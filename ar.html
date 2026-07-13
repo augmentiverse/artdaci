@@ -6,9 +6,14 @@
     <meta name="theme-color" content="#050505" />
     <title>DACIART WebAR Viewer - Mona Lisa</title>
     <link rel="stylesheet" href="styles/ar.css" />
-    <script src="vendor/three.min.js"></script>
-    <script src="vendor/GLTFLoader.js"></script>
-    <script src="vendor/mindar-image-three.prod.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./vendor/three.module.js",
+          "three/addons/": "./vendor/three-addons/"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="ar-root" aria-label="WebAR camera view"></div>
@@ -61,13 +66,13 @@
           <span class="camera-glyph" aria-hidden="true"></span>
           Start Camera
         </button>
-        <small class="version-note">WebAR viewer v5 - local AR libraries</small>
+        <small class="version-note">WebAR viewer v6 - module AR libraries</small>
         <pre id="error-details" class="error-details" hidden></pre>
         <a href="print-target.html">Open target image</a>
         <a href="camera-test.html">Test camera only</a>
       </div>
     </div>
 
-    <script src="scripts/ar-viewer.js?v=5"></script>
+    <script type="module" src="scripts/ar-viewer.js?v=6"></script>
   </body>
 </html>

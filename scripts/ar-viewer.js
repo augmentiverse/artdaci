@@ -1,3 +1,7 @@
+import * as THREE from "../vendor/three.module.js";
+import { GLTFLoader } from "../vendor/GLTFLoader.module.js";
+import { MindARThree } from "../vendor/mindar-image-three.prod.js";
+
 const CONFIG = {
   target: "assets/targets/mona-lisa.mind",
   model: "assets/paintings/mona-lisa/mona-lisa.glb",
@@ -98,7 +102,7 @@ async function loadManifest() {
 }
 
 async function startAR() {
-  if (!window.THREE || !window.MINDAR?.IMAGE?.MindARThree || !window.THREE.GLTFLoader) {
+  if (!THREE || !MindARThree || !GLTFLoader) {
     showStartupError(new Error(getMissingLibraryMessage()));
     return;
   }
@@ -117,7 +121,7 @@ async function startAR() {
     state.clock = new THREE.Clock();
     const root = document.getElementById("ar-root");
 
-    state.mindarThree = new window.MINDAR.IMAGE.MindARThree({
+    state.mindarThree = new MindARThree({
       container: root,
       imageTargetSrc: CONFIG.target,
       filterMinCF: 0.0001,
@@ -234,7 +238,7 @@ function addFallbackPainting(group) {
 
 async function loadModel(group) {
   setStartupMessage("Loading the 3D Mona Lisa model...");
-  const loader = new THREE.GLTFLoader();
+  const loader = new GLTFLoader();
 
   return new Promise((resolve, reject) => {
     loader.load(
@@ -425,9 +429,9 @@ function getFriendlyCameraError(error) {
 function getMissingLibraryMessage() {
   const missing = [];
 
-  if (!window.THREE) missing.push("vendor/three.min.js");
-  if (!window.THREE?.GLTFLoader) missing.push("vendor/GLTFLoader.js");
-  if (!window.MINDAR?.IMAGE?.MindARThree) missing.push("vendor/mindar-image-three.prod.js");
+  if (!THREE) missing.push("vendor/three.module.js");
+  if (!GLTFLoader) missing.push("vendor/GLTFLoader.module.js");
+  if (!MindARThree) missing.push("vendor/mindar-image-three.prod.js");
 
   return `Required AR libraries did not load: ${missing.join(", ")}`;
 }
