@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#191512" />
+    <title>DACIART - Augmented Art Book</title>
+    <link rel="stylesheet" href="styles/site.css" />
+  </head>
+  <body>
+    <main class="home-shell">
+      <section class="book-hero" aria-labelledby="book-title">
+        <div class="plate">
+          <img src="assets/paintings/mona-lisa/mona-lisa.jpg" alt="Mona Lisa by Leonardo da Vinci" />
+        </div>
+
+        <article class="intro">
+          <p class="eyebrow">Spread 001</p>
+          <h1 id="book-title">Masterpieces Alive</h1>
+          <p class="dek">
+            A browser-based WebAR art book prototype. Scan the printed Mona Lisa image and the painting opens as an anchored 3D museum object with hotspots, lighting controls, and catalogue content.
+          </p>
+
+          <div class="actions" aria-label="Primary actions">
+            <a class="button primary" href="ar.html">Launch WebAR Viewer</a>
+            <a class="button" href="print-target.html">Open Printable Target</a>
+            <a class="button" href="AR_Art_Book_Concept.md">Read Concept</a>
+          </div>
+
+          <dl class="facts">
+            <div>
+              <dt>Painting</dt>
+              <dd>Mona Lisa</dd>
+            </div>
+            <div>
+              <dt>Artist</dt>
+              <dd>Leonardo da Vinci</dd>
+            </div>
+            <div>
+              <dt>AR Engine</dt>
+              <dd>MindAR + Three.js</dd>
+            </div>
+            <div>
+              <dt>Model</dt>
+              <dd>GLB linked locally</dd>
+            </div>
+          </dl>
+        </article>
+      </section>
+
+      <section class="spread-preview" aria-label="Book spread preview">
+        <article class="page image-page">
+          <figure>
+            <img src="assets/paintings/mona-lisa/mona-lisa.jpg" alt="Mona Lisa target reproduction" />
+            <figcaption>
+              <strong>Mona Lisa</strong>
+              <span>Leonardo da Vinci, c. 1503-1519 - Oil on poplar panel - Musee du Louvre, Paris</span>
+            </figcaption>
+          </figure>
+        </article>
+
+        <article class="page text-page">
+          <div class="meta">
+            <span>High Renaissance</span>
+            <span>Sfumato</span>
+            <span>Portrait</span>
+            <span>Louvre</span>
+          </div>
+
+          <h2>Mona Lisa</h2>
+          <p class="artist">Leonardo da Vinci</p>
+
+          <div class="essay-grid">
+            <section>
+              <h3>Historical Context</h3>
+              <p>Painted in the early sixteenth century, the Mona Lisa reflects the High Renaissance interest in idealized naturalism, atmospheric depth, and the inner life of the sitter.</p>
+            </section>
+            <section>
+              <h3>AR Hotspots</h3>
+              <p>The first WebAR layer highlights the smile, folded hands, imagined landscape, and Leonardo's sfumato technique.</p>
+            </section>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

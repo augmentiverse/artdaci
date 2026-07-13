@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="theme-color" content="#050505" />
+    <title>DACIART WebAR Viewer - Mona Lisa</title>
+    <link rel="stylesheet" href="styles/ar.css" />
+    <script src="vendor/three.min.js"></script>
+    <script src="vendor/GLTFLoader.js"></script>
+    <script src="vendor/mindar-image-three.prod.js"></script>
+  </head>
+  <body>
+    <div id="ar-root" aria-label="WebAR camera view"></div>
+
+    <header class="hud top-hud">
+      <a class="icon-link" href="index.html" aria-label="Back to book">Back</a>
+      <div class="title-block">
+        <span>Spread 001</span>
+        <strong>Mona Lisa</strong>
+      </div>
+      <div id="tracking-status" class="tracking-badge searching">Searching</div>
+    </header>
+
+    <aside id="info-panel" class="info-panel" aria-live="polite">
+      <button id="close-info" class="close-button" type="button" aria-label="Close information panel">x</button>
+      <p class="panel-kicker" id="panel-kicker">Catalogue</p>
+      <h1 id="panel-title">Mona Lisa</h1>
+      <p id="panel-body">Point your camera at the printed Mona Lisa target. When tracking locks, the 3D model will rise from the page.</p>
+    </aside>
+
+    <nav class="hotspot-bar" aria-label="AR hotspots">
+      <button class="hotspot active" type="button" data-hotspot="intro">Intro</button>
+      <button class="hotspot" type="button" data-hotspot="smile">Smile</button>
+      <button class="hotspot" type="button" data-hotspot="hands">Hands</button>
+      <button class="hotspot" type="button" data-hotspot="landscape">Landscape</button>
+      <button class="hotspot" type="button" data-hotspot="sfumato">Sfumato</button>
+    </nav>
+
+    <section class="control-dock" aria-label="AR controls">
+      <div class="control-row">
+        <label for="scale-control">Scale</label>
+        <input id="scale-control" type="range" min="0.12" max="1.2" step="0.01" value="0.42" />
+      </div>
+      <div class="control-row">
+        <label for="height-control">Rise</label>
+        <input id="height-control" type="range" min="0" max="0.55" step="0.01" value="0.18" />
+      </div>
+      <div class="button-row">
+        <button id="toggle-spin" type="button">Rotate</button>
+        <button id="toggle-light" type="button">Museum Light</button>
+        <button id="reset-view" type="button">Reset</button>
+      </div>
+    </section>
+
+    <div id="loading-screen" class="loading-screen">
+      <div>
+        <h1>Preparing WebAR</h1>
+        <p id="startup-message">Tap start, allow camera access, then scan the printed Mona Lisa target.</p>
+        <button id="start-ar" class="start-button" type="button" aria-label="Start camera">
+          <span class="camera-glyph" aria-hidden="true"></span>
+          Start Camera
+        </button>
+        <small class="version-note">WebAR viewer v5 - local AR libraries</small>
+        <pre id="error-details" class="error-details" hidden></pre>
+        <a href="print-target.html">Open target image</a>
+        <a href="camera-test.html">Test camera only</a>
+      </div>
+    </div>
+
+    <script src="scripts/ar-viewer.js?v=5"></script>
+  </body>
+</html>

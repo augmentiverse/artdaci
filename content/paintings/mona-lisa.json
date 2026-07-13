@@ -1,0 +1,192 @@
+{
+  "id": "leonardo-mona-lisa-1503-1519",
+  "slug": "mona-lisa",
+  "bookOrder": 1,
+  "title": "Mona Lisa",
+  "artist": {
+    "name": "Leonardo da Vinci",
+    "birthYear": 1452,
+    "deathYear": 1519,
+    "nationality": "Italian",
+    "bioShort": "Leonardo da Vinci was a Renaissance painter, engineer, anatomist, designer, and theorist whose work fused artistic observation with scientific inquiry.",
+    "bioLong": "Leonardo da Vinci is one of the defining figures of the Italian Renaissance. Trained in Florence in the workshop of Andrea del Verrocchio, he developed a practice that joined painting, anatomy, optics, engineering, and natural philosophy. His paintings are rare in number but immense in influence, especially for their atmospheric effects, psychological ambiguity, and technical subtlety."
+  },
+  "date": "c. 1503-1519",
+  "movement": ["High Renaissance"],
+  "medium": "Oil on poplar panel",
+  "dimensions": {
+    "heightCm": 77,
+    "widthCm": 53
+  },
+  "currentLocation": {
+    "museum": "Musee du Louvre",
+    "city": "Paris",
+    "country": "France",
+    "latitude": 48.8606,
+    "longitude": 2.3376,
+    "galleryUrl": "https://www.louvre.fr/en/explore/the-palace/mona-lisa"
+  },
+  "print": {
+    "spreadNumber": 1,
+    "chapter": "Renaissance",
+    "imageTargetId": "target-001-mona-lisa",
+    "imageTargetSource": "assets/paintings/mona-lisa/mona-lisa.jpg",
+    "compiledMindTarget": "assets/targets/mona-lisa.mind",
+    "qrUrl": "https://example.org/ar/mona-lisa"
+  },
+  "texts": {
+    "historicalContext": "Painted in the early sixteenth century, the Mona Lisa belongs to the mature phase of Leonardo's career and reflects the High Renaissance interest in idealized naturalism, atmospheric depth, and the inner life of the sitter.",
+    "artistBiography": "Leonardo da Vinci worked across art, science, and engineering. His paintings are marked by close observation, sfumato modeling, experimental technique, and an unusual sensitivity to psychological presence.",
+    "artisticAnalysis": "The portrait is built around a calm pyramidal composition, delicate transitions of light and shadow, and an enigmatic expression that changes as the viewer's attention shifts between the eyes, mouth, hands, and landscape.",
+    "symbolism": "The winding roads, bridges, water, and mountains behind the sitter suggest a union between human presence and the forces of nature. The smile has become a symbol of ambiguity, interiority, and the unstable nature of perception.",
+    "composition": "The sitter is placed frontally in a stable triangular structure. Her folded hands form the base, her shoulders guide the eye upward, and her face becomes the still center of a moving landscape.",
+    "palette": "The palette is restrained: warm flesh tones, smoky browns, muted greens, blue-green atmospheric distance, and dark glazes that produce depth without strong contour lines.",
+    "perspectiveTechnique": "Leonardo uses sfumato to soften transitions and atmospheric perspective to make the distant landscape recede. The absence of hard outlines allows forms to appear alive and suspended in air.",
+    "culturalSignificance": "The Mona Lisa is one of the most recognized paintings in the world and a benchmark for portraiture, artistic celebrity, museum culture, and the modern idea of the masterpiece.",
+    "influence": "Its psychological subtlety, atmospheric technique, and iconic status influenced portraiture, modern art, popular culture, advertising, film, and countless reinterpretations by later artists.",
+    "interestingFacts": [
+      "The painting is executed on a poplar panel rather than canvas.",
+      "The sitter is commonly identified as Lisa Gherardini, wife of Francesco del Giocondo.",
+      "Its fame increased dramatically after its theft from the Louvre in 1911 and recovery in 1913."
+    ]
+  },
+  "timeline": [
+    {
+      "year": 1452,
+      "label": "Leonardo da Vinci is born in Vinci.",
+      "type": "artist"
+    },
+    {
+      "year": 1503,
+      "label": "Leonardo likely begins the portrait in Florence.",
+      "type": "artwork"
+    },
+    {
+      "year": 1519,
+      "label": "Leonardo dies in France; the painting remains associated with the French royal collection.",
+      "type": "artist"
+    },
+    {
+      "year": 1797,
+      "label": "The painting enters the Louvre's public museum context.",
+      "type": "museum"
+    },
+    {
+      "year": 1911,
+      "label": "The painting is stolen from the Louvre.",
+      "type": "history"
+    },
+    {
+      "year": 1913,
+      "label": "The painting is recovered.",
+      "type": "history"
+    }
+  ],
+  "hotspots": [
+    {
+      "id": "smile",
+      "label": "The Smile",
+      "position2D": [0.5, 0.36],
+      "position3D": [0, 0.24, 0.04],
+      "category": "hidden-details",
+      "body": "The smile appears to shift because Leonardo softens the mouth's edges with sfumato, letting peripheral vision and shadow change the viewer's perception."
+    },
+    {
+      "id": "hands",
+      "label": "Folded Hands",
+      "position2D": [0.51, 0.78],
+      "position3D": [0, -0.28, 0.04],
+      "category": "composition",
+      "body": "The hands anchor the portrait's pyramidal structure and create a composed, dignified stillness."
+    },
+    {
+      "id": "landscape",
+      "label": "Imagined Landscape",
+      "position2D": [0.72, 0.34],
+      "position3D": [0.2, 0.25, 0.03],
+      "category": "history",
+      "body": "The landscape uses atmospheric perspective and geological imagination, linking the sitter to Leonardo's studies of water, rock, and natural transformation."
+    },
+    {
+      "id": "sfumato",
+      "label": "Sfumato",
+      "position2D": [0.48, 0.31],
+      "position3D": [0, 0.32, 0.05],
+      "category": "brushstrokes",
+      "body": "Sfumato means smoky or softened. Leonardo builds form through delicate tonal transitions rather than sharp contour."
+    }
+  ],
+  "ar": {
+    "startMode": "painting-emergence",
+    "imageTarget": "assets/paintings/mona-lisa/mona-lisa.jpg",
+    "compiledTarget": "assets/targets/mona-lisa.mind",
+    "primaryModel": "assets/paintings/mona-lisa/mona-lisa.glb",
+    "frameModel": "assets/paintings/mona-lisa/mona-lisa.glb",
+    "scaleMeters": {
+      "width": 0.53,
+      "height": 0.77
+    },
+    "lightingPresets": ["daylight", "museum", "candlelight", "raking-light"],
+    "availableModes": [
+      "painting-emergence",
+      "artist",
+      "history",
+      "timeline",
+      "museum",
+      "hidden-details",
+      "audio-guide",
+      "quiz",
+      "brushstrokes",
+      "lighting",
+      "ask-guide"
+    ],
+    "deferredModes": [
+      "xray",
+      "infrared",
+      "exploded-layers",
+      "studio",
+      "documentary"
+    ]
+  },
+  "media": {
+    "image": "assets/paintings/mona-lisa/mona-lisa.jpg",
+    "model": "assets/paintings/mona-lisa/mona-lisa.glb",
+    "audioGuides": [],
+    "videos": [],
+    "subtitles": [],
+    "signLanguage": [],
+    "imageCredits": []
+  },
+  "education": {
+    "ageBands": ["8-11", "12-15", "16-18", "university"],
+    "learningObjectives": [
+      "Explain sfumato and atmospheric perspective.",
+      "Identify how composition guides attention.",
+      "Discuss why the Mona Lisa became a modern museum icon.",
+      "Compare Renaissance portraiture with later portrait traditions."
+    ],
+    "quiz": [
+      {
+        "question": "Which technique softens the transitions around the Mona Lisa's face?",
+        "answers": ["Sfumato", "Pointillism", "Cubism", "Impasto"],
+        "correctAnswer": "Sfumato"
+      }
+    ],
+    "vocabulary": ["sfumato", "atmospheric perspective", "portraiture", "High Renaissance", "poplar panel"],
+    "discussionPrompts": [
+      "Why might an ambiguous expression make a portrait more memorable?",
+      "How does the background landscape change the mood of the sitter?"
+    ]
+  },
+  "rights": {
+    "publicDomainStatus": "Artwork is public domain; reproduction and model rights must be verified for production use.",
+    "imageLicense": "User-provided project asset",
+    "assetRestrictions": "Confirm source and institutional reproduction requirements before commercial publication.",
+    "creditLine": "Leonardo da Vinci, Mona Lisa, c. 1503-1519, Musee du Louvre, Paris."
+  },
+  "references": [
+    "Musee du Louvre collection and visitor materials",
+    "Standard Leonardo da Vinci and High Renaissance scholarship",
+    "Technical art history studies on sfumato, support, and conservation"
+  ]
+}
