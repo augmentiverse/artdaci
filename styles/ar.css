@@ -33,7 +33,7 @@ body {
 .hud,
 .info-panel,
 .hotspot-bar,
-.control-dock,
+.mini-dock,
 .loading-screen {
   position: fixed;
   z-index: 10;
@@ -54,7 +54,7 @@ body {
 .tracking-badge,
 .title-block,
 .info-panel,
-.control-dock,
+.mini-dock,
 .hotspot-bar {
   border: 1px solid var(--line);
   background: var(--glass);
@@ -163,7 +163,7 @@ body {
 
 .hotspot-bar {
   left: 50%;
-  bottom: 128px;
+  bottom: 18px;
   width: min(620px, calc(100vw - 24px));
   transform: translateX(-50%);
   display: grid;
@@ -172,8 +172,7 @@ body {
   padding: 8px;
 }
 
-.hotspot-bar button,
-.button-row button {
+.hotspot-bar button {
   min-height: 32px;
   border: 1px solid var(--line);
   color: var(--text);
@@ -188,40 +187,25 @@ body {
   background: var(--gold);
 }
 
-.control-dock {
-  left: 50%;
+.mini-dock {
+  right: 16px;
   bottom: 16px;
-  width: min(620px, calc(100vw - 24px));
-  transform: translateX(-50%);
-  padding: 9px;
+  display: flex;
+  gap: 6px;
+  padding: 6px;
 }
 
-.control-row {
-  display: grid;
-  grid-template-columns: 52px 1fr;
-  gap: 12px;
-  align-items: center;
-  margin-bottom: 7px;
-}
-
-.control-row label {
-  color: var(--gold);
+.mini-dock button {
+  min-height: 32px;
+  border: 1px solid var(--line);
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
   font-size: 12px;
-  font-weight: 800;
-  text-transform: uppercase;
+  font-weight: 700;
 }
 
-.control-row input {
-  width: 100%;
-}
-
-.button-row {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.button-row button.active {
+.mini-dock button.active {
   background: var(--gold);
   color: #1b1309;
 }
@@ -347,11 +331,12 @@ body {
   }
 
   .hotspot-bar {
-    bottom: 172px;
+    bottom: 64px;
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .button-row {
-    grid-template-columns: 1fr;
+  .mini-dock {
+    right: 12px;
+    bottom: 12px;
   }
 }

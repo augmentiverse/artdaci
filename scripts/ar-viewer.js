@@ -24,8 +24,12 @@ const state = {
   keepVisible: true,
   targetFoundOnce: false,
   isDragging: false,
+  gestureMode: null,
+  activePointers: new Map(),
   lastPointerX: 0,
   lastPointerY: 0,
+  lastPinchDistance: 0,
+  lastTwoFingerY: 0,
   manualRotation: {
     x: 0,
     y: 0
@@ -60,31 +64,9 @@ function bindUI() {
     await startAR();
   });
 
-  document.getElementById("scale-control").addEventListener("input", (event) => {
-    state.targetScale = Number(event.target.value);
-  });
-
-  document.getElementById("height-control").addEventListener("input", (event) => {
-    state.targetRise = Number(event.target.value);
-  });
-
   document.getElementById("toggle-spin").addEventListener("click", (event) => {
     state.spin = !state.spin;
     event.currentTarget.classList.toggle("active", state.spin);
-  });
-
-  document.getElementById("toggle-light").addEventListener("click", (event) => {
-    state.warmLight = !state.warmLight;
-    event.currentTarget.classList.toggle("active", state.warmLight);
-    updateLighting();
-  });
-
-  document.getElementById("toggle-hold").addEventListener("click", (event) => {
-    state.keepVisible = !state.keepVisible;
-    event.currentTarget.classList.toggle("active", state.keepVisible);
-    if (state.anchor?.group && state.targetFoundOnce) {
-      state.anchor.group.visible = state.keepVisible;
-    }
   });
 
   document.getElementById("reset-view").addEventListener("click", () => {
@@ -95,11 +77,7 @@ function bindUI() {
     state.manualRotation.y = 0;
     state.targetRise = CONFIG.initialRise;
     state.targetScale = CONFIG.initialScale;
-    document.getElementById("scale-control").value = CONFIG.initialScale;
-    document.getElementById("height-control").value = CONFIG.initialRise;
     document.getElementById("toggle-spin").classList.remove("active");
-    document.getElementById("toggle-light").classList.remove("active");
-    document.getElementById("toggle-hold").classList.add("active");
     applyModelRotation();
     updateLighting();
   });
@@ -124,14 +102,23 @@ function bindRotationGestures() {
 
   root.addEventListener("pointerdown", (event) => {
     if (!state.model) return;
-    state.isDragging = true;
-    state.lastPointerX = event.clientX;
-    state.lastPointerY = event.clientY;
+    event.preventDefault();
+    state.activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
     root.setPointerCapture?.(event.pointerId);
+    updateGestureStart();
   });
 
   root.addEventListener("pointermove", (event) => {
-    if (!state.isDragging || !state.model) return;
+    if (!state.model || !state.activePointers.has(event.pointerId)) return;
+    event.preventDefault();
+    state.activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+
+    if (state.activePointers.size >= 2) {
+      handleTwoFingerGesture();
+      return;
+    }
+
+    if (state.gestureMode !== "rotate") return;
 
     const deltaX = event.clientX - state.lastPointerX;
     const deltaY = event.clientY - state.lastPointerY;
@@ -145,13 +132,65 @@ function bindRotationGestures() {
   });
 
   root.addEventListener("pointerup", (event) => {
+    state.activePointers.delete(event.pointerId);
     state.isDragging = false;
     root.releasePointerCapture?.(event.pointerId);
+    updateGestureStart();
   });
 
-  root.addEventListener("pointercancel", () => {
+  root.addEventListener("pointercancel", (event) => {
+    state.activePointers.delete(event.pointerId);
     state.isDragging = false;
+    updateGestureStart();
   });
+}
+
+function updateGestureStart() {
+  const pointers = [...state.activePointers.values()];
+
+  if (pointers.length === 1) {
+    state.gestureMode = "rotate";
+    state.isDragging = true;
+    state.lastPointerX = pointers[0].x;
+    state.lastPointerY = pointers[0].y;
+    return;
+  }
+
+  if (pointers.length >= 2) {
+    state.gestureMode = "transform";
+    state.isDragging = false;
+    state.lastPinchDistance = getPointerDistance(pointers[0], pointers[1]);
+    state.lastTwoFingerY = (pointers[0].y + pointers[1].y) / 2;
+    return;
+  }
+
+  state.gestureMode = null;
+  state.lastPinchDistance = 0;
+}
+
+function handleTwoFingerGesture() {
+  const pointers = [...state.activePointers.values()];
+  if (pointers.length < 2) return;
+
+  const distance = getPointerDistance(pointers[0], pointers[1]);
+  const midY = (pointers[0].y + pointers[1].y) / 2;
+
+  if (state.lastPinchDistance > 0) {
+    const scaleDelta = distance / state.lastPinchDistance;
+    state.targetScale = clamp(state.targetScale * scaleDelta, 0.14, 1.35);
+  }
+
+  if (state.lastTwoFingerY > 0) {
+    const raiseDelta = (state.lastTwoFingerY - midY) * 0.0025;
+    state.targetRise = clamp(state.targetRise + raiseDelta, -0.08, 0.85);
+  }
+
+  state.lastPinchDistance = distance;
+  state.lastTwoFingerY = midY;
+}
+
+function getPointerDistance(first, second) {
+  return Math.hypot(first.x - second.x, first.y - second.y);
 }
 
 async function loadManifest() {
