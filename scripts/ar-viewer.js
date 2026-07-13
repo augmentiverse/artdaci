@@ -19,7 +19,6 @@ const state = {
   mindarThree: null,
   anchor: null,
   model: null,
-  fallbackPlane: null,
   spin: false,
   warmLight: false,
   keepVisible: true,
@@ -167,7 +166,7 @@ async function startAR() {
     state.anchor.group.visible = false;
 
     addAnchorStage(state.anchor.group);
-    addFallbackPainting(state.anchor.group);
+    await loadModel(state.anchor.group);
 
     state.anchor.onTargetFound = () => {
       state.targetFoundOnce = true;
@@ -187,10 +186,6 @@ async function startAR() {
     await state.mindarThree.start();
     document.getElementById("loading-screen").classList.add("hidden");
     renderer.setAnimationLoop(() => renderFrame(renderer, scene, camera));
-    loadModel(state.anchor.group).catch((error) => {
-      console.warn("GLB model could not be loaded; using the painting plane fallback.", error);
-      showHotspot("intro");
-    });
   } catch (error) {
     showStartupError(error);
   }
@@ -241,22 +236,6 @@ function addAnchorStage(group) {
   group.add(shadow);
 }
 
-function addFallbackPainting(group) {
-  const textureLoader = new THREE.TextureLoader();
-  const imagePath = state.manifest?.media?.image || "assets/paintings/mona-lisa/mona-lisa.jpg";
-  textureLoader.load(imagePath, (texture) => {
-    texture.encoding = THREE.sRGBEncoding;
-    const geometry = new THREE.PlaneGeometry(0.53, 0.77);
-    const material = new THREE.MeshBasicMaterial({
-      map: texture,
-      side: THREE.DoubleSide
-    });
-    state.fallbackPlane = new THREE.Mesh(geometry, material);
-    state.fallbackPlane.position.z = CONFIG.initialRise;
-    group.add(state.fallbackPlane);
-  });
-}
-
 async function loadModel(group) {
   setStartupMessage("Loading the 3D Mona Lisa model...");
   const loader = new GLTFLoader();
@@ -281,9 +260,6 @@ async function loadModel(group) {
           }
         });
 
-        if (state.fallbackPlane) {
-          state.fallbackPlane.visible = false;
-        }
         group.add(state.model);
         resolve();
       },
@@ -306,16 +282,6 @@ function renderFrame(renderer, scene, camera) {
 
     if (state.spin) {
       state.model.rotation.z += delta * 0.55;
-    }
-  }
-
-  if (state.fallbackPlane?.visible) {
-    state.fallbackPlane.position.z += (state.targetRise - state.fallbackPlane.position.z) * 0.08;
-    const planeScale = state.targetScale / CONFIG.initialScale;
-    state.fallbackPlane.scale.lerp(new THREE.Vector3(planeScale, planeScale, planeScale), 0.12);
-
-    if (state.spin) {
-      state.fallbackPlane.rotation.z += delta * 0.55;
     }
   }
 
