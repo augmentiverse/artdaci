@@ -9,117 +9,67 @@
   </head>
   <body>
     <main class="home-shell">
-      <section class="book-hero" aria-labelledby="book-title">
-        <div class="plate">
-          <img src="assets/paintings/mona-lisa/mona-lisa.jpg" alt="Mona Lisa by Leonardo da Vinci" />
-        </div>
-
+      <section class="book-hero index-hero" aria-labelledby="book-title">
         <article class="intro">
-          <p class="eyebrow">Spread 001</p>
+          <p class="eyebrow">Augmented Reality Art Book</p>
           <h1 id="book-title">Masterpieces Alive</h1>
           <p class="dek">
-            A browser-based WebAR art book prototype. Scan the printed Mona Lisa image and the painting opens as an anchored 3D museum object with hotspots, lighting controls, and catalogue content.
+            A browser-based WebAR museum book where each printed artwork becomes an interactive 3D portal. Scan a target page, then rotate, zoom, and raise the model directly with touch gestures.
           </p>
 
           <div class="actions" aria-label="Primary actions">
-            <a class="button primary" href="ar.html?painting=mona-lisa">Launch Mona Lisa AR</a>
-            <a class="button" href="print-target.html">Open Printable Target</a>
-            <a class="button" href="ar.html?painting=van-gogh">Launch Van Gogh AR</a>
-            <a class="button" href="print-van-gogh.html">Open Van Gogh Target</a>
-            <a class="button" href="AR_Art_Book_Concept.md">Read Concept</a>
+            <a class="button primary" href="#painting-index">Open Painting Index</a>
+            <a class="button" href="AR_Art_Book_Concept.md">Read Full Concept</a>
+            <a class="button" href="compile-target.html">Compile Van Gogh Target</a>
           </div>
 
           <dl class="facts">
             <div>
-              <dt>Painting</dt>
-              <dd>Mona Lisa</dd>
+              <dt>Format</dt>
+              <dd>Museum book + WebAR</dd>
             </div>
             <div>
-              <dt>Artist</dt>
-              <dd>Leonardo da Vinci</dd>
-            </div>
-            <div>
-              <dt>AR Engine</dt>
+              <dt>Engine</dt>
               <dd>MindAR + Three.js</dd>
             </div>
             <div>
-              <dt>Model</dt>
-              <dd>GLB linked locally</dd>
+              <dt>Controls</dt>
+              <dd>Touch rotate, pinch zoom, two-finger raise</dd>
+            </div>
+            <div>
+              <dt>Collection</dt>
+              <dd>Expandable painting index</dd>
             </div>
           </dl>
         </article>
       </section>
 
-      <section class="spread-preview" aria-label="Book spread preview">
-        <article class="page image-page">
-          <figure>
-            <img src="assets/paintings/mona-lisa/mona-lisa.jpg" alt="Mona Lisa target reproduction" />
-            <figcaption>
-              <strong>Mona Lisa</strong>
-              <span>Leonardo da Vinci, c. 1503-1519 - Oil on poplar panel - Musee du Louvre, Paris</span>
-            </figcaption>
-          </figure>
-        </article>
+      <section id="painting-index" class="painting-index" aria-labelledby="index-title">
+        <div class="section-heading">
+          <p class="eyebrow">Index</p>
+          <h2 id="index-title">Available AR Paintings</h2>
+        </div>
 
-        <article class="page text-page">
-          <div class="meta">
-            <span>High Renaissance</span>
-            <span>Sfumato</span>
-            <span>Portrait</span>
-            <span>Louvre</span>
+        <article class="painting-row">
+          <div>
+            <p class="eyebrow">Spread 001</p>
+            <h3>Mona Lisa</h3>
+            <p>Leonardo da Vinci, c. 1503-1519. High Renaissance portrait with sfumato, atmospheric landscape, and interactive detail hotspots.</p>
           </div>
-
-          <h2>Mona Lisa</h2>
-          <p class="artist">Leonardo da Vinci</p>
-
-          <div class="essay-grid">
-            <section>
-              <h3>Historical Context</h3>
-              <p>Painted in the early sixteenth century, the Mona Lisa reflects the High Renaissance interest in idealized naturalism, atmospheric depth, and the inner life of the sitter.</p>
-            </section>
-            <section>
-              <h3>AR Hotspots</h3>
-              <p>The first WebAR layer highlights the smile, folded hands, imagined landscape, and Leonardo's sfumato technique.</p>
-            </section>
+          <div class="row-actions">
+            <a class="button primary" href="ar.html?painting=mona-lisa">Launch AR</a>
+            <a class="button" href="print-target.html">Open Target</a>
           </div>
         </article>
-      </section>
 
-      <section class="spread-preview" aria-label="Van Gogh spread preview">
-        <article class="page image-page">
-          <figure>
-            <img src="assets/paintings/van-gogh/van-gogh__Portrait.jpg" alt="Van Gogh self-portrait target reproduction" />
-            <figcaption>
-              <strong>Self-Portrait</strong>
-              <span>Vincent van Gogh, 1887 - Post-Impressionism - AR target 002</span>
-            </figcaption>
-          </figure>
-        </article>
-
-        <article class="page text-page">
-          <div class="meta">
-            <span>Post-Impressionism</span>
-            <span>Self-Portrait</span>
-            <span>Brushwork</span>
-            <span>Color Contrast</span>
+        <article class="painting-row">
+          <div>
+            <p class="eyebrow">Spread 002</p>
+            <h3>Self-Portrait</h3>
+            <p>Vincent van Gogh, 1887. Post-Impressionist self-portrait exploring directional brushwork, complementary color, and psychological intensity.</p>
           </div>
-
-          <h2>Self-Portrait</h2>
-          <p class="artist">Vincent van Gogh</p>
-
-          <div class="essay-grid">
-            <section>
-              <h3>Historical Context</h3>
-              <p>Painted during Van Gogh's Paris period, this portrait shows his experiments with broken brushwork, vivid complementary color, and psychological intensity.</p>
-            </section>
-            <section>
-              <h3>AR Hotspots</h3>
-              <p>The Van Gogh layer highlights the direct gaze, orange-blue color contrast, broken background strokes, and the dark structural jacket.</p>
-            </section>
-          </div>
-
-          <div class="actions" aria-label="Van Gogh actions">
-            <a class="button primary" href="ar.html?painting=van-gogh">Launch Van Gogh AR</a>
+          <div class="row-actions">
+            <a class="button primary" href="ar.html?painting=van-gogh">Launch AR</a>
             <a class="button" href="print-van-gogh.html">Open Target</a>
             <a class="button" href="compile-target.html">Compile Target</a>
           </div>

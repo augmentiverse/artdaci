@@ -313,7 +313,6 @@ async function startAR() {
     state.anchor = state.mindarThree.addAnchor(0);
     state.anchor.group.visible = false;
 
-    addAnchorStage(state.anchor.group);
     await loadModel(state.anchor.group);
 
     state.anchor.onTargetFound = () => {
@@ -359,29 +358,6 @@ async function preflightCamera() {
   });
 
   stream.getTracks().forEach((track) => track.stop());
-}
-
-function addAnchorStage(group) {
-  const frameGeometry = new THREE.BoxGeometry(1.04, 1.48, 0.035);
-  const frameMaterial = new THREE.MeshStandardMaterial({
-    color: 0x5a3a1d,
-    roughness: 0.48,
-    metalness: 0.18
-  });
-  const frame = new THREE.Mesh(frameGeometry, frameMaterial);
-  frame.position.z = -0.02;
-  group.add(frame);
-
-  const shadowGeometry = new THREE.PlaneGeometry(1.18, 1.62);
-  const shadowMaterial = new THREE.MeshBasicMaterial({
-    color: 0x000000,
-    transparent: true,
-    opacity: 0.22,
-    side: THREE.DoubleSide
-  });
-  const shadow = new THREE.Mesh(shadowGeometry, shadowMaterial);
-  shadow.position.z = -0.04;
-  group.add(shadow);
 }
 
 async function loadModel(group) {
