@@ -7,10 +7,15 @@ This repository is a GitHub Pages-ready prototype for an augmented reality art b
 - `index.html` - book landing page and first spread preview.
 - `ar.html` - live WebAR viewer using MindAR and Three.js.
 - `print-target.html` - printable/scannable Mona Lisa target page.
+- `print-van-gogh.html` - printable/scannable Van Gogh target page.
+- `compile-target.html` - browser utility to generate `assets/targets/van-gogh.mind`.
 - `assets/paintings/mona-lisa/mona-lisa.jpg` - printed target image.
 - `assets/paintings/mona-lisa/mona-lisa.glb` - 3D model loaded in AR.
+- `assets/paintings/van-gogh/van-gogh__Portrait.jpg` - Van Gogh printed target image.
+- `assets/paintings/van-gogh/van-gogh__Portrait.glb` - Van Gogh 3D model loaded in AR.
 - `assets/targets/mona-lisa.mind` - compiled MindAR image target.
 - `content/paintings/mona-lisa.json` - structured painting data record.
+- `content/paintings/van-gogh.json` - structured Van Gogh painting data record.
 - `vendor/` - local copies of Three.js, GLTFLoader, and MindAR used by the AR viewer.
 - `AR_Art_Book_Concept.md` - full product and editorial concept.
 
@@ -40,6 +45,15 @@ On a phone, the easiest route is to upload to GitHub Pages because camera access
 6. Open `print-target.html` on a second device or print it.
 7. Open `ar.html` on your phone and scan the Mona Lisa image.
 
+For Van Gogh:
+
+1. Open `compile-target.html`.
+2. Click **Generate van-gogh.mind**.
+3. Save the downloaded file as `assets/targets/van-gogh.mind`.
+4. Upload that file to GitHub.
+5. Open `print-van-gogh.html` on a second screen or print it.
+6. Open `ar.html?painting=van-gogh` and scan the Van Gogh portrait.
+
 ## Important Browser Notes
 
 - Use HTTPS for camera access.
@@ -55,7 +69,14 @@ On a phone, the easiest route is to upload to GitHub Pages because camera access
 2. Add the GLB model to `assets/paintings/{slug}/{slug}.glb`.
 3. Generate a MindAR target file and save it to `assets/targets/{slug}.mind`.
 4. Add a JSON record in `content/paintings/{slug}.json`.
-5. Duplicate the Mona Lisa configuration in `scripts/ar-viewer.js` or extend it to load by query string.
+5. Add the new slug to the `PAINTINGS` registry in `scripts/ar-viewer.js`.
+
+The current viewer already supports loading by query string:
+
+```text
+ar.html?painting=mona-lisa
+ar.html?painting=van-gogh
+```
 
 ## Regenerating The MindAR Target
 

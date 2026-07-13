@@ -1,0 +1,177 @@
+{
+  "id": "vincent-van-gogh-self-portrait-1887",
+  "slug": "van-gogh",
+  "bookOrder": 2,
+  "title": "Self-Portrait",
+  "artist": {
+    "name": "Vincent van Gogh",
+    "birthYear": 1853,
+    "deathYear": 1890,
+    "nationality": "Dutch",
+    "bioShort": "Vincent van Gogh was a Dutch Post-Impressionist painter whose intense color, expressive brushwork, and emotional directness transformed modern art.",
+    "bioLong": "Vincent van Gogh developed his mature style during a short but astonishingly productive career. In Paris he absorbed Impressionist and Neo-Impressionist color, then transformed those lessons into a highly personal language of directional brushwork, complementary color, and psychological force."
+  },
+  "date": "1887",
+  "movement": ["Post-Impressionism"],
+  "medium": "Oil on canvas",
+  "dimensions": {
+    "heightCm": 41,
+    "widthCm": 32
+  },
+  "currentLocation": {
+    "museum": "Collection varies by reproduction source",
+    "city": "",
+    "country": "",
+    "latitude": null,
+    "longitude": null,
+    "galleryUrl": ""
+  },
+  "print": {
+    "spreadNumber": 2,
+    "chapter": "Impressionism and Post-Impressionism",
+    "imageTargetId": "target-002-van-gogh",
+    "imageTargetSource": "assets/paintings/van-gogh/van-gogh__Portrait.jpg",
+    "compiledMindTarget": "assets/targets/van-gogh.mind",
+    "qrUrl": "ar.html?painting=van-gogh"
+  },
+  "texts": {
+    "historicalContext": "Painted during Van Gogh's Paris period, this self-portrait shows the artist experimenting with vivid color contrasts, broken brushwork, and the lessons of Impressionism and Neo-Impressionism.",
+    "artistBiography": "Van Gogh used self-portraits as a practical and psychological laboratory. Unable to afford models consistently, he painted himself repeatedly, studying expression, color, identity, and the physical energy of brushwork.",
+    "artisticAnalysis": "The face is built from short, directional strokes that alternate warm reds, oranges, greens, and yellows. The blue-green background vibrates against the red beard, making the portrait feel both intimate and electrically alive.",
+    "symbolism": "The portrait presents the artist as both observer and subject. His direct gaze, exposed forehead, and restless surface suggest concentration, vulnerability, and artistic self-scrutiny.",
+    "composition": "The head turns slightly in three-quarter view, while the shoulders form a dark base. The gaze anchors the image, and the surrounding marks move like a charged atmosphere around the face.",
+    "palette": "Van Gogh uses complementary contrasts: red-orange hair and beard against blue-green surroundings, with touches of yellow, rose, teal, and dark violet-brown.",
+    "perspectiveTechnique": "The portrait relies less on academic modeling than on color structure and directional brushwork. Form is shaped by strokes that follow cheekbones, brow, beard, jacket, and background rhythm.",
+    "culturalSignificance": "Van Gogh's self-portraits became icons of modern artistic identity, linking visible brushwork with interior feeling and turning the artist's face into a record of perception itself.",
+    "influence": "The work anticipates Expressionism and later modern portraiture by making color, touch, and psychological intensity as important as likeness.",
+    "interestingFacts": [
+      "Van Gogh painted many self-portraits because he often could not pay models.",
+      "The red-green and orange-blue contrasts reflect his study of modern color theory in Paris.",
+      "The dense, short strokes show his transition toward the more expressive style of his later years."
+    ]
+  },
+  "timeline": [
+    {
+      "year": 1853,
+      "label": "Vincent van Gogh is born in Zundert, Netherlands.",
+      "type": "artist"
+    },
+    {
+      "year": 1886,
+      "label": "Van Gogh moves to Paris and encounters Impressionist and Neo-Impressionist painting.",
+      "type": "artist"
+    },
+    {
+      "year": 1887,
+      "label": "Van Gogh paints numerous self-portraits while experimenting with color and brushwork.",
+      "type": "artwork"
+    },
+    {
+      "year": 1888,
+      "label": "Van Gogh leaves Paris for Arles, where his color becomes even more intense.",
+      "type": "artist"
+    },
+    {
+      "year": 1890,
+      "label": "Van Gogh dies at age 37.",
+      "type": "artist"
+    }
+  ],
+  "hotspots": [
+    {
+      "id": "eyes",
+      "label": "Direct Gaze",
+      "position2D": [0.48, 0.34],
+      "position3D": [0, 0.22, 0.04],
+      "category": "psychology",
+      "body": "The eyes create a tense direct encounter with the viewer, turning the self-portrait into an act of observation and self-observation."
+    },
+    {
+      "id": "beard",
+      "label": "Complementary Color",
+      "position2D": [0.47, 0.56],
+      "position3D": [0, -0.02, 0.04],
+      "category": "color",
+      "body": "The orange-red beard vibrates against the blue-green background, using complementary contrast to intensify the portrait."
+    },
+    {
+      "id": "background",
+      "label": "Broken Brushwork",
+      "position2D": [0.24, 0.22],
+      "position3D": [-0.2, 0.28, 0.03],
+      "category": "brushstrokes",
+      "body": "The background is not passive; its short marks create movement and emotional pressure around the figure."
+    },
+    {
+      "id": "jacket",
+      "label": "Dark Structure",
+      "position2D": [0.61, 0.78],
+      "position3D": [0.14, -0.28, 0.04],
+      "category": "composition",
+      "body": "The dark jacket stabilizes the lower part of the image while repeating the same broken, directional brushwork seen in the face and background."
+    }
+  ],
+  "ar": {
+    "startMode": "painting-emergence",
+    "imageTarget": "assets/paintings/van-gogh/van-gogh__Portrait.jpg",
+    "compiledTarget": "assets/targets/van-gogh.mind",
+    "primaryModel": "assets/paintings/van-gogh/van-gogh__Portrait.glb",
+    "viewer": {
+      "initialScale": 0.42,
+      "initialRise": 0.18,
+      "modelRotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "availableModes": [
+      "painting-emergence",
+      "artist",
+      "history",
+      "hidden-details",
+      "brushstrokes",
+      "ask-guide"
+    ]
+  },
+  "media": {
+    "image": "assets/paintings/van-gogh/van-gogh__Portrait.jpg",
+    "model": "assets/paintings/van-gogh/van-gogh__Portrait.glb",
+    "audioGuides": [],
+    "videos": [],
+    "subtitles": [],
+    "signLanguage": [],
+    "imageCredits": []
+  },
+  "education": {
+    "ageBands": ["8-11", "12-15", "16-18", "university"],
+    "learningObjectives": [
+      "Explain complementary color contrast.",
+      "Describe Van Gogh's directional brushwork.",
+      "Discuss how self-portraiture can explore identity.",
+      "Compare Van Gogh's portrait technique with Leonardo's sfumato."
+    ],
+    "quiz": [
+      {
+        "question": "Which contrast gives the portrait much of its visual energy?",
+        "answers": ["Red-orange against blue-green", "Black against white", "Purple against yellow only", "Gold against silver"],
+        "correctAnswer": "Red-orange against blue-green"
+      }
+    ],
+    "vocabulary": ["Post-Impressionism", "self-portrait", "complementary colors", "broken brushwork", "directional stroke"],
+    "discussionPrompts": [
+      "How does the brushwork change the emotional tone of the face?",
+      "What is different about this portrait compared with the Mona Lisa?"
+    ]
+  },
+  "rights": {
+    "publicDomainStatus": "Artwork is public domain; reproduction and model rights must be verified for production use.",
+    "imageLicense": "User-provided project asset",
+    "assetRestrictions": "Confirm source and reproduction requirements before commercial publication.",
+    "creditLine": "Vincent van Gogh, Self-Portrait, 1887."
+  },
+  "references": [
+    "Standard Vincent van Gogh and Post-Impressionism scholarship",
+    "Technical art history studies on Van Gogh's Paris-period color and brushwork"
+  ]
+}

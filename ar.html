@@ -21,8 +21,8 @@
     <header class="hud top-hud">
       <a class="icon-link" href="index.html" aria-label="Back to book">Back</a>
       <div class="title-block">
-        <span>Spread 001</span>
-        <strong>Mona Lisa</strong>
+        <span id="spread-label">Spread 001</span>
+        <strong id="artwork-title">Mona Lisa</strong>
       </div>
       <div id="tracking-status" class="tracking-badge searching">Searching</div>
     </header>
@@ -31,7 +31,7 @@
       <button id="close-info" class="close-button" type="button" aria-label="Close information panel">x</button>
       <p class="panel-kicker" id="panel-kicker">Catalogue</p>
       <h1 id="panel-title">Mona Lisa</h1>
-      <p id="panel-body">Point your camera at the printed Mona Lisa target. When tracking locks, the 3D model will rise from the page.</p>
+      <p id="panel-body">Point your camera at the printed target. When tracking locks, the 3D model will rise from the page.</p>
     </aside>
 
     <nav class="hotspot-bar" aria-label="AR hotspots">
@@ -55,13 +55,13 @@
           <span class="camera-glyph" aria-hidden="true"></span>
           Start Camera
         </button>
-        <small class="version-note">WebAR viewer v10 - gesture controls</small>
+        <small class="version-note">WebAR viewer v11 - multi-painting</small>
         <pre id="error-details" class="error-details" hidden></pre>
         <a href="print-target.html">Open target image</a>
         <a href="camera-test.html">Test camera only</a>
       </div>
     </div>
 
-    <script type="module" src="scripts/ar-viewer.js?v=10"></script>
+    <script type="module" src="scripts/ar-viewer.js?v=11"></script>
   </body>
 </html>

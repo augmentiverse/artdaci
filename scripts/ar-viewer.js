@@ -3,9 +3,9 @@ import { GLTFLoader } from "../vendor/GLTFLoader.module.js";
 import { MindARThree } from "../vendor/mindar-image-three.prod.js";
 
 const CONFIG = {
-  target: "assets/targets/mona-lisa.mind",
-  model: "assets/paintings/mona-lisa/mona-lisa.glb",
-  manifest: "content/paintings/mona-lisa.json",
+  target: "",
+  model: "",
+  manifest: "",
   initialScale: 0.42,
   initialRise: 0.18,
   modelRotation: {
@@ -13,6 +13,11 @@ const CONFIG = {
     y: 0,
     z: 0
   }
+};
+
+const PAINTINGS = {
+  "mona-lisa": "content/paintings/mona-lisa.json",
+  "van-gogh": "content/paintings/van-gogh.json"
 };
 
 const state = {
@@ -50,9 +55,16 @@ const hotspotFallback = {
 };
 
 async function init() {
+  selectPainting();
   bindUI();
   await loadManifest();
   setStartupMessage("Ready. Tap Start Camera and allow camera access.");
+}
+
+function selectPainting() {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get("painting") || "mona-lisa";
+  CONFIG.manifest = PAINTINGS[slug] || PAINTINGS["mona-lisa"];
 }
 
 function bindUI() {
@@ -198,9 +210,59 @@ async function loadManifest() {
     const response = await fetch(CONFIG.manifest);
     state.manifest = await response.json();
     hotspotFallback.intro.body = state.manifest.texts.artisticAnalysis;
+    configureFromManifest(state.manifest);
+    updateInterfaceFromManifest(state.manifest);
+    renderHotspotButtons(state.manifest);
   } catch (error) {
     console.warn("Manifest could not be loaded. Using fallback copy.", error);
   }
+}
+
+function renderHotspotButtons(manifest) {
+  const bar = document.querySelector(".hotspot-bar");
+  const buttons = [
+    { id: "intro", label: "Intro" },
+    ...(manifest.hotspots || []).slice(0, 4).map((hotspot) => ({
+      id: hotspot.id,
+      label: hotspot.label
+    }))
+  ];
+
+  bar.innerHTML = "";
+  buttons.forEach((item, index) => {
+    const button = document.createElement("button");
+    button.className = `hotspot${index === 0 ? " active" : ""}`;
+    button.type = "button";
+    button.dataset.hotspot = item.id;
+    button.textContent = item.label;
+    button.addEventListener("click", () => {
+      document.querySelectorAll(".hotspot").forEach((node) => node.classList.remove("active"));
+      button.classList.add("active");
+      showHotspot(item.id);
+    });
+    bar.appendChild(button);
+  });
+}
+
+function configureFromManifest(manifest) {
+  CONFIG.target = manifest.ar?.compiledTarget || manifest.print?.compiledMindTarget || CONFIG.target;
+  CONFIG.model = manifest.ar?.primaryModel || manifest.media?.model || CONFIG.model;
+  CONFIG.initialScale = manifest.ar?.viewer?.initialScale ?? CONFIG.initialScale;
+  CONFIG.initialRise = manifest.ar?.viewer?.initialRise ?? CONFIG.initialRise;
+  CONFIG.modelRotation = manifest.ar?.viewer?.modelRotation || CONFIG.modelRotation;
+  state.targetScale = CONFIG.initialScale;
+  state.targetRise = CONFIG.initialRise;
+}
+
+function updateInterfaceFromManifest(manifest) {
+  const title = manifest.title || "Artwork";
+  const artist = manifest.artist?.name || "";
+  const spread = manifest.print?.spreadNumber ? `Spread ${String(manifest.print.spreadNumber).padStart(3, "0")}` : "Spread";
+  document.title = `DACIART WebAR Viewer - ${title}`;
+  document.getElementById("spread-label").textContent = spread;
+  document.getElementById("artwork-title").textContent = title;
+  document.getElementById("panel-title").textContent = title;
+  document.getElementById("panel-body").textContent = `Scan the printed ${artist ? `${artist} ` : ""}${title} target.`;
 }
 
 async function startAR() {
