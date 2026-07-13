@@ -3,6 +3,8 @@ import { GLTFLoader } from "../vendor/GLTFLoader.module.js";
 import { MindARThree } from "../vendor/mindar-image-three.prod.js";
 
 const CONFIG = {
+  slug: "mona-lisa",
+  lang: "en",
   target: "",
   model: "",
   video: "",
@@ -19,6 +21,138 @@ const CONFIG = {
 const PAINTINGS = {
   "mona-lisa": "content/paintings/mona-lisa.json",
   "van-gogh": "content/paintings/van-gogh.json"
+};
+
+const UI_TEXT = {
+  en: {
+    ready: "Ready. Tap Start Camera and allow camera access.",
+    starting: "Starting...",
+    startCamera: "Start Camera",
+    back: "Back",
+    searching: "Searching",
+    preparing: "Preparing WebAR",
+    audio: "Audio",
+    stop: "Stop",
+    video: "Video",
+    hideVideo: "Hide Video",
+    rotate: "Rotate",
+    reset: "Reset",
+    noVideoTitle: "No video",
+    noVideoBody: "This painting does not have a video layer yet.",
+    videoReadyTitle: "Video ready",
+    videoReadyBody: "Tap the Video button to play the Mona Lisa documentary layer.",
+    modelLoading: "Loading the 3D {title} model...",
+    trackingReady: "Tracking is ready. The 3D model is loading in the background.",
+    engineLoading: "Loading image target and preparing the AR engine...",
+    cameraRequest: "Requesting camera permission...",
+    modelErrorTitle: "Model could not load",
+    modelErrorBody: "The camera is running, but the 3D model file could not be loaded. Check the GLB path and file size.",
+    audioUnavailableTitle: "Audio unavailable",
+    audioUnavailableBody: "This browser does not support built-in speech narration.",
+    scanTarget: "Scan the printed {artist}{title} target.",
+    catalogue: "Catalogue",
+    intro: "Intro"
+  },
+  fr: {
+    ready: "Pret. Touchez Demarrer la camera et autorisez l'acces.",
+    starting: "Demarrage...",
+    startCamera: "Demarrer la camera",
+    back: "Retour",
+    searching: "Recherche",
+    preparing: "Preparation WebAR",
+    audio: "Audio",
+    stop: "Stop",
+    video: "Video",
+    hideVideo: "Masquer video",
+    rotate: "Rotation",
+    reset: "Reinitialiser",
+    noVideoTitle: "Aucune video",
+    noVideoBody: "Cette peinture n'a pas encore de couche video.",
+    videoReadyTitle: "Video prete",
+    videoReadyBody: "Touchez le bouton Video pour lancer la couche documentaire.",
+    modelLoading: "Chargement du modele 3D : {title}...",
+    trackingReady: "Le suivi est pret. Le modele 3D se charge en arriere-plan.",
+    engineLoading: "Chargement de la cible image et preparation du moteur AR...",
+    cameraRequest: "Demande d'autorisation camera...",
+    modelErrorTitle: "Le modele ne peut pas se charger",
+    modelErrorBody: "La camera fonctionne, mais le fichier 3D ne peut pas etre charge. Verifiez le chemin du GLB et la taille du fichier.",
+    audioUnavailableTitle: "Audio indisponible",
+    audioUnavailableBody: "Ce navigateur ne prend pas en charge la narration vocale integree.",
+    scanTarget: "Scannez l'image imprimee : {artist}{title}.",
+    catalogue: "Catalogue",
+    intro: "Intro"
+  }
+};
+
+const AR_TRANSLATIONS = {
+  fr: {
+    "mona-lisa": {
+      title: "Mona Lisa",
+      texts: {
+        historicalContext: "Peinte au debut du XVIe siecle, la Mona Lisa appartient a la periode de maturite de Leonard de Vinci et reflete l'interet de la Haute Renaissance pour le naturalisme idealise, la profondeur atmospherique et la vie interieure du modele.",
+        artisticAnalysis: "Le portrait repose sur une composition pyramidale calme, des transitions tres fines entre ombre et lumiere, et une expression enigmatique qui change selon que l'on observe les yeux, la bouche, les mains ou le paysage.",
+        composition: "Le modele est place dans une structure triangulaire stable. Les mains repliees forment la base, les epaules guident le regard vers le visage, et celui-ci devient le centre immobile d'un paysage en mouvement.",
+        palette: "La palette est retenue : carnations chaudes, bruns fumes, verts assourdis, lointains bleu-vert et glacis sombres qui creent la profondeur sans contours durs.",
+        perspectiveTechnique: "Leonard utilise le sfumato pour adoucir les transitions et la perspective atmospherique pour faire reculer le paysage. Les formes semblent ainsi flotter dans l'air.",
+        culturalSignificance: "La Mona Lisa est l'une des peintures les plus reconnues au monde et demeure une reference majeure pour le portrait, la culture museale et l'idee moderne de chef-d'oeuvre."
+      },
+      hotspots: {
+        smile: {
+          label: "Le sourire",
+          category: "detail cache",
+          body: "Le sourire semble changer car Leonard adoucit les bords de la bouche par le sfumato, laissant la vision peripherique et l'ombre modifier notre perception."
+        },
+        hands: {
+          label: "Les mains",
+          category: "composition",
+          body: "Les mains stabilisent la structure pyramidale du portrait et donnent a la figure une presence calme et digne."
+        },
+        landscape: {
+          label: "Le paysage",
+          category: "histoire",
+          body: "Le paysage utilise la perspective atmospherique et l'imagination geologique, reliant le modele aux etudes de Leonard sur l'eau, la roche et la nature."
+        },
+        sfumato: {
+          label: "Sfumato",
+          category: "technique",
+          body: "Le sfumato signifie un passage doux, presque fume. Leonard modele les formes par des transitions tonales tres subtiles plutot que par des contours nets."
+        }
+      }
+    },
+    "van-gogh": {
+      title: "Autoportrait",
+      texts: {
+        historicalContext: "Peint pendant les annees parisiennes de Van Gogh, cet autoportrait montre ses recherches sur les contrastes de couleur, la touche fragmentee et les lecons de l'impressionnisme et du neo-impressionnisme.",
+        artisticAnalysis: "Le visage est construit par de courtes touches directionnelles qui alternent rouges, oranges, verts et jaunes. Le fond bleu-vert vibre face a la barbe rousse et donne au portrait une intensite electrique.",
+        composition: "La tete est legerement tournee en trois quarts, tandis que le regard fixe le spectateur. Le veston sombre stabilise le bas de l'image et le fond actif fait pression autour de la figure.",
+        palette: "Van Gogh utilise des contrastes complementaires : cheveux et barbe rouge-orange contre un environnement bleu-vert, avec des touches de jaune, rose, turquoise et brun-violet.",
+        perspectiveTechnique: "Le portrait depend moins d'un modele academique que d'une structure de couleur et de touches directionnelles. La forme nait du mouvement de la peinture.",
+        culturalSignificance: "Les autoportraits de Van Gogh sont devenus des icones de l'identite artistique moderne, associant la touche visible a l'intensite interieure."
+      },
+      hotspots: {
+        eyes: {
+          label: "Le regard",
+          category: "psychologie",
+          body: "Les yeux creent une rencontre directe avec le spectateur et transforment l'autoportrait en acte d'observation de soi."
+        },
+        beard: {
+          label: "Couleurs complementaires",
+          category: "couleur",
+          body: "La barbe orange-rouge vibre contre le fond bleu-vert, intensifiant l'energie visuelle du portrait."
+        },
+        background: {
+          label: "Touches fragmentees",
+          category: "touche",
+          body: "Le fond n'est pas neutre : ses petites touches creent un mouvement qui entoure et charge la figure."
+        },
+        jacket: {
+          label: "Structure sombre",
+          category: "composition",
+          body: "Le veston sombre stabilise le bas de l'image tout en reprenant la meme energie de touche que le visage et le fond."
+        }
+      }
+    }
+  }
 };
 
 const state = {
@@ -63,14 +197,53 @@ const hotspotFallback = {
 async function init() {
   selectPainting();
   bindUI();
+  applyStaticLanguage();
   await loadManifest();
-  setStartupMessage("Ready. Tap Start Camera and allow camera access.");
+  setStartupMessage(t("ready"));
 }
 
 function selectPainting() {
   const params = new URLSearchParams(window.location.search);
   const slug = params.get("painting") || "mona-lisa";
-  CONFIG.manifest = PAINTINGS[slug] || PAINTINGS["mona-lisa"];
+  CONFIG.slug = PAINTINGS[slug] ? slug : "mona-lisa";
+  CONFIG.lang = params.get("lang") === "fr" ? "fr" : "en";
+  CONFIG.manifest = PAINTINGS[CONFIG.slug];
+}
+
+function t(key) {
+  return UI_TEXT[CONFIG.lang]?.[key] || UI_TEXT.en[key] || key;
+}
+
+function applyStaticLanguage() {
+  document.documentElement.lang = CONFIG.lang;
+  document.querySelector(".icon-link").textContent = t("back");
+  document.getElementById("tracking-status").textContent = t("searching");
+  document.querySelector("#loading-screen h1").textContent = t("preparing");
+  const startButton = document.getElementById("start-ar");
+  startButton.innerHTML = `<span class="camera-glyph" aria-hidden="true"></span>${t("startCamera")}`;
+  startButton.setAttribute("aria-label", t("startCamera"));
+  document.getElementById("audio-guide").textContent = t("audio");
+  document.getElementById("video-guide").textContent = t("video");
+  document.getElementById("toggle-spin").textContent = t("rotate");
+  document.getElementById("reset-view").textContent = t("reset");
+  document.getElementById("panel-kicker").textContent = t("catalogue");
+}
+
+function localizeManifest(manifest) {
+  const translation = AR_TRANSLATIONS[CONFIG.lang]?.[CONFIG.slug];
+  if (!translation) return manifest;
+
+  const localized = JSON.parse(JSON.stringify(manifest));
+  localized.title = translation.title || localized.title;
+  localized.texts = {
+    ...(localized.texts || {}),
+    ...(translation.texts || {})
+  };
+  localized.hotspots = (localized.hotspots || []).map((hotspot) => ({
+    ...hotspot,
+    ...(translation.hotspots?.[hotspot.id] || {})
+  }));
+  return localized;
 }
 
 function bindUI() {
@@ -78,7 +251,7 @@ function bindUI() {
     if (state.started) return;
     state.started = true;
     event.currentTarget.disabled = true;
-    event.currentTarget.textContent = "Starting...";
+    event.currentTarget.textContent = t("starting");
     await startAR();
   });
 
@@ -222,7 +395,7 @@ function getPointerDistance(first, second) {
 async function loadManifest() {
   try {
     const response = await fetch(CONFIG.manifest);
-    state.manifest = await response.json();
+    state.manifest = localizeManifest(await response.json());
     hotspotFallback.intro.body = state.manifest.texts.artisticAnalysis;
     configureFromManifest(state.manifest);
     updateInterfaceFromManifest(state.manifest);
@@ -235,7 +408,7 @@ async function loadManifest() {
 function renderHotspotButtons(manifest) {
   const bar = document.querySelector(".hotspot-bar");
   const buttons = [
-    { id: "intro", label: "Intro" },
+    { id: "intro", label: t("intro") },
     ...(manifest.hotspots || []).slice(0, 4).map((hotspot) => ({
       id: hotspot.id,
       label: hotspot.label
@@ -277,7 +450,9 @@ function updateInterfaceFromManifest(manifest) {
   document.getElementById("spread-label").textContent = spread;
   document.getElementById("artwork-title").textContent = title;
   document.getElementById("panel-title").textContent = title;
-  document.getElementById("panel-body").textContent = `Scan the printed ${artist ? `${artist} ` : ""}${title} target.`;
+  document.getElementById("panel-body").textContent = t("scanTarget")
+    .replace("{artist}", artist ? `${artist} ` : "")
+    .replace("{title}", title);
 }
 
 async function startAR() {
@@ -296,7 +471,7 @@ async function startAR() {
   }
 
   try {
-    setStartupMessage("Loading image target and preparing the AR engine...");
+    setStartupMessage(t("engineLoading"));
     state.clock = new THREE.Clock();
     const root = document.getElementById("ar-root");
 
@@ -334,7 +509,7 @@ async function startAR() {
       setTrackingStatus(true);
       showHotspot("intro");
       if (!state.modelLoaded) {
-        document.getElementById("panel-body").textContent = "Tracking is ready. The 3D model is loading in the background.";
+        document.getElementById("panel-body").textContent = t("trackingReady");
       }
     };
 
@@ -345,14 +520,14 @@ async function startAR() {
       }
     };
 
-    setStartupMessage("Requesting camera permission...");
+    setStartupMessage(t("cameraRequest"));
     await state.mindarThree.start();
     document.getElementById("loading-screen").classList.add("hidden");
     renderer.setAnimationLoop(() => renderFrame(renderer, scene, camera));
     loadModel(state.anchor.group).catch((error) => {
       console.error(error);
-      document.getElementById("panel-title").textContent = "Model could not load";
-      document.getElementById("panel-body").textContent = "The camera is running, but the 3D model file could not be loaded. Check the GLB path and file size.";
+      document.getElementById("panel-title").textContent = t("modelErrorTitle");
+      document.getElementById("panel-body").textContent = t("modelErrorBody");
       document.getElementById("info-panel").classList.remove("collapsed");
     });
     if (CONFIG.video) {
@@ -367,7 +542,7 @@ function addVideoLayer(group) {
   const button = document.getElementById("video-guide");
   button.disabled = false;
   button.classList.add("active");
-  button.textContent = "Hide Video";
+  button.textContent = t("hideVideo");
 
   const video = document.createElement("video");
   video.src = CONFIG.video;
@@ -403,8 +578,8 @@ function addVideoLayer(group) {
   state.videoVisible = true;
 
   video.play().catch(() => {
-    document.getElementById("panel-title").textContent = "Video ready";
-    document.getElementById("panel-body").textContent = "Tap the Video button to play the Mona Lisa documentary layer.";
+    document.getElementById("panel-title").textContent = t("videoReadyTitle");
+    document.getElementById("panel-body").textContent = t("videoReadyBody");
     document.getElementById("info-panel").classList.remove("collapsed");
   });
 }
@@ -413,8 +588,8 @@ function toggleVideoLayer() {
   const button = document.getElementById("video-guide");
 
   if (!CONFIG.video) {
-    document.getElementById("panel-title").textContent = "No video";
-    document.getElementById("panel-body").textContent = "This painting does not have a video layer yet.";
+    document.getElementById("panel-title").textContent = t("noVideoTitle");
+    document.getElementById("panel-body").textContent = t("noVideoBody");
     document.getElementById("info-panel").classList.remove("collapsed");
     return;
   }
@@ -430,10 +605,10 @@ function toggleVideoLayer() {
 
   if (state.videoVisible) {
     state.video?.play().catch(() => {});
-    button.textContent = "Hide Video";
+    button.textContent = t("hideVideo");
   } else {
     state.video?.pause();
-    button.textContent = "Video";
+    button.textContent = t("video");
   }
 }
 
@@ -461,7 +636,7 @@ async function preflightCamera() {
 
 async function loadModel(group) {
   const label = state.manifest?.title || "artwork";
-  document.getElementById("panel-body").textContent = `Loading the 3D ${label} model...`;
+  document.getElementById("panel-body").textContent = t("modelLoading").replace("{title}", label);
   const loader = new GLTFLoader();
 
   return new Promise((resolve, reject) => {
@@ -574,8 +749,8 @@ function toggleAudioGuide() {
   const button = document.getElementById("audio-guide");
 
   if (!("speechSynthesis" in window)) {
-    document.getElementById("panel-title").textContent = "Audio unavailable";
-    document.getElementById("panel-body").textContent = "This browser does not support built-in speech narration.";
+    document.getElementById("panel-title").textContent = t("audioUnavailableTitle");
+    document.getElementById("panel-body").textContent = t("audioUnavailableBody");
     document.getElementById("info-panel").classList.remove("collapsed");
     return;
   }
@@ -584,24 +759,25 @@ function toggleAudioGuide() {
     window.speechSynthesis.cancel();
     state.speaking = false;
     button.classList.remove("active");
-    button.textContent = "Audio";
+    button.textContent = t("audio");
     return;
   }
 
   const utterance = new SpeechSynthesisUtterance(getAudioGuideText());
+  utterance.lang = CONFIG.lang === "fr" ? "fr-FR" : "en-US";
   utterance.rate = 0.92;
   utterance.pitch = 1;
   utterance.onend = () => {
     state.speaking = false;
     button.classList.remove("active");
-    button.textContent = "Audio";
+    button.textContent = t("audio");
   };
 
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(utterance);
   state.speaking = true;
   button.classList.add("active");
-  button.textContent = "Stop";
+  button.textContent = t("stop");
 }
 
 function getAudioGuideText() {
