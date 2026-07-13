@@ -7,7 +7,12 @@ const CONFIG = {
   model: "assets/paintings/mona-lisa/mona-lisa.glb",
   manifest: "content/paintings/mona-lisa.json",
   initialScale: 0.42,
-  initialRise: 0.18
+  initialRise: 0.18,
+  modelRotation: {
+    x: 0,
+    y: 0,
+    z: 0
+  }
 };
 
 const state = {
@@ -17,6 +22,8 @@ const state = {
   fallbackPlane: null,
   spin: false,
   warmLight: false,
+  keepVisible: true,
+  targetFoundOnce: false,
   targetRise: CONFIG.initialRise,
   targetScale: CONFIG.initialScale,
   clock: null,
@@ -66,15 +73,25 @@ function bindUI() {
     updateLighting();
   });
 
+  document.getElementById("toggle-hold").addEventListener("click", (event) => {
+    state.keepVisible = !state.keepVisible;
+    event.currentTarget.classList.toggle("active", state.keepVisible);
+    if (state.anchor?.group && state.targetFoundOnce) {
+      state.anchor.group.visible = state.keepVisible;
+    }
+  });
+
   document.getElementById("reset-view").addEventListener("click", () => {
     state.spin = false;
     state.warmLight = false;
+    state.keepVisible = true;
     state.targetRise = CONFIG.initialRise;
     state.targetScale = CONFIG.initialScale;
     document.getElementById("scale-control").value = CONFIG.initialScale;
     document.getElementById("height-control").value = CONFIG.initialRise;
     document.getElementById("toggle-spin").classList.remove("active");
     document.getElementById("toggle-light").classList.remove("active");
+    document.getElementById("toggle-hold").classList.add("active");
     updateLighting();
   });
 
@@ -153,6 +170,7 @@ async function startAR() {
     addFallbackPainting(state.anchor.group);
 
     state.anchor.onTargetFound = () => {
+      state.targetFoundOnce = true;
       state.anchor.group.visible = true;
       setTrackingStatus(true);
       showHotspot("intro");
@@ -160,6 +178,9 @@ async function startAR() {
 
     state.anchor.onTargetLost = () => {
       setTrackingStatus(false);
+      if (state.keepVisible && state.targetFoundOnce) {
+        state.anchor.group.visible = true;
+      }
     };
 
     setStartupMessage("Requesting camera permission...");
@@ -248,7 +269,7 @@ async function loadModel(group) {
         state.model.name = "mona-lisa-model";
         state.model.scale.setScalar(CONFIG.initialScale);
         state.model.position.set(0, 0, 0);
-        state.model.rotation.set(Math.PI / 2, 0, 0);
+        state.model.rotation.set(CONFIG.modelRotation.x, CONFIG.modelRotation.y, CONFIG.modelRotation.z);
 
         state.model.traverse((child) => {
           if (!child.isMesh) return;
@@ -274,6 +295,10 @@ async function loadModel(group) {
 
 function renderFrame(renderer, scene, camera) {
   const delta = state.clock ? state.clock.getDelta() : 0;
+
+  if (state.anchor?.group && state.keepVisible && state.targetFoundOnce) {
+    state.anchor.group.visible = true;
+  }
 
   if (state.model) {
     state.model.scale.lerp(new THREE.Vector3(state.targetScale, state.targetScale, state.targetScale), 0.12);

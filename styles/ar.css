@@ -108,10 +108,12 @@ body {
 }
 
 .info-panel {
-  top: 88px;
+  top: 82px;
   left: 16px;
-  width: min(390px, calc(100vw - 32px));
-  padding: 18px;
+  width: min(280px, calc(100vw - 32px));
+  max-height: 178px;
+  overflow: auto;
+  padding: 11px 12px;
   transform: translateY(0);
   transition: transform 0.25s ease, opacity 0.25s ease;
 }
@@ -124,10 +126,10 @@ body {
 
 .close-button {
   position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 30px;
-  height: 30px;
+  top: 6px;
+  right: 6px;
+  width: 24px;
+  height: 24px;
   border: 1px solid var(--line);
   color: var(--text);
   background: transparent;
@@ -135,9 +137,9 @@ body {
 }
 
 .panel-kicker {
-  margin: 0 0 8px;
+  margin: 0 28px 5px 0;
   color: var(--gold);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -146,22 +148,22 @@ body {
 .info-panel h1 {
   margin: 0;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 32px;
+  font-size: 21px;
   font-weight: 500;
 }
 
 .info-panel p:last-child {
-  margin: 10px 0 0;
+  margin: 6px 0 0;
   color: var(--muted);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 17px;
-  line-height: 1.45;
+  font-size: 13px;
+  line-height: 1.32;
 }
 
 .hotspot-bar {
   left: 50%;
-  bottom: 142px;
-  width: min(720px, calc(100vw - 24px));
+  bottom: 128px;
+  width: min(620px, calc(100vw - 24px));
   transform: translateX(-50%);
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -171,11 +173,12 @@ body {
 
 .hotspot-bar button,
 .button-row button {
-  min-height: 38px;
+  min-height: 32px;
   border: 1px solid var(--line);
   color: var(--text);
   background: rgba(255, 255, 255, 0.06);
   cursor: pointer;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -187,9 +190,9 @@ body {
 .control-dock {
   left: 50%;
   bottom: 16px;
-  width: min(720px, calc(100vw - 24px));
+  width: min(620px, calc(100vw - 24px));
   transform: translateX(-50%);
-  padding: 12px;
+  padding: 9px;
 }
 
 .control-row {
@@ -197,7 +200,7 @@ body {
   grid-template-columns: 52px 1fr;
   gap: 12px;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
 }
 
 .control-row label {
@@ -213,7 +216,7 @@ body {
 
 .button-row {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
 }
 
@@ -343,7 +346,7 @@ body {
   }
 
   .hotspot-bar {
-    bottom: 164px;
+    bottom: 172px;
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
