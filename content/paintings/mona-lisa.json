@@ -153,11 +153,11 @@
     "model": "assets/paintings/mona-lisa/mona-lisa.glb",
     "audioGuides": [
       {
-        "id": "mona-lisa-recorded-guide",
-        "title": "Mona Lisa recorded audio guide",
-        "src": "assets/paintings/mona-lisa/mona-lisa.mp3",
-        "type": "audio/mpeg",
-        "description": "Recorded narration for the Mona Lisa AR experience."
+        "id": "joconde-audio-presentation",
+        "title": "Presentation audio de La Joconde",
+        "src": "assets/paintings/mona-lisa/joconde.m4a",
+        "type": "audio/mp4",
+        "description": "Audio presentation for the Mona Lisa AR experience."
       }
     ],
     "videos": [

@@ -405,7 +405,7 @@ function handleTwoFingerGesture() {
     }
 
     if (state.lastTwoFingerY > 0) {
-      state.videoTargetPosition.x = clamp(state.videoTargetPosition.x + (midX - state.lastTwoFingerX) * 0.0022, -0.85, 0.95);
+      state.videoTargetPosition.x = clamp(state.videoTargetPosition.x + (midX - state.lastTwoFingerX) * 0.0022, -1.1, 1.35);
       state.videoTargetPosition.y = clamp(state.videoTargetPosition.y - (midY - state.lastTwoFingerY) * 0.0022, -0.55, 0.55);
     }
 
@@ -452,12 +452,12 @@ function moveVideoWithPointer(event) {
   const deltaY = event.clientY - state.lastPointerY;
   state.lastPointerX = event.clientX;
   state.lastPointerY = event.clientY;
-  state.videoTargetPosition.x = clamp(state.videoTargetPosition.x + deltaX * 0.0022, -0.85, 0.95);
+  state.videoTargetPosition.x = clamp(state.videoTargetPosition.x + deltaX * 0.0022, -1.1, 1.35);
   state.videoTargetPosition.y = clamp(state.videoTargetPosition.y - deltaY * 0.0022, -0.55, 0.55);
 }
 
 function resetVideoTransform() {
-  state.videoTargetPosition.x = CONFIG.slug === "mona-lisa" ? 0.62 : 0.58;
+  state.videoTargetPosition.x = CONFIG.slug === "mona-lisa" ? 1.06 : 0.86;
   state.videoTargetPosition.y = 0.02;
   state.videoTargetPosition.z = CONFIG.initialRise + 0.16;
   state.videoTargetScale = 1;
