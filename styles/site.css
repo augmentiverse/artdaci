@@ -445,6 +445,54 @@ figcaption strong {
   margin: 14px 8px 0 0;
 }
 
+.qr-strip {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.qr-card {
+  display: grid;
+  grid-template-columns: 82px 1fr;
+  gap: 10px;
+  align-items: center;
+  border: 1px solid var(--line);
+  background: #fffaf1;
+  padding: 9px;
+}
+
+.qr-card img {
+  width: 82px;
+  height: 82px;
+  image-rendering: crisp-edges;
+}
+
+.qr-card strong {
+  display: block;
+  font-size: 13px;
+}
+
+.qr-card span {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.index-qr {
+  max-width: 1320px;
+  margin: 30px auto 0;
+  padding: clamp(22px, 4vw, 42px) clamp(24px, 4vw, 52px);
+  border: 1px solid #6f6254;
+  background: var(--paper);
+}
+
+.index-qr .qr-strip {
+  max-width: 620px;
+}
+
 @media (max-width: 860px) {
   .book-hero,
   .spread-preview,
@@ -477,6 +525,7 @@ figcaption strong {
 
   .catalogue-grid,
   .catalogue-meta,
+  .qr-strip,
   .timeline-strip ol {
     grid-template-columns: 1fr;
   }
