@@ -6,6 +6,7 @@
   --line: #d9cbbb;
   --accent: #8e2435;
   --dark: #171310;
+  --gold: #c7a45d;
 }
 
 * {
@@ -109,6 +110,7 @@ model-viewer {
   font-size: 14px;
   background: transparent;
   cursor: pointer;
+  border-radius: 0;
 }
 
 .button.primary {
@@ -116,11 +118,41 @@ model-viewer {
   color: #fffaf1;
 }
 
+.button:hover,
+.button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.button.primary:hover,
+.button.primary:focus-visible,
+.ar-button:hover,
+.ar-button:focus-visible {
+  background: var(--gold);
+  border-color: #6f4e12;
+  color: #171310;
+}
+
 .ar-button {
   position: absolute;
   left: 50%;
   bottom: 22px;
   transform: translateX(-50%);
+  min-width: 190px;
+  border: 2px solid #6f4e12;
+  background: var(--gold);
+  color: #171310;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+  font-weight: 800;
+}
+
+.ar-button:active,
+.button.primary:active {
+  transform: translateY(1px);
+}
+
+.ar-button:active {
+  transform: translateX(-50%) translateY(1px);
 }
 
 .note {
