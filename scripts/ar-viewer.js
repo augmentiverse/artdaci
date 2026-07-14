@@ -50,6 +50,7 @@ const UI_TEXT = {
     modelErrorBody: "The camera is running, but the 3D model file could not be loaded. Check the GLB path and file size.",
     audioUnavailableTitle: "Audio unavailable",
     audioUnavailableBody: "This browser does not support built-in speech narration.",
+    audioLoadErrorBody: "The recorded audio could not be loaded. Check that the audio file was uploaded with the site.",
     scanTarget: "Scan the printed {artist}{title} target.",
     catalogue: "Catalogue",
     intro: "Intro"
@@ -79,6 +80,7 @@ const UI_TEXT = {
     modelErrorBody: "La camera fonctionne, mais le fichier 3D ne peut pas etre charge. Verifiez le chemin du GLB et la taille du fichier.",
     audioUnavailableTitle: "Audio indisponible",
     audioUnavailableBody: "Ce navigateur ne prend pas en charge la narration vocale integree.",
+    audioLoadErrorBody: "Le fichier audio enregistre ne peut pas etre charge. Verifiez que le fichier audio a bien ete publie avec le site.",
     scanTarget: "Scannez l'image imprimee : {artist}{title}.",
     catalogue: "Catalogue",
     intro: "Intro"
@@ -890,6 +892,15 @@ function ensureNativeAudioGuide() {
   const audio = new Audio(CONFIG.audio);
   audio.preload = "auto";
   audio.playsInline = true;
+  audio.addEventListener("error", () => {
+    state.speaking = false;
+    const button = document.getElementById("audio-guide");
+    button.classList.remove("active");
+    button.textContent = t("audio");
+    document.getElementById("panel-title").textContent = t("audioUnavailableTitle");
+    document.getElementById("panel-body").textContent = t("audioLoadErrorBody");
+    document.getElementById("info-panel").classList.remove("collapsed");
+  });
   audio.addEventListener("ended", () => {
     state.speaking = false;
     const button = document.getElementById("audio-guide");

@@ -164,8 +164,8 @@
         "id": "mona-lisa-audio-fr",
         "lang": "fr",
         "title": "Presentation audio de La Joconde",
-        "src": "assets/paintings/mona-lisa/mona-lisa-fr.m4a",
-        "type": "audio/mp4",
+        "src": "assets/paintings/mona-lisa/mona-lisa-fr.mp3",
+        "type": "audio/mpeg",
         "description": "Presentation audio francaise pour l'experience AR de la Joconde."
       }
     ],
