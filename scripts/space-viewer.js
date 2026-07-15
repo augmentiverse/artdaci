@@ -10,6 +10,8 @@ const COPY = {
     kicker: "Room Placement",
     loading: "Loading model...",
     ready: "Model ready. Tap Place in My Space to position it in your room.",
+    readyWithUsdz: "Model ready. Tap Place in My Space. iPhone/iPad will use USDZ; Android will use Scene Viewer.",
+    readyWithoutUsdz: "Model ready. Android and WebXR-compatible devices can use spatial AR. iPhone/iPad needs a USDZ file for this artwork.",
     place: "Place in My Space",
     imageAr: "Image AR",
     printedPage: "Printed Page",
@@ -22,6 +24,8 @@ const COPY = {
     kicker: "Placement dans l'espace",
     loading: "Chargement du modele...",
     ready: "Modele pret. Touchez Placer dans mon espace pour le positionner dans votre piece.",
+    readyWithUsdz: "Modele pret. Touchez Placer dans mon espace. iPhone/iPad utilisera USDZ; Android utilisera Scene Viewer.",
+    readyWithoutUsdz: "Modele pret. Android et les appareils WebXR compatibles peuvent utiliser l'AR spatiale. iPhone/iPad necessite un fichier USDZ pour cette oeuvre.",
     place: "Placer dans mon espace",
     imageAr: "AR sur image",
     printedPage: "Page imprimee",
@@ -79,6 +83,7 @@ function applyStaticCopy() {
 
 function configureViewer(manifest) {
   const model = document.getElementById("space-model");
+  const arButton = document.getElementById("ar-button");
   const title = manifest.title || "Artwork";
   const src = manifest.ar?.primaryModel || manifest.media?.model;
   const poster = manifest.media?.image || manifest.print?.imageTargetSource;
@@ -86,20 +91,21 @@ function configureViewer(manifest) {
 
   document.title = `DACIART - ${title} - ${COPY[lang].kicker}`;
   document.getElementById("space-title").textContent = lang === "fr" && slug === "van-gogh-bedroom" ? "La Chambre" : title;
-  document.getElementById("space-status").textContent = COPY[lang].ready;
 
   model.src = src;
   model.alt = `${title} 3D model`;
   if (poster) model.poster = poster;
   if (usdz) {
     model.setAttribute("ios-src", usdz);
+    document.getElementById("space-status").textContent = COPY[lang].readyWithUsdz;
   } else {
     document.getElementById("ios-note").hidden = false;
+    document.getElementById("space-status").textContent = COPY[lang].readyWithoutUsdz;
   }
 
   document.getElementById("image-ar-link").href = `ar.html?painting=${slug}&lang=${lang}`;
   document.getElementById("print-link").href = PRINT_PAGES[lang]?.[slug] || "index.html";
-  document.getElementById("ar-button").addEventListener("click", (event) => {
+  arButton.addEventListener("click", (event) => {
     event.preventDefault();
     if (typeof model.activateAR === "function") {
       model.activateAR();

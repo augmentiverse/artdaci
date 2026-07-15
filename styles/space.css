@@ -142,10 +142,6 @@ model-viewer {
 }
 
 .ar-button {
-  position: absolute;
-  left: 50%;
-  bottom: 22px;
-  transform: translateX(-50%);
   min-width: 190px;
   border: 2px solid #6f4e12;
   background: var(--gold);
@@ -154,13 +150,8 @@ model-viewer {
   font-weight: 800;
 }
 
-.ar-button:active,
 .button.primary:active {
   transform: translateY(1px);
-}
-
-.ar-button:active {
-  transform: translateX(-50%) translateY(1px);
 }
 
 .note {
