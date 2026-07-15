@@ -279,7 +279,7 @@ function applyStaticLanguage() {
   document.getElementById("toggle-spin").textContent = t("rotate");
   document.getElementById("reset-view").textContent = t("reset");
   document.getElementById("space-link").textContent = t("space");
-  document.getElementById("space-link").href = `space.html?painting=${CONFIG.slug}&lang=${CONFIG.lang}&v=9`;
+  document.getElementById("space-link").href = `space.html?painting=${CONFIG.slug}&lang=${CONFIG.lang}&v=10`;
   document.getElementById("panel-kicker").textContent = t("catalogue");
 }
 
