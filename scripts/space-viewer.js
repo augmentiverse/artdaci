@@ -99,6 +99,14 @@ function configureViewer(manifest) {
 
   document.getElementById("image-ar-link").href = `ar.html?painting=${slug}&lang=${lang}`;
   document.getElementById("print-link").href = PRINT_PAGES[lang]?.[slug] || "index.html";
+  document.getElementById("ar-button").addEventListener("click", (event) => {
+    event.preventDefault();
+    if (typeof model.activateAR === "function") {
+      model.activateAR();
+    } else {
+      document.getElementById("space-status").textContent = COPY[lang].unsupported;
+    }
+  });
   model.addEventListener("ar-status", (event) => {
     if (event.detail.status === "failed") {
       document.getElementById("space-status").textContent = COPY[lang].unsupported;
