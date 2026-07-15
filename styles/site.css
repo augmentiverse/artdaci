@@ -154,6 +154,61 @@ h2 {
   border: 1px solid #6f6254;
 }
 
+.atlas-callout {
+  max-width: 1320px;
+  margin: 0 auto 30px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(340px, 1.08fr);
+  gap: clamp(22px, 4vw, 42px);
+  padding: clamp(26px, 4vw, 52px);
+  color: #fffaf1;
+  background: #2d261f;
+  border: 1px solid #6f6254;
+}
+
+.atlas-callout h2 {
+  max-width: 780px;
+  font-size: clamp(34px, 5vw, 68px);
+  line-height: 0.98;
+}
+
+.atlas-callout p {
+  max-width: 760px;
+  margin: 20px 0 0;
+  color: #e6d8c4;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(18px, 2vw, 23px);
+  line-height: 1.48;
+}
+
+.atlas-pillars {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.atlas-pillars article {
+  min-height: 154px;
+  padding: 18px;
+  border: 1px solid rgba(255, 250, 241, 0.24);
+  background: rgba(255, 250, 241, 0.06);
+}
+
+.atlas-pillars strong {
+  display: block;
+  margin-bottom: 10px;
+  color: #d2ad61;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.atlas-pillars span {
+  color: #eadfce;
+  font-size: 15px;
+  line-height: 1.46;
+}
+
 .section-heading {
   padding: clamp(24px, 4vw, 52px);
   border-bottom: 1px solid var(--line);
@@ -596,6 +651,7 @@ figcaption strong {
 @media (max-width: 860px) {
   .book-hero,
   .spread-preview,
+  .atlas-callout,
   .catalogue-spread {
     grid-template-columns: 1fr;
   }
@@ -625,6 +681,7 @@ figcaption strong {
 
   .catalogue-grid,
   .catalogue-meta,
+  .atlas-pillars,
   .concept-grid,
   .mode-grid,
   .qr-strip,
