@@ -11,6 +11,7 @@ const COPY = {
     loading: "Loading model...",
     ready: "Model ready. Tap Place in My Space to position it in your room.",
     place: "Place in My Space",
+    iphonePlace: "Open iPhone AR",
     imageAr: "Image AR",
     printedPage: "Printed Page",
     unsupported: "This browser can preview the 3D model, but may not support room-scale AR placement.",
@@ -23,6 +24,7 @@ const COPY = {
     loading: "Chargement du modele...",
     ready: "Modele pret. Touchez Placer dans mon espace pour le positionner dans votre piece.",
     place: "Placer dans mon espace",
+    iphonePlace: "Ouvrir l'AR iPhone",
     imageAr: "AR sur image",
     printedPage: "Page imprimee",
     unsupported: "Ce navigateur peut afficher le modele 3D, mais il peut ne pas prendre en charge le placement AR dans l'espace.",
@@ -73,6 +75,7 @@ function applyStaticCopy() {
   document.getElementById("space-status").textContent = text.loading;
   document.getElementById("open-ar").textContent = text.place;
   document.getElementById("ar-button").textContent = text.place;
+  document.querySelector("#quick-look-link span").textContent = text.iphonePlace;
   document.getElementById("image-ar-link").textContent = text.imageAr;
   document.getElementById("print-link").textContent = text.printedPage;
   document.getElementById("ios-note").textContent = text.iosNote;
@@ -94,6 +97,11 @@ function configureViewer(manifest) {
   if (poster) model.poster = poster;
   if (usdz) {
     model.setAttribute("ios-src", usdz);
+    const quickLookLink = document.getElementById("quick-look-link");
+    quickLookLink.href = usdz;
+    quickLookLink.hidden = false;
+    const thumb = document.getElementById("quick-look-thumb");
+    if (poster) thumb.src = poster;
   } else {
     document.getElementById("ios-note").hidden = false;
   }
