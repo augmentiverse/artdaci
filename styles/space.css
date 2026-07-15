@@ -88,9 +88,6 @@ model-viewer {
 }
 
 .space-panel {
-  position: sticky;
-  bottom: 0;
-  z-index: 20;
   padding: clamp(18px, 3vw, 28px);
 }
 
@@ -121,8 +118,7 @@ model-viewer {
   color: #fffaf1;
 }
 
-.quick-look-link img,
-.ar-button img {
+.quick-look-link img {
   width: 1px;
   height: 1px;
   opacity: 0;
@@ -146,6 +142,10 @@ model-viewer {
 }
 
 .ar-button {
+  position: absolute;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
   min-width: 190px;
   border: 2px solid #6f4e12;
   background: var(--gold);
@@ -154,8 +154,13 @@ model-viewer {
   font-weight: 800;
 }
 
+.ar-button:active,
 .button.primary:active {
   transform: translateY(1px);
+}
+
+.ar-button:active {
+  transform: translateX(-50%) translateY(1px);
 }
 
 .note {
@@ -174,20 +179,6 @@ model-viewer {
 
   model-viewer {
     min-height: 340px;
-    height: 52vh;
-  }
-
-  .space-panel {
-    box-shadow: 0 -16px 36px rgba(0, 0, 0, 0.28);
-  }
-
-  .actions {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-
-  .ar-button {
-    min-height: 52px;
-    font-size: 16px;
+    height: 58vh;
   }
 }

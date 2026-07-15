@@ -29,15 +29,13 @@
         shadow-intensity="0.65"
         exposure="1"
         loading="eager"
-        reveal="auto"></model-viewer>
+        reveal="auto">
+        <button id="ar-button" class="button primary ar-button" slot="ar-button" type="button">Place in My Space</button>
+      </model-viewer>
 
       <section class="space-panel" aria-live="polite">
         <p id="space-status">Loading model...</p>
         <div class="actions">
-          <a id="ar-button" class="button primary ar-button" href="#" rel="ar">
-            <img id="ar-button-thumb" alt="" />
-            <span>Place in My Space</span>
-          </a>
           <a id="image-ar-link" class="button" href="ar.html">Image AR</a>
           <a id="print-link" class="button" href="index.html">Printed Page</a>
         </div>
@@ -45,6 +43,6 @@
       </section>
     </main>
 
-    <script type="module" src="scripts/space-viewer.js?v=7"></script>
+    <script type="module" src="scripts/space-viewer.js?v=8"></script>
   </body>
 </html>
