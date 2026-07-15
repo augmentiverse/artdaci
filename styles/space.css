@@ -88,6 +88,9 @@ model-viewer {
 }
 
 .space-panel {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
   padding: clamp(18px, 3vw, 28px);
 }
 
@@ -118,7 +121,8 @@ model-viewer {
   color: #fffaf1;
 }
 
-.quick-look-link img {
+.quick-look-link img,
+.ar-button img {
   width: 1px;
   height: 1px;
   opacity: 0;
@@ -170,6 +174,20 @@ model-viewer {
 
   model-viewer {
     min-height: 340px;
-    height: 58vh;
+    height: 52vh;
+  }
+
+  .space-panel {
+    box-shadow: 0 -16px 36px rgba(0, 0, 0, 0.28);
+  }
+
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .ar-button {
+    min-height: 52px;
+    font-size: 16px;
   }
 }

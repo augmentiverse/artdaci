@@ -75,7 +75,7 @@ function applyStaticCopy() {
   document.getElementById("space-kicker").textContent = text.kicker;
   document.getElementById("space-copy").textContent = text.intro;
   document.getElementById("space-status").textContent = text.loading;
-  document.getElementById("ar-button").textContent = text.place;
+  document.querySelector("#ar-button span").textContent = text.place;
   document.getElementById("image-ar-link").textContent = text.imageAr;
   document.getElementById("print-link").textContent = text.printedPage;
   document.getElementById("ios-note").textContent = text.iosNote;
@@ -95,10 +95,14 @@ function configureViewer(manifest) {
   model.src = src;
   model.alt = `${title} 3D model`;
   if (poster) model.poster = poster;
+  const arThumb = document.getElementById("ar-button-thumb");
+  if (poster) arThumb.src = poster;
   if (usdz) {
     model.setAttribute("ios-src", usdz);
+    arButton.href = usdz;
     document.getElementById("space-status").textContent = COPY[lang].readyWithUsdz;
   } else {
+    arButton.href = "#";
     document.getElementById("ios-note").hidden = false;
     document.getElementById("space-status").textContent = COPY[lang].readyWithoutUsdz;
   }
@@ -106,6 +110,9 @@ function configureViewer(manifest) {
   document.getElementById("image-ar-link").href = `ar.html?painting=${slug}&lang=${lang}`;
   document.getElementById("print-link").href = PRINT_PAGES[lang]?.[slug] || "index.html";
   arButton.addEventListener("click", (event) => {
+    if (isLikelyAppleDevice() && usdz) {
+      return;
+    }
     event.preventDefault();
     if (typeof model.activateAR === "function") {
       model.activateAR();
@@ -118,4 +125,8 @@ function configureViewer(manifest) {
       document.getElementById("space-status").textContent = COPY[lang].unsupported;
     }
   });
+}
+
+function isLikelyAppleDevice() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 }
