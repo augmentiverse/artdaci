@@ -11,7 +11,7 @@
     "bioShort": "Vincent van Gogh was a Dutch Post-Impressionist painter whose expressive color, visible brushwork, and emotional directness transformed modern art.",
     "bioLong": "Vincent van Gogh developed one of the most recognizable visual languages of modern painting. In Arles he sought an art of clarity, feeling, and intense color, using everyday subjects to express inner states and the promise of a new artistic life."
   },
-  "date": "1888",
+  "date": "October 1888",
   "movement": ["Post-Impressionism"],
   "medium": "Oil on canvas",
   "dimensions": {
@@ -35,19 +35,21 @@
     "qrUrl": "ar.html?painting=van-gogh-bedroom"
   },
   "texts": {
-    "historicalContext": "Van Gogh painted The Bedroom in Arles in 1888, shortly after moving into the Yellow House. The room was meant to represent rest, stability, and the possibility of an artist's home in the south of France.",
-    "artistBiography": "During his Arles period, Van Gogh hoped to build a studio community and create a new art based on strong color, simplified form, and emotional sincerity. His bedroom became a personal subject: ordinary, intimate, and charged with feeling.",
-    "artisticAnalysis": "The painting transforms a simple room into a vivid psychological space. Furniture tilts forward, walls lean, and strong outlines hold bright colors in place. The result feels both welcoming and unstable.",
-    "symbolism": "The bed, chairs, portraits, towels, and window suggest privacy, friendship, hygiene, rest, and artistic identity. The empty chairs also imply absence and expectation.",
-    "composition": "The floorboards pull the eye into the room, while the bed dominates the right side. The chairs, table, pictures, and window create a rhythm of rectangles that makes the room feel carefully staged.",
-    "palette": "Van Gogh uses flat areas of blue, lavender, yellow, orange, green, and red. He described the color as intended to suggest rest, but the contrasts make the room visually alive.",
-    "perspectiveTechnique": "The perspective is deliberately simplified and distorted. Instead of academic accuracy, Van Gogh uses tilted lines and flattened color to make the room expressive.",
-    "culturalSignificance": "The Bedroom is one of Van Gogh's most beloved images because it turns a private interior into a portrait of longing, shelter, and artistic hope.",
-    "influence": "The painting influenced later modern artists by showing that interior space could be emotional, symbolic, and structurally expressive rather than merely descriptive.",
+    "historicalContext": "In February 1888, Van Gogh left the intensity of Paris for Arles, searching for the bright southern light that reminded him of Japanese prints. In September he rented the Yellow House on Place Lamartine and dreamed of founding a community of artists, the Studio of the South, with Paul Gauguin as its leading figure. Painted in October 1888, just before Gauguin's arrival, The Bedroom represents Van Gogh's private room as a refuge, a psychological sanctuary of order, peace, and domestic security.",
+    "artistBiography": "During his Arles period, Van Gogh hoped to build a studio community and create a new art based on strong color, simplified form, and emotional sincerity. His own bedroom became more than a place to sleep: it became a self-portrait without a body, a modest interior charged with longing for friendship, rest, and stability.",
+    "artisticAnalysis": "The painting is immediately striking because of its distorted perspective and forced recession lines. The walls appear to tilt inward, making the room feel almost claustrophobic and yet strangely welcoming. Van Gogh does not apply classical geometric perspective; he uses oblique angles to give the space a subjective and emotional character.",
+    "symbolism": "The room is a theatre of intimacy. The bed, chairs, portraits, towels, bottles, table, mirror, and closed window describe a modest daily life while also suggesting privacy, friendship, order, cleanliness, absence, and the desire for companionship.",
+    "composition": "The floorboards pull the eye toward the rear wall, while the bed dominates the right side like a block of yellow stability. The chairs, table, portraits, mirror, and window create a rhythm of paired rectangles, turning the room into a carefully staged emotional interior.",
+    "palette": "Van Gogh frees color from purely descriptive duty. Pale violet-blue walls, muted red-brown floorboards, golden yellow furniture, pale green bedding, orange furniture, blue washing basin, and the red blanket form vibrant complementary harmonies intended to express rest while remaining visually charged.",
+    "perspectiveTechnique": "The perspective is deliberately simplified and distorted. The dressing table and straw chairs seem to float or lean toward the viewer. Instead of academic accuracy, Van Gogh uses tilted lines, compressed depth, and thick impasto to make the room expressive.",
+    "culturalSignificance": "The Bedroom is one of Van Gogh's most beloved images because it turns a private interior into a portrait of longing, shelter, and artistic hope. It shows that an empty room can carry as much psychological force as a human face.",
+    "influence": "With this work Van Gogh takes a major step toward modern Expressionism. The painting no longer tries to copy external reality faithfully; it projects the artist's inner state onto objects. Its spatial distortions and heightened colors later influenced French Fauvism and German Expressionism.",
     "interestingFacts": [
       "Van Gogh made three versions of The Bedroom.",
       "The room shown is his bedroom in the Yellow House in Arles.",
-      "He wrote to Theo that the color should suggest rest and sleep."
+      "The Amsterdam version was damaged by flooding while Van Gogh was hospitalized.",
+      "In a letter to Theo, Van Gogh explained that he wanted the colors to express absolute rest.",
+      "The yellow straw chairs relate to the same modest furniture celebrated in Van Gogh's Chair."
     ]
   },
   "timeline": [
@@ -63,7 +65,12 @@
     },
     {
       "year": 1888,
-      "label": "He paints The Bedroom as an image of his private room and hoped-for stability.",
+      "label": "In September, he rents the Yellow House on Place Lamartine and imagines the Studio of the South.",
+      "type": "artist"
+    },
+    {
+      "year": 1888,
+      "label": "In October, he paints The Bedroom shortly before Gauguin's arrival.",
       "type": "artwork"
     },
     {
@@ -100,7 +107,7 @@
       "position2D": [0.72, 0.16],
       "position3D": [0.22, 0.3, 0.03],
       "category": "artist",
-      "body": "The small pictures on the wall refer to Van Gogh's artistic world and make the bedroom feel like a personal studio interior."
+      "body": "The portraits above the bed introduce human presence into a solitary space. They are usually associated with Van Gogh's friends in Arles, including Eugene Boch and Paul-Eugene Milliet."
     },
     {
       "id": "perspective",
@@ -109,6 +116,22 @@
       "position3D": [0, -0.24, 0.04],
       "category": "technique",
       "body": "The floor and furniture do not follow strict academic perspective. Their tilt gives the room emotional pressure and immediacy."
+    },
+    {
+      "id": "mirror",
+      "label": "Empty Mirror",
+      "position2D": [0.1, 0.24],
+      "position3D": [-0.34, 0.18, 0.03],
+      "category": "observation",
+      "body": "The mirror hanging beside the window reflects no clear element of the room. Its pale emptiness intensifies the sense of solitude and the artist's physical absence."
+    },
+    {
+      "id": "window",
+      "label": "Closed Green Window",
+      "position2D": [0.28, 0.17],
+      "position3D": [-0.19, 0.28, 0.03],
+      "category": "symbolism",
+      "body": "The closed window is the only link with the outside world. It protects the interior and makes the room feel like a sanctuary."
     }
   ],
   "ar": {
@@ -132,7 +155,11 @@
       "hidden-details",
       "brushstrokes",
       "ask-guide"
-    ]
+    ],
+    "experienceNotes": {
+      "imageAR": "The bed and chairs can appear to detach from the painted wall as volumetric 3D forms, letting the viewer notice how the forced perspective changes with screen movement.",
+      "spatialAR": "The long-term spatial version can become a 1:1 reconstruction of the room in Arles, allowing the user to walk across the painted floor, approach the straw chair, and look toward a virtual Arles window in warm southern light."
+    }
   },
   "media": {
     "image": "assets/paintings/van-gogh-bedroom/bed_van-gogh.jpeg",
@@ -150,6 +177,7 @@
       "Describe how Van Gogh uses color to create emotional space.",
       "Explain why the perspective looks intentionally unstable.",
       "Identify symbolic objects in the room.",
+      "Connect the painting to the Yellow House and Van Gogh's dream of an artist community.",
       "Compare an interior scene with a portrait as a way of representing identity."
     ],
     "quiz": [
@@ -157,12 +185,19 @@
         "question": "What feeling did Van Gogh want the bedroom colors to suggest?",
         "answers": ["Rest", "Battle", "Coldness", "Luxury"],
         "correctAnswer": "Rest"
+      },
+      {
+        "question": "What repeated visual structure suggests companionship and order?",
+        "answers": ["Pairs of objects", "A crowd of figures", "A city street", "A mirror reflection"],
+        "correctAnswer": "Pairs of objects"
       }
     ],
-    "vocabulary": ["Post-Impressionism", "interior", "complementary color", "expressive perspective", "Yellow House"],
+    "vocabulary": ["Post-Impressionism", "interior", "complementary color", "expressive perspective", "impasto", "Yellow House", "Studio of the South"],
     "discussionPrompts": [
       "How can an empty room feel like a portrait?",
-      "Which object in the room feels most important, and why?"
+      "Which object in the room feels most important, and why?",
+      "Why might Van Gogh make a peaceful room feel visually unstable?",
+      "What changes when you notice that the mirror does not clearly reflect the room?"
     ]
   },
   "rights": {
