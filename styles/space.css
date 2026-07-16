@@ -87,6 +87,36 @@ model-viewer {
   background: #eee6d8;
 }
 
+model-viewer.viewer-fallback {
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: #201a15;
+}
+
+.viewer-fallback-panel {
+  width: min(560px, 100%);
+  border: 1px solid rgba(255, 250, 241, 0.24);
+  padding: 22px;
+  color: #fffaf1;
+  background: rgba(255, 250, 241, 0.08);
+}
+
+.viewer-fallback-panel strong {
+  display: block;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(28px, 5vw, 46px);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.viewer-fallback-panel span {
+  display: block;
+  margin-top: 10px;
+  color: #e6d8c4;
+  line-height: 1.45;
+}
+
 .space-panel {
   padding: clamp(18px, 3vw, 28px);
 }

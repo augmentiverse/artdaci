@@ -12,6 +12,10 @@ const COPY = {
     ready: "Model ready. Tap Place in My Space to position it in your room.",
     readyWithUsdz: "Model ready. Tap Place in My Space. iPhone/iPad will use USDZ; Android will use Scene Viewer.",
     readyWithoutUsdz: "Model ready. Android and WebXR-compatible devices can use spatial AR. iPhone/iPad needs a USDZ file for this artwork.",
+    fallbackTitle: "3D preview unavailable",
+    fallbackBody: "The room-placement viewer library did not load. You can still open the printed page, image AR, or download the 3D file.",
+    downloadModel: "Download GLB",
+    downloadUsdz: "Download USDZ",
     place: "Place in My Space",
     imageAr: "Image AR",
     printedPage: "Printed Page",
@@ -26,6 +30,10 @@ const COPY = {
     ready: "Modele pret. Touchez Placer dans mon espace pour le positionner dans votre piece.",
     readyWithUsdz: "Modele pret. Touchez Placer dans mon espace. iPhone/iPad utilisera USDZ; Android utilisera Scene Viewer.",
     readyWithoutUsdz: "Modele pret. Android et les appareils WebXR compatibles peuvent utiliser l'AR spatiale. iPhone/iPad necessite un fichier USDZ pour cette oeuvre.",
+    fallbackTitle: "Apercu 3D indisponible",
+    fallbackBody: "La bibliotheque de placement dans l'espace ne s'est pas chargee. Vous pouvez tout de meme ouvrir la page imprimee, l'AR image ou telecharger le fichier 3D.",
+    downloadModel: "Telecharger GLB",
+    downloadUsdz: "Telecharger USDZ",
     place: "Placer dans mon espace",
     imageAr: "AR sur image",
     printedPage: "Page imprimee",
@@ -91,7 +99,7 @@ function configureViewer(manifest) {
   document.title = `DACIART - ${title} - ${COPY[lang].kicker}`;
   document.getElementById("space-title").textContent = lang === "fr" && slug === "van-gogh-bedroom" ? "La Chambre" : title;
 
-  model.src = src;
+  model.setAttribute("src", src);
   model.alt = `${title} 3D model`;
   if (poster) model.poster = poster;
   if (usdz) {
@@ -104,9 +112,41 @@ function configureViewer(manifest) {
 
   document.getElementById("image-ar-link").href = `ar.html?painting=${slug}&lang=${lang}`;
   document.getElementById("print-link").href = PRINT_PAGES[lang]?.[slug] || "index.html";
+  renderDirectAssetLinks(src, usdz);
+  checkModelViewerAvailability(src, usdz);
   model.addEventListener("ar-status", (event) => {
     if (event.detail.status === "failed") {
       document.getElementById("space-status").textContent = COPY[lang].unsupported;
     }
   });
+}
+
+function renderDirectAssetLinks(src, usdz) {
+  const actions = document.querySelector(".space-panel .actions");
+  if (!actions || !src) return;
+
+  actions.insertAdjacentHTML("beforeend", `
+    <a class="button" href="${src}" download>${COPY[lang].downloadModel}</a>
+    ${usdz ? `<a class="button" href="${usdz}" rel="ar">${COPY[lang].downloadUsdz}</a>` : ""}
+  `);
+}
+
+function checkModelViewerAvailability(src, usdz) {
+  window.setTimeout(() => {
+    if (customElements.get("model-viewer")) return;
+
+    const model = document.getElementById("space-model");
+    model.classList.add("viewer-fallback");
+    model.innerHTML = `
+      <div class="viewer-fallback-panel">
+        <strong>${COPY[lang].fallbackTitle}</strong>
+        <span>${COPY[lang].fallbackBody}</span>
+        <div class="actions">
+          <a class="button primary" href="${src}" download>${COPY[lang].downloadModel}</a>
+          ${usdz ? `<a class="button" href="${usdz}" rel="ar">${COPY[lang].downloadUsdz}</a>` : ""}
+        </div>
+      </div>
+    `;
+    document.getElementById("space-status").textContent = COPY[lang].fallbackBody;
+  }, 1800);
 }

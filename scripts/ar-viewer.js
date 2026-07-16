@@ -32,7 +32,9 @@ const UI_TEXT = {
     startCamera: "Start Camera",
     back: "Back",
     searching: "Searching",
+    locked: "Locked",
     preparing: "Preparing WebAR",
+    checkingCamera: "Checking camera permission...",
     audio: "Audio",
     stop: "Stop",
     video: "Video",
@@ -57,7 +59,19 @@ const UI_TEXT = {
     audioLoadErrorBody: "The recorded audio could not be loaded. Check that the audio file was uploaded with the site.",
     scanTarget: "Scan the printed {artist}{title} target.",
     catalogue: "Catalogue",
-    intro: "Intro"
+    intro: "Intro",
+    arStartErrorTitle: "Camera AR could not start",
+    tryAgain: "Try Again",
+    audioGuideNotReady: "Audio guide is not ready yet.",
+    hotspot: "Hotspot",
+    futureLayer: "This interpretive layer is ready for future content.",
+    permissionBlocked: "Camera permission was blocked. Tap the site controls in the address bar, allow Camera, then try again.",
+    noCamera: "No camera was found. Test on a phone/tablet with a working rear camera, or connect a webcam.",
+    cameraInUse: "The camera is already in use by another app or browser tab. Close other camera apps and try again.",
+    cameraSettingsUnavailable: "The requested camera settings are not available on this device. Try another browser or device.",
+    securityBlocked: "The browser blocked camera access for security reasons. Use HTTPS and avoid embedded/in-app browsers.",
+    librariesMissing: "The AR JavaScript libraries did not load. Re-upload the complete project, including the vendor folder.",
+    cameraGenericError: "The browser or AR engine refused camera startup. See the technical details below, then try Safari on iOS or Chrome on Android."
   },
   fr: {
     ready: "Pret. Touchez Demarrer la camera et autorisez l'acces.",
@@ -65,7 +79,9 @@ const UI_TEXT = {
     startCamera: "Demarrer la camera",
     back: "Retour",
     searching: "Recherche",
+    locked: "Verrouille",
     preparing: "Preparation WebAR",
+    checkingCamera: "Verification de l'autorisation camera...",
     audio: "Audio",
     stop: "Stop",
     video: "Video",
@@ -90,7 +106,19 @@ const UI_TEXT = {
     audioLoadErrorBody: "Le fichier audio enregistre ne peut pas etre charge. Verifiez que le fichier audio a bien ete publie avec le site.",
     scanTarget: "Scannez l'image imprimee : {artist}{title}.",
     catalogue: "Catalogue",
-    intro: "Intro"
+    intro: "Intro",
+    arStartErrorTitle: "L'AR camera ne peut pas demarrer",
+    tryAgain: "Reessayer",
+    audioGuideNotReady: "Le guide audio n'est pas encore pret.",
+    hotspot: "Point d'interet",
+    futureLayer: "Cette couche d'interpretation est prete pour un contenu futur.",
+    permissionBlocked: "L'autorisation camera a ete bloquee. Ouvrez les controles du site dans la barre d'adresse, autorisez la camera, puis reessayez.",
+    noCamera: "Aucune camera n'a ete trouvee. Testez sur un telephone ou une tablette avec camera arriere, ou connectez une webcam.",
+    cameraInUse: "La camera est deja utilisee par une autre application ou un autre onglet. Fermez-les puis reessayez.",
+    cameraSettingsUnavailable: "Les reglages camera demandes ne sont pas disponibles sur cet appareil. Essayez un autre navigateur ou appareil.",
+    securityBlocked: "Le navigateur a bloque la camera pour des raisons de securite. Utilisez HTTPS et evitez les navigateurs integres.",
+    librariesMissing: "Les bibliotheques JavaScript AR ne se sont pas chargees. Republiez le projet complet, y compris le dossier vendor.",
+    cameraGenericError: "Le navigateur ou le moteur AR a refuse le demarrage camera. Consultez les details techniques, puis essayez Safari sur iOS ou Chrome sur Android."
   }
 };
 
@@ -772,7 +800,7 @@ async function preflightCamera() {
     throw new Error("This browser does not expose navigator.mediaDevices.getUserMedia. Use Safari on iOS or Chrome on Android, and avoid in-app browsers.");
   }
 
-  setStartupMessage("Checking camera permission...");
+  setStartupMessage(t("checkingCamera"));
   const stream = await navigator.mediaDevices.getUserMedia({
     video: {
       facingMode: { ideal: "environment" },
@@ -887,7 +915,7 @@ function clamp(value, min, max) {
 
 function setTrackingStatus(locked) {
   const badge = document.getElementById("tracking-status");
-  badge.textContent = locked ? "Locked" : "Searching";
+  badge.textContent = locked ? t("locked") : t("searching");
   badge.classList.toggle("locked", locked);
   badge.classList.toggle("searching", !locked);
 }
@@ -1009,7 +1037,7 @@ function toggleNativeAudioGuide() {
 
 function getAudioGuideText() {
   const manifest = state.manifest;
-  if (!manifest) return "Audio guide is not ready yet.";
+  if (!manifest) return t("audioGuideNotReady");
 
   const artist = manifest.artist?.name ? `by ${manifest.artist.name}` : "";
   const parts = [
@@ -1031,9 +1059,9 @@ function getHotspotContent(id) {
   const found = state.manifest?.hotspots?.find((item) => item.id === id);
   if (!found) {
     return {
-      kicker: "Hotspot",
-      title: "Mona Lisa",
-      body: "This interpretive layer is ready for future content."
+      kicker: t("hotspot"),
+      title: state.manifest?.title || "Artwork",
+      body: t("futureLayer")
     };
   }
 
@@ -1048,14 +1076,14 @@ function showStartupError(error) {
   console.error(error);
   const screen = document.getElementById("loading-screen");
   screen.classList.remove("hidden");
-  screen.querySelector("h1").textContent = "Camera AR could not start";
+  screen.querySelector("h1").textContent = t("arStartErrorTitle");
   setStartupMessage(
     getFriendlyCameraError(error)
   );
   showErrorDetails(error);
   const button = document.getElementById("start-ar");
   button.disabled = false;
-  button.textContent = "Try Again";
+  button.textContent = t("tryAgain");
   state.started = false;
 }
 
@@ -1091,30 +1119,30 @@ function getFriendlyCameraError(error) {
   const name = error?.name || "";
 
   if (name === "NotAllowedError" || name === "PermissionDeniedError") {
-    return "Camera permission was blocked. Tap the site controls in the address bar, allow Camera, then try again.";
+    return t("permissionBlocked");
   }
 
   if (name === "NotFoundError" || name === "DevicesNotFoundError") {
-    return "No camera was found. Test on a phone/tablet with a working rear camera, or connect a webcam.";
+    return t("noCamera");
   }
 
   if (name === "NotReadableError" || name === "TrackStartError") {
-    return "The camera is already in use by another app or browser tab. Close other camera apps and try again.";
+    return t("cameraInUse");
   }
 
   if (name === "OverconstrainedError") {
-    return "The requested camera settings are not available on this device. Try another browser or device.";
+    return t("cameraSettingsUnavailable");
   }
 
   if (name === "SecurityError") {
-    return "The browser blocked camera access for security reasons. Use HTTPS and avoid embedded/in-app browsers.";
+    return t("securityBlocked");
   }
 
   if (String(error?.message || "").includes("Required AR libraries")) {
-    return "The AR JavaScript libraries did not load. Re-upload the complete project, including the vendor folder.";
+    return t("librariesMissing");
   }
 
-  return "The browser or AR engine refused camera startup. See the technical details below, then try Safari on iOS or Chrome on Android.";
+  return t("cameraGenericError");
 }
 
 function getMissingLibraryMessage() {

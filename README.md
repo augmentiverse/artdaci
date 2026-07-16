@@ -1,14 +1,17 @@
 # DACIART WebAR Art Book
 
-This repository is a GitHub Pages-ready prototype for an augmented reality art book. The first implemented spread is Leonardo da Vinci's **Mona Lisa**.
+This repository is a GitHub Pages-ready prototype for an augmented reality art book. It includes a print-first collection index, three catalogue spreads, image-tracked WebAR, room-placement AR, bilingual entry points, QR access, and data-driven painting manifests.
 
 ## What Is Included
 
-- `index.html` - book landing page and first spread preview.
+- `index.html` - English collection companion with searchable data-driven painting index.
+- `index-fr.html` - French collection companion with the same interactive index.
 - `ar.html` - live WebAR viewer using MindAR and Three.js.
 - `space.html` - room-placement viewer for placing a GLB model in the user's space on compatible AR browsers.
 - `print-target.html` - rich printable Mona Lisa catalogue spread.
 - `print-van-gogh.html` - rich printable Van Gogh catalogue spread.
+- `print-van-gogh-bedroom.html` - rich printable Van Gogh bedroom catalogue spread.
+- `scripts/catalogue.js` - manifest-driven catalogue UI with search, filtering, comparison, stats, and learning prompts.
 - `assets/paintings/mona-lisa/mona-lisa.jpg` - printed target image.
 - `assets/paintings/mona-lisa/mona-lisa.glb` - 3D model loaded in AR.
 - `assets/paintings/van-gogh/van-gogh__Portrait.jpg` - Van Gogh printed target image.
@@ -16,6 +19,7 @@ This repository is a GitHub Pages-ready prototype for an augmented reality art b
 - `assets/targets/mona-lisa.mind` - compiled MindAR image target.
 - `content/paintings/mona-lisa.json` - structured painting data record.
 - `content/paintings/van-gogh.json` - structured Van Gogh painting data record.
+- `content/paintings/van-gogh-bedroom.json` - structured Van Gogh bedroom painting data record.
 - `vendor/` - local copies of Three.js, GLTFLoader, and MindAR used by the AR viewer.
 - `AR_Art_Book_Concept.md` - full product and editorial concept.
 
@@ -46,6 +50,7 @@ On a phone, the easiest route is to upload to GitHub Pages because camera access
 7. Open `ar.html` on your phone and scan the Mona Lisa image.
 
 For Van Gogh, open `print-van-gogh.html` as the printed catalogue spread, then use `ar.html?painting=van-gogh` only when you want the optional AR layer.
+For Van Gogh's bedroom, open `print-van-gogh-bedroom.html`, then use `ar.html?painting=van-gogh-bedroom`.
 
 ## Important Browser Notes
 
@@ -62,7 +67,8 @@ For Van Gogh, open `print-van-gogh.html` as the printed catalogue spread, then u
 2. Add the GLB model to `assets/paintings/{slug}/{slug}.glb`.
 3. Generate a MindAR target file and save it to `assets/targets/{slug}.mind`.
 4. Add a JSON record in `content/paintings/{slug}.json`.
-5. Add the new slug to the `PAINTINGS` registry in `scripts/ar-viewer.js`.
+5. Add the new slug to the `PAINTINGS` registry in `scripts/ar-viewer.js` and `scripts/space-viewer.js`.
+6. Add the manifest path to the `data-manifests` attribute in `index.html` and `index-fr.html`.
 
 The current viewer already supports loading by query string:
 
@@ -72,9 +78,10 @@ ar.html?painting=van-gogh
 space.html?painting=mona-lisa
 space.html?painting=van-gogh
 space.html?painting=van-gogh-bedroom
+ar.html?painting=van-gogh-bedroom
 ```
 
-`space.html` uses model-viewer room placement. Android Chrome can place GLB models directly. iPhone Safari generally needs USDZ files for native room placement; add `media.usdz` to a painting manifest when a USDZ conversion is available.
+`space.html` uses model-viewer room placement. Android Chrome can place GLB models directly. iPhone Safari generally needs USDZ files for native room placement; add `media.usdz` to a painting manifest when a USDZ conversion is available. If the model-viewer library is blocked by the browser or network, the page falls back to direct GLB/USDZ links plus the printed page and image AR routes.
 
 ## Regenerating The MindAR Target
 
@@ -88,9 +95,10 @@ This repo also includes `compile-target.html` as a developer utility for generat
 
 ## Production Next Steps
 
-- Add a painting selector and query-string routing.
 - Compress and optimize GLB files.
-- Add audio guide files and subtitles.
-- Add institutional localization files.
+- Add audio guide files and subtitles for every painting.
+- Add institutional localization files for full bilingual parity.
 - Add WebXR immersive mode for compatible headsets.
+- Vendor `model-viewer` locally if the project must work without CDN access.
+- Add automated link, JSON, and browser smoke tests.
 - Add analytics only after privacy review.

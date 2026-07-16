@@ -32,7 +32,7 @@
     "imageTargetId": "target-001-mona-lisa",
     "imageTargetSource": "assets/paintings/mona-lisa/mona-lisa.jpg",
     "compiledMindTarget": "assets/targets/mona-lisa.mind",
-    "qrUrl": "https://example.org/ar/mona-lisa"
+    "qrUrl": "https://augmentiverse.github.io/artdaci/ar.html?painting=mona-lisa"
   },
   "texts": {
     "historicalContext": "Painted in the early sixteenth century, the Mona Lisa belongs to the mature phase of Leonardo's career and reflects the High Renaissance interest in idealized naturalism, atmospheric depth, and the inner life of the sitter.",

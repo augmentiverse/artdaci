@@ -81,8 +81,18 @@
         <div class="section-heading">
           <p class="eyebrow">Index</p>
           <h2 id="index-title">Index des peintures</h2>
+          <p class="section-dek">Recherchez la collection, comparez les oeuvres, ouvrez les doubles pages imprimees, lancez l'AR et preparez un parcours pedagogique depuis les memes donnees que les experiences.</p>
         </div>
 
+        <div
+          id="catalogue-app"
+          class="catalogue-app"
+          data-lang="fr"
+          data-manifests="content/paintings/mona-lisa.json,content/paintings/van-gogh.json,content/paintings/van-gogh-bedroom.json"
+          aria-live="polite">
+        </div>
+
+        <div class="static-index">
         <article class="painting-row">
           <div>
             <p class="eyebrow">Double page 001</p>
@@ -124,6 +134,7 @@
             <a class="button" href="print-van-gogh-bedroom.html" lang="en">English</a>
           </div>
         </article>
+        </div>
       </section>
 
       <section class="index-qr" aria-labelledby="book-qr-title">
@@ -141,5 +152,6 @@
         </div>
       </section>
     </main>
+    <script type="module" src="scripts/catalogue.js?v=1"></script>
   </body>
 </html>
