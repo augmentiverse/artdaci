@@ -688,6 +688,27 @@ figcaption strong {
   border: 1px solid var(--line);
 }
 
+.catalogue-spread.stacked-spread {
+  max-width: 980px;
+  grid-template-columns: 1fr;
+}
+
+.stacked-spread .catalogue-plate {
+  border-right: 0;
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+}
+
+.stacked-spread .target-art img {
+  width: min(520px, 100%);
+  margin: 0 auto;
+}
+
+.stacked-spread figcaption {
+  max-width: 720px;
+  margin: 16px auto 0;
+}
+
 .catalogue-plate,
 .catalogue-text {
   padding: clamp(22px, 4vw, 46px);
@@ -735,6 +756,30 @@ figcaption strong {
   gap: 24px;
 }
 
+.expanded-grid {
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.chapter-band {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.36fr) minmax(0, 0.64fr);
+  gap: 22px;
+  margin: 28px 0 0;
+  padding: 18px;
+  border: 1px solid var(--line);
+  background: #fffaf1;
+}
+
+.chapter-band h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(28px, 4vw, 46px);
+  font-weight: 500;
+  line-height: 1;
+}
+
 .catalogue-grid h2,
 .timeline-strip h2,
 .ar-note h2 {
@@ -748,7 +793,8 @@ figcaption strong {
 .catalogue-grid p,
 .catalogue-grid li,
 .timeline-strip li,
-.ar-note p {
+.ar-note p,
+.chapter-band p {
   color: #352d26;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 16px;
@@ -756,7 +802,8 @@ figcaption strong {
 }
 
 .catalogue-grid p,
-.ar-note p {
+.ar-note p,
+.chapter-band p {
   margin: 0;
 }
 
@@ -971,6 +1018,7 @@ figcaption strong {
   .catalogue-grid,
   .catalogue-meta,
   .atlas-pillars,
+  .chapter-band,
   .catalogue-toolbar,
   .catalogue-layout,
   .artwork-grid,

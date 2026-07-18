@@ -35,19 +35,32 @@
     "qrUrl": "https://augmentiverse.github.io/artdaci/ar.html?painting=mona-lisa"
   },
   "texts": {
-    "historicalContext": "Painted in the early sixteenth century, the Mona Lisa belongs to the mature phase of Leonardo's career and reflects the High Renaissance interest in idealized naturalism, atmospheric depth, and the inner life of the sitter.",
-    "artistBiography": "Leonardo da Vinci worked across art, science, and engineering. His paintings are marked by close observation, sfumato modeling, experimental technique, and an unusual sensitivity to psychological presence.",
-    "artisticAnalysis": "The portrait is built around a calm pyramidal composition, delicate transitions of light and shadow, and an enigmatic expression that changes as the viewer's attention shifts between the eyes, mouth, hands, and landscape.",
-    "symbolism": "The winding roads, bridges, water, and mountains behind the sitter suggest a union between human presence and the forces of nature. The smile has become a symbol of ambiguity, interiority, and the unstable nature of perception.",
-    "composition": "The sitter is placed frontally in a stable triangular structure. Her folded hands form the base, her shoulders guide the eye upward, and her face becomes the still center of a moving landscape.",
-    "palette": "The palette is restrained: warm flesh tones, smoky browns, muted greens, blue-green atmospheric distance, and dark glazes that produce depth without strong contour lines.",
-    "perspectiveTechnique": "Leonardo uses sfumato to soften transitions and atmospheric perspective to make the distant landscape recede. The absence of hard outlines allows forms to appear alive and suspended in air.",
-    "culturalSignificance": "The Mona Lisa is one of the most recognized paintings in the world and a benchmark for portraiture, artistic celebrity, museum culture, and the modern idea of the masterpiece.",
-    "influence": "Its psychological subtlety, atmospheric technique, and iconic status influenced portraiture, modern art, popular culture, advertising, film, and countless reinterpretations by later artists.",
+    "historicalContext": "Painted in the early sixteenth century, the Mona Lisa belongs to the mature phase of Leonardo's career and to the wider High Renaissance transformation of art into a disciplined investigation of nature. Florence, Milan, Venice, and Rome were centers of patronage and experimentation, where mathematics, anatomy, optics, and direct observation reshaped how artists represented the visible world.",
+    "artistBiography": "Leonardo da Vinci was trained in Florence in the workshop of Andrea del Verrocchio and became one of history's most versatile minds. He studied painting, sculpture, engineering, architecture, mechanics, anatomy, hydrodynamics, optics, and military design. His notebooks reveal an insatiable curiosity, and his habit of revising works over many years helps explain the Mona Lisa's extraordinary subtlety.",
+    "artisticAnalysis": "The Mona Lisa is modest in scale but immense in ambition. Its power comes from the convergence of technical innovation, psychological depth, and scientific observation: a sitter whose expression seems alive, a landscape shaped by geology and atmosphere, and a surface built from transitions so soft that outlines appear to dissolve.",
+    "symbolism": "The winding roads, bridges, water, eroded cliffs, and distant mountains suggest a union between human presence and natural transformation. The smile has become a symbol of ambiguity and interior life, but the painting's deeper mystery lies in the harmony of many subtle decisions rather than in a single hidden secret.",
+    "composition": "Leonardo replaces the rigid profile format common in fifteenth-century portraiture with a natural three-quarter pose. The folded hands form a stable triangular base, the shoulders guide the eye upward, and the face becomes the still center of a composition energized by an asymmetrical horizon and dreamlike landscape.",
+    "palette": "The palette is restrained: warm flesh tones, smoky browns, muted greens, blue-green atmospheric distance, and dark glazes that produce depth without hard contours. Leonardo's thin translucent layers scatter light through the paint surface, creating unusually soft skin, shadow, and air.",
+    "perspectiveTechnique": "Leonardo combines sfumato with atmospheric perspective. Sfumato softens transitions between light and shadow until contours nearly disappear, while atmospheric perspective reduces contrast and saturation in the distant landscape. Together they create depth, lifelike volume, and the feeling that the figure breathes within real air.",
+    "culturalSignificance": "The Mona Lisa became a global cultural icon through exceptional artistic quality, Leonardo's enduring reputation, centuries of scholarly attention, the dramatic 1911 theft, countless reproductions, and its prominent display in the Louvre. It now functions as a symbol of art itself.",
+    "influence": "The painting influenced portrait composition, psychological realism, atmospheric perspective, and the integration of figure and landscape for more than five centuries. In modern culture, artists such as Marcel Duchamp and Andy Warhol transformed its image into a reusable icon, proving that its power extends far beyond Renaissance painting.",
+    "sitterIdentity": "The prevailing scholarly view identifies the sitter as Lisa Gherardini, wife of the Florentine merchant Francesco del Giocondo. Alternative theories have imagined an ideal woman, a symbolic figure, or even a disguised self-portrait, but these are not generally accepted by most art historians.",
+    "scientificAnalysis": "Infrared reflectography, ultraviolet fluorescence, X-radiography, multispectral imaging, and high-resolution microscopy have allowed researchers to study the painting without touching it. These investigations show that the work developed through gradual refinement rather than a single uninterrupted campaign.",
+    "workingMethod": "Leonardo rarely treated painting as the execution of a fully fixed design. Imaging suggests subtle modifications to the fingers, veil, face, and background transitions. These pentimenti reveal a creative process based on observation, revision, and slow experimentation.",
+    "sfumatoStudy": "The Italian word sfumato derives from fumo, or smoke. Leonardo regarded abrupt edges as unnatural because light diffuses gradually across curved surfaces. By applying many thin glazes, some only micrometers thick, he created skin and shadow transitions where brushstrokes are difficult to distinguish even under magnification.",
+    "opticalIllusions": "The smile appears stronger when the viewer looks at the eyes rather than directly at the mouth because peripheral vision is sensitive to broad tonal information. The direct gaze can also seem to follow viewers around the room, an effect produced by frontal orientation and perspective geometry.",
+    "conservationHistory": "The Mona Lisa has survived more than five hundred years on a poplar panel, a support that expands and contracts with humidity. Today it is displayed in a climate-controlled protective case that limits environmental fluctuation and helps shield the painting from accidental damage and vandalism.",
+    "theftHistory": "On 21 August 1911, Vincenzo Peruggia removed the Mona Lisa from the Louvre and kept it hidden for more than two years. When he attempted to sell it in Florence in 1913, the painting was recovered. The theft generated worldwide press coverage and greatly increased the painting's fame.",
+    "restorationPhilosophy": "The painting has not undergone an extensive modern repainting campaign intended to make it look new. Modern conservation emphasizes stabilization, environmental control, and documentation, preserving authenticity rather than inventing a refreshed appearance.",
+    "curatorInsight": "When looking at the Mona Lisa, resist focusing only on the smile. Follow the light across the cheeks, study the folded hands, and watch the landscape dissolve into distance. The painting rewards slow attention because its power lies in countless small decisions working together.",
     "interestingFacts": [
       "The painting is executed on a poplar panel rather than canvas.",
       "The sitter is commonly identified as Lisa Gherardini, wife of Francesco del Giocondo.",
-      "Its fame increased dramatically after its theft from the Louvre in 1911 and recovery in 1913."
+      "Leonardo may have continued revising the painting for many years after beginning it.",
+      "Scientific imaging has revealed subtle changes of mind, known as pentimenti.",
+      "The smile's shifting effect is linked to how peripheral vision processes soft tonal information.",
+      "Its fame increased dramatically after its theft from the Louvre in 1911 and recovery in 1913.",
+      "Today the painting is protected in a climate-controlled case at the Louvre."
     ]
   },
   "timeline": [
@@ -62,6 +75,16 @@
       "type": "artwork"
     },
     {
+      "year": 1506,
+      "label": "The initial painting campaign is likely substantially developed, with later refinements continuing.",
+      "type": "artwork"
+    },
+    {
+      "year": 1517,
+      "label": "Leonardo may still be carrying or revising the portrait near the end of his life in France.",
+      "type": "artwork"
+    },
+    {
       "year": 1519,
       "label": "Leonardo dies in France; the painting remains associated with the French royal collection.",
       "type": "artist"
@@ -73,13 +96,18 @@
     },
     {
       "year": 1911,
-      "label": "The painting is stolen from the Louvre.",
+      "label": "The painting is stolen from the Louvre by Vincenzo Peruggia on 21 August.",
       "type": "history"
     },
     {
       "year": 1913,
       "label": "The painting is recovered.",
       "type": "history"
+    },
+    {
+      "year": 2005,
+      "label": "The painting is displayed in a specially engineered protective case in the Louvre's Salle des Etats.",
+      "type": "museum"
     }
   ],
   "hotspots": [
@@ -114,6 +142,46 @@
       "position3D": [0, 0.32, 0.05],
       "category": "brushstrokes",
       "body": "Sfumato means smoky or softened. Leonardo builds form through delicate tonal transitions rather than sharp contour."
+    },
+    {
+      "id": "eyes",
+      "label": "Following Eyes",
+      "position2D": [0.5, 0.32],
+      "position3D": [0, 0.3, 0.06],
+      "category": "optics",
+      "body": "The gaze can seem to follow viewers because the face is oriented toward us and the perspective remains stable as we move. Many direct-gaze portraits create a similar perceptual effect."
+    },
+    {
+      "id": "veil",
+      "label": "Veil and Pentimenti",
+      "position2D": [0.5, 0.26],
+      "position3D": [0, 0.38, 0.04],
+      "category": "scientific-imaging",
+      "body": "Scientific imaging suggests that areas such as the veil, fingers, face, and background were refined during execution. These changes of mind reveal Leonardo's slow, experimental working method."
+    },
+    {
+      "id": "glazes",
+      "label": "Transparent Glazes",
+      "position2D": [0.48, 0.42],
+      "position3D": [0, 0.12, 0.05],
+      "category": "technique",
+      "body": "Leonardo built the surface with extremely thin translucent glazes. Light passes through these layers and scatters softly, producing transitions that opaque brushstrokes cannot easily imitate."
+    },
+    {
+      "id": "protection",
+      "label": "Modern Protection",
+      "position2D": [0.5, 0.5],
+      "position3D": [0, 0, 0.08],
+      "category": "conservation",
+      "body": "The painting is displayed in a climate-controlled protective case because its poplar panel support responds to humidity and must be shielded from environmental fluctuations, damage, and vandalism."
+    },
+    {
+      "id": "theft",
+      "label": "The 1911 Theft",
+      "position2D": [0.58, 0.18],
+      "position3D": [0.16, 0.42, 0.04],
+      "category": "history",
+      "body": "In 1911 Vincenzo Peruggia removed the painting from the Louvre. Its recovery in 1913 turned a celebrated Renaissance portrait into a worldwide media icon."
     }
   ],
   "ar": {
@@ -134,6 +202,9 @@
       "timeline",
       "museum",
       "hidden-details",
+      "scientific-imaging",
+      "conservation",
+      "optical-illusions",
       "audio-guide",
       "quiz",
       "brushstrokes",
@@ -146,7 +217,16 @@
       "exploded-layers",
       "studio",
       "documentary"
-    ]
+    ],
+    "chapterExperience": {
+      "scanPrompt": "Begin with the smile, then move through hands, landscape, scientific imaging, conservation, and the 1911 theft.",
+      "guideSequence": ["smile", "eyes", "hands", "landscape", "sfumato", "veil", "glazes", "protection", "theft"],
+      "productionNotes": [
+        "Use close-up overlays for sfumato and glaze explanations.",
+        "Represent pentimenti as toggleable ghost outlines rather than as claims of a single hidden image.",
+        "Keep conservation content factual and avoid implying that the current appearance should be restored to an imagined original state."
+      ]
+    }
   },
   "media": {
     "image": "assets/paintings/mona-lisa/mona-lisa.jpg",
@@ -188,19 +268,40 @@
       "Explain sfumato and atmospheric perspective.",
       "Identify how composition guides attention.",
       "Discuss why the Mona Lisa became a modern museum icon.",
-      "Compare Renaissance portraiture with later portrait traditions."
+      "Compare Renaissance portraiture with later portrait traditions.",
+      "Describe how scientific imaging helps researchers study paintings without touching them.",
+      "Explain how conservation ethics prioritize authenticity, stability, and documentation.",
+      "Connect the 1911 theft to the painting's modern global fame."
     ],
     "quiz": [
       {
         "question": "Which technique softens the transitions around the Mona Lisa's face?",
         "answers": ["Sfumato", "Pointillism", "Cubism", "Impasto"],
         "correctAnswer": "Sfumato"
+      },
+      {
+        "question": "What does scientific imaging suggest about Leonardo's process?",
+        "answers": ["He revised subtle details over time", "He painted the portrait in one sitting", "He used only opaque paint", "He avoided changes once painting began"],
+        "correctAnswer": "He revised subtle details over time"
+      },
+      {
+        "question": "Why does the smile seem to shift?",
+        "answers": ["Soft tonal transitions are read differently by peripheral vision", "The panel physically moves", "The mouth is painted twice", "The frame changes the lighting every second"],
+        "correctAnswer": "Soft tonal transitions are read differently by peripheral vision"
+      },
+      {
+        "question": "Which event helped turn the painting into a worldwide media icon?",
+        "answers": ["Its theft from the Louvre in 1911", "Its first exhibition in New York", "Its sale at auction", "Its repainting in the twentieth century"],
+        "correctAnswer": "Its theft from the Louvre in 1911"
       }
     ],
-    "vocabulary": ["sfumato", "atmospheric perspective", "portraiture", "High Renaissance", "poplar panel"],
+    "vocabulary": ["sfumato", "atmospheric perspective", "portraiture", "High Renaissance", "poplar panel", "pentimenti", "infrared reflectography", "multispectral imaging", "glaze", "conservation ethics", "peripheral vision"],
     "discussionPrompts": [
       "Why might an ambiguous expression make a portrait more memorable?",
-      "How does the background landscape change the mood of the sitter?"
+      "How does the background landscape change the mood of the sitter?",
+      "What is the difference between a mystery that invites looking and a myth that distorts evidence?",
+      "Why might a museum choose to preserve a painting's current historical state instead of making it look new?",
+      "How did theft, reproduction, and museum display change the painting's meaning?"
     ]
   },
   "rights": {

@@ -171,15 +171,18 @@ body {
 .hotspot-bar {
   left: 50%;
   bottom: 18px;
-  width: min(620px, calc(100vw - 24px));
+  width: min(860px, calc(100vw - 24px));
   transform: translateX(-50%);
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  display: flex;
   gap: 6px;
   padding: 8px;
+  overflow-x: auto;
+  scrollbar-width: thin;
 }
 
 .hotspot-bar button {
+  flex: 0 0 auto;
+  min-width: 104px;
   min-height: 32px;
   border: 1px solid var(--line);
   color: var(--text);
@@ -346,7 +349,6 @@ body {
 
   .hotspot-bar {
     bottom: 64px;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .mini-dock {

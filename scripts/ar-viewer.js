@@ -552,7 +552,7 @@ function renderHotspotButtons(manifest) {
   const bar = document.querySelector(".hotspot-bar");
   const buttons = [
     { id: "intro", label: t("intro") },
-    ...(manifest.hotspots || []).slice(0, 4).map((hotspot) => ({
+    ...(manifest.hotspots || []).slice(0, 8).map((hotspot) => ({
       id: hotspot.id,
       label: hotspot.label
     }))
