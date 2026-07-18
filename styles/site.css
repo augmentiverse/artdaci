@@ -302,15 +302,12 @@ h2 {
 }
 
 .catalogue-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.35fr);
-  gap: 18px;
   margin-top: 18px;
 }
 
 .artwork-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr));
   gap: 14px;
   align-content: start;
 }
@@ -321,11 +318,6 @@ h2 {
   min-height: 410px;
   border: 1px solid var(--line);
   background: #fffaf1;
-}
-
-.artwork-card.selected {
-  outline: 3px solid #d2ad61;
-  outline-offset: -3px;
 }
 
 .artwork-image {
@@ -420,83 +412,6 @@ h2 {
   min-height: 38px;
   padding: 8px 10px;
   font-size: 12px;
-}
-
-.card-actions button {
-  cursor: pointer;
-}
-
-.study-panel {
-  display: grid;
-  gap: 14px;
-  align-content: start;
-}
-
-.compare-panel,
-.learning-panel {
-  border: 1px solid var(--line);
-  background: #fffaf1;
-  padding: 18px;
-}
-
-.panel-heading p:not(.eyebrow),
-.panel-empty {
-  margin: 0;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.45;
-}
-
-.comparison-grid {
-  display: grid;
-  gap: 12px;
-}
-
-.comparison-grid article {
-  border-top: 1px solid var(--line);
-  padding-top: 12px;
-}
-
-.comparison-grid h3,
-.learning-panel h3 {
-  margin: 0 0 8px;
-  color: var(--accent);
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.comparison-grid dl {
-  margin: 0;
-}
-
-.comparison-grid dt {
-  margin-top: 10px;
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.comparison-grid dd {
-  margin: 4px 0 0;
-  color: #352d26;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 15px;
-  line-height: 1.42;
-}
-
-.learning-panel ol,
-.learning-panel ul {
-  margin: 0 0 16px;
-  padding-left: 20px;
-}
-
-.learning-panel li {
-  color: #352d26;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 15px;
-  line-height: 1.45;
 }
 
 .empty-results,
