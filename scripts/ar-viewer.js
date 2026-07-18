@@ -45,7 +45,7 @@ const UI_TEXT = {
     noVideoTitle: "No video",
     noVideoBody: "This painting does not have a video layer yet.",
     videoReadyTitle: "Video ready",
-    videoReadyBody: "Tap the Video button to play the Mona Lisa documentary layer.",
+    videoReadyBody: "Tap the Video button to play the Mona Lisa documentary layer. Drag the video to move it; use two fingers to resize or rotate it.",
     modelLoading: "Loading the 3D {title} model...",
     trackingReady: "Tracking is ready. The 3D model is loading in the background.",
     engineLoading: "Loading image target and preparing the AR engine...",
@@ -92,7 +92,7 @@ const UI_TEXT = {
     noVideoTitle: "Aucune vidéo",
     noVideoBody: "Cette peinture n'a pas encore de couche vidéo.",
     videoReadyTitle: "Vidéo prête",
-    videoReadyBody: "Touchez le bouton Vidéo pour lancer la couche documentaire.",
+    videoReadyBody: "Touchez le bouton Vidéo pour lancer la couche documentaire. Faites glisser la vidéo pour la déplacer; utilisez deux doigts pour la redimensionner ou la faire pivoter.",
     modelLoading: "Chargement du modèle 3D : {title}...",
     trackingReady: "Le suivi est prêt. Le modèle 3D se charge en arrière-plan.",
     engineLoading: "Chargement de la cible image et préparation du moteur AR...",
@@ -248,6 +248,7 @@ const state = {
   lastPinchDistance: 0,
   lastTwoFingerY: 0,
   lastTwoFingerX: 0,
+  lastTwoFingerAngle: 0,
   videoPointerStart: false,
   manualRotation: {
     x: 0,
@@ -259,6 +260,7 @@ const state = {
     z: 0.36
   },
   videoTargetScale: 1,
+  videoTargetRotation: 0,
   targetRise: CONFIG.initialRise,
   targetScale: CONFIG.initialScale,
   clock: null,
@@ -452,6 +454,7 @@ function updateGestureStart() {
     state.gestureMode = state.videoPointerStart && state.videoMesh ? "video-transform" : "transform";
     state.isDragging = false;
     state.lastPinchDistance = getPointerDistance(pointers[0], pointers[1]);
+    state.lastTwoFingerAngle = getPointerAngle(pointers[0], pointers[1]);
     state.lastTwoFingerY = (pointers[0].y + pointers[1].y) / 2;
     state.lastTwoFingerX = (pointers[0].x + pointers[1].x) / 2;
     return;
@@ -459,6 +462,7 @@ function updateGestureStart() {
 
   state.gestureMode = null;
   state.lastPinchDistance = 0;
+  state.lastTwoFingerAngle = 0;
   state.lastTwoFingerX = 0;
 }
 
@@ -467,21 +471,27 @@ function handleTwoFingerGesture() {
   if (pointers.length < 2) return;
 
   const distance = getPointerDistance(pointers[0], pointers[1]);
+  const angle = getPointerAngle(pointers[0], pointers[1]);
   const midX = (pointers[0].x + pointers[1].x) / 2;
   const midY = (pointers[0].y + pointers[1].y) / 2;
 
   if (state.gestureMode === "video-transform") {
     if (state.lastPinchDistance > 0) {
       const scaleDelta = distance / state.lastPinchDistance;
-      state.videoTargetScale = clamp(state.videoTargetScale * scaleDelta, 0.55, 2.2);
+      state.videoTargetScale = clamp(state.videoTargetScale * scaleDelta, 0.45, 2.4);
+    }
+
+    if (state.lastTwoFingerAngle) {
+      state.videoTargetRotation += getAngleDelta(angle, state.lastTwoFingerAngle);
     }
 
     if (state.lastTwoFingerY > 0) {
-      state.videoTargetPosition.x = clamp(state.videoTargetPosition.x + (midX - state.lastTwoFingerX) * 0.0022, -1.1, 1.35);
-      state.videoTargetPosition.y = clamp(state.videoTargetPosition.y - (midY - state.lastTwoFingerY) * 0.0022, -0.55, 0.55);
+      state.videoTargetPosition.x = clamp(state.videoTargetPosition.x + (midX - state.lastTwoFingerX) * 0.0022, -1.25, 1.25);
+      state.videoTargetPosition.y = clamp(state.videoTargetPosition.y - (midY - state.lastTwoFingerY) * 0.0022, -0.9, 0.7);
     }
 
     state.lastPinchDistance = distance;
+    state.lastTwoFingerAngle = angle;
     state.lastTwoFingerX = midX;
     state.lastTwoFingerY = midY;
     return;
@@ -506,6 +516,17 @@ function getPointerDistance(first, second) {
   return Math.hypot(first.x - second.x, first.y - second.y);
 }
 
+function getPointerAngle(first, second) {
+  return Math.atan2(second.y - first.y, second.x - first.x);
+}
+
+function getAngleDelta(angle, previousAngle) {
+  let delta = angle - previousAngle;
+  if (delta > Math.PI) delta -= Math.PI * 2;
+  if (delta < -Math.PI) delta += Math.PI * 2;
+  return delta;
+}
+
 function isPointerOnVideo(event) {
   if (!state.videoMesh || !state.videoMesh.visible || !state.mindarThree?.camera) return false;
 
@@ -524,15 +545,19 @@ function moveVideoWithPointer(event) {
   const deltaY = event.clientY - state.lastPointerY;
   state.lastPointerX = event.clientX;
   state.lastPointerY = event.clientY;
-  state.videoTargetPosition.x = clamp(state.videoTargetPosition.x + deltaX * 0.0022, -1.1, 1.35);
-  state.videoTargetPosition.y = clamp(state.videoTargetPosition.y - deltaY * 0.0022, -0.55, 0.55);
+  state.videoTargetPosition.x = clamp(state.videoTargetPosition.x + deltaX * 0.0022, -1.25, 1.25);
+  state.videoTargetPosition.y = clamp(state.videoTargetPosition.y - deltaY * 0.0022, -0.9, 0.7);
 }
 
 function resetVideoTransform() {
-  state.videoTargetPosition.x = CONFIG.slug === "mona-lisa" ? 1.06 : 0.86;
-  state.videoTargetPosition.y = 0.02;
-  state.videoTargetPosition.z = CONFIG.initialRise + 0.16;
-  state.videoTargetScale = 1;
+  state.videoTargetPosition.x = 0;
+  state.videoTargetPosition.y = -0.58;
+  state.videoTargetPosition.z = CONFIG.initialRise + 0.14;
+  state.videoTargetScale = 0.88;
+  state.videoTargetRotation = 0;
+  if (state.videoMesh) {
+    state.videoMesh.rotation.z = state.videoTargetRotation;
+  }
 }
 
 async function loadManifest() {
@@ -748,6 +773,7 @@ function addVideoLayer(group) {
   panel.name = "ar-video-panel";
   panel.position.set(state.videoTargetPosition.x, state.videoTargetPosition.y, state.videoTargetPosition.z);
   panel.scale.setScalar(state.videoTargetScale);
+  panel.rotation.z = state.videoTargetRotation;
   panel.renderOrder = 20;
   panel.visible = true;
   group.add(panel);
@@ -873,6 +899,7 @@ function renderFrame(renderer, scene, camera) {
     state.videoMesh.position.z += (state.videoTargetPosition.z - state.videoMesh.position.z) * 0.16;
     const videoScale = new THREE.Vector3(state.videoTargetScale, state.videoTargetScale, state.videoTargetScale);
     state.videoMesh.scale.lerp(videoScale, 0.16);
+    state.videoMesh.rotation.z += getAngleDelta(state.videoTargetRotation, state.videoMesh.rotation.z) * 0.16;
   }
 
   renderer.render(scene, camera);
