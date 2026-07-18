@@ -128,6 +128,18 @@ model-viewer.viewer-fallback {
   margin-top: 16px;
 }
 
+.model-variant-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.model-variant.active {
+  background: var(--gold);
+  border-color: #6f4e12;
+  color: #171310;
+}
+
 .button {
   display: inline-flex;
   align-items: center;

@@ -21,6 +21,7 @@ const COPY = {
     place: "Place in My Space",
     imageAr: "Image AR",
     printedPage: "Printed Page",
+    modelChoice: "Model choice",
     unsupported: "This browser can preview the 3D model, but may not support room-scale AR placement.",
     iosNote: "Spatial AR is available when the model has a compatible AR file for this device.",
     intro: "Place the 3D model in your space, then move, rotate, and scale it with your device's AR controls."
@@ -41,6 +42,7 @@ const COPY = {
     place: "Placer dans mon espace",
     imageAr: "AR sur image",
     printedPage: "Page imprimée",
+    modelChoice: "Choix du modèle",
     unsupported: "Ce navigateur peut afficher le modèle 3D, mais il peut ne pas prendre en charge le placement AR dans l'espace.",
     iosNote: "L'AR spatiale est disponible lorsque le modèle possède un fichier AR compatible avec cet appareil.",
     intro: "Placez le modèle 3D dans votre espace, puis déplacez-le, tournez-le et redimensionnez-le avec les contrôles AR de votre appareil."
@@ -96,7 +98,8 @@ function applyStaticCopy() {
 function configureViewer(manifest) {
   const model = document.getElementById("space-model");
   const title = manifest.title || "Artwork";
-  const src = manifest.ar?.primaryModel || manifest.media?.model;
+  const modelVariants = getModelVariants(manifest);
+  const src = modelVariants[0]?.src || manifest.ar?.primaryModel || manifest.media?.model;
   const poster = manifest.media?.image || manifest.print?.imageTargetSource;
   const usdz = manifest.media?.usdz || manifest.media?.usdzModel;
   const audioOverview = getLocalizedAudioOverview(manifest);
@@ -117,6 +120,7 @@ function configureViewer(manifest) {
 
   document.getElementById("image-ar-link").href = `ar.html?painting=${slug}&lang=${lang}`;
   document.getElementById("print-link").href = PRINT_PAGES[lang]?.[slug] || "index.html";
+  renderModelVariantControls(model, modelVariants);
   renderDirectAssetLinks(usdz, audioOverview);
   checkModelViewerAvailability(usdz, audioOverview);
   model.addEventListener("ar-status", (event) => {
@@ -124,6 +128,49 @@ function configureViewer(manifest) {
       document.getElementById("space-status").textContent = COPY[lang].unsupported;
     }
   });
+}
+
+function getModelVariants(manifest) {
+  const variants = manifest.ar?.modelVariants || manifest.media?.modelVariants || [];
+  const list = Array.isArray(variants) ? variants : [];
+  if (list.length) return list.filter((variant) => variant?.src);
+
+  const fallback = manifest.ar?.primaryModel || manifest.media?.model;
+  return fallback
+    ? [{ id: "model-1", label: { en: "Model 1", fr: "Modèle 1" }, src: fallback }]
+    : [];
+}
+
+function getModelVariantLabel(variant, index) {
+  if (typeof variant.label === "string") return variant.label;
+  return variant.label?.[lang] || variant.label?.en || `Model ${index + 1}`;
+}
+
+function renderModelVariantControls(model, variants) {
+  if (variants.length < 2) return;
+
+  const actions = document.querySelector(".space-panel .actions");
+  if (!actions) return;
+
+  const group = document.createElement("div");
+  group.className = "model-variant-group";
+  group.setAttribute("role", "group");
+  group.setAttribute("aria-label", COPY[lang].modelChoice || COPY.en.modelChoice);
+
+  variants.forEach((variant, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `button model-variant${index === 0 ? " active" : ""}`;
+    button.textContent = getModelVariantLabel(variant, index);
+    button.addEventListener("click", () => {
+      model.setAttribute("src", variant.src);
+      group.querySelectorAll(".model-variant").forEach((item) => item.classList.remove("active"));
+      button.classList.add("active");
+    });
+    group.appendChild(button);
+  });
+
+  actions.appendChild(group);
 }
 
 function getLocalizedAudioOverview(manifest) {

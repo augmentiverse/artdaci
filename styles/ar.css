@@ -221,6 +221,13 @@ body {
   text-decoration: none;
 }
 
+.model-variant-group {
+  display: inline-flex;
+  gap: 4px;
+  padding-right: 4px;
+  border-right: 1px solid rgba(255, 250, 241, 0.28);
+}
+
 .mini-dock button.active,
 .mini-dock a.active {
   background: var(--gold);

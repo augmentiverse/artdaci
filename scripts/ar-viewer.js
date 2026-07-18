@@ -7,6 +7,7 @@ const CONFIG = {
   lang: "en",
   target: "",
   model: "",
+  modelVariants: [],
   video: "",
   audio: "",
   manifest: "",
@@ -42,6 +43,7 @@ const UI_TEXT = {
     space: "Space",
     rotate: "Rotate",
     reset: "Reset",
+    modelChoice: "Model choice",
     noVideoTitle: "No video",
     noVideoBody: "This painting does not have a video layer yet.",
     videoReadyTitle: "Video ready",
@@ -89,6 +91,7 @@ const UI_TEXT = {
     space: "Espace",
     rotate: "Rotation",
     reset: "Réinitialiser",
+    modelChoice: "Choix du modèle",
     noVideoTitle: "Aucune vidéo",
     noVideoBody: "Cette peinture n'a pas encore de couche vidéo.",
     videoReadyTitle: "Vidéo prête",
@@ -263,6 +266,8 @@ const state = {
   videoTargetRotation: 0,
   targetRise: CONFIG.initialRise,
   targetScale: CONFIG.initialScale,
+  selectedModelIndex: 0,
+  modelLoading: false,
   clock: null,
   manifest: null,
   started: false
@@ -309,7 +314,7 @@ function applyStaticLanguage() {
   document.getElementById("toggle-spin").textContent = t("rotate");
   document.getElementById("reset-view").textContent = t("reset");
   document.getElementById("space-link").textContent = t("space");
-  document.getElementById("space-link").href = `space.html?painting=${CONFIG.slug}&lang=${CONFIG.lang}&v=10`;
+  document.getElementById("space-link").href = `space.html?painting=${CONFIG.slug}&lang=${CONFIG.lang}&v=14`;
   document.getElementById("panel-kicker").textContent = t("catalogue");
 }
 
@@ -601,8 +606,10 @@ function renderHotspotButtons(manifest) {
 
 function configureFromManifest(manifest) {
   const audioGuide = getLocalizedAudioGuide(manifest);
+  CONFIG.modelVariants = getModelVariants(manifest);
+  state.selectedModelIndex = 0;
   CONFIG.target = manifest.ar?.compiledTarget || manifest.print?.compiledMindTarget || CONFIG.target;
-  CONFIG.model = manifest.ar?.primaryModel || manifest.media?.model || CONFIG.model;
+  CONFIG.model = CONFIG.modelVariants[0]?.src || manifest.ar?.primaryModel || manifest.media?.model || CONFIG.model;
   CONFIG.video = manifest.media?.videos?.[0]?.src || "";
   CONFIG.audio = audioGuide?.src ? withAssetVersion(audioGuide.src) : "";
   CONFIG.initialScale = manifest.ar?.viewer?.initialScale ?? CONFIG.initialScale;
@@ -614,6 +621,7 @@ function configureFromManifest(manifest) {
   state.targetScale = CONFIG.initialScale;
   state.targetRise = CONFIG.initialRise;
   resetVideoTransform();
+  renderModelVariantControls();
 }
 
 function getLocalizedAudioGuide(manifest) {
@@ -622,6 +630,100 @@ function getLocalizedAudioGuide(manifest) {
     || guides.find((guide) => guide.lang === "en")
     || guides[0]
     || null;
+}
+
+function getModelVariants(manifest) {
+  const variants = manifest.ar?.modelVariants || manifest.media?.modelVariants || [];
+  const list = Array.isArray(variants) ? variants : [];
+  if (list.length) {
+    return list.filter((variant) => variant?.src);
+  }
+
+  const fallback = manifest.ar?.primaryModel || manifest.media?.model || CONFIG.model;
+  return fallback
+    ? [{ id: "model-1", label: { en: "Model 1", fr: "Modèle 1" }, src: fallback }]
+    : [];
+}
+
+function getModelVariantLabel(variant, index) {
+  if (typeof variant.label === "string") return variant.label;
+  return variant.label?.[CONFIG.lang] || variant.label?.en || `Model ${index + 1}`;
+}
+
+function renderModelVariantControls() {
+  document.getElementById("model-variant-group")?.remove();
+  if (CONFIG.modelVariants.length < 2) return;
+
+  const dock = document.querySelector(".mini-dock");
+  if (!dock) return;
+
+  const group = document.createElement("div");
+  group.id = "model-variant-group";
+  group.className = "model-variant-group";
+  group.setAttribute("role", "group");
+  group.setAttribute("aria-label", t("modelChoice"));
+
+  CONFIG.modelVariants.forEach((variant, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `model-variant${index === state.selectedModelIndex ? " active" : ""}`;
+    button.dataset.modelIndex = String(index);
+    button.textContent = getModelVariantLabel(variant, index);
+    button.addEventListener("click", () => switchModelVariant(index));
+    group.appendChild(button);
+  });
+
+  dock.insertBefore(group, document.getElementById("toggle-spin"));
+}
+
+function updateModelVariantControls() {
+  document.querySelectorAll(".model-variant").forEach((button) => {
+    const isActive = Number(button.dataset.modelIndex) === state.selectedModelIndex;
+    button.classList.toggle("active", isActive);
+    button.disabled = state.modelLoading;
+  });
+}
+
+async function switchModelVariant(index) {
+  if (!CONFIG.modelVariants[index] || index === state.selectedModelIndex || state.modelLoading) return;
+
+  state.selectedModelIndex = index;
+  CONFIG.model = CONFIG.modelVariants[index].src;
+  updateModelVariantControls();
+
+  if (!state.anchor?.group || !state.started) return;
+
+  if (state.model) {
+    state.anchor.group.remove(state.model);
+    disposeModel(state.model);
+    state.model = null;
+    state.modelLoaded = false;
+  }
+
+  try {
+    await loadModel(state.anchor.group);
+  } catch (error) {
+    console.error(error);
+    document.getElementById("panel-title").textContent = t("modelErrorTitle");
+    document.getElementById("panel-body").textContent = t("modelErrorBody");
+    document.getElementById("info-panel").classList.remove("collapsed");
+  } finally {
+    updateModelVariantControls();
+  }
+}
+
+function disposeModel(model) {
+  model.traverse((child) => {
+    if (!child.isMesh) return;
+    child.geometry?.dispose?.();
+    const materials = Array.isArray(child.material) ? child.material : [child.material];
+    materials.filter(Boolean).forEach((material) => {
+      Object.values(material).forEach((value) => {
+        if (value?.isTexture) value.dispose();
+      });
+      material.dispose?.();
+    });
+  });
 }
 
 function withAssetVersion(src) {
@@ -843,6 +945,8 @@ async function loadModel(group) {
   const label = state.manifest?.title || "artwork";
   document.getElementById("panel-body").textContent = t("modelLoading").replace("{title}", label);
   const loader = new GLTFLoader();
+  state.modelLoading = true;
+  updateModelVariantControls();
 
   return new Promise((resolve, reject) => {
     loader.load(
@@ -866,12 +970,18 @@ async function loadModel(group) {
 
         group.add(state.model);
         state.modelLoaded = true;
+        state.modelLoading = false;
+        updateModelVariantControls();
         showHotspot("intro");
         playNativeAudioGuide(true);
         resolve();
       },
       undefined,
-      reject
+      (error) => {
+        state.modelLoading = false;
+        updateModelVariantControls();
+        reject(error);
+      }
     );
   });
 }

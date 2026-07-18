@@ -255,6 +255,24 @@
     "compiledTarget": "assets/targets/mona-lisa.mind",
     "primaryModel": "assets/paintings/mona-lisa/mona-lisa.glb",
     "frameModel": "assets/paintings/mona-lisa/mona-lisa.glb",
+    "modelVariants": [
+      {
+        "id": "model-1",
+        "label": {
+          "en": "Model 1",
+          "fr": "Modèle 1"
+        },
+        "src": "assets/paintings/mona-lisa/mona-lisa.glb"
+      },
+      {
+        "id": "model-2",
+        "label": {
+          "en": "Model 2",
+          "fr": "Modèle 2"
+        },
+        "src": "assets/paintings/mona-lisa/mona-lisa-out-of-frame.glb"
+      }
+    ],
     "scaleMeters": {
       "width": 0.53,
       "height": 0.77
@@ -311,6 +329,24 @@
   "media": {
     "image": "assets/paintings/mona-lisa/mona-lisa.jpg",
     "model": "assets/paintings/mona-lisa/mona-lisa.glb",
+    "modelVariants": [
+      {
+        "id": "model-1",
+        "label": {
+          "en": "Model 1",
+          "fr": "Modèle 1"
+        },
+        "src": "assets/paintings/mona-lisa/mona-lisa.glb"
+      },
+      {
+        "id": "model-2",
+        "label": {
+          "en": "Model 2",
+          "fr": "Modèle 2"
+        },
+        "src": "assets/paintings/mona-lisa/mona-lisa-out-of-frame.glb"
+      }
+    ],
     "audioGuides": [
       {
         "id": "mona-lisa-audio-en",
