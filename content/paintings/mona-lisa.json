@@ -12,7 +12,9 @@
     "bioLong": "Leonardo da Vinci is one of the defining figures of the Italian Renaissance. Trained in Florence in the workshop of Andrea del Verrocchio, he developed a practice that joined painting, anatomy, optics, engineering, and natural philosophy. His paintings are rare in number but immense in influence, especially for their atmospheric effects, psychological ambiguity, and technical subtlety."
   },
   "date": "c. 1503-1519",
-  "movement": ["High Renaissance"],
+  "movement": [
+    "High Renaissance"
+  ],
   "medium": "Oil on poplar panel",
   "dimensions": {
     "heightCm": 77,
@@ -114,72 +116,135 @@
     {
       "id": "smile",
       "label": "The Smile",
-      "position2D": [0.5, 0.36],
-      "position3D": [0, 0.24, 0.04],
+      "position2D": [
+        0.5,
+        0.36
+      ],
+      "position3D": [
+        0,
+        0.24,
+        0.04
+      ],
       "category": "hidden-details",
       "body": "The smile appears to shift because Leonardo softens the mouth's edges with sfumato, letting peripheral vision and shadow change the viewer's perception."
     },
     {
       "id": "hands",
       "label": "Folded Hands",
-      "position2D": [0.51, 0.78],
-      "position3D": [0, -0.28, 0.04],
+      "position2D": [
+        0.51,
+        0.78
+      ],
+      "position3D": [
+        0,
+        -0.28,
+        0.04
+      ],
       "category": "composition",
       "body": "The hands anchor the portrait's pyramidal structure and create a composed, dignified stillness."
     },
     {
       "id": "landscape",
       "label": "Imagined Landscape",
-      "position2D": [0.72, 0.34],
-      "position3D": [0.2, 0.25, 0.03],
+      "position2D": [
+        0.72,
+        0.34
+      ],
+      "position3D": [
+        0.2,
+        0.25,
+        0.03
+      ],
       "category": "history",
       "body": "The landscape uses atmospheric perspective and geological imagination, linking the sitter to Leonardo's studies of water, rock, and natural transformation."
     },
     {
       "id": "sfumato",
       "label": "Sfumato",
-      "position2D": [0.48, 0.31],
-      "position3D": [0, 0.32, 0.05],
+      "position2D": [
+        0.48,
+        0.31
+      ],
+      "position3D": [
+        0,
+        0.32,
+        0.05
+      ],
       "category": "brushstrokes",
       "body": "Sfumato means smoky or softened. Leonardo builds form through delicate tonal transitions rather than sharp contour."
     },
     {
       "id": "eyes",
       "label": "Following Eyes",
-      "position2D": [0.5, 0.32],
-      "position3D": [0, 0.3, 0.06],
+      "position2D": [
+        0.5,
+        0.32
+      ],
+      "position3D": [
+        0,
+        0.3,
+        0.06
+      ],
       "category": "optics",
       "body": "The gaze can seem to follow viewers because the face is oriented toward us and the perspective remains stable as we move. Many direct-gaze portraits create a similar perceptual effect."
     },
     {
       "id": "veil",
       "label": "Veil and Pentimenti",
-      "position2D": [0.5, 0.26],
-      "position3D": [0, 0.38, 0.04],
+      "position2D": [
+        0.5,
+        0.26
+      ],
+      "position3D": [
+        0,
+        0.38,
+        0.04
+      ],
       "category": "scientific-imaging",
       "body": "Scientific imaging suggests that areas such as the veil, fingers, face, and background were refined during execution. These changes of mind reveal Leonardo's slow, experimental working method."
     },
     {
       "id": "glazes",
       "label": "Transparent Glazes",
-      "position2D": [0.48, 0.42],
-      "position3D": [0, 0.12, 0.05],
+      "position2D": [
+        0.48,
+        0.42
+      ],
+      "position3D": [
+        0,
+        0.12,
+        0.05
+      ],
       "category": "technique",
       "body": "Leonardo built the surface with extremely thin translucent glazes. Light passes through these layers and scatters softly, producing transitions that opaque brushstrokes cannot easily imitate."
     },
     {
       "id": "protection",
       "label": "Modern Protection",
-      "position2D": [0.5, 0.5],
-      "position3D": [0, 0, 0.08],
+      "position2D": [
+        0.5,
+        0.5
+      ],
+      "position3D": [
+        0,
+        0,
+        0.08
+      ],
       "category": "conservation",
       "body": "The painting is displayed in a climate-controlled protective case because its poplar panel support responds to humidity and must be shielded from environmental fluctuations, damage, and vandalism."
     },
     {
       "id": "theft",
       "label": "The 1911 Theft",
-      "position2D": [0.58, 0.18],
-      "position3D": [0.16, 0.42, 0.04],
+      "position2D": [
+        0.58,
+        0.18
+      ],
+      "position3D": [
+        0.16,
+        0.42,
+        0.04
+      ],
       "category": "history",
       "body": "In 1911 Vincenzo Peruggia removed the painting from the Louvre. Its recovery in 1913 turned a celebrated Renaissance portrait into a worldwide media icon."
     }
@@ -194,7 +259,12 @@
       "width": 0.53,
       "height": 0.77
     },
-    "lightingPresets": ["daylight", "museum", "candlelight", "raking-light"],
+    "lightingPresets": [
+      "daylight",
+      "museum",
+      "candlelight",
+      "raking-light"
+    ],
     "availableModes": [
       "painting-emergence",
       "artist",
@@ -220,7 +290,17 @@
     ],
     "chapterExperience": {
       "scanPrompt": "Begin with the smile, then move through hands, landscape, scientific imaging, conservation, and the 1911 theft.",
-      "guideSequence": ["smile", "eyes", "hands", "landscape", "sfumato", "veil", "glazes", "protection", "theft"],
+      "guideSequence": [
+        "smile",
+        "eyes",
+        "hands",
+        "landscape",
+        "sfumato",
+        "veil",
+        "glazes",
+        "protection",
+        "theft"
+      ],
       "productionNotes": [
         "Use close-up overlays for sfumato and glaze explanations.",
         "Represent pentimenti as toggleable ghost outlines rather than as claims of a single hidden image.",
@@ -235,18 +315,18 @@
       {
         "id": "mona-lisa-audio-en",
         "lang": "en",
-        "title": "Mona Lisa audio presentation",
-        "src": "assets/paintings/mona-lisa/mona-lisa-en.mp3",
-        "type": "audio/mpeg",
-        "description": "English audio presentation for the Mona Lisa AR experience."
+        "title": "Inside the Mona Lisa",
+        "src": "assets/paintings/mona-lisa/audio-video/Inside_the_Mona_Lisa_1m40_en.m4a",
+        "type": "audio/mp4",
+        "description": "Short English audio guide for the Mona Lisa AR experience."
       },
       {
         "id": "mona-lisa-audio-fr",
         "lang": "fr",
-        "title": "Presentation audio de La Joconde",
-        "src": "assets/paintings/mona-lisa/mona-lisa-fr.mp3",
-        "type": "audio/mpeg",
-        "description": "Présentation audio française pour l'expérience AR de la Joconde."
+        "title": "Dans La Joconde",
+        "src": "assets/paintings/mona-lisa/audio-video/Inside_the_Mona_Lisa_1m46_fr.m4a",
+        "type": "audio/mp4",
+        "description": "Court guide audio français pour l'expérience AR de La Joconde."
       }
     ],
     "videos": [
@@ -260,10 +340,33 @@
     ],
     "subtitles": [],
     "signLanguage": [],
-    "imageCredits": []
+    "imageCredits": [],
+    "audioOverviews": [
+      {
+        "id": "mona-lisa-overview-en",
+        "lang": "en",
+        "title": "Mona Lisa audio overview",
+        "src": "assets/paintings/mona-lisa/mona-lisa-en.mp3",
+        "type": "audio/mpeg",
+        "description": "Detailed English discussion between two speakers about the Mona Lisa."
+      },
+      {
+        "id": "mona-lisa-overview-fr",
+        "lang": "fr",
+        "title": "Aperçu audio de La Joconde",
+        "src": "assets/paintings/mona-lisa/mona-lisa-fr.mp3",
+        "type": "audio/mpeg",
+        "description": "Discussion détaillée en français entre deux personnes au sujet de La Joconde."
+      }
+    ]
   },
   "education": {
-    "ageBands": ["8-11", "12-15", "16-18", "university"],
+    "ageBands": [
+      "8-11",
+      "12-15",
+      "16-18",
+      "university"
+    ],
     "learningObjectives": [
       "Explain sfumato and atmospheric perspective.",
       "Identify how composition guides attention.",
@@ -276,26 +379,58 @@
     "quiz": [
       {
         "question": "Which technique softens the transitions around the Mona Lisa's face?",
-        "answers": ["Sfumato", "Pointillism", "Cubism", "Impasto"],
+        "answers": [
+          "Sfumato",
+          "Pointillism",
+          "Cubism",
+          "Impasto"
+        ],
         "correctAnswer": "Sfumato"
       },
       {
         "question": "What does scientific imaging suggest about Leonardo's process?",
-        "answers": ["He revised subtle details over time", "He painted the portrait in one sitting", "He used only opaque paint", "He avoided changes once painting began"],
+        "answers": [
+          "He revised subtle details over time",
+          "He painted the portrait in one sitting",
+          "He used only opaque paint",
+          "He avoided changes once painting began"
+        ],
         "correctAnswer": "He revised subtle details over time"
       },
       {
         "question": "Why does the smile seem to shift?",
-        "answers": ["Soft tonal transitions are read differently by peripheral vision", "The panel physically moves", "The mouth is painted twice", "The frame changes the lighting every second"],
+        "answers": [
+          "Soft tonal transitions are read differently by peripheral vision",
+          "The panel physically moves",
+          "The mouth is painted twice",
+          "The frame changes the lighting every second"
+        ],
         "correctAnswer": "Soft tonal transitions are read differently by peripheral vision"
       },
       {
         "question": "Which event helped turn the painting into a worldwide media icon?",
-        "answers": ["Its theft from the Louvre in 1911", "Its first exhibition in New York", "Its sale at auction", "Its repainting in the twentieth century"],
+        "answers": [
+          "Its theft from the Louvre in 1911",
+          "Its first exhibition in New York",
+          "Its sale at auction",
+          "Its repainting in the twentieth century"
+        ],
         "correctAnswer": "Its theft from the Louvre in 1911"
       }
     ],
-    "vocabulary": ["sfumato", "atmospheric perspective", "portraiture", "High Renaissance", "poplar panel", "pentimenti", "infrared reflectography", "multispectral imaging", "glaze", "conservation ethics", "peripheral vision"],
+    "vocabulary": [
+      "sfumato",
+      "atmospheric perspective",
+      "portraiture",
+      "High Renaissance",
+      "poplar panel",
+      "pentimenti",
+      "infrared reflectography",
+      "multispectral imaging",
+      "glaze",
+      "conservation ethics",
+      "peripheral vision"
+    ],
     "discussionPrompts": [
       "Why might an ambiguous expression make a portrait more memorable?",
       "How does the background landscape change the mood of the sitter?",

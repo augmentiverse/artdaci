@@ -148,6 +148,21 @@ model-viewer.viewer-fallback {
   color: #fffaf1;
 }
 
+.button:disabled {
+  opacity: 0.56;
+  cursor: not-allowed;
+}
+
+.audio-overview-player {
+  display: block;
+  width: min(760px, 100%);
+  margin-top: 16px;
+}
+
+.audio-overview-player[hidden] {
+  display: none;
+}
+
 .quick-look-link img {
   width: 1px;
   height: 1px;
