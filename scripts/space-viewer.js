@@ -26,20 +26,20 @@ const COPY = {
   fr: {
     back: "Retour",
     kicker: "Placement dans l'espace",
-    loading: "Chargement du modele...",
-    ready: "Modele pret. Touchez Placer dans mon espace pour le positionner dans votre piece.",
-    readyWithUsdz: "Modele pret. Touchez Placer dans mon espace. iPhone/iPad utilisera USDZ; Android utilisera Scene Viewer.",
-    readyWithoutUsdz: "Modele pret. Android et les appareils WebXR compatibles peuvent utiliser l'AR spatiale. iPhone/iPad necessite un fichier USDZ pour cette oeuvre.",
-    fallbackTitle: "Apercu 3D indisponible",
-    fallbackBody: "La bibliotheque de placement dans l'espace ne s'est pas chargee. Vous pouvez tout de meme ouvrir la page imprimee, l'AR image ou telecharger le fichier 3D.",
-    downloadModel: "Telecharger GLB",
-    downloadUsdz: "Telecharger USDZ",
+    loading: "Chargement du modèle...",
+    ready: "Modèle prêt. Touchez Placer dans mon espace pour le positionner dans votre pièce.",
+    readyWithUsdz: "Modèle prêt. Touchez Placer dans mon espace. iPhone/iPad utilisera USDZ; Android utilisera Scene Viewer.",
+    readyWithoutUsdz: "Modèle prêt. Android et les appareils WebXR compatibles peuvent utiliser l'AR spatiale. iPhone/iPad nécessite un fichier USDZ pour cette œuvre.",
+    fallbackTitle: "Aperçu 3D indisponible",
+    fallbackBody: "La bibliothèque de placement dans l'espace ne s'est pas chargée. Vous pouvez tout de même ouvrir la page imprimée, l'AR image ou télécharger le fichier 3D.",
+    downloadModel: "Télécharger GLB",
+    downloadUsdz: "Télécharger USDZ",
     place: "Placer dans mon espace",
     imageAr: "AR sur image",
-    printedPage: "Page imprimee",
-    unsupported: "Ce navigateur peut afficher le modele 3D, mais il peut ne pas prendre en charge le placement AR dans l'espace.",
-    iosNote: "L'AR spatiale est disponible lorsque le modele possede un fichier AR compatible avec cet appareil.",
-    intro: "Placez le modele 3D dans votre espace, puis deplacez-le, tournez-le et redimensionnez-le avec les controles AR de votre appareil."
+    printedPage: "Page imprimée",
+    unsupported: "Ce navigateur peut afficher le modèle 3D, mais il peut ne pas prendre en charge le placement AR dans l'espace.",
+    iosNote: "L'AR spatiale est disponible lorsque le modèle possède un fichier AR compatible avec cet appareil.",
+    intro: "Placez le modèle 3D dans votre espace, puis déplacez-le, tournez-le et redimensionnez-le avec les contrôles AR de votre appareil."
   }
 };
 

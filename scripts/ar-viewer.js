@@ -74,51 +74,51 @@ const UI_TEXT = {
     cameraGenericError: "The browser or AR engine refused camera startup. See the technical details below, then try Safari on iOS or Chrome on Android."
   },
   fr: {
-    ready: "Pret. Touchez Demarrer la camera et autorisez l'acces.",
-    starting: "Demarrage...",
-    startCamera: "Demarrer la camera",
+    ready: "Prêt. Touchez Démarrer la caméra et autorisez l'accès.",
+    starting: "Démarrage...",
+    startCamera: "Démarrer la caméra",
     back: "Retour",
     searching: "Recherche",
-    locked: "Verrouille",
-    preparing: "Preparation WebAR",
-    checkingCamera: "Verification de l'autorisation camera...",
+    locked: "Verrouillé",
+    preparing: "Préparation WebAR",
+    checkingCamera: "Vérification de l'autorisation caméra...",
     audio: "Audio",
     stop: "Stop",
-    video: "Video",
-    hideVideo: "Masquer video",
+    video: "Vidéo",
+    hideVideo: "Masquer vidéo",
     space: "Espace",
     rotate: "Rotation",
-    reset: "Reinitialiser",
-    noVideoTitle: "Aucune video",
-    noVideoBody: "Cette peinture n'a pas encore de couche video.",
-    videoReadyTitle: "Video prete",
-    videoReadyBody: "Touchez le bouton Video pour lancer la couche documentaire.",
-    modelLoading: "Chargement du modele 3D : {title}...",
-    trackingReady: "Le suivi est pret. Le modele 3D se charge en arriere-plan.",
-    engineLoading: "Chargement de la cible image et preparation du moteur AR...",
-    cameraRequest: "Demande d'autorisation camera...",
-    modelErrorTitle: "Le modele ne peut pas se charger",
-    modelErrorBody: "La camera fonctionne, mais le fichier 3D ne peut pas etre charge. Verifiez le chemin du GLB et la taille du fichier.",
+    reset: "Réinitialiser",
+    noVideoTitle: "Aucune vidéo",
+    noVideoBody: "Cette peinture n'a pas encore de couche vidéo.",
+    videoReadyTitle: "Vidéo prête",
+    videoReadyBody: "Touchez le bouton Vidéo pour lancer la couche documentaire.",
+    modelLoading: "Chargement du modèle 3D : {title}...",
+    trackingReady: "Le suivi est prêt. Le modèle 3D se charge en arrière-plan.",
+    engineLoading: "Chargement de la cible image et préparation du moteur AR...",
+    cameraRequest: "Demande d'autorisation caméra...",
+    modelErrorTitle: "Le modèle ne peut pas se charger",
+    modelErrorBody: "La caméra fonctionne, mais le fichier 3D ne peut pas être chargé. Vérifiez le chemin du GLB et la taille du fichier.",
     targetErrorTitle: "La cible AR ne peut pas se charger",
-    targetErrorBody: "Le fichier cible image ne peut pas etre charge. Verifiez le chemin du fichier .mind dans la fiche de la peinture.",
+    targetErrorBody: "Le fichier cible image ne peut pas être chargé. Vérifiez le chemin du fichier .mind dans la fiche de la peinture.",
     audioUnavailableTitle: "Audio indisponible",
-    audioUnavailableBody: "Ce navigateur ne prend pas en charge la narration vocale integree.",
-    audioLoadErrorBody: "Le fichier audio enregistre ne peut pas etre charge. Verifiez que le fichier audio a bien ete publie avec le site.",
-    scanTarget: "Scannez l'image imprimee : {artist}{title}.",
+    audioUnavailableBody: "Ce navigateur ne prend pas en charge la narration vocale intégrée.",
+    audioLoadErrorBody: "Le fichier audio enregistré ne peut pas être chargé. Vérifiez que le fichier audio a bien été publié avec le site.",
+    scanTarget: "Scannez l'image imprimée : {artist}{title}.",
     catalogue: "Catalogue",
     intro: "Intro",
-    arStartErrorTitle: "L'AR camera ne peut pas demarrer",
-    tryAgain: "Reessayer",
-    audioGuideNotReady: "Le guide audio n'est pas encore pret.",
-    hotspot: "Point d'interet",
-    futureLayer: "Cette couche d'interpretation est prete pour un contenu futur.",
-    permissionBlocked: "L'autorisation camera a ete bloquee. Ouvrez les controles du site dans la barre d'adresse, autorisez la camera, puis reessayez.",
-    noCamera: "Aucune camera n'a ete trouvee. Testez sur un telephone ou une tablette avec camera arriere, ou connectez une webcam.",
-    cameraInUse: "La camera est deja utilisee par une autre application ou un autre onglet. Fermez-les puis reessayez.",
-    cameraSettingsUnavailable: "Les reglages camera demandes ne sont pas disponibles sur cet appareil. Essayez un autre navigateur ou appareil.",
-    securityBlocked: "Le navigateur a bloque la camera pour des raisons de securite. Utilisez HTTPS et evitez les navigateurs integres.",
-    librariesMissing: "Les bibliotheques JavaScript AR ne se sont pas chargees. Republiez le projet complet, y compris le dossier vendor.",
-    cameraGenericError: "Le navigateur ou le moteur AR a refuse le demarrage camera. Consultez les details techniques, puis essayez Safari sur iOS ou Chrome sur Android."
+    arStartErrorTitle: "L'AR caméra ne peut pas démarrer",
+    tryAgain: "Réessayer",
+    audioGuideNotReady: "Le guide audio n'est pas encore prêt.",
+    hotspot: "Point d'intérêt",
+    futureLayer: "Cette couche d'interprétation est prête pour un contenu futur.",
+    permissionBlocked: "L'autorisation caméra a été bloquée. Ouvrez les contrôles du site dans la barre d'adresse, autorisez la caméra, puis réessayez.",
+    noCamera: "Aucune caméra n'a été trouvée. Testez sur un téléphone ou une tablette avec caméra arrière, ou connectez une webcam.",
+    cameraInUse: "La caméra est déjà utilisée par une autre application ou un autre onglet. Fermez-les puis réessayez.",
+    cameraSettingsUnavailable: "Les réglages caméra demandés ne sont pas disponibles sur cet appareil. Essayez un autre navigateur ou appareil.",
+    securityBlocked: "Le navigateur a bloqué la caméra pour des raisons de sécurité. Utilisez HTTPS et évitez les navigateurs intégrés.",
+    librariesMissing: "Les bibliothèques JavaScript AR ne se sont pas chargées. Republiez le projet complet, y compris le dossier vendor.",
+    cameraGenericError: "Le navigateur ou le moteur AR a refusé le démarrage caméra. Consultez les détails techniques, puis essayez Safari sur iOS ou Chrome sur Android."
   }
 };
 
@@ -127,99 +127,99 @@ const AR_TRANSLATIONS = {
     "mona-lisa": {
       title: "Mona Lisa",
       texts: {
-        historicalContext: "Peinte au debut du XVIe siecle, la Mona Lisa appartient a la periode de maturite de Leonard de Vinci et reflete l'interet de la Haute Renaissance pour le naturalisme idealise, la profondeur atmospherique et la vie interieure du modele.",
-        artisticAnalysis: "Le portrait repose sur une composition pyramidale calme, des transitions tres fines entre ombre et lumiere, et une expression enigmatique qui change selon que l'on observe les yeux, la bouche, les mains ou le paysage.",
-        composition: "Le modele est place dans une structure triangulaire stable. Les mains repliees forment la base, les epaules guident le regard vers le visage, et celui-ci devient le centre immobile d'un paysage en mouvement.",
-        palette: "La palette est retenue : carnations chaudes, bruns fumes, verts assourdis, lointains bleu-vert et glacis sombres qui creent la profondeur sans contours durs.",
-        perspectiveTechnique: "Leonard utilise le sfumato pour adoucir les transitions et la perspective atmospherique pour faire reculer le paysage. Les formes semblent ainsi flotter dans l'air.",
-        culturalSignificance: "La Mona Lisa est l'une des peintures les plus reconnues au monde et demeure une reference majeure pour le portrait, la culture museale et l'idee moderne de chef-d'oeuvre."
+        historicalContext: "Peinte au début du XVIe siècle, la Mona Lisa appartient à la période de maturité de Léonard de Vinci et reflète l'intérêt de la Haute Renaissance pour le naturalisme idéalisé, la profondeur atmosphérique et la vie intérieure du modèle.",
+        artisticAnalysis: "Le portrait repose sur une composition pyramidale calme, des transitions très fines entre ombre et lumière, et une expression énigmatique qui change selon que l'on observe les yeux, la bouche, les mains ou le paysage.",
+        composition: "Le modèle est placé dans une structure triangulaire stable. Les mains repliées forment la base, les épaules guident le regard vers le visage, et celui-ci devient le centre immobile d'un paysage en mouvement.",
+        palette: "La palette est retenue : carnations chaudes, bruns fumés, verts assourdis, lointains bleu-vert et glacis sombres qui créent la profondeur sans contours durs.",
+        perspectiveTechnique: "Léonard utilise le sfumato pour adoucir les transitions et la perspective atmosphérique pour faire reculer le paysage. Les formes semblent ainsi flotter dans l'air.",
+        culturalSignificance: "La Mona Lisa est l'une des peintures les plus reconnues au monde et demeure une référence majeure pour le portrait, la culture muséale et l'idée moderne de chef-d'œuvre."
       },
       hotspots: {
         smile: {
           label: "Le sourire",
-          category: "detail cache",
-          body: "Le sourire semble changer car Leonard adoucit les bords de la bouche par le sfumato, laissant la vision peripherique et l'ombre modifier notre perception."
+          category: "détail caché",
+          body: "Le sourire semble changer car Léonard adoucit les bords de la bouche par le sfumato, laissant la vision périphérique et l'ombre modifier notre perception."
         },
         hands: {
           label: "Les mains",
           category: "composition",
-          body: "Les mains stabilisent la structure pyramidale du portrait et donnent a la figure une presence calme et digne."
+          body: "Les mains stabilisent la structure pyramidale du portrait et donnent à la figure une présence calme et digne."
         },
         landscape: {
           label: "Le paysage",
           category: "histoire",
-          body: "Le paysage utilise la perspective atmospherique et l'imagination geologique, reliant le modele aux etudes de Leonard sur l'eau, la roche et la nature."
+          body: "Le paysage utilise la perspective atmosphérique et l'imagination géologique, reliant le modèle aux études de Léonard sur l'eau, la roche et la nature."
         },
         sfumato: {
           label: "Sfumato",
           category: "technique",
-          body: "Le sfumato signifie un passage doux, presque fume. Leonard modele les formes par des transitions tonales tres subtiles plutot que par des contours nets."
+          body: "Le sfumato signifie un passage doux, presque fumé. Léonard modèle les formes par des transitions tonales très subtiles plutôt que par des contours nets."
         }
       }
     },
     "van-gogh": {
       title: "Autoportrait",
       texts: {
-        historicalContext: "Peint pendant les annees parisiennes de Van Gogh, cet autoportrait montre ses recherches sur les contrastes de couleur, la touche fragmentee et les lecons de l'impressionnisme et du neo-impressionnisme.",
-        artisticAnalysis: "Le visage est construit par de courtes touches directionnelles qui alternent rouges, oranges, verts et jaunes. Le fond bleu-vert vibre face a la barbe rousse et donne au portrait une intensite electrique.",
-        composition: "La tete est legerement tournee en trois quarts, tandis que le regard fixe le spectateur. Le veston sombre stabilise le bas de l'image et le fond actif fait pression autour de la figure.",
-        palette: "Van Gogh utilise des contrastes complementaires : cheveux et barbe rouge-orange contre un environnement bleu-vert, avec des touches de jaune, rose, turquoise et brun-violet.",
-        perspectiveTechnique: "Le portrait depend moins d'un modele academique que d'une structure de couleur et de touches directionnelles. La forme nait du mouvement de la peinture.",
-        culturalSignificance: "Les autoportraits de Van Gogh sont devenus des icones de l'identite artistique moderne, associant la touche visible a l'intensite interieure."
+        historicalContext: "Peint pendant les années parisiennes de Van Gogh, cet autoportrait montre ses recherches sur les contrastes de couleur, la touche fragmentée et les leçons de l'impressionnisme et du néo-impressionnisme.",
+        artisticAnalysis: "Le visage est construit par de courtes touches directionnelles qui alternent rouges, oranges, verts et jaunes. Le fond bleu-vert vibre face à la barbe rousse et donne au portrait une intensité électrique.",
+        composition: "La tête est légèrement tournée en trois quarts, tandis que le regard fixe le spectateur. Le veston sombre stabilise le bas de l'image et le fond actif fait pression autour de la figure.",
+        palette: "Van Gogh utilise des contrastes complémentaires : cheveux et barbe rouge-orange contre un environnement bleu-vert, avec des touches de jaune, rose, turquoise et brun-violet.",
+        perspectiveTechnique: "Le portrait dépend moins d'un modèle académique que d'une structure de couleur et de touches directionnelles. La forme naît du mouvement de la peinture.",
+        culturalSignificance: "Les autoportraits de Van Gogh sont devenus des icônes de l'identité artistique moderne, associant la touche visible à l'intensité intérieure."
       },
       hotspots: {
         eyes: {
           label: "Le regard",
           category: "psychologie",
-          body: "Les yeux creent une rencontre directe avec le spectateur et transforment l'autoportrait en acte d'observation de soi."
+          body: "Les yeux créent une rencontre directe avec le spectateur et transforment l'autoportrait en acte d'observation de soi."
         },
         beard: {
-          label: "Couleurs complementaires",
+          label: "Couleurs complémentaires",
           category: "couleur",
-          body: "La barbe orange-rouge vibre contre le fond bleu-vert, intensifiant l'energie visuelle du portrait."
+          body: "La barbe orange-rouge vibre contre le fond bleu-vert, intensifiant l'énergie visuelle du portrait."
         },
         background: {
-          label: "Touches fragmentees",
+          label: "Touches fragmentées",
           category: "touche",
-          body: "Le fond n'est pas neutre : ses petites touches creent un mouvement qui entoure et charge la figure."
+          body: "Le fond n'est pas neutre : ses petites touches créent un mouvement qui entoure et charge la figure."
         },
         jacket: {
           label: "Structure sombre",
           category: "composition",
-          body: "Le veston sombre stabilise le bas de l'image tout en reprenant la meme energie de touche que le visage et le fond."
+          body: "Le veston sombre stabilise le bas de l'image tout en reprenant la même énergie de touche que le visage et le fond."
         }
       }
     },
     "van-gogh-bedroom": {
       title: "La Chambre",
       texts: {
-        historicalContext: "Van Gogh peint La Chambre a Arles en 1888, peu apres son installation dans la Maison jaune. Cette piece devait representer le repos, la stabilite et l'espoir d'un foyer d'artiste dans le sud de la France.",
+        historicalContext: "Van Gogh peint La Chambre à Arles en 1888, peu après son installation dans la Maison jaune. Cette pièce devait représenter le repos, la stabilité et l'espoir d'un foyer d'artiste dans le sud de la France.",
         artisticAnalysis: "La peinture transforme une chambre simple en espace psychologique intense. Les meubles basculent, les murs penchent et les contours forts maintiennent les couleurs vives en place.",
-        composition: "Les lames du plancher guident le regard vers le fond, tandis que le lit domine la partie droite. Chaises, table, tableaux et fenetre creent un rythme de rectangles.",
-        palette: "Van Gogh utilise de grands aplats de bleu, lavande, jaune, orange, vert et rouge. Il voulait evoquer le repos, mais les contrastes rendent la chambre tres vivante.",
-        perspectiveTechnique: "La perspective est volontairement simplifiee et deformee. Les lignes inclinees et les couleurs plates donnent a la chambre une force expressive.",
-        culturalSignificance: "La Chambre est devenue l'une des images les plus aimees de Van Gogh parce qu'elle transforme un interieur prive en portrait de desir de repos, d'abri et d'espoir artistique."
+        composition: "Les lames du plancher guident le regard vers le fond, tandis que le lit domine la partie droite. Chaises, table, tableaux et fenêtre créent un rythme de rectangles.",
+        palette: "Van Gogh utilise de grands aplats de bleu, lavande, jaune, orange, vert et rouge. Il voulait évoquer le repos, mais les contrastes rendent la chambre très vivante.",
+        perspectiveTechnique: "La perspective est volontairement simplifiée et déformée. Les lignes inclinées et les couleurs plates donnent à la chambre une force expressive.",
+        culturalSignificance: "La Chambre est devenue l'une des images les plus aimées de Van Gogh parce qu'elle transforme un intérieur privé en portrait de désir de repos, d'abri et d'espoir artistique."
       },
       hotspots: {
         bed: {
           label: "Le lit",
           category: "symbolique",
-          body: "Le grand lit jaune domine la chambre et fait du repos le centre emotionnel de la composition."
+          body: "Le grand lit jaune domine la chambre et fait du repos le centre émotionnel de la composition."
         },
         chairs: {
           label: "Les chaises vides",
           category: "composition",
-          body: "Les chaises suggerent la vie quotidienne, l'hospitalite et l'absence. Elles rendent la piece habitee meme sans figure humaine."
+          body: "Les chaises suggèrent la vie quotidienne, l'hospitalité et l'absence. Elles rendent la pièce habitée même sans figure humaine."
         },
         pictures: {
           label: "Les tableaux au mur",
           category: "artiste",
-          body: "Les petites images au mur renvoient a l'univers artistique de Van Gogh et transforment la chambre en espace personnel."
+          body: "Les petites images au mur renvoient à l'univers artistique de Van Gogh et transforment la chambre en espace personnel."
         },
         perspective: {
-          label: "Perspective inclinee",
+          label: "Perspective inclinée",
           category: "technique",
-          body: "Le sol et les meubles ne suivent pas une perspective academique stricte. Leur inclinaison donne a la chambre une tension expressive."
+          body: "Le sol et les meubles ne suivent pas une perspective académique stricte. Leur inclinaison donne à la chambre une tension expressive."
         }
       }
     }
@@ -1012,7 +1012,7 @@ function playNativeAudioGuide(quiet = false) {
     if (!quiet) {
       document.getElementById("panel-title").textContent = t("audio");
       document.getElementById("panel-body").textContent = CONFIG.lang === "fr"
-        ? "Touchez Audio pour lancer la narration enregistree."
+        ? "Touchez Audio pour lancer la narration enregistrée."
         : "Tap Audio to start the recorded narration.";
       document.getElementById("info-panel").classList.remove("collapsed");
     }
