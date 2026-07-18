@@ -20,6 +20,7 @@ const UI = {
     print: "Printed Spread",
     ar: "Image AR",
     space: "Room AR",
+    audioOverview: "Audio Overview",
     vocabulary: "Vocabulary",
     noResults: "No artwork matches that search.",
     years: "years covered",
@@ -40,6 +41,7 @@ const UI = {
     print: "Double page",
     ar: "AR image",
     space: "AR espace",
+    audioOverview: "Aperçu audio",
     vocabulary: "Vocabulaire",
     noResults: "Aucune œuvre ne correspond à cette recherche.",
     years: "années couvertes",
@@ -182,6 +184,7 @@ function renderCard(manifest, lang, text) {
   const image = manifest.media?.image || manifest.print?.imageTargetSource;
   const movement = (manifest.movement || []).join(", ");
   const printUrl = PRINT_PAGES[lang]?.[slug] || PRINT_PAGES.en[slug] || "index.html";
+  const audioOverview = getLocalizedAudioOverview(manifest, lang);
   const location = [manifest.currentLocation?.museum, manifest.currentLocation?.city].filter(Boolean).join(", ");
 
   return `
@@ -205,10 +208,17 @@ function renderCard(manifest, lang, text) {
           <a class="button primary" href="${printUrl}">${text.print}</a>
           <a class="button" href="ar.html?painting=${slug}&amp;lang=${lang}">${text.ar}</a>
           <a class="button" href="space.html?painting=${slug}&amp;lang=${lang}">${text.space}</a>
+          ${audioOverview ? `<a class="button" href="${escapeHtml(audioOverview.src)}">${text.audioOverview}</a>` : ""}
         </div>
       </div>
     </article>
   `;
+}
+
+function getLocalizedAudioOverview(manifest, lang) {
+  const overviews = manifest.media?.audioOverviews || manifest.media?.audioOverview || [];
+  const list = Array.isArray(overviews) ? overviews : [overviews];
+  return list.find((item) => item.lang === lang) || list.find((item) => item.lang === "en") || list[0] || null;
 }
 
 function getTitle(manifest, lang) {
