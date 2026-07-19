@@ -751,15 +751,8 @@ figcaption strong {
   margin: 14px 8px 0 0;
 }
 
-.ar-note .audio-overview {
-  display: grid;
-  gap: 8px;
-  margin-top: 16px;
-  max-width: 560px;
-}
-
-.ar-note .audio-overview audio {
-  width: 100%;
+.ar-note .qr-heading {
+  margin-top: 18px;
 }
 
 .qr-strip {
