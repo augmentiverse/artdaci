@@ -17,7 +17,6 @@ const COPY = {
     audioOverview: "Audio overview",
     audioOverviewPause: "Pause overview",
     audioOverviewMissing: "Audio overview unavailable",
-    downloadUsdz: "Download USDZ",
     place: "Place in My Space",
     imageAr: "Image AR",
     printedPage: "Printed Page",
@@ -38,7 +37,6 @@ const COPY = {
     audioOverview: "Aperçu audio",
     audioOverviewPause: "Mettre en pause",
     audioOverviewMissing: "Aperçu audio indisponible",
-    downloadUsdz: "Télécharger USDZ",
     place: "Placer dans mon espace",
     imageAr: "AR sur image",
     printedPage: "Page imprimée",
@@ -121,7 +119,7 @@ function configureViewer(manifest) {
   document.getElementById("image-ar-link").href = `ar.html?painting=${slug}&lang=${lang}`;
   document.getElementById("print-link").href = PRINT_PAGES[lang]?.[slug] || "index.html";
   renderModelVariantControls(model, modelVariants);
-  renderDirectAssetLinks(usdz, audioOverview);
+  renderExperienceActions(audioOverview);
   checkModelViewerAvailability(usdz, audioOverview);
   model.addEventListener("ar-status", (event) => {
     if (event.detail.status === "failed") {
@@ -179,13 +177,12 @@ function getLocalizedAudioOverview(manifest) {
   return list.find((item) => item.lang === lang) || list.find((item) => item.lang === "en") || list[0] || null;
 }
 
-function renderDirectAssetLinks(usdz, audioOverview) {
+function renderExperienceActions(audioOverview) {
   const actions = document.querySelector(".space-panel .actions");
   if (!actions) return;
 
   actions.insertAdjacentHTML("beforeend", `
     <button id="audio-overview-button" class="button" type="button">${audioOverview ? COPY[lang].audioOverview : COPY[lang].audioOverviewMissing}</button>
-    ${usdz ? `<a class="button" href="${usdz}" rel="ar">${COPY[lang].downloadUsdz}</a>` : ""}
   `);
   bindAudioOverview(audioOverview);
 }
@@ -245,7 +242,6 @@ function checkModelViewerAvailability(usdz, audioOverview) {
         <span>${COPY[lang].fallbackBody}</span>
         <div class="actions">
           ${audioOverview?.src ? `<a class="button primary" href="${audioOverview.src}">${COPY[lang].audioOverview}</a>` : ""}
-          ${usdz ? `<a class="button" href="${usdz}" rel="ar">${COPY[lang].downloadUsdz}</a>` : ""}
         </div>
       </div>
     `;
