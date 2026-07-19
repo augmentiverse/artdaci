@@ -12,6 +12,12 @@ TARGETS = {
     "mona-lisa-audio-fr.png": "assets/paintings/mona-lisa/mona-lisa-fr.mp3",
     "van-gogh-bedroom-audio-en.png": "assets/paintings/van-gogh-bedroom/audio-video/Van-Gogh_Bedroom_en.m4a",
     "van-gogh-bedroom-audio-fr.png": "assets/paintings/van-gogh-bedroom/audio-video/Van-Gogh_la-chambre_fr.m4a",
+    "vermeer-girl-pearl-ar-en.png": "ar.html?painting=vermeer-girl-with-a-pearl-earring&lang=en",
+    "vermeer-girl-pearl-ar-fr.png": "ar.html?painting=vermeer-girl-with-a-pearl-earring&lang=fr",
+    "vermeer-girl-pearl-space-en.png": "space.html?painting=vermeer-girl-with-a-pearl-earring&lang=en",
+    "vermeer-girl-pearl-space-fr.png": "space.html?painting=vermeer-girl-with-a-pearl-earring&lang=fr",
+    "vermeer-girl-pearl-audio-en.png": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring.mp3",
+    "vermeer-girl-pearl-audio-fr.png": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring_fr.mp3",
 }
 
 

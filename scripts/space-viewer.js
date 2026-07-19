@@ -1,7 +1,8 @@
 const PAINTINGS = {
   "mona-lisa": "content/paintings/mona-lisa.json",
   "van-gogh": "content/paintings/van-gogh.json",
-  "van-gogh-bedroom": "content/paintings/van-gogh-bedroom.json"
+  "van-gogh-bedroom": "content/paintings/van-gogh-bedroom.json",
+  "vermeer-girl-with-a-pearl-earring": "content/paintings/vermeer-girl-with-a-pearl-earring.json"
 };
 
 const COPY = {
@@ -51,13 +52,20 @@ const PRINT_PAGES = {
   en: {
     "mona-lisa": "print-target.html",
     "van-gogh": "print-van-gogh.html",
-    "van-gogh-bedroom": "print-van-gogh-bedroom.html"
+    "van-gogh-bedroom": "print-van-gogh-bedroom.html",
+    "vermeer-girl-with-a-pearl-earring": "print-vermeer-girl-with-a-pearl-earring.html"
   },
   fr: {
     "mona-lisa": "print-target-fr.html",
     "van-gogh": "print-van-gogh-fr.html",
-    "van-gogh-bedroom": "print-van-gogh-bedroom-fr.html"
+    "van-gogh-bedroom": "print-van-gogh-bedroom-fr.html",
+    "vermeer-girl-with-a-pearl-earring": "print-vermeer-girl-with-a-pearl-earring-fr.html"
   }
+};
+
+const FR_TITLES = {
+  "van-gogh-bedroom": "La Chambre",
+  "vermeer-girl-with-a-pearl-earring": "La Jeune Fille à la perle"
 };
 
 const params = new URLSearchParams(window.location.search);
@@ -95,7 +103,8 @@ function applyStaticCopy() {
 
 function configureViewer(manifest) {
   const model = document.getElementById("space-model");
-  const title = manifest.title || "Artwork";
+  const defaultTitle = manifest.title || "Artwork";
+  const title = lang === "fr" ? FR_TITLES[slug] || defaultTitle : defaultTitle;
   const modelVariants = getModelVariants(manifest);
   const src = modelVariants[0]?.src || manifest.ar?.primaryModel || manifest.media?.model;
   const poster = manifest.media?.image || manifest.print?.imageTargetSource;
@@ -103,7 +112,7 @@ function configureViewer(manifest) {
   const audioOverview = getLocalizedAudioOverview(manifest);
 
   document.title = `DACIART - ${title} - ${COPY[lang].kicker}`;
-  document.getElementById("space-title").textContent = lang === "fr" && slug === "van-gogh-bedroom" ? "La Chambre" : title;
+  document.getElementById("space-title").textContent = title;
 
   model.setAttribute("src", src);
   model.alt = `${title} 3D model`;

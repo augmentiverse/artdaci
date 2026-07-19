@@ -23,7 +23,8 @@ const CONFIG = {
 const PAINTINGS = {
   "mona-lisa": "content/paintings/mona-lisa.json",
   "van-gogh": "content/paintings/van-gogh.json",
-  "van-gogh-bedroom": "content/paintings/van-gogh-bedroom.json"
+  "van-gogh-bedroom": "content/paintings/van-gogh-bedroom.json",
+  "vermeer-girl-with-a-pearl-earring": "content/paintings/vermeer-girl-with-a-pearl-earring.json"
 };
 
 const UI_TEXT = {
@@ -224,6 +225,24 @@ const AR_TRANSLATIONS = {
           category: "technique",
           body: "Le sol et les meubles ne suivent pas une perspective académique stricte. Leur inclinaison donne à la chambre une tension expressive."
         }
+      }
+    },
+    "vermeer-girl-with-a-pearl-earring": {
+      title: "La Jeune Fille à la perle",
+      texts: {
+        historicalContext: "Peinte à Delft vers 1665, l'œuvre est une tronie : une étude de caractère et de costume plutôt qu'un portrait commandé d'une personne identifiée.",
+        artisticAnalysis: "La jeune fille se retourne au moment de la rencontre. Son regard direct, ses lèvres entrouvertes et les contours adoucis rendent l'image immédiate tout en préservant son mystère.",
+        composition: "La silhouette triangulaire se détache du fond sombre. La tête et le corps tournent en sens opposés, créant un mouvement en spirale qui aboutit au regard.",
+        palette: "Vermeer oppose le bleu outremer et le jaune du turban aux tons terreux du vêtement. Glacis, peinture opaque et reflets précis construisent la lumière.",
+        perspectiveTechnique: "Sans architecture visible, la profondeur naît des superpositions, des bords adoucis et des transitions tonales. Les effets optiques ont suscité des comparaisons avec la chambre noire, sans preuve d'une méthode unique.",
+        culturalSignificance: "Souvent surnommée la Joconde du Nord, l'œuvre est devenue une icône du mystère, du regard et de l'identité imaginée."
+      },
+      hotspots: {
+        gaze: { label: "Le regard", category: "observation", body: "Les yeux rencontrent le spectateur au moment où la jeune fille se retourne, créant une proximité sans récit explicatif." },
+        pearl: { label: "La perle", category: "technique", body: "Quelques touches de lumière suffisent à suggérer la boucle d'oreille, sans crochet visible." },
+        turban: { label: "Le turban bleu et jaune", category: "couleur", body: "Le costume fantaisiste signale la tronie. L'outremer et le jaune forment le contraste coloré principal." },
+        lips: { label: "Les lèvres entrouvertes", category: "technique", body: "Les reflets humides et les bords adoucis donnent l'impression qu'elle va parler." },
+        background: { label: "Le rideau vert caché", category: "conservation", body: "L'analyse technique a révélé un rideau vert translucide dont les plis se sont assombris et effacés avec le temps." }
       }
     }
   }

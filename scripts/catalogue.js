@@ -2,12 +2,14 @@ const PRINT_PAGES = {
   en: {
     "mona-lisa": "print-target.html",
     "van-gogh": "print-van-gogh.html",
-    "van-gogh-bedroom": "print-van-gogh-bedroom.html"
+    "van-gogh-bedroom": "print-van-gogh-bedroom.html",
+    "vermeer-girl-with-a-pearl-earring": "print-vermeer-girl-with-a-pearl-earring.html"
   },
   fr: {
     "mona-lisa": "print-target-fr.html",
     "van-gogh": "print-van-gogh-fr.html",
-    "van-gogh-bedroom": "print-van-gogh-bedroom-fr.html"
+    "van-gogh-bedroom": "print-van-gogh-bedroom-fr.html",
+    "vermeer-girl-with-a-pearl-earring": "print-vermeer-girl-with-a-pearl-earring-fr.html"
   }
 };
 
@@ -58,7 +60,8 @@ const UI = {
 
 const FR_TITLES = {
   "van-gogh": "Autoportrait",
-  "van-gogh-bedroom": "La Chambre"
+  "van-gogh-bedroom": "La Chambre",
+  "vermeer-girl-with-a-pearl-earring": "La Jeune Fille à la perle"
 };
 
 const app = document.getElementById("catalogue-app");
