@@ -495,8 +495,7 @@ function handleTwoFingerGesture() {
   if (pointers.length < 2) return;
 
   const distance = getPointerDistance(pointers[0], pointers[1]);
-  const angle = getPointerAngle(pointers[0], pointers[1]);
-  const midX = (pointers[0].x + pointers[1].x) / 2;
+    const midX = (pointers[0].x + pointers[1].x) / 2;
   const midY = (pointers[0].y + pointers[1].y) / 2;
 
   if (state.gestureMode === "video-transform") {
@@ -505,17 +504,12 @@ function handleTwoFingerGesture() {
       state.videoTargetScale = clamp(state.videoTargetScale * scaleDelta, 0.45, 2.4);
     }
 
-    if (state.lastTwoFingerAngle) {
-      state.videoTargetRotation += getAngleDelta(angle, state.lastTwoFingerAngle);
-    }
-
     if (state.lastTwoFingerY > 0) {
       state.videoTargetPosition.x = clamp(state.videoTargetPosition.x + (midX - state.lastTwoFingerX) * 0.0022, -1.25, 1.25);
       state.videoTargetPosition.y = clamp(state.videoTargetPosition.y - (midY - state.lastTwoFingerY) * 0.0022, -0.9, 0.7);
     }
 
     state.lastPinchDistance = distance;
-    state.lastTwoFingerAngle = angle;
     state.lastTwoFingerX = midX;
     state.lastTwoFingerY = midY;
     return;
@@ -1028,7 +1022,7 @@ function renderFrame(renderer, scene, camera) {
     state.videoMesh.position.z += (state.videoTargetPosition.z - state.videoMesh.position.z) * 0.16;
     const videoScale = new THREE.Vector3(state.videoTargetScale, state.videoTargetScale, state.videoTargetScale);
     state.videoMesh.scale.lerp(videoScale, 0.16);
-    state.videoMesh.rotation.z += getAngleDelta(state.videoTargetRotation, state.videoMesh.rotation.z) * 0.16;
+    state.videoMesh.rotation.z = 0;
   }
 
   renderer.render(scene, camera);
