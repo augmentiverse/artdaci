@@ -84,6 +84,7 @@
       { "id": "sitting", "label": { "en": "Sitting figure", "fr": "Figure assise" }, "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring_sitting.glb" }
     ],
     "audioGuides": [
+      { "id": "vermeer-pearl-audio-en", "lang": "en", "title": "Girl with a Pearl Earring", "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring_1m17_en.mp3", "type": "audio/mpeg", "description": "English audio guide for the image AR experience." },
       { "id": "vermeer-pearl-audio-fr", "lang": "fr", "title": "La Jeune Fille à la perle", "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring_1m17_fr.mp3", "type": "audio/mpeg", "description": "Court guide audio français pour l'AR." }
     ],
     "videos": [

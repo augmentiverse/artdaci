@@ -739,7 +739,7 @@ function disposeModel(model) {
 
 function withAssetVersion(src) {
   const separator = src.includes("?") ? "&" : "?";
-  return `${src}${separator}lang=${CONFIG.lang}&v=22`;
+  return `${src}${separator}lang=${CONFIG.lang}&v=23`;
 }
 
 function updateInterfaceFromManifest(manifest) {
