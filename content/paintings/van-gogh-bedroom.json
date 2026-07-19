@@ -185,8 +185,8 @@
         "id": "van-gogh-bedroom-audio-fr",
         "lang": "fr",
         "title": "Dans La Chambre de Van Gogh",
-        "src": "assets/paintings/van-gogh-bedroom/audio-video/Van-Gogh_la-chambre_fr.m4a",
-        "type": "audio/mp4",
+        "src": "assets/paintings/van-gogh-bedroom/audio-video/Van-Gogh_la-chambre_fr.mp3",
+        "type": "audio/mpeg",
         "description": "Guide audio français pour l'expérience AR de La Chambre."
       }
     ],
@@ -199,16 +199,16 @@
         "id": "van-gogh-bedroom-overview-en",
         "lang": "en",
         "title": "The Bedroom audio overview",
-        "src": "assets/paintings/van-gogh-bedroom/audio-video/Van-Gogh_Bedroom_en.m4a",
-        "type": "audio/mp4",
+        "src": "assets/paintings/van-gogh-bedroom/audio-video/Van-Gogh_Bedroom_en.mp3",
+        "type": "audio/mpeg",
         "description": "Extended English audio overview of Van Gogh's The Bedroom."
       },
       {
         "id": "van-gogh-bedroom-overview-fr",
         "lang": "fr",
         "title": "Aperçu audio de La Chambre",
-        "src": "assets/paintings/van-gogh-bedroom/audio-video/Van-Gogh_la-chambre_fr.m4a",
-        "type": "audio/mp4",
+        "src": "assets/paintings/van-gogh-bedroom/audio-video/Van-Gogh_la-chambre_fr.mp3",
+        "type": "audio/mpeg",
         "description": "Présentation audio détaillée en français de La Chambre de Van Gogh."
       }
     ]
