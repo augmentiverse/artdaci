@@ -645,10 +645,10 @@ function configureFromManifest(manifest) {
 
 function getLocalizedAudioGuide(manifest) {
   const guides = manifest.media?.audioGuides || [];
-  return guides.find((guide) => guide.lang === CONFIG.lang)
-    || guides.find((guide) => guide.lang === "en")
-    || guides[0]
-    || null;
+  const localizedGuide = guides.find((guide) => guide.lang === CONFIG.lang);
+  if (localizedGuide) return localizedGuide;
+  if (CONFIG.lang !== "en") return guides.find((guide) => guide.lang === "en") || null;
+  return null;
 }
 
 function getModelVariants(manifest) {
@@ -747,7 +747,7 @@ function disposeModel(model) {
 
 function withAssetVersion(src) {
   const separator = src.includes("?") ? "&" : "?";
-  return `${src}${separator}lang=${CONFIG.lang}&v=21`;
+  return `${src}${separator}lang=${CONFIG.lang}&v=22`;
 }
 
 function updateInterfaceFromManifest(manifest) {
