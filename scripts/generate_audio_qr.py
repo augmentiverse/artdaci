@@ -16,7 +16,7 @@ TARGETS = {
     "vermeer-girl-pearl-ar-fr.png": "ar.html?painting=vermeer-girl-with-a-pearl-earring&lang=fr",
     "vermeer-girl-pearl-space-en.png": "space.html?painting=vermeer-girl-with-a-pearl-earring&lang=en",
     "vermeer-girl-pearl-space-fr.png": "space.html?painting=vermeer-girl-with-a-pearl-earring&lang=fr",
-    "vermeer-girl-pearl-audio-en.png": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring_1m17_en.mp3",
+    "vermeer-girl-pearl-audio-en.png": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring_en.mp3",
     "vermeer-girl-pearl-audio-fr.png": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring_fr.mp3",
 }
 

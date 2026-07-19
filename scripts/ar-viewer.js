@@ -282,7 +282,6 @@ const state = {
     z: 0.36
   },
   videoTargetScale: 1,
-  videoTargetRotation: 0,
   targetRise: CONFIG.initialRise,
   targetScale: CONFIG.initialScale,
   selectedModelIndex: 0,
@@ -572,9 +571,8 @@ function resetVideoTransform() {
   state.videoTargetPosition.y = -0.58;
   state.videoTargetPosition.z = CONFIG.initialRise + 0.14;
   state.videoTargetScale = 0.88;
-  state.videoTargetRotation = 0;
   if (state.videoMesh) {
-    state.videoMesh.rotation.z = state.videoTargetRotation;
+    state.videoMesh.rotation.z = 0;
   }
 }
 
@@ -888,7 +886,7 @@ function addVideoLayer(group) {
   panel.name = "ar-video-panel";
   panel.position.set(state.videoTargetPosition.x, state.videoTargetPosition.y, state.videoTargetPosition.z);
   panel.scale.setScalar(state.videoTargetScale);
-  panel.rotation.z = state.videoTargetRotation;
+  panel.rotation.z = 0;
   panel.renderOrder = 20;
   panel.visible = true;
   group.add(panel);
