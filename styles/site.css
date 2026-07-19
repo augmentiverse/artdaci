@@ -751,6 +751,17 @@ figcaption strong {
   margin: 14px 8px 0 0;
 }
 
+.ar-note .audio-overview {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+  max-width: 560px;
+}
+
+.ar-note .audio-overview audio {
+  width: 100%;
+}
+
 .qr-strip {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
