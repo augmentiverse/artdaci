@@ -356,10 +356,28 @@ body {
 
   .hotspot-bar {
     bottom: 64px;
+    touch-action: pan-x;
+    -webkit-overflow-scrolling: touch;
   }
 
   .mini-dock {
+    left: 12px;
     right: 12px;
     bottom: 12px;
+    width: auto;
+    max-width: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    touch-action: pan-x;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .mini-dock > button,
+  .mini-dock > a,
+  .mini-dock .model-variant-group {
+    flex: 0 0 auto;
   }
 }

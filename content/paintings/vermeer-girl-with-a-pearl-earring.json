@@ -71,8 +71,7 @@
     "primaryModel": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring.glb",
     "modelVariants": [
       { "id": "portrait", "label": { "en": "Portrait", "fr": "Portrait" }, "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring.glb" },
-      { "id": "standing", "label": { "en": "Standing figure", "fr": "Figure debout" }, "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/copies/Meshy_AI_Portrait_of_a_Woman_w_0719104619_texture.glb" },
-      { "id": "without-base", "label": { "en": "Without base", "fr": "Sans socle" }, "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/copies/vermeer_Girl-with-a-Pearl-Earring_sans-base.glb" }
+      { "id": "standing", "label": { "en": "Standing figure", "fr": "Figure debout" }, "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring_standing.glb" }
     ],
     "viewer": { "initialScale": 0.34, "initialRise": 0.14, "modelRotation": { "x": 0, "y": 0, "z": 0 } },
     "availableModes": ["painting-emergence", "artist", "history", "hidden-details", "brushstrokes", "ask-guide"]
@@ -82,8 +81,7 @@
     "model": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring.glb",
     "modelVariants": [
       { "id": "portrait", "label": { "en": "Portrait", "fr": "Portrait" }, "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring.glb" },
-      { "id": "standing", "label": { "en": "Standing figure", "fr": "Figure debout" }, "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/copies/Meshy_AI_Portrait_of_a_Woman_w_0719104619_texture.glb" },
-      { "id": "without-base", "label": { "en": "Without base", "fr": "Sans socle" }, "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/copies/vermeer_Girl-with-a-Pearl-Earring_sans-base.glb" }
+      { "id": "standing", "label": { "en": "Standing figure", "fr": "Figure debout" }, "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring_standing.glb" }
     ],
     "audioGuides": [
       { "id": "vermeer-pearl-audio-en", "lang": "en", "title": "Girl with a Pearl Earring", "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring_1m17_en.mp3", "type": "audio/mpeg", "description": "Short English AR audio guide." },
