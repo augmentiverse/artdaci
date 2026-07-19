@@ -115,7 +115,24 @@
     "startMode": "painting-emergence",
     "imageTarget": "assets/paintings/van-gogh/van-gogh__Portrait.jpg",
     "compiledTarget": "assets/targets/van-gogh.mind",
-    "primaryModel": "assets/paintings/van-gogh/van-gogh__standing.glb",
+    "primaryModel": "assets/paintings/van-gogh/van-gogh__Portrait.glb",
+    "modelVariants": [
+      {
+        "id": "portrait",
+        "label": { "en": "Portrait", "fr": "Portrait" },
+        "src": "assets/paintings/van-gogh/van-gogh__Portrait.glb"
+      },
+      {
+        "id": "standing",
+        "label": { "en": "Standing figure", "fr": "Figure debout" },
+        "src": "assets/paintings/van-gogh/van-gogh__standing.glb"
+      },
+      {
+        "id": "bedroom-standing",
+        "label": { "en": "Van Gogh in the Bedroom", "fr": "Van Gogh dans la chambre" },
+        "src": "assets/paintings/van-gogh/van-gogh_in_bedroom-standing.glb"
+      }
+    ],
     "viewer": {
       "initialScale": 0.42,
       "initialRise": 0.18,
@@ -136,7 +153,24 @@
   },
   "media": {
     "image": "assets/paintings/van-gogh/van-gogh__Portrait.jpg",
-    "model": "assets/paintings/van-gogh/van-gogh__standing.glb",
+    "model": "assets/paintings/van-gogh/van-gogh__Portrait.glb",
+    "modelVariants": [
+      {
+        "id": "portrait",
+        "label": { "en": "Portrait", "fr": "Portrait" },
+        "src": "assets/paintings/van-gogh/van-gogh__Portrait.glb"
+      },
+      {
+        "id": "standing",
+        "label": { "en": "Standing figure", "fr": "Figure debout" },
+        "src": "assets/paintings/van-gogh/van-gogh__standing.glb"
+      },
+      {
+        "id": "bedroom-standing",
+        "label": { "en": "Van Gogh in the Bedroom", "fr": "Van Gogh dans la chambre" },
+        "src": "assets/paintings/van-gogh/van-gogh_in_bedroom-standing.glb"
+      }
+    ],
     "audioGuides": [],
     "videos": [],
     "subtitles": [],
