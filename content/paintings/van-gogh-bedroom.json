@@ -37,19 +37,21 @@
   "texts": {
     "historicalContext": "In February 1888, Van Gogh left the intensity of Paris for Arles, searching for the bright southern light that reminded him of Japanese prints. In September he rented the Yellow House on Place Lamartine and dreamed of founding a community of artists, the Studio of the South, with Paul Gauguin as its leading figure. Painted in October 1888, just before Gauguin's arrival, The Bedroom represents Van Gogh's private room as a refuge, a psychological sanctuary of order, peace, and domestic security.",
     "artistBiography": "During his Arles period, Van Gogh hoped to build a studio community and create a new art based on strong color, simplified form, and emotional sincerity. His own bedroom became more than a place to sleep: it became a self-portrait without a body, a modest interior charged with longing for friendship, rest, and stability.",
-    "artisticAnalysis": "The painting is immediately striking because of its distorted perspective and forced recession lines. The walls appear to tilt inward, making the room feel almost claustrophobic and yet strangely welcoming. Van Gogh does not apply classical geometric perspective; he uses oblique angles to give the space a subjective and emotional character.",
+    "artisticAnalysis": "The painting is immediately striking because of its distorted perspective and forced recession lines. The actual room in the Yellow House was trapezoidal rather than rectangular, but Van Gogh heightened its obtuse and acute angles until the walls and furniture seem to tip toward the viewer. Bold outlines, flat areas of color, coarse impasto, and the economy of Japanese prints replace classical modeling and give the interior a subjective emotional force.",
     "symbolism": "The room is a theatre of intimacy. The bed, chairs, portraits, towels, bottles, table, mirror, and closed window describe a modest daily life while also suggesting privacy, friendship, order, cleanliness, absence, and the desire for companionship.",
     "composition": "The floorboards pull the eye toward the rear wall, while the bed dominates the right side like a block of yellow stability. The chairs, table, portraits, mirror, and window create a rhythm of paired rectangles, turning the room into a carefully staged emotional interior.",
-    "palette": "Van Gogh frees color from purely descriptive duty. Pale violet-blue walls, muted red-brown floorboards, golden yellow furniture, pale green bedding, orange furniture, blue washing basin, and the red blanket form vibrant complementary harmonies intended to express rest while remaining visually charged.",
-    "perspectiveTechnique": "The perspective is deliberately simplified and distorted. The dressing table and straw chairs seem to float or lean toward the viewer. Instead of academic accuracy, Van Gogh uses tilted lines, compressed depth, and thick impasto to make the room expressive.",
+    "palette": "Van Gogh frees color from purely descriptive duty. In his letters he described pale violet walls, a faded red floor, chrome-yellow furniture, pale green bedding, a blue basin, and a scarlet blanket, separated by emphatic outlines and with almost no white. Light-sensitive red lake pigments have since faded, making the walls appear bluer and the floor less pink-red than he intended.",
+    "perspectiveTechnique": "The perspective is deliberately simplified and distorted. The room itself had an irregular trapezoidal plan, and Van Gogh amplified its converging walls with tilted lines and compressed depth. The dressing table and straw chairs seem to float or lean toward the viewer, making the painted space more expressive than optically accurate.",
     "culturalSignificance": "The Bedroom is one of Van Gogh's most beloved images because it turns a private interior into a portrait of longing, shelter, and artistic hope. It shows that an empty room can carry as much psychological force as a human face.",
-    "influence": "With this work Van Gogh takes a major step toward modern Expressionism. The painting no longer tries to copy external reality faithfully; it projects the artist's inner state onto objects. Its spatial distortions and heightened colors later influenced French Fauvism and German Expressionism.",
+    "influence": "With this work Van Gogh takes a major step toward modern Expressionism. The painting projects an inner state onto ordinary objects, and its spatial distortions and heightened colors later resonated with Fauvism and German Expressionism. Roy Lichtenstein revisited the icon in his large 1992 painting Bedroom at Arles, translating the room into Pop Art with modernized furnishings and Ben-Day dots.",
     "interestingFacts": [
-      "Van Gogh made three versions of The Bedroom.",
+      "Van Gogh made three authentic versions: the October 1888 Amsterdam painting, a full-size replacement painted at Saint-Remy in September 1889 and now in Chicago, and a smaller reduction made later that month for his mother and sister Wil, now in Paris.",
       "The room shown is his bedroom in the Yellow House in Arles.",
-      "The Amsterdam version was damaged by flooding while Van Gogh was hospitalized.",
+      "The Amsterdam version was damaged by damp and flooding while Van Gogh was hospitalized; fragments of newspaper he applied to secure flaking paint remain on its surface.",
       "In a letter to Theo, Van Gogh explained that he wanted the colors to express absolute rest.",
-      "The yellow straw chairs relate to the same modest furniture celebrated in Van Gogh's Chair."
+      "Technical study found that the first version developed like a live, improvised study, while the Chicago and Paris repetitions use more deliberate graphic hatching.",
+      "Analysis of light-sensitive carmine and geranium lake pigments, including paint once protected by the frames, has supported digital reconstructions of the room's more violet and pink-red original color scheme.",
+      "Both the Amsterdam and Chicago canvases were lined early in their histories to stabilize their paint layers."
     ]
   },
   "timeline": [
@@ -75,13 +77,18 @@
     },
     {
       "year": 1889,
-      "label": "Van Gogh paints later versions of the bedroom composition.",
+      "label": "At Saint-Remy in September, Van Gogh paints a full-size replacement now in Chicago and a smaller reduction for his mother and sister Wil, now in Paris.",
       "type": "artwork"
     },
     {
       "year": 1890,
       "label": "Van Gogh dies at age 37.",
       "type": "artist"
+    },
+    {
+      "year": 1992,
+      "label": "Roy Lichtenstein reinterprets the composition in his Pop Art painting Bedroom at Arles.",
+      "type": "legacy"
     }
   ],
   "hotspots": [
@@ -165,11 +172,46 @@
     "image": "assets/paintings/van-gogh-bedroom/bed_van-gogh.jpeg",
     "model": "assets/paintings/van-gogh-bedroom/bed_van-gogh.glb",
     "usdz": "assets/paintings/van-gogh-bedroom/bed_van-gogh.usdz",
-    "audioGuides": [],
+    "audioGuides": [
+      {
+        "id": "van-gogh-bedroom-audio-en",
+        "lang": "en",
+        "title": "Inside Van Gogh's Bedroom",
+        "src": "assets/paintings/van-gogh-bedroom/audio-video/Van-Gogh_Bedroom_1m53_en.m4a",
+        "type": "audio/mp4",
+        "description": "Short English audio guide for The Bedroom AR experience."
+      },
+      {
+        "id": "van-gogh-bedroom-audio-fr",
+        "lang": "fr",
+        "title": "Dans La Chambre de Van Gogh",
+        "src": "assets/paintings/van-gogh-bedroom/audio-video/Van-Gogh_la-chambre_fr.m4a",
+        "type": "audio/mp4",
+        "description": "Guide audio français pour l'expérience AR de La Chambre."
+      }
+    ],
     "videos": [],
     "subtitles": [],
     "signLanguage": [],
-    "imageCredits": []
+    "imageCredits": [],
+    "audioOverviews": [
+      {
+        "id": "van-gogh-bedroom-overview-en",
+        "lang": "en",
+        "title": "The Bedroom audio overview",
+        "src": "assets/paintings/van-gogh-bedroom/audio-video/Van-Gogh_Bedroom_en.m4a",
+        "type": "audio/mp4",
+        "description": "Extended English audio overview of Van Gogh's The Bedroom."
+      },
+      {
+        "id": "van-gogh-bedroom-overview-fr",
+        "lang": "fr",
+        "title": "Aperçu audio de La Chambre",
+        "src": "assets/paintings/van-gogh-bedroom/audio-video/Van-Gogh_la-chambre_fr.m4a",
+        "type": "audio/mp4",
+        "description": "Présentation audio détaillée en français de La Chambre de Van Gogh."
+      }
+    ]
   },
   "education": {
     "ageBands": ["8-11", "12-15", "16-18", "university"],
@@ -192,7 +234,7 @@
         "correctAnswer": "Pairs of objects"
       }
     ],
-    "vocabulary": ["Post-Impressionism", "interior", "complementary color", "expressive perspective", "impasto", "Yellow House", "Studio of the South"],
+    "vocabulary": ["Post-Impressionism", "interior", "complementary color", "expressive perspective", "impasto", "red lake pigment", "lining", "technical imaging", "Yellow House", "Studio of the South"],
     "discussionPrompts": [
       "How can an empty room feel like a portrait?",
       "Which object in the room feels most important, and why?",
@@ -209,6 +251,7 @@
   "references": [
     "Van Gogh Museum collection materials",
     "Standard Vincent van Gogh and Post-Impressionism scholarship",
-    "Van Gogh's letters from the Arles period"
+    "Van Gogh's letters from the Arles and Saint-Remy periods",
+    "Collaborative technical studies of the Amsterdam, Chicago, and Paris versions"
   ]
 }
