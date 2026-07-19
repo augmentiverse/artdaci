@@ -115,7 +115,7 @@
     "startMode": "painting-emergence",
     "imageTarget": "assets/paintings/van-gogh/van-gogh__Portrait.jpg",
     "compiledTarget": "assets/targets/van-gogh.mind",
-    "primaryModel": "assets/paintings/van-gogh/van-gogh__Portrait.glb",
+    "primaryModel": "assets/paintings/van-gogh/van-gogh__standing.glb",
     "viewer": {
       "initialScale": 0.42,
       "initialRise": 0.18,
@@ -136,7 +136,7 @@
   },
   "media": {
     "image": "assets/paintings/van-gogh/van-gogh__Portrait.jpg",
-    "model": "assets/paintings/van-gogh/van-gogh__Portrait.glb",
+    "model": "assets/paintings/van-gogh/van-gogh__standing.glb",
     "audioGuides": [],
     "videos": [],
     "subtitles": [],
