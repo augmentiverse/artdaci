@@ -12,7 +12,7 @@ const COPY = {
     loading: "Loading model...",
     ready: "Model ready. Tap Place in My Space to position it in your room.",
     readyWithUsdz: "Model ready. Tap Place in My Space. iPhone/iPad will use USDZ; Android will use Scene Viewer.",
-    readyWithoutUsdz: "Model ready. Android and WebXR-compatible devices can use spatial AR. iPhone/iPad needs a USDZ file for this artwork.",
+    readyWithoutUsdz: "Model ready. Tap Place in My Space to generate the AR view from the selected model.",
     fallbackTitle: "3D preview unavailable",
     fallbackBody: "The room-placement viewer library did not load. You can still open the printed page, image AR, or listen to the audio overview.",
     audioOverview: "Audio overview",
@@ -32,7 +32,7 @@ const COPY = {
     loading: "Chargement du modèle...",
     ready: "Modèle prêt. Touchez Placer dans mon espace pour le positionner dans votre pièce.",
     readyWithUsdz: "Modèle prêt. Touchez Placer dans mon espace. iPhone/iPad utilisera USDZ; Android utilisera Scene Viewer.",
-    readyWithoutUsdz: "Modèle prêt. Android et les appareils WebXR compatibles peuvent utiliser l'AR spatiale. iPhone/iPad nécessite un fichier USDZ pour cette œuvre.",
+    readyWithoutUsdz: "Modèle prêt. Touchez Placer dans mon espace pour générer la vue AR à partir du modèle sélectionné.",
     fallbackTitle: "Aperçu 3D indisponible",
     fallbackBody: "La bibliothèque de placement dans l'espace ne s'est pas chargée. Vous pouvez tout de même ouvrir la page imprimée, l'AR image ou écouter l'aperçu audio.",
     audioOverview: "Aperçu audio",
@@ -127,7 +127,7 @@ function configureViewer(manifest) {
 
   document.getElementById("image-ar-link").href = `ar.html?painting=${slug}&lang=${lang}`;
   document.getElementById("print-link").href = PRINT_PAGES[lang]?.[slug] || "index.html";
-  renderModelVariantControls(model, modelVariants);
+  renderModelVariantControls(model, modelVariants, usdz);
   renderExperienceActions(audioOverview);
   checkModelViewerAvailability(usdz, audioOverview);
   model.addEventListener("ar-status", (event) => {
@@ -153,7 +153,7 @@ function getModelVariantLabel(variant, index) {
   return variant.label?.[lang] || variant.label?.en || `Model ${index + 1}`;
 }
 
-function renderModelVariantControls(model, variants) {
+function renderModelVariantControls(model, variants, defaultUsdz) {
   if (variants.length < 2) return;
 
   const actions = document.querySelector(".space-panel .actions");
@@ -170,7 +170,31 @@ function renderModelVariantControls(model, variants) {
     button.className = `button model-variant${index === 0 ? " active" : ""}`;
     button.textContent = getModelVariantLabel(variant, index);
     button.addEventListener("click", () => {
+      if (button.classList.contains("active")) return;
+
+      const arButton = document.getElementById("ar-button");
+      const variantUsdz = variant.usdz || variant.iosSrc || (index === 0 ? defaultUsdz : "");
+
+      arButton.disabled = true;
+      document.getElementById("space-status").textContent = COPY[lang].loading;
       model.setAttribute("src", variant.src);
+      if (variantUsdz) {
+        model.setAttribute("ios-src", variantUsdz);
+      } else {
+        model.removeAttribute("ios-src");
+      }
+
+      model.addEventListener("load", () => {
+        arButton.disabled = false;
+        document.getElementById("space-status").textContent = variantUsdz
+          ? COPY[lang].readyWithUsdz
+          : COPY[lang].readyWithoutUsdz;
+      }, { once: true });
+      model.addEventListener("error", () => {
+        arButton.disabled = false;
+        document.getElementById("space-status").textContent = COPY[lang].unsupported;
+      }, { once: true });
+
       group.querySelectorAll(".model-variant").forEach((item) => item.classList.remove("active"));
       button.classList.add("active");
     });
