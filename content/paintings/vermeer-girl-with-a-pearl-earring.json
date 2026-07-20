@@ -46,7 +46,12 @@
       "The earring is painted with only a few strokes and has no visible hook attaching it to the ear.",
       "Technical examination found that the background originally included a translucent green curtain that has darkened and lost definition.",
       "Microscopic and imaging studies have mapped eyelashes, tiny highlights, paint layers, and Vermeer's pigment choices.",
-      "The identity of the model remains unknown."
+      "The identity of the model remains unknown; proposed identifications include Vermeer's daughter Maria and Magdalena van Ruijven, but none is proven.",
+      "The painting was bought at auction in 1881 for two guilders and thirty cents and entered the Mauritshuis collection in 1902.",
+      "The 2018 Girl in the Spotlight project used non-invasive microscopy, MA-XRF, and reflectance imaging to study pigments, paint layers, eyelashes, and the faded green background.",
+      "Optical effects have encouraged camera-obscura theories, but there is no documentary or physical proof that Vermeer used such a device.",
+      "During the Second World War, the painting was moved to protected storage, including the caves near Maastricht.",
+      "Scientific analysis identified a yellowish-white ground of chalk, lead white, and ochre, as well as indigo and yellow weld in the original green background glaze."
     ]
   },
   "timeline": [
@@ -54,12 +59,15 @@
     { "year": 1653, "label": "Vermeer joins the Guild of Saint Luke and begins his career as a master painter.", "type": "artist" },
     { "year": 1665, "label": "Around this year, Vermeer paints Girl with a Pearl Earring.", "type": "artwork" },
     { "year": 1675, "label": "Vermeer dies in Delft at age 43.", "type": "artist" },
-    { "year": 1881, "label": "The painting is purchased at auction and soon given to the Mauritshuis.", "type": "artwork" },
+    { "year": 1881, "label": "The neglected painting is purchased at auction for two guilders and thirty cents.", "type": "artwork" },
+    { "year": 1902, "label": "The painting enters the Mauritshuis collection in The Hague.", "type": "artwork" },
+    { "year": 1994, "label": "A major restoration is conducted in public view during Vermeer Illuminated.", "type": "conservation" },
+    { "year": 2018, "label": "The Girl in the Spotlight project examines the painting with non-invasive scientific imaging.", "type": "conservation" },
     { "year": 1999, "label": "Tracy Chevalier publishes the novel Girl with a Pearl Earring.", "type": "legacy" }
   ],
   "hotspots": [
     { "id": "gaze", "label": "The Gaze", "position2D": [0.42, 0.37], "position3D": [-0.08, 0.16, 0.05], "category": "observation", "body": "The eyes meet the viewer at the moment the girl turns, creating an encounter that feels intimate but never explains itself." },
-    { "id": "pearl", "label": "The Earring", "position2D": [0.58, 0.57], "position3D": [0.12, -0.02, 0.06], "category": "technique", "body": "A few light strokes suggest the entire earring. Reflected light and the dark surrounding tone make it appear round, although no hook is visible." },
+    { "id": "pearl", "label": "The Earring", "position2D": [0.58, 0.57], "position3D": [0.12, -0.02, 0.06], "category": "technique", "body": "A few light strokes suggest the entire earring. It has no contour or visible hook; reflected light and the dark surrounding tone make it appear round. Its size and metallic reflection have led some researchers to suggest polished tin rather than a real pearl." },
     { "id": "turban", "label": "Blue and Yellow Turban", "position2D": [0.48, 0.2], "position3D": [0, 0.3, 0.04], "category": "palette", "body": "The fanciful headcloth identifies the work as a tronie. Its ultramarine blue and yellow folds create the painting's strongest color contrast." },
     { "id": "lips", "label": "Parted Lips", "position2D": [0.4, 0.48], "position3D": [-0.08, 0.04, 0.06], "category": "technique", "body": "Moist highlights and softened edges make the lips seem about to speak, intensifying the sense of a fleeting moment." },
     { "id": "background", "label": "The Hidden Green Curtain", "position2D": [0.16, 0.3], "position3D": [-0.28, 0.16, 0.01], "category": "conservation", "body": "The background now appears almost black, but technical study detected a once-visible translucent green curtain whose pigments and glaze have altered over time." }
