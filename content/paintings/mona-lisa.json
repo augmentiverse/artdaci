@@ -271,6 +271,14 @@
           "fr": "Modèle 2"
         },
         "src": "assets/paintings/mona-lisa/mona-lisa-out-of-frame.glb"
+      },
+      {
+        "id": "framed-scene",
+        "label": {
+          "en": "Framed scene",
+          "fr": "Scène encadrée"
+        },
+        "src": "assets/paintings/mona-lisa/mona-lisa-f-s.glb"
       }
     ],
     "scaleMeters": {
@@ -345,6 +353,14 @@
           "fr": "Modèle 2"
         },
         "src": "assets/paintings/mona-lisa/mona-lisa-out-of-frame.glb"
+      },
+      {
+        "id": "framed-scene",
+        "label": {
+          "en": "Framed scene",
+          "fr": "Scène encadrée"
+        },
+        "src": "assets/paintings/mona-lisa/mona-lisa-f-s.glb"
       }
     ],
     "audioGuides": [

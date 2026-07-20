@@ -146,6 +146,18 @@
     "imageTarget": "assets/paintings/van-gogh-bedroom/images/bed_van-gogh.jpeg",
     "compiledTarget": "assets/targets/bed_van-gogh.mind",
     "primaryModel": "assets/paintings/van-gogh-bedroom/bed_van-gogh.glb",
+    "modelVariants": [
+      {
+        "id": "bedroom",
+        "label": { "en": "Bedroom", "fr": "La Chambre" },
+        "src": "assets/paintings/van-gogh-bedroom/bed_van-gogh.glb"
+      },
+      {
+        "id": "framed-scene",
+        "label": { "en": "Framed scene", "fr": "Scène encadrée" },
+        "src": "assets/paintings/van-gogh-bedroom/bed_van-gogh_f-s.glb"
+      }
+    ],
     "viewer": {
       "initialScale": 0.38,
       "initialRise": 0.16,
@@ -171,13 +183,25 @@
   "media": {
     "image": "assets/paintings/van-gogh-bedroom/images/bed_van-gogh.jpeg",
     "model": "assets/paintings/van-gogh-bedroom/bed_van-gogh.glb",
+    "modelVariants": [
+      {
+        "id": "bedroom",
+        "label": { "en": "Bedroom", "fr": "La Chambre" },
+        "src": "assets/paintings/van-gogh-bedroom/bed_van-gogh.glb"
+      },
+      {
+        "id": "framed-scene",
+        "label": { "en": "Framed scene", "fr": "Scène encadrée" },
+        "src": "assets/paintings/van-gogh-bedroom/bed_van-gogh_f-s.glb"
+      }
+    ],
     "usdz": "assets/paintings/van-gogh-bedroom/bed_van-gogh.usdz",
     "audioGuides": [
       {
         "id": "van-gogh-bedroom-audio-en",
         "lang": "en",
         "title": "Inside Van Gogh's Bedroom",
-        "src": "assets/paintings/van-gogh-bedroom/audio-video/Van-Gogh_Bedroom_1m53_en.m4a",
+        "src": "assets/paintings/van-gogh-bedroom/audio-video/Van-Gogh_Bedroom_1m25_en.m4a",
         "type": "audio/mp4",
         "description": "Short English audio guide for The Bedroom AR experience."
       },
