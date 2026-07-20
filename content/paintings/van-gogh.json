@@ -30,7 +30,7 @@
     "spreadNumber": 2,
     "chapter": "Impressionism and Post-Impressionism",
     "imageTargetId": "target-002-van-gogh",
-    "imageTargetSource": "assets/paintings/van-gogh/van-gogh__Portrait.jpg",
+    "imageTargetSource": "assets/paintings/van-gogh/images/van-gogh__Portrait.jpg",
     "compiledMindTarget": "assets/targets/van-gogh.mind",
     "qrUrl": "ar.html?painting=van-gogh"
   },
@@ -113,7 +113,7 @@
   ],
   "ar": {
     "startMode": "painting-emergence",
-    "imageTarget": "assets/paintings/van-gogh/van-gogh__Portrait.jpg",
+    "imageTarget": "assets/paintings/van-gogh/images/van-gogh__Portrait.jpg",
     "compiledTarget": "assets/targets/van-gogh.mind",
     "primaryModel": "assets/paintings/van-gogh/van-gogh__Portrait.glb",
     "modelVariants": [
@@ -152,7 +152,7 @@
     ]
   },
   "media": {
-    "image": "assets/paintings/van-gogh/van-gogh__Portrait.jpg",
+    "image": "assets/paintings/van-gogh/images/van-gogh__Portrait.jpg",
     "model": "assets/paintings/van-gogh/van-gogh__Portrait.glb",
     "modelVariants": [
       {

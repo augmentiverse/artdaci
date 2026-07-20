@@ -12,9 +12,9 @@ This repository is a GitHub Pages-ready prototype for an augmented reality art b
 - `print-van-gogh.html` - rich printable Van Gogh catalogue spread.
 - `print-van-gogh-bedroom.html` - rich printable Van Gogh bedroom catalogue spread.
 - `scripts/catalogue.js` - manifest-driven catalogue UI with search, filtering, comparison, stats, and learning prompts.
-- `assets/paintings/mona-lisa/mona-lisa.jpg` - printed target image.
+- `assets/paintings/mona-lisa/images/mona-lisa.jpg` - printed target image.
 - `assets/paintings/mona-lisa/mona-lisa.glb` - 3D model loaded in AR.
-- `assets/paintings/van-gogh/van-gogh__Portrait.jpg` - Van Gogh printed target image.
+- `assets/paintings/van-gogh/images/van-gogh__Portrait.jpg` - Van Gogh printed target image.
 - `assets/paintings/van-gogh/van-gogh__Portrait.glb` - Van Gogh 3D model loaded in AR.
 - `assets/targets/mona-lisa.mind` - compiled MindAR image target.
 - `content/paintings/mona-lisa.json` - structured painting data record.

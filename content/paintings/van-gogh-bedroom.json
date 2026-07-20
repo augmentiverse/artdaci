@@ -30,7 +30,7 @@
     "spreadNumber": 3,
     "chapter": "Impressionism and Post-Impressionism",
     "imageTargetId": "target-003-van-gogh-bedroom",
-    "imageTargetSource": "assets/paintings/van-gogh-bedroom/bed_van-gogh.jpeg",
+    "imageTargetSource": "assets/paintings/van-gogh-bedroom/images/bed_van-gogh.jpeg",
     "compiledMindTarget": "assets/targets/bed_van-gogh.mind",
     "qrUrl": "ar.html?painting=van-gogh-bedroom"
   },
@@ -143,7 +143,7 @@
   ],
   "ar": {
     "startMode": "painting-emergence",
-    "imageTarget": "assets/paintings/van-gogh-bedroom/bed_van-gogh.jpeg",
+    "imageTarget": "assets/paintings/van-gogh-bedroom/images/bed_van-gogh.jpeg",
     "compiledTarget": "assets/targets/bed_van-gogh.mind",
     "primaryModel": "assets/paintings/van-gogh-bedroom/bed_van-gogh.glb",
     "viewer": {
@@ -169,7 +169,7 @@
     }
   },
   "media": {
-    "image": "assets/paintings/van-gogh-bedroom/bed_van-gogh.jpeg",
+    "image": "assets/paintings/van-gogh-bedroom/images/bed_van-gogh.jpeg",
     "model": "assets/paintings/van-gogh-bedroom/bed_van-gogh.glb",
     "usdz": "assets/paintings/van-gogh-bedroom/bed_van-gogh.usdz",
     "audioGuides": [

@@ -32,7 +32,7 @@
     "spreadNumber": 1,
     "chapter": "Renaissance",
     "imageTargetId": "target-001-mona-lisa",
-    "imageTargetSource": "assets/paintings/mona-lisa/mona-lisa.jpg",
+    "imageTargetSource": "assets/paintings/mona-lisa/images/mona-lisa.jpg",
     "compiledMindTarget": "assets/targets/mona-lisa.mind",
     "qrUrl": "https://augmentiverse.github.io/artdaci/ar.html?painting=mona-lisa"
   },
@@ -251,7 +251,7 @@
   ],
   "ar": {
     "startMode": "painting-emergence",
-    "imageTarget": "assets/paintings/mona-lisa/mona-lisa.jpg",
+    "imageTarget": "assets/paintings/mona-lisa/images/mona-lisa.jpg",
     "compiledTarget": "assets/targets/mona-lisa.mind",
     "primaryModel": "assets/paintings/mona-lisa/mona-lisa.glb",
     "frameModel": "assets/paintings/mona-lisa/mona-lisa.glb",
@@ -327,7 +327,7 @@
     }
   },
   "media": {
-    "image": "assets/paintings/mona-lisa/mona-lisa.jpg",
+    "image": "assets/paintings/mona-lisa/images/mona-lisa.jpg",
     "model": "assets/paintings/mona-lisa/mona-lisa.glb",
     "modelVariants": [
       {
@@ -369,7 +369,7 @@
       {
         "id": "mona-lisa-video",
         "title": "Mona Lisa Video Guide",
-        "src": "assets/paintings/mona-lisa/mona-lisa_video.mp4",
+        "src": "assets/paintings/mona-lisa/audio-video/mona-lisa_video.mp4",
         "type": "video/mp4",
         "description": "Short video layer for the Mona Lisa AR experience."
       }
@@ -382,7 +382,7 @@
         "id": "mona-lisa-overview-en",
         "lang": "en",
         "title": "Mona Lisa audio overview",
-        "src": "assets/paintings/mona-lisa/mona-lisa-en.mp3",
+        "src": "assets/paintings/mona-lisa/audio-video/mona-lisa-en.mp3",
         "type": "audio/mpeg",
         "description": "Detailed English discussion between two speakers about the Mona Lisa."
       },
@@ -390,7 +390,7 @@
         "id": "mona-lisa-overview-fr",
         "lang": "fr",
         "title": "Aperçu audio de La Joconde",
-        "src": "assets/paintings/mona-lisa/mona-lisa-fr.mp3",
+        "src": "assets/paintings/mona-lisa/audio-video/mona-lisa-fr.mp3",
         "type": "audio/mpeg",
         "description": "Discussion détaillée en français entre deux personnes au sujet de La Joconde."
       }
