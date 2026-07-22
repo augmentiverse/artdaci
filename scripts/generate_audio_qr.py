@@ -10,6 +10,8 @@ BASE = "https://augmentiverse.github.io/artdaci/"
 TARGETS = {
     "mona-lisa-audio-en.png": "assets/paintings/mona-lisa/audio-video/mona-lisa-en.mp3",
     "mona-lisa-audio-fr.png": "assets/paintings/mona-lisa/audio-video/mona-lisa-fr.mp3",
+    "van-gogh-audio-en.png": "assets/paintings/van-gogh/audio-video/van-gogh_self-portrait_en.mp3",
+    "van-gogh-audio-fr.png": "assets/paintings/van-gogh/audio-video/van-gogh_self-portrait_fr.mp3",
     "van-gogh-bedroom-audio-en.png": "assets/paintings/van-gogh-bedroom/audio-video/Van-Gogh_Bedroom_en.mp3",
     "van-gogh-bedroom-audio-fr.png": "assets/paintings/van-gogh-bedroom/audio-video/Van-Gogh_la-chambre_fr.mp3",
     "vermeer-girl-pearl-ar-en.png": "ar.html?painting=vermeer-girl-with-a-pearl-earring&lang=en",

@@ -171,11 +171,46 @@
         "src": "assets/paintings/van-gogh/van-gogh_in_bedroom-standing.glb"
       }
     ],
-    "audioGuides": [],
+    "audioGuides": [
+      {
+        "id": "van-gogh-self-portrait-audio-en",
+        "lang": "en",
+        "title": "Van Gogh's Self-Portrait",
+        "src": "assets/paintings/van-gogh/audio-video/van-gogh_self-portrait_en-c.m4a",
+        "type": "audio/mp4",
+        "description": "Short English introduction for the image AR experience."
+      },
+      {
+        "id": "van-gogh-self-portrait-audio-fr",
+        "lang": "fr",
+        "title": "L'Autoportrait de Van Gogh",
+        "src": "assets/paintings/van-gogh/audio-video/van-gogh_self-portrait_fr-c.m4a",
+        "type": "audio/mp4",
+        "description": "Courte introduction française pour l'expérience AR sur image."
+      }
+    ],
     "videos": [],
     "subtitles": [],
     "signLanguage": [],
-    "imageCredits": []
+    "imageCredits": [],
+    "audioOverviews": [
+      {
+        "id": "van-gogh-self-portrait-overview-en",
+        "lang": "en",
+        "title": "Van Gogh Self-Portrait audio overview",
+        "src": "assets/paintings/van-gogh/audio-video/van-gogh_self-portrait_en.mp3",
+        "type": "audio/mpeg",
+        "description": "Extended English audio overview of Van Gogh's Self-Portrait."
+      },
+      {
+        "id": "van-gogh-self-portrait-overview-fr",
+        "lang": "fr",
+        "title": "Aperçu audio de l'Autoportrait de Van Gogh",
+        "src": "assets/paintings/van-gogh/audio-video/van-gogh_self-portrait_fr.mp3",
+        "type": "audio/mpeg",
+        "description": "Présentation audio détaillée en français de l'Autoportrait de Van Gogh."
+      }
+    ]
   },
   "education": {
     "ageBands": ["8-11", "12-15", "16-18", "university"],
