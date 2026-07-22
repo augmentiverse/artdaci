@@ -251,6 +251,7 @@ const AR_TRANSLATIONS = {
 const state = {
   mindarThree: null,
   anchor: null,
+  contentGroup: null,
   model: null,
   modelLoaded: false,
   video: null,
@@ -262,6 +263,7 @@ const state = {
   speaking: false,
   keepVisible: true,
   targetFoundOnce: false,
+  targetTracked: false,
   isDragging: false,
   gestureMode: null,
   activePointers: new Map(),
@@ -704,17 +706,17 @@ async function switchModelVariant(index) {
   CONFIG.model = CONFIG.modelVariants[index].src;
   updateModelVariantControls();
 
-  if (!state.anchor?.group || !state.started) return;
+  if (!state.contentGroup || !state.started) return;
 
   if (state.model) {
-    state.anchor.group.remove(state.model);
+    state.contentGroup.remove(state.model);
     disposeModel(state.model);
     state.model = null;
     state.modelLoaded = false;
   }
 
   try {
-    await loadModel(state.anchor.group);
+    await loadModel(state.contentGroup);
   } catch (error) {
     console.error(error);
     document.getElementById("panel-title").textContent = t("modelErrorTitle");
@@ -806,9 +808,19 @@ async function startAR() {
     state.anchor = state.mindarThree.addAnchor(0);
     state.anchor.group.visible = false;
 
+    // MindAR owns the anchor visibility and hides it whenever image tracking is
+    // lost. Keep the displayed content in an independent scene group instead,
+    // and copy only the last valid tracked pose into it.
+    state.contentGroup = new THREE.Group();
+    state.contentGroup.name = "retained-image-ar-content";
+    state.contentGroup.matrixAutoUpdate = false;
+    state.contentGroup.visible = false;
+    scene.add(state.contentGroup);
+
     state.anchor.onTargetFound = () => {
       state.targetFoundOnce = true;
-      state.anchor.group.visible = true;
+      state.targetTracked = true;
+      state.contentGroup.visible = true;
       setTrackingStatus(true);
       showHotspot("intro");
       if (!state.modelLoaded) {
@@ -817,24 +829,23 @@ async function startAR() {
     };
 
     state.anchor.onTargetLost = () => {
+      state.targetTracked = false;
       setTrackingStatus(false);
-      if (state.keepVisible && state.targetFoundOnce) {
-        state.anchor.group.visible = true;
-      }
+      state.contentGroup.visible = state.keepVisible && state.targetFoundOnce;
     };
 
     setStartupMessage(t("cameraRequest"));
     await state.mindarThree.start();
     document.getElementById("loading-screen").classList.add("hidden");
     renderer.setAnimationLoop(() => renderFrame(renderer, scene, camera));
-    loadModel(state.anchor.group).catch((error) => {
+    loadModel(state.contentGroup).catch((error) => {
       console.error(error);
       document.getElementById("panel-title").textContent = t("modelErrorTitle");
       document.getElementById("panel-body").textContent = t("modelErrorBody");
       document.getElementById("info-panel").classList.remove("collapsed");
     });
     if (CONFIG.video) {
-      addVideoLayer(state.anchor.group);
+      addVideoLayer(state.contentGroup);
     }
   } catch (error) {
     showStartupError(error);
@@ -915,7 +926,7 @@ function toggleVideoLayer() {
   }
 
   if (!state.videoMesh) {
-    if (state.anchor?.group) addVideoLayer(state.anchor.group);
+    if (state.contentGroup) addVideoLayer(state.contentGroup);
     return;
   }
 
@@ -1002,8 +1013,14 @@ async function loadModel(group) {
 function renderFrame(renderer, scene, camera) {
   const delta = state.clock ? state.clock.getDelta() : 0;
 
-  if (state.anchor?.group && state.keepVisible && state.targetFoundOnce) {
-    state.anchor.group.visible = true;
+  if (state.anchor?.group && state.contentGroup) {
+    if (state.targetTracked) {
+      state.anchor.group.updateWorldMatrix(true, false);
+      state.contentGroup.matrix.copy(state.anchor.group.matrixWorld);
+      state.contentGroup.visible = true;
+    } else {
+      state.contentGroup.visible = state.keepVisible && state.targetFoundOnce;
+    }
   }
 
   if (state.model) {
