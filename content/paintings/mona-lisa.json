@@ -279,6 +279,14 @@
           "fr": "Scène encadrée"
         },
         "src": "assets/paintings/mona-lisa/monalisa_framed.glb"
+      },
+      {
+        "id": "davinci-monalisa",
+        "label": {
+          "en": "Da Vinci and Mona Lisa",
+          "fr": "De Vinci et Mona Lisa"
+        },
+        "src": "assets/paintings/mona-lisa/davinci_monalisa.glb"
       }
     ],
     "scaleMeters": {
@@ -361,6 +369,14 @@
           "fr": "Scène encadrée"
         },
         "src": "assets/paintings/mona-lisa/monalisa_framed.glb"
+      },
+      {
+        "id": "davinci-monalisa",
+        "label": {
+          "en": "Da Vinci and Mona Lisa",
+          "fr": "De Vinci et Mona Lisa"
+        },
+        "src": "assets/paintings/mona-lisa/davinci_monalisa.glb"
       }
     ],
     "audioGuides": [
