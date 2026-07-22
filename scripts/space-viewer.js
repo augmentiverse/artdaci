@@ -201,7 +201,8 @@ function renderModelVariantControls(model, variants, defaultUsdz) {
     group.appendChild(button);
   });
 
-  actions.appendChild(group);
+  // The model must be selected before launching the native AR viewer.
+  actions.prepend(group);
 }
 
 function getLocalizedAudioOverview(manifest) {

@@ -684,7 +684,9 @@ function renderModelVariantControls() {
     group.appendChild(button);
   });
 
-  dock.insertBefore(group, document.getElementById("toggle-spin"));
+  // Keep every model choice immediately visible, especially in the narrow
+  // mobile dock where later controls would otherwise push variants off-screen.
+  dock.prepend(group);
 }
 
 function updateModelVariantControls() {

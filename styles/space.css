@@ -129,8 +129,10 @@ model-viewer.viewer-fallback {
 }
 
 .model-variant-group {
-  display: inline-flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  flex: 1 0 100%;
+  width: 100%;
   gap: 10px;
 }
 
