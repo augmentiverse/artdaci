@@ -278,7 +278,7 @@
           "en": "Framed scene",
           "fr": "Scène encadrée"
         },
-        "src": "assets/paintings/mona-lisa/mona-lisa-f-s.glb"
+        "src": "assets/paintings/mona-lisa/monalisa_framed.glb"
       }
     ],
     "scaleMeters": {
@@ -360,7 +360,7 @@
           "en": "Framed scene",
           "fr": "Scène encadrée"
         },
-        "src": "assets/paintings/mona-lisa/mona-lisa-f-s.glb"
+        "src": "assets/paintings/mona-lisa/monalisa_framed.glb"
       }
     ],
     "audioGuides": [
