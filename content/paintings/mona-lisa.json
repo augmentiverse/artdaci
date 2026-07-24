@@ -368,7 +368,7 @@
           "en": "Framed scene",
           "fr": "Scène encadrée"
         },
-        "src": "assets/paintings/mona-lisa/monalisa_framed.glb"
+        "src": "assets/paintings/mona-lisa/monalisa-tableau-c.glb"
       },
       {
         "id": "davinci-monalisa",
@@ -377,6 +377,14 @@
           "fr": "De Vinci et Mona Lisa"
         },
         "src": "assets/paintings/mona-lisa/davinci_monalisa.glb"
+      },
+      {
+        "id": "davinci-monalisa-alternative",
+        "label": {
+          "en": "Da Vinci and Mona Lisa — Alternative",
+          "fr": "De Vinci et Mona Lisa — Variante"
+        },
+        "src": "assets/paintings/mona-lisa/davinci-monalisa.glb"
       }
     ],
     "audioGuides": [

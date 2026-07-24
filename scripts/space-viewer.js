@@ -138,7 +138,8 @@ function configureViewer(manifest) {
 }
 
 function getModelVariants(manifest) {
-  const variants = manifest.ar?.modelVariants || manifest.media?.modelVariants || [];
+  // Space AR can use a different set of models from image-tracked AR.
+  const variants = manifest.media?.modelVariants || manifest.ar?.modelVariants || [];
   const list = Array.isArray(variants) ? variants : [];
   if (list.length) return list.filter((variant) => variant?.src);
 
