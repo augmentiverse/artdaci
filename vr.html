@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#11100e" />
+    <title>DACIART VR Gallery</title>
+    <link rel="stylesheet" href="styles/vr.css?v=1" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./vendor/three.module.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <main class="vr-shell">
+      <header class="vr-toolbar">
+        <a id="vr-back" class="vr-button" href="space.html">Back</a>
+        <div>
+          <p id="vr-kicker">Headset experience</p>
+          <h1 id="vr-title">ARTDACI VR</h1>
+          <p id="vr-instructions">Trigger: grab, move and rotate. Use both triggers to resize and rotate.</p>
+        </div>
+        <button id="enter-vr" class="vr-button primary" type="button" disabled>Enter VR</button>
+      </header>
+
+      <section class="vr-controls" aria-label="VR model controls">
+        <label for="vr-model-choice" id="vr-model-label">3D model</label>
+        <select id="vr-model-choice"></select>
+        <button id="vr-reset" class="vr-button" type="button">Reset model</button>
+        <p id="vr-status" role="status">Preparing VR experience…</p>
+      </section>
+
+      <div id="vr-stage" aria-label="Interactive VR gallery"></div>
+    </main>
+
+    <script type="module" src="scripts/vr-viewer.js?v=1"></script>
+  </body>
+</html>

@@ -19,6 +19,7 @@ const COPY = {
     audioOverviewPause: "Pause overview",
     audioOverviewMissing: "Audio overview unavailable",
     place: "Place in My Space",
+    openVr: "Open in VR headset",
     imageAr: "Image AR",
     printedPage: "Printed Page",
     modelChoice: "Model choice",
@@ -39,6 +40,7 @@ const COPY = {
     audioOverviewPause: "Mettre en pause",
     audioOverviewMissing: "Aperçu audio indisponible",
     place: "Placer dans mon espace",
+    openVr: "Ouvrir dans un casque VR",
     imageAr: "AR sur image",
     printedPage: "Page imprimée",
     modelChoice: "Choix du modèle",
@@ -96,6 +98,7 @@ function applyStaticCopy() {
   document.getElementById("space-copy").textContent = text.intro;
   document.getElementById("space-status").textContent = text.loading;
   document.getElementById("ar-button").textContent = text.place;
+  document.getElementById("vr-link").textContent = text.openVr;
   document.getElementById("image-ar-link").textContent = text.imageAr;
   document.getElementById("print-link").textContent = text.printedPage;
   document.getElementById("ios-note").textContent = text.iosNote;
@@ -126,6 +129,7 @@ function configureViewer(manifest) {
   }
 
   document.getElementById("image-ar-link").href = `ar.html?painting=${slug}&lang=${lang}`;
+  updateVrLink(0);
   document.getElementById("print-link").href = PRINT_PAGES[lang]?.[slug] || "index.html";
   renderModelVariantControls(model, modelVariants, usdz);
   renderExperienceActions(audioOverview);
@@ -179,6 +183,7 @@ function renderModelVariantControls(model, variants, defaultUsdz) {
       arButton.disabled = true;
       document.getElementById("space-status").textContent = COPY[lang].loading;
       model.setAttribute("src", variant.src);
+      updateVrLink(index);
       if (variantUsdz) {
         model.setAttribute("ios-src", variantUsdz);
       } else {
@@ -204,6 +209,12 @@ function renderModelVariantControls(model, variants, defaultUsdz) {
 
   // The model must be selected before launching the native AR viewer.
   actions.prepend(group);
+}
+
+function updateVrLink(modelIndex) {
+  const link = document.getElementById("vr-link");
+  if (!link) return;
+  link.href = `vr.html?painting=${encodeURIComponent(slug)}&lang=${lang}&model=${modelIndex}`;
 }
 
 function getLocalizedAudioOverview(manifest) {
