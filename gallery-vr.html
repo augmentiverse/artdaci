@@ -21,7 +21,7 @@
         <div>
           <p id="gallery-kicker">Immersive exhibition</p>
           <h1 id="gallery-title">The ARTDACI Gallery</h1>
-          <p id="gallery-instructions">Use a thumbstick to walk. Point at a floor hotspot and press the trigger. Audio grows louder as you approach each painting.</p>
+          <p id="gallery-instructions">Trigger: teleport. A/X: play or pause. B/Y: restart audio. Press a thumbstick to mute.</p>
         </div>
         <button id="enter-gallery-vr" class="gallery-button primary" type="button" disabled>Enter VR Gallery</button>
       </header>
@@ -29,11 +29,16 @@
       <aside class="gallery-guide">
         <strong id="gallery-count">Four masterpieces</strong>
         <span id="gallery-status" role="status">Preparing the gallery…</span>
+        <div class="gallery-audio-controls" aria-label="Audio guide controls">
+          <button id="gallery-audio-toggle" class="gallery-button" type="button">Play audio</button>
+          <button id="gallery-audio-restart" class="gallery-button" type="button">Restart</button>
+          <button id="gallery-audio-mute" class="gallery-button" type="button">Mute</button>
+        </div>
       </aside>
 
       <div id="gallery-stage" aria-label="Virtual gallery containing four paintings"></div>
     </main>
 
-    <script type="module" src="scripts/gallery-vr.js?v=2"></script>
+    <script type="module" src="scripts/gallery-vr.js?v=3"></script>
   </body>
 </html>

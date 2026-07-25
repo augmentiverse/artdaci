@@ -125,6 +125,25 @@ body {
   font-size: 13px;
 }
 
+.gallery-audio-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 7px;
+}
+
+.gallery-audio-controls .gallery-button {
+  min-height: 34px;
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+.gallery-audio-controls .active {
+  border-color: #6f4e12;
+  color: #171310;
+  background: var(--gold);
+}
+
 @media (max-width: 720px) {
   .gallery-toolbar {
     grid-template-columns: auto 1fr;

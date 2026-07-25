@@ -9,32 +9,56 @@ const MANIFESTS = [
 
 const params = new URLSearchParams(location.search);
 const lang = params.get("lang") === "fr" ? "fr" : "en";
+const PAINTING_INFO = {
+  en: {
+    "mona-lisa": "Leonardo used delicate layers of sfumato to soften outlines and give the sitter a lifelike presence. Her expression and the imaginary landscape seem to change as we look.",
+    "van-gogh": "Van Gogh painted this self-portrait in Paris in 1887. Short, directional brushstrokes and complementary colours turn his face into an intense study of artistic identity.",
+    "van-gogh-bedroom": "Van Gogh painted his room in the Yellow House at Arles as a place of rest. Tilted perspective, strong outlines and expressive colour make the familiar room feel deeply personal.",
+    "vermeer-girl-with-a-pearl-earring": "This is a tronie: a character study rather than a formal portrait. Vermeer used ultramarine, soft light and a few bright highlights to create the girl’s direct, memorable presence."
+  },
+  fr: {
+    "mona-lisa": "Léonard utilise de fines couches de sfumato pour adoucir les contours et donner vie au modèle. Son expression et le paysage imaginaire semblent changer au fil du regard.",
+    "van-gogh": "Van Gogh peint cet autoportrait à Paris en 1887. Les touches courtes et les couleurs complémentaires transforment son visage en une étude intense de l’identité artistique.",
+    "van-gogh-bedroom": "Van Gogh représente sa chambre de la Maison jaune à Arles comme un lieu de repos. La perspective inclinée, les contours marqués et la couleur expressive rendent cet espace très personnel.",
+    "vermeer-girl-with-a-pearl-earring": "Cette œuvre est une tronie, une étude de caractère plutôt qu’un portrait officiel. Vermeer associe outremer, lumière douce et quelques reflets pour créer une présence inoubliable."
+  }
+};
 const COPY = {
   en: {
     back: "Back to collection",
     kicker: "Immersive exhibition",
     title: "The ARTDACI Gallery",
-    instructions: "Use a thumbstick to walk. Point at a floor hotspot and press the trigger. Audio grows louder as you approach each painting.",
+    instructions: "Trigger: teleport. A/X: play or pause. B/Y: restart audio. Press a thumbstick to mute.",
     enter: "Enter VR Gallery",
     exit: "Exit VR",
     count: "Four masterpieces",
     loading: "Preparing the gallery…",
     ready: "Gallery ready. Open this page in your headset and enter VR.",
     unsupported: "The gallery preview is ready. For immersive access, open it in Meta Quest Browser or another WebXR headset.",
-    failed: "The gallery could not be loaded."
+    failed: "The gallery could not be loaded.",
+    playAudio: "Play audio",
+    pauseAudio: "Pause audio",
+    restartAudio: "Restart",
+    muteAudio: "Mute",
+    unmuteAudio: "Unmute"
   },
   fr: {
     back: "Retour à la collection",
     kicker: "Exposition immersive",
     title: "La galerie ARTDACI",
-    instructions: "Utilisez un joystick pour marcher. Visez un point au sol et appuyez sur la gâchette. Le guide devient plus fort près du tableau.",
+    instructions: "Gâchette : téléportation. A/X : lecture ou pause. B/Y : recommencer. Appuyez sur un joystick pour couper le son.",
     enter: "Entrer dans la galerie VR",
     exit: "Quitter la VR",
     count: "Quatre chefs-d’œuvre",
     loading: "Préparation de la galerie…",
     ready: "Galerie prête. Ouvrez cette page dans votre casque puis entrez en VR.",
     unsupported: "L’aperçu de la galerie est prêt. Pour l’immersion, ouvrez-la dans Meta Quest Browser ou un autre casque WebXR.",
-    failed: "La galerie n’a pas pu être chargée."
+    failed: "La galerie n’a pas pu être chargée.",
+    playAudio: "Lire l’audio",
+    pauseAudio: "Pause",
+    restartAudio: "Recommencer",
+    muteAudio: "Couper le son",
+    unmuteAudio: "Rétablir le son"
   }
 };
 const text = COPY[lang];
@@ -42,6 +66,9 @@ const text = COPY[lang];
 const stage = document.getElementById("gallery-stage");
 const status = document.getElementById("gallery-status");
 const enterButton = document.getElementById("enter-gallery-vr");
+const audioToggleButton = document.getElementById("gallery-audio-toggle");
+const audioRestartButton = document.getElementById("gallery-audio-restart");
+const audioMuteButton = document.getElementById("gallery-audio-mute");
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x191714);
 scene.fog = new THREE.Fog(0x191714, 12, 26);
@@ -74,6 +101,8 @@ const clock = new THREE.Clock();
 let currentSession = null;
 let snapTurnReady = true;
 let activeExhibit = null;
+let audioMuted = false;
+const controllerCommandState = new Map();
 
 init();
 
@@ -107,6 +136,9 @@ function applyCopy() {
   document.getElementById("gallery-instructions").textContent = text.instructions;
   document.getElementById("gallery-count").textContent = text.count;
   enterButton.textContent = text.enter;
+  audioToggleButton.textContent = text.playAudio;
+  audioRestartButton.textContent = text.restartAudio;
+  audioMuteButton.textContent = text.muteAudio;
   status.textContent = text.loading;
 }
 
@@ -209,10 +241,10 @@ async function addPainting(painting, placement) {
   artwork.add(canvas);
 
   const title = localizedTitle(painting);
-  const label = makeLabel(`${title}\n${painting.artist?.name || ""} · ${painting.date || ""}`);
-  label.position.set(0, -height / 2 - 0.28, 0.07);
-  label.scale.set(1.7, 0.43, 1);
-  artwork.add(label);
+  const information = makeInformationPanel(painting, title);
+  information.position.set(0, -height / 2 - 0.62, 0.07);
+  information.scale.set(2.12, 2.12, 1);
+  artwork.add(information);
   scene.add(artwork);
 
   const hotspot = createTeleportHotspot(title, placement, artwork);
@@ -283,18 +315,43 @@ async function loadAudioGuide(exhibit) {
   if (!guide?.src) return;
 
   const buffer = await audioLoader.loadAsync(guide.src);
-  const audio = new THREE.PositionalAudio(audioListener);
+  // Use a clean non-HRTF signal and calculate distance volume ourselves.
+  // This avoids the artefacts some Quest devices produce with long HRTF narration.
+  const audio = new THREE.Audio(audioListener);
   audio.setBuffer(buffer);
   audio.setLoop(false);
-  audio.setVolume(1);
-  audio.setDistanceModel("inverse");
-  audio.setRefDistance(0.8);
-  audio.setRolloffFactor(1.65);
-  audio.setMaxDistance(7);
-  audio.position.set(0, 0, 0.28);
-  exhibit.artwork.add(audio);
+  audio.setVolume(0);
+  audio.setFilters(createVoiceCleanupFilters());
+  scene.add(audio);
   exhibit.audio = audio;
   exhibit.audioReady = true;
+}
+
+function createVoiceCleanupFilters() {
+  const context = audioListener.context;
+  const highPass = context.createBiquadFilter();
+  highPass.type = "highpass";
+  highPass.frequency.value = 85;
+  highPass.Q.value = 0.7;
+
+  const presence = context.createBiquadFilter();
+  presence.type = "peaking";
+  presence.frequency.value = 2600;
+  presence.Q.value = 0.85;
+  presence.gain.value = 2.4;
+
+  const lowPass = context.createBiquadFilter();
+  lowPass.type = "lowpass";
+  lowPass.frequency.value = 11500;
+  lowPass.Q.value = 0.7;
+
+  const compressor = context.createDynamicsCompressor();
+  compressor.threshold.value = -25;
+  compressor.knee.value = 22;
+  compressor.ratio.value = 3;
+  compressor.attack.value = 0.012;
+  compressor.release.value = 0.24;
+  return [highPass, presence, lowPass, compressor];
 }
 
 function localizedTitle(painting) {
@@ -335,6 +392,57 @@ function makeLabel(message) {
   );
 }
 
+function makeInformationPanel(painting, title) {
+  const canvas = document.createElement("canvas");
+  canvas.width = 1200;
+  canvas.height = 520;
+  const context = canvas.getContext("2d");
+  context.fillStyle = "#f4ecdf";
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.strokeStyle = "#4b3c2d";
+  context.lineWidth = 10;
+  context.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
+
+  context.textAlign = "left";
+  context.fillStyle = "#211b16";
+  context.font = "700 72px Georgia";
+  context.fillText(title, 54, 98);
+
+  context.fillStyle = "#7b2937";
+  context.font = "600 34px Arial";
+  context.fillText(`${painting.artist?.name || ""} · ${painting.date || ""}`, 56, 152);
+
+  context.fillStyle = "#4f463d";
+  context.font = "32px Georgia";
+  const body = PAINTING_INFO[lang]?.[painting.slug] || painting.texts?.curatorInsight || "";
+  drawWrappedText(context, body, 56, 225, canvas.width - 112, 46, 5);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.encoding = THREE.sRGBEncoding;
+  return new THREE.Mesh(
+    new THREE.PlaneGeometry(1, 0.433),
+    new THREE.MeshBasicMaterial({ map: texture })
+  );
+}
+
+function drawWrappedText(context, message, x, y, maxWidth, lineHeight, maxLines) {
+  const words = message.split(/\s+/);
+  let line = "";
+  let lineNumber = 0;
+  for (const word of words) {
+    const testLine = line ? `${line} ${word}` : word;
+    if (context.measureText(testLine).width > maxWidth && line) {
+      context.fillText(line, x, y + lineNumber * lineHeight);
+      line = word;
+      lineNumber += 1;
+      if (lineNumber >= maxLines) return;
+    } else {
+      line = testLine;
+    }
+  }
+  if (lineNumber < maxLines) context.fillText(line, x, y + lineNumber * lineHeight);
+}
+
 function addControllers() {
   controllers.forEach((controller) => {
     const geometry = new THREE.BufferGeometry().setFromPoints([
@@ -368,6 +476,9 @@ function teleportFrom(controller) {
 
 function bindUI() {
   enterButton.addEventListener("click", toggleVR);
+  audioToggleButton.addEventListener("click", toggleAudioGuide);
+  audioRestartButton.addEventListener("click", restartAudioGuide);
+  audioMuteButton.addEventListener("click", toggleAudioMute);
   addEventListener("resize", resize);
 }
 
@@ -405,8 +516,8 @@ async function toggleVR() {
 }
 
 function selectNearestAudioGuide(force = false) {
-  if (!currentSession || !exhibits.length) return;
-  const head = renderer.xr.getCamera(camera).getWorldPosition(new THREE.Vector3());
+  if ((!currentSession && !force) || !exhibits.length) return;
+  const head = getListenerPosition();
   let nearest = null;
   let nearestDistance = Infinity;
 
@@ -419,7 +530,7 @@ function selectNearestAudioGuide(force = false) {
     }
   });
 
-  const next = nearestDistance <= 3.25 ? nearest : null;
+  const next = force || nearestDistance <= 3.25 ? nearest : null;
   if (!force && next === activeExhibit) {
     if (next?.audioReady && !next.started) startAudioGuide(next);
     return;
@@ -439,6 +550,7 @@ function startAudioGuide(exhibit) {
   if (!exhibit.audioReady || exhibit.started || audioListener.context.state !== "running") return;
   exhibit.audio.play();
   exhibit.started = true;
+  updateAudioButtons();
 }
 
 function stopAllAudioGuides() {
@@ -447,6 +559,75 @@ function stopAllAudioGuides() {
     exhibit.started = false;
   });
   activeExhibit = null;
+  updateAudioButtons();
+}
+
+async function toggleAudioGuide() {
+  await audioListener.context.resume();
+  if (!activeExhibit) selectNearestAudioGuide(true);
+  if (!activeExhibit?.audioReady) return;
+
+  if (activeExhibit.audio.isPlaying) {
+    activeExhibit.audio.pause();
+  } else {
+    activeExhibit.audio.play();
+    activeExhibit.started = true;
+  }
+  updateAudioButtons();
+}
+
+async function restartAudioGuide() {
+  await audioListener.context.resume();
+  if (!activeExhibit) selectNearestAudioGuide(true);
+  if (!activeExhibit?.audioReady) return;
+  if (activeExhibit.audio.isPlaying) activeExhibit.audio.stop();
+  activeExhibit.started = false;
+  startAudioGuide(activeExhibit);
+}
+
+function toggleAudioMute() {
+  audioMuted = !audioMuted;
+  updateAudioButtons();
+}
+
+function updateAudioButtons() {
+  const playing = Boolean(activeExhibit?.audio?.isPlaying);
+  audioToggleButton.textContent = playing ? text.pauseAudio : text.playAudio;
+  audioToggleButton.classList.toggle("active", playing);
+  audioMuteButton.textContent = audioMuted ? text.unmuteAudio : text.muteAudio;
+  audioMuteButton.classList.toggle("active", audioMuted);
+}
+
+function updateAudioVolume() {
+  if (!activeExhibit?.audio) return;
+  const head = getListenerPosition();
+  const paintingPosition = activeExhibit.artwork.getWorldPosition(new THREE.Vector3());
+  const distance = paintingPosition.distanceTo(head);
+  const volume = audioMuted ? 0 : THREE.MathUtils.clamp(1.18 - distance / 4.2, 0.12, 1);
+  activeExhibit.audio.setVolume(volume);
+}
+
+function getListenerPosition() {
+  const activeCamera = currentSession ? renderer.xr.getCamera(camera) : camera;
+  return activeCamera.getWorldPosition(new THREE.Vector3());
+}
+
+function updateControllerAudioCommands() {
+  if (!currentSession) return;
+  for (const source of currentSession.inputSources) {
+    if (!source.gamepad) continue;
+    const key = source.handedness || "unknown";
+    const previous = controllerCommandState.get(key) || {};
+    const current = {
+      toggle: Boolean(source.gamepad.buttons[4]?.pressed),
+      restart: Boolean(source.gamepad.buttons[5]?.pressed),
+      mute: Boolean(source.gamepad.buttons[3]?.pressed)
+    };
+    if (current.toggle && !previous.toggle) toggleAudioGuide();
+    if (current.restart && !previous.restart) restartAudioGuide();
+    if (current.mute && !previous.mute) toggleAudioMute();
+    controllerCommandState.set(key, current);
+  }
 }
 
 function updateLocomotion(delta) {
@@ -490,5 +671,7 @@ function resize() {
 function render() {
   updateLocomotion(Math.min(clock.getDelta(), 0.05));
   selectNearestAudioGuide();
+  updateAudioVolume();
+  updateControllerAudioCommands();
   renderer.render(scene, camera);
 }
