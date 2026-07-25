@@ -1,4 +1,5 @@
 import * as THREE from "../vendor/three.module.js";
+import { GLTFLoader } from "../vendor/GLTFLoader.module.js";
 
 const MANIFESTS = [
   "content/paintings/mona-lisa.json",
@@ -40,7 +41,9 @@ const COPY = {
     pauseAudio: "Pause audio",
     restartAudio: "Restart",
     muteAudio: "Mute",
-    unmuteAudio: "Unmute"
+    unmuteAudio: "Unmute",
+    loadingModels: "Loading 3D exhibits…",
+    modelsReady: "Four paintings and four walk-around 3D exhibits are ready."
   },
   fr: {
     back: "Retour à la collection",
@@ -58,7 +61,9 @@ const COPY = {
     pauseAudio: "Pause",
     restartAudio: "Recommencer",
     muteAudio: "Couper le son",
-    unmuteAudio: "Rétablir le son"
+    unmuteAudio: "Rétablir le son",
+    loadingModels: "Chargement des œuvres 3D…",
+    modelsReady: "Quatre tableaux et quatre œuvres 3D observables sous tous les angles sont prêts."
   }
 };
 const text = COPY[lang];
@@ -92,9 +97,11 @@ stage.appendChild(renderer.domElement);
 
 const textureLoader = new THREE.TextureLoader();
 const audioLoader = new THREE.AudioLoader();
+const modelLoader = new GLTFLoader();
 const controllers = [renderer.xr.getController(0), renderer.xr.getController(1)];
 const teleportTargets = [];
 const exhibits = [];
+const exhibitsBySlug = new Map();
 const teleportRaycaster = new THREE.Raycaster();
 const rayRotation = new THREE.Matrix4();
 const clock = new THREE.Clock();
@@ -118,6 +125,7 @@ async function init() {
     const paintings = await Promise.all(responses.map((response) => response.json()));
     await buildExhibition(paintings);
     await detectVR();
+    void buildModelExhibits(paintings);
   } catch (error) {
     console.error(error);
     status.textContent = `${text.failed} ${error.message}`;
@@ -199,10 +207,10 @@ function buildRoom() {
 
 async function buildExhibition(paintings) {
   const placements = [
-    { position: [-2.2, 2.15, -4.92], rotationY: 0, hotspot: [-2.2, -2.55], visitorYaw: 0 },
-    { position: [5.92, 2.1, -1.9], rotationY: -Math.PI / 2, hotspot: [3.55, -1.9], visitorYaw: -Math.PI / 2 },
-    { position: [-5.92, 2.1, -1.9], rotationY: Math.PI / 2, hotspot: [-3.55, -1.9], visitorYaw: Math.PI / 2 },
-    { position: [2.2, 2.15, -4.92], rotationY: 0, hotspot: [2.2, -2.55], visitorYaw: 0 }
+    { position: [-2.2, 2.15, -4.92], rotationY: 0, hotspot: [-2.2, -2.55], visitorYaw: 0, modelPosition: [-4.2, 1.15] },
+    { position: [5.92, 2.1, -1.9], rotationY: -Math.PI / 2, hotspot: [3.55, -1.9], visitorYaw: -Math.PI / 2, modelPosition: [-1.4, 1.15] },
+    { position: [-5.92, 2.1, -1.9], rotationY: Math.PI / 2, hotspot: [-3.55, -1.9], visitorYaw: Math.PI / 2, modelPosition: [1.4, 1.15] },
+    { position: [2.2, 2.15, -4.92], rotationY: 0, hotspot: [2.2, -2.55], visitorYaw: 0, modelPosition: [4.2, 1.15] }
   ];
 
   await Promise.all(paintings.map((painting, index) => addPainting(painting, placements[index])));
@@ -256,12 +264,141 @@ async function addPainting(painting, placement) {
     hotspot,
     audio: null,
     audioReady: false,
-    started: false
+    started: false,
+    modelPosition: placement.modelPosition,
+    modelDisplay: null
   };
   exhibits.push(exhibit);
+  exhibitsBySlug.set(painting.slug, exhibit);
+  hotspot.userData.exhibit = exhibit;
   loadAudioGuide(exhibit).catch((error) => {
     console.warn(`Audio guide unavailable for ${painting.slug}.`, error);
   });
+}
+
+async function buildModelExhibits(paintings) {
+  status.textContent = text.loadingModels;
+  let loaded = 0;
+  await Promise.allSettled(paintings.map(async (painting) => {
+    const exhibit = exhibitsBySlug.get(painting.slug);
+    const modelSrc = getDefaultModelSource(painting);
+    if (!exhibit || !modelSrc) return;
+    await addGalleryModel(exhibit, modelSrc);
+    loaded += 1;
+    status.textContent = `${text.loadingModels} ${loaded}/${paintings.length}`;
+  }));
+  status.textContent = loaded
+    ? `${text.modelsReady} ${loaded}/${paintings.length}`
+    : text.ready;
+}
+
+function getDefaultModelSource(painting) {
+  const variants = painting.media?.modelVariants || painting.ar?.modelVariants || [];
+  return variants.find((variant) => variant?.src)?.src
+    || painting.media?.model
+    || painting.ar?.primaryModel
+    || "";
+}
+
+async function addGalleryModel(exhibit, modelSrc) {
+  const gltf = await modelLoader.loadAsync(modelSrc);
+  const display = new THREE.Group();
+  const [x, z] = exhibit.modelPosition;
+  display.position.set(x, 0, z);
+  display.userData.painting = exhibit.painting.slug;
+
+  const pedestal = new THREE.Mesh(
+    new THREE.BoxGeometry(1.48, 0.24, 1.48),
+    new THREE.MeshStandardMaterial({ color: 0xc9bca8, roughness: 0.78 })
+  );
+  pedestal.position.y = 0.12;
+  pedestal.receiveShadow = true;
+  display.add(pedestal);
+
+  const model = gltf.scene;
+  normalizeGalleryModel(model);
+  model.position.y += 0.25;
+  model.traverse((node) => {
+    if (!node.isMesh) return;
+    node.castShadow = false;
+    node.receiveShadow = false;
+  });
+  display.add(model);
+
+  const title = localizedTitle(exhibit.painting);
+  const label = makeLabel(`${lang === "fr" ? "Œuvre 3D" : "3D exhibit"}\n${title}`);
+  label.position.set(0, 0.43, 0.76);
+  label.rotation.x = -Math.PI / 5;
+  label.scale.set(1.3, 0.38, 1);
+  display.add(label);
+
+  const light = new THREE.SpotLight(0xffedcf, 0.72, 5, Math.PI / 5, 0.5);
+  light.position.set(x, 3.5, z + 0.5);
+  light.target = display;
+  scene.add(light);
+
+  scene.add(display);
+  exhibit.modelDisplay = display;
+  const hotspot = createModelTeleportHotspot(exhibit, display);
+  scene.add(hotspot);
+}
+
+function normalizeGalleryModel(model) {
+  model.updateMatrixWorld(true);
+  const box = new THREE.Box3().setFromObject(model);
+  const size = box.getSize(new THREE.Vector3());
+  const center = box.getCenter(new THREE.Vector3());
+  const largest = Math.max(size.x, size.y, size.z) || 1;
+  const scale = 1.32 / largest;
+  model.scale.setScalar(scale);
+  model.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
+  model.updateMatrixWorld(true);
+  const normalized = new THREE.Box3().setFromObject(model);
+  model.position.y -= normalized.min.y;
+}
+
+function createModelTeleportHotspot(exhibit, display) {
+  const title = localizedTitle(exhibit.painting);
+  const group = new THREE.Group();
+  group.position.set(display.position.x, 0.019, display.position.z + 1.55);
+  group.userData.destination = new THREE.Vector3(display.position.x, 0, display.position.z + 1.55);
+  group.userData.visitorYaw = 0;
+  group.userData.artwork = display;
+  group.userData.exhibit = exhibit;
+
+  const target = new THREE.Mesh(
+    new THREE.CircleGeometry(0.43, 48),
+    new THREE.MeshBasicMaterial({
+      color: 0x497e9f,
+      transparent: true,
+      opacity: 0.3,
+      side: THREE.DoubleSide
+    })
+  );
+  target.rotation.x = -Math.PI / 2;
+  target.userData.hotspot = group;
+  group.add(target);
+  teleportTargets.push(target);
+
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(0.31, 0.43, 48),
+    new THREE.MeshBasicMaterial({
+      color: 0x8edbff,
+      transparent: true,
+      opacity: 0.94,
+      side: THREE.DoubleSide
+    })
+  );
+  ring.rotation.x = -Math.PI / 2;
+  ring.position.y = 0.006;
+  group.add(ring);
+
+  const marker = makeLabel(`${lang === "fr" ? "Explorer en 3D" : "Explore in 3D"}\n${title}`);
+  marker.position.set(0, 0.035, 0.62);
+  marker.rotation.x = -Math.PI / 2;
+  marker.scale.set(1.25, 0.32, 1);
+  group.add(marker);
+  return group;
 }
 
 function createTeleportHotspot(title, placement, artwork) {
@@ -466,6 +603,7 @@ function teleportFrom(controller) {
   const hotspot = hit.object.userData.hotspot;
   if (!hotspot) return;
 
+  activeExhibit = hotspot.userData.exhibit || activeExhibit;
   visitor.rotation.y = hotspot.userData.visitorYaw;
   visitor.updateMatrixWorld(true);
   const head = renderer.xr.getCamera(camera).getWorldPosition(new THREE.Vector3());
@@ -505,8 +643,12 @@ async function toggleVR() {
       currentSession = null;
       enterButton.textContent = text.enter;
       stopAllAudioGuides();
+      visitor.position.set(0, 0, 0);
+      visitor.rotation.set(0, 0, 0);
     }, { once: true });
     await renderer.xr.setSession(currentSession);
+    visitor.position.set(0, 0, 3.7);
+    visitor.rotation.set(0, 0, 0);
     await audioListener.context.resume();
     enterButton.textContent = text.exit;
   } catch (error) {
@@ -522,8 +664,12 @@ function selectNearestAudioGuide(force = false) {
   let nearestDistance = Infinity;
 
   exhibits.forEach((exhibit) => {
-    const position = exhibit.hotspot.getWorldPosition(new THREE.Vector3());
-    const distance = position.distanceTo(head);
+    const paintingPosition = exhibit.hotspot.getWorldPosition(new THREE.Vector3());
+    const modelPosition = exhibit.modelDisplay?.getWorldPosition(new THREE.Vector3());
+    const distance = Math.min(
+      paintingPosition.distanceTo(head),
+      modelPosition ? modelPosition.distanceTo(head) : Infinity
+    );
     if (distance < nearestDistance) {
       nearest = exhibit;
       nearestDistance = distance;
@@ -602,7 +748,11 @@ function updateAudioVolume() {
   if (!activeExhibit?.audio) return;
   const head = getListenerPosition();
   const paintingPosition = activeExhibit.artwork.getWorldPosition(new THREE.Vector3());
-  const distance = paintingPosition.distanceTo(head);
+  const modelPosition = activeExhibit.modelDisplay?.getWorldPosition(new THREE.Vector3());
+  const distance = Math.min(
+    paintingPosition.distanceTo(head),
+    modelPosition ? modelPosition.distanceTo(head) : Infinity
+  );
   const volume = audioMuted ? 0 : THREE.MathUtils.clamp(1.18 - distance / 4.2, 0.12, 1);
   activeExhibit.audio.setVolume(volume);
 }
