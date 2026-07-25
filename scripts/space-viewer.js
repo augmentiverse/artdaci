@@ -20,6 +20,7 @@ const COPY = {
     audioOverviewMissing: "Audio overview unavailable",
     place: "Place in My Space",
     openVr: "Open in VR headset",
+    vrGallery: "Visit VR Gallery",
     imageAr: "Image AR",
     printedPage: "Printed Page",
     modelChoice: "Model choice",
@@ -41,6 +42,7 @@ const COPY = {
     audioOverviewMissing: "Aperçu audio indisponible",
     place: "Placer dans mon espace",
     openVr: "Ouvrir dans un casque VR",
+    vrGallery: "Visiter la galerie VR",
     imageAr: "AR sur image",
     printedPage: "Page imprimée",
     modelChoice: "Choix du modèle",
@@ -99,6 +101,8 @@ function applyStaticCopy() {
   document.getElementById("space-status").textContent = text.loading;
   document.getElementById("ar-button").textContent = text.place;
   document.getElementById("vr-link").textContent = text.openVr;
+  document.getElementById("vr-gallery-link").textContent = text.vrGallery;
+  document.getElementById("vr-gallery-link").href = `gallery-vr.html?lang=${lang}`;
   document.getElementById("image-ar-link").textContent = text.imageAr;
   document.getElementById("print-link").textContent = text.printedPage;
   document.getElementById("ios-note").textContent = text.iosNote;

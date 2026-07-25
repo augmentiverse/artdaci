@@ -125,6 +125,8 @@ async function init() {
 function applyCopy() {
   document.getElementById("vr-back").textContent = text.back;
   document.getElementById("vr-back").href = `space.html?painting=${encodeURIComponent(slug)}&lang=${lang}`;
+  document.getElementById("gallery-link").textContent = lang === "fr" ? "Galerie VR" : "VR Gallery";
+  document.getElementById("gallery-link").href = `gallery-vr.html?lang=${lang}`;
   document.getElementById("vr-kicker").textContent = text.kicker;
   document.getElementById("vr-instructions").textContent = text.instructions;
   document.getElementById("vr-model-label").textContent = text.model;

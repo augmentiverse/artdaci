@@ -1,0 +1,140 @@
+:root {
+  color-scheme: dark;
+  --ink: #fffaf1;
+  --muted: #cabdaa;
+  --line: rgba(255, 250, 241, 0.28);
+  --panel: rgba(23, 19, 15, 0.92);
+  --gold: #c7a45d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+.gallery-shell,
+#gallery-stage {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+  color: var(--ink);
+  background: #11100e;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+.gallery-shell,
+#gallery-stage {
+  width: 100vw;
+  height: 100vh;
+}
+
+#gallery-stage canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.gallery-toolbar,
+.gallery-guide {
+  position: fixed;
+  z-index: 2;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  backdrop-filter: blur(12px);
+}
+
+.gallery-toolbar {
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: start;
+  padding: 14px;
+}
+
+.gallery-toolbar p,
+.gallery-toolbar h1 {
+  margin: 0;
+}
+
+#gallery-kicker {
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.gallery-toolbar h1 {
+  margin-top: 3px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(25px, 4vw, 44px);
+  font-weight: 500;
+}
+
+#gallery-instructions {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.gallery-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  border: 1px solid var(--line);
+  padding: 9px 13px;
+  color: var(--ink);
+  background: #211c17;
+  cursor: pointer;
+  font: inherit;
+  text-decoration: none;
+}
+
+.gallery-button.primary {
+  border-color: #6f4e12;
+  color: #171310;
+  background: var(--gold);
+  font-weight: 800;
+}
+
+.gallery-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.gallery-guide {
+  left: 16px;
+  bottom: 16px;
+  display: grid;
+  gap: 3px;
+  max-width: min(560px, calc(100vw - 32px));
+  padding: 12px 15px;
+}
+
+.gallery-guide span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@media (max-width: 720px) {
+  .gallery-toolbar {
+    grid-template-columns: auto 1fr;
+  }
+
+  #enter-gallery-vr {
+    grid-column: 1 / -1;
+  }
+
+  #gallery-instructions {
+    display: none;
+  }
+}

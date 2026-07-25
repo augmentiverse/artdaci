@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#171411" />
+    <title>DACIART — VR Gallery</title>
+    <link rel="stylesheet" href="styles/gallery-vr.css?v=1" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./vendor/three.module.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <main class="gallery-shell">
+      <header class="gallery-toolbar">
+        <a id="gallery-back" class="gallery-button" href="index.html">Back to collection</a>
+        <div>
+          <p id="gallery-kicker">Immersive exhibition</p>
+          <h1 id="gallery-title">The ARTDACI Gallery</h1>
+          <p id="gallery-instructions">Use a thumbstick to walk. Point at a floor hotspot and press the trigger. Audio grows louder as you approach each painting.</p>
+        </div>
+        <button id="enter-gallery-vr" class="gallery-button primary" type="button" disabled>Enter VR Gallery</button>
+      </header>
+
+      <aside class="gallery-guide">
+        <strong id="gallery-count">Four masterpieces</strong>
+        <span id="gallery-status" role="status">Preparing the gallery…</span>
+      </aside>
+
+      <div id="gallery-stage" aria-label="Virtual gallery containing four paintings"></div>
+    </main>
+
+    <script type="module" src="scripts/gallery-vr.js?v=2"></script>
+  </body>
+</html>
