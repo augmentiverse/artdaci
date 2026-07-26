@@ -623,12 +623,15 @@ function openExperience(definition, hotspot) {
   if (hotspot.type === "audio" && hotspot.audio?.src) {
     experienceBody.innerHTML = `<div class="experience-audio"><audio controls autoplay src="${hotspot.audio.src}"></audio></div>`;
   } else if (hotspot.type === "video" && hotspot.video?.src) {
-    const companionAudio = hotspot.video.audioSrc
-      ? `<audio data-video-sound preload="auto" src="${hotspot.video.audioSrc}"></audio>`
+    const companionAudioSrc = lang === "fr" && hotspot.video.audioSrcFr
+      ? hotspot.video.audioSrcFr
+      : hotspot.video.audioSrc;
+    const companionAudio = companionAudioSrc
+      ? `<audio data-video-sound preload="auto" src="${companionAudioSrc}"></audio>`
       : "";
     experienceBody.innerHTML = `
       <div class="experience-video">
-        <video controls autoplay playsinline ${hotspot.video.audioSrc ? "muted" : ""} src="${hotspot.video.src}"></video>
+        <video controls autoplay playsinline ${companionAudioSrc ? "muted" : ""} src="${hotspot.video.src}"></video>
         ${companionAudio}
         <div class="experience-video-controls">
           <button type="button" data-video-action="toggle">${lang === "fr" ? "Pause" : "Pause"}</button>

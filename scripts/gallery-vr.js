@@ -31,7 +31,8 @@ const CINEMA_VIDEO_LIBRARY = [
   {
     title: { en: "Mona Lisa Reimagined", fr: "La Joconde réimaginée" },
     src: "assets/paintings/mona-lisa/audio-video/mona-lisa_video.mp4",
-    audioSrc: "assets/paintings/mona-lisa/audio-video/Centuries_Behind_Glass.mp3"
+    audioSrc: "assets/paintings/mona-lisa/audio-video/Centuries_Behind_Glass.mp3",
+    audioSrcFr: "assets/paintings/mona-lisa/audio-video/La_Joconde_s_évade.mp3"
   },
   {
     title: { en: "Mona Lisa — Alternate Scene", fr: "La Joconde — scène alternative" },
@@ -1149,13 +1150,14 @@ function setCinemaVideo(exhibit, index, autoplay = true) {
   exhibit.playlistIndex = (index + CINEMA_VIDEO_LIBRARY.length) % CINEMA_VIDEO_LIBRARY.length;
   exhibit.title = item.title;
   exhibit.src = item.src;
+  const companionAudioSrc = lang === "fr" && item.audioSrcFr ? item.audioSrcFr : item.audioSrc;
   exhibit.video.src = item.src;
   exhibit.video.currentTime = 0;
   exhibit.video.muted = logicalMuted;
-  exhibit.video.volume = item.audioSrc ? 0 : 1;
-  if (item.audioSrc) {
+  exhibit.video.volume = companionAudioSrc ? 0 : 1;
+  if (companionAudioSrc) {
     const sound = document.createElement("audio");
-    sound.src = item.audioSrc;
+    sound.src = companionAudioSrc;
     sound.preload = "auto";
     sound.loop = true;
     sound.muted = logicalMuted;
