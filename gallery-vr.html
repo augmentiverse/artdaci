@@ -38,9 +38,14 @@
           <button id="gallery-audio-mute" class="gallery-button" type="button">Mute</button>
         </div>
         <div class="gallery-video-controls" aria-label="Video controls">
+          <select id="gallery-video-select" class="gallery-video-select" aria-label="Choose a cinema video" disabled></select>
+          <button id="gallery-video-previous" class="gallery-button" type="button" disabled>Previous</button>
           <button id="gallery-video-toggle" class="gallery-button" type="button" disabled>Play video</button>
           <button id="gallery-video-restart" class="gallery-button" type="button" disabled>Restart video</button>
           <button id="gallery-video-mute" class="gallery-button" type="button" disabled>Unmute video</button>
+          <button id="gallery-video-back" class="gallery-button" type="button" disabled>−10 sec</button>
+          <button id="gallery-video-forward" class="gallery-button" type="button" disabled>+10 sec</button>
+          <button id="gallery-video-next" class="gallery-button" type="button" disabled>Next</button>
         </div>
         <nav class="gallery-exit-links" aria-label="Exit gallery links">
           <a id="gallery-bedroom-world-link" class="gallery-button bedroom-world-link" href="https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae">Visit The Bedroom VR World</a>
@@ -52,6 +57,6 @@
       <div id="gallery-stage" aria-label="Virtual gallery containing four paintings"></div>
     </main>
 
-  <script type="module" src="scripts/gallery-vr.js?v=30"></script>
+  <script type="module" src="scripts/gallery-vr.js?v=31"></script>
   </body>
 </html>

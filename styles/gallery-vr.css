@@ -184,6 +184,17 @@ body {
   font-size: 12px;
 }
 
+.gallery-video-select {
+  min-height: 34px;
+  max-width: min(100%, 280px);
+  border: 1px solid var(--line);
+  padding: 6px 30px 6px 9px;
+  color: var(--ink);
+  background: #152a36;
+  font: inherit;
+  font-size: 12px;
+}
+
 .gallery-video-controls .active {
   border-color: #5d9fb2;
   color: #07151c;

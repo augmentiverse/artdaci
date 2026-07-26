@@ -22,15 +22,27 @@ const GALLERY_MODEL_OVERRIDES = {
 
 const STANDING_VAN_GOGH_MODEL = "assets/paintings/van-gogh/vangogh_istanding.glb";
 const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae";
-const REIMAGINED_VIDEO_EXHIBITS = [
+const CINEMA_VIDEO_LIBRARY = [
   {
-    title: "Leonardo Painting the Mona Lisa",
+    title: { en: "Leonardo Painting the Mona Lisa", fr: "Léonard peignant La Joconde" },
     src: "assets/paintings/mona-lisa/audio-video/davinci_painting_monalisa.mp4"
   },
   {
-    title: "Mona Lisa Reimagined",
+    title: { en: "Mona Lisa Reimagined", fr: "La Joconde réimaginée" },
     src: "assets/paintings/mona-lisa/audio-video/mona-lisa_video.mp4",
     audioSrc: "assets/paintings/mona-lisa/audio-video/Centuries_Behind_Glass.mp3"
+  },
+  {
+    title: { en: "Mona Lisa — Alternate Scene", fr: "La Joconde — scène alternative" },
+    src: "assets/paintings/mona-lisa/audio-video/mona-lisa_video-1.mp4"
+  },
+  {
+    title: { en: "Beyond the Frame II", fr: "Au-delà du cadre II" },
+    src: "assets/paintings/mona-lisa/audio-video/monalisa-out-of-frame-2.mp4"
+  },
+  {
+    title: { en: "Beyond the Frame III", fr: "Au-delà du cadre III" },
+    src: "assets/paintings/mona-lisa/audio-video/monalisa-out-of-frame-3.mp4"
   }
 ];
 
@@ -48,7 +60,7 @@ const params = new URLSearchParams(location.search);
 const lang = params.get("lang") === "fr" ? "fr" : "en";
 const previewRoom = params.get("room");
 const previewPositionZ = previewRoom === "reimagined"
-  ? 31
+  ? 30
   : previewRoom === "bedroom"
     ? 17.4
     : previewRoom === "models"
@@ -105,6 +117,13 @@ const COPY = {
     videoRestart: "Restart video",
     videoMute: "Mute video",
     videoUnmute: "Unmute video",
+    cinema: "ARTDACI CINEMA",
+    cinemaLibrary: "CHOOSE A FILM",
+    cinemaSit: "SIT & WATCH",
+    cinemaPrevious: "PREVIOUS",
+    cinemaNext: "NEXT",
+    cinemaBack: "−10 SEC",
+    cinemaForward: "+10 SEC",
     languageSwitch: "Français",
     languageSwitchLabel: "Voir la galerie en français",
     exitSign: "EXIT GALLERY"
@@ -144,6 +163,13 @@ const COPY = {
     videoRestart: "Recommencer la vidéo",
     videoMute: "Couper le son vidéo",
     videoUnmute: "Activer le son vidéo",
+    cinema: "CINÉMA ARTDACI",
+    cinemaLibrary: "CHOISIR UN FILM",
+    cinemaSit: "S’ASSEOIR ET REGARDER",
+    cinemaPrevious: "PRÉCÉDENT",
+    cinemaNext: "SUIVANT",
+    cinemaBack: "−10 SEC",
+    cinemaForward: "+10 SEC",
     languageSwitch: "English",
     languageSwitchLabel: "View the gallery in English",
     exitSign: "SORTIE DE LA GALERIE"
@@ -160,6 +186,11 @@ const audioMuteButton = document.getElementById("gallery-audio-mute");
 const videoToggleButton = document.getElementById("gallery-video-toggle");
 const videoRestartButton = document.getElementById("gallery-video-restart");
 const videoMuteButton = document.getElementById("gallery-video-mute");
+const videoSelect = document.getElementById("gallery-video-select");
+const videoPreviousButton = document.getElementById("gallery-video-previous");
+const videoNextButton = document.getElementById("gallery-video-next");
+const videoBackButton = document.getElementById("gallery-video-back");
+const videoForwardButton = document.getElementById("gallery-video-forward");
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x191714);
 scene.fog = new THREE.Fog(0x191714, 16, 44);
@@ -201,6 +232,7 @@ const exhibits = [];
 const exhibitsBySlug = new Map();
 const galleryVideoExhibits = [];
 const galleryVideoScreens = [];
+const cinemaControlMeshes = [];
 const teleportRaycaster = new THREE.Raycaster();
 const rayRotation = new THREE.Matrix4();
 const clock = new THREE.Clock();
@@ -253,6 +285,11 @@ function applyCopy() {
   videoToggleButton.textContent = text.videoPlay;
   videoRestartButton.textContent = text.videoRestart;
   videoMuteButton.textContent = text.videoUnmute;
+  videoPreviousButton.textContent = text.cinemaPrevious;
+  videoNextButton.textContent = text.cinemaNext;
+  videoBackButton.textContent = text.cinemaBack;
+  videoForwardButton.textContent = text.cinemaForward;
+  videoSelect.setAttribute("aria-label", text.cinemaLibrary);
   document.getElementById("gallery-exit-link").textContent = text.exitGallery;
   document.getElementById("gallery-exit-link").href = lang === "fr" ? "index-fr.html" : "index.html";
   document.getElementById("gallery-bedroom-world-link").textContent = text.bedroomVrWorld;
@@ -774,96 +811,280 @@ function createReimaginedHotspot(title, placement, artwork) {
 }
 
 function buildReimaginedVideoExhibits() {
-  const placements = [
-    { position: [-2.25, 1.82, 35.15], rotationY: -0.1 },
-    { position: [2.25, 1.82, 35.15], rotationY: 0.1 }
-  ];
+  const cinema = new THREE.Group();
+  cinema.name = "artdaci-cinema";
 
-  REIMAGINED_VIDEO_EXHIBITS.forEach((item, index) => {
-    const placement = placements[index];
-    const display = new THREE.Group();
-    display.position.set(...placement.position);
-    display.rotation.y = placement.rotationY;
+  const darkMaterial = new THREE.MeshStandardMaterial({ color: 0x0d1015, roughness: 0.62 });
+  const blueMaterial = new THREE.MeshStandardMaterial({ color: 0x19384a, roughness: 0.72 });
+  const velvetMaterial = new THREE.MeshStandardMaterial({ color: 0x3e111b, roughness: 0.96 });
+  const goldMaterial = new THREE.MeshStandardMaterial({ color: 0xb9914c, roughness: 0.44, metalness: 0.28 });
 
-    const video = document.createElement("video");
-    video.crossOrigin = "anonymous";
-    video.preload = "auto";
-    video.autoplay = true;
-    video.playsInline = true;
-    video.loop = true;
-    video.muted = true;
-    video.src = item.src;
-    video.style.display = "none";
-    document.body.appendChild(video);
-    video.volume = 0;
-    const sound = item.audioSrc ? document.createElement("audio") : null;
-    if (sound) {
-      sound.src = item.audioSrc;
-      sound.preload = "auto";
-      sound.loop = true;
-      sound.muted = true;
-      sound.style.display = "none";
-      document.body.appendChild(sound);
-      video.addEventListener("timeupdate", () => {
-        if (!sound.duration) return;
-        const expected = video.currentTime % sound.duration;
-        if (Math.abs(sound.currentTime - expected) > 0.35) sound.currentTime = expected;
-      });
-      video.addEventListener("pause", () => sound.pause());
-      video.addEventListener("play", () => {
-        if (!video.muted) {
-          sound.currentTime = sound.duration ? video.currentTime % sound.duration : video.currentTime;
-          sound.play().catch(() => {});
-        }
-      });
-    }
-    video.addEventListener("canplay", () => {
-      video.play().catch(() => {});
-    }, { once: true });
-    video.load();
+  const backdrop = new THREE.Mesh(new THREE.BoxGeometry(5.55, 3.68, 0.2), darkMaterial);
+  backdrop.position.set(0, 2.02, 36.55);
+  cinema.add(backdrop);
 
-    const texture = new THREE.VideoTexture(video);
-    texture.encoding = THREE.sRGBEncoding;
-    texture.minFilter = THREE.LinearFilter;
-    texture.magFilter = THREE.LinearFilter;
+  const video = document.createElement("video");
+  video.crossOrigin = "anonymous";
+  video.preload = "metadata";
+  video.playsInline = true;
+  video.loop = true;
+  video.muted = true;
+  video.style.display = "none";
+  document.body.appendChild(video);
 
-    const frame = new THREE.Mesh(
-      new THREE.BoxGeometry(2.2, 1.38, 0.16),
-      new THREE.MeshStandardMaterial({ color: 0x17130f, roughness: 0.48, metalness: 0.22 })
-    );
-    display.add(frame);
+  const texture = new THREE.VideoTexture(video);
+  texture.encoding = THREE.sRGBEncoding;
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
 
-    const screen = new THREE.Mesh(
-      new THREE.PlaneGeometry(2.02, 1.14),
-      new THREE.MeshBasicMaterial({ map: texture, color: 0xffffff, side: THREE.DoubleSide })
-    );
-    screen.position.z = -0.086;
-    display.add(screen);
+  const television = new THREE.Mesh(
+    new THREE.BoxGeometry(4.72, 2.72, 0.18),
+    new THREE.MeshStandardMaterial({ color: 0x101114, roughness: 0.38, metalness: 0.32 })
+  );
+  television.position.set(0, 2.22, 36.39);
+  cinema.add(television);
 
-    const pedestal = new THREE.Mesh(
-      new THREE.BoxGeometry(1.28, 0.72, 0.68),
-      new THREE.MeshStandardMaterial({ color: 0x233d52, roughness: 0.82 })
-    );
-    pedestal.position.y = -1.04;
-    display.add(pedestal);
+  const screen = new THREE.Mesh(
+    new THREE.PlaneGeometry(4.42, 2.42),
+    new THREE.MeshBasicMaterial({ map: texture, color: 0xffffff, side: THREE.DoubleSide })
+  );
+  screen.position.set(0, 2.22, 36.29);
+  cinema.add(screen);
 
-    const title = makeLabel(item.title);
-    title.position.set(0, -0.67, -0.11);
-    title.scale.set(1.95, 0.68, 1);
-    display.add(title);
+  const title = makeLabel(text.cinema);
+  title.position.set(0, 3.73, 36.22);
+  title.scale.set(3.5, 0.58, 1);
+  cinema.add(title);
 
-    const instruction = makeLabel(text.playVideo);
-    instruction.position.set(0, -1.18, -0.37);
-    instruction.scale.set(1.65, 0.52, 1);
-    display.add(instruction);
+  const exhibit = {
+    title: CINEMA_VIDEO_LIBRARY[0].title,
+    src: CINEMA_VIDEO_LIBRARY[0].src,
+    display: television,
+    screen,
+    video,
+    sound: null,
+    cinema: true,
+    playlistIndex: 0
+  };
 
-    const exhibit = { ...item, display, screen, video, sound };
-    screen.userData.videoExhibit = exhibit;
-    galleryVideoExhibits.push(exhibit);
-    galleryVideoScreens.push(screen);
-    teleportTargets.push(screen);
-    scene.add(display);
+  video.addEventListener("timeupdate", () => {
+    if (!exhibit.sound?.duration) return;
+    const expected = video.currentTime % exhibit.sound.duration;
+    if (Math.abs(exhibit.sound.currentTime - expected) > 0.35) exhibit.sound.currentTime = expected;
   });
+  video.addEventListener("pause", () => exhibit.sound?.pause());
+  video.addEventListener("play", () => {
+    if (!video.muted && exhibit.sound) {
+      exhibit.sound.currentTime = exhibit.sound.duration
+        ? video.currentTime % exhibit.sound.duration
+        : video.currentTime;
+      exhibit.sound.play().catch(() => {});
+    }
+  });
+
+  screen.userData.videoExhibit = exhibit;
+  galleryVideoExhibits.push(exhibit);
+  galleryVideoScreens.push(screen);
+  teleportTargets.push(screen);
+  activeGalleryVideo = exhibit;
+  videoSelect.innerHTML = "";
+  CINEMA_VIDEO_LIBRARY.forEach((item, index) => {
+    const option = document.createElement("option");
+    option.value = String(index);
+    option.textContent = `${index + 1}. ${localizedCinemaTitle(item)}`;
+    videoSelect.appendChild(option);
+  });
+
+  const controlActions = [
+    { label: "◀", type: "previous", x: -2.3 },
+    { label: text.cinemaBack, type: "seek", value: -10, x: -1.55 },
+    { label: "▶ / ❚❚", type: "toggle", x: -0.78 },
+    { label: "↺", type: "restart", x: 0 },
+    { label: "SOUND", type: "mute", x: 0.78 },
+    { label: text.cinemaForward, type: "seek", value: 10, x: 1.55 },
+    { label: "▶", type: "next", x: 2.3 }
+  ];
+  controlActions.forEach((control) => {
+    const button = createCinemaButton(control.label, {
+      type: control.type,
+      value: control.value,
+      position: [control.x, 0.65, 36.16],
+      width: 0.66,
+      height: 0.32,
+      material: blueMaterial
+    });
+    cinema.add(button);
+  });
+
+  const libraryHeading = makeLabel(text.cinemaLibrary);
+  libraryHeading.position.set(4.5, 3.64, 35.98);
+  libraryHeading.scale.set(1.65, 0.42, 1);
+  cinema.add(libraryHeading);
+  CINEMA_VIDEO_LIBRARY.forEach((item, index) => {
+    const button = createCinemaButton(`${index + 1}. ${localizedCinemaTitle(item)}`, {
+      type: "select",
+      value: index,
+      position: [4.5, 3.18 - index * 0.48, 35.98],
+      width: 1.85,
+      height: 0.36,
+      material: index === 0 ? goldMaterial : blueMaterial
+    });
+    cinema.add(button);
+  });
+
+  const console = new THREE.Mesh(new THREE.BoxGeometry(5.45, 0.52, 0.58), darkMaterial);
+  console.position.set(0, 0.43, 36.36);
+  cinema.add(console);
+
+  addCinemaSofa(cinema, velvetMaterial, goldMaterial);
+  scene.add(cinema);
+  setCinemaVideo(exhibit, 0, false);
+  updateGalleryVideoButtons();
+}
+
+function localizedCinemaTitle(item) {
+  return typeof item.title === "string" ? item.title : item.title?.[lang] || item.title?.en || "";
+}
+
+function createCinemaButton(label, options) {
+  const canvas = document.createElement("canvas");
+  canvas.width = 900;
+  canvas.height = 220;
+  const context = canvas.getContext("2d");
+  context.fillStyle = "#17384a";
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.strokeStyle = "#a9efff";
+  context.lineWidth = 10;
+  context.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
+  context.fillStyle = "#fffaf1";
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  let size = label.length > 24 ? 46 : label.length > 12 ? 58 : 78;
+  context.font = `800 ${size}px Arial`;
+  while (context.measureText(label).width > canvas.width - 44 && size > 34) {
+    size -= 2;
+    context.font = `800 ${size}px Arial`;
+  }
+  context.fillText(label, canvas.width / 2, canvas.height / 2);
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.encoding = THREE.sRGBEncoding;
+  const faceMaterial = new THREE.MeshBasicMaterial({ map: texture });
+  const button = new THREE.Mesh(
+    new THREE.BoxGeometry(options.width, options.height, 0.08),
+    [
+      options.material,
+      options.material,
+      options.material,
+      options.material,
+      faceMaterial,
+      faceMaterial
+    ]
+  );
+  button.position.set(...options.position);
+  button.userData.cinemaAction = { type: options.type, value: options.value };
+  cinemaControlMeshes.push(button);
+  teleportTargets.push(button);
+  return button;
+}
+
+function addCinemaSofa(cinema, velvetMaterial, goldMaterial) {
+  const sofa = new THREE.Group();
+  const seat = new THREE.Mesh(new THREE.BoxGeometry(3.35, 0.48, 1.08), velvetMaterial);
+  seat.position.y = 0.55;
+  sofa.add(seat);
+  const back = new THREE.Mesh(new THREE.BoxGeometry(3.35, 0.8, 0.38), velvetMaterial);
+  back.position.set(0, 0.84, -0.47);
+  sofa.add(back);
+  [-1.55, 1.55].forEach((x) => {
+    const arm = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.72, 1.12), velvetMaterial);
+    arm.position.set(x, 0.72, 0);
+    sofa.add(arm);
+    const foot = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.22, 0.14), goldMaterial);
+    foot.position.set(x, 0.12, 0.35);
+    sofa.add(foot);
+  });
+  sofa.position.set(0, 0, 32.8);
+  cinema.add(sofa);
+
+  const viewingSpot = new THREE.Group();
+  viewingSpot.position.set(0, 0.02, 33.9);
+  viewingSpot.userData.destination = new THREE.Vector3(0, 0, 33.9);
+  viewingSpot.userData.visitorYaw = Math.PI;
+  viewingSpot.userData.visitorHeightOffset = -0.55;
+  const target = new THREE.Mesh(
+    new THREE.CircleGeometry(0.55, 48),
+    new THREE.MeshBasicMaterial({ color: 0xb9914c, transparent: true, opacity: 0.34, side: THREE.DoubleSide })
+  );
+  target.rotation.x = -Math.PI / 2;
+  target.userData.hotspot = viewingSpot;
+  viewingSpot.add(target);
+  teleportTargets.push(target);
+  const label = makeLabel(text.cinemaSit);
+  label.position.set(0, 0.03, 0.7);
+  label.rotation.x = -Math.PI / 2;
+  label.scale.set(1.55, 0.36, 1);
+  viewingSpot.add(label);
+  cinema.add(viewingSpot);
+}
+
+function setCinemaVideo(exhibit, index, autoplay = true) {
+  if (!exhibit?.cinema) return;
+  const item = CINEMA_VIDEO_LIBRARY[(index + CINEMA_VIDEO_LIBRARY.length) % CINEMA_VIDEO_LIBRARY.length];
+  const logicalMuted = exhibit.video.muted;
+  exhibit.video.pause();
+  if (exhibit.sound) {
+    exhibit.sound.pause();
+    exhibit.sound.remove();
+    exhibit.sound = null;
+  }
+  exhibit.playlistIndex = (index + CINEMA_VIDEO_LIBRARY.length) % CINEMA_VIDEO_LIBRARY.length;
+  exhibit.title = item.title;
+  exhibit.src = item.src;
+  exhibit.video.src = item.src;
+  exhibit.video.currentTime = 0;
+  exhibit.video.muted = logicalMuted;
+  exhibit.video.volume = item.audioSrc ? 0 : 1;
+  if (item.audioSrc) {
+    const sound = document.createElement("audio");
+    sound.src = item.audioSrc;
+    sound.preload = "auto";
+    sound.loop = true;
+    sound.muted = logicalMuted;
+    sound.style.display = "none";
+    document.body.appendChild(sound);
+    exhibit.sound = sound;
+  }
+  exhibit.video.load();
+  exhibit.video.addEventListener("loadeddata", () => {
+    if (exhibit.video.currentTime === 0) exhibit.video.currentTime = 0.01;
+  }, { once: true });
+  if (autoplay) exhibit.video.play().catch(() => {});
+  activeGalleryVideo = exhibit;
+  status.textContent = `${text.cinema}: ${localizedCinemaTitle(item)}`;
+  updateGalleryVideoButtons();
+}
+
+function runCinemaAction(action) {
+  const exhibit = activeGalleryVideo?.cinema
+    ? activeGalleryVideo
+    : galleryVideoExhibits.find((item) => item.cinema);
+  if (!exhibit || !action) return;
+  activeGalleryVideo = exhibit;
+  if (action.type === "toggle") toggleGalleryVideo(exhibit);
+  if (action.type === "restart") restartGalleryVideo(exhibit);
+  if (action.type === "mute") toggleGalleryVideoMute(exhibit);
+  if (action.type === "previous") setCinemaVideo(exhibit, exhibit.playlistIndex - 1);
+  if (action.type === "next") setCinemaVideo(exhibit, exhibit.playlistIndex + 1);
+  if (action.type === "select") setCinemaVideo(exhibit, action.value);
+  if (action.type === "seek") {
+    const duration = Number.isFinite(exhibit.video.duration) ? exhibit.video.duration : Infinity;
+    exhibit.video.currentTime = THREE.MathUtils.clamp(exhibit.video.currentTime + action.value, 0, duration);
+    if (exhibit.sound) {
+      exhibit.sound.currentTime = exhibit.sound.duration
+        ? exhibit.video.currentTime % exhibit.sound.duration
+        : exhibit.video.currentTime;
+    }
+  }
 }
 
 async function toggleGalleryVideo(exhibit) {
@@ -957,6 +1178,12 @@ function updateGalleryVideoButtons() {
   videoToggleButton.disabled = disabled;
   videoRestartButton.disabled = disabled;
   videoMuteButton.disabled = disabled;
+  videoSelect.disabled = disabled;
+  videoPreviousButton.disabled = disabled;
+  videoNextButton.disabled = disabled;
+  videoBackButton.disabled = disabled;
+  videoForwardButton.disabled = disabled;
+  if (activeGalleryVideo?.cinema) videoSelect.value = String(activeGalleryVideo.playlistIndex);
   videoToggleButton.textContent = video && !video.paused ? text.videoPause : text.videoPlay;
   videoMuteButton.textContent = video && !video.muted ? text.videoMute : text.videoUnmute;
   videoToggleButton.classList.toggle("active", Boolean(video && !video.paused));
@@ -984,15 +1211,19 @@ function updateGalleryVideoVolume() {
 }
 
 function toggleVideoFromPointer(event) {
-  if (currentSession || !galleryVideoScreens.length) return;
+  if (currentSession || (!galleryVideoScreens.length && !cinemaControlMeshes.length)) return;
   const bounds = renderer.domElement.getBoundingClientRect();
   const pointer = new THREE.Vector2(
     ((event.clientX - bounds.left) / bounds.width) * 2 - 1,
     -((event.clientY - bounds.top) / bounds.height) * 2 + 1
   );
   teleportRaycaster.setFromCamera(pointer, camera);
-  const hit = teleportRaycaster.intersectObjects(galleryVideoScreens, false)[0];
-  if (hit?.object.userData.videoExhibit) toggleGalleryVideo(hit.object.userData.videoExhibit);
+  const hit = teleportRaycaster.intersectObjects([...galleryVideoScreens, ...cinemaControlMeshes], false)[0];
+  if (hit?.object.userData.cinemaAction) {
+    runCinemaAction(hit.object.userData.cinemaAction);
+  } else if (hit?.object.userData.videoExhibit) {
+    toggleGalleryVideo(hit.object.userData.videoExhibit);
+  }
 }
 
 async function buildModelExhibits(paintings) {
@@ -1504,6 +1735,10 @@ function interactFromHand(hand) {
 
 function activateInteractionHit(hit) {
   if (!hit) return;
+  if (hit.object.userData.cinemaAction) {
+    runCinemaAction(hit.object.userData.cinemaAction);
+    return;
+  }
   if (hit.object.userData.videoExhibit) {
     toggleGalleryVideo(hit.object.userData.videoExhibit);
     return;
@@ -1521,6 +1756,7 @@ function activateInteractionHit(hit) {
   const head = renderer.xr.getCamera(camera).getWorldPosition(new THREE.Vector3());
   visitor.position.x += hotspot.userData.destination.x - head.x;
   visitor.position.z += hotspot.userData.destination.z - head.z;
+  visitor.position.y = hotspot.userData.visitorHeightOffset || 0;
   selectNearestAudioGuide(true);
 }
 
@@ -1539,6 +1775,11 @@ function bindUI() {
   videoToggleButton.addEventListener("click", () => toggleGalleryVideo());
   videoRestartButton.addEventListener("click", () => restartGalleryVideo());
   videoMuteButton.addEventListener("click", () => toggleGalleryVideoMute());
+  videoSelect.addEventListener("change", () => runCinemaAction({ type: "select", value: Number(videoSelect.value) }));
+  videoPreviousButton.addEventListener("click", () => runCinemaAction({ type: "previous" }));
+  videoNextButton.addEventListener("click", () => runCinemaAction({ type: "next" }));
+  videoBackButton.addEventListener("click", () => runCinemaAction({ type: "seek", value: -10 }));
+  videoForwardButton.addEventListener("click", () => runCinemaAction({ type: "seek", value: 10 }));
   renderer.domElement.addEventListener("pointerdown", toggleVideoFromPointer);
   addEventListener("resize", resize);
 }
