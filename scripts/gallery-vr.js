@@ -21,6 +21,7 @@ const GALLERY_MODEL_OVERRIDES = {
 };
 
 const STANDING_VAN_GOGH_MODEL = "assets/paintings/van-gogh/vangogh_istanding.glb";
+const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae";
 
 const REIMAGINED_ARTWORKS = [
   { src: "assets/gallery/reimagined/mona-lisa_out.png", title: "Mona Lisa — Beyond the frame" },
@@ -85,6 +86,8 @@ const COPY = {
     bedroomLifeSize: "LIFE-SIZE RECONSTRUCTION",
     reimaginedRoom: "MASTERPIECES REIMAGINED",
     reimaginedSubtitle: "FAMILIAR ICONS, NEW STORIES",
+    fastTravel: "QUICK ROOM ACCESS",
+    bedroomVrWorld: "VISIT THE BEDROOM VR WORLD",
     exitSign: "EXIT GALLERY"
   },
   fr: {
@@ -114,6 +117,8 @@ const COPY = {
     bedroomLifeSize: "RECONSTRUCTION GRANDEUR NATURE",
     reimaginedRoom: "CHEFS-D'ŒUVRE RÉIMAGINÉS",
     reimaginedSubtitle: "NOUVEAUX REGARDS SUR DES ICÔNES",
+    fastTravel: "ACCÈS RAPIDE AUX SALLES",
+    bedroomVrWorld: "VISITER LA CHAMBRE EN MONDE VR",
     exitSign: "SORTIE DE LA GALERIE"
   }
 };
@@ -329,6 +334,7 @@ function buildRoom() {
   scene.add(reimaginedRoomFloor);
 
   addNavigationSigns();
+  addFastTravelStations();
 }
 
 function addNavigationSigns() {
@@ -377,6 +383,11 @@ function addNavigationSigns() {
     height: 0.58,
     accent: true
   });
+  createWallSign(text.bedroomVrWorld, [-5.85, 1.75, 24.5], Math.PI / 2, {
+    width: 3.55,
+    height: 0.64,
+    exitUrl: BEDROOM_VR_WORLD_URL
+  });
   createWallSign(text.exitSign, [0, 0.62, -4.86], 0, {
     width: 1.55,
     height: 0.5,
@@ -400,9 +411,10 @@ function createWallSign(message, position, rotationY, options = {}) {
   canvas.height = 480;
   const context = canvas.getContext("2d");
   const isExit = Boolean(options.exitUrl);
-  context.fillStyle = isExit ? "#812f38" : options.accent ? "#273f51" : "#211c17";
+  const isTravel = Boolean(options.destination);
+  context.fillStyle = isExit ? "#812f38" : isTravel ? "#17566a" : options.accent ? "#273f51" : "#211c17";
   context.fillRect(0, 0, canvas.width, canvas.height);
-  context.strokeStyle = isExit ? "#ffd8d8" : "#c7a45d";
+  context.strokeStyle = isExit ? "#ffd8d8" : isTravel ? "#a9efff" : "#c7a45d";
   context.lineWidth = 14;
   context.strokeRect(7, 7, canvas.width - 14, canvas.height - 14);
   context.fillStyle = "#fffaf1";
@@ -429,9 +441,50 @@ function createWallSign(message, position, rotationY, options = {}) {
   if (options.exitUrl) {
     sign.userData.exitUrl = options.exitUrl;
     teleportTargets.push(sign);
+  } else if (options.destination) {
+    sign.userData.hotspot = {
+      userData: {
+        destination: new THREE.Vector3(...options.destination),
+        visitorYaw: options.visitorYaw || 0,
+        exhibit: null
+      }
+    };
+    teleportTargets.push(sign);
   }
   scene.add(sign);
   return sign;
+}
+
+function addFastTravelStations() {
+  const rooms = [
+    { id: "paintings", label: text.paintingsRoom, destination: [0, 0, 0.8], visitorYaw: 0 },
+    { id: "models", label: text.modelsRoom, destination: [0, 0, 10], visitorYaw: 0 },
+    { id: "bedroom", label: text.bedroomRoom, destination: [0, 0, 20.6], visitorYaw: Math.PI },
+    { id: "reimagined", label: text.reimaginedRoom, destination: [0, 0, 34], visitorYaw: Math.PI }
+  ];
+  const stations = [
+    { room: "paintings", position: [5.86, 3.35, 3.25], rotationY: -Math.PI / 2 },
+    { room: "models", position: [5.86, 3.35, 7.15], rotationY: -Math.PI / 2 },
+    { room: "bedroom", position: [5.86, 3.35, 17.4], rotationY: -Math.PI / 2 },
+    { room: "reimagined", position: [-5.86, 3.35, 30.6], rotationY: Math.PI / 2 }
+  ];
+
+  stations.forEach((station) => {
+    const [x, y, z] = station.position;
+    createWallSign(text.fastTravel, [x, y, z], station.rotationY, {
+      width: 2.3,
+      height: 0.5,
+      accent: true
+    });
+    rooms.filter((room) => room.id !== station.room).forEach((room, index) => {
+      createWallSign(room.label, [x, y - 0.62 - index * 0.58, z], station.rotationY, {
+        width: 2.3,
+        height: 0.46,
+        destination: room.destination,
+        visitorYaw: room.visitorYaw
+      });
+    });
+  });
 }
 
 async function buildExhibition(paintings) {
