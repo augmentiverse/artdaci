@@ -22,6 +22,7 @@ const GALLERY_MODEL_OVERRIDES = {
 
 const STANDING_VAN_GOGH_MODEL = "assets/paintings/van-gogh/vangogh_istanding.glb";
 const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae";
+const CINEMA_ROOM_X = 14;
 const CINEMA_VIDEO_LIBRARY = [
   {
     title: { en: "Leonardo Painting the Mona Lisa", fr: "Léonard peignant La Joconde" },
@@ -59,14 +60,17 @@ const REIMAGINED_ARTWORKS = [
 const params = new URLSearchParams(location.search);
 const lang = params.get("lang") === "fr" ? "fr" : "en";
 const previewRoom = params.get("room");
-const previewPositionZ = previewRoom === "reimagined"
+const previewPositionX = previewRoom === "cinema" ? CINEMA_ROOM_X : 0;
+const previewPositionZ = previewRoom === "cinema"
+  ? 30
+  : previewRoom === "reimagined"
   ? 30
   : previewRoom === "bedroom"
     ? 17.4
     : previewRoom === "models"
       ? 14
       : 4;
-const previewRotationY = previewRoom === "bedroom" || previewRoom === "reimagined" ? Math.PI : 0;
+const previewRotationY = ["bedroom", "reimagined", "cinema"].includes(previewRoom) ? Math.PI : 0;
 const PAINTING_INFO = {
   en: {
     "mona-lisa": "Leonardo used delicate layers of sfumato to soften outlines and give the sitter a lifelike presence. Her expression and the imaginary landscape seem to change as we look.",
@@ -118,12 +122,17 @@ const COPY = {
     videoMute: "Mute video",
     videoUnmute: "Unmute video",
     cinema: "ARTDACI CINEMA",
+    cinemaRoom: "CINEMA ROOM",
+    cinemaEnter: "ENTER THE CINEMA",
+    cinemaReturn: "RETURN TO REIMAGINED ART",
     cinemaLibrary: "CHOOSE A FILM",
     cinemaSit: "SIT & WATCH",
     cinemaPrevious: "PREVIOUS",
     cinemaNext: "NEXT",
     cinemaBack: "−10 SEC",
     cinemaForward: "+10 SEC",
+    cinemaPlayPause: "PLAY / PAUSE",
+    cinemaSound: "SOUND ON / OFF",
     languageSwitch: "Français",
     languageSwitchLabel: "Voir la galerie en français",
     exitSign: "EXIT GALLERY"
@@ -164,12 +173,17 @@ const COPY = {
     videoMute: "Couper le son vidéo",
     videoUnmute: "Activer le son vidéo",
     cinema: "CINÉMA ARTDACI",
+    cinemaRoom: "SALLE DE CINÉMA",
+    cinemaEnter: "ENTRER DANS LE CINÉMA",
+    cinemaReturn: "RETOUR AUX ŒUVRES RÉIMAGINÉES",
     cinemaLibrary: "CHOISIR UN FILM",
     cinemaSit: "S’ASSEOIR ET REGARDER",
     cinemaPrevious: "PRÉCÉDENT",
     cinemaNext: "SUIVANT",
     cinemaBack: "−10 SEC",
     cinemaForward: "+10 SEC",
+    cinemaPlayPause: "LECTURE / PAUSE",
+    cinemaSound: "SON ACTIVÉ / COUPÉ",
     languageSwitch: "English",
     languageSwitchLabel: "View the gallery in English",
     exitSign: "SORTIE DE LA GALERIE"
@@ -200,6 +214,7 @@ camera.position.set(0, 1.65, 0);
 const audioListener = new THREE.AudioListener();
 camera.add(audioListener);
 const visitor = new THREE.Group();
+visitor.position.x = previewPositionX;
 visitor.position.z = previewPositionZ;
 visitor.rotation.y = previewRotationY;
 visitor.add(camera);
@@ -433,8 +448,68 @@ function buildRoom() {
   scene.add(reimaginedRoomFloor);
 
   addLouvrePaintingsRoomDecor();
+  addCinemaRoomArchitecture();
   addNavigationSigns();
   addFastTravelStations();
+}
+
+function addCinemaRoomArchitecture() {
+  const wallMaterial = new THREE.MeshStandardMaterial({
+    color: 0x141a22,
+    roughness: 0.9,
+    side: THREE.DoubleSide
+  });
+  const floorMaterial = new THREE.MeshStandardMaterial({ color: 0x24151a, roughness: 0.94 });
+  const ceilingMaterial = new THREE.MeshStandardMaterial({
+    color: 0x0b1016,
+    roughness: 1,
+    side: THREE.DoubleSide
+  });
+  const acousticMaterial = new THREE.MeshStandardMaterial({ color: 0x243b4a, roughness: 0.98 });
+
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(12, 10), floorMaterial);
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.set(CINEMA_ROOM_X, 0.006, 34);
+  floor.receiveShadow = true;
+  scene.add(floor);
+
+  const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(12, 10), ceilingMaterial);
+  ceiling.rotation.x = Math.PI / 2;
+  ceiling.position.set(CINEMA_ROOM_X, 4, 34);
+  scene.add(ceiling);
+
+  [
+    { size: [12, 4], position: [CINEMA_ROOM_X, 2, 29], rotationY: 0 },
+    { size: [12, 4], position: [CINEMA_ROOM_X, 2, 39], rotationY: Math.PI },
+    { size: [10, 4], position: [8, 2, 34], rotationY: Math.PI / 2 },
+    { size: [10, 4], position: [20, 2, 34], rotationY: -Math.PI / 2 }
+  ].forEach((wall) => {
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(...wall.size), wallMaterial);
+    mesh.position.set(...wall.position);
+    mesh.rotation.y = wall.rotationY;
+    mesh.receiveShadow = true;
+    scene.add(mesh);
+  });
+
+  [-4.8, -3.55, -2.3, 2.3, 3.55, 4.8].forEach((offset) => {
+    const panel = new THREE.Mesh(new THREE.BoxGeometry(0.82, 2.75, 0.1), acousticMaterial);
+    panel.position.set(CINEMA_ROOM_X + offset, 2.05, 38.86);
+    scene.add(panel);
+  });
+
+  [-3.8, 0, 3.8].forEach((offset) => {
+    const light = new THREE.SpotLight(0xffd9ae, 1.05, 8, Math.PI / 4.5, 0.62, 1.4);
+    light.position.set(CINEMA_ROOM_X + offset, 3.75, 32.5);
+    light.target.position.set(CINEMA_ROOM_X + offset * 0.55, 1.2, 36);
+    scene.add(light, light.target);
+  });
+
+  const aisleLightMaterial = new THREE.MeshBasicMaterial({ color: 0x4fc6e8 });
+  [-5.5, 5.5].forEach((offset) => {
+    const strip = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.025, 8.8), aisleLightMaterial);
+    strip.position.set(CINEMA_ROOM_X + offset, 0.025, 34);
+    scene.add(strip);
+  });
 }
 
 function addLouvrePaintingsRoomDecor() {
@@ -545,6 +620,18 @@ function addNavigationSigns() {
     height: 0.58,
     accent: true
   });
+  createWallSign(text.cinemaEnter, [5.85, 1.35, 37.2], -Math.PI / 2, {
+    width: 2.35,
+    height: 0.52,
+    destination: [CINEMA_ROOM_X, 0, 30.25],
+    visitorYaw: Math.PI
+  });
+  createWallSign(text.cinemaReturn, [8.12, 1.25, 30.6], Math.PI / 2, {
+    width: 2.65,
+    height: 0.52,
+    destination: [0, 0, 34],
+    visitorYaw: Math.PI
+  });
   createWallSign(text.bedroomRoom, [-5.86, 3.25, 24.5], Math.PI / 2, { width: 4.1 });
   createWallSign(text.bedroomLifeSize, [-5.85, 2.58, 24.5], Math.PI / 2, {
     width: 3.55,
@@ -628,13 +715,15 @@ function addFastTravelStations() {
     { id: "paintings", label: text.paintingsRoom, destination: [0, 0, 0.8], visitorYaw: 0 },
     { id: "models", label: text.modelsRoom, destination: [0, 0, 10], visitorYaw: 0 },
     { id: "bedroom", label: text.bedroomRoom, destination: [0, 0, 20.6], visitorYaw: Math.PI },
-    { id: "reimagined", label: text.reimaginedRoom, destination: [0, 0, 34], visitorYaw: Math.PI }
+    { id: "reimagined", label: text.reimaginedRoom, destination: [0, 0, 34], visitorYaw: Math.PI },
+    { id: "cinema", label: text.cinemaRoom, destination: [CINEMA_ROOM_X, 0, 30.25], visitorYaw: Math.PI }
   ];
   const stations = [
     { room: "paintings", position: [5.86, 3.35, 3.25], rotationY: -Math.PI / 2 },
     { room: "models", position: [5.86, 3.35, 7.15], rotationY: -Math.PI / 2 },
     { room: "bedroom", position: [5.86, 3.35, 17.4], rotationY: -Math.PI / 2 },
-    { room: "reimagined", position: [-5.86, 3.35, 30.6], rotationY: Math.PI / 2 }
+    { room: "reimagined", position: [-5.86, 3.35, 30.6], rotationY: Math.PI / 2 },
+    { room: "cinema", position: [8.12, 3.35, 31], rotationY: Math.PI / 2 }
   ];
 
   stations.forEach((station) => {
@@ -813,6 +902,7 @@ function createReimaginedHotspot(title, placement, artwork) {
 function buildReimaginedVideoExhibits() {
   const cinema = new THREE.Group();
   cinema.name = "artdaci-cinema";
+  cinema.position.x = CINEMA_ROOM_X;
 
   const darkMaterial = new THREE.MeshStandardMaterial({ color: 0x0d1015, roughness: 0.62 });
   const blueMaterial = new THREE.MeshStandardMaterial({ color: 0x19384a, roughness: 0.72 });
@@ -896,35 +986,35 @@ function buildReimaginedVideoExhibits() {
   });
 
   const controlActions = [
-    { label: "◀", type: "previous", x: -2.3 },
-    { label: text.cinemaBack, type: "seek", value: -10, x: -1.55 },
-    { label: "▶ / ❚❚", type: "toggle", x: -0.78 },
-    { label: "↺", type: "restart", x: 0 },
-    { label: "SOUND", type: "mute", x: 0.78 },
-    { label: text.cinemaForward, type: "seek", value: 10, x: 1.55 },
-    { label: "▶", type: "next", x: 2.3 }
+    { label: text.cinemaPrevious, type: "previous" },
+    { label: text.cinemaPlayPause, type: "toggle" },
+    { label: text.videoRestart, type: "restart" },
+    { label: text.cinemaSound, type: "mute" },
+    { label: text.cinemaBack, type: "seek", value: -10 },
+    { label: text.cinemaForward, type: "seek", value: 10 },
+    { label: text.cinemaNext, type: "next" }
   ];
-  controlActions.forEach((control) => {
+  controlActions.forEach((control, index) => {
     const button = createCinemaButton(control.label, {
       type: control.type,
       value: control.value,
-      position: [control.x, 0.65, 36.16],
-      width: 0.66,
-      height: 0.32,
+      position: [-4.5, 3.45 - index * 0.39, 36.02],
+      width: 1.85,
+      height: 0.34,
       material: blueMaterial
     });
     cinema.add(button);
   });
 
   const libraryHeading = makeLabel(text.cinemaLibrary);
-  libraryHeading.position.set(4.5, 3.64, 35.98);
+  libraryHeading.position.set(4.5, 3.72, 35.98);
   libraryHeading.scale.set(1.65, 0.42, 1);
   cinema.add(libraryHeading);
   CINEMA_VIDEO_LIBRARY.forEach((item, index) => {
     const button = createCinemaButton(`${index + 1}. ${localizedCinemaTitle(item)}`, {
       type: "select",
       value: index,
-      position: [4.5, 3.18 - index * 0.48, 35.98],
+      position: [4.5, 3.35 - index * 0.42, 35.98],
       width: 1.85,
       height: 0.36,
       material: index === 0 ? goldMaterial : blueMaterial
@@ -932,9 +1022,11 @@ function buildReimaginedVideoExhibits() {
     cinema.add(button);
   });
 
-  const console = new THREE.Mesh(new THREE.BoxGeometry(5.45, 0.52, 0.58), darkMaterial);
-  console.position.set(0, 0.43, 36.36);
-  cinema.add(console);
+  [-4.5, 4.5].forEach((x) => {
+    const console = new THREE.Mesh(new THREE.BoxGeometry(2.18, 3.42, 0.18), darkMaterial);
+    console.position.set(x, 2.02, 36.2);
+    cinema.add(console);
+  });
 
   addCinemaSofa(cinema, velvetMaterial, goldMaterial);
   scene.add(cinema);
@@ -989,26 +1081,76 @@ function createCinemaButton(label, options) {
 
 function addCinemaSofa(cinema, velvetMaterial, goldMaterial) {
   const sofa = new THREE.Group();
-  const seat = new THREE.Mesh(new THREE.BoxGeometry(3.35, 0.48, 1.08), velvetMaterial);
-  seat.position.y = 0.55;
-  sofa.add(seat);
-  const back = new THREE.Mesh(new THREE.BoxGeometry(3.35, 0.8, 0.38), velvetMaterial);
-  back.position.set(0, 0.84, -0.47);
-  sofa.add(back);
-  [-1.55, 1.55].forEach((x) => {
-    const arm = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.72, 1.12), velvetMaterial);
-    arm.position.set(x, 0.72, 0);
-    sofa.add(arm);
-    const foot = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.22, 0.14), goldMaterial);
-    foot.position.set(x, 0.12, 0.35);
-    sofa.add(foot);
+  const frameMaterial = new THREE.MeshStandardMaterial({ color: 0x111318, roughness: 0.5, metalness: 0.16 });
+  const accentMaterial = new THREE.MeshStandardMaterial({ color: 0xc69a55, roughness: 0.86 });
+  const cushionGeometry = new THREE.SphereGeometry(1, 28, 18);
+  const makeRoundedCushion = (width, height, depth, radius, position, material = velvetMaterial, rotation = [0, 0, 0]) => {
+    const shape = new THREE.Shape();
+    const x = -width / 2;
+    const y = -height / 2;
+    shape.moveTo(x + radius, y);
+    shape.lineTo(x + width - radius, y);
+    shape.quadraticCurveTo(x + width, y, x + width, y + radius);
+    shape.lineTo(x + width, y + height - radius);
+    shape.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    shape.lineTo(x + radius, y + height);
+    shape.quadraticCurveTo(x, y + height, x, y + height - radius);
+    shape.lineTo(x, y + radius);
+    shape.quadraticCurveTo(x, y, x + radius, y);
+    const geometry = new THREE.ExtrudeGeometry(shape, {
+      depth,
+      bevelEnabled: true,
+      bevelThickness: 0.035,
+      bevelSize: 0.035,
+      bevelSegments: 3,
+      curveSegments: 8
+    });
+    geometry.translate(0, 0, -depth / 2);
+    const cushion = new THREE.Mesh(geometry, material);
+    cushion.position.set(...position);
+    cushion.rotation.set(...rotation);
+    cushion.castShadow = true;
+    sofa.add(cushion);
+    return cushion;
+  };
+  const makeCushion = (position, scale, material = velvetMaterial, rotation = [0, 0, 0]) => {
+    const cushion = new THREE.Mesh(cushionGeometry, material);
+    cushion.position.set(...position);
+    cushion.scale.set(...scale);
+    cushion.rotation.set(...rotation);
+    cushion.castShadow = true;
+    sofa.add(cushion);
+    return cushion;
+  };
+
+  const platform = new THREE.Mesh(new THREE.BoxGeometry(3.72, 0.18, 1.24), frameMaterial);
+  platform.position.y = 0.31;
+  platform.castShadow = true;
+  sofa.add(platform);
+
+  [-1.08, 0, 1.08].forEach((x) => {
+    makeRoundedCushion(1.01, 0.28, 0.98, 0.12, [x, 0.58, 0.02]);
+    makeRoundedCushion(1.01, 0.82, 0.28, 0.14, [x, 1.03, -0.44], velvetMaterial, [-0.12, 0, 0]);
   });
-  sofa.position.set(0, 0, 32.8);
+  [-1.72, 1.72].forEach((x) => {
+    makeRoundedCushion(0.3, 0.58, 0.98, 0.12, [x, 0.67, 0]);
+  });
+  makeCushion([-1.25, 0.96, -0.05], [0.24, 0.3, 0.11], accentMaterial, [0, 0, -0.16]);
+  makeCushion([1.25, 0.96, -0.05], [0.24, 0.3, 0.11], accentMaterial, [0, 0, 0.16]);
+
+  [-1.55, 1.55].forEach((x) => {
+    [-0.42, 0.42].forEach((z) => {
+      const foot = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.075, 0.24, 12), goldMaterial);
+      foot.position.set(x, 0.12, z);
+      sofa.add(foot);
+    });
+  });
+  sofa.position.set(0, 0, 33.8);
   cinema.add(sofa);
 
   const viewingSpot = new THREE.Group();
-  viewingSpot.position.set(0, 0.02, 33.9);
-  viewingSpot.userData.destination = new THREE.Vector3(0, 0, 33.9);
+  viewingSpot.position.set(0, 0.02, 33.15);
+  viewingSpot.userData.destination = new THREE.Vector3(CINEMA_ROOM_X, 0, 33.75);
   viewingSpot.userData.visitorYaw = Math.PI;
   viewingSpot.userData.visitorHeightOffset = -0.55;
   const target = new THREE.Mesh(
@@ -1807,7 +1949,7 @@ async function toggleVR() {
       currentSession = null;
       enterButton.textContent = text.enter;
       stopAllAudioGuides();
-      visitor.position.set(0, 0, previewPositionZ);
+      visitor.position.set(previewPositionX, 0, previewPositionZ);
       visitor.rotation.set(0, previewRotationY, 0);
     }, { once: true });
     await renderer.xr.setSession(currentSession);
