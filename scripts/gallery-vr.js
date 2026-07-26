@@ -1,5 +1,6 @@
 import * as THREE from "../vendor/three.module.js";
 import { GLTFLoader } from "../vendor/GLTFLoader.module.js";
+import { DRACOLoader } from "../vendor/DRACOLoader.module.js";
 
 const MANIFESTS = [
   "content/paintings/mona-lisa.json",
@@ -15,11 +16,33 @@ const GALLERY_IMAGES = {
   "vermeer-girl-with-a-pearl-earring": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/images/vermee_girl-earring-t.png"
 };
 
+const GALLERY_MODEL_OVERRIDES = {
+  "van-gogh-bedroom": "assets/paintings/van-gogh-bedroom/bed.glb"
+};
+
+const STANDING_VAN_GOGH_MODEL = "assets/paintings/van-gogh/vangogh_istanding.glb";
+
+const REIMAGINED_ARTWORKS = [
+  { src: "assets/gallery/reimagined/mona-lisa_out.png", title: "Mona Lisa — Beyond the frame" },
+  { src: "assets/gallery/reimagined/Monalisa-Davinci.png", title: "Mona Lisa and Leonardo" },
+  { src: "assets/gallery/reimagined/Monalisa-louvre-1.png", title: "Mona Lisa at the Louvre" },
+  { src: "assets/gallery/reimagined/the-bedroom.avif", title: "The Bedroom — Reimagined" },
+  { src: "assets/gallery/reimagined/van-gogh_in_bedroom-standing.png", title: "Van Gogh in The Bedroom" },
+  { src: "assets/gallery/reimagined/vermeer_girl-earring-p.png", title: "Girl with a Pearl Earring — Portrait" },
+  { src: "assets/gallery/reimagined/vermeer_Girl-with-a-Pearl-Earring_sitting.png", title: "Girl with a Pearl Earring — Seated" }
+];
+
 const params = new URLSearchParams(location.search);
 const lang = params.get("lang") === "fr" ? "fr" : "en";
 const previewRoom = params.get("room");
-const previewPositionZ = previewRoom === "bedroom" ? 17.4 : previewRoom === "models" ? 14 : 4;
-const previewRotationY = previewRoom === "bedroom" ? Math.PI : 0;
+const previewPositionZ = previewRoom === "reimagined"
+  ? 31
+  : previewRoom === "bedroom"
+    ? 17.4
+    : previewRoom === "models"
+      ? 14
+      : 4;
+const previewRotationY = previewRoom === "bedroom" || previewRoom === "reimagined" ? Math.PI : 0;
 const PAINTING_INFO = {
   en: {
     "mona-lisa": "Leonardo used delicate layers of sfumato to soften outlines and give the sitter a lifelike presence. Her expression and the imaginary landscape seem to change as we look.",
@@ -60,6 +83,8 @@ const COPY = {
     modelsRoom: "3D MODELS",
     bedroomRoom: "VAN GOGH'S BEDROOM",
     bedroomLifeSize: "LIFE-SIZE RECONSTRUCTION",
+    reimaginedRoom: "MASTERPIECES REIMAGINED",
+    reimaginedSubtitle: "FAMILIAR ICONS, NEW STORIES",
     exitSign: "EXIT GALLERY"
   },
   fr: {
@@ -87,6 +112,8 @@ const COPY = {
     modelsRoom: "MODÈLES 3D",
     bedroomRoom: "LA CHAMBRE DE VAN GOGH",
     bedroomLifeSize: "RECONSTRUCTION GRANDEUR NATURE",
+    reimaginedRoom: "CHEFS-D'ŒUVRE RÉIMAGINÉS",
+    reimaginedSubtitle: "DES ICÔNES FAMILIÈRES, DE NOUVEAUX RÉCITS",
     exitSign: "SORTIE DE LA GALERIE"
   }
 };
@@ -100,7 +127,7 @@ const audioRestartButton = document.getElementById("gallery-audio-restart");
 const audioMuteButton = document.getElementById("gallery-audio-mute");
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x191714);
-scene.fog = new THREE.Fog(0x191714, 12, 26);
+scene.fog = new THREE.Fog(0x191714, 16, 44);
 
 const camera = new THREE.PerspectiveCamera(62, innerWidth / innerHeight, 0.05, 60);
 camera.position.set(0, 1.65, 0);
@@ -123,7 +150,10 @@ stage.appendChild(renderer.domElement);
 
 const textureLoader = new THREE.TextureLoader();
 const audioLoader = new THREE.AudioLoader();
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath("vendor/draco/");
 const modelLoader = new GLTFLoader();
+modelLoader.setDRACOLoader(dracoLoader);
 const controllers = [renderer.xr.getController(0), renderer.xr.getController(1)];
 const teleportTargets = [];
 const exhibits = [];
@@ -150,6 +180,7 @@ async function init() {
     if (responses.some((response) => !response.ok)) throw new Error("Manifest unavailable");
     const paintings = await Promise.all(responses.map((response) => response.json()));
     await buildExhibition(paintings);
+    await buildReimaginedExhibition();
     await detectVR();
     void buildModelExhibits(paintings);
   } catch (error) {
@@ -195,7 +226,11 @@ function buildRoom() {
     [-3, 3.5, 19],
     [3, 3.5, 19],
     [-3, 3.5, 26],
-    [3, 3.5, 26]
+    [3, 3.5, 26],
+    [-3, 3.5, 32],
+    [3, 3.5, 32],
+    [-3, 3.5, 37],
+    [3, 3.5, 37]
   ];
   ceilingLights.forEach(([x, y, z]) => {
     const light = new THREE.PointLight(0xffe7c2, 0.82, 9);
@@ -212,7 +247,8 @@ function buildRoom() {
   [
     { z: 0, depth: 10, name: "paintings-room-floor" },
     { z: 10, depth: 10, name: "models-room-floor" },
-    { z: 22, depth: 14, name: "bedroom-room-floor" }
+    { z: 22, depth: 14, name: "bedroom-room-floor" },
+    { z: 34, depth: 10, name: "reimagined-room-floor" }
   ].forEach(({ z, depth, name }) => {
     const floor = new THREE.Mesh(new THREE.PlaneGeometry(12, depth), floorMaterial);
     floor.rotation.x = -Math.PI / 2;
@@ -246,7 +282,12 @@ function buildRoom() {
     { size: [2, 1.1], position: [0, 3.45, 15], rotation: [0, Math.PI, 0] },
     { size: [14, 4], position: [-6, 2, 22], rotation: [0, Math.PI / 2, 0] },
     { size: [14, 4], position: [6, 2, 22], rotation: [0, -Math.PI / 2, 0] },
-    { size: [12, 4], position: [0, 2, 29], rotation: [0, Math.PI, 0] }
+    { size: [5, 4], position: [-3.5, 2, 29], rotation: [0, Math.PI, 0] },
+    { size: [5, 4], position: [3.5, 2, 29], rotation: [0, Math.PI, 0] },
+    { size: [2, 1.1], position: [0, 3.45, 29], rotation: [0, Math.PI, 0] },
+    { size: [10, 4], position: [-6, 2, 34], rotation: [0, Math.PI / 2, 0] },
+    { size: [10, 4], position: [6, 2, 34], rotation: [0, -Math.PI / 2, 0] },
+    { size: [12, 4], position: [0, 2, 39], rotation: [0, Math.PI, 0] }
   ].forEach((wall) => {
     const mesh = new THREE.Mesh(new THREE.PlaneGeometry(...wall.size), wallMaterial);
     mesh.position.set(...wall.position);
@@ -279,6 +320,14 @@ function buildRoom() {
   bedroomRoomFloor.position.set(0, 0.007, 22);
   scene.add(bedroomRoomFloor);
 
+  const reimaginedRoomFloor = new THREE.Mesh(
+    new THREE.PlaneGeometry(10.8, 9.7),
+    new THREE.MeshStandardMaterial({ color: 0x253642, roughness: 0.9 })
+  );
+  reimaginedRoomFloor.rotation.x = -Math.PI / 2;
+  reimaginedRoomFloor.position.set(0, 0.008, 34);
+  scene.add(reimaginedRoomFloor);
+
   addNavigationSigns();
 }
 
@@ -306,8 +355,24 @@ function addNavigationSigns() {
     height: 0.66,
     accent: true
   });
-  createWallSign(text.bedroomRoom, [0, 3.38, 28.88], Math.PI, { width: 4.1 });
-  createWallSign(text.bedroomLifeSize, [0, 2.72, 28.87], Math.PI, {
+  createWallSign(`${text.reimaginedRoom}  →`, [0, 3.47, 28.88], Math.PI, {
+    width: 3.65,
+    height: 0.66,
+    accent: true
+  });
+  createWallSign(`←  ${text.bedroomRoom}`, [0, 3.47, 29.12], 0, {
+    width: 2.65,
+    height: 0.66,
+    accent: true
+  });
+  createWallSign(text.reimaginedRoom, [0, 3.58, 38.88], Math.PI, { width: 5.1 });
+  createWallSign(text.reimaginedSubtitle, [0, 3.05, 38.87], Math.PI, {
+    width: 4.65,
+    height: 0.58,
+    accent: true
+  });
+  createWallSign(text.bedroomRoom, [-5.86, 3.25, 24.5], Math.PI / 2, { width: 4.1 });
+  createWallSign(text.bedroomLifeSize, [-5.85, 2.58, 24.5], Math.PI / 2, {
     width: 3.55,
     height: 0.58,
     accent: true
@@ -322,7 +387,7 @@ function addNavigationSigns() {
     height: 0.78,
     exitUrl: collectionUrl
   });
-  createWallSign(text.exitSign, [0, 1.42, 28.86], Math.PI, {
+  createWallSign(text.exitSign, [-5.86, 1.15, 37.6], Math.PI / 2, {
     width: 2.35,
     height: 0.78,
     exitUrl: collectionUrl
@@ -437,10 +502,97 @@ async function addPainting(painting, placement) {
   });
 }
 
+async function buildReimaginedExhibition() {
+  const placements = [
+    { position: [-3.7, 1.72, 38.92], rotationY: Math.PI, hotspot: [-3.7, 36.45], visitorYaw: Math.PI },
+    { position: [0, 1.72, 38.92], rotationY: Math.PI, hotspot: [0, 36.45], visitorYaw: Math.PI },
+    { position: [3.7, 1.72, 38.92], rotationY: Math.PI, hotspot: [3.7, 36.45], visitorYaw: Math.PI },
+    { position: [-5.92, 1.9, 32.2], rotationY: Math.PI / 2, hotspot: [-3.45, 32.2], visitorYaw: Math.PI / 2 },
+    { position: [-5.92, 1.9, 35.8], rotationY: Math.PI / 2, hotspot: [-3.45, 35.8], visitorYaw: Math.PI / 2 },
+    { position: [5.92, 1.9, 32.2], rotationY: -Math.PI / 2, hotspot: [3.45, 32.2], visitorYaw: -Math.PI / 2 },
+    { position: [5.92, 1.9, 35.8], rotationY: -Math.PI / 2, hotspot: [3.45, 35.8], visitorYaw: -Math.PI / 2 }
+  ];
+
+  await Promise.all(REIMAGINED_ARTWORKS.map(async (item, index) => {
+    const texture = await textureLoader.loadAsync(item.src);
+    texture.encoding = THREE.sRGBEncoding;
+    const aspect = texture.image.width / texture.image.height;
+    const height = Math.min(1.32, 2.2 / aspect);
+    const width = height * aspect;
+    const placement = placements[index];
+
+    const artwork = new THREE.Group();
+    artwork.position.set(...placement.position);
+    artwork.rotation.y = placement.rotationY;
+
+    const frame = new THREE.Mesh(
+      new THREE.BoxGeometry(width + 0.16, height + 0.16, 0.1),
+      new THREE.MeshStandardMaterial({ color: 0xb68b4c, roughness: 0.48, metalness: 0.25 })
+    );
+    artwork.add(frame);
+
+    const image = new THREE.Mesh(
+      new THREE.PlaneGeometry(width, height),
+      new THREE.MeshStandardMaterial({ map: texture, roughness: 0.72 })
+    );
+    image.position.z = 0.056;
+    artwork.add(image);
+
+    const title = makeLabel(item.title);
+    title.position.set(0, -height / 2 - 0.22, 0.07);
+    title.scale.set(Math.min(1.7, width + 0.3), 0.33, 1);
+    artwork.add(title);
+    scene.add(artwork);
+    scene.add(createReimaginedHotspot(item.title, placement, artwork));
+  }));
+}
+
+function createReimaginedHotspot(title, placement, artwork) {
+  const group = new THREE.Group();
+  group.position.set(placement.hotspot[0], 0.018, placement.hotspot[1]);
+  group.userData.destination = new THREE.Vector3(placement.hotspot[0], 0, placement.hotspot[1]);
+  group.userData.visitorYaw = placement.visitorYaw;
+  group.userData.artwork = artwork;
+
+  const target = new THREE.Mesh(
+    new THREE.CircleGeometry(0.43, 48),
+    new THREE.MeshBasicMaterial({
+      color: 0x70c7d8,
+      transparent: true,
+      opacity: 0.24,
+      side: THREE.DoubleSide
+    })
+  );
+  target.rotation.x = -Math.PI / 2;
+  target.userData.hotspot = group;
+  group.add(target);
+  teleportTargets.push(target);
+
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(0.33, 0.43, 48),
+    new THREE.MeshBasicMaterial({
+      color: 0x9eeaff,
+      transparent: true,
+      opacity: 0.94,
+      side: THREE.DoubleSide
+    })
+  );
+  ring.rotation.x = -Math.PI / 2;
+  ring.position.y = 0.006;
+  group.add(ring);
+
+  const marker = makeLabel(`${lang === "fr" ? "Voir" : "View"}\n${title}`);
+  marker.position.set(0, 0.035, 0.64);
+  marker.rotation.x = -Math.PI / 2;
+  marker.scale.set(1.35, 0.32, 1);
+  group.add(marker);
+  return group;
+}
+
 async function buildModelExhibits(paintings) {
   status.textContent = text.loadingModels;
   let loaded = 0;
-  await Promise.allSettled(paintings.map(async (painting) => {
+  const results = await Promise.allSettled(paintings.map(async (painting) => {
     const exhibit = exhibitsBySlug.get(painting.slug);
     const modelSrc = getDefaultModelSource(painting);
     if (!exhibit || !modelSrc) return;
@@ -448,12 +600,18 @@ async function buildModelExhibits(paintings) {
     loaded += 1;
     status.textContent = `${text.loadingModels} ${loaded}/${paintings.length}`;
   }));
+  results.forEach((result, index) => {
+    if (result.status === "rejected") {
+      console.error(`3D exhibit unavailable for ${paintings[index]?.slug || "unknown painting"}.`, result.reason);
+    }
+  });
   status.textContent = loaded
     ? `${text.modelsReady} ${loaded}/${paintings.length}`
     : text.ready;
 }
 
 function getDefaultModelSource(painting) {
+  if (GALLERY_MODEL_OVERRIDES[painting.slug]) return GALLERY_MODEL_OVERRIDES[painting.slug];
   const variants = painting.media?.modelVariants || painting.ar?.modelVariants || [];
   return variants.find((variant) => variant?.src)?.src
     || painting.media?.model
@@ -464,7 +622,7 @@ function getDefaultModelSource(painting) {
 async function addGalleryModel(exhibit, modelSrc) {
   const gltf = await modelLoader.loadAsync(modelSrc);
   if (exhibit.painting.slug === "van-gogh-bedroom") {
-    addLifeSizeBedroom(exhibit, gltf.scene);
+    await addLifeSizeBedroom(exhibit, gltf.scene);
     return;
   }
 
@@ -510,7 +668,7 @@ async function addGalleryModel(exhibit, modelSrc) {
   scene.add(hotspot);
 }
 
-function addLifeSizeBedroom(exhibit, model) {
+async function addLifeSizeBedroom(exhibit, model) {
   const display = new THREE.Group();
   display.position.set(0, 0, 22.2);
   display.rotation.y = Math.PI;
@@ -524,6 +682,8 @@ function addLifeSizeBedroom(exhibit, model) {
     if (node.material) node.material.side = THREE.DoubleSide;
   });
   display.add(model);
+  const standingGltf = await modelLoader.loadAsync(STANDING_VAN_GOGH_MODEL);
+  addLifeSizeStandingVanGogh(display, standingGltf.scene);
   scene.add(display);
   exhibit.modelDisplay = display;
 
@@ -537,6 +697,28 @@ function addLifeSizeBedroom(exhibit, model) {
 
   const hotspot = createBedroomEntranceHotspot(exhibit);
   scene.add(hotspot);
+}
+
+function addLifeSizeStandingVanGogh(roomDisplay, model) {
+  model.updateMatrixWorld(true);
+  const box = new THREE.Box3().setFromObject(model);
+  const size = box.getSize(new THREE.Vector3());
+  const center = box.getCenter(new THREE.Vector3());
+  const scale = 1.72 / (size.y || 1);
+  model.scale.setScalar(scale);
+  model.position.set(
+    -center.x * scale - 1.25,
+    -box.min.y * scale,
+    -center.z * scale + 0.7
+  );
+  model.rotation.y = Math.PI * 0.12;
+  model.traverse((node) => {
+    if (!node.isMesh) return;
+    node.castShadow = false;
+    node.receiveShadow = false;
+    if (node.material) node.material.side = THREE.DoubleSide;
+  });
+  roomDisplay.add(model);
 }
 
 function scaleBedroomToLifeSize(model, targetHeight) {
@@ -1071,7 +1253,7 @@ function updateLocomotion(delta) {
       visitor.position.addScaledVector(right, x * delta * 1.8);
       visitor.position.addScaledVector(forward, -y * delta * 1.8);
       visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, -5.3, 5.3);
-      visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, -4.3, 28.3);
+      visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, -4.3, 38.3);
     }
 
     if (source.handedness === "right") {
