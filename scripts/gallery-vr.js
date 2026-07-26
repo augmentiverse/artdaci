@@ -17,7 +17,9 @@ const GALLERY_IMAGES = {
 
 const params = new URLSearchParams(location.search);
 const lang = params.get("lang") === "fr" ? "fr" : "en";
-const previewModelsRoom = params.get("room") === "models";
+const previewRoom = params.get("room");
+const previewPositionZ = previewRoom === "bedroom" ? 17.4 : previewRoom === "models" ? 14 : 4;
+const previewRotationY = previewRoom === "bedroom" ? Math.PI : 0;
 const PAINTING_INFO = {
   en: {
     "mona-lisa": "Leonardo used delicate layers of sfumato to soften outlines and give the sitter a lifelike presence. Her expression and the imaginary landscape seem to change as we look.",
@@ -56,6 +58,8 @@ const COPY = {
     individualExperiences: "Individual experiences",
     paintingsRoom: "PAINTINGS",
     modelsRoom: "3D MODELS",
+    bedroomRoom: "VAN GOGH'S BEDROOM",
+    bedroomLifeSize: "LIFE-SIZE RECONSTRUCTION",
     exitSign: "EXIT GALLERY"
   },
   fr: {
@@ -81,6 +85,8 @@ const COPY = {
     individualExperiences: "Expériences individuelles",
     paintingsRoom: "TABLEAUX",
     modelsRoom: "MODÈLES 3D",
+    bedroomRoom: "LA CHAMBRE DE VAN GOGH",
+    bedroomLifeSize: "RECONSTRUCTION GRANDEUR NATURE",
     exitSign: "SORTIE DE LA GALERIE"
   }
 };
@@ -101,7 +107,8 @@ camera.position.set(0, 1.65, 0);
 const audioListener = new THREE.AudioListener();
 camera.add(audioListener);
 const visitor = new THREE.Group();
-visitor.position.z = previewModelsRoom ? 14 : 4;
+visitor.position.z = previewPositionZ;
+visitor.rotation.y = previewRotationY;
 visitor.add(camera);
 scene.add(visitor);
 
@@ -184,7 +191,11 @@ function buildRoom() {
     [-3, 3.5, 8],
     [3, 3.5, 8],
     [-3, 3.5, 13],
-    [3, 3.5, 13]
+    [3, 3.5, 13],
+    [-3, 3.5, 19],
+    [3, 3.5, 19],
+    [-3, 3.5, 26],
+    [3, 3.5, 26]
   ];
   ceilingLights.forEach(([x, y, z]) => {
     const light = new THREE.PointLight(0xffe7c2, 0.82, 9);
@@ -198,15 +209,19 @@ function buildRoom() {
     roughness: 1,
     side: THREE.DoubleSide
   });
-  [0, 10].forEach((z) => {
-    const floor = new THREE.Mesh(new THREE.PlaneGeometry(12, 10), floorMaterial);
+  [
+    { z: 0, depth: 10, name: "paintings-room-floor" },
+    { z: 10, depth: 10, name: "models-room-floor" },
+    { z: 22, depth: 14, name: "bedroom-room-floor" }
+  ].forEach(({ z, depth, name }) => {
+    const floor = new THREE.Mesh(new THREE.PlaneGeometry(12, depth), floorMaterial);
     floor.rotation.x = -Math.PI / 2;
     floor.position.z = z;
     floor.receiveShadow = true;
-    floor.name = z === 0 ? "paintings-room-floor" : "models-room-floor";
+    floor.name = name;
     scene.add(floor);
 
-    const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(12, 10), ceilingMaterial);
+    const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(12, depth), ceilingMaterial);
     ceiling.rotation.x = Math.PI / 2;
     ceiling.position.set(0, 4, z);
     scene.add(ceiling);
@@ -226,7 +241,12 @@ function buildRoom() {
     { size: [2, 1.1], position: [0, 3.45, 5], rotation: [0, Math.PI, 0] },
     { size: [10, 4], position: [-6, 2, 10], rotation: [0, Math.PI / 2, 0] },
     { size: [10, 4], position: [6, 2, 10], rotation: [0, -Math.PI / 2, 0] },
-    { size: [12, 4], position: [0, 2, 15], rotation: [0, Math.PI, 0] }
+    { size: [5, 4], position: [-3.5, 2, 15], rotation: [0, Math.PI, 0] },
+    { size: [5, 4], position: [3.5, 2, 15], rotation: [0, Math.PI, 0] },
+    { size: [2, 1.1], position: [0, 3.45, 15], rotation: [0, Math.PI, 0] },
+    { size: [14, 4], position: [-6, 2, 22], rotation: [0, Math.PI / 2, 0] },
+    { size: [14, 4], position: [6, 2, 22], rotation: [0, -Math.PI / 2, 0] },
+    { size: [12, 4], position: [0, 2, 29], rotation: [0, Math.PI, 0] }
   ].forEach((wall) => {
     const mesh = new THREE.Mesh(new THREE.PlaneGeometry(...wall.size), wallMaterial);
     mesh.position.set(...wall.position);
@@ -251,13 +271,21 @@ function buildRoom() {
   modelRoomRug.position.set(0, 0.006, 10.4);
   scene.add(modelRoomRug);
 
+  const bedroomRoomFloor = new THREE.Mesh(
+    new THREE.PlaneGeometry(10.8, 12.8),
+    new THREE.MeshStandardMaterial({ color: 0x9e7548, roughness: 0.94 })
+  );
+  bedroomRoomFloor.rotation.x = -Math.PI / 2;
+  bedroomRoomFloor.position.set(0, 0.007, 22);
+  scene.add(bedroomRoomFloor);
+
   addNavigationSigns();
 }
 
 function addNavigationSigns() {
   const collectionUrl = lang === "fr" ? "index-fr.html" : "index.html";
   createWallSign(text.paintingsRoom, [0, 3.38, -4.88], 0, { width: 3.4 });
-  createWallSign(text.modelsRoom, [0, 3.38, 14.88], Math.PI, { width: 3.4 });
+  createWallSign(text.modelsRoom, [-5.86, 3.34, 10], Math.PI / 2, { width: 3.4 });
   createWallSign(`${text.modelsRoom}  →`, [0, 3.47, 4.88], Math.PI, {
     width: 1.82,
     height: 0.66,
@@ -268,12 +296,33 @@ function addNavigationSigns() {
     height: 0.66,
     accent: true
   });
+  createWallSign(`${text.bedroomRoom}  →`, [0, 3.47, 14.88], Math.PI, {
+    width: 1.82,
+    height: 0.66,
+    accent: true
+  });
+  createWallSign(`←  ${text.modelsRoom}`, [0, 3.47, 15.12], 0, {
+    width: 1.82,
+    height: 0.66,
+    accent: true
+  });
+  createWallSign(text.bedroomRoom, [0, 3.38, 28.88], Math.PI, { width: 4.1 });
+  createWallSign(text.bedroomLifeSize, [0, 2.72, 28.87], Math.PI, {
+    width: 3.55,
+    height: 0.58,
+    accent: true
+  });
   createWallSign(text.exitSign, [0, 1.42, -4.86], 0, {
     width: 2.35,
     height: 0.78,
     exitUrl: collectionUrl
   });
-  createWallSign(text.exitSign, [0, 1.42, 14.86], Math.PI, {
+  createWallSign(text.exitSign, [5.86, 1.42, 12.7], -Math.PI / 2, {
+    width: 2.35,
+    height: 0.78,
+    exitUrl: collectionUrl
+  });
+  createWallSign(text.exitSign, [0, 1.42, 28.86], Math.PI, {
     width: 2.35,
     height: 0.78,
     exitUrl: collectionUrl
@@ -315,10 +364,10 @@ function createWallSign(message, position, rotationY, options = {}) {
 
 async function buildExhibition(paintings) {
   const placements = [
-    { position: [-2.2, 2.15, -4.92], rotationY: 0, hotspot: [-2.2, -2.55], visitorYaw: 0, modelPosition: [-4.2, 10.25] },
-    { position: [5.92, 2.1, -1.9], rotationY: -Math.PI / 2, hotspot: [3.55, -1.9], visitorYaw: -Math.PI / 2, modelPosition: [-1.4, 10.25] },
+    { position: [-2.2, 2.15, -4.92], rotationY: 0, hotspot: [-2.2, -2.55], visitorYaw: 0, modelPosition: [-3.2, 10.25] },
+    { position: [5.92, 2.1, -1.9], rotationY: -Math.PI / 2, hotspot: [3.55, -1.9], visitorYaw: -Math.PI / 2, modelPosition: [0, 10.25] },
     { position: [-5.92, 2.1, -1.9], rotationY: Math.PI / 2, hotspot: [-3.55, -1.9], visitorYaw: Math.PI / 2, modelPosition: [1.4, 10.25] },
-    { position: [2.2, 2.15, -4.92], rotationY: 0, hotspot: [2.2, -2.55], visitorYaw: 0, modelPosition: [4.2, 10.25] }
+    { position: [2.2, 2.15, -4.92], rotationY: 0, hotspot: [2.2, -2.55], visitorYaw: 0, modelPosition: [3.2, 10.25] }
   ];
 
   await Promise.all(paintings.map((painting, index) => addPainting(painting, placements[index])));
@@ -414,6 +463,11 @@ function getDefaultModelSource(painting) {
 
 async function addGalleryModel(exhibit, modelSrc) {
   const gltf = await modelLoader.loadAsync(modelSrc);
+  if (exhibit.painting.slug === "van-gogh-bedroom") {
+    addLifeSizeBedroom(exhibit, gltf.scene);
+    return;
+  }
+
   const display = new THREE.Group();
   const [x, z] = exhibit.modelPosition;
   display.position.set(x, 0, z);
@@ -454,6 +508,102 @@ async function addGalleryModel(exhibit, modelSrc) {
   exhibit.modelDisplay = display;
   const hotspot = createModelTeleportHotspot(exhibit, display);
   scene.add(hotspot);
+}
+
+function addLifeSizeBedroom(exhibit, model) {
+  const display = new THREE.Group();
+  display.position.set(0, 0, 22.2);
+  display.rotation.y = Math.PI;
+  display.userData.painting = exhibit.painting.slug;
+
+  const dimensions = scaleBedroomToLifeSize(model, 2.7);
+  model.traverse((node) => {
+    if (!node.isMesh) return;
+    node.castShadow = false;
+    node.receiveShadow = true;
+    if (node.material) node.material.side = THREE.DoubleSide;
+  });
+  display.add(model);
+  scene.add(display);
+  exhibit.modelDisplay = display;
+
+  const dimensionsText = `${dimensions.width.toFixed(1)} × ${dimensions.depth.toFixed(1)} × ${dimensions.height.toFixed(1)} m`;
+  const information = makeLabel(
+    `${text.bedroomLifeSize}\n${dimensionsText}`
+  );
+  information.position.set(0, 1.25, 3.15);
+  information.scale.set(2.35, 0.66, 1);
+  display.add(information);
+
+  const hotspot = createBedroomEntranceHotspot(exhibit);
+  scene.add(hotspot);
+}
+
+function scaleBedroomToLifeSize(model, targetHeight) {
+  model.updateMatrixWorld(true);
+  const sourceBox = new THREE.Box3().setFromObject(model);
+  const sourceSize = sourceBox.getSize(new THREE.Vector3());
+  const sourceCenter = sourceBox.getCenter(new THREE.Vector3());
+  const scale = targetHeight / (sourceSize.y || 1);
+  model.scale.setScalar(scale);
+  model.position.set(
+    -sourceCenter.x * scale,
+    -sourceBox.min.y * scale,
+    -sourceCenter.z * scale
+  );
+  model.updateMatrixWorld(true);
+  const scaledBox = new THREE.Box3().setFromObject(model);
+  const scaledSize = scaledBox.getSize(new THREE.Vector3());
+  return {
+    width: scaledSize.x,
+    height: scaledSize.y,
+    depth: scaledSize.z
+  };
+}
+
+function createBedroomEntranceHotspot(exhibit) {
+  const group = new THREE.Group();
+  group.position.set(0, 0.02, 17.4);
+  // The authored model has a closed façade. Keep the marker outside, but place
+  // the visitor just inside the room so the experience feels like entering it.
+  group.userData.destination = new THREE.Vector3(0, 0, 20.6);
+  group.userData.visitorYaw = Math.PI;
+  group.userData.artwork = exhibit.modelDisplay;
+  group.userData.exhibit = exhibit;
+
+  const target = new THREE.Mesh(
+    new THREE.CircleGeometry(0.62, 56),
+    new THREE.MeshBasicMaterial({
+      color: 0x90528f,
+      transparent: true,
+      opacity: 0.38,
+      side: THREE.DoubleSide
+    })
+  );
+  target.rotation.x = -Math.PI / 2;
+  target.userData.hotspot = group;
+  group.add(target);
+  teleportTargets.push(target);
+
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(0.46, 0.62, 56),
+    new THREE.MeshBasicMaterial({
+      color: 0xe6a8e5,
+      transparent: true,
+      opacity: 0.96,
+      side: THREE.DoubleSide
+    })
+  );
+  ring.rotation.x = -Math.PI / 2;
+  ring.position.y = 0.007;
+  group.add(ring);
+
+  const marker = makeLabel(`${lang === "fr" ? "Entrer dans" : "Enter"}\n${localizedTitle(exhibit.painting)}`);
+  marker.position.set(0, 0.04, -0.82);
+  marker.rotation.x = -Math.PI / 2;
+  marker.scale.set(1.65, 0.42, 1);
+  group.add(marker);
+  return group;
 }
 
 function normalizeGalleryModel(model) {
@@ -766,8 +916,8 @@ async function toggleVR() {
       currentSession = null;
       enterButton.textContent = text.enter;
       stopAllAudioGuides();
-      visitor.position.set(0, 0, previewModelsRoom ? 14 : 4);
-      visitor.rotation.set(0, 0, 0);
+      visitor.position.set(0, 0, previewPositionZ);
+      visitor.rotation.set(0, previewRotationY, 0);
     }, { once: true });
     await renderer.xr.setSession(currentSession);
     visitor.position.set(0, 0, 3.7);
@@ -921,7 +1071,7 @@ function updateLocomotion(delta) {
       visitor.position.addScaledVector(right, x * delta * 1.8);
       visitor.position.addScaledVector(forward, -y * delta * 1.8);
       visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, -5.3, 5.3);
-      visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, -4.3, 14.3);
+      visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, -4.3, 28.3);
     }
 
     if (source.handedness === "right") {
