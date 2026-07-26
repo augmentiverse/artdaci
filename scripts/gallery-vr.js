@@ -8,8 +8,16 @@ const MANIFESTS = [
   "content/paintings/vermeer-girl-with-a-pearl-earring.json"
 ];
 
+const GALLERY_IMAGES = {
+  "mona-lisa": "assets/paintings/mona-lisa/images/monalisa-t.png",
+  "van-gogh": "assets/paintings/van-gogh/images/van-gogh_portrait-p.png",
+  "van-gogh-bedroom": "assets/paintings/van-gogh-bedroom/images/van-gogh_bedroom-t.png",
+  "vermeer-girl-with-a-pearl-earring": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/images/vermee_girl-earring-t.png"
+};
+
 const params = new URLSearchParams(location.search);
 const lang = params.get("lang") === "fr" ? "fr" : "en";
+const previewModelsRoom = params.get("room") === "models";
 const PAINTING_INFO = {
   en: {
     "mona-lisa": "Leonardo used delicate layers of sfumato to soften outlines and give the sitter a lifelike presence. Her expression and the imaginary landscape seem to change as we look.",
@@ -43,7 +51,12 @@ const COPY = {
     muteAudio: "Mute",
     unmuteAudio: "Unmute",
     loadingModels: "Loading 3D exhibits…",
-    modelsReady: "Four paintings and four walk-around 3D exhibits are ready."
+    modelsReady: "Four paintings and four walk-around 3D exhibits are ready.",
+    exitGallery: "Exit to collection",
+    individualExperiences: "Individual experiences",
+    paintingsRoom: "PAINTINGS",
+    modelsRoom: "3D MODELS",
+    exitSign: "EXIT GALLERY"
   },
   fr: {
     back: "Retour à la collection",
@@ -63,7 +76,12 @@ const COPY = {
     muteAudio: "Couper le son",
     unmuteAudio: "Rétablir le son",
     loadingModels: "Chargement des œuvres 3D…",
-    modelsReady: "Quatre tableaux et quatre œuvres 3D observables sous tous les angles sont prêts."
+    modelsReady: "Quatre tableaux et quatre œuvres 3D observables sous tous les angles sont prêts.",
+    exitGallery: "Sortir vers la collection",
+    individualExperiences: "Expériences individuelles",
+    paintingsRoom: "TABLEAUX",
+    modelsRoom: "MODÈLES 3D",
+    exitSign: "SORTIE DE LA GALERIE"
   }
 };
 const text = COPY[lang];
@@ -79,10 +97,11 @@ scene.background = new THREE.Color(0x191714);
 scene.fog = new THREE.Fog(0x191714, 12, 26);
 
 const camera = new THREE.PerspectiveCamera(62, innerWidth / innerHeight, 0.05, 60);
-camera.position.set(0, 1.65, 4);
+camera.position.set(0, 1.65, 0);
 const audioListener = new THREE.AudioListener();
 camera.add(audioListener);
 const visitor = new THREE.Group();
+visitor.position.z = previewModelsRoom ? 14 : 4;
 visitor.add(camera);
 scene.add(visitor);
 
@@ -147,6 +166,10 @@ function applyCopy() {
   audioToggleButton.textContent = text.playAudio;
   audioRestartButton.textContent = text.restartAudio;
   audioMuteButton.textContent = text.muteAudio;
+  document.getElementById("gallery-exit-link").textContent = text.exitGallery;
+  document.getElementById("gallery-exit-link").href = lang === "fr" ? "index-fr.html" : "index.html";
+  document.getElementById("gallery-experiences-link").textContent = text.individualExperiences;
+  document.getElementById("gallery-experiences-link").href = `space.html?painting=mona-lisa&lang=${lang}`;
   status.textContent = text.loading;
 }
 
@@ -157,7 +180,11 @@ function buildRoom() {
     [-3, 3.5, 1.5],
     [3, 3.5, 1.5],
     [-3, 3.5, -3],
-    [3, 3.5, -3]
+    [3, 3.5, -3],
+    [-3, 3.5, 8],
+    [3, 3.5, 8],
+    [-3, 3.5, 13],
+    [3, 3.5, 13]
   ];
   ceilingLights.forEach(([x, y, z]) => {
     const light = new THREE.PointLight(0xffe7c2, 0.82, 9);
@@ -165,29 +192,41 @@ function buildRoom() {
     scene.add(light);
   });
 
-  const floor = new THREE.Mesh(
-    new THREE.PlaneGeometry(12, 10),
-    new THREE.MeshStandardMaterial({ color: 0x594d40, roughness: 0.88 })
-  );
-  floor.rotation.x = -Math.PI / 2;
-  floor.receiveShadow = true;
-  floor.name = "gallery-floor";
-  scene.add(floor);
+  const floorMaterial = new THREE.MeshStandardMaterial({ color: 0x594d40, roughness: 0.88 });
+  const ceilingMaterial = new THREE.MeshStandardMaterial({
+    color: 0xe8dfd1,
+    roughness: 1,
+    side: THREE.DoubleSide
+  });
+  [0, 10].forEach((z) => {
+    const floor = new THREE.Mesh(new THREE.PlaneGeometry(12, 10), floorMaterial);
+    floor.rotation.x = -Math.PI / 2;
+    floor.position.z = z;
+    floor.receiveShadow = true;
+    floor.name = z === 0 ? "paintings-room-floor" : "models-room-floor";
+    scene.add(floor);
 
-  const ceiling = new THREE.Mesh(
-    new THREE.PlaneGeometry(12, 10),
-    new THREE.MeshStandardMaterial({ color: 0xe8dfd1, roughness: 1, side: THREE.DoubleSide })
-  );
-  ceiling.rotation.x = Math.PI / 2;
-  ceiling.position.y = 4;
-  scene.add(ceiling);
+    const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(12, 10), ceilingMaterial);
+    ceiling.rotation.x = Math.PI / 2;
+    ceiling.position.set(0, 4, z);
+    scene.add(ceiling);
+  });
 
-  const wallMaterial = new THREE.MeshStandardMaterial({ color: 0xd8cbbb, roughness: 0.95 });
+  const wallMaterial = new THREE.MeshStandardMaterial({
+    color: 0xd8cbbb,
+    roughness: 0.95,
+    side: THREE.DoubleSide
+  });
   [
     { size: [12, 4], position: [0, 2, -5], rotation: [0, 0, 0] },
     { size: [10, 4], position: [-6, 2, 0], rotation: [0, Math.PI / 2, 0] },
     { size: [10, 4], position: [6, 2, 0], rotation: [0, -Math.PI / 2, 0] },
-    { size: [12, 4], position: [0, 2, 5], rotation: [0, Math.PI, 0] }
+    { size: [5, 4], position: [-3.5, 2, 5], rotation: [0, Math.PI, 0] },
+    { size: [5, 4], position: [3.5, 2, 5], rotation: [0, Math.PI, 0] },
+    { size: [2, 1.1], position: [0, 3.45, 5], rotation: [0, Math.PI, 0] },
+    { size: [10, 4], position: [-6, 2, 10], rotation: [0, Math.PI / 2, 0] },
+    { size: [10, 4], position: [6, 2, 10], rotation: [0, -Math.PI / 2, 0] },
+    { size: [12, 4], position: [0, 2, 15], rotation: [0, Math.PI, 0] }
   ].forEach((wall) => {
     const mesh = new THREE.Mesh(new THREE.PlaneGeometry(...wall.size), wallMaterial);
     mesh.position.set(...wall.position);
@@ -203,27 +242,100 @@ function buildRoom() {
   rug.rotation.x = -Math.PI / 2;
   rug.position.y = 0.006;
   scene.add(rug);
+
+  const modelRoomRug = new THREE.Mesh(
+    new THREE.PlaneGeometry(9.6, 5.5),
+    new THREE.MeshStandardMaterial({ color: 0x263f52, roughness: 0.9 })
+  );
+  modelRoomRug.rotation.x = -Math.PI / 2;
+  modelRoomRug.position.set(0, 0.006, 10.4);
+  scene.add(modelRoomRug);
+
+  addNavigationSigns();
+}
+
+function addNavigationSigns() {
+  const collectionUrl = lang === "fr" ? "index-fr.html" : "index.html";
+  createWallSign(text.paintingsRoom, [0, 3.38, -4.88], 0, { width: 3.4 });
+  createWallSign(text.modelsRoom, [0, 3.38, 14.88], Math.PI, { width: 3.4 });
+  createWallSign(`${text.modelsRoom}  →`, [0, 3.47, 4.88], Math.PI, {
+    width: 1.82,
+    height: 0.66,
+    accent: true
+  });
+  createWallSign(`←  ${text.paintingsRoom}`, [0, 3.47, 5.12], 0, {
+    width: 1.82,
+    height: 0.66,
+    accent: true
+  });
+  createWallSign(text.exitSign, [0, 1.42, -4.86], 0, {
+    width: 2.35,
+    height: 0.78,
+    exitUrl: collectionUrl
+  });
+  createWallSign(text.exitSign, [0, 1.42, 14.86], Math.PI, {
+    width: 2.35,
+    height: 0.78,
+    exitUrl: collectionUrl
+  });
+}
+
+function createWallSign(message, position, rotationY, options = {}) {
+  const canvas = document.createElement("canvas");
+  canvas.width = 1200;
+  canvas.height = 360;
+  const context = canvas.getContext("2d");
+  const isExit = Boolean(options.exitUrl);
+  context.fillStyle = isExit ? "#812f38" : options.accent ? "#273f51" : "#211c17";
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.strokeStyle = isExit ? "#ffd8d8" : "#c7a45d";
+  context.lineWidth = 14;
+  context.strokeRect(7, 7, canvas.width - 14, canvas.height - 14);
+  context.fillStyle = "#fffaf1";
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  context.font = `800 ${message.length > 18 ? 76 : 92}px Arial`;
+  context.fillText(message, canvas.width / 2, canvas.height / 2);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.encoding = THREE.sRGBEncoding;
+  const sign = new THREE.Mesh(
+    new THREE.PlaneGeometry(options.width || 3.1, options.height || 0.94),
+    new THREE.MeshBasicMaterial({ map: texture })
+  );
+  sign.position.set(...position);
+  sign.rotation.y = rotationY;
+  if (options.exitUrl) {
+    sign.userData.exitUrl = options.exitUrl;
+    teleportTargets.push(sign);
+  }
+  scene.add(sign);
+  return sign;
 }
 
 async function buildExhibition(paintings) {
   const placements = [
-    { position: [-2.2, 2.15, -4.92], rotationY: 0, hotspot: [-2.2, -2.55], visitorYaw: 0, modelPosition: [-4.2, 1.15] },
-    { position: [5.92, 2.1, -1.9], rotationY: -Math.PI / 2, hotspot: [3.55, -1.9], visitorYaw: -Math.PI / 2, modelPosition: [-1.4, 1.15] },
-    { position: [-5.92, 2.1, -1.9], rotationY: Math.PI / 2, hotspot: [-3.55, -1.9], visitorYaw: Math.PI / 2, modelPosition: [1.4, 1.15] },
-    { position: [2.2, 2.15, -4.92], rotationY: 0, hotspot: [2.2, -2.55], visitorYaw: 0, modelPosition: [4.2, 1.15] }
+    { position: [-2.2, 2.15, -4.92], rotationY: 0, hotspot: [-2.2, -2.55], visitorYaw: 0, modelPosition: [-4.2, 10.25] },
+    { position: [5.92, 2.1, -1.9], rotationY: -Math.PI / 2, hotspot: [3.55, -1.9], visitorYaw: -Math.PI / 2, modelPosition: [-1.4, 10.25] },
+    { position: [-5.92, 2.1, -1.9], rotationY: Math.PI / 2, hotspot: [-3.55, -1.9], visitorYaw: Math.PI / 2, modelPosition: [1.4, 10.25] },
+    { position: [2.2, 2.15, -4.92], rotationY: 0, hotspot: [2.2, -2.55], visitorYaw: 0, modelPosition: [4.2, 10.25] }
   ];
 
   await Promise.all(paintings.map((painting, index) => addPainting(painting, placements[index])));
 }
 
 async function addPainting(painting, placement) {
-  const image = painting.media?.image || painting.print?.imageTargetSource;
+  const image = GALLERY_IMAGES[painting.slug]
+    || painting.media?.image
+    || painting.print?.imageTargetSource;
   const texture = await textureLoader.loadAsync(image);
   texture.encoding = THREE.sRGBEncoding;
 
   const widthCm = painting.dimensions?.widthCm || texture.image.width;
   const heightCm = painting.dimensions?.heightCm || texture.image.height;
-  const aspect = widthCm / heightCm;
+  const aspect = GALLERY_IMAGES[painting.slug]
+    ? texture.image.width / texture.image.height
+    : widthCm / heightCm;
   const maxHeight = 1.72;
   const maxWidth = 2.65;
   const height = Math.min(maxHeight, maxWidth / aspect);
@@ -327,7 +439,8 @@ async function addGalleryModel(exhibit, modelSrc) {
 
   const title = localizedTitle(exhibit.painting);
   const label = makeLabel(`${lang === "fr" ? "Œuvre 3D" : "3D exhibit"}\n${title}`);
-  label.position.set(0, 0.43, 0.76);
+  label.position.set(0, 0.43, -0.76);
+  label.rotation.y = Math.PI;
   label.rotation.x = -Math.PI / 5;
   label.scale.set(1.3, 0.38, 1);
   display.add(label);
@@ -360,9 +473,9 @@ function normalizeGalleryModel(model) {
 function createModelTeleportHotspot(exhibit, display) {
   const title = localizedTitle(exhibit.painting);
   const group = new THREE.Group();
-  group.position.set(display.position.x, 0.019, display.position.z + 1.55);
-  group.userData.destination = new THREE.Vector3(display.position.x, 0, display.position.z + 1.55);
-  group.userData.visitorYaw = 0;
+  group.position.set(display.position.x, 0.019, display.position.z - 1.55);
+  group.userData.destination = new THREE.Vector3(display.position.x, 0, display.position.z - 1.55);
+  group.userData.visitorYaw = Math.PI;
   group.userData.artwork = display;
   group.userData.exhibit = exhibit;
 
@@ -600,6 +713,10 @@ function teleportFrom(controller) {
   teleportRaycaster.ray.direction.set(0, 0, -1).applyMatrix4(rayRotation).normalize();
   const hit = teleportRaycaster.intersectObjects(teleportTargets, false)[0];
   if (!hit) return;
+  if (hit.object.userData.exitUrl) {
+    exitGallery(hit.object.userData.exitUrl);
+    return;
+  }
   const hotspot = hit.object.userData.hotspot;
   if (!hotspot) return;
 
@@ -610,6 +727,12 @@ function teleportFrom(controller) {
   visitor.position.x += hotspot.userData.destination.x - head.x;
   visitor.position.z += hotspot.userData.destination.z - head.z;
   selectNearestAudioGuide(true);
+}
+
+async function exitGallery(url) {
+  stopAllAudioGuides();
+  if (currentSession) await currentSession.end();
+  location.href = url;
 }
 
 function bindUI() {
@@ -643,7 +766,7 @@ async function toggleVR() {
       currentSession = null;
       enterButton.textContent = text.enter;
       stopAllAudioGuides();
-      visitor.position.set(0, 0, 0);
+      visitor.position.set(0, 0, previewModelsRoom ? 14 : 4);
       visitor.rotation.set(0, 0, 0);
     }, { once: true });
     await renderer.xr.setSession(currentSession);
@@ -798,7 +921,7 @@ function updateLocomotion(delta) {
       visitor.position.addScaledVector(right, x * delta * 1.8);
       visitor.position.addScaledVector(forward, -y * delta * 1.8);
       visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, -5.3, 5.3);
-      visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, -4.3, 4.3);
+      visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, -4.3, 14.3);
     }
 
     if (source.handedness === "right") {

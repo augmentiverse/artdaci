@@ -132,6 +132,19 @@ body {
   margin-top: 7px;
 }
 
+.gallery-exit-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 3px;
+}
+
+.gallery-exit-links .gallery-button {
+  min-height: 34px;
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
 .gallery-audio-controls .gallery-button {
   min-height: 34px;
   padding: 6px 10px;
