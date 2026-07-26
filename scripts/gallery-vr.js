@@ -906,7 +906,6 @@ function buildReimaginedVideoExhibits() {
 
   const darkMaterial = new THREE.MeshStandardMaterial({ color: 0x0d1015, roughness: 0.62 });
   const blueMaterial = new THREE.MeshStandardMaterial({ color: 0x19384a, roughness: 0.72 });
-  const velvetMaterial = new THREE.MeshStandardMaterial({ color: 0x3e111b, roughness: 0.96 });
   const goldMaterial = new THREE.MeshStandardMaterial({ color: 0xb9914c, roughness: 0.44, metalness: 0.28 });
 
   const backdrop = new THREE.Mesh(new THREE.BoxGeometry(5.55, 3.68, 0.2), darkMaterial);
@@ -1028,7 +1027,10 @@ function buildReimaginedVideoExhibits() {
     cinema.add(console);
   });
 
-  addCinemaSofa(cinema, velvetMaterial, goldMaterial);
+  addCinemaViewingSpot(cinema);
+  addCinemaSofaModel(cinema).catch((error) => {
+    console.warn("The cinema sofa model could not be loaded.", error);
+  });
   scene.add(cinema);
   setCinemaVideo(exhibit, 0, false);
   updateGalleryVideoButtons();
@@ -1079,75 +1081,40 @@ function createCinemaButton(label, options) {
   return button;
 }
 
-function addCinemaSofa(cinema, velvetMaterial, goldMaterial) {
-  const sofa = new THREE.Group();
-  const frameMaterial = new THREE.MeshStandardMaterial({ color: 0x111318, roughness: 0.5, metalness: 0.16 });
-  const accentMaterial = new THREE.MeshStandardMaterial({ color: 0xc69a55, roughness: 0.86 });
-  const cushionGeometry = new THREE.SphereGeometry(1, 28, 18);
-  const makeRoundedCushion = (width, height, depth, radius, position, material = velvetMaterial, rotation = [0, 0, 0]) => {
-    const shape = new THREE.Shape();
-    const x = -width / 2;
-    const y = -height / 2;
-    shape.moveTo(x + radius, y);
-    shape.lineTo(x + width - radius, y);
-    shape.quadraticCurveTo(x + width, y, x + width, y + radius);
-    shape.lineTo(x + width, y + height - radius);
-    shape.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-    shape.lineTo(x + radius, y + height);
-    shape.quadraticCurveTo(x, y + height, x, y + height - radius);
-    shape.lineTo(x, y + radius);
-    shape.quadraticCurveTo(x, y, x + radius, y);
-    const geometry = new THREE.ExtrudeGeometry(shape, {
-      depth,
-      bevelEnabled: true,
-      bevelThickness: 0.035,
-      bevelSize: 0.035,
-      bevelSegments: 3,
-      curveSegments: 8
-    });
-    geometry.translate(0, 0, -depth / 2);
-    const cushion = new THREE.Mesh(geometry, material);
-    cushion.position.set(...position);
-    cushion.rotation.set(...rotation);
-    cushion.castShadow = true;
-    sofa.add(cushion);
-    return cushion;
-  };
-  const makeCushion = (position, scale, material = velvetMaterial, rotation = [0, 0, 0]) => {
-    const cushion = new THREE.Mesh(cushionGeometry, material);
-    cushion.position.set(...position);
-    cushion.scale.set(...scale);
-    cushion.rotation.set(...rotation);
-    cushion.castShadow = true;
-    sofa.add(cushion);
-    return cushion;
-  };
-
-  const platform = new THREE.Mesh(new THREE.BoxGeometry(3.72, 0.18, 1.24), frameMaterial);
-  platform.position.y = 0.31;
-  platform.castShadow = true;
-  sofa.add(platform);
-
-  [-1.08, 0, 1.08].forEach((x) => {
-    makeRoundedCushion(1.01, 0.28, 0.98, 0.12, [x, 0.58, 0.02]);
-    makeRoundedCushion(1.01, 0.82, 0.28, 0.14, [x, 1.03, -0.44], velvetMaterial, [-0.12, 0, 0]);
+async function addCinemaSofaModel(cinema) {
+  const gltf = await modelLoader.loadAsync("assets/paintings/fourniture/sofa.glb");
+  const sofa = gltf.scene;
+  sofa.name = "cinema-sofa-model";
+  sofa.traverse((node) => {
+    if (!node.isMesh) return;
+    node.castShadow = true;
+    node.receiveShadow = true;
+    if (node.material) {
+      node.material.roughness = Math.max(node.material.roughness ?? 0.72, 0.58);
+      node.material.needsUpdate = true;
+    }
   });
-  [-1.72, 1.72].forEach((x) => {
-    makeRoundedCushion(0.3, 0.58, 0.98, 0.12, [x, 0.67, 0]);
-  });
-  makeCushion([-1.25, 0.96, -0.05], [0.24, 0.3, 0.11], accentMaterial, [0, 0, -0.16]);
-  makeCushion([1.25, 0.96, -0.05], [0.24, 0.3, 0.11], accentMaterial, [0, 0, 0.16]);
 
-  [-1.55, 1.55].forEach((x) => {
-    [-0.42, 0.42].forEach((z) => {
-      const foot = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.075, 0.24, 12), goldMaterial);
-      foot.position.set(x, 0.12, z);
-      sofa.add(foot);
-    });
-  });
-  sofa.position.set(0, 0, 33.8);
+  sofa.rotation.y = 0;
+  sofa.updateMatrixWorld(true);
+  let box = new THREE.Box3().setFromObject(sofa);
+  let size = box.getSize(new THREE.Vector3());
+  if (size.z > size.x) {
+    sofa.rotation.y += Math.PI / 2;
+    sofa.updateMatrixWorld(true);
+    box = new THREE.Box3().setFromObject(sofa);
+    size = box.getSize(new THREE.Vector3());
+  }
+  const scale = 3.75 / Math.max(size.x, 0.001);
+  sofa.scale.setScalar(scale);
+  sofa.updateMatrixWorld(true);
+  box = new THREE.Box3().setFromObject(sofa);
+  const center = box.getCenter(new THREE.Vector3());
+  sofa.position.set(-center.x, -box.min.y, 33.8 - center.z);
   cinema.add(sofa);
+}
 
+function addCinemaViewingSpot(cinema) {
   const viewingSpot = new THREE.Group();
   viewingSpot.position.set(0, 0.02, 33.15);
   viewingSpot.userData.destination = new THREE.Vector3(CINEMA_ROOM_X, 0, 33.75);
