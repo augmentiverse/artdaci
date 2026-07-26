@@ -207,6 +207,19 @@ button, a { font: inherit; }
 .experience-video p { margin: 0; color: #d8c9b5; text-align: center; }
 .experience-video-controls { display: flex; justify-content: center; gap: 9px; }
 .experience-video-controls button { border: 1px solid rgba(255,255,255,.28); padding: 9px 14px; color: #fff8ec; background: #263f52; cursor: pointer; }
+.experience-world {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 18px;
+  height: 100%;
+  padding: 36px;
+  text-align: center;
+  background: radial-gradient(circle at 50% 38%, #5d4030, #17120f 70%);
+}
+.experience-world p { max-width: 620px; margin: 0; font: 500 clamp(24px, 4vw, 42px)/1.25 Georgia, serif; }
+.experience-world a { border: 1px solid #e7c477; padding: 14px 20px; color: #19120d; background: var(--gold); font-weight: 800; text-decoration: none; }
+.experience-world small { color: #d8c9b5; }
 
 @media (max-width: 760px) {
   .book-toolbar { grid-template-columns: auto 1fr; }

@@ -255,6 +255,8 @@ function applyCopy() {
   videoMuteButton.textContent = text.videoUnmute;
   document.getElementById("gallery-exit-link").textContent = text.exitGallery;
   document.getElementById("gallery-exit-link").href = lang === "fr" ? "index-fr.html" : "index.html";
+  document.getElementById("gallery-bedroom-world-link").textContent = text.bedroomVrWorld;
+  document.getElementById("gallery-bedroom-world-link").href = BEDROOM_VR_WORLD_URL;
   document.getElementById("gallery-experiences-link").textContent = text.individualExperiences;
   document.getElementById("gallery-experiences-link").href = `space.html?painting=mona-lisa&lang=${lang}`;
   const languageSwitch = document.getElementById("gallery-language-switch");

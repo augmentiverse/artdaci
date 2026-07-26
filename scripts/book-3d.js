@@ -5,6 +5,8 @@ const MANIFEST_URLS = [
   "content/paintings/vermeer-girl-with-a-pearl-earring.json"
 ];
 
+const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae";
+
 const BOOK_IMAGE_GALLERIES = {
   "mona-lisa": [
     "assets/paintings/mona-lisa/images/Mona-Lisa_out-of-frame.png",
@@ -636,6 +638,20 @@ function openExperience(definition, hotspot) {
       </div>
     `;
     bindBookVideoControls();
+  } else if (hotspot.type === "world") {
+    experienceBody.innerHTML = `
+      <div class="experience-world">
+        <p>${lang === "fr"
+          ? "Explorez la chambre de Van Gogh comme un monde VR immersif."
+          : "Explore Van Gogh’s Bedroom as an immersive VR world."}</p>
+        <a href="${BEDROOM_VR_WORLD_URL}">
+          ${lang === "fr" ? "Ouvrir le monde VR de La Chambre" : "Open The Bedroom VR World"}
+        </a>
+        <small>${lang === "fr"
+          ? "Le monde VR s’ouvrira directement dans cette fenêtre."
+          : "The VR world will open directly in this window."}</small>
+      </div>
+    `;
   } else {
     const url = getExperienceUrl(manifest, hotspot.type);
     experienceBody.innerHTML = `<iframe title="${experienceTitle.textContent}" src="${url}" allow="autoplay; fullscreen; xr-spatial-tracking; camera"></iframe>`;
@@ -709,10 +725,7 @@ function getExperienceUrl(manifest, type) {
   if (type === "ar") return `ar.html?painting=${slug}&lang=${lang}`;
   if (type === "vr") return `vr.html?painting=${slug}&lang=${lang}`;
   if (type === "gallery") return `gallery-vr.html?lang=${lang}`;
-  if (type === "world") {
-    return manifest.externalExperiences?.find((item) => item.type === "vr-world")?.url
-      || `vr.html?painting=${slug}&lang=${lang}`;
-  }
+  if (type === "world") return BEDROOM_VR_WORLD_URL;
   return `space.html?painting=${slug}&lang=${lang}`;
 }
 

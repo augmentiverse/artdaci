@@ -165,6 +165,13 @@ body {
   font-size: 12px;
 }
 
+.gallery-exit-links .bedroom-world-link {
+  border-color: #8a6a2d;
+  color: #21170e;
+  background: var(--gold);
+  font-weight: 800;
+}
+
 .gallery-audio-controls .gallery-button {
   min-height: 34px;
   padding: 6px 10px;
