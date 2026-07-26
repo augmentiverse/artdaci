@@ -63,7 +63,7 @@ const lang = params.get("lang") === "fr" ? "fr" : "en";
 const previewRoom = params.get("room");
 const previewPositionX = previewRoom === "cinema" ? CINEMA_ROOM_X : 0;
 const previewPositionZ = previewRoom === "cinema"
-  ? 30
+  ? 32
   : previewRoom === "reimagined"
   ? 30
   : previewRoom === "bedroom"
@@ -624,7 +624,7 @@ function addNavigationSigns() {
   createWallSign(text.cinemaEnter, [5.85, 1.35, 37.2], -Math.PI / 2, {
     width: 2.35,
     height: 0.52,
-    destination: [CINEMA_ROOM_X, 0, 30.25],
+    destination: [CINEMA_ROOM_X, 0, 32],
     visitorYaw: Math.PI
   });
   createWallSign(text.cinemaReturn, [8.12, 1.25, 30.6], Math.PI / 2, {
@@ -717,7 +717,7 @@ function addFastTravelStations() {
     { id: "models", label: text.modelsRoom, destination: [0, 0, 10], visitorYaw: 0 },
     { id: "bedroom", label: text.bedroomRoom, destination: [0, 0, 20.6], visitorYaw: Math.PI },
     { id: "reimagined", label: text.reimaginedRoom, destination: [0, 0, 34], visitorYaw: Math.PI },
-    { id: "cinema", label: text.cinemaRoom, destination: [CINEMA_ROOM_X, 0, 30.25], visitorYaw: Math.PI }
+    { id: "cinema", label: text.cinemaRoom, destination: [CINEMA_ROOM_X, 0, 32], visitorYaw: Math.PI }
   ];
   const stations = [
     { room: "paintings", position: [5.86, 3.35, 3.25], rotationY: -Math.PI / 2 },
@@ -1111,14 +1111,14 @@ async function addCinemaSofaModel(cinema) {
   sofa.updateMatrixWorld(true);
   box = new THREE.Box3().setFromObject(sofa);
   const center = box.getCenter(new THREE.Vector3());
-  sofa.position.set(-center.x, -box.min.y, 33.8 - center.z);
+  sofa.position.set(-center.x, -box.min.y, 29.12 - box.min.z);
   cinema.add(sofa);
 }
 
 function addCinemaViewingSpot(cinema) {
   const viewingSpot = new THREE.Group();
-  viewingSpot.position.set(0, 0.02, 33.15);
-  viewingSpot.userData.destination = new THREE.Vector3(CINEMA_ROOM_X, 0, 33.75);
+  viewingSpot.position.set(0, 0.02, 31);
+  viewingSpot.userData.destination = new THREE.Vector3(CINEMA_ROOM_X, 0, 30.1);
   viewingSpot.userData.visitorYaw = Math.PI;
   viewingSpot.userData.visitorHeightOffset = -0.55;
   const target = new THREE.Mesh(
