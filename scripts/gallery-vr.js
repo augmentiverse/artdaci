@@ -22,6 +22,16 @@ const GALLERY_MODEL_OVERRIDES = {
 
 const STANDING_VAN_GOGH_MODEL = "assets/paintings/van-gogh/vangogh_istanding.glb";
 const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae";
+const REIMAGINED_VIDEO_EXHIBITS = [
+  {
+    title: "Leonardo Painting the Mona Lisa",
+    src: "assets/paintings/mona-lisa/audio-video/davinci_painting_monalisa.mp4"
+  },
+  {
+    title: "Mona Lisa Reimagined",
+    src: "assets/paintings/mona-lisa/audio-video/mona-lisa_video.mp4"
+  }
+];
 
 const REIMAGINED_ARTWORKS = [
   { src: "assets/gallery/reimagined/mona-lisa_out.png", title: "Mona Lisa — Beyond the frame" },
@@ -88,6 +98,7 @@ const COPY = {
     reimaginedSubtitle: "FAMILIAR ICONS, NEW STORIES",
     fastTravel: "QUICK ROOM ACCESS",
     bedroomVrWorld: "VISIT THE BEDROOM VR WORLD",
+    playVideo: "TRIGGER: PLAY / PAUSE",
     exitSign: "EXIT GALLERY"
   },
   fr: {
@@ -119,6 +130,7 @@ const COPY = {
     reimaginedSubtitle: "NOUVEAUX REGARDS SUR DES ICÔNES",
     fastTravel: "ACCÈS RAPIDE AUX SALLES",
     bedroomVrWorld: "VISITER LA CHAMBRE EN MONDE VR",
+    playVideo: "GÂCHETTE : LECTURE / PAUSE",
     exitSign: "SORTIE DE LA GALERIE"
   }
 };
@@ -163,6 +175,8 @@ const controllers = [renderer.xr.getController(0), renderer.xr.getController(1)]
 const teleportTargets = [];
 const exhibits = [];
 const exhibitsBySlug = new Map();
+const galleryVideoExhibits = [];
+const galleryVideoScreens = [];
 const teleportRaycaster = new THREE.Raycaster();
 const rayRotation = new THREE.Matrix4();
 const clock = new THREE.Clock();
@@ -186,6 +200,7 @@ async function init() {
     const paintings = await Promise.all(responses.map((response) => response.json()));
     await buildExhibition(paintings);
     await buildReimaginedExhibition();
+    buildReimaginedVideoExhibits();
     await detectVR();
     void buildModelExhibits(paintings);
   } catch (error) {
@@ -719,6 +734,130 @@ function createReimaginedHotspot(title, placement, artwork) {
   return group;
 }
 
+function buildReimaginedVideoExhibits() {
+  const placements = [
+    { position: [-2.25, 1.82, 35.15], rotationY: -0.1 },
+    { position: [2.25, 1.82, 35.15], rotationY: 0.1 }
+  ];
+
+  REIMAGINED_VIDEO_EXHIBITS.forEach((item, index) => {
+    const placement = placements[index];
+    const display = new THREE.Group();
+    display.position.set(...placement.position);
+    display.rotation.y = placement.rotationY;
+
+    const video = document.createElement("video");
+    video.crossOrigin = "anonymous";
+    video.preload = "auto";
+    video.autoplay = true;
+    video.playsInline = true;
+    video.loop = true;
+    video.muted = true;
+    video.src = item.src;
+    video.style.display = "none";
+    document.body.appendChild(video);
+    video.volume = 0;
+    video.addEventListener("canplay", () => {
+      video.play().catch(() => {});
+    }, { once: true });
+    video.load();
+
+    const texture = new THREE.VideoTexture(video);
+    texture.encoding = THREE.sRGBEncoding;
+    texture.minFilter = THREE.LinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+
+    const frame = new THREE.Mesh(
+      new THREE.BoxGeometry(2.2, 1.38, 0.16),
+      new THREE.MeshStandardMaterial({ color: 0x17130f, roughness: 0.48, metalness: 0.22 })
+    );
+    display.add(frame);
+
+    const screen = new THREE.Mesh(
+      new THREE.PlaneGeometry(2.02, 1.14),
+      new THREE.MeshBasicMaterial({ map: texture, color: 0xffffff, side: THREE.DoubleSide })
+    );
+    screen.position.z = -0.086;
+    display.add(screen);
+
+    const pedestal = new THREE.Mesh(
+      new THREE.BoxGeometry(1.28, 0.72, 0.68),
+      new THREE.MeshStandardMaterial({ color: 0x233d52, roughness: 0.82 })
+    );
+    pedestal.position.y = -1.04;
+    display.add(pedestal);
+
+    const title = makeLabel(item.title);
+    title.position.set(0, -0.67, -0.11);
+    title.scale.set(1.95, 0.68, 1);
+    display.add(title);
+
+    const instruction = makeLabel(text.playVideo);
+    instruction.position.set(0, -1.18, -0.37);
+    instruction.scale.set(1.65, 0.52, 1);
+    display.add(instruction);
+
+    const exhibit = { ...item, display, screen, video };
+    screen.userData.videoExhibit = exhibit;
+    galleryVideoExhibits.push(exhibit);
+    galleryVideoScreens.push(screen);
+    teleportTargets.push(screen);
+    scene.add(display);
+  });
+}
+
+async function toggleGalleryVideo(exhibit) {
+  if (!exhibit?.video) return;
+  galleryVideoExhibits.forEach((item) => {
+    if (item !== exhibit) {
+      item.video.muted = true;
+      if (!item.video.paused) item.video.play().catch(() => {});
+    }
+  });
+  if (activeExhibit?.audio?.isPlaying) activeExhibit.audio.pause();
+  if (exhibit.video.muted) {
+    exhibit.video.muted = false;
+    try {
+      await exhibit.video.play();
+    } catch (error) {
+      console.warn("Video playback is waiting for a visitor gesture.", error);
+    }
+  } else if (exhibit.video.paused) {
+    try {
+      await exhibit.video.play();
+    } catch (error) {
+      console.warn("Video playback is waiting for a visitor gesture.", error);
+    }
+  } else {
+    exhibit.video.pause();
+  }
+}
+
+function updateGalleryVideoVolume() {
+  if (!galleryVideoExhibits.length) return;
+  const head = getListenerPosition();
+  galleryVideoExhibits.forEach((exhibit) => {
+    if (exhibit.video.paused || exhibit.video.muted) {
+      exhibit.video.volume = 0;
+      return;
+    }
+    const position = exhibit.display.getWorldPosition(new THREE.Vector3());
+    exhibit.video.volume = THREE.MathUtils.clamp(1.15 - position.distanceTo(head) / 5.5, 0.08, 1);
+  });
+}
+
+function toggleVideoFromPointer(event) {
+  if (currentSession || !galleryVideoScreens.length) return;
+  const bounds = renderer.domElement.getBoundingClientRect();
+  const pointer = new THREE.Vector2(
+    ((event.clientX - bounds.left) / bounds.width) * 2 - 1,
+    -((event.clientY - bounds.top) / bounds.height) * 2 + 1
+  );
+  teleportRaycaster.setFromCamera(pointer, camera);
+  const hit = teleportRaycaster.intersectObjects(galleryVideoScreens, false)[0];
+  if (hit?.object.userData.videoExhibit) toggleGalleryVideo(hit.object.userData.videoExhibit);
+}
+
 async function buildModelExhibits(paintings) {
   status.textContent = text.loadingModels;
   let loaded = 0;
@@ -1187,6 +1326,10 @@ function teleportFrom(controller) {
   teleportRaycaster.ray.direction.set(0, 0, -1).applyMatrix4(rayRotation).normalize();
   const hit = teleportRaycaster.intersectObjects(teleportTargets, false)[0];
   if (!hit) return;
+  if (hit.object.userData.videoExhibit) {
+    toggleGalleryVideo(hit.object.userData.videoExhibit);
+    return;
+  }
   if (hit.object.userData.exitUrl) {
     exitGallery(hit.object.userData.exitUrl);
     return;
@@ -1205,6 +1348,7 @@ function teleportFrom(controller) {
 
 async function exitGallery(url) {
   stopAllAudioGuides();
+  galleryVideoExhibits.forEach((exhibit) => exhibit.video.pause());
   if (currentSession) await currentSession.end();
   location.href = url;
 }
@@ -1214,6 +1358,7 @@ function bindUI() {
   audioToggleButton.addEventListener("click", toggleAudioGuide);
   audioRestartButton.addEventListener("click", restartAudioGuide);
   audioMuteButton.addEventListener("click", toggleAudioMute);
+  renderer.domElement.addEventListener("pointerdown", toggleVideoFromPointer);
   addEventListener("resize", resize);
 }
 
@@ -1419,6 +1564,7 @@ function render() {
   updateLocomotion(Math.min(clock.getDelta(), 0.05));
   selectNearestAudioGuide();
   updateAudioVolume();
+  updateGalleryVideoVolume();
   updateControllerAudioCommands();
   renderer.render(scene, camera);
 }

@@ -93,6 +93,7 @@ function buildPageDefinitions(manifests) {
   manifests.forEach((manifest, index) => {
     const title = localizedTitle(manifest);
     const audio = getAudio(manifest);
+    const videos = manifest.media?.videos || [];
     pages.push({
       kind: "artwork",
       eyebrow: `${String(index + 1).padStart(2, "0")} · ${manifest.movement?.[0] || "Masterpiece"}`,
@@ -104,7 +105,8 @@ function buildPageDefinitions(manifests) {
       hotspots: [
         { label: "3D", x: 83, y: 23, type: "space" },
         { label: "♪", x: 83, y: 35, type: "audio", audio },
-        { label: "AR", x: 83, y: 47, type: "ar" }
+        { label: "AR", x: 83, y: 47, type: "ar" },
+        ...(videos[0] ? [{ label: "▶", x: 83, y: 59, type: "video", video: videos[0] }] : [])
       ]
     });
     pages.push({
@@ -118,7 +120,8 @@ function buildPageDefinitions(manifests) {
       manifest,
       hotspots: [
         { label: "VR", x: 82, y: 24, type: manifest.slug === "van-gogh-bedroom" ? "world" : "vr" },
-        { label: "◉", x: 82, y: 38, type: "gallery" }
+        { label: "◉", x: 82, y: 38, type: "gallery" },
+        ...(videos[1] ? [{ label: "▶", x: 82, y: 52, type: "video", video: videos[1] }] : [])
       ]
     });
   });
@@ -378,6 +381,7 @@ function openExperience(definition, hotspot) {
   experienceTitle.textContent = definition.title;
   experienceKicker.textContent = {
     audio: lang === "fr" ? "Narration audio" : "Audio narration",
+    video: lang === "fr" ? "Scène réimaginée en mouvement" : "Reimagined scene in motion",
     space: lang === "fr" ? "Objet 3D interactif" : "Interactive 3D object",
     ar: lang === "fr" ? "Réalité augmentée" : "Augmented reality",
     vr: lang === "fr" ? "Scène VR" : "VR scene",
@@ -387,6 +391,13 @@ function openExperience(definition, hotspot) {
 
   if (hotspot.type === "audio" && hotspot.audio?.src) {
     experienceBody.innerHTML = `<div class="experience-audio"><audio controls autoplay src="${hotspot.audio.src}"></audio></div>`;
+  } else if (hotspot.type === "video" && hotspot.video?.src) {
+    experienceBody.innerHTML = `
+      <div class="experience-video">
+        <video controls autoplay playsinline src="${hotspot.video.src}"></video>
+        <p>${hotspot.video.description || ""}</p>
+      </div>
+    `;
   } else {
     const url = getExperienceUrl(manifest, hotspot.type);
     experienceBody.innerHTML = `<iframe title="${experienceTitle.textContent}" src="${url}" allow="autoplay; fullscreen; xr-spatial-tracking; camera"></iframe>`;

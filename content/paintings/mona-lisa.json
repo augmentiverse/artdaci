@@ -407,6 +407,20 @@
     ],
     "videos": [
       {
+        "id": "davinci-painting-mona-lisa",
+        "title": "Leonardo Painting the Mona Lisa",
+        "src": "assets/paintings/mona-lisa/audio-video/davinci_painting_monalisa.mp4",
+        "type": "video/mp4",
+        "description": "A reimagined moving scene of Leonardo at work on the Mona Lisa."
+      },
+      {
+        "id": "mona-lisa-reimagined-video",
+        "title": "Mona Lisa Reimagined",
+        "src": "assets/paintings/mona-lisa/audio-video/mona-lisa_video.mp4",
+        "type": "video/mp4",
+        "description": "A moving reinterpretation of the Mona Lisa."
+      },
+      {
         "id": "mona-lisa-video",
         "title": "Mona Lisa Video Guide",
         "src": "assets/paintings/mona-lisa/audio-video/mona-lisa_video.mp4",
