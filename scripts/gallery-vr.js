@@ -273,13 +273,18 @@ function buildRoom() {
     roughness: 0.95,
     side: THREE.DoubleSide
   });
+  const louvreWallMaterial = new THREE.MeshStandardMaterial({
+    color: 0x07142d,
+    roughness: 0.9,
+    side: THREE.DoubleSide
+  });
   [
-    { size: [12, 4], position: [0, 2, -5], rotation: [0, 0, 0] },
-    { size: [10, 4], position: [-6, 2, 0], rotation: [0, Math.PI / 2, 0] },
-    { size: [10, 4], position: [6, 2, 0], rotation: [0, -Math.PI / 2, 0] },
-    { size: [5, 4], position: [-3.5, 2, 5], rotation: [0, Math.PI, 0] },
-    { size: [5, 4], position: [3.5, 2, 5], rotation: [0, Math.PI, 0] },
-    { size: [2, 1.1], position: [0, 3.45, 5], rotation: [0, Math.PI, 0] },
+    { size: [12, 4], position: [0, 2, -5], rotation: [0, 0, 0], louvre: true },
+    { size: [10, 4], position: [-6, 2, 0], rotation: [0, Math.PI / 2, 0], louvre: true },
+    { size: [10, 4], position: [6, 2, 0], rotation: [0, -Math.PI / 2, 0], louvre: true },
+    { size: [5, 4], position: [-3.5, 2, 5], rotation: [0, Math.PI, 0], louvre: true },
+    { size: [5, 4], position: [3.5, 2, 5], rotation: [0, Math.PI, 0], louvre: true },
+    { size: [2, 1.1], position: [0, 3.45, 5], rotation: [0, Math.PI, 0], louvre: true },
     { size: [10, 4], position: [-6, 2, 10], rotation: [0, Math.PI / 2, 0] },
     { size: [10, 4], position: [6, 2, 10], rotation: [0, -Math.PI / 2, 0] },
     { size: [5, 4], position: [-3.5, 2, 15], rotation: [0, Math.PI, 0] },
@@ -294,7 +299,10 @@ function buildRoom() {
     { size: [10, 4], position: [6, 2, 34], rotation: [0, -Math.PI / 2, 0] },
     { size: [12, 4], position: [0, 2, 39], rotation: [0, Math.PI, 0] }
   ].forEach((wall) => {
-    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(...wall.size), wallMaterial);
+    const mesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(...wall.size),
+      wall.louvre ? louvreWallMaterial : wallMaterial
+    );
     mesh.position.set(...wall.position);
     mesh.rotation.set(...wall.rotation);
     mesh.receiveShadow = true;
@@ -333,8 +341,77 @@ function buildRoom() {
   reimaginedRoomFloor.position.set(0, 0.008, 34);
   scene.add(reimaginedRoomFloor);
 
+  addLouvrePaintingsRoomDecor();
   addNavigationSigns();
   addFastTravelStations();
+}
+
+function addLouvrePaintingsRoomDecor() {
+  const gold = new THREE.MeshStandardMaterial({
+    color: 0xb8914f,
+    roughness: 0.42,
+    metalness: 0.38
+  });
+  const navyWainscot = new THREE.MeshStandardMaterial({
+    color: 0x0a152b,
+    roughness: 0.86
+  });
+
+  const addRail = (size, position, rotationY = 0, material = gold) => {
+    const rail = new THREE.Mesh(new THREE.BoxGeometry(...size), material);
+    rail.position.set(...position);
+    rail.rotation.y = rotationY;
+    scene.add(rail);
+  };
+
+  [0.42, 3.66].forEach((height) => {
+    addRail([11.82, 0.075, 0.06], [0, height, -4.93]);
+    addRail([9.82, 0.075, 0.06], [-5.93, height, 0], Math.PI / 2);
+    addRail([9.82, 0.075, 0.06], [5.93, height, 0], Math.PI / 2);
+  });
+
+  addRail([11.75, 0.68, 0.055], [0, 0.02, -4.92], 0, navyWainscot);
+  addRail([9.75, 0.68, 0.055], [-5.92, 0.02, 0], Math.PI / 2, navyWainscot);
+  addRail([9.75, 0.68, 0.055], [5.92, 0.02, 0], Math.PI / 2, navyWainscot);
+
+  [-5.1, 0, 5.1].forEach((x) => {
+    addRail([0.045, 3.12, 0.055], [x, 2.03, -4.92]);
+  });
+
+  const skylight = new THREE.Mesh(
+    new THREE.PlaneGeometry(8.8, 6.7),
+    new THREE.MeshBasicMaterial({
+      color: 0xe7edf0,
+      transparent: true,
+      opacity: 0.82,
+      side: THREE.DoubleSide
+    })
+  );
+  skylight.rotation.x = Math.PI / 2;
+  skylight.position.set(0, 3.955, 0);
+  scene.add(skylight);
+
+  for (let x = -4.4; x <= 4.4; x += 1.1) {
+    addRail([0.045, 0.05, 6.65], [x, 3.94, 0]);
+  }
+  for (let z = -3.3; z <= 3.3; z += 1.1) {
+    addRail([8.75, 0.05, 0.045], [0, 3.94, z]);
+  }
+
+  const bench = new THREE.Group();
+  const seat = new THREE.Mesh(
+    new THREE.BoxGeometry(2.5, 0.18, 0.72),
+    new THREE.MeshStandardMaterial({ color: 0x263d5d, roughness: 0.78 })
+  );
+  seat.position.y = 0.62;
+  bench.add(seat);
+  [-1.0, 1.0].forEach((x) => {
+    const leg = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.62, 0.56), gold);
+    leg.position.set(x, 0.31, 0);
+    bench.add(leg);
+  });
+  bench.position.set(0, 0, 2.55);
+  scene.add(bench);
 }
 
 function addNavigationSigns() {

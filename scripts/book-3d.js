@@ -5,6 +5,28 @@ const MANIFEST_URLS = [
   "content/paintings/vermeer-girl-with-a-pearl-earring.json"
 ];
 
+const BOOK_IMAGE_GALLERIES = {
+  "mona-lisa": [
+    "assets/paintings/mona-lisa/images/Mona-Lisa_out-of-frame.png",
+    "assets/paintings/mona-lisa/images/davinci-monalisa.png",
+    "assets/paintings/mona-lisa/images/monalisa-t.png"
+  ],
+  "van-gogh": [
+    "assets/paintings/van-gogh/images/van-gogh-out-of-frame.png",
+    "assets/paintings/van-gogh/images/van-gogh_in_bedroom-standing.png",
+    "assets/paintings/van-gogh/images/van-gogh__Portrait.jpg"
+  ],
+  "van-gogh-bedroom": [
+    "assets/paintings/van-gogh-bedroom/images/bed_van-gogh.jpeg",
+    "assets/paintings/van-gogh-bedroom/images/van-gogh_bedroom-t.png"
+  ],
+  "vermeer-girl-with-a-pearl-earring": [
+    "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/images/Girl_with_a_Pearl_Earring_standing.jpg",
+    "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/images/vermeer_Girl-with-a-Pearl-Earring_sitting.png",
+    "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/images/vermeer_Girl-with-a-Pearl-Earring_room.png"
+  ]
+};
+
 const params = new URLSearchParams(location.search);
 const lang = params.get("lang") === "fr" ? "fr" : "en";
 const book = document.getElementById("book");
@@ -90,6 +112,7 @@ function buildPageDefinitions(manifests) {
       eyebrow: lang === "fr" ? "REGARDER DE PLUS PRÈS" : "LOOK CLOSER",
       title,
       image: manifest.media?.image || manifest.print?.imageTargetSource,
+      galleryImages: BOOK_IMAGE_GALLERIES[manifest.slug] || [],
       body: manifest.texts?.artisticAnalysis || manifest.texts?.composition || "",
       facts: (manifest.texts?.interestingFacts || []).slice(0, 3),
       manifest,
@@ -153,7 +176,10 @@ async function createPageTexture(definition) {
   const context = canvas.getContext("2d");
   drawPaper(context, canvas, definition.kind);
 
-  if (definition.image) {
+  if (definition.kind === "analysis" && definition.galleryImages?.length) {
+    const galleryImages = await Promise.all(definition.galleryImages.slice(0, 3).map(loadImage));
+    drawImageGallery(context, galleryImages, 130, 360, 1340, 700);
+  } else if (definition.image) {
     const image = await loadImage(definition.image);
     if (definition.kind === "artwork") {
       drawCoverImage(context, image, 120, 390, 1360, 920);
@@ -164,6 +190,14 @@ async function createPageTexture(definition) {
 
   drawPageCopy(context, canvas, definition);
   return canvas.toDataURL("image/jpeg", 0.94);
+}
+
+function drawImageGallery(context, images, x, y, width, height) {
+  const gap = 24;
+  const cellWidth = (width - gap * (images.length - 1)) / images.length;
+  images.forEach((image, index) => {
+    drawCoverImage(context, image, x + index * (cellWidth + gap), y, cellWidth, height);
+  });
 }
 
 function drawPaper(context, canvas, kind) {
