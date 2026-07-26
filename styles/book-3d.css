@@ -198,9 +198,11 @@ button, a { font: inherit; }
 .experience-body iframe { width: 100%; height: 100%; border: 0; background: #111; }
 .experience-audio { display: grid; place-items: center; height: 100%; padding: 30px; background: radial-gradient(circle, #4b3426, #17120f 68%); }
 .experience-audio audio { width: min(680px, 90%); }
-.experience-video { display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 12px; height: 100%; padding: 18px; background: #090807; }
+.experience-video { display: grid; grid-template-rows: minmax(0, 1fr) auto auto; gap: 12px; height: 100%; padding: 18px; background: #090807; }
 .experience-video video { width: 100%; height: 100%; object-fit: contain; background: #000; }
 .experience-video p { margin: 0; color: #d8c9b5; text-align: center; }
+.experience-video-controls { display: flex; justify-content: center; gap: 9px; }
+.experience-video-controls button { border: 1px solid rgba(255,255,255,.28); padding: 9px 14px; color: #fff8ec; background: #263f52; cursor: pointer; }
 
 @media (max-width: 760px) {
   .book-toolbar { grid-template-columns: auto 1fr; }

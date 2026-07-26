@@ -99,6 +99,11 @@ const COPY = {
     fastTravel: "QUICK ROOM ACCESS",
     bedroomVrWorld: "VISIT THE BEDROOM VR WORLD",
     playVideo: "TRIGGER: PLAY / PAUSE",
+    videoPlay: "Play video",
+    videoPause: "Pause video",
+    videoRestart: "Restart video",
+    videoMute: "Mute video",
+    videoUnmute: "Unmute video",
     exitSign: "EXIT GALLERY"
   },
   fr: {
@@ -131,6 +136,11 @@ const COPY = {
     fastTravel: "ACCÈS RAPIDE AUX SALLES",
     bedroomVrWorld: "VISITER LA CHAMBRE EN MONDE VR",
     playVideo: "GÂCHETTE : LECTURE / PAUSE",
+    videoPlay: "Lire la vidéo",
+    videoPause: "Mettre la vidéo en pause",
+    videoRestart: "Recommencer la vidéo",
+    videoMute: "Couper le son vidéo",
+    videoUnmute: "Activer le son vidéo",
     exitSign: "SORTIE DE LA GALERIE"
   }
 };
@@ -142,6 +152,9 @@ const enterButton = document.getElementById("enter-gallery-vr");
 const audioToggleButton = document.getElementById("gallery-audio-toggle");
 const audioRestartButton = document.getElementById("gallery-audio-restart");
 const audioMuteButton = document.getElementById("gallery-audio-mute");
+const videoToggleButton = document.getElementById("gallery-video-toggle");
+const videoRestartButton = document.getElementById("gallery-video-restart");
+const videoMuteButton = document.getElementById("gallery-video-mute");
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x191714);
 scene.fog = new THREE.Fog(0x191714, 16, 44);
@@ -183,6 +196,7 @@ const clock = new THREE.Clock();
 let currentSession = null;
 let snapTurnReady = true;
 let activeExhibit = null;
+let activeGalleryVideo = null;
 let audioMuted = false;
 const controllerCommandState = new Map();
 
@@ -224,6 +238,9 @@ function applyCopy() {
   audioToggleButton.textContent = text.playAudio;
   audioRestartButton.textContent = text.restartAudio;
   audioMuteButton.textContent = text.muteAudio;
+  videoToggleButton.textContent = text.videoPlay;
+  videoRestartButton.textContent = text.videoRestart;
+  videoMuteButton.textContent = text.videoUnmute;
   document.getElementById("gallery-exit-link").textContent = text.exitGallery;
   document.getElementById("gallery-exit-link").href = lang === "fr" ? "index-fr.html" : "index.html";
   document.getElementById("gallery-experiences-link").textContent = text.individualExperiences;
@@ -807,7 +824,9 @@ function buildReimaginedVideoExhibits() {
 }
 
 async function toggleGalleryVideo(exhibit) {
+  exhibit = exhibit || activeGalleryVideo || getNearestGalleryVideo();
   if (!exhibit?.video) return;
+  activeGalleryVideo = exhibit;
   galleryVideoExhibits.forEach((item) => {
     if (item !== exhibit) {
       item.video.muted = true;
@@ -831,6 +850,47 @@ async function toggleGalleryVideo(exhibit) {
   } else {
     exhibit.video.pause();
   }
+  updateGalleryVideoButtons();
+}
+
+function restartGalleryVideo(exhibit = activeGalleryVideo) {
+  exhibit = exhibit || getNearestGalleryVideo();
+  if (!exhibit?.video) return;
+  activeGalleryVideo = exhibit;
+  exhibit.video.currentTime = 0;
+  exhibit.video.muted = false;
+  exhibit.video.play().catch(() => {});
+  updateGalleryVideoButtons();
+}
+
+function toggleGalleryVideoMute(exhibit = activeGalleryVideo) {
+  exhibit = exhibit || getNearestGalleryVideo();
+  if (!exhibit?.video) return;
+  activeGalleryVideo = exhibit;
+  exhibit.video.muted = !exhibit.video.muted;
+  if (!exhibit.video.paused) exhibit.video.play().catch(() => {});
+  updateGalleryVideoButtons();
+}
+
+function getNearestGalleryVideo() {
+  if (!galleryVideoExhibits.length) return null;
+  const head = getListenerPosition();
+  return galleryVideoExhibits.reduce((nearest, exhibit) => {
+    const distance = exhibit.display.getWorldPosition(new THREE.Vector3()).distanceTo(head);
+    return !nearest || distance < nearest.distance ? { exhibit, distance } : nearest;
+  }, null)?.exhibit || null;
+}
+
+function updateGalleryVideoButtons() {
+  const video = activeGalleryVideo?.video;
+  const disabled = !video;
+  videoToggleButton.disabled = disabled;
+  videoRestartButton.disabled = disabled;
+  videoMuteButton.disabled = disabled;
+  videoToggleButton.textContent = video && !video.paused ? text.videoPause : text.videoPlay;
+  videoMuteButton.textContent = video && !video.muted ? text.videoMute : text.videoUnmute;
+  videoToggleButton.classList.toggle("active", Boolean(video && !video.paused));
+  videoMuteButton.classList.toggle("active", Boolean(video && !video.muted));
 }
 
 function updateGalleryVideoVolume() {
@@ -1358,6 +1418,9 @@ function bindUI() {
   audioToggleButton.addEventListener("click", toggleAudioGuide);
   audioRestartButton.addEventListener("click", restartAudioGuide);
   audioMuteButton.addEventListener("click", toggleAudioMute);
+  videoToggleButton.addEventListener("click", () => toggleGalleryVideo());
+  videoRestartButton.addEventListener("click", () => restartGalleryVideo());
+  videoMuteButton.addEventListener("click", () => toggleGalleryVideoMute());
   renderer.domElement.addEventListener("pointerdown", toggleVideoFromPointer);
   addEventListener("resize", resize);
 }
@@ -1515,9 +1578,17 @@ function updateControllerAudioCommands() {
       restart: Boolean(source.gamepad.buttons[5]?.pressed),
       mute: Boolean(source.gamepad.buttons[3]?.pressed)
     };
-    if (current.toggle && !previous.toggle) toggleAudioGuide();
-    if (current.restart && !previous.restart) restartAudioGuide();
-    if (current.mute && !previous.mute) toggleAudioMute();
+    const videoIsNear = activeGalleryVideo
+      && activeGalleryVideo.display.getWorldPosition(new THREE.Vector3()).distanceTo(getListenerPosition()) <= 5.5;
+    if (videoIsNear) {
+      if (current.toggle && !previous.toggle) toggleGalleryVideo(activeGalleryVideo);
+      if (current.restart && !previous.restart) restartGalleryVideo(activeGalleryVideo);
+      if (current.mute && !previous.mute) toggleGalleryVideoMute(activeGalleryVideo);
+    } else {
+      if (current.toggle && !previous.toggle) toggleAudioGuide();
+      if (current.restart && !previous.restart) restartAudioGuide();
+      if (current.mute && !previous.mute) toggleAudioMute();
+    }
     controllerCommandState.set(key, current);
   }
 }

@@ -395,14 +395,47 @@ function openExperience(definition, hotspot) {
     experienceBody.innerHTML = `
       <div class="experience-video">
         <video controls autoplay playsinline src="${hotspot.video.src}"></video>
+        <div class="experience-video-controls">
+          <button type="button" data-video-action="toggle">${lang === "fr" ? "Pause" : "Pause"}</button>
+          <button type="button" data-video-action="mute">${lang === "fr" ? "Couper le son" : "Mute sound"}</button>
+        </div>
         <p>${hotspot.video.description || ""}</p>
       </div>
     `;
+    bindBookVideoControls();
   } else {
     const url = getExperienceUrl(manifest, hotspot.type);
     experienceBody.innerHTML = `<iframe title="${experienceTitle.textContent}" src="${url}" allow="autoplay; fullscreen; xr-spatial-tracking; camera"></iframe>`;
   }
   dialog.showModal();
+}
+
+function bindBookVideoControls() {
+  const player = experienceBody.querySelector("video");
+  const toggle = experienceBody.querySelector('[data-video-action="toggle"]');
+  const mute = experienceBody.querySelector('[data-video-action="mute"]');
+  if (!player || !toggle || !mute) return;
+
+  const update = () => {
+    toggle.textContent = player.paused
+      ? (lang === "fr" ? "Lire la vidéo" : "Play video")
+      : (lang === "fr" ? "Pause" : "Pause");
+    mute.textContent = player.muted
+      ? (lang === "fr" ? "Activer le son" : "Unmute sound")
+      : (lang === "fr" ? "Couper le son" : "Mute sound");
+  };
+  toggle.addEventListener("click", () => {
+    if (player.paused) player.play();
+    else player.pause();
+    update();
+  });
+  mute.addEventListener("click", () => {
+    player.muted = !player.muted;
+    update();
+  });
+  player.addEventListener("play", update);
+  player.addEventListener("pause", update);
+  update();
 }
 
 function getExperienceUrl(manifest, type) {

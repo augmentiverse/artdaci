@@ -132,6 +132,15 @@ body {
   margin-top: 7px;
 }
 
+.gallery-video-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 4px;
+  padding-top: 7px;
+  border-top: 1px solid var(--line);
+}
+
 .gallery-exit-links {
   display: flex;
   flex-wrap: wrap;
@@ -149,6 +158,18 @@ body {
   min-height: 34px;
   padding: 6px 10px;
   font-size: 12px;
+}
+
+.gallery-video-controls .gallery-button {
+  min-height: 34px;
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+.gallery-video-controls .active {
+  border-color: #5d9fb2;
+  color: #07151c;
+  background: #9eeaff;
 }
 
 .gallery-audio-controls .active {
