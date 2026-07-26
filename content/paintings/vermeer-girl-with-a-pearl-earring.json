@@ -93,7 +93,7 @@
     ],
     "audioGuides": [
       { "id": "vermeer-pearl-audio-en", "lang": "en", "title": "Girl with a Pearl Earring", "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring_1m17_en.mp3", "type": "audio/mpeg", "description": "English audio guide for the image AR experience." },
-      { "id": "vermeer-pearl-audio-fr", "lang": "fr", "title": "La Jeune Fille à la perle", "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring_1m17_fr.mp3", "type": "audio/mpeg", "description": "Court guide audio français pour l'AR." }
+      { "id": "vermeer-pearl-audio-fr", "lang": "fr", "title": "La Jeune Fille à la perle", "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring_1m54_fr.m4a", "type": "audio/mp4", "description": "Présentation audio brève en français pour l’expérience AR sur image." }
     ],
     "videos": [
       { "id": "vermeer-pearl-room-video", "title": "Girl with a Pearl Earring room experience", "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring_room.mp4", "type": "video/mp4", "description": "Short spatial room presentation." }
@@ -101,7 +101,7 @@
     "subtitles": [], "signLanguage": [], "imageCredits": [],
     "audioOverviews": [
       { "id": "vermeer-pearl-overview-en", "lang": "en", "title": "Girl with a Pearl Earring audio overview", "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring_en.mp3", "type": "audio/mpeg", "description": "English audio overview." },
-      { "id": "vermeer-pearl-overview-fr", "lang": "fr", "title": "Aperçu audio de La Jeune Fille à la perle", "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring_fr.mp3", "type": "audio/mpeg", "description": "Présentation audio détaillée en français." }
+      { "id": "vermeer-pearl-overview-fr", "lang": "fr", "title": "Aperçu audio de La Jeune Fille à la perle", "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring_fr.wav", "type": "audio/wav", "description": "Présentation audio détaillée en français." }
     ]
   },
   "education": {

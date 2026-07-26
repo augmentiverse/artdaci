@@ -236,6 +236,17 @@
       }
     ]
   },
+  "externalExperiences": [
+    {
+      "id": "bedroom-world-vr",
+      "type": "vr-world",
+      "url": "https://marble.worldlabs.ai/worldvr/e44dd3a5-8b94-4860-9ed2-2c379127b2b0",
+      "label": {
+        "en": "Visit The Bedroom as a VR World",
+        "fr": "Visiter La Chambre comme monde VR"
+      }
+    }
+  ],
   "education": {
     "ageBands": ["8-11", "12-15", "16-18", "university"],
     "learningObjectives": [

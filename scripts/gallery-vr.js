@@ -113,7 +113,7 @@ const COPY = {
     bedroomRoom: "LA CHAMBRE DE VAN GOGH",
     bedroomLifeSize: "RECONSTRUCTION GRANDEUR NATURE",
     reimaginedRoom: "CHEFS-D'ŒUVRE RÉIMAGINÉS",
-    reimaginedSubtitle: "DES ICÔNES FAMILIÈRES, DE NOUVEAUX RÉCITS",
+    reimaginedSubtitle: "NOUVEAUX REGARDS SUR DES ICÔNES",
     exitSign: "SORTIE DE LA GALERIE"
   }
 };
@@ -333,7 +333,7 @@ function buildRoom() {
 
 function addNavigationSigns() {
   const collectionUrl = lang === "fr" ? "index-fr.html" : "index.html";
-  createWallSign(text.paintingsRoom, [0, 3.38, -4.88], 0, { width: 3.4 });
+  createWallSign(text.paintingsRoom, [0, 3.58, -4.88], 0, { width: 2.1, height: 0.58 });
   createWallSign(text.modelsRoom, [-5.86, 3.34, 10], Math.PI / 2, { width: 3.4 });
   createWallSign(`${text.modelsRoom}  →`, [0, 3.47, 4.88], Math.PI, {
     width: 1.82,
@@ -377,27 +377,27 @@ function addNavigationSigns() {
     height: 0.58,
     accent: true
   });
-  createWallSign(text.exitSign, [0, 1.42, -4.86], 0, {
-    width: 2.35,
-    height: 0.78,
+  createWallSign(text.exitSign, [0, 0.62, -4.86], 0, {
+    width: 1.55,
+    height: 0.5,
     exitUrl: collectionUrl
   });
-  createWallSign(text.exitSign, [5.86, 1.42, 12.7], -Math.PI / 2, {
-    width: 2.35,
-    height: 0.78,
+  createWallSign(text.exitSign, [5.86, 0.72, 12.7], -Math.PI / 2, {
+    width: 1.55,
+    height: 0.5,
     exitUrl: collectionUrl
   });
-  createWallSign(text.exitSign, [-5.86, 1.15, 37.6], Math.PI / 2, {
-    width: 2.35,
-    height: 0.78,
+  createWallSign(text.exitSign, [-5.86, 0.72, 37.6], Math.PI / 2, {
+    width: 1.55,
+    height: 0.5,
     exitUrl: collectionUrl
   });
 }
 
 function createWallSign(message, position, rotationY, options = {}) {
   const canvas = document.createElement("canvas");
-  canvas.width = 1200;
-  canvas.height = 360;
+  canvas.width = 1600;
+  canvas.height = 480;
   const context = canvas.getContext("2d");
   const isExit = Boolean(options.exitUrl);
   context.fillStyle = isExit ? "#812f38" : options.accent ? "#273f51" : "#211c17";
@@ -408,11 +408,18 @@ function createWallSign(message, position, rotationY, options = {}) {
   context.fillStyle = "#fffaf1";
   context.textAlign = "center";
   context.textBaseline = "middle";
-  context.font = `800 ${message.length > 18 ? 76 : 92}px Arial`;
+  let wallFontSize = message.length > 28 ? 88 : message.length > 18 ? 104 : 126;
+  context.font = `800 ${wallFontSize}px Arial`;
+  while (context.measureText(message).width > canvas.width - 110) {
+    wallFontSize = Math.max(wallFontSize - 4, 58);
+    context.font = `800 ${wallFontSize}px Arial`;
+    if (wallFontSize === 58) break;
+  }
   context.fillText(message, canvas.width / 2, canvas.height / 2);
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.encoding = THREE.sRGBEncoding;
+  texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
   const sign = new THREE.Mesh(
     new THREE.PlaneGeometry(options.width || 3.1, options.height || 0.94),
     new THREE.MeshBasicMaterial({ map: texture })
@@ -460,24 +467,17 @@ async function addPainting(painting, placement) {
   artwork.rotation.y = placement.rotationY;
   artwork.userData.painting = painting.slug;
 
-  const frame = new THREE.Mesh(
-    new THREE.BoxGeometry(width + 0.18, height + 0.18, 0.10),
-    new THREE.MeshStandardMaterial({ color: 0x5b3718, roughness: 0.55, metalness: 0.18 })
-  );
-  frame.castShadow = true;
-  artwork.add(frame);
-
   const canvas = new THREE.Mesh(
     new THREE.PlaneGeometry(width, height),
     new THREE.MeshStandardMaterial({ map: texture, roughness: 0.78 })
   );
-  canvas.position.z = 0.056;
+  canvas.position.z = 0.018;
   artwork.add(canvas);
 
   const title = localizedTitle(painting);
   const information = makeInformationPanel(painting, title);
-  information.position.set(0, -height / 2 - 0.62, 0.07);
-  information.scale.set(2.12, 2.12, 1);
+  information.position.set(0, -height / 2 - 0.55, 0.035);
+  information.scale.set(2.25, 2.25, 1);
   artwork.add(information);
   scene.add(artwork);
 
@@ -540,7 +540,7 @@ async function buildReimaginedExhibition() {
 
     const title = makeLabel(item.title);
     title.position.set(0, -height / 2 - 0.22, 0.07);
-    title.scale.set(Math.min(1.7, width + 0.3), 0.33, 1);
+    title.scale.set(Math.min(2.15, width + 0.62), 0.9, 1);
     artwork.add(title);
     scene.add(artwork);
     scene.add(createReimaginedHotspot(item.title, placement, artwork));
@@ -654,7 +654,7 @@ async function addGalleryModel(exhibit, modelSrc) {
   label.position.set(0, 0.43, -0.76);
   label.rotation.y = Math.PI;
   label.rotation.x = -Math.PI / 5;
-  label.scale.set(1.3, 0.38, 1);
+  label.scale.set(1.55, 0.72, 1);
   display.add(label);
 
   const light = new THREE.SpotLight(0xffedcf, 0.72, 5, Math.PI / 5, 0.5);
@@ -692,7 +692,7 @@ async function addLifeSizeBedroom(exhibit, model) {
     `${text.bedroomLifeSize}\n${dimensionsText}`
   );
   information.position.set(0, 1.25, 3.15);
-  information.scale.set(2.35, 0.66, 1);
+  information.scale.set(2.65, 1.05, 1);
   display.add(information);
 
   const hotspot = createBedroomEntranceHotspot(exhibit);
@@ -949,25 +949,31 @@ function localizedTitle(painting) {
 
 function makeLabel(message) {
   const canvas = document.createElement("canvas");
-  canvas.width = 1024;
-  canvas.height = 256;
+  canvas.width = 1600;
+  canvas.height = 400;
   const context = canvas.getContext("2d");
   context.fillStyle = "#f2eadc";
   context.fillRect(0, 0, canvas.width, canvas.height);
   context.strokeStyle = "#4b3c2d";
-  context.lineWidth = 8;
-  context.strokeRect(4, 4, canvas.width - 8, canvas.height - 8);
+  context.lineWidth = 12;
+  context.strokeRect(6, 6, canvas.width - 12, canvas.height - 12);
   context.fillStyle = "#251f19";
-  context.font = "600 54px Georgia";
   context.textAlign = "center";
   const lines = message.split("\n");
-  context.fillText(lines[0], canvas.width / 2, 100);
-  context.font = "34px Arial";
+  let titleSize = 84;
+  context.font = `700 ${titleSize}px Georgia`;
+  while (context.measureText(lines[0]).width > canvas.width - 100 && titleSize > 54) {
+    titleSize -= 4;
+    context.font = `700 ${titleSize}px Georgia`;
+  }
+  context.fillText(lines[0], canvas.width / 2, lines[1] ? 158 : 220);
+  context.font = "600 54px Arial";
   context.fillStyle = "#65584b";
-  context.fillText(lines[1] || "", canvas.width / 2, 172);
+  context.fillText(lines[1] || "", canvas.width / 2, 278);
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.encoding = THREE.sRGBEncoding;
+  texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
   return new THREE.Mesh(
     new THREE.PlaneGeometry(1, 0.25),
     new THREE.MeshBasicMaterial({ map: texture })
@@ -976,31 +982,37 @@ function makeLabel(message) {
 
 function makeInformationPanel(painting, title) {
   const canvas = document.createElement("canvas");
-  canvas.width = 1200;
-  canvas.height = 520;
+  canvas.width = 1800;
+  canvas.height = 780;
   const context = canvas.getContext("2d");
   context.fillStyle = "#f4ecdf";
   context.fillRect(0, 0, canvas.width, canvas.height);
   context.strokeStyle = "#4b3c2d";
-  context.lineWidth = 10;
-  context.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
+  context.lineWidth = 14;
+  context.strokeRect(7, 7, canvas.width - 14, canvas.height - 14);
 
   context.textAlign = "left";
   context.fillStyle = "#211b16";
-  context.font = "700 72px Georgia";
-  context.fillText(title, 54, 98);
+  let panelTitleSize = 106;
+  context.font = `700 ${panelTitleSize}px Georgia`;
+  while (context.measureText(title).width > canvas.width - 160 && panelTitleSize > 72) {
+    panelTitleSize -= 4;
+    context.font = `700 ${panelTitleSize}px Georgia`;
+  }
+  context.fillText(title, 78, 142);
 
   context.fillStyle = "#7b2937";
-  context.font = "600 34px Arial";
-  context.fillText(`${painting.artist?.name || ""} · ${painting.date || ""}`, 56, 152);
+  context.font = "700 52px Arial";
+  context.fillText(`${painting.artist?.name || ""} · ${painting.date || ""}`, 80, 222);
 
-  context.fillStyle = "#4f463d";
-  context.font = "32px Georgia";
+  context.fillStyle = "#332b24";
+  context.font = "54px Georgia";
   const body = PAINTING_INFO[lang]?.[painting.slug] || painting.texts?.curatorInsight || "";
-  drawWrappedText(context, body, 56, 225, canvas.width - 112, 46, 5);
+  drawWrappedText(context, body, 80, 330, canvas.width - 160, 72, 6);
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.encoding = THREE.sRGBEncoding;
+  texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
   return new THREE.Mesh(
     new THREE.PlaneGeometry(1, 0.433),
     new THREE.MeshBasicMaterial({ map: texture })

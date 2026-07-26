@@ -21,6 +21,7 @@ const COPY = {
     place: "Place in My Space",
     openVr: "Open in VR headset",
     vrGallery: "Visit VR Gallery",
+    externalVrWorld: "Visit as a VR World",
     imageAr: "Image AR",
     printedPage: "Printed Page",
     modelChoice: "Model choice",
@@ -43,6 +44,7 @@ const COPY = {
     place: "Placer dans mon espace",
     openVr: "Ouvrir dans un casque VR",
     vrGallery: "Visiter la galerie VR",
+    externalVrWorld: "Visiter comme monde VR",
     imageAr: "AR sur image",
     printedPage: "Page imprimée",
     modelChoice: "Choix du modèle",
@@ -137,6 +139,7 @@ function configureViewer(manifest) {
   document.getElementById("print-link").href = PRINT_PAGES[lang]?.[slug] || "index.html";
   renderModelVariantControls(model, modelVariants, usdz);
   renderExperienceActions(audioOverview);
+  renderExternalExperiences(manifest.externalExperiences);
   checkModelViewerAvailability(usdz, audioOverview);
   model.addEventListener("ar-status", (event) => {
     if (event.detail.status === "failed") {
@@ -235,6 +238,24 @@ function renderExperienceActions(audioOverview) {
     <button id="audio-overview-button" class="button" type="button">${audioOverview ? COPY[lang].audioOverview : COPY[lang].audioOverviewMissing}</button>
   `);
   bindAudioOverview(audioOverview);
+}
+
+function renderExternalExperiences(experiences) {
+  const actions = document.querySelector(".space-panel .actions");
+  const list = Array.isArray(experiences) ? experiences : [];
+  if (!actions || !list.length) return;
+
+  list.filter((experience) => experience?.url).forEach((experience) => {
+    const link = document.createElement("a");
+    link.className = "button external-vr-world";
+    link.href = experience.url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = experience.label?.[lang]
+      || experience.label?.en
+      || COPY[lang].externalVrWorld;
+    actions.appendChild(link);
+  });
 }
 
 function bindAudioOverview(audioOverview) {
