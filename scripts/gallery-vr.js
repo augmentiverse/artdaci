@@ -472,14 +472,14 @@ function addFastTravelStations() {
   stations.forEach((station) => {
     const [x, y, z] = station.position;
     createWallSign(text.fastTravel, [x, y, z], station.rotationY, {
-      width: 2.3,
-      height: 0.5,
+      width: 1.15,
+      height: 0.25,
       accent: true
     });
     rooms.filter((room) => room.id !== station.room).forEach((room, index) => {
-      createWallSign(room.label, [x, y - 0.62 - index * 0.58, z], station.rotationY, {
-        width: 2.3,
-        height: 0.46,
+      createWallSign(room.label, [x, y - 0.31 - index * 0.29, z], station.rotationY, {
+        width: 1.15,
+        height: 0.23,
         destination: room.destination,
         visitorYaw: room.visitorYaw
       });
