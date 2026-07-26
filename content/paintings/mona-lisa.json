@@ -417,6 +417,7 @@
         "id": "mona-lisa-reimagined-video",
         "title": "Mona Lisa Reimagined",
         "src": "assets/paintings/mona-lisa/audio-video/mona-lisa_video.mp4",
+        "audioSrc": "assets/paintings/mona-lisa/audio-video/Centuries_Behind_Glass.mp3",
         "type": "video/mp4",
         "description": "A moving reinterpretation of the Mona Lisa."
       },
@@ -424,6 +425,7 @@
         "id": "mona-lisa-video",
         "title": "Mona Lisa Video Guide",
         "src": "assets/paintings/mona-lisa/audio-video/mona-lisa_video.mp4",
+        "audioSrc": "assets/paintings/mona-lisa/audio-video/Centuries_Behind_Glass.mp3",
         "type": "video/mp4",
         "description": "Short video layer for the Mona Lisa AR experience."
       }

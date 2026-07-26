@@ -29,7 +29,8 @@ const REIMAGINED_VIDEO_EXHIBITS = [
   },
   {
     title: "Mona Lisa Reimagined",
-    src: "assets/paintings/mona-lisa/audio-video/mona-lisa_video.mp4"
+    src: "assets/paintings/mona-lisa/audio-video/mona-lisa_video.mp4",
+    audioSrc: "assets/paintings/mona-lisa/audio-video/Centuries_Behind_Glass.mp3"
   }
 ];
 
@@ -774,6 +775,27 @@ function buildReimaginedVideoExhibits() {
     video.style.display = "none";
     document.body.appendChild(video);
     video.volume = 0;
+    const sound = item.audioSrc ? document.createElement("audio") : null;
+    if (sound) {
+      sound.src = item.audioSrc;
+      sound.preload = "auto";
+      sound.loop = true;
+      sound.muted = true;
+      sound.style.display = "none";
+      document.body.appendChild(sound);
+      video.addEventListener("timeupdate", () => {
+        if (!sound.duration) return;
+        const expected = video.currentTime % sound.duration;
+        if (Math.abs(sound.currentTime - expected) > 0.35) sound.currentTime = expected;
+      });
+      video.addEventListener("pause", () => sound.pause());
+      video.addEventListener("play", () => {
+        if (!video.muted) {
+          sound.currentTime = sound.duration ? video.currentTime % sound.duration : video.currentTime;
+          sound.play().catch(() => {});
+        }
+      });
+    }
     video.addEventListener("canplay", () => {
       video.play().catch(() => {});
     }, { once: true });
@@ -814,7 +836,7 @@ function buildReimaginedVideoExhibits() {
     instruction.scale.set(1.65, 0.52, 1);
     display.add(instruction);
 
-    const exhibit = { ...item, display, screen, video };
+    const exhibit = { ...item, display, screen, video, sound };
     screen.userData.videoExhibit = exhibit;
     galleryVideoExhibits.push(exhibit);
     galleryVideoScreens.push(screen);
@@ -830,12 +852,23 @@ async function toggleGalleryVideo(exhibit) {
   galleryVideoExhibits.forEach((item) => {
     if (item !== exhibit) {
       item.video.muted = true;
+      if (item.sound) {
+        item.sound.muted = true;
+        item.sound.pause();
+      }
       if (!item.video.paused) item.video.play().catch(() => {});
     }
   });
   if (activeExhibit?.audio?.isPlaying) activeExhibit.audio.pause();
   if (exhibit.video.muted) {
     exhibit.video.muted = false;
+    if (exhibit.sound) {
+      exhibit.sound.muted = false;
+      exhibit.sound.currentTime = exhibit.sound.duration
+        ? exhibit.video.currentTime % exhibit.sound.duration
+        : exhibit.video.currentTime;
+      exhibit.sound.play().catch(() => {});
+    }
     try {
       await exhibit.video.play();
     } catch (error) {
@@ -849,6 +882,7 @@ async function toggleGalleryVideo(exhibit) {
     }
   } else {
     exhibit.video.pause();
+    exhibit.sound?.pause();
   }
   updateGalleryVideoButtons();
 }
@@ -859,6 +893,11 @@ function restartGalleryVideo(exhibit = activeGalleryVideo) {
   activeGalleryVideo = exhibit;
   exhibit.video.currentTime = 0;
   exhibit.video.muted = false;
+  if (exhibit.sound) {
+    exhibit.sound.currentTime = 0;
+    exhibit.sound.muted = false;
+    exhibit.sound.play().catch(() => {});
+  }
   exhibit.video.play().catch(() => {});
   updateGalleryVideoButtons();
 }
@@ -868,6 +907,16 @@ function toggleGalleryVideoMute(exhibit = activeGalleryVideo) {
   if (!exhibit?.video) return;
   activeGalleryVideo = exhibit;
   exhibit.video.muted = !exhibit.video.muted;
+  if (exhibit.sound) {
+    exhibit.sound.muted = exhibit.video.muted;
+    if (exhibit.video.muted) exhibit.sound.pause();
+    else {
+      exhibit.sound.currentTime = exhibit.sound.duration
+        ? exhibit.video.currentTime % exhibit.sound.duration
+        : exhibit.video.currentTime;
+      exhibit.sound.play().catch(() => {});
+    }
+  }
   if (!exhibit.video.paused) exhibit.video.play().catch(() => {});
   updateGalleryVideoButtons();
 }
@@ -899,10 +948,17 @@ function updateGalleryVideoVolume() {
   galleryVideoExhibits.forEach((exhibit) => {
     if (exhibit.video.paused || exhibit.video.muted) {
       exhibit.video.volume = 0;
+      if (exhibit.sound) exhibit.sound.volume = 0;
       return;
     }
     const position = exhibit.display.getWorldPosition(new THREE.Vector3());
-    exhibit.video.volume = THREE.MathUtils.clamp(1.15 - position.distanceTo(head) / 5.5, 0.08, 1);
+    const volume = THREE.MathUtils.clamp(1.15 - position.distanceTo(head) / 5.5, 0.08, 1);
+    if (exhibit.sound) {
+      exhibit.video.volume = 0;
+      exhibit.sound.volume = volume;
+    } else {
+      exhibit.video.volume = volume;
+    }
   });
 }
 

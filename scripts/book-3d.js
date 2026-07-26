@@ -392,9 +392,13 @@ function openExperience(definition, hotspot) {
   if (hotspot.type === "audio" && hotspot.audio?.src) {
     experienceBody.innerHTML = `<div class="experience-audio"><audio controls autoplay src="${hotspot.audio.src}"></audio></div>`;
   } else if (hotspot.type === "video" && hotspot.video?.src) {
+    const companionAudio = hotspot.video.audioSrc
+      ? `<audio data-video-sound preload="auto" src="${hotspot.video.audioSrc}"></audio>`
+      : "";
     experienceBody.innerHTML = `
       <div class="experience-video">
-        <video controls autoplay playsinline src="${hotspot.video.src}"></video>
+        <video controls autoplay playsinline ${hotspot.video.audioSrc ? "muted" : ""} src="${hotspot.video.src}"></video>
+        ${companionAudio}
         <div class="experience-video-controls">
           <button type="button" data-video-action="toggle">${lang === "fr" ? "Pause" : "Pause"}</button>
           <button type="button" data-video-action="mute">${lang === "fr" ? "Couper le son" : "Mute sound"}</button>
@@ -412,25 +416,57 @@ function openExperience(definition, hotspot) {
 
 function bindBookVideoControls() {
   const player = experienceBody.querySelector("video");
+  const sound = experienceBody.querySelector("[data-video-sound]");
   const toggle = experienceBody.querySelector('[data-video-action="toggle"]');
   const mute = experienceBody.querySelector('[data-video-action="mute"]');
   if (!player || !toggle || !mute) return;
+
+  let companionMuted = false;
+  const syncSound = () => {
+    if (!sound) return;
+    const expectedTime = sound.duration
+      ? player.currentTime % sound.duration
+      : player.currentTime;
+    if (Math.abs(sound.currentTime - expectedTime) > 0.35) {
+      sound.currentTime = expectedTime;
+    }
+  };
+  const playSound = () => {
+    if (!sound || companionMuted || player.paused) return;
+    syncSound();
+    sound.play().catch(() => {});
+  };
+
+  if (sound) {
+    player.volume = 0;
+    player.addEventListener("timeupdate", syncSound);
+    player.addEventListener("play", playSound);
+    player.addEventListener("pause", () => sound.pause());
+    playSound();
+  }
 
   const update = () => {
     toggle.textContent = player.paused
       ? (lang === "fr" ? "Lire la vidéo" : "Play video")
       : (lang === "fr" ? "Pause" : "Pause");
-    mute.textContent = player.muted
+    mute.textContent = (sound ? companionMuted : player.muted)
       ? (lang === "fr" ? "Activer le son" : "Unmute sound")
       : (lang === "fr" ? "Couper le son" : "Mute sound");
   };
   toggle.addEventListener("click", () => {
-    if (player.paused) player.play();
+    if (player.paused) player.play().catch(() => {});
     else player.pause();
     update();
   });
   mute.addEventListener("click", () => {
-    player.muted = !player.muted;
+    if (sound) {
+      companionMuted = !companionMuted;
+      sound.muted = companionMuted;
+      if (companionMuted) sound.pause();
+      else playSound();
+    } else {
+      player.muted = !player.muted;
+    }
     update();
   });
   player.addEventListener("play", update);
