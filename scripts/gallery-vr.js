@@ -74,7 +74,7 @@ const COPY = {
     back: "Back to collection",
     kicker: "Immersive exhibition",
     title: "The ARTDACI Gallery",
-    instructions: "Trigger: teleport. A/X: play or pause. B/Y: restart audio. Press a thumbstick to mute.",
+    instructions: "Trigger or hand pinch: select and teleport. A/X: play or pause. B/Y: restart audio. Press a thumbstick to mute.",
     enter: "Enter VR Gallery",
     exit: "Exit VR",
     count: "Four masterpieces",
@@ -105,13 +105,15 @@ const COPY = {
     videoRestart: "Restart video",
     videoMute: "Mute video",
     videoUnmute: "Unmute video",
+    languageSwitch: "Français",
+    languageSwitchLabel: "Voir la galerie en français",
     exitSign: "EXIT GALLERY"
   },
   fr: {
     back: "Retour à la collection",
     kicker: "Exposition immersive",
     title: "La galerie ARTDACI",
-    instructions: "Gâchette : téléportation. A/X : lecture ou pause. B/Y : recommencer. Appuyez sur un joystick pour couper le son.",
+    instructions: "Gâchette ou pincement de la main : sélectionner et se téléporter. A/X : lecture ou pause. B/Y : recommencer. Appuyez sur un joystick pour couper le son.",
     enter: "Entrer dans la galerie VR",
     exit: "Quitter la VR",
     count: "Quatre chefs-d’œuvre",
@@ -142,6 +144,8 @@ const COPY = {
     videoRestart: "Recommencer la vidéo",
     videoMute: "Couper le son vidéo",
     videoUnmute: "Activer le son vidéo",
+    languageSwitch: "English",
+    languageSwitchLabel: "View the gallery in English",
     exitSign: "SORTIE DE LA GALERIE"
   }
 };
@@ -186,6 +190,12 @@ dracoLoader.setDecoderPath("vendor/draco/");
 const modelLoader = new GLTFLoader();
 modelLoader.setDRACOLoader(dracoLoader);
 const controllers = [renderer.xr.getController(0), renderer.xr.getController(1)];
+const hands = [renderer.xr.getHand(0), renderer.xr.getHand(1)];
+const handJointGeometry = new THREE.SphereGeometry(0.008, 12, 8);
+const handJointMaterials = [
+  new THREE.MeshBasicMaterial({ color: 0x8ee8ff, transparent: true, opacity: 0.82 }),
+  new THREE.MeshBasicMaterial({ color: 0xffd58e, transparent: true, opacity: 0.82 })
+];
 const teleportTargets = [];
 const exhibits = [];
 const exhibitsBySlug = new Map();
@@ -207,6 +217,7 @@ async function init() {
   applyCopy();
   buildRoom();
   addControllers();
+  addHands();
   bindUI();
 
   try {
@@ -246,6 +257,14 @@ function applyCopy() {
   document.getElementById("gallery-exit-link").href = lang === "fr" ? "index-fr.html" : "index.html";
   document.getElementById("gallery-experiences-link").textContent = text.individualExperiences;
   document.getElementById("gallery-experiences-link").href = `space.html?painting=mona-lisa&lang=${lang}`;
+  const languageSwitch = document.getElementById("gallery-language-switch");
+  const targetLang = lang === "fr" ? "en" : "fr";
+  const targetParams = new URLSearchParams(location.search);
+  targetParams.set("lang", targetLang);
+  languageSwitch.textContent = text.languageSwitch;
+  languageSwitch.setAttribute("aria-label", text.languageSwitchLabel);
+  languageSwitch.lang = targetLang;
+  languageSwitch.href = `gallery-vr.html?${targetParams.toString()}${location.hash}`;
   status.textContent = text.loading;
 }
 
@@ -1436,11 +1455,52 @@ function addControllers() {
   });
 }
 
+function addHands() {
+  hands.forEach((hand, index) => {
+    hand.userData.handIndex = index;
+    hand.addEventListener("pinchstart", () => interactFromHand(hand));
+    visitor.add(hand);
+  });
+}
+
+function updateHandVisuals() {
+  hands.forEach((hand, handIndex) => {
+    Object.values(hand.joints || {}).forEach((joint) => {
+      if (!joint.userData.artdaciJoint) {
+        const marker = new THREE.Mesh(handJointGeometry, handJointMaterials[handIndex]);
+        marker.userData.handJointMarker = true;
+        joint.add(marker);
+        joint.userData.artdaciJoint = marker;
+      }
+      const radius = joint.jointRadius || 0.008;
+      joint.userData.artdaciJoint.scale.setScalar(radius / 0.008);
+    });
+  });
+}
+
 function teleportFrom(controller) {
   rayRotation.identity().extractRotation(controller.matrixWorld);
   teleportRaycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
   teleportRaycaster.ray.direction.set(0, 0, -1).applyMatrix4(rayRotation).normalize();
   const hit = teleportRaycaster.intersectObjects(teleportTargets, false)[0];
+  activateInteractionHit(hit);
+}
+
+function interactFromHand(hand) {
+  const indexTip = hand.joints?.["index-finger-tip"];
+  const indexKnuckle = hand.joints?.["index-finger-phalanx-proximal"]
+    || hand.joints?.["index-finger-metacarpal"];
+  if (!indexTip?.visible || !indexKnuckle?.visible) return;
+  const origin = indexTip.getWorldPosition(new THREE.Vector3());
+  const direction = origin.clone()
+    .sub(indexKnuckle.getWorldPosition(new THREE.Vector3()))
+    .normalize();
+  teleportRaycaster.set(origin, direction);
+  const hit = teleportRaycaster.intersectObjects(teleportTargets, false)[0];
+  activateInteractionHit(hit);
+}
+
+function activateInteractionHit(hit) {
   if (!hit) return;
   if (hit.object.userData.videoExhibit) {
     toggleGalleryVideo(hit.object.userData.videoExhibit);
@@ -1688,6 +1748,7 @@ function resize() {
 }
 
 function render() {
+  updateHandVisuals();
   updateLocomotion(Math.min(clock.getDelta(), 0.05));
   selectNearestAudioGuide();
   updateAudioVolume();

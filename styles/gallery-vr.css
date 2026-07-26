@@ -111,6 +111,17 @@ body {
   opacity: 0.55;
 }
 
+.gallery-toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+#gallery-language-switch {
+  min-width: 88px;
+}
+
 .gallery-guide {
   left: 16px;
   bottom: 16px;

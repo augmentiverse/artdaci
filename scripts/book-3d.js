@@ -27,6 +27,77 @@ const BOOK_IMAGE_GALLERIES = {
   ]
 };
 
+const BOOK_SECTION_COPY = {
+  en: {
+    story: "STORY & CONTEXT",
+    looking: "LOOK CLOSER",
+    technique: "MATERIALS & DISCOVERIES",
+    legacy: "MEANING & LEGACY",
+    notice: "DETAILS TO REMEMBER"
+  },
+  fr: {
+    story: "HISTOIRE ET CONTEXTE",
+    looking: "REGARDER DE PLUS PRÈS",
+    technique: "MATIÈRES ET DÉCOUVERTES",
+    legacy: "SENS ET HÉRITAGE",
+    notice: "DÉTAILS À RETENIR"
+  }
+};
+
+const BOOK_FRENCH_TEXT = {
+  "mona-lisa": {
+    story: "Léonard commence ce portrait à Florence au début du XVIe siècle. Le modèle est généralement identifié comme Lisa Gherardini, épouse du marchand Francesco del Giocondo. Léonard conserva pourtant le tableau et continua probablement à le retravailler pendant plusieurs années. Cette lente élaboration transforme un portrait privé en une étude ambitieuse de la présence humaine, de la lumière et de la nature.",
+    looking: "La pose de trois quarts remplace le profil rigide encore courant dans les portraits florentins. Les mains croisées forment une base stable, tandis que le visage devient le centre calme de la composition. À l’arrière-plan, routes, eau et montagnes se dissolvent dans l’atmosphère. Le sourire paraît changer parce que ses transitions très douces sollicitent différemment la vision centrale et périphérique.",
+    technique: "Le sfumato naît de fines couches transparentes qui atténuent contours et contrastes comme une légère fumée. L’imagerie scientifique révèle aussi des modifications des doigts, du voile et du paysage : Léonard construisait l’œuvre par observation et révision. Peinte sur un panneau de peuplier devenu fragile, La Joconde est aujourd’hui protégée au Louvre dans une vitrine à température et humidité contrôlées.",
+    legacy: "La virtuosité de l’œuvre, la réputation de Léonard, le vol spectaculaire de 1911 et d’innombrables reproductions ont fait de La Joconde une icône mondiale. Elle a influencé le portrait psychologique et l’union de la figure avec le paysage, avant d’être réinterprétée par Marcel Duchamp, Andy Warhol et la culture populaire. Son pouvoir demeure pourtant dans de très petites décisions visuelles qui récompensent un regard lent."
+  },
+  "van-gogh": {
+    story: "Van Gogh peint cet autoportrait à Paris en 1887, au moment où il découvre l’impressionnisme, le néo-impressionnisme et les nouvelles théories de la couleur. Faute d’argent pour payer régulièrement des modèles, il utilise son propre visage comme laboratoire. Chaque autoportrait lui permet d’étudier la ressemblance, l’expression et la manière dont une touche visible peut traduire un état intérieur.",
+    looking: "La tête, légèrement tournée, se détache d’un fond bleu-vert parcouru de touches courtes. Les rouges et orangés de la barbe vibrent contre leurs couleurs complémentaires. Les coups de pinceau suivent le front, les pommettes, la barbe et la veste au lieu de disparaître dans un modelé académique. Le regard fixe stabilise cette surface agitée et donne au portrait sa tension psychologique.",
+    technique: "Van Gogh construit les volumes avec la direction, l’épaisseur et la couleur des touches. Les marques serrées du visage décrivent sa structure, tandis que le fond forme une atmosphère mouvante. Les contrastes rouge-vert et orange-bleu témoignent de ses recherches parisiennes. Cette méthode prépare le langage plus libre et expressif qu’il développera ensuite à Arles et à Saint-Rémy.",
+    legacy: "Les autoportraits de Van Gogh sont devenus des images majeures de l’artiste moderne : le peintre y est à la fois observateur, modèle et matière d’expérimentation. Ils ont montré aux expressionnistes que la fidélité psychologique pouvait compter autant que la ressemblance physique. Regardez surtout la relation entre les yeux immobiles et les touches mobiles : le tableau semble enregistrer l’acte même de se regarder."
+  },
+  "van-gogh-bedroom": {
+    story: "Van Gogh peint sa chambre de la Maison jaune à Arles en octobre 1888, peu avant l’arrivée de Paul Gauguin. Il rêvait d’y créer un « atelier du Midi » réunissant des artistes. Cette pièce modeste représentait pour lui un premier foyer personnel et un refuge. Dans une lettre à son frère Theo, il explique que la couleur devait suggérer le repos et « reposer l’imagination ».",
+    looking: "La chambre réelle était trapézoïdale, mais Van Gogh accentue encore ses angles. Le sol semble se relever et les meubles basculer vers le visiteur. Le lit jaune domine la droite, tandis que les chaises, la table, la fenêtre et les tableaux forment un rythme de rectangles. Les contours épais et les aplats inspirés des estampes japonaises rendent l’espace volontairement plus expressif que réaliste.",
+    technique: "Van Gogh décrivait des murs violet pâle, un sol rouge fané, des meubles jaune chrome et une couverture écarlate. Des pigments rouges sensibles à la lumière ont disparu peu à peu : les murs paraissent aujourd’hui plus bleus et le sol moins rose. Les analyses ont aussi confirmé les dégâts d’eau de la première version et révélé des fragments de journal utilisés pour maintenir la peinture qui s’écaillait.",
+    legacy: "Van Gogh réalisa trois versions authentiques : Amsterdam en 1888, Chicago en 1889 après les dégâts subis par la première, puis une réduction destinée à sa mère et à sa sœur, aujourd’hui à Paris. Les portraits accrochés au mur changent selon les versions. L’œuvre transforme une chambre vide en portrait émotionnel du foyer, de l’amitié espérée et du besoin de stabilité."
+  },
+  "vermeer-girl-with-a-pearl-earring": {
+    story: "Peinte à Delft vers 1665, l’œuvre est une tronie : une étude de caractère et de costume, non un portrait officiel destiné à identifier une personne. L’identité du modèle reste inconnue. Le turban imaginaire, la pose tournée et l’arrière-plan sombre détachent la jeune fille de la vie quotidienne et créent un instant suspendu.",
+    looking: "Le corps se tourne dans une direction tandis que la tête revient vers nous. Ce mouvement en spirale aboutit au contact du regard et aux lèvres entrouvertes. Le col clair sépare le visage du vêtement, et la perle répond aux reflets des yeux et de la bouche. Quelques accents lumineux suffisent à faire émerger la figure de l’obscurité.",
+    technique: "Vermeer emploie un outremer naturel coûteux, obtenu à partir de lapis-lazuli, pour le foulard bleu. Le fond était autrefois une surface vert sombre plus brillante, dont les pigments organiques ont pâli. L’étude scientifique de 2018 a utilisé microscope 3D, MA-XRF et imagerie infrarouge. Elle a révélé de minuscules cils et confirmé que la « perle » n’a ni contour complet ni crochet visible.",
+    legacy: "Acquise en 1881 pour seulement deux florins et trente centimes, l’œuvre entre au Mauritshuis en 1902. Sa simplicité, son silence narratif et son identité ouverte ont inspiré romans, cinéma, photographie et mode. Les théories sur une camera obscura restent possibles mais non prouvées : aucune preuve documentaire ou trace matérielle ne confirme l’emploi d’un appareil précis."
+  }
+};
+
+const BOOK_ENGLISH_TEXT = {
+  "mona-lisa": {
+    story: "Leonardo began this portrait in Florence in the early sixteenth century. The sitter is generally identified as Lisa Gherardini, wife of the merchant Francesco del Giocondo. Leonardo nevertheless kept the painting and probably refined it over several years. That slow process transformed a private likeness into an ambitious study of human presence, light, atmosphere, and the changing forms of nature.",
+    looking: "The natural three-quarter pose replaces the rigid profile common in earlier Florentine portraits. Folded hands create a stable base while the face becomes the calm centre of the design. Behind her, roads, water, and mountains dissolve into atmospheric distance. The smile seems to shift because its soft tonal transitions register differently in central and peripheral vision.",
+    technique: "Sfumato is built from extremely thin translucent layers that soften edges and contrasts like smoke. Scientific imaging also reveals changes to the fingers, veil, face, and landscape: Leonardo developed the work through repeated observation and revision. Painted on a poplar panel that has warped over time, the Mona Lisa is now protected at the Louvre in a temperature- and humidity-controlled case.",
+    legacy: "Technical brilliance, Leonardo’s reputation, the spectacular 1911 theft, and endless reproduction turned the Mona Lisa into a global icon. It shaped psychological portraiture and the integration of figure and landscape, then became material for artists including Marcel Duchamp and Andy Warhol. Its lasting power, however, lies in many quiet visual decisions that reward slow looking."
+  },
+  "van-gogh": {
+    story: "Van Gogh painted this self-portrait in Paris in 1887, while absorbing Impressionism, Neo-Impressionism, and modern colour theory. Because he could rarely afford professional models, he used his own face as a practical laboratory. Each self-portrait allowed him to test likeness, expression, complementary colour, and the ability of visible brushwork to communicate an inner state.",
+    looking: "The head turns slightly against a blue-green field of short strokes. Reds and oranges in the beard vibrate against their complementary colours. Instead of disappearing into smooth academic modelling, the brushmarks follow the forehead, cheekbones, beard, jacket, and surrounding air. The fixed gaze steadies this restless surface and gives the portrait its psychological tension.",
+    technique: "Van Gogh builds form through the direction, thickness, and colour of individual strokes. Closely packed marks describe the structure of the face while the background becomes a moving atmosphere. Red-green and orange-blue contrasts reflect his experiments in Paris. This method prepares the freer, more expressive visual language he would develop in Arles and Saint-Rémy.",
+    legacy: "Van Gogh’s self-portraits became defining images of the modern artist: painter, observer, and experimental subject at once. They showed later Expressionists that psychological truth could matter as much as physical likeness. Look especially at the relationship between the still eyes and the moving brushwork—the painting seems to preserve the act of looking at oneself."
+  },
+  "van-gogh-bedroom": {
+    story: "Van Gogh painted his room in the Yellow House at Arles in October 1888, shortly before Paul Gauguin arrived. He hoped to create a shared “Studio of the South” there. The modest bedroom represented his first home of his own and a private refuge. In a letter to Theo, he explained that its colours should suggest rest and “repose the imagination.”",
+    looking: "The real room was trapezoidal, but Van Gogh heightened its irregular angles. The floor appears to tilt upward and the furniture seems to fall toward the viewer. The yellow bed dominates the right side while chairs, table, window, and pictures create a rhythm of rectangles. Thick outlines and flat colour, inspired partly by Japanese prints, make the space expressive rather than optically correct.",
+    technique: "Van Gogh described pale violet walls, a faded red floor, chrome-yellow furniture, and a scarlet blanket. Light-sensitive red pigments gradually faded, so the walls now look bluer and the floor less pink. Technical study also confirmed water damage to the first version and found fragments of newspaper that Van Gogh attached to hold flaking paint in place.",
+    legacy: "Van Gogh made three authentic versions: Amsterdam in 1888, Chicago in 1889 after the first was damaged, and a smaller reduction for his mother and sister, now in Paris. The portraits on the wall change between versions. The painting turns an empty room into an emotional portrait of home, hoped-for friendship, and the need for stability."
+  },
+  "vermeer-girl-with-a-pearl-earring": {
+    story: "Painted in Delft around 1665, this work is a tronie—a study of character and unusual costume rather than a formal portrait intended to record one person’s identity. The sitter remains unknown. The imagined turban, turning pose, and dark background remove the girl from everyday Dutch life and create a suspended moment of encounter.",
+    looking: "Her body turns one way while her head returns toward us. This spiral movement ends in direct eye contact and parted lips. The bright collar separates the face from the jacket, while the earring echoes highlights in the eyes and mouth. A small number of precisely placed accents is enough to bring the figure out of darkness.",
+    technique: "Vermeer used costly natural ultramarine made from lapis lazuli in the blue headscarf. The background was once a glossier deep green but its organic pigments faded. The 2018 examination used 3D microscopy, MA-XRF, and infrared imaging. It revealed tiny eyelashes and confirmed that the “pearl” has neither a complete contour nor a visible hook.",
+    legacy: "Bought in 1881 for only two guilders and thirty cents, the painting entered the Mauritshuis collection in 1902. Its visual economy, narrative silence, and open identity have inspired novels, film, photography, and fashion. Camera-obscura theories remain possible but unproven: no document or physical trace confirms that Vermeer used a particular optical device."
+  }
+};
+
 const params = new URLSearchParams(location.search);
 const lang = params.get("lang") === "fr" ? "fr" : "en";
 const book = document.getElementById("book");
@@ -44,6 +115,10 @@ let currentLeaf = 0;
 let sheets = [];
 let pageDefinitions = [];
 let dragStartX = null;
+const activePointers = new Map();
+let pinchStartDistance = null;
+let pinchHandled = false;
+let suppressPageClick = false;
 
 init();
 
@@ -65,14 +140,15 @@ function applyLanguage() {
   document.querySelector(".book-toolbar p").textContent = lang === "fr" ? "Livre d’art interactif" : "Interactive art book";
   document.querySelector(".book-toolbar h1").textContent = lang === "fr" ? "Le Livre Vivant" : "The Living Book";
   document.querySelector(".book-hint").textContent = lang === "fr"
-    ? "Sélectionnez un hotspot lumineux pour ouvrir la 3D, l’audio, l’AR ou une mini-scène."
-    : "Select a glowing hotspot to open 3D, audio, AR, or a mini-scene.";
+    ? "Cliquez sur une page, balayez ou pincez pour la tourner. Sélectionnez un repère lumineux pour le contenu immersif."
+    : "Click a page, swipe, or pinch to turn it. Select a glowing hotspot for immersive content.";
   previousButton.textContent = lang === "fr" ? "← Précédent" : "← Previous";
   nextButton.textContent = lang === "fr" ? "Suivant →" : "Next →";
   closeExperienceButton.textContent = lang === "fr" ? "Retour au livre ✕" : "Return to book ✕";
 }
 
 function buildPageDefinitions(manifests) {
+  const sectionCopy = BOOK_SECTION_COPY[lang];
   const pages = [
     {
       kind: "cover",
@@ -94,13 +170,15 @@ function buildPageDefinitions(manifests) {
     const title = localizedTitle(manifest);
     const audio = getAudio(manifest);
     const videos = manifest.media?.videos || [];
+    const texts = getBookTexts(manifest);
+    const galleryImages = BOOK_IMAGE_GALLERIES[manifest.slug] || [];
     pages.push({
       kind: "artwork",
-      eyebrow: `${String(index + 1).padStart(2, "0")} · ${manifest.movement?.[0] || "Masterpiece"}`,
+      eyebrow: `${String(index + 1).padStart(2, "0")} · ${sectionCopy.story}`,
       title,
       subtitle: `${manifest.artist?.name || ""} · ${manifest.date || ""}`,
       image: manifest.media?.image || manifest.print?.imageTargetSource,
-      body: manifest.texts?.historicalContext || "",
+      body: texts.story,
       manifest,
       hotspots: [
         { label: "3D", x: 83, y: 23, type: "space" },
@@ -111,16 +189,40 @@ function buildPageDefinitions(manifests) {
     });
     pages.push({
       kind: "analysis",
-      eyebrow: lang === "fr" ? "REGARDER DE PLUS PRÈS" : "LOOK CLOSER",
+      eyebrow: sectionCopy.looking,
       title,
       image: manifest.media?.image || manifest.print?.imageTargetSource,
-      galleryImages: BOOK_IMAGE_GALLERIES[manifest.slug] || [],
-      body: manifest.texts?.artisticAnalysis || manifest.texts?.composition || "",
-      facts: (manifest.texts?.interestingFacts || []).slice(0, 3),
+      galleryImages,
+      body: texts.looking,
       manifest,
       hotspots: [
         { label: "VR", x: 82, y: 24, type: manifest.slug === "van-gogh-bedroom" ? "world" : "vr" },
-        { label: "◉", x: 82, y: 38, type: "gallery" },
+        { label: "◉", x: 82, y: 38, type: "gallery" }
+      ]
+    });
+    pages.push({
+      kind: "technique",
+      eyebrow: sectionCopy.technique,
+      title,
+      image: galleryImages[1] || manifest.media?.image || manifest.print?.imageTargetSource,
+      body: texts.technique,
+      manifest,
+      hotspots: [
+        ...(videos[0] ? [{ label: "▶", x: 82, y: 25, type: "video", video: videos[0] }] : []),
+        { label: "AR", x: 82, y: 39, type: "ar" }
+      ]
+    });
+    pages.push({
+      kind: "legacy",
+      eyebrow: sectionCopy.legacy,
+      title,
+      image: galleryImages[2] || galleryImages[0] || manifest.media?.image,
+      body: texts.legacy,
+      facts: (manifest.texts?.interestingFacts || []).slice(0, 3),
+      manifest,
+      hotspots: [
+        { label: "3D", x: 82, y: 24, type: "space" },
+        { label: "♪", x: 82, y: 38, type: "audio", audio },
         ...(videos[1] ? [{ label: "▶", x: 82, y: 52, type: "video", video: videos[1] }] : [])
       ]
     });
@@ -154,6 +256,9 @@ async function buildBook(pages) {
 function createPageSurface(definition, texture, side) {
   const page = document.createElement("section");
   page.className = `page page-${side}`;
+  page.dataset.kind = definition.kind || "";
+  if (definition.manifest?.slug) page.dataset.painting = definition.manifest.slug;
+  page.setAttribute("aria-label", definition.title || definition.eyebrow || "Book page");
   page.style.backgroundImage = `url("${texture}")`;
   (definition.hotspots || []).forEach((hotspot) => {
     const button = document.createElement("button");
@@ -169,6 +274,15 @@ function createPageSurface(definition, texture, side) {
     });
     page.appendChild(button);
   });
+  page.addEventListener("click", (event) => {
+    if (event.target.closest(".page-hotspot") || dialog.open) return;
+    if (suppressPageClick) {
+      suppressPageClick = false;
+      return;
+    }
+    if (side === "front") nextPage();
+    else previousPage();
+  });
   return page;
 }
 
@@ -181,13 +295,13 @@ async function createPageTexture(definition) {
 
   if (definition.kind === "analysis" && definition.galleryImages?.length) {
     const galleryImages = await Promise.all(definition.galleryImages.slice(0, 3).map(loadImage));
-    drawImageGallery(context, galleryImages, 130, 360, 1340, 700);
+    drawImageGallery(context, galleryImages, 130, 350, 1340, 620);
   } else if (definition.image) {
     const image = await loadImage(definition.image);
     if (definition.kind === "artwork") {
-      drawCoverImage(context, image, 120, 390, 1360, 920);
+      drawCoverImage(context, image, 120, 420, 1360, 760);
     } else {
-      drawCoverImage(context, image, 130, 360, 1340, 700);
+      drawCoverImage(context, image, 130, 350, 1340, 620);
     }
   }
 
@@ -239,26 +353,72 @@ function drawPageCopy(context, canvas, definition) {
   }
 
   if (definition.body) {
-    context.fillStyle = "#3f352c";
-    context.font = "42px Georgia";
-    const bodyY = definition.kind === "artwork" ? 1445 : definition.image ? 1190 : 1040;
-    drawWrappedText(context, definition.body, 130, bodyY, 1320, 62, definition.kind === "artwork" ? 8 : 9);
+    const bodyY = definition.kind === "artwork" ? 1280 : definition.image ? 1065 : 990;
+    const bodyBottom = definition.facts?.length ? 1650 : 1990;
+    context.fillStyle = "rgba(255, 250, 240, .66)";
+    context.fillRect(105, bodyY - 52, 1390, bodyBottom - bodyY + 78);
+    context.fillStyle = "#2e251e";
+    drawTextInBox(context, definition.body, 130, bodyY, 1340, bodyBottom - bodyY, {
+      fontFamily: "Georgia",
+      maxFontSize: 42,
+      minFontSize: 31,
+      lineHeightRatio: 1.48
+    });
   }
 
   if (definition.facts?.length) {
     context.fillStyle = "#7d2f3e";
-    context.font = "700 38px Arial";
-    context.fillText(lang === "fr" ? "À RETENIR" : "THINGS TO NOTICE", 130, 1760);
+    context.font = "700 34px Arial";
+    context.fillText(BOOK_SECTION_COPY[lang].notice, 130, 1720);
     context.fillStyle = "#3f352c";
-    context.font = "36px Georgia";
+    context.font = "32px Georgia";
     definition.facts.forEach((fact, index) => {
-      drawWrappedText(context, `• ${fact}`, 145, 1835 + index * 112, 1260, 48, 2);
+      drawWrappedText(context, `• ${fact}`, 145, 1780 + index * 92, 1260, 42, 2);
     });
   }
 
   context.fillStyle = dark ? "#d6bd92" : "#765f4a";
   context.font = "30px Arial";
   context.fillText("ARTDACI · MASTERPIECES ALIVE", 120, canvas.height - 100);
+}
+
+function drawTextInBox(context, message, x, y, width, height, options = {}) {
+  const family = options.fontFamily || "Georgia";
+  const maxSize = options.maxFontSize || 42;
+  const minSize = options.minFontSize || 30;
+  const ratio = options.lineHeightRatio || 1.45;
+  for (let size = maxSize; size >= minSize; size -= 1) {
+    context.font = `${size}px ${family}`;
+    const lines = wrapTextLines(context, message, width);
+    const lineHeight = size * ratio;
+    if (lines.length * lineHeight <= height) {
+      lines.forEach((line, index) => context.fillText(line, x, y + index * lineHeight));
+      return;
+    }
+  }
+  context.font = `${minSize}px ${family}`;
+  const lineHeight = minSize * ratio;
+  const maxLines = Math.max(1, Math.floor(height / lineHeight));
+  const lines = wrapTextLines(context, message, width).slice(0, maxLines);
+  if (lines.length === maxLines) lines[maxLines - 1] = `${lines[maxLines - 1].replace(/[.,;:]?$/, "")}…`;
+  lines.forEach((line, index) => context.fillText(line, x, y + index * lineHeight));
+}
+
+function wrapTextLines(context, message, maxWidth) {
+  const words = String(message).split(/\s+/);
+  const lines = [];
+  let line = "";
+  words.forEach((word) => {
+    const testLine = line ? `${line} ${word}` : word;
+    if (line && context.measureText(testLine).width > maxWidth) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = testLine;
+    }
+  });
+  if (line) lines.push(line);
+  return lines;
 }
 
 function drawCoverImage(context, image, x, y, width, height) {
@@ -327,6 +487,24 @@ function getAudio(manifest) {
   return list.find((item) => item.lang === lang) || list.find((item) => item.lang === "en") || list[0];
 }
 
+function getBookTexts(manifest) {
+  if (lang === "fr" && BOOK_FRENCH_TEXT[manifest.slug]) return BOOK_FRENCH_TEXT[manifest.slug];
+  if (BOOK_ENGLISH_TEXT[manifest.slug]) return BOOK_ENGLISH_TEXT[manifest.slug];
+  const texts = manifest.texts || {};
+  const techniqueBySlug = {
+    "mona-lisa": [texts.sfumatoStudy, texts.scientificAnalysis, texts.conservationHistory],
+    "van-gogh": [texts.palette, texts.perspectiveTechnique],
+    "van-gogh-bedroom": [texts.palette, texts.perspectiveTechnique],
+    "vermeer-girl-with-a-pearl-earring": [texts.palette, texts.perspectiveTechnique]
+  };
+  return {
+    story: [texts.historicalContext, texts.artistBiography].filter(Boolean).join(" "),
+    looking: [texts.artisticAnalysis, texts.composition].filter(Boolean).join(" "),
+    technique: (techniqueBySlug[manifest.slug] || [texts.palette, texts.perspectiveTechnique]).filter(Boolean).join(" "),
+    legacy: [texts.culturalSignificance, texts.influence, texts.curatorInsight].filter(Boolean).join(" ")
+  };
+}
+
 function bindControls() {
   previousButton.addEventListener("click", previousPage);
   nextButton.addEventListener("click", nextPage);
@@ -340,14 +518,65 @@ function bindControls() {
     if (event.key === "ArrowRight") nextPage();
     if (event.key === "ArrowLeft") previousPage();
   });
-  book.addEventListener("pointerdown", (event) => { dragStartX = event.clientX; });
+  book.addEventListener("pointerdown", (event) => {
+    dragStartX = event.clientX;
+    activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    if (activePointers.size === 2) {
+      pinchStartDistance = getPointerDistance();
+      pinchHandled = false;
+    }
+  });
+  book.addEventListener("pointermove", (event) => {
+    if (!activePointers.has(event.pointerId)) return;
+    activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    if (activePointers.size !== 2 || pinchHandled || pinchStartDistance === null) return;
+    const change = getPointerDistance() - pinchStartDistance;
+    if (change < -70) {
+      pinchHandled = true;
+      markPageClickSuppressed();
+      nextPage();
+    } else if (change > 70) {
+      pinchHandled = true;
+      markPageClickSuppressed();
+      previousPage();
+    }
+  });
   book.addEventListener("pointerup", (event) => {
+    const wasPinching = pinchStartDistance !== null;
+    activePointers.delete(event.pointerId);
+    if (activePointers.size < 2) pinchStartDistance = null;
+    if (wasPinching) {
+      dragStartX = null;
+      return;
+    }
     if (dragStartX === null) return;
     const delta = event.clientX - dragStartX;
     dragStartX = null;
-    if (delta < -55) nextPage();
-    if (delta > 55) previousPage();
+    if (delta < -55) {
+      markPageClickSuppressed();
+      nextPage();
+    }
+    if (delta > 55) {
+      markPageClickSuppressed();
+      previousPage();
+    }
   });
+  book.addEventListener("pointercancel", (event) => {
+    activePointers.delete(event.pointerId);
+    if (activePointers.size < 2) pinchStartDistance = null;
+    dragStartX = null;
+  });
+}
+
+function getPointerDistance() {
+  const points = [...activePointers.values()];
+  if (points.length < 2) return 0;
+  return Math.hypot(points[0].x - points[1].x, points[0].y - points[1].y);
+}
+
+function markPageClickSuppressed() {
+  suppressPageClick = true;
+  setTimeout(() => { suppressPageClick = false; }, 400);
 }
 
 function nextPage() {
