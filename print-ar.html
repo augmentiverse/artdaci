@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ARTDACI — الصفحة المطبوعة</title>
+    <link rel="stylesheet" href="styles/site.css" />
+    <style>
+      body { direction: rtl; font-family: Tahoma, "Segoe UI", Arial, sans-serif; }
+      .arabic-print { text-align: right; }
+      .arabic-print .catalogue-meta div,
+      .arabic-print .catalogue-grid,
+      .arabic-print .close-look-list { direction: rtl; }
+      .print-toolbar { position: sticky; top: 0; z-index: 5; display: flex; gap: .6rem; justify-content: center; padding: .7rem; background: rgba(250,246,238,.96); }
+      @media print { .print-toolbar { display: none; } }
+    </style>
+  </head>
+  <body class="target-body">
+    <nav class="print-toolbar" aria-label="أدوات الصفحة المطبوعة">
+      <button class="button primary" type="button" onclick="window.print()">طباعة الصفحة</button>
+      <a class="button" href="index-ar.html">العودة إلى الفهرس</a>
+    </nav>
+    <main id="arabic-print" class="catalogue-spread stacked-spread arabic-print" aria-live="polite"></main>
+    <script src="scripts/print-ar.js?v=1"></script>
+  </body>
+</html>

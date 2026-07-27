@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#171411" />
     <title>DACIART — VR Gallery</title>
-    <link rel="stylesheet" href="styles/gallery-vr.css?v=4" />
+    <link rel="stylesheet" href="styles/gallery-vr.css?v=5" />
     <script type="importmap">
       {
         "imports": {
@@ -58,8 +58,22 @@
       </aside>
 
       <div id="gallery-stage" aria-label="Virtual gallery containing four paintings"></div>
+      <details id="virtual-guide" class="virtual-guide">
+        <summary id="virtual-guide-title">Virtual guide</summary>
+        <div class="virtual-guide-body">
+          <p id="virtual-guide-intro"></p>
+          <label id="virtual-guide-label" for="virtual-guide-question"></label>
+          <textarea id="virtual-guide-question" rows="3"></textarea>
+          <div id="virtual-guide-suggestions" class="virtual-guide-suggestions"></div>
+          <div class="virtual-guide-actions">
+            <a id="virtual-guide-chatgpt" class="gallery-button primary" target="_blank" rel="noopener noreferrer">ChatGPT</a>
+            <a id="virtual-guide-gemini" class="gallery-button" href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer">Gemini</a>
+          </div>
+          <small id="virtual-guide-note"></small>
+        </div>
+      </details>
     </main>
 
-  <script type="module" src="scripts/gallery-vr.js?v=47"></script>
+  <script type="module" src="scripts/gallery-vr.js?v=48"></script>
   </body>
 </html>

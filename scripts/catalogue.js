@@ -11,6 +11,13 @@ const PRINT_PAGES = {
     "van-gogh-bedroom": "print-van-gogh-bedroom-fr.html",
     "vermeer-girl-with-a-pearl-earring": "print-vermeer-girl-with-a-pearl-earring-fr.html"
   }
+  ,
+  ar: {
+    "mona-lisa": "print-ar.html?painting=mona-lisa",
+    "van-gogh": "print-ar.html?painting=van-gogh",
+    "van-gogh-bedroom": "print-ar.html?painting=van-gogh-bedroom",
+    "vermeer-girl-with-a-pearl-earring": "print-ar.html?painting=vermeer-girl-with-a-pearl-earring"
+  }
 };
 
 const UI = {

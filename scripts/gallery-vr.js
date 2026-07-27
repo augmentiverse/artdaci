@@ -352,6 +352,7 @@ init();
 
 async function init() {
   applyCopy();
+  setupVirtualGuide();
   buildRoom();
   addControllers();
   addHands();
@@ -372,6 +373,82 @@ async function init() {
   }
 
   renderer.setAnimationLoop(render);
+}
+
+function setupVirtualGuide() {
+  const guideCopy = {
+    en: {
+      title: "Ask the virtual guide",
+      intro: "Choose a question or write your own. It will open in the AI assistant you select.",
+      label: "Your question about the gallery",
+      placeholder: "What would you like to understand?",
+      note: "The assistant opens in a new tab and may require you to sign in.",
+      questions: [
+        "Why is the Mona Lisa's smile so difficult to read?",
+        "How did Van Gogh use colour in The Bedroom?",
+        "Compare Vermeer and Leonardo's use of light."
+      ]
+    },
+    fr: {
+      title: "Interroger le guide virtuel",
+      intro: "Choisissez une question ou écrivez la vôtre. Elle s’ouvrira dans l’assistant IA sélectionné.",
+      label: "Votre question sur la galerie",
+      placeholder: "Que souhaitez-vous comprendre ?",
+      note: "L’assistant s’ouvre dans un nouvel onglet et peut demander une connexion.",
+      questions: [
+        "Pourquoi le sourire de la Joconde est-il si difficile à interpréter ?",
+        "Comment Van Gogh utilise-t-il la couleur dans La Chambre ?",
+        "Compare la lumière chez Vermeer et Léonard de Vinci."
+      ]
+    },
+    ar: {
+      title: "اسأل المرشد الافتراضي",
+      intro: "اختر سؤالاً أو اكتب سؤالك، ثم افتحه في مساعد الذكاء الاصطناعي الذي تفضله.",
+      label: "سؤالك عن المعرض",
+      placeholder: "ما الذي تريد فهمه؟",
+      note: "يفتح المساعد في علامة تبويب جديدة وقد يطلب تسجيل الدخول.",
+      questions: [
+        "لماذا يصعب تفسير ابتسامة الموناليزا؟",
+        "كيف استخدم فان غوخ اللون في غرفة النوم؟",
+        "قارن بين استخدام الضوء عند فيرمير وليوناردو دافنشي."
+      ]
+    }
+  }[lang];
+  const title = document.getElementById("virtual-guide-title");
+  const intro = document.getElementById("virtual-guide-intro");
+  const label = document.getElementById("virtual-guide-label");
+  const question = document.getElementById("virtual-guide-question");
+  const suggestions = document.getElementById("virtual-guide-suggestions");
+  const chatgpt = document.getElementById("virtual-guide-chatgpt");
+  const gemini = document.getElementById("virtual-guide-gemini");
+  const note = document.getElementById("virtual-guide-note");
+  title.textContent = guideCopy.title;
+  intro.textContent = guideCopy.intro;
+  label.textContent = guideCopy.label;
+  question.placeholder = guideCopy.placeholder;
+  note.textContent = guideCopy.note;
+  chatgpt.textContent = lang === "ar" ? "اسأل ChatGPT" : lang === "fr" ? "Demander à ChatGPT" : "Ask ChatGPT";
+  gemini.textContent = lang === "ar" ? "اسأل Gemini" : lang === "fr" ? "Demander à Gemini" : "Ask Gemini";
+
+  const updateLinks = () => {
+    const prompt = question.value.trim() || guideCopy.questions[0];
+    const contextualPrompt = `${prompt}\n\nContext: ARTDACI virtual art gallery featuring the Mona Lisa, Van Gogh Self-Portrait, The Bedroom, and Girl with a Pearl Earring. Reply in ${lang === "ar" ? "Arabic" : lang === "fr" ? "French" : "English"}.`;
+    chatgpt.href = `https://chatgpt.com/?q=${encodeURIComponent(contextualPrompt)}`;
+    gemini.href = `https://gemini.google.com/app?q=${encodeURIComponent(contextualPrompt)}`;
+  };
+
+  guideCopy.questions.forEach((suggestion) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = suggestion;
+    button.addEventListener("click", () => {
+      question.value = suggestion;
+      updateLinks();
+    });
+    suggestions.appendChild(button);
+  });
+  question.addEventListener("input", updateLinks);
+  updateLinks();
 }
 
 function applyCopy() {
@@ -907,8 +984,8 @@ function addFastTravelStations() {
     const [x, , z] = station.position;
     const compactTop = 3.62;
     createWallSign(text.fastTravel, [x, compactTop, z], station.rotationY, {
-      width: 2.35,
-      height: 0.34,
+      width: 2.7,
+      height: 0.4,
       accent: true,
       compact: true
     });
@@ -916,8 +993,8 @@ function addFastTravelStations() {
       const columnOffset = index % 2 === 0 ? -0.78 : 0.78;
       const rowY = 3.16 - Math.floor(index / 2) * 0.42;
       createWallSign(room.label, [x, rowY, z + columnOffset], station.rotationY, {
-        width: 1.48,
-        height: 0.3,
+        width: 1.78,
+        height: 0.36,
         destination: room.destination,
         visitorYaw: room.visitorYaw,
         compact: true
@@ -1323,12 +1400,14 @@ async function addCinemaAudienceModels(cinema) {
     {
       src: "assets/paintings/living-paintings/monalisa_out-of-frame_c.glb",
       name: "cinema-audience-mona-lisa",
-      x: -1.35
+      x: -4.25,
+      rotationY: -Math.PI / 2
     },
     {
       src: "assets/paintings/living-paintings/vermeer_girl.glb",
       name: "cinema-audience-vermeer",
-      x: 1.35
+      x: 4.25,
+      rotationY: Math.PI / 2
     }
   ];
 
@@ -1336,7 +1415,7 @@ async function addCinemaAudienceModels(cinema) {
     const gltf = await modelLoader.loadAsync(entry.src);
     const model = gltf.scene;
     model.name = entry.name;
-    model.rotation.y = Math.PI;
+    model.rotation.y = entry.rotationY;
     model.updateMatrixWorld(true);
     let box = new THREE.Box3().setFromObject(model);
     const sourceHeight = box.getSize(new THREE.Vector3()).y;
@@ -1344,7 +1423,7 @@ async function addCinemaAudienceModels(cinema) {
     model.updateMatrixWorld(true);
     box = new THREE.Box3().setFromObject(model);
     const center = box.getCenter(new THREE.Vector3());
-    model.position.set(entry.x - center.x, -box.min.y, 30.35 - center.z);
+    model.position.set(entry.x - center.x, -box.min.y, 35.15 - center.z);
     model.traverse((node) => {
       if (!node.isMesh) return;
       node.castShadow = true;
