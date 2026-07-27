@@ -92,6 +92,20 @@ const AR_TITLES = {
   "vermeer-girl-with-a-pearl-earring": "الفتاة ذات القرط اللؤلؤي"
 };
 
+const AR_SUMMARIES = {
+  "mona-lisa": "بورتريه يجمع بين السفوماتو والمنظور الجوي وتعبير يتغير مع النظرة. تكشف اليدان والمنظر الطبيعي والابتسامة عن بحث ليوناردو الطويل في الضوء والحضور الإنساني.",
+  "van-gogh": "يبني فان غوخ وجهه بضربات قصيرة وألوان متكاملة. يمنح التباين بين اللحية البرتقالية والخلفية الزرقاء الخضراء الصورة طاقة نفسية قوية.",
+  "van-gogh-bedroom": "حوّل فان غوخ غرفته في البيت الأصفر إلى مساحة عاطفية. تجعل الزوايا المائلة والألوان المسطحة والأثاث القوي المكان أكثر تعبيراً من الواقع.",
+  "vermeer-girl-with-a-pearl-earring": "هذه اللوحة دراسة لشخصية وليست بورتريهاً رسمياً. يخلق الضوء الناعم والأزرق الثمين والقرط اللامع لحظة لقاء مباشرة مع المشاهد."
+};
+
+const AR_METADATA = {
+  "mona-lisa": { artist: "ليوناردو دافنشي", date: "نحو 1503–1519", location: "متحف اللوفر، باريس" },
+  "van-gogh": { artist: "فنسنت فان غوخ", date: "1887", location: "متحف فان غوخ، أمستردام" },
+  "van-gogh-bedroom": { artist: "فنسنت فان غوخ", date: "أكتوبر 1888", location: "متحف فان غوخ، أمستردام" },
+  "vermeer-girl-with-a-pearl-earring": { artist: "يوهانس فيرمير", date: "نحو 1665", location: "موريتشهاوس، لاهاي" }
+};
+
 const app = document.getElementById("catalogue-app");
 
 if (app) initCatalogue(app);
@@ -217,6 +231,13 @@ function renderCard(manifest, lang, text) {
   const printUrl = PRINT_PAGES[lang]?.[slug] || PRINT_PAGES.en[slug] || "index.html";
   const audioOverview = getLocalizedAudioOverview(manifest, lang);
   const location = [manifest.currentLocation?.museum, manifest.currentLocation?.city].filter(Boolean).join(", ");
+  const summary = lang === "ar"
+    ? AR_SUMMARIES[slug] || ""
+    : manifest.texts?.artisticAnalysis || manifest.texts?.historicalContext || "";
+  const arMeta = AR_METADATA[slug] || {};
+  const artist = lang === "ar" ? arMeta.artist || manifest.artist?.name || "" : manifest.artist?.name || "";
+  const date = lang === "ar" ? arMeta.date || manifest.date || "" : manifest.date || "";
+  const displayLocation = lang === "ar" ? arMeta.location || location : location;
 
   return `
     <article class="artwork-card">
@@ -224,16 +245,16 @@ function renderCard(manifest, lang, text) {
         <img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy" />
       </a>
       <div class="artwork-content">
-        <p class="eyebrow">Spread ${String(manifest.print?.spreadNumber || manifest.bookOrder).padStart(3, "0")}</p>
+        <p class="eyebrow">${lang === "ar" ? "القسم" : "Spread"} ${String(manifest.print?.spreadNumber || manifest.bookOrder).padStart(3, "0")}</p>
         <h3>${escapeHtml(title)}</h3>
-        <p class="card-meta">${escapeHtml(manifest.artist?.name || "")}, ${escapeHtml(manifest.date || "")}</p>
-        <p>${escapeHtml(shorten(manifest.texts?.artisticAnalysis || manifest.texts?.historicalContext || "", 210))}</p>
+        <p class="card-meta">${escapeHtml(artist)}, ${escapeHtml(date)}</p>
+        <p>${escapeHtml(shorten(summary, 210))}</p>
         <dl class="mini-facts">
           <div><dt>${text.dimensions}</dt><dd>${manifest.dimensions?.heightCm || "?"} x ${manifest.dimensions?.widthCm || "?"} cm</dd></div>
-          <div><dt>${text.location}</dt><dd>${escapeHtml(location || movement)}</dd></div>
+          <div><dt>${text.location}</dt><dd>${escapeHtml(displayLocation || movement)}</dd></div>
         </dl>
         <div class="tag-strip">
-          ${(manifest.education?.vocabulary || []).slice(0, 4).map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
+          ${lang === "ar" ? "" : (manifest.education?.vocabulary || []).slice(0, 4).map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
         </div>
         <div class="card-actions">
           <a class="button primary" href="${printUrl}">${text.print}</a>
@@ -249,7 +270,7 @@ function renderCard(manifest, lang, text) {
 function getLocalizedAudioOverview(manifest, lang) {
   const overviews = manifest.media?.audioOverviews || manifest.media?.audioOverview || [];
   const list = Array.isArray(overviews) ? overviews : [overviews];
-  const mediaLang = lang === "ar" ? "fr" : lang;
+  const mediaLang = lang;
   return list.find((item) => item.lang === mediaLang) || list.find((item) => item.lang === "fr") || list.find((item) => item.lang === "en") || list[0] || null;
 }
 

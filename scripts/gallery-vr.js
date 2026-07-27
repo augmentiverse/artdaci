@@ -23,13 +23,13 @@ const GALLERY_MODEL_OVERRIDES = {
 const FURNITURE_MODEL_EXHIBITS = [
   {
     id: "vermeer-girl",
-    title: { en: "Girl with a Pearl Earring", fr: "La Jeune Fille à la perle" },
+    title: { en: "Girl with a Pearl Earring", fr: "La Jeune Fille à la perle", ar: "الفتاة ذات القرط اللؤلؤي" },
     src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring.glb",
     position: [-2.3, 7.25]
   },
   {
     id: "vermeer-girl-rig",
-    title: { en: "Girl with a Pearl Earring — Rigged", fr: "La Jeune Fille à la perle — animée" },
+    title: { en: "Girl with a Pearl Earring — Rigged", fr: "La Jeune Fille à la perle — animée", ar: "الفتاة ذات القرط اللؤلؤي — متحركة" },
     src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring-rig.glb",
     position: [2.3, 7.25]
   }
@@ -42,37 +42,38 @@ const LEONARDO_ENRICHED_STUDIO_URL = "https://marble.worldlabs.ai/project/c7853f
 const CINEMA_ROOM_X = 14;
 const CINEMA_VIDEO_LIBRARY = [
   {
-    title: { en: "Leonardo Painting the Mona Lisa", fr: "Léonard peignant La Joconde" },
+    title: { en: "Leonardo Painting the Mona Lisa", fr: "Léonard peignant La Joconde", ar: "ليوناردو يرسم الموناليزا" },
     src: "assets/paintings/mona-lisa/audio-video/davinci_painting_monalisa.mp4"
   },
   {
-    title: { en: "Mona Lisa Reimagined", fr: "La Joconde réimaginée" },
+    title: { en: "Mona Lisa Reimagined", fr: "La Joconde réimaginée", ar: "الموناليزا معاد تخيلها" },
     src: "assets/paintings/mona-lisa/audio-video/mona-lisa_video.mp4",
     audioSrc: "assets/paintings/mona-lisa/audio-video/Centuries_Behind_Glass.mp3",
-    audioSrcFr: "assets/paintings/mona-lisa/audio-video/La_Joconde_s_évade.mp3"
+    audioSrcFr: "assets/paintings/mona-lisa/audio-video/La_Joconde_s_évade.mp3",
+    audioSrcAr: "assets/paintings/mona-lisa/audio-video/رقصة_خلف_الإطار.mp3"
   },
   {
-    title: { en: "Mona Lisa — Alternate Scene", fr: "La Joconde — scène alternative" },
+    title: { en: "Mona Lisa — Alternate Scene", fr: "La Joconde — scène alternative", ar: "الموناليزا — مشهد بديل" },
     src: "assets/paintings/mona-lisa/audio-video/mona-lisa_video-1.mp4"
   },
   {
-    title: { en: "Beyond the Frame II", fr: "Au-delà du cadre II" },
+    title: { en: "Beyond the Frame II", fr: "Au-delà du cadre II", ar: "خارج الإطار ٢" },
     src: "assets/paintings/mona-lisa/audio-video/monalisa-out-of-frame-2.mp4"
   },
   {
-    title: { en: "Beyond the Frame III", fr: "Au-delà du cadre III" },
+    title: { en: "Beyond the Frame III", fr: "Au-delà du cadre III", ar: "خارج الإطار ٣" },
     src: "assets/paintings/mona-lisa/audio-video/monalisa-out-of-frame-3.mp4"
   }
 ];
 
 const REIMAGINED_ARTWORKS = [
-  { src: "assets/gallery/reimagined/mona-lisa_out.png", title: "Mona Lisa — Beyond the frame" },
-  { src: "assets/gallery/reimagined/Monalisa-Davinci.png", title: "Mona Lisa and Leonardo" },
-  { src: "assets/gallery/reimagined/Monalisa-louvre-1.png", title: "Mona Lisa at the Louvre" },
-  { src: "assets/gallery/reimagined/the-bedroom.avif", title: "The Bedroom — Reimagined" },
-  { src: "assets/gallery/reimagined/van-gogh_in_bedroom-standing.png", title: "Van Gogh in The Bedroom" },
-  { src: "assets/gallery/reimagined/vermeer_girl-earring-p.png", title: "Girl with a Pearl Earring — Portrait" },
-  { src: "assets/gallery/reimagined/vermeer_Girl-with-a-Pearl-Earring_sitting.png", title: "Girl with a Pearl Earring — Seated" }
+  { src: "assets/gallery/reimagined/mona-lisa_out.png", title: "Mona Lisa — Beyond the frame", titleAr: "الموناليزا — خارج الإطار" },
+  { src: "assets/gallery/reimagined/Monalisa-Davinci.png", title: "Mona Lisa and Leonardo", titleAr: "الموناليزا وليوناردو" },
+  { src: "assets/gallery/reimagined/Monalisa-louvre-1.png", title: "Mona Lisa at the Louvre", titleAr: "الموناليزا في اللوفر" },
+  { src: "assets/gallery/reimagined/the-bedroom.avif", title: "The Bedroom — Reimagined", titleAr: "غرفة النوم — معاد تخيلها" },
+  { src: "assets/gallery/reimagined/van-gogh_in_bedroom-standing.png", title: "Van Gogh in The Bedroom", titleAr: "فان غوخ في غرفة النوم" },
+  { src: "assets/gallery/reimagined/vermeer_girl-earring-p.png", title: "Girl with a Pearl Earring — Portrait", titleAr: "الفتاة ذات القرط اللؤلؤي — بورتريه" },
+  { src: "assets/gallery/reimagined/vermeer_Girl-with-a-Pearl-Earring_sitting.png", title: "Girl with a Pearl Earring — Seated", titleAr: "الفتاة ذات القرط اللؤلؤي — جالسة" }
 ];
 
 const params = new URLSearchParams(location.search);
@@ -101,6 +102,12 @@ const PAINTING_INFO = {
     "van-gogh": "Van Gogh peint cet autoportrait à Paris en 1887. Les touches courtes et les couleurs complémentaires transforment son visage en une étude intense de l’identité artistique.",
     "van-gogh-bedroom": "Van Gogh représente sa chambre de la Maison jaune à Arles comme un lieu de repos. La perspective inclinée, les contours marqués et la couleur expressive rendent cet espace très personnel.",
     "vermeer-girl-with-a-pearl-earring": "Cette œuvre est une tronie, une étude de caractère plutôt qu’un portrait officiel. Vermeer associe outremer, lumière douce et quelques reflets pour créer une présence inoubliable."
+  },
+  ar: {
+    "mona-lisa": "استخدم ليوناردو طبقات رقيقة من السفوماتو لتليين الحواف ومنح الجالسة حضوراً حياً. يتغير تعبيرها والمنظر الخيالي كلما أطلنا النظر.",
+    "van-gogh": "رسم فان غوخ هذا البورتريه الذاتي في باريس سنة 1887. تحول ضربات الفرشاة القصيرة والألوان المتكاملة الوجه إلى دراسة مكثفة لهوية الفنان.",
+    "van-gogh-bedroom": "رسم فان غوخ غرفته في البيت الأصفر بآرل كمكان للراحة. تجعل الزوايا المائلة والخطوط القوية والألوان التعبيرية الغرفة شخصية وعاطفية.",
+    "vermeer-girl-with-a-pearl-earring": "هذه اللوحة دراسة لشخصية وليست بورتريهاً رسمياً. جمع فيرمير بين الأزرق الثمين والضوء الناعم واللمعات الدقيقة ليخلق حضوراً لا يُنسى."
   }
 };
 const COPY = {
@@ -207,7 +214,11 @@ const COPY = {
     cinemaPlayPause: "Lecture / Pause",
     cinemaSound: "Son activé / coupé",
     languageSwitch: "English",
-    languageSwitchLabel: "View the gallery in English",
+    languageSwitchLabel: "عرض النسخة الإنجليزية من المعرض",
+    audioControlsLabel: "أدوات التحكم في الدليل الصوتي",
+    videoControlsLabel: "أدوات التحكم في الفيديو",
+    exitLinksLabel: "روابط الانتقال والخروج من المعرض",
+    stageLabel: "معرض افتراضي يضم أربع روائع فنية",
     exitSign: "SORTIE DE LA GALERIE"
   },
   ar: {
@@ -260,7 +271,11 @@ const COPY = {
     cinemaPlayPause: "تشغيل / إيقاف",
     cinemaSound: "تشغيل / كتم الصوت",
     languageSwitch: "English",
-    languageSwitchLabel: "View the gallery in English",
+    languageSwitchLabel: "عرض النسخة الإنجليزية من المعرض",
+    audioControlsLabel: "أدوات التحكم في الدليل الصوتي",
+    videoControlsLabel: "أدوات التحكم في الفيديو",
+    exitLinksLabel: "روابط الانتقال والخروج من المعرض",
+    stageLabel: "معرض افتراضي يضم أربع روائع فنية",
     exitSign: "الخروج من المعرض"
   }
 };
@@ -381,6 +396,12 @@ function applyCopy() {
   videoBackButton.textContent = text.cinemaBack;
   videoForwardButton.textContent = text.cinemaForward;
   videoSelect.setAttribute("aria-label", text.cinemaLibrary);
+  if (lang === "ar") {
+    document.querySelector(".gallery-audio-controls")?.setAttribute("aria-label", text.audioControlsLabel);
+    document.querySelector(".gallery-video-controls")?.setAttribute("aria-label", text.videoControlsLabel);
+    document.querySelector(".gallery-exit-links")?.setAttribute("aria-label", text.exitLinksLabel);
+    stage.setAttribute("aria-label", text.stageLabel);
+  }
   document.getElementById("gallery-exit-link").textContent = text.exitGallery;
   document.getElementById("gallery-exit-link").href = lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html";
   document.getElementById("gallery-bedroom-world-link").textContent = text.bedroomVrWorld;
@@ -883,18 +904,20 @@ function addFastTravelStations() {
   ];
 
   stations.forEach((station) => {
-    const [x, y, z] = station.position;
-    const compactTop = 3.7;
+    const [x, , z] = station.position;
+    const compactTop = 3.62;
     createWallSign(text.fastTravel, [x, compactTop, z], station.rotationY, {
-      width: 1.2,
-      height: 0.22,
+      width: 2.35,
+      height: 0.34,
       accent: true,
       compact: true
     });
     rooms.filter((room) => room.id !== station.room).forEach((room, index) => {
-      createWallSign(room.label, [x, compactTop - 0.27 - index * 0.21, z], station.rotationY, {
-        width: 1.2,
-        height: 0.19,
+      const columnOffset = index % 2 === 0 ? -0.78 : 0.78;
+      const rowY = 3.16 - Math.floor(index / 2) * 0.42;
+      createWallSign(room.label, [x, rowY, z + columnOffset], station.rotationY, {
+        width: 1.48,
+        height: 0.3,
         destination: room.destination,
         visitorYaw: room.visitorYaw,
         compact: true
@@ -1007,12 +1030,13 @@ async function buildReimaginedExhibition() {
     image.position.z = 0.056;
     artwork.add(image);
 
-    const title = makeLabel(item.title);
+    const itemTitle = lang === "ar" ? item.titleAr || item.title : item.title;
+    const title = makeLabel(itemTitle);
     title.position.set(0, -height / 2 - 0.22, 0.07);
     title.scale.set(Math.min(2.15, width + 0.62), 0.9, 1);
     artwork.add(title);
     scene.add(artwork);
-    scene.add(createReimaginedHotspot(item.title, placement, artwork));
+    scene.add(createReimaginedHotspot(itemTitle, placement, artwork));
   }));
 }
 
@@ -1191,6 +1215,9 @@ function buildReimaginedVideoExhibits() {
   addCinemaSofaModel(cinema).catch((error) => {
     console.warn("The cinema sofa model could not be loaded.", error);
   });
+  addCinemaAudienceModels(cinema).catch((error) => {
+    console.warn("The cinema audience models could not be loaded.", error);
+  });
   scene.add(cinema);
   setCinemaVideo(exhibit, 0, false);
   updateGalleryVideoButtons();
@@ -1266,7 +1293,7 @@ async function addCinemaSofaModel(cinema) {
   });
 
   // Face the seating toward the screen on the opposite wall.
-  sofa.rotation.y = Math.PI;
+  sofa.rotation.y = Math.PI * 1.5;
   sofa.updateMatrixWorld(true);
   let box = new THREE.Box3().setFromObject(sofa);
   let size = box.getSize(new THREE.Vector3());
@@ -1289,6 +1316,44 @@ async function addCinemaSofaModel(cinema) {
   sofaLight.position.set(0, 3.5, 31.4);
   sofaLight.target = sofa;
   cinema.add(sofaLight, sofaLight.target);
+}
+
+async function addCinemaAudienceModels(cinema) {
+  const audience = [
+    {
+      src: "assets/paintings/living-paintings/monalisa_out-of-frame_c.glb",
+      name: "cinema-audience-mona-lisa",
+      x: -1.35
+    },
+    {
+      src: "assets/paintings/living-paintings/vermeer_girl.glb",
+      name: "cinema-audience-vermeer",
+      x: 1.35
+    }
+  ];
+
+  const models = await Promise.all(audience.map(async (entry) => {
+    const gltf = await modelLoader.loadAsync(entry.src);
+    const model = gltf.scene;
+    model.name = entry.name;
+    model.rotation.y = Math.PI;
+    model.updateMatrixWorld(true);
+    let box = new THREE.Box3().setFromObject(model);
+    const sourceHeight = box.getSize(new THREE.Vector3()).y;
+    model.scale.setScalar(1.55 / Math.max(sourceHeight, 0.001));
+    model.updateMatrixWorld(true);
+    box = new THREE.Box3().setFromObject(model);
+    const center = box.getCenter(new THREE.Vector3());
+    model.position.set(entry.x - center.x, -box.min.y, 30.35 - center.z);
+    model.traverse((node) => {
+      if (!node.isMesh) return;
+      node.castShadow = true;
+      node.receiveShadow = true;
+    });
+    return model;
+  }));
+
+  models.forEach((model) => cinema.add(model));
 }
 
 function addCinemaViewingSpot(cinema) {
@@ -1326,7 +1391,11 @@ function setCinemaVideo(exhibit, index, autoplay = true) {
   exhibit.playlistIndex = (index + CINEMA_VIDEO_LIBRARY.length) % CINEMA_VIDEO_LIBRARY.length;
   exhibit.title = item.title;
   exhibit.src = item.src;
-  const companionAudioSrc = (lang === "fr" || lang === "ar") && item.audioSrcFr ? item.audioSrcFr : item.audioSrc;
+  const companionAudioSrc = lang === "ar" && item.audioSrcAr
+    ? item.audioSrcAr
+    : lang === "fr" && item.audioSrcFr
+      ? item.audioSrcFr
+      : item.audioSrc;
   exhibit.video.src = item.src;
   exhibit.video.currentTime = 0;
   exhibit.video.muted = logicalMuted;
@@ -1891,7 +1960,7 @@ function createTeleportHotspot(title, placement, artwork) {
 async function loadAudioGuide(exhibit) {
   const guides = exhibit.painting.media?.audioOverviews || exhibit.painting.media?.audioOverview || [];
   const list = Array.isArray(guides) ? guides : [guides];
-  const mediaLang = lang === "ar" ? "fr" : lang;
+  const mediaLang = lang;
   const guide = list.find((item) => item?.lang === mediaLang)
     || list.find((item) => item?.lang === "fr")
     || list.find((item) => item?.lang === "en")
@@ -1985,7 +2054,7 @@ function makeLabel(message) {
   texture.encoding = THREE.sRGBEncoding;
   texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
   return new THREE.Mesh(
-    new THREE.PlaneGeometry(1, 0.25),
+    new THREE.PlaneGeometry(1.28, 0.32),
     new THREE.MeshBasicMaterial({ map: texture })
   );
 }

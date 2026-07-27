@@ -419,6 +419,7 @@
         "src": "assets/paintings/mona-lisa/audio-video/mona-lisa_video.mp4",
         "audioSrc": "assets/paintings/mona-lisa/audio-video/Centuries_Behind_Glass.mp3",
         "audioSrcFr": "assets/paintings/mona-lisa/audio-video/La_Joconde_s_évade.mp3",
+        "audioSrcAr": "assets/paintings/mona-lisa/audio-video/رقصة_خلف_الإطار.mp3",
         "type": "video/mp4",
         "description": "A moving reinterpretation of the Mona Lisa."
       },
@@ -428,6 +429,7 @@
         "src": "assets/paintings/mona-lisa/audio-video/mona-lisa_video.mp4",
         "audioSrc": "assets/paintings/mona-lisa/audio-video/Centuries_Behind_Glass.mp3",
         "audioSrcFr": "assets/paintings/mona-lisa/audio-video/La_Joconde_s_évade.mp3",
+        "audioSrcAr": "assets/paintings/mona-lisa/audio-video/رقصة_خلف_الإطار.mp3",
         "type": "video/mp4",
         "description": "Short video layer for the Mona Lisa AR experience."
       }
@@ -451,6 +453,14 @@
         "src": "assets/paintings/mona-lisa/audio-video/mona-lisa-fr.mp3",
         "type": "audio/mpeg",
         "description": "Discussion détaillée en français entre deux personnes au sujet de La Joconde."
+      },
+      {
+        "id": "mona-lisa-overview-ar",
+        "lang": "ar",
+        "title": "وصف صوتي مطوّل للموناليزا",
+        "src": "assets/paintings/mona-lisa/audio-video/الموناليزا_لغز_الابتسامة_والسرقة_والرموش_المفقودة.mp3",
+        "type": "audio/mpeg",
+        "description": "وصف صوتي عربي مطوّل عن ابتسامة الموناليزا وسرقتها وتفاصيلها المكتشفة."
       }
     ]
   },

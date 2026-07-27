@@ -192,6 +192,7 @@ function getModelVariants(manifest) {
 
 function getModelVariantLabel(variant, index) {
   if (typeof variant.label === "string") return variant.label;
+  if (lang === "ar") return variant.label?.ar || `النموذج ${index + 1}`;
   return variant.label?.[lang] || variant.label?.en || `Model ${index + 1}`;
 }
 
@@ -257,7 +258,7 @@ function updateVrLink(modelIndex) {
 function getLocalizedAudioOverview(manifest) {
   const overviews = manifest.media?.audioOverviews || manifest.media?.audioOverview || [];
   const list = Array.isArray(overviews) ? overviews : [overviews];
-  const mediaLang = lang === "ar" ? "fr" : lang;
+  const mediaLang = lang;
   return list.find((item) => item.lang === mediaLang) || list.find((item) => item.lang === "fr") || list.find((item) => item.lang === "en") || list[0] || null;
 }
 

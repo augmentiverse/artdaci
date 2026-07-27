@@ -267,7 +267,7 @@ function buildPageDefinitions(manifests) {
       title,
       image: galleryImages[2] || galleryImages[0] || manifest.media?.image,
       body: texts.legacy,
-      facts: (manifest.texts?.interestingFacts || []).slice(0, 3),
+      facts: lang === "ar" ? [] : (manifest.texts?.interestingFacts || []).slice(0, 3),
       manifest,
       hotspots: [
         { label: "3D", x: 82, y: 24, type: "space" },
@@ -539,7 +539,7 @@ function localizedTitle(manifest) {
 
 function getAudio(manifest) {
   const list = manifest.media?.audioOverviews || [];
-  const mediaLang = lang === "ar" ? "fr" : lang;
+  const mediaLang = lang;
   return list.find((item) => item.lang === mediaLang) || list.find((item) => item.lang === "fr") || list.find((item) => item.lang === "en") || list[0];
 }
 
@@ -699,9 +699,11 @@ function openExperience(definition, hotspot) {
   if (hotspot.type === "audio" && hotspot.audio?.src) {
     experienceBody.innerHTML = `<div class="experience-audio"><audio controls autoplay src="${hotspot.audio.src}"></audio></div>`;
   } else if (hotspot.type === "video" && hotspot.video?.src) {
-    const companionAudioSrc = (lang === "fr" || lang === "ar") && hotspot.video.audioSrcFr
-      ? hotspot.video.audioSrcFr
-      : hotspot.video.audioSrc;
+    const companionAudioSrc = lang === "ar" && hotspot.video.audioSrcAr
+      ? hotspot.video.audioSrcAr
+      : lang === "fr" && hotspot.video.audioSrcFr
+        ? hotspot.video.audioSrcFr
+        : hotspot.video.audioSrc;
     const companionAudio = companionAudioSrc
       ? `<audio data-video-sound preload="auto" src="${companionAudioSrc}"></audio>`
       : "";
@@ -710,8 +712,8 @@ function openExperience(definition, hotspot) {
         <video controls autoplay playsinline ${companionAudioSrc ? "muted" : ""} src="${hotspot.video.src}"></video>
         ${companionAudio}
         <div class="experience-video-controls">
-          <button type="button" data-video-action="toggle">${lang === "fr" ? "Pause" : "Pause"}</button>
-          <button type="button" data-video-action="mute">${lang === "fr" ? "Couper le son" : "Mute sound"}</button>
+          <button type="button" data-video-action="toggle">${lang === "ar" ? "إيقاف مؤقت" : "Pause"}</button>
+          <button type="button" data-video-action="mute">${lang === "ar" ? "كتم الصوت" : lang === "fr" ? "Couper le son" : "Mute sound"}</button>
         </div>
         <p>${hotspot.video.description || ""}</p>
       </div>
@@ -720,15 +722,19 @@ function openExperience(definition, hotspot) {
   } else if (hotspot.type === "world") {
     experienceBody.innerHTML = `
       <div class="experience-world">
-        <p>${lang === "fr"
-          ? "Explorez la chambre de Van Gogh comme un monde VR immersif."
-          : "Explore Van Gogh’s Bedroom as an immersive VR world."}</p>
+        <p>${lang === "ar"
+          ? "استكشف غرفة نوم فان غوخ كعالم واقع افتراضي غامر."
+          : lang === "fr"
+            ? "Explorez la chambre de Van Gogh comme un monde VR immersif."
+            : "Explore Van Gogh’s Bedroom as an immersive VR world."}</p>
         <a href="${BEDROOM_VR_WORLD_URL}">
-          ${lang === "fr" ? "Ouvrir le monde VR de La Chambre" : "Open The Bedroom VR World"}
+          ${lang === "ar" ? "فتح عالم غرفة النوم الافتراضي" : lang === "fr" ? "Ouvrir le monde VR de La Chambre" : "Open The Bedroom VR World"}
         </a>
-        <small>${lang === "fr"
-          ? "Le monde VR s’ouvrira directement dans cette fenêtre."
-          : "The VR world will open directly in this window."}</small>
+        <small>${lang === "ar"
+          ? "سيفتح عالم الواقع الافتراضي مباشرة في هذه النافذة."
+          : lang === "fr"
+            ? "Le monde VR s’ouvrira directement dans cette fenêtre."
+            : "The VR world will open directly in this window."}</small>
       </div>
     `;
   } else if (hotspot.type === "studio" || hotspot.type === "studioEnriched") {
@@ -747,9 +753,11 @@ function openExperience(definition, hotspot) {
               ? (enriched ? "Ouvrir l’atelier enrichi de Léonard" : "Ouvrir l’atelier de Léonard en VR")
               : (enriched ? "Open Leonardo’s Enriched Studio" : "Open Leonardo’s Studio in VR")}
         </a>
-        <small>${lang === "fr"
-          ? "Le monde VR s’ouvrira directement dans cette fenêtre."
-          : "The VR world will open directly in this window."}</small>
+        <small>${lang === "ar"
+          ? "سيفتح عالم الواقع الافتراضي مباشرة في هذه النافذة."
+          : lang === "fr"
+            ? "Le monde VR s’ouvrira directement dans cette fenêtre."
+            : "The VR world will open directly in this window."}</small>
       </div>
     `;
   } else {
@@ -792,11 +800,11 @@ function bindBookVideoControls() {
 
   const update = () => {
     toggle.textContent = player.paused
-      ? (lang === "fr" ? "Lire la vidéo" : "Play video")
-      : (lang === "fr" ? "Pause" : "Pause");
+      ? (lang === "ar" ? "تشغيل الفيديو" : lang === "fr" ? "Lire la vidéo" : "Play video")
+      : (lang === "ar" ? "إيقاف مؤقت" : "Pause");
     mute.textContent = (sound ? companionMuted : player.muted)
-      ? (lang === "fr" ? "Activer le son" : "Unmute sound")
-      : (lang === "fr" ? "Couper le son" : "Mute sound");
+      ? (lang === "ar" ? "تشغيل الصوت" : lang === "fr" ? "Activer le son" : "Unmute sound")
+      : (lang === "ar" ? "كتم الصوت" : lang === "fr" ? "Couper le son" : "Mute sound");
   };
   toggle.addEventListener("click", () => {
     if (player.paused) player.play().catch(() => {});

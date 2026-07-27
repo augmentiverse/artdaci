@@ -55,6 +55,12 @@ const slug = PAINTINGS[params.get("painting")] ? params.get("painting") : "mona-
 const lang = ["en", "fr", "ar"].includes(params.get("lang")) ? params.get("lang") : "en";
 const requestedModel = Number.parseInt(params.get("model") || "0", 10);
 const text = COPY[lang];
+const ARABIC_TITLES = {
+  "mona-lisa": "الموناليزا",
+  "van-gogh": "بورتريه ذاتي لفان غوخ",
+  "van-gogh-bedroom": "غرفة النوم",
+  "vermeer-girl-with-a-pearl-earring": "الفتاة ذات القرط اللؤلؤي"
+};
 
 const stage = document.getElementById("vr-stage");
 const status = document.getElementById("vr-status");
@@ -122,7 +128,9 @@ async function init() {
     if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
     const manifest = await response.json();
     variants = getModelVariants(manifest);
-    document.getElementById("vr-title").textContent = manifest.title || "ARTDACI VR";
+    document.getElementById("vr-title").textContent = lang === "ar"
+      ? ARABIC_TITLES[slug] || manifest.title || "ARTDACI VR"
+      : manifest.title || "ARTDACI VR";
     renderVariantOptions();
     const index = THREE.MathUtils.clamp(Number.isFinite(requestedModel) ? requestedModel : 0, 0, variants.length - 1);
     modelChoice.value = String(index);
@@ -157,6 +165,7 @@ function getModelVariants(manifest) {
 
 function getVariantLabel(variant, index) {
   if (typeof variant.label === "string") return variant.label;
+  if (lang === "ar") return variant.label?.ar || `النموذج ${index + 1}`;
   return variant.label?.[lang] || variant.label?.en || `Model ${index + 1}`;
 }
 

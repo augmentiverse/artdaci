@@ -156,7 +156,24 @@ UI_TEXT.ar = {
   catalogue: "الكتالوج",
   intro: "مقدمة",
   tryAgain: "حاول مجدداً",
-  hotspot: "نقطة تفاعلية"
+  hotspot: "نقطة تفاعلية",
+  videoReadyBody: "اضغط زر الفيديو لتشغيل المشهد. اسحبه لتحريكه، واستخدم إصبعين لتغيير حجمه أو تدويره.",
+  modelErrorTitle: "تعذر تحميل النموذج",
+  modelErrorBody: "الكاميرا تعمل، لكن تعذر تحميل ملف النموذج ثلاثي الأبعاد. تحقق من مسار ملف GLB وحجمه.",
+  targetErrorTitle: "تعذر تحميل هدف الواقع المعزز",
+  targetErrorBody: "تعذر تحميل ملف تتبع الصورة. تحقق من مسار ملف ‎.mind في بيانات اللوحة.",
+  audioUnavailableBody: "هذا المتصفح لا يدعم السرد الصوتي المدمج.",
+  audioLoadErrorBody: "تعذر تحميل التسجيل الصوتي. تحقق من نشر ملف الصوت مع الموقع.",
+  scanTarget: "وجّه الكاميرا نحو صورة {artist}{title} المطبوعة.",
+  arStartErrorTitle: "تعذر تشغيل كاميرا الواقع المعزز",
+  futureLayer: "هذه الطبقة التفسيرية جاهزة لإضافة محتوى مستقبلي.",
+  permissionBlocked: "تم حظر إذن الكاميرا. اسمح باستخدام الكاميرا من إعدادات الموقع ثم حاول مجدداً.",
+  noCamera: "لم يُعثر على كاميرا. جرّب هاتفاً أو جهازاً لوحياً بكاميرا خلفية تعمل.",
+  cameraInUse: "الكاميرا مستخدمة في تطبيق أو علامة تبويب أخرى. أغلقها ثم حاول مجدداً.",
+  cameraSettingsUnavailable: "إعدادات الكاميرا المطلوبة غير متاحة على هذا الجهاز. جرّب متصفحاً أو جهازاً آخر.",
+  securityBlocked: "حظر المتصفح الكاميرا لأسباب أمنية. استخدم اتصال HTTPS وتجنب المتصفحات المدمجة.",
+  librariesMissing: "لم تُحمّل مكتبات الواقع المعزز. أعد نشر المشروع كاملاً، بما في ذلك مجلد vendor.",
+  cameraGenericError: "رفض المتصفح أو محرك الواقع المعزز تشغيل الكاميرا. جرّب Safari على iOS أو Chrome على Android."
 };
 
 const AR_TRANSLATIONS = {
@@ -277,6 +294,78 @@ const AR_TRANSLATIONS = {
         lips: { label: "Les lèvres entrouvertes", category: "technique", body: "Les reflets humides et les bords adoucis donnent l'impression qu'elle va parler." },
         background: { label: "Le rideau vert caché", category: "conservation", body: "L'analyse technique a révélé un rideau vert translucide dont les plis se sont assombris et effacés avec le temps." }
       }
+    }
+  }
+};
+
+AR_TRANSLATIONS.ar = {
+  "mona-lisa": {
+    title: "الموناليزا",
+    texts: {
+      historicalContext: "رسم ليوناردو دافنشي الموناليزا في مطلع القرن السادس عشر، وجمع فيها بين الملاحظة الطبيعية والعمق النفسي والمنظور الجوي.",
+      artisticAnalysis: "تقوم اللوحة على تكوين هرمي هادئ وانتقالات ناعمة جداً بين الضوء والظل، بينما يتغير التعبير الغامض بحسب موضع نظر المشاهد.",
+      composition: "تشكل اليدان قاعدة مثلث بصري يقود العين نحو الوجه، في حين يحيط بالجالسة منظر طبيعي متحرك.",
+      palette: "تجمع الألوان بين درجات البشرة الدافئة والبني الدخاني والأخضر الخافت والأزرق البعيد.",
+      perspectiveTechnique: "استخدم ليوناردو تقنية السفوماتو لتليين الحدود والمنظور الجوي لإبعاد المشهد الطبيعي.",
+      culturalSignificance: "أصبحت الموناليزا من أشهر صور البورتريه في العالم ورمزاً لفكرة التحفة الفنية."
+    },
+    hotspots: {
+      smile: { label: "الابتسامة", category: "تفصيل خفي", body: "تبدو الابتسامة متغيرة لأن السفوماتو يذيب حواف الفم ويجعل الظلال والرؤية الطرفية تؤثران في إدراكنا." },
+      hands: { label: "اليدان", category: "التكوين", body: "تثبّت اليدان البنية الهرمية وتمنحان الشخصية حضوراً هادئاً ومهيباً." },
+      landscape: { label: "المشهد الطبيعي", category: "التاريخ", body: "يربط المنظر الخيالي الشخصية بدراسات ليوناردو للماء والصخور والطبيعة." },
+      sfumato: { label: "السفوماتو", category: "التقنية", body: "يبني السفوماتو الأشكال بانتقالات لونية دخانية دقيقة بدلاً من الحدود الحادة." }
+    }
+  },
+  "van-gogh": {
+    title: "بورتريه ذاتي",
+    texts: {
+      historicalContext: "رسم فان غوخ هذا البورتريه الذاتي في باريس، حيث كان يختبر التباينات اللونية وضربات الفرشاة المجزأة.",
+      artisticAnalysis: "بُني الوجه بضربات قصيرة حمراء وبرتقالية وخضراء وصفراء، وتزداد طاقته أمام الخلفية الزرقاء الخضراء.",
+      composition: "يتجه الرأس قليلاً إلى الجانب بينما يواجه النظر المشاهد مباشرة، ويثبت المعطف الداكن أسفل الصورة.",
+      palette: "تقابل اللحية البرتقالية الحمراء خلفية زرقاء خضراء، مع لمسات صفراء ووردية وفيروزية.",
+      perspectiveTechnique: "تنشأ هيئة الوجه من اتجاه اللون وحركة الفرشاة أكثر مما تنشأ من النمذجة الأكاديمية.",
+      culturalSignificance: "أصبحت بورتريهات فان غوخ الذاتية رموزاً للهوية الفنية الحديثة والحياة الداخلية."
+    },
+    hotspots: {
+      eyes: { label: "النظرة", category: "علم النفس", body: "تخلق العينان لقاءً مباشراً مع المشاهد وتجعلان اللوحة فعلاً لمراقبة الذات." },
+      beard: { label: "الألوان المتكاملة", category: "اللون", body: "تهتز اللحية البرتقالية الحمراء أمام الخلفية الزرقاء الخضراء." },
+      background: { label: "الضربات المجزأة", category: "الفرشاة", body: "تصنع الضربات الصغيرة في الخلفية حركة تحيط بالشخصية." },
+      jacket: { label: "البنية الداكنة", category: "التكوين", body: "يثبت المعطف الداكن أسفل الصورة مع احتفاظه بطاقة ضربات الفرشاة." }
+    }
+  },
+  "van-gogh-bedroom": {
+    title: "غرفة النوم",
+    texts: {
+      historicalContext: "رسم فان غوخ غرفته في البيت الأصفر بآرل سنة 1888 لتعبّر عن الراحة والاستقرار والأمل في بيت للفنانين.",
+      artisticAnalysis: "تحولت الغرفة البسيطة إلى فضاء نفسي قوي؛ فالأثاث والجدران تميل، بينما تضبط الخطوط القوية مساحات اللون.",
+      composition: "تقود ألواح الأرضية العين إلى العمق، ويهيمن السرير على اليمين، بينما تصنع الكراسي والطاولة والنافذة إيقاعاً هندسياً.",
+      palette: "استخدم فان غوخ مساحات كبيرة من الأزرق والبنفسجي والأصفر والبرتقالي والأخضر والأحمر.",
+      perspectiveTechnique: "المنظور مبسط ومشوّه عمداً، فتمنح الخطوط المائلة والألوان المسطحة الغرفة قوة تعبيرية.",
+      culturalSignificance: "تحول هذا الداخل الخاص إلى صورة عالمية للبحث عن الراحة والمأوى والأمل الفني."
+    },
+    hotspots: {
+      bed: { label: "السرير", category: "الرمز", body: "يسيطر السرير الأصفر الكبير على الغرفة ويجعل الراحة مركزها العاطفي." },
+      chairs: { label: "الكراسي الفارغة", category: "التكوين", body: "توحي الكراسي بالحياة اليومية والضيافة والغياب." },
+      pictures: { label: "الصور على الجدار", category: "الفنان", body: "تحيل الصور الصغيرة إلى عالم فان غوخ الفني وتجعل المكان شخصياً." },
+      perspective: { label: "المنظور المائل", category: "التقنية", body: "لا تتبع الأرضية والأثاث منظوراً أكاديمياً صارماً، ويمنح ميلها الغرفة توتراً تعبيرياً." }
+    }
+  },
+  "vermeer-girl-with-a-pearl-earring": {
+    title: "الفتاة ذات القرط اللؤلؤي",
+    texts: {
+      historicalContext: "رسم فيرمير هذه اللوحة في دلفت نحو 1665. وهي دراسة لشخصية وملابس غير مألوفة، وليست بورتريهاً رسمياً لشخص معروف.",
+      artisticAnalysis: "تلتفت الفتاة في لحظة لقاء؛ وتجعل النظرة المباشرة والشفاه المنفرجة والحواف الناعمة الصورة قريبة وغامضة معاً.",
+      composition: "تبرز الهيئة المثلثة أمام خلفية داكنة، ويدور الرأس والجسم في اتجاهين متعاكسين حتى تستقر الحركة عند العينين.",
+      palette: "يقابل فيرمير الأزرق الثمين والأصفر في غطاء الرأس بدرجات ترابية ولمعات دقيقة.",
+      perspectiveTechnique: "ينشأ العمق من تراكب الأشكال والحواف الناعمة والانتقالات اللونية، لا من عمارة مرئية.",
+      culturalSignificance: "أصبحت اللوحة رمزاً عالمياً للغموض والنظرة والهوية المتخيلة."
+    },
+    hotspots: {
+      gaze: { label: "النظرة", category: "الملاحظة", body: "تلتقي العينان بالمشاهد لحظة التفات الفتاة، فتخلقان قرباً بلا حكاية محددة." },
+      pearl: { label: "القرط", category: "التقنية", body: "تكفي لمسات قليلة من الضوء لإيهامنا بالقرط، من دون حدود أو خطاف ظاهر." },
+      turban: { label: "غطاء الرأس الأزرق والأصفر", category: "اللون", body: "يشير الزي الخيالي إلى دراسة شخصية، ويصنع الأزرق والأصفر التباين الرئيسي." },
+      lips: { label: "الشفاه المنفرجة", category: "التقنية", body: "توحي اللمعات الرطبة والحواف الناعمة بأنها على وشك الكلام." },
+      background: { label: "الستار الأخضر الخفي", category: "الحفظ", body: "كشف الفحص التقني ستاراً أخضر شفافاً أظلمت طياته واختفت مع الزمن." }
     }
   }
 };
@@ -1156,7 +1245,7 @@ function toggleAudioGuide() {
   }
 
   const utterance = new SpeechSynthesisUtterance(getAudioGuideText());
-  utterance.lang = CONFIG.lang === "fr" ? "fr-FR" : "en-US";
+  utterance.lang = CONFIG.lang === "ar" ? "ar-SA" : CONFIG.lang === "fr" ? "fr-FR" : "en-US";
   utterance.rate = 0.92;
   utterance.pitch = 1;
   utterance.onend = () => {
@@ -1214,9 +1303,11 @@ function playNativeAudioGuide(quiet = false) {
     button.textContent = t("audio");
     if (!quiet) {
       document.getElementById("panel-title").textContent = t("audio");
-      document.getElementById("panel-body").textContent = CONFIG.lang === "fr"
-        ? "Touchez Audio pour lancer la narration enregistrée."
-        : "Tap Audio to start the recorded narration.";
+      document.getElementById("panel-body").textContent = CONFIG.lang === "ar"
+        ? "اضغط الصوت لتشغيل السرد المسجّل."
+        : CONFIG.lang === "fr"
+          ? "Touchez Audio pour lancer la narration enregistrée."
+          : "Tap Audio to start the recorded narration.";
       document.getElementById("info-panel").classList.remove("collapsed");
     }
   });
