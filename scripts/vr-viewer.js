@@ -34,12 +34,25 @@ const COPY = {
     unsupported: "La VR immersive n’est pas disponible dans ce navigateur. Ouvrez cette page dans Meta Quest Browser ou un autre casque WebXR.",
     failed: "L’expérience VR n’a pas pu démarrer.",
     instructions: "Gâchette : saisir, déplacer et orienter. Utilisez les deux gâchettes pour redimensionner et faire pivoter."
+  },
+  ar: {
+    back: "رجوع",
+    kicker: "تجربة جهاز الواقع الافتراضي",
+    enter: "دخول الواقع الافتراضي",
+    exit: "الخروج من الواقع الافتراضي",
+    model: "نموذج ثلاثي الأبعاد",
+    reset: "إعادة ضبط النموذج",
+    loading: "جارٍ تحميل النموذج ثلاثي الأبعاد...",
+    ready: "جاهز. ضع الجهاز ثم اختر دخول الواقع الافتراضي.",
+    unsupported: "الواقع الافتراضي غير متاح في هذا المتصفح. افتح الصفحة في متصفح Meta Quest أو جهاز WebXR.",
+    failed: "تعذر بدء تجربة الواقع الافتراضي.",
+    instructions: "الزناد: إمساك وتحريك وتدوير. استخدم الزنادين معاً لتغيير الحجم والتدوير."
   }
 };
 
 const params = new URLSearchParams(location.search);
 const slug = PAINTINGS[params.get("painting")] ? params.get("painting") : "mona-lisa";
-const lang = params.get("lang") === "fr" ? "fr" : "en";
+const lang = ["en", "fr", "ar"].includes(params.get("lang")) ? params.get("lang") : "en";
 const requestedModel = Number.parseInt(params.get("model") || "0", 10);
 const text = COPY[lang];
 
@@ -99,6 +112,7 @@ init();
 
 async function init() {
   document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
   applyCopy();
   addControllers();
   bindUI();
@@ -125,7 +139,7 @@ async function init() {
 function applyCopy() {
   document.getElementById("vr-back").textContent = text.back;
   document.getElementById("vr-back").href = `space.html?painting=${encodeURIComponent(slug)}&lang=${lang}`;
-  document.getElementById("gallery-link").textContent = lang === "fr" ? "Galerie VR" : "VR Gallery";
+  document.getElementById("gallery-link").textContent = lang === "ar" ? "معرض الواقع الافتراضي" : lang === "fr" ? "Galerie VR" : "VR Gallery";
   document.getElementById("gallery-link").href = `gallery-vr.html?lang=${lang}`;
   document.getElementById("vr-kicker").textContent = text.kicker;
   document.getElementById("vr-instructions").textContent = text.instructions;

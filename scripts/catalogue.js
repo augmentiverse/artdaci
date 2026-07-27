@@ -55,6 +55,27 @@ const UI = {
     palette: "Palette",
     technique: "Technique",
     context: "Contexte"
+  },
+  ar: {
+    search: "ابحث بالعنوان أو الفنان أو التقنية أو الفترة...",
+    allMovements: "جميع الحركات الفنية",
+    reset: "إعادة الضبط",
+    results: "لوحات",
+    print: "الصفحة المطبوعة",
+    ar: "واقع معزز",
+    space: "وضع في المساحة",
+    audioOverview: "الدليل الصوتي",
+    vocabulary: "المفردات",
+    noResults: "لا توجد لوحة مطابقة لهذا البحث.",
+    years: "سنة تغطيها المجموعة",
+    modes: "تجارب متاحة",
+    printFirst: "صفحات مطبوعة",
+    by: "للفنان",
+    dimensions: "الأبعاد",
+    location: "الموقع",
+    palette: "الألوان",
+    technique: "التقنية",
+    context: "السياق"
   }
 };
 
@@ -64,12 +85,19 @@ const FR_TITLES = {
   "vermeer-girl-with-a-pearl-earring": "La Jeune Fille à la perle"
 };
 
+const AR_TITLES = {
+  "mona-lisa": "الموناليزا",
+  "van-gogh": "بورتريه ذاتي",
+  "van-gogh-bedroom": "غرفة النوم",
+  "vermeer-girl-with-a-pearl-earring": "الفتاة ذات القرط اللؤلؤي"
+};
+
 const app = document.getElementById("catalogue-app");
 
 if (app) initCatalogue(app);
 
 async function initCatalogue(root) {
-  const lang = root.dataset.lang === "fr" ? "fr" : "en";
+  const lang = ["en", "fr", "ar"].includes(root.dataset.lang) ? root.dataset.lang : "en";
   const text = UI[lang];
   const manifestPaths = root.dataset.manifests.split(",").map((item) => item.trim()).filter(Boolean);
 
@@ -221,10 +249,12 @@ function renderCard(manifest, lang, text) {
 function getLocalizedAudioOverview(manifest, lang) {
   const overviews = manifest.media?.audioOverviews || manifest.media?.audioOverview || [];
   const list = Array.isArray(overviews) ? overviews : [overviews];
-  return list.find((item) => item.lang === lang) || list.find((item) => item.lang === "en") || list[0] || null;
+  const mediaLang = lang === "ar" ? "fr" : lang;
+  return list.find((item) => item.lang === mediaLang) || list.find((item) => item.lang === "fr") || list.find((item) => item.lang === "en") || list[0] || null;
 }
 
 function getTitle(manifest, lang) {
+  if (lang === "ar") return AR_TITLES[manifest.slug] || manifest.title;
   return lang === "fr" ? FR_TITLES[manifest.slug] || manifest.title : manifest.title;
 }
 

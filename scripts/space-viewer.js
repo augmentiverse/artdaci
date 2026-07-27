@@ -51,6 +51,29 @@ const COPY = {
     unsupported: "Ce navigateur peut afficher le modèle 3D, mais il peut ne pas prendre en charge le placement AR dans l'espace.",
     iosNote: "L'AR spatiale est disponible lorsque le modèle possède un fichier AR compatible avec cet appareil.",
     intro: "Placez le modèle 3D dans votre espace, puis déplacez-le, tournez-le et redimensionnez-le avec les contrôles AR de votre appareil."
+  },
+  ar: {
+    back: "رجوع",
+    kicker: "وضع النموذج في المساحة",
+    loading: "جارٍ تحميل النموذج...",
+    ready: "النموذج جاهز. اضغط «ضعه في مساحتي» لتثبيته في غرفتك.",
+    readyWithUsdz: "النموذج جاهز. يستخدم iPhone وiPad ملف USDZ، ويستخدم Android عارض المشاهد.",
+    readyWithoutUsdz: "النموذج جاهز. اضغط «ضعه في مساحتي» لفتح الواقع المعزز.",
+    fallbackTitle: "المعاينة ثلاثية الأبعاد غير متاحة",
+    fallbackBody: "تعذر تحميل عارض النماذج. يمكنك فتح الواقع المعزز على الصورة أو الاستماع إلى الدليل الصوتي.",
+    audioOverview: "الدليل الصوتي",
+    audioOverviewPause: "إيقاف مؤقت",
+    audioOverviewMissing: "الدليل الصوتي غير متاح",
+    place: "ضعه في مساحتي",
+    openVr: "فتح في جهاز الواقع الافتراضي",
+    vrGallery: "زيارة معرض الواقع الافتراضي",
+    externalVrWorld: "زيارة العالم الافتراضي",
+    imageAr: "واقع معزز على الصورة",
+    printedPage: "الصفحة المطبوعة",
+    modelChoice: "اختيار النموذج",
+    unsupported: "يمكن لهذا المتصفح عرض النموذج، لكنه قد لا يدعم وضعه في الغرفة.",
+    iosNote: "يتوفر الواقع المعزز المكاني عندما يوجد ملف متوافق مع جهازك.",
+    intro: "ضع النموذج ثلاثي الأبعاد في مساحتك، ثم حرّكه وأدره وغيّر حجمه باستخدام أدوات الواقع المعزز."
   }
 };
 
@@ -76,12 +99,13 @@ const FR_TITLES = {
 
 const params = new URLSearchParams(window.location.search);
 const slug = PAINTINGS[params.get("painting")] ? params.get("painting") : "mona-lisa";
-const lang = params.get("lang") === "fr" ? "fr" : "en";
+const lang = ["en", "fr", "ar"].includes(params.get("lang")) ? params.get("lang") : "en";
 
 init();
 
 async function init() {
   document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
   applyStaticCopy();
 
   try {
@@ -97,7 +121,7 @@ async function init() {
 function applyStaticCopy() {
   const text = COPY[lang];
   document.getElementById("back-link").textContent = text.back;
-  document.getElementById("back-link").href = lang === "fr" ? "index-fr.html" : "index.html";
+  document.getElementById("back-link").href = lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html";
   document.getElementById("space-kicker").textContent = text.kicker;
   document.getElementById("space-copy").textContent = text.intro;
   document.getElementById("space-status").textContent = text.loading;
@@ -113,7 +137,13 @@ function applyStaticCopy() {
 function configureViewer(manifest) {
   const model = document.getElementById("space-model");
   const defaultTitle = manifest.title || "Artwork";
-  const title = lang === "fr" ? FR_TITLES[slug] || defaultTitle : defaultTitle;
+  const arTitles = {
+    "mona-lisa": "الموناليزا",
+    "van-gogh": "بورتريه ذاتي",
+    "van-gogh-bedroom": "غرفة النوم",
+    "vermeer-girl-with-a-pearl-earring": "الفتاة ذات القرط اللؤلؤي"
+  };
+  const title = lang === "ar" ? arTitles[slug] || defaultTitle : lang === "fr" ? FR_TITLES[slug] || defaultTitle : defaultTitle;
   const modelVariants = getModelVariants(manifest);
   const src = modelVariants[0]?.src || manifest.ar?.primaryModel || manifest.media?.model;
   const poster = manifest.media?.image || manifest.print?.imageTargetSource;
@@ -227,7 +257,8 @@ function updateVrLink(modelIndex) {
 function getLocalizedAudioOverview(manifest) {
   const overviews = manifest.media?.audioOverviews || manifest.media?.audioOverview || [];
   const list = Array.isArray(overviews) ? overviews : [overviews];
-  return list.find((item) => item.lang === lang) || list.find((item) => item.lang === "en") || list[0] || null;
+  const mediaLang = lang === "ar" ? "fr" : lang;
+  return list.find((item) => item.lang === mediaLang) || list.find((item) => item.lang === "fr") || list.find((item) => item.lang === "en") || list[0] || null;
 }
 
 function renderExperienceActions(audioOverview) {

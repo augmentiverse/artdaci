@@ -8,6 +8,31 @@
   --dark: #171310;
 }
 
+html[dir="rtl"],
+html[lang="ar"] {
+  direction: rtl;
+}
+
+html[dir="rtl"] body,
+html[lang="ar"] body {
+  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+  text-align: right;
+}
+
+html[dir="rtl"] .actions,
+html[dir="rtl"] .card-actions,
+html[dir="rtl"] .row-actions,
+html[dir="rtl"] .tag-strip {
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+}
+
+html[dir="rtl"] input,
+html[dir="rtl"] select {
+  direction: rtl;
+  text-align: right;
+}
+
 * {
   box-sizing: border-box;
 }

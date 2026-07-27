@@ -44,6 +44,13 @@ const BOOK_SECTION_COPY = {
     technique: "MATIÈRES ET DÉCOUVERTES",
     legacy: "SENS ET HÉRITAGE",
     notice: "DÉTAILS À RETENIR"
+  },
+  ar: {
+    story: "القصة والسياق",
+    looking: "نظرة أقرب",
+    technique: "المواد والاكتشافات",
+    legacy: "المعنى والإرث",
+    notice: "تفاصيل جديرة بالتذكر"
   }
 };
 
@@ -71,6 +78,33 @@ const BOOK_FRENCH_TEXT = {
     looking: "Le corps se tourne dans une direction tandis que la tête revient vers nous. Ce mouvement en spirale aboutit au contact du regard et aux lèvres entrouvertes. Le col clair sépare le visage du vêtement, et la perle répond aux reflets des yeux et de la bouche. Quelques accents lumineux suffisent à faire émerger la figure de l’obscurité.",
     technique: "Vermeer emploie un outremer naturel coûteux, obtenu à partir de lapis-lazuli, pour le foulard bleu. Le fond était autrefois une surface vert sombre plus brillante, dont les pigments organiques ont pâli. L’étude scientifique de 2018 a utilisé microscope 3D, MA-XRF et imagerie infrarouge. Elle a révélé de minuscules cils et confirmé que la « perle » n’a ni contour complet ni crochet visible.",
     legacy: "Acquise en 1881 pour seulement deux florins et trente centimes, l’œuvre entre au Mauritshuis en 1902. Sa simplicité, son silence narratif et son identité ouverte ont inspiré romans, cinéma, photographie et mode. Les théories sur une camera obscura restent possibles mais non prouvées : aucune preuve documentaire ou trace matérielle ne confirme l’emploi d’un appareil précis."
+  }
+};
+
+const BOOK_ARABIC_TEXT = {
+  "mona-lisa": {
+    story: "بدأ ليوناردو دافنشي رسم هذا البورتريه في فلورنسا مطلع القرن السادس عشر. ويُعتقد أن الجالسة هي ليزا غيرارديني. احتفظ ليوناردو باللوحة وواصل تنقيحها سنوات، فتحولت من صورة شخصية إلى دراسة عميقة للحضور الإنساني والضوء والطبيعة.",
+    looking: "تمنح وضعية الثلاثة أرباع واليدان المتقاطعتان التكوين هدوءاً وثباتاً. يتلاشى الطريق والماء والجبال في الخلفية بفضل المنظور الجوي، بينما يبدو الابتسام متغيراً بسبب الانتقالات الناعمة حول الفم.",
+    technique: "بنى ليوناردو تقنية السفوماتو بطبقات شفافة بالغة الرقة تخفف الحواف مثل الدخان. تكشف الصور العلمية تعديلات في الأصابع والوشاح والمنظر الطبيعي، ما يدل على عملية طويلة من الملاحظة والمراجعة.",
+    legacy: "جعلت براعة اللوحة وشهرة ليوناردو وسرقتها عام 1911 وانتشار نسخها منها أيقونة عالمية. أثرت في فن البورتريه النفسي وما زالت تفاصيلها الدقيقة تكافئ النظر البطيء."
+  },
+  "van-gogh": {
+    story: "رسم فان غوخ هذا البورتريه الذاتي في باريس سنة 1887 أثناء تعرفه إلى الانطباعية ونظريات اللون الحديثة. استخدم وجهه مختبراً عملياً لدراسة التعبير واللون وضربات الفرشاة.",
+    looking: "تتحرك ضربات قصيرة زرقاء وخضراء حول الرأس، وتتوهج اللحية الحمراء والبرتقالية أمام ألوانها المكملة. يثبّت النظر المباشر السطح المتحرك ويمنح الصورة توترها النفسي.",
+    technique: "يبني فان غوخ الشكل باتجاه الضربات وسماكتها ولونها. تصف العلامات بنية الوجه، بينما تتحول الخلفية إلى جو نابض يمهد لأسلوبه الأكثر حرية في آرل وسان ريمي.",
+    legacy: "أصبحت بورتريهاته الذاتية صوراً أساسية للفنان الحديث بوصفه رساماً ومراقباً وموضوعاً للتجربة في آن واحد. ألهمت الأجيال اللاحقة للبحث عن الصدق النفسي لا التشابه فقط."
+  },
+  "van-gogh-bedroom": {
+    story: "رسم فان غوخ غرفته في البيت الأصفر بآرل في أكتوبر 1888. مثّلت الغرفة أول منزل خاص به وملاذاً شخصياً، وكان يريد للألوان أن توحي بالراحة وتهدئ الخيال.",
+    looking: "كانت الغرفة الحقيقية شبه منحرفة، لكن فان غوخ بالغ في زواياها. يبدو الأرض مائلاً والأثاث متجهاً نحو المشاهد، وتخلق السرير والكراسي والنافذة إيقاعاً من المستطيلات والخطوط القوية.",
+    technique: "وصف الفنان جدراناً بنفسجية باهتة وأرضية حمراء وأثاثاً أصفر وغطاءً قرمزياً. بهتت الأصباغ الحمراء الحساسة للضوء، لذلك تبدو الجدران اليوم أكثر زرقة مما كانت عليه.",
+    legacy: "أنجز فان غوخ ثلاث نسخ أصلية من غرفة النوم. تتغير الصور المعلقة بين النسخ، وتحول اللوحة المكان البسيط إلى صورة عاطفية للبيت والصداقة والحاجة إلى الاستقرار."
+  },
+  "vermeer-girl-with-a-pearl-earring": {
+    story: "رسم فيرمير هذه اللوحة في دلفت نحو 1665. وهي تروني، أي دراسة لشخصية وملابس غير مألوفة وليست بورتريهاً رسمياً. ما زالت هوية الفتاة مجهولة.",
+    looking: "يدور الجسد في اتجاه بينما يعود الرأس نحو المشاهد. ينتهي هذا الالتفاف باتصال مباشر للعينين وشفاه نصف مفتوحة، وتكرر اللؤلؤة أضواء العين والفم.",
+    technique: "استخدم فيرمير حجر اللازورد الثمين في غطاء الرأس الأزرق. كان لون الخلفية أخضر داكناً ثم بهت. وكشفت دراسة 2018 رموشاً دقيقة وأكدت أن اللؤلؤة بلا محيط كامل أو خطاف ظاهر.",
+    legacy: "اشتُريت اللوحة عام 1881 بسعر زهيد، ودخلت مجموعة موريتشهاوس سنة 1902. ألهم غموضها وصمتها السردي الروايات والسينما والتصوير والأزياء."
   }
 };
 
@@ -102,7 +136,7 @@ const BOOK_ENGLISH_TEXT = {
 };
 
 const params = new URLSearchParams(location.search);
-const lang = params.get("lang") === "fr" ? "fr" : "en";
+const lang = ["en", "fr", "ar"].includes(params.get("lang")) ? params.get("lang") : "en";
 const book = document.getElementById("book");
 const sheetsRoot = document.getElementById("book-sheets");
 const previousButton = document.getElementById("book-prev");
@@ -138,16 +172,19 @@ async function init() {
 
 function applyLanguage() {
   document.documentElement.lang = lang;
-  document.querySelector(".book-back").href = lang === "fr" ? "index-fr.html" : "index.html";
-  document.querySelector(".book-back").textContent = lang === "fr" ? "Retour à la collection" : "Back to collection";
-  document.querySelector(".book-toolbar p").textContent = lang === "fr" ? "Livre d’art interactif" : "Interactive art book";
-  document.querySelector(".book-toolbar h1").textContent = lang === "fr" ? "Le Livre Vivant" : "The Living Book";
-  document.querySelector(".book-hint").textContent = lang === "fr"
-    ? "Cliquez sur une page, balayez ou pincez pour la tourner. Sélectionnez un repère lumineux pour le contenu immersif."
-    : "Click a page, swipe, or pinch to turn it. Select a glowing hotspot for immersive content.";
-  previousButton.textContent = lang === "fr" ? "← Précédent" : "← Previous";
-  nextButton.textContent = lang === "fr" ? "Suivant →" : "Next →";
-  closeExperienceButton.textContent = lang === "fr" ? "Retour au livre ✕" : "Return to book ✕";
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+  document.querySelector(".book-back").href = lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html";
+  document.querySelector(".book-back").textContent = lang === "ar" ? "العودة إلى المجموعة" : lang === "fr" ? "Retour à la collection" : "Back to collection";
+  document.querySelector(".book-toolbar p").textContent = lang === "ar" ? "كتاب فني تفاعلي" : lang === "fr" ? "Livre d’art interactif" : "Interactive art book";
+  document.querySelector(".book-toolbar h1").textContent = lang === "ar" ? "الكتاب الحي" : lang === "fr" ? "Le Livre Vivant" : "The Living Book";
+  document.querySelector(".book-hint").textContent = lang === "ar"
+    ? "انقر على الصفحة أو اسحبها أو اقرصها لقلبها. اختر علامة مضيئة لفتح المحتوى الغامر."
+    : lang === "fr"
+      ? "Cliquez sur une page, balayez ou pincez pour la tourner. Sélectionnez un repère lumineux pour le contenu immersif."
+      : "Click a page, swipe, or pinch to turn it. Select a glowing hotspot for immersive content.";
+  previousButton.textContent = lang === "ar" ? "→ السابق" : lang === "fr" ? "← Précédent" : "← Previous";
+  nextButton.textContent = lang === "ar" ? "التالي ←" : lang === "fr" ? "Suivant →" : "Next →";
+  closeExperienceButton.textContent = lang === "ar" ? "العودة إلى الكتاب ✕" : lang === "fr" ? "Retour au livre ✕" : "Return to book ✕";
 }
 
 function buildPageDefinitions(manifests) {
@@ -156,16 +193,18 @@ function buildPageDefinitions(manifests) {
     {
       kind: "cover",
       eyebrow: "ARTDACI",
-      title: lang === "fr" ? "CHEFS-D’ŒUVRE VIVANTS" : "MASTERPIECES ALIVE",
-      subtitle: lang === "fr" ? "Un livre imprimé. Un musée spatial." : "A printed book. A spatial museum."
+      title: lang === "ar" ? "روائع فنية حية" : lang === "fr" ? "CHEFS-D’ŒUVRE VIVANTS" : "MASTERPIECES ALIVE",
+      subtitle: lang === "ar" ? "كتاب مطبوع، ومتحف مكاني." : lang === "fr" ? "Un livre imprimé. Un musée spatial." : "A printed book. A spatial museum."
     },
     {
       kind: "intro",
-      eyebrow: lang === "fr" ? "MODE D’EMPLOI" : "HOW TO EXPLORE",
-      title: lang === "fr" ? "Lisez. Touchez. Entrez." : "Read. Select. Enter.",
-      body: lang === "fr"
-        ? "Tournez les pages comme dans un livre réel. Les repères lumineux ouvrent des objets 3D, des narrations, des animations et des scènes immersives. Fermez l’expérience pour revenir exactement à la page quittée."
-        : "Turn pages as you would in a real book. Glowing markers open 3D objects, narration, animation, and immersive scenes. Close an experience to return to the exact page you left."
+      eyebrow: lang === "ar" ? "طريقة الاستكشاف" : lang === "fr" ? "MODE D’EMPLOI" : "HOW TO EXPLORE",
+      title: lang === "ar" ? "اقرأ. اختر. ادخل." : lang === "fr" ? "Lisez. Touchez. Entrez." : "Read. Select. Enter.",
+      body: lang === "ar"
+        ? "اقلب الصفحات كما في كتاب حقيقي. تفتح العلامات المضيئة نماذج ثلاثية الأبعاد وسرداً صوتياً ورسوم حركة ومشاهد غامرة، ثم تعيدك إلى الصفحة نفسها."
+        : lang === "fr"
+          ? "Tournez les pages comme dans un livre réel. Les repères lumineux ouvrent des objets 3D, des narrations, des animations et des scènes immersives. Fermez l’expérience pour revenir exactement à la page quittée."
+          : "Turn pages as you would in a real book. Glowing markers open 3D objects, narration, animation, and immersive scenes. Close an experience to return to the exact page you left."
     }
   ];
 
@@ -237,8 +276,8 @@ function buildPageDefinitions(manifests) {
   pages.push({
     kind: "back",
     eyebrow: "ARTDACI",
-    title: lang === "fr" ? "CONTINUEZ L’EXPLORATION" : "KEEP EXPLORING",
-    subtitle: lang === "fr" ? "La collection continue dans la galerie VR." : "The collection continues inside the VR Gallery."
+    title: lang === "ar" ? "تابع الاستكشاف" : lang === "fr" ? "CONTINUEZ L’EXPLORATION" : "KEEP EXPLORING",
+    subtitle: lang === "ar" ? "تستمر المجموعة داخل معرض الواقع الافتراضي." : lang === "fr" ? "La collection continue dans la galerie VR." : "The collection continues inside the VR Gallery."
   });
   if (pages.length % 2) pages.push({ kind: "blank", title: "" });
   return pages;
@@ -479,6 +518,12 @@ function loadImage(src) {
 }
 
 function localizedTitle(manifest) {
+  if (lang === "ar") return {
+    "mona-lisa": "الموناليزا",
+    "van-gogh": "بورتريه ذاتي",
+    "van-gogh-bedroom": "غرفة النوم",
+    "vermeer-girl-with-a-pearl-earring": "الفتاة ذات القرط اللؤلؤي"
+  }[manifest.slug] || manifest.title;
   if (lang !== "fr") return manifest.title;
   return {
     "mona-lisa": "La Joconde",
@@ -490,10 +535,12 @@ function localizedTitle(manifest) {
 
 function getAudio(manifest) {
   const list = manifest.media?.audioOverviews || [];
-  return list.find((item) => item.lang === lang) || list.find((item) => item.lang === "en") || list[0];
+  const mediaLang = lang === "ar" ? "fr" : lang;
+  return list.find((item) => item.lang === mediaLang) || list.find((item) => item.lang === "fr") || list.find((item) => item.lang === "en") || list[0];
 }
 
 function getBookTexts(manifest) {
+  if (lang === "ar" && BOOK_ARABIC_TEXT[manifest.slug]) return BOOK_ARABIC_TEXT[manifest.slug];
   if (lang === "fr" && BOOK_FRENCH_TEXT[manifest.slug]) return BOOK_FRENCH_TEXT[manifest.slug];
   if (BOOK_ENGLISH_TEXT[manifest.slug]) return BOOK_ENGLISH_TEXT[manifest.slug];
   const texts = manifest.texts || {};
@@ -626,28 +673,28 @@ function updateBook() {
   nextButton.disabled = currentLeaf === sheets.length;
   const visiblePage = Math.min(currentLeaf * 2, pageDefinitions.length - 1);
   progress.textContent = currentLeaf === 0
-    ? (lang === "fr" ? "Couverture" : "Cover")
-    : `${lang === "fr" ? "Pages" : "Pages"} ${visiblePage}–${Math.min(visiblePage + 1, pageDefinitions.length)}`;
+    ? (lang === "ar" ? "الغلاف" : lang === "fr" ? "Couverture" : "Cover")
+    : `${lang === "ar" ? "الصفحات" : "Pages"} ${visiblePage}–${Math.min(visiblePage + 1, pageDefinitions.length)}`;
 }
 
 function openExperience(definition, hotspot) {
   const manifest = definition.manifest;
   experienceTitle.textContent = definition.title;
   experienceKicker.textContent = {
-    audio: lang === "fr" ? "Narration audio" : "Audio narration",
-    video: lang === "fr" ? "Scène réimaginée en mouvement" : "Reimagined scene in motion",
-    space: lang === "fr" ? "Objet 3D interactif" : "Interactive 3D object",
-    ar: lang === "fr" ? "Réalité augmentée" : "Augmented reality",
-    vr: lang === "fr" ? "Scène VR" : "VR scene",
-    world: lang === "fr" ? "Monde VR" : "VR world",
-    studio: lang === "fr" ? "Atelier de Léonard en VR" : "Leonardo’s Studio in VR",
-    gallery: lang === "fr" ? "Galerie immersive" : "Immersive gallery"
+    audio: lang === "ar" ? "سرد صوتي" : lang === "fr" ? "Narration audio" : "Audio narration",
+    video: lang === "ar" ? "مشهد متحرك معاد تخيله" : lang === "fr" ? "Scène réimaginée en mouvement" : "Reimagined scene in motion",
+    space: lang === "ar" ? "نموذج ثلاثي الأبعاد تفاعلي" : lang === "fr" ? "Objet 3D interactif" : "Interactive 3D object",
+    ar: lang === "ar" ? "واقع معزز" : lang === "fr" ? "Réalité augmentée" : "Augmented reality",
+    vr: lang === "ar" ? "مشهد واقع افتراضي" : lang === "fr" ? "Scène VR" : "VR scene",
+    world: lang === "ar" ? "عالم افتراضي" : lang === "fr" ? "Monde VR" : "VR world",
+    studio: lang === "ar" ? "محترف ليوناردو الافتراضي" : lang === "fr" ? "Atelier de Léonard en VR" : "Leonardo’s Studio in VR",
+    gallery: lang === "ar" ? "معرض غامر" : lang === "fr" ? "Galerie immersive" : "Immersive gallery"
   }[hotspot.type] || "Immersive layer";
 
   if (hotspot.type === "audio" && hotspot.audio?.src) {
     experienceBody.innerHTML = `<div class="experience-audio"><audio controls autoplay src="${hotspot.audio.src}"></audio></div>`;
   } else if (hotspot.type === "video" && hotspot.video?.src) {
-    const companionAudioSrc = lang === "fr" && hotspot.video.audioSrcFr
+    const companionAudioSrc = (lang === "fr" || lang === "ar") && hotspot.video.audioSrcFr
       ? hotspot.video.audioSrcFr
       : hotspot.video.audioSrc;
     const companionAudio = companionAudioSrc

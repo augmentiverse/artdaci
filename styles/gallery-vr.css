@@ -7,6 +7,18 @@
   --gold: #c7a45d;
 }
 
+html[dir="rtl"] body {
+  direction: rtl;
+  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+}
+
+html[dir="rtl"] .gallery-toolbar,
+html[dir="rtl"] .gallery-guide,
+html[dir="rtl"] .gallery-video-controls,
+html[dir="rtl"] .gallery-audio-controls {
+  text-align: right;
+}
+
 * {
   box-sizing: border-box;
 }

@@ -75,7 +75,7 @@ const REIMAGINED_ARTWORKS = [
 ];
 
 const params = new URLSearchParams(location.search);
-const lang = params.get("lang") === "fr" ? "fr" : "en";
+const lang = ["en", "fr", "ar"].includes(params.get("lang")) ? params.get("lang") : "en";
 const previewRoom = params.get("room");
 const previewPositionX = previewRoom === "cinema" ? CINEMA_ROOM_X : 0;
 const previewPositionZ = previewRoom === "cinema"
@@ -206,6 +206,58 @@ const COPY = {
     languageSwitch: "English",
     languageSwitchLabel: "View the gallery in English",
     exitSign: "SORTIE DE LA GALERIE"
+  },
+  ar: {
+    back: "العودة إلى المجموعة",
+    kicker: "معرض غامر",
+    title: "معرض ARTDACI",
+    instructions: "استخدم الزناد أو قرص اليد للاختيار والانتقال. A/X للتشغيل والإيقاف، وB/Y لإعادة التشغيل، واضغط عصا التحكم لكتم الصوت.",
+    enter: "دخول المعرض بالواقع الافتراضي",
+    exit: "الخروج من الواقع الافتراضي",
+    count: "أربع روائع فنية",
+    loading: "جارٍ إعداد المعرض...",
+    ready: "المعرض جاهز. افتح هذه الصفحة في جهاز الواقع الافتراضي ثم ادخل.",
+    unsupported: "معاينة المعرض جاهزة. للتجربة الغامرة افتحها في متصفح Meta Quest أو جهاز WebXR.",
+    failed: "تعذر تحميل المعرض.",
+    playAudio: "تشغيل الصوت",
+    pauseAudio: "إيقاف مؤقت",
+    restartAudio: "إعادة التشغيل",
+    muteAudio: "كتم الصوت",
+    unmuteAudio: "تشغيل الصوت",
+    loadingModels: "جارٍ تحميل النماذج ثلاثية الأبعاد...",
+    modelsReady: "نماذج اللوحات وأعمال فيرمير ثلاثية الأبعاد جاهزة.",
+    exitGallery: "الخروج إلى المجموعة",
+    individualExperiences: "تجارب فردية",
+    paintingsRoom: "اللوحات",
+    modelsRoom: "نماذج ثلاثية الأبعاد",
+    bedroomRoom: "غرفة نوم فان غوخ",
+    bedroomLifeSize: "إعادة بناء بالحجم الحقيقي",
+    reimaginedRoom: "روائع معاد تخيلها",
+    reimaginedSubtitle: "أيقونات مألوفة، حكايات جديدة",
+    fastTravel: "انتقال سريع بين القاعات",
+    bedroomVrWorld: "زيارة عالم غرفة النوم",
+    leonardoStudioVrWorld: "زيارة محترف ليوناردو بالواقع الافتراضي",
+    playVideo: "الزناد: تشغيل / إيقاف",
+    videoPlay: "تشغيل الفيديو",
+    videoPause: "إيقاف الفيديو مؤقتاً",
+    videoRestart: "إعادة الفيديو",
+    videoMute: "كتم الفيديو",
+    videoUnmute: "تشغيل صوت الفيديو",
+    cinema: "سينما ARTDACI",
+    cinemaRoom: "قاعة السينما",
+    cinemaEnter: "دخول السينما",
+    cinemaReturn: "العودة إلى الأعمال المعاد تخيلها",
+    cinemaLibrary: "اختر فيلماً",
+    cinemaSit: "اجلس وشاهد",
+    cinemaPrevious: "السابق",
+    cinemaNext: "التالي",
+    cinemaBack: "−10 ثوانٍ",
+    cinemaForward: "+10 ثوانٍ",
+    cinemaPlayPause: "تشغيل / إيقاف",
+    cinemaSound: "تشغيل / كتم الصوت",
+    languageSwitch: "English",
+    languageSwitchLabel: "View the gallery in English",
+    exitSign: "الخروج من المعرض"
   }
 };
 const text = COPY[lang];
@@ -305,9 +357,10 @@ async function init() {
 
 function applyCopy() {
   document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
   document.title = `DACIART — ${text.title}`;
   document.getElementById("gallery-back").textContent = text.back;
-  document.getElementById("gallery-back").href = lang === "fr" ? "index-fr.html" : "index.html";
+  document.getElementById("gallery-back").href = lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html";
   document.getElementById("gallery-kicker").textContent = text.kicker;
   document.getElementById("gallery-title").textContent = text.title;
   document.getElementById("gallery-instructions").textContent = text.instructions;
@@ -325,7 +378,7 @@ function applyCopy() {
   videoForwardButton.textContent = text.cinemaForward;
   videoSelect.setAttribute("aria-label", text.cinemaLibrary);
   document.getElementById("gallery-exit-link").textContent = text.exitGallery;
-  document.getElementById("gallery-exit-link").href = lang === "fr" ? "index-fr.html" : "index.html";
+  document.getElementById("gallery-exit-link").href = lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html";
   document.getElementById("gallery-bedroom-world-link").textContent = text.bedroomVrWorld;
   document.getElementById("gallery-bedroom-world-link").href = BEDROOM_VR_WORLD_URL;
   document.getElementById("gallery-leonardo-world-link").textContent = text.leonardoStudioVrWorld;
@@ -335,7 +388,7 @@ function applyCopy() {
   document.getElementById("gallery-experiences-link").textContent = text.individualExperiences;
   document.getElementById("gallery-experiences-link").href = `space.html?painting=mona-lisa&lang=${lang}`;
   const languageSwitch = document.getElementById("gallery-language-switch");
-  const targetLang = lang === "fr" ? "en" : "fr";
+  const targetLang = lang === "en" ? "fr" : lang === "fr" ? "ar" : "en";
   const targetParams = new URLSearchParams(location.search);
   targetParams.set("lang", targetLang);
   languageSwitch.textContent = text.languageSwitch;
@@ -618,7 +671,7 @@ function addLouvrePaintingsRoomDecor() {
 }
 
 function addNavigationSigns() {
-  const collectionUrl = lang === "fr" ? "index-fr.html" : "index.html";
+  const collectionUrl = lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html";
   createWallSign(text.paintingsRoom, [0, 3.58, -4.88], 0, { width: 2.1, height: 0.58 });
   createWallSign(text.modelsRoom, [-5.86, 3.34, 10], Math.PI / 2, { width: 3.4 });
   createWallSign(`${text.modelsRoom}  →`, [0, 3.47, 4.88], Math.PI, {
@@ -985,7 +1038,7 @@ function createReimaginedHotspot(title, placement, artwork) {
   ring.position.y = 0.006;
   group.add(ring);
 
-  const marker = makeLabel(`${lang === "fr" ? "Voir" : "View"}\n${title}`);
+  const marker = makeLabel(`${lang === "ar" ? "شاهد" : lang === "fr" ? "Voir" : "View"}\n${title}`);
   marker.position.set(0, 0.035, 0.64);
   marker.rotation.x = -Math.PI / 2;
   marker.scale.set(1.35, 0.32, 1);
@@ -1261,7 +1314,7 @@ function setCinemaVideo(exhibit, index, autoplay = true) {
   exhibit.playlistIndex = (index + CINEMA_VIDEO_LIBRARY.length) % CINEMA_VIDEO_LIBRARY.length;
   exhibit.title = item.title;
   exhibit.src = item.src;
-  const companionAudioSrc = lang === "fr" && item.audioSrcFr ? item.audioSrcFr : item.audioSrc;
+  const companionAudioSrc = (lang === "fr" || lang === "ar") && item.audioSrcFr ? item.audioSrcFr : item.audioSrc;
   exhibit.video.src = item.src;
   exhibit.video.currentTime = 0;
   exhibit.video.muted = logicalMuted;
@@ -1524,7 +1577,7 @@ function addFurnitureGalleryModel(item, model) {
   display.add(model);
 
   const localizedTitle = item.title[lang] || item.title.en;
-  const label = makeLabel(`${lang === "fr" ? "Modèle 3D" : "3D model"}\n${localizedTitle}`);
+  const label = makeLabel(`${lang === "ar" ? "نموذج ثلاثي الأبعاد" : lang === "fr" ? "Modèle 3D" : "3D model"}\n${localizedTitle}`);
   label.position.set(0, 0.5, -0.92);
   label.rotation.y = Math.PI;
   label.rotation.x = -Math.PI / 5;
@@ -1585,7 +1638,7 @@ async function addGalleryModel(exhibit, modelSrc) {
   display.add(model);
 
   const title = localizedTitle(exhibit.painting);
-  const label = makeLabel(`${lang === "fr" ? "Œuvre 3D" : "3D exhibit"}\n${title}`);
+  const label = makeLabel(`${lang === "ar" ? "عمل ثلاثي الأبعاد" : lang === "fr" ? "Œuvre 3D" : "3D exhibit"}\n${title}`);
   label.position.set(0, 0.43, -0.76);
   label.rotation.y = Math.PI;
   label.rotation.x = -Math.PI / 5;
@@ -1715,7 +1768,7 @@ function createBedroomEntranceHotspot(exhibit) {
   ring.position.y = 0.007;
   group.add(ring);
 
-  const marker = makeLabel(`${lang === "fr" ? "Entrer dans" : "Enter"}\n${localizedTitle(exhibit.painting)}`);
+  const marker = makeLabel(`${lang === "ar" ? "ادخل" : lang === "fr" ? "Entrer dans" : "Enter"}\n${localizedTitle(exhibit.painting)}`);
   marker.position.set(0, 0.04, -0.82);
   marker.rotation.x = -Math.PI / 2;
   marker.scale.set(1.65, 0.42, 1);
@@ -1773,7 +1826,7 @@ function createModelTeleportHotspot(exhibit, display) {
   ring.position.y = 0.006;
   group.add(ring);
 
-  const marker = makeLabel(`${lang === "fr" ? "Explorer en 3D" : "Explore in 3D"}\n${title}`);
+  const marker = makeLabel(`${lang === "ar" ? "استكشف ثلاثي الأبعاد" : lang === "fr" ? "Explorer en 3D" : "Explore in 3D"}\n${title}`);
   marker.position.set(0, 0.035, 0.62);
   marker.rotation.x = -Math.PI / 2;
   marker.scale.set(1.25, 0.32, 1);
@@ -1815,7 +1868,7 @@ function createTeleportHotspot(title, placement, artwork) {
   ring.position.y = 0.006;
   group.add(ring);
 
-  const marker = makeLabel(`${lang === "fr" ? "Écouter" : "Listen"}\n${title}`);
+  const marker = makeLabel(`${lang === "ar" ? "استمع" : lang === "fr" ? "Écouter" : "Listen"}\n${title}`);
   marker.position.set(0, 0.035, 0.68);
   marker.rotation.x = -Math.PI / 2;
   marker.scale.set(1.25, 0.32, 1);
@@ -1826,7 +1879,9 @@ function createTeleportHotspot(title, placement, artwork) {
 async function loadAudioGuide(exhibit) {
   const guides = exhibit.painting.media?.audioOverviews || exhibit.painting.media?.audioOverview || [];
   const list = Array.isArray(guides) ? guides : [guides];
-  const guide = list.find((item) => item?.lang === lang)
+  const mediaLang = lang === "ar" ? "fr" : lang;
+  const guide = list.find((item) => item?.lang === mediaLang)
+    || list.find((item) => item?.lang === "fr")
     || list.find((item) => item?.lang === "en")
     || list[0];
   if (!guide?.src) return;
@@ -1872,6 +1927,14 @@ function createVoiceCleanupFilters() {
 }
 
 function localizedTitle(painting) {
+  if (lang === "ar") {
+    return {
+      "mona-lisa": "الموناليزا",
+      "van-gogh": "بورتريه ذاتي",
+      "van-gogh-bedroom": "غرفة النوم",
+      "vermeer-girl-with-a-pearl-earring": "الفتاة ذات القرط اللؤلؤي"
+    }[painting.slug] || painting.title || "";
+  }
   if (lang !== "fr") return painting.title || "";
   const titles = {
     "mona-lisa": "La Joconde",

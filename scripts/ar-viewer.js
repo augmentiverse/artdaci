@@ -126,6 +126,39 @@ const UI_TEXT = {
   }
 };
 
+UI_TEXT.ar = {
+  ...UI_TEXT.fr,
+  ready: "جاهز. اضغط تشغيل الكاميرا واسمح بالوصول إليها.",
+  starting: "جارٍ التشغيل...",
+  startCamera: "تشغيل الكاميرا",
+  back: "رجوع",
+  searching: "جارٍ البحث",
+  locked: "تم التثبيت",
+  preparing: "إعداد الواقع المعزز",
+  checkingCamera: "التحقق من إذن الكاميرا...",
+  audio: "الصوت",
+  stop: "إيقاف",
+  video: "الفيديو",
+  hideVideo: "إخفاء الفيديو",
+  space: "المساحة",
+  rotate: "تدوير",
+  reset: "إعادة الضبط",
+  modelChoice: "اختيار النموذج",
+  noVideoTitle: "لا يوجد فيديو",
+  noVideoBody: "لا تحتوي هذه اللوحة على طبقة فيديو حالياً.",
+  videoReadyTitle: "الفيديو جاهز",
+  modelLoading: "جارٍ تحميل نموذج {title} ثلاثي الأبعاد...",
+  trackingReady: "تتبّع الصورة جاهز، والنموذج قيد التحميل.",
+  engineLoading: "جارٍ تحميل هدف الصورة وإعداد محرك الواقع المعزز...",
+  cameraRequest: "طلب إذن الكاميرا...",
+  audioUnavailableTitle: "الصوت غير متاح",
+  audioGuideNotReady: "الدليل الصوتي غير جاهز بعد.",
+  catalogue: "الكتالوج",
+  intro: "مقدمة",
+  tryAgain: "حاول مجدداً",
+  hotspot: "نقطة تفاعلية"
+};
+
 const AR_TRANSLATIONS = {
   fr: {
     "mona-lisa": {
@@ -313,7 +346,7 @@ function selectPainting() {
   const params = new URLSearchParams(window.location.search);
   const slug = params.get("painting") || "mona-lisa";
   CONFIG.slug = PAINTINGS[slug] ? slug : "mona-lisa";
-  CONFIG.lang = params.get("lang") === "fr" ? "fr" : "en";
+  CONFIG.lang = ["en", "fr", "ar"].includes(params.get("lang")) ? params.get("lang") : "en";
   CONFIG.manifest = PAINTINGS[CONFIG.slug];
 }
 
@@ -323,7 +356,9 @@ function t(key) {
 
 function applyStaticLanguage() {
   document.documentElement.lang = CONFIG.lang;
+  document.documentElement.dir = CONFIG.lang === "ar" ? "rtl" : "ltr";
   document.querySelector(".icon-link").textContent = t("back");
+  document.querySelector(".icon-link").href = CONFIG.lang === "ar" ? "index-ar.html" : CONFIG.lang === "fr" ? "index-fr.html" : "index.html";
   document.getElementById("tracking-status").textContent = t("searching");
   document.querySelector("#loading-screen h1").textContent = t("preparing");
   const startButton = document.getElementById("start-ar");
@@ -639,9 +674,10 @@ function configureFromManifest(manifest) {
 
 function getLocalizedAudioGuide(manifest) {
   const guides = manifest.media?.audioGuides || [];
-  const localizedGuide = guides.find((guide) => guide.lang === CONFIG.lang);
+  const mediaLang = CONFIG.lang === "ar" ? "fr" : CONFIG.lang;
+  const localizedGuide = guides.find((guide) => guide.lang === mediaLang);
   if (localizedGuide) return localizedGuide;
-  if (CONFIG.lang !== "en") return guides.find((guide) => guide.lang === "en") || null;
+  if (CONFIG.lang !== "en") return guides.find((guide) => guide.lang === "fr") || guides.find((guide) => guide.lang === "en") || null;
   return null;
 }
 

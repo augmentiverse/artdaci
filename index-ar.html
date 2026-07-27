@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#191512" />
+    <title>ARTDACI - روائع فنية حية</title>
+    <link rel="stylesheet" href="styles/site.css" />
+  </head>
+  <body>
+    <main class="home-shell">
+      <section class="book-hero index-hero" aria-labelledby="book-title">
+        <article class="intro">
+          <p class="eyebrow">كتاب فني مطبوع مع تجارب رقمية اختيارية</p>
+          <h1 id="book-title">روائع فنية حية</h1>
+          <p class="dek">كتاب فني بأسلوب كتالوج المتاحف، يمكن قراءته والاستمتاع به من دون جهاز. وتضيف التجارب الرقمية طبقة اختيارية تشمل الصوت والفيديو والواقع المعزز والنماذج ثلاثية الأبعاد والواقع الافتراضي.</p>
+          <div class="actions" aria-label="الإجراءات الرئيسية">
+            <a class="button primary" href="#painting-index">فتح فهرس اللوحات</a>
+            <a class="button primary" href="gallery-vr.html?lang=ar">زيارة المعرض الافتراضي</a>
+            <a class="button primary" href="book-3d.html?lang=ar">فتح الكتاب الحي ثلاثي الأبعاد</a>
+            <a class="button" href="index.html" lang="en" dir="ltr">English</a>
+            <a class="button" href="index-fr.html" lang="fr" dir="ltr">Français</a>
+          </div>
+          <dl class="facts">
+            <div><dt>الصيغة</dt><dd>كتالوج متحفي مطبوع فاخر</dd></div>
+            <div><dt>المحتوى</dt><dd>السياق والتحليل والتقنيات والتسلسل الزمني</dd></div>
+            <div><dt>الطبقة الرقمية</dt><dd>صوت وفيديو وواقع معزز ونماذج ثلاثية الأبعاد</dd></div>
+            <div><dt>المجموعة</dt><dd>فهرس قابل للتوسّع</dd></div>
+          </dl>
+        </article>
+      </section>
+
+      <section class="atlas-callout" aria-labelledby="arabic-intro">
+        <div>
+          <p class="eyebrow">من الصفحة إلى الفضاء</p>
+          <h2 id="arabic-intro">اقرأ اللوحة، ثم ادخل عالمها.</h2>
+          <p>يمكنك مسح الصفحات، الاستماع إلى الشروحات، مشاهدة المشاهد المعاد تخيلها، وضع النماذج في غرفتك أو زيارة المعرض وعوالمه الافتراضية بواسطة الهاتف أو جهاز الواقع الافتراضي.</p>
+        </div>
+        <div class="atlas-pillars">
+          <article><strong>اقرأ</strong><span>صفحات مطبوعة واضحة وغنية بالمعلومات.</span></article>
+          <article><strong>امسح</strong><span>اكتشف محتوى الواقع المعزز فوق اللوحة.</span></article>
+          <article><strong>استكشف</strong><span>حرّك النماذج ثلاثية الأبعاد وضعها في مساحتك.</span></article>
+          <article><strong>زُر</strong><span>تجوّل داخل المعرض والعوالم الافتراضية.</span></article>
+        </div>
+      </section>
+
+      <section id="painting-index" class="painting-index" aria-labelledby="index-title">
+        <div class="section-heading">
+          <p class="eyebrow">الفهرس</p>
+          <h2 id="index-title">فهرس اللوحات</h2>
+          <p class="section-dek">ابحث في المجموعة وافتح تجارب الواقع المعزز والصوت والنماذج ثلاثية الأبعاد.</p>
+        </div>
+        <div id="catalogue-app" class="catalogue-app"
+          data-lang="ar"
+          data-manifests="content/paintings/mona-lisa.json,content/paintings/van-gogh.json,content/paintings/van-gogh-bedroom.json,content/paintings/vermeer-girl-with-a-pearl-earring.json"
+          aria-live="polite"></div>
+      </section>
+    </main>
+    <script type="module" src="scripts/catalogue.js?v=5"></script>
+  </body>
+</html>

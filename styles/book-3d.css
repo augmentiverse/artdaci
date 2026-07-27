@@ -6,6 +6,18 @@
   --wine: #7d2f3e;
 }
 
+html[dir="rtl"] body {
+  direction: rtl;
+  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+}
+
+html[dir="rtl"] .book-toolbar,
+html[dir="rtl"] .book-hint,
+html[dir="rtl"] .experience-header,
+html[dir="rtl"] .experience-body {
+  text-align: right;
+}
+
 * { box-sizing: border-box; }
 
 html, body {
