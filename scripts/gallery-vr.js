@@ -484,6 +484,7 @@ function buildRoom() {
   addLouvrePaintingsRoomDecor();
   addCinemaRoomArchitecture();
   addNavigationSigns();
+  addCinemaEntranceHotspot();
   addFastTravelStations();
 }
 
@@ -656,16 +657,18 @@ function addNavigationSigns() {
     height: 0.58,
     accent: true
   });
-  createWallSign(text.cinemaEnter, [5.85, 1.35, 37.2], -Math.PI / 2, {
-    width: 2.35,
-    height: 0.52,
+  createWallSign(text.cinemaEnter, [6.02, 3.42, 34], -Math.PI / 2, {
+    width: 1.9,
+    height: 0.34,
     destination: [CINEMA_ROOM_X, 0, 32],
-    visitorYaw: Math.PI
+    visitorYaw: Math.PI,
+    compact: true
   });
-  createWallSign(text.leonardoStudioVrWorld, [-5.85, 1.85, 37], Math.PI / 2, {
-    width: 3.2,
-    height: 0.56,
-    exitUrl: LEONARDO_STUDIO_VR_WORLD_URL
+  createWallSign(text.leonardoStudioVrWorld, [-5.85, 3.5, 37.15], Math.PI / 2, {
+    width: 1.45,
+    height: 0.27,
+    exitUrl: LEONARDO_STUDIO_VR_WORLD_URL,
+    compact: true
   });
   createWallSign(text.cinemaReturn, [8.12, 1.25, 30.6], Math.PI / 2, {
     width: 2.65,
@@ -680,25 +683,70 @@ function addNavigationSigns() {
     accent: true
   });
   createWallSign(text.bedroomVrWorld, [-5.85, 1.75, 24.5], Math.PI / 2, {
-    width: 3.55,
-    height: 0.64,
-    exitUrl: BEDROOM_VR_WORLD_URL
+    width: 1.75,
+    height: 0.32,
+    exitUrl: BEDROOM_VR_WORLD_URL,
+    compact: true
   });
-  createWallSign(text.exitSign, [0, 0.62, -4.86], 0, {
-    width: 1.55,
-    height: 0.5,
-    exitUrl: collectionUrl
+  createWallSign(text.exitSign, [0, 0.5, -4.86], 0, {
+    width: 0.9,
+    height: 0.28,
+    exitUrl: collectionUrl,
+    compact: true
   });
-  createWallSign(text.exitSign, [5.86, 0.72, 12.7], -Math.PI / 2, {
-    width: 1.55,
-    height: 0.5,
-    exitUrl: collectionUrl
+  createWallSign(text.exitSign, [5.86, 3.48, 12.7], -Math.PI / 2, {
+    width: 0.9,
+    height: 0.28,
+    exitUrl: collectionUrl,
+    compact: true
   });
-  createWallSign(text.exitSign, [-5.86, 0.72, 37.6], Math.PI / 2, {
-    width: 1.55,
-    height: 0.5,
-    exitUrl: collectionUrl
+  createWallSign(text.exitSign, [-5.86, 3.12, 37.15], Math.PI / 2, {
+    width: 0.9,
+    height: 0.25,
+    exitUrl: collectionUrl,
+    compact: true
   });
+}
+
+function addCinemaEntranceHotspot() {
+  const group = new THREE.Group();
+  group.position.set(5.15, 0.02, 34);
+  group.userData.destination = new THREE.Vector3(CINEMA_ROOM_X, 0, 32);
+  group.userData.visitorYaw = Math.PI;
+
+  const target = new THREE.Mesh(
+    new THREE.CircleGeometry(0.52, 48),
+    new THREE.MeshBasicMaterial({
+      color: 0xb9914c,
+      transparent: true,
+      opacity: 0.34,
+      side: THREE.DoubleSide
+    })
+  );
+  target.rotation.x = -Math.PI / 2;
+  target.userData.hotspot = group;
+  group.add(target);
+  teleportTargets.push(target);
+
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(0.39, 0.52, 48),
+    new THREE.MeshBasicMaterial({
+      color: 0xffd79a,
+      transparent: true,
+      opacity: 0.95,
+      side: THREE.DoubleSide
+    })
+  );
+  ring.rotation.x = -Math.PI / 2;
+  ring.position.y = 0.007;
+  group.add(ring);
+
+  const label = makeLabel(text.cinemaEnter);
+  label.position.set(0, 0.035, 0.7);
+  label.rotation.x = -Math.PI / 2;
+  label.scale.set(1.1, 0.27, 1);
+  group.add(label);
+  scene.add(group);
 }
 
 function createWallSign(message, position, rotationY, options = {}) {
@@ -716,7 +764,9 @@ function createWallSign(message, position, rotationY, options = {}) {
   context.fillStyle = "#fffaf1";
   context.textAlign = "center";
   context.textBaseline = "middle";
-  let wallFontSize = message.length > 28 ? 88 : message.length > 18 ? 104 : 126;
+  let wallFontSize = options.compact
+    ? (message.length > 28 ? 60 : message.length > 18 ? 68 : 76)
+    : (message.length > 28 ? 88 : message.length > 18 ? 104 : 126);
   context.font = `800 ${wallFontSize}px Arial`;
   while (context.measureText(message).width > canvas.width - 110) {
     wallFontSize = Math.max(wallFontSize - 4, 58);
@@ -769,17 +819,20 @@ function addFastTravelStations() {
 
   stations.forEach((station) => {
     const [x, y, z] = station.position;
-    createWallSign(text.fastTravel, [x, y, z], station.rotationY, {
-      width: 1.15,
-      height: 0.25,
-      accent: true
+    const compactTop = 3.72;
+    createWallSign(text.fastTravel, [x, compactTop, z], station.rotationY, {
+      width: 0.86,
+      height: 0.17,
+      accent: true,
+      compact: true
     });
     rooms.filter((room) => room.id !== station.room).forEach((room, index) => {
-      createWallSign(room.label, [x, y - 0.31 - index * 0.29, z], station.rotationY, {
-        width: 1.15,
-        height: 0.23,
+      createWallSign(room.label, [x, compactTop - 0.21 - index * 0.19, z], station.rotationY, {
+        width: 0.86,
+        height: 0.15,
         destination: room.destination,
-        visitorYaw: room.visitorYaw
+        visitorYaw: room.visitorYaw,
+        compact: true
       });
     });
   });
@@ -860,8 +913,8 @@ async function buildReimaginedExhibition() {
     { position: [3.7, 1.72, 38.92], rotationY: Math.PI, hotspot: [3.7, 36.45], visitorYaw: Math.PI },
     { position: [-5.92, 1.9, 32.2], rotationY: Math.PI / 2, hotspot: [-3.45, 32.2], visitorYaw: Math.PI / 2 },
     { position: [-5.92, 1.9, 35.8], rotationY: Math.PI / 2, hotspot: [-3.45, 35.8], visitorYaw: Math.PI / 2 },
-    { position: [5.92, 1.9, 32.2], rotationY: -Math.PI / 2, hotspot: [3.45, 32.2], visitorYaw: -Math.PI / 2 },
-    { position: [5.92, 1.9, 35.8], rotationY: -Math.PI / 2, hotspot: [3.45, 35.8], visitorYaw: -Math.PI / 2 }
+    { position: [5.92, 1.9, 30.85], rotationY: -Math.PI / 2, hotspot: [3.45, 30.85], visitorYaw: -Math.PI / 2 },
+    { position: [5.92, 1.9, 37.15], rotationY: -Math.PI / 2, hotspot: [3.45, 37.15], visitorYaw: -Math.PI / 2 }
   ];
 
   await Promise.all(REIMAGINED_ARTWORKS.map(async (item, index) => {
@@ -2049,8 +2102,8 @@ async function toggleVR() {
       visitor.rotation.set(0, previewRotationY, 0);
     }, { once: true });
     await renderer.xr.setSession(currentSession);
-    visitor.position.set(0, 0, 3.7);
-    visitor.rotation.set(0, 0, 0);
+    visitor.position.set(previewPositionX, 0, previewPositionZ);
+    visitor.rotation.set(0, previewRotationY, 0);
     await audioListener.context.resume();
     enterButton.textContent = text.exit;
   } catch (error) {
@@ -2207,7 +2260,7 @@ function updateLocomotion(delta) {
     if (source.handedness === "left") {
       visitor.position.addScaledVector(right, x * delta * 1.8);
       visitor.position.addScaledVector(forward, -y * delta * 1.8);
-      visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, -5.3, 5.3);
+      visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, -5.3, 19.3);
       visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, -4.3, 38.3);
     }
 
