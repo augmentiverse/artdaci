@@ -6,6 +6,7 @@ const MANIFEST_URLS = [
 ];
 
 const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae";
+const LEONARDO_STUDIO_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/862ab5f6-8608-469c-a840-8cb10f3859ae";
 
 const BOOK_IMAGE_GALLERIES = {
   "mona-lisa": [
@@ -199,7 +200,10 @@ function buildPageDefinitions(manifests) {
       manifest,
       hotspots: [
         { label: "VR", x: 82, y: 24, type: manifest.slug === "van-gogh-bedroom" ? "world" : "vr" },
-        { label: "◉", x: 82, y: 38, type: "gallery" }
+        { label: "◉", x: 82, y: 38, type: "gallery" },
+        ...(manifest.slug === "mona-lisa"
+          ? [{ label: "VR+", x: 82, y: 52, type: "studio", url: LEONARDO_STUDIO_VR_WORLD_URL }]
+          : [])
       ]
     });
     pages.push({
@@ -617,6 +621,7 @@ function openExperience(definition, hotspot) {
     ar: lang === "fr" ? "Réalité augmentée" : "Augmented reality",
     vr: lang === "fr" ? "Scène VR" : "VR scene",
     world: lang === "fr" ? "Monde VR" : "VR world",
+    studio: lang === "fr" ? "Atelier de Léonard en VR" : "Leonardo’s Studio in VR",
     gallery: lang === "fr" ? "Galerie immersive" : "Immersive gallery"
   }[hotspot.type] || "Immersive layer";
 
@@ -649,6 +654,20 @@ function openExperience(definition, hotspot) {
           : "Explore Van Gogh’s Bedroom as an immersive VR world."}</p>
         <a href="${BEDROOM_VR_WORLD_URL}">
           ${lang === "fr" ? "Ouvrir le monde VR de La Chambre" : "Open The Bedroom VR World"}
+        </a>
+        <small>${lang === "fr"
+          ? "Le monde VR s’ouvrira directement dans cette fenêtre."
+          : "The VR world will open directly in this window."}</small>
+      </div>
+    `;
+  } else if (hotspot.type === "studio") {
+    experienceBody.innerHTML = `
+      <div class="experience-world">
+        <p>${lang === "fr"
+          ? "Entrez dans l’atelier de Léonard de Vinci et découvrez son univers en VR."
+          : "Enter Leonardo da Vinci’s studio and explore his world in VR."}</p>
+        <a href="${hotspot.url || LEONARDO_STUDIO_VR_WORLD_URL}">
+          ${lang === "fr" ? "Ouvrir l’atelier de Léonard en VR" : "Open Leonardo’s Studio in VR"}
         </a>
         <small>${lang === "fr"
           ? "Le monde VR s’ouvrira directement dans cette fenêtre."

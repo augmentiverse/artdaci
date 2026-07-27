@@ -20,8 +20,24 @@ const GALLERY_MODEL_OVERRIDES = {
   "van-gogh-bedroom": "assets/paintings/van-gogh-bedroom/bed.glb"
 };
 
+const FURNITURE_MODEL_EXHIBITS = [
+  {
+    id: "sofa-a",
+    title: { en: "Sofa A", fr: "Canapé A" },
+    src: "assets/paintings/fourniture/sofa-a.glb",
+    position: [-2.3, 7.25]
+  },
+  {
+    id: "sofa-b",
+    title: { en: "Sofa B", fr: "Canapé B" },
+    src: "assets/paintings/fourniture/sofa-b.glb",
+    position: [2.3, 7.25]
+  }
+];
+
 const STANDING_VAN_GOGH_MODEL = "assets/paintings/van-gogh/vangogh_istanding.glb";
 const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae";
+const LEONARDO_STUDIO_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/862ab5f6-8608-469c-a840-8cb10f3859ae";
 const CINEMA_ROOM_X = 14;
 const CINEMA_VIDEO_LIBRARY = [
   {
@@ -105,7 +121,7 @@ const COPY = {
     muteAudio: "Mute",
     unmuteAudio: "Unmute",
     loadingModels: "Loading 3D exhibits…",
-    modelsReady: "Four paintings and four walk-around 3D exhibits are ready.",
+    modelsReady: "The painting models and two walk-around sofa exhibits are ready.",
     exitGallery: "Exit to collection",
     individualExperiences: "Individual experiences",
     paintingsRoom: "PAINTINGS",
@@ -116,6 +132,7 @@ const COPY = {
     reimaginedSubtitle: "FAMILIAR ICONS, NEW STORIES",
     fastTravel: "QUICK ROOM ACCESS",
     bedroomVrWorld: "VISIT THE BEDROOM VR WORLD",
+    leonardoStudioVrWorld: "VISIT LEONARDO'S STUDIO IN VR",
     playVideo: "TRIGGER: PLAY / PAUSE",
     videoPlay: "Play video",
     videoPause: "Pause video",
@@ -128,12 +145,12 @@ const COPY = {
     cinemaReturn: "RETURN TO REIMAGINED ART",
     cinemaLibrary: "CHOOSE A FILM",
     cinemaSit: "SIT & WATCH",
-    cinemaPrevious: "PREVIOUS",
-    cinemaNext: "NEXT",
-    cinemaBack: "−10 SEC",
-    cinemaForward: "+10 SEC",
-    cinemaPlayPause: "PLAY / PAUSE",
-    cinemaSound: "SOUND ON / OFF",
+    cinemaPrevious: "Previous",
+    cinemaNext: "Next",
+    cinemaBack: "−10 seconds",
+    cinemaForward: "+10 seconds",
+    cinemaPlayPause: "Play / Pause",
+    cinemaSound: "Sound on / off",
     languageSwitch: "Français",
     languageSwitchLabel: "Voir la galerie en français",
     exitSign: "EXIT GALLERY"
@@ -156,7 +173,7 @@ const COPY = {
     muteAudio: "Couper le son",
     unmuteAudio: "Rétablir le son",
     loadingModels: "Chargement des œuvres 3D…",
-    modelsReady: "Quatre tableaux et quatre œuvres 3D observables sous tous les angles sont prêts.",
+    modelsReady: "Les modèles des tableaux et deux canapés 3D observables sous tous les angles sont prêts.",
     exitGallery: "Sortir vers la collection",
     individualExperiences: "Expériences individuelles",
     paintingsRoom: "TABLEAUX",
@@ -167,6 +184,7 @@ const COPY = {
     reimaginedSubtitle: "NOUVEAUX REGARDS SUR DES ICÔNES",
     fastTravel: "ACCÈS RAPIDE AUX SALLES",
     bedroomVrWorld: "VISITER LA CHAMBRE EN MONDE VR",
+    leonardoStudioVrWorld: "VISITER L’ATELIER DE LÉONARD EN VR",
     playVideo: "GÂCHETTE : LECTURE / PAUSE",
     videoPlay: "Lire la vidéo",
     videoPause: "Mettre la vidéo en pause",
@@ -179,12 +197,12 @@ const COPY = {
     cinemaReturn: "RETOUR AUX ŒUVRES RÉIMAGINÉES",
     cinemaLibrary: "CHOISIR UN FILM",
     cinemaSit: "S’ASSEOIR ET REGARDER",
-    cinemaPrevious: "PRÉCÉDENT",
-    cinemaNext: "SUIVANT",
-    cinemaBack: "−10 SEC",
-    cinemaForward: "+10 SEC",
-    cinemaPlayPause: "LECTURE / PAUSE",
-    cinemaSound: "SON ACTIVÉ / COUPÉ",
+    cinemaPrevious: "Précédent",
+    cinemaNext: "Suivant",
+    cinemaBack: "−10 secondes",
+    cinemaForward: "+10 secondes",
+    cinemaPlayPause: "Lecture / Pause",
+    cinemaSound: "Son activé / coupé",
     languageSwitch: "English",
     languageSwitchLabel: "View the gallery in English",
     exitSign: "SORTIE DE LA GALERIE"
@@ -310,6 +328,8 @@ function applyCopy() {
   document.getElementById("gallery-exit-link").href = lang === "fr" ? "index-fr.html" : "index.html";
   document.getElementById("gallery-bedroom-world-link").textContent = text.bedroomVrWorld;
   document.getElementById("gallery-bedroom-world-link").href = BEDROOM_VR_WORLD_URL;
+  document.getElementById("gallery-leonardo-world-link").textContent = text.leonardoStudioVrWorld;
+  document.getElementById("gallery-leonardo-world-link").href = LEONARDO_STUDIO_VR_WORLD_URL;
   document.getElementById("gallery-experiences-link").textContent = text.individualExperiences;
   document.getElementById("gallery-experiences-link").href = `space.html?painting=mona-lisa&lang=${lang}`;
   const languageSwitch = document.getElementById("gallery-language-switch");
@@ -626,6 +646,11 @@ function addNavigationSigns() {
     height: 0.52,
     destination: [CINEMA_ROOM_X, 0, 32],
     visitorYaw: Math.PI
+  });
+  createWallSign(text.leonardoStudioVrWorld, [-5.85, 1.85, 37], Math.PI / 2, {
+    width: 3.2,
+    height: 0.56,
+    exitUrl: LEONARDO_STUDIO_VR_WORLD_URL
   });
   createWallSign(text.cinemaReturn, [8.12, 1.25, 30.6], Math.PI / 2, {
     width: 2.65,
@@ -998,23 +1023,24 @@ function buildReimaginedVideoExhibits() {
     const button = createCinemaButton(control.label, {
       type: control.type,
       value: control.value,
-      position: [-4.5, 3.45 - index * 0.39, 36.02],
+      position: [-3.75, 3.45 - index * 0.39, 36.02],
       width: 1.85,
       height: 0.34,
-      material: blueMaterial
+      material: blueMaterial,
+      compact: true
     });
     cinema.add(button);
   });
 
   const libraryHeading = makeLabel(text.cinemaLibrary);
-  libraryHeading.position.set(4.5, 3.72, 35.98);
+  libraryHeading.position.set(3.75, 3.72, 35.98);
   libraryHeading.scale.set(1.65, 0.42, 1);
   cinema.add(libraryHeading);
   CINEMA_VIDEO_LIBRARY.forEach((item, index) => {
     const button = createCinemaButton(`${index + 1}. ${localizedCinemaTitle(item)}`, {
       type: "select",
       value: index,
-      position: [4.5, 3.35 - index * 0.42, 35.98],
+      position: [3.75, 3.35 - index * 0.42, 35.98],
       width: 1.85,
       height: 0.36,
       material: index === 0 ? goldMaterial : blueMaterial
@@ -1022,7 +1048,7 @@ function buildReimaginedVideoExhibits() {
     cinema.add(button);
   });
 
-  [-4.5, 4.5].forEach((x) => {
+  [-3.75, 3.75].forEach((x) => {
     const console = new THREE.Mesh(new THREE.BoxGeometry(2.18, 3.42, 0.18), darkMaterial);
     console.position.set(x, 2.02, 36.2);
     cinema.add(console);
@@ -1046,19 +1072,29 @@ function createCinemaButton(label, options) {
   canvas.width = 900;
   canvas.height = 220;
   const context = canvas.getContext("2d");
-  context.fillStyle = "#17384a";
+  const background = context.createLinearGradient(0, 0, canvas.width, canvas.height);
+  background.addColorStop(0, options.compact ? "#132331" : "#17384a");
+  background.addColorStop(1, options.compact ? "#0b151e" : "#102b3a");
+  context.fillStyle = background;
   context.fillRect(0, 0, canvas.width, canvas.height);
-  context.strokeStyle = "#a9efff";
-  context.lineWidth = 10;
-  context.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
-  context.fillStyle = "#fffaf1";
+  context.strokeStyle = options.compact ? "#b99a60" : "#a9efff";
+  context.lineWidth = options.compact ? 5 : 10;
+  context.strokeRect(8, 8, canvas.width - 16, canvas.height - 16);
+  if (options.compact) {
+    context.strokeStyle = "rgba(255, 241, 210, .24)";
+    context.lineWidth = 2;
+    context.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+  }
+  context.fillStyle = options.compact ? "#f0dfbf" : "#fffaf1";
   context.textAlign = "center";
   context.textBaseline = "middle";
-  let size = label.length > 24 ? 46 : label.length > 12 ? 58 : 78;
-  context.font = `800 ${size}px Arial`;
-  while (context.measureText(label).width > canvas.width - 44 && size > 34) {
+  let size = options.compact
+    ? (label.length > 20 ? 34 : label.length > 12 ? 40 : 46)
+    : (label.length > 24 ? 46 : label.length > 12 ? 58 : 78);
+  context.font = options.compact ? `600 ${size}px Georgia` : `800 ${size}px Arial`;
+  while (context.measureText(label).width > canvas.width - 70 && size > 30) {
     size -= 2;
-    context.font = `800 ${size}px Arial`;
+    context.font = options.compact ? `600 ${size}px Georgia` : `800 ${size}px Arial`;
   }
   context.fillText(label, canvas.width / 2, canvas.height / 2);
   const texture = new THREE.CanvasTexture(canvas);
@@ -1353,9 +1389,85 @@ async function buildModelExhibits(paintings) {
       console.error(`3D exhibit unavailable for ${paintings[index]?.slug || "unknown painting"}.`, result.reason);
     }
   });
+  const furnitureLoaded = await buildFurnitureModelExhibits();
   status.textContent = loaded
-    ? `${text.modelsReady} ${loaded}/${paintings.length}`
+    ? `${text.modelsReady} ${loaded + furnitureLoaded}/${paintings.length + FURNITURE_MODEL_EXHIBITS.length}`
     : text.ready;
+}
+
+async function buildFurnitureModelExhibits() {
+  let loaded = 0;
+  const results = await Promise.allSettled(
+    FURNITURE_MODEL_EXHIBITS.map(async (item) => {
+      const gltf = await modelLoader.loadAsync(item.src);
+      addFurnitureGalleryModel(item, gltf.scene);
+      loaded += 1;
+    })
+  );
+  results.forEach((result, index) => {
+    if (result.status === "rejected") {
+      console.error(`Furniture exhibit unavailable for ${FURNITURE_MODEL_EXHIBITS[index].id}.`, result.reason);
+    }
+  });
+  return loaded;
+}
+
+function addFurnitureGalleryModel(item, model) {
+  const display = new THREE.Group();
+  const [x, z] = item.position;
+  display.position.set(x, 0, z);
+  display.userData.furniture = item.id;
+
+  const pedestal = new THREE.Mesh(
+    new THREE.BoxGeometry(2.2, 0.2, 1.55),
+    new THREE.MeshStandardMaterial({ color: 0x314d5d, roughness: 0.76 })
+  );
+  pedestal.position.y = 0.1;
+  pedestal.receiveShadow = true;
+  display.add(pedestal);
+
+  model.updateMatrixWorld(true);
+  let box = new THREE.Box3().setFromObject(model);
+  let size = box.getSize(new THREE.Vector3());
+  if (size.z > size.x) {
+    model.rotation.y = Math.PI / 2;
+    model.updateMatrixWorld(true);
+    box = new THREE.Box3().setFromObject(model);
+    size = box.getSize(new THREE.Vector3());
+  }
+  const scale = 1.92 / Math.max(size.x, 0.001);
+  model.scale.setScalar(scale);
+  model.updateMatrixWorld(true);
+  box = new THREE.Box3().setFromObject(model);
+  const center = box.getCenter(new THREE.Vector3());
+  model.position.set(-center.x, 0.21 - box.min.y, -center.z);
+  model.traverse((node) => {
+    if (!node.isMesh) return;
+    node.castShadow = true;
+    node.receiveShadow = true;
+  });
+  display.add(model);
+
+  const localizedTitle = item.title[lang] || item.title.en;
+  const label = makeLabel(`${lang === "fr" ? "Mobilier 3D" : "3D furniture"}\n${localizedTitle}`);
+  label.position.set(0, 0.5, -0.92);
+  label.rotation.y = Math.PI;
+  label.rotation.x = -Math.PI / 5;
+  label.scale.set(1.72, 0.72, 1);
+  display.add(label);
+
+  const light = new THREE.SpotLight(0xffedcf, 0.82, 5, Math.PI / 5, 0.48);
+  light.position.set(x, 3.4, z + 0.35);
+  light.target = display;
+  scene.add(light);
+  scene.add(display);
+
+  const pseudoExhibit = {
+    painting: { slug: item.id, title: localizedTitle },
+    modelDisplay: display
+  };
+  const hotspot = createModelTeleportHotspot(pseudoExhibit, display);
+  scene.add(hotspot);
 }
 
 function getDefaultModelSource(painting) {

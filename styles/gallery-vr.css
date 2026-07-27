@@ -172,6 +172,13 @@ body {
   font-weight: 800;
 }
 
+.gallery-exit-links .vr-world-link {
+  border-color: #487d8e;
+  color: #07151c;
+  background: #9ed8e8;
+  font-weight: 800;
+}
+
 .gallery-audio-controls .gallery-button {
   min-height: 34px;
   padding: 6px 10px;
