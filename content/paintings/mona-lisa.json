@@ -454,6 +454,28 @@
       }
     ]
   },
+  "externalExperiences": [
+    {
+      "id": "leonardo-studio-vr",
+      "type": "vr-world",
+      "url": "https://marble.worldlabs.ai/worldvr/862ab5f6-8608-469c-a840-8cb10f3859ae",
+      "label": {
+        "en": "Visit Leonardo's Studio in VR",
+        "fr": "Visiter l’atelier de Léonard en VR",
+        "ar": "زيارة محترف ليوناردو بالواقع الافتراضي"
+      }
+    },
+    {
+      "id": "leonardo-studio-enriched",
+      "type": "vr-world",
+      "url": "https://marble.worldlabs.ai/project/c7853f32-4025-4d66-a536-54bb9db6162d",
+      "label": {
+        "en": "Visit Leonardo's Enriched Studio",
+        "fr": "Visiter l’atelier enrichi de Léonard",
+        "ar": "زيارة محترف ليوناردو المطوّر"
+      }
+    }
+  ],
   "education": {
     "ageBands": [
       "8-11",

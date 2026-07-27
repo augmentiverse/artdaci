@@ -7,6 +7,7 @@ const MANIFEST_URLS = [
 
 const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae";
 const LEONARDO_STUDIO_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/862ab5f6-8608-469c-a840-8cb10f3859ae";
+const LEONARDO_ENRICHED_STUDIO_URL = "https://marble.worldlabs.ai/project/c7853f32-4025-4d66-a536-54bb9db6162d";
 
 const BOOK_IMAGE_GALLERIES = {
   "mona-lisa": [
@@ -241,7 +242,10 @@ function buildPageDefinitions(manifests) {
         { label: "VR", x: 82, y: 24, type: manifest.slug === "van-gogh-bedroom" ? "world" : "vr" },
         { label: "◉", x: 82, y: 38, type: "gallery" },
         ...(manifest.slug === "mona-lisa"
-          ? [{ label: "VR+", x: 82, y: 52, type: "studio", url: LEONARDO_STUDIO_VR_WORLD_URL }]
+          ? [
+              { label: "VR+", x: 82, y: 52, type: "studio", url: LEONARDO_STUDIO_VR_WORLD_URL },
+              { label: "VR++", x: 82, y: 66, type: "studioEnriched", url: LEONARDO_ENRICHED_STUDIO_URL }
+            ]
           : [])
       ]
     });
@@ -688,6 +692,7 @@ function openExperience(definition, hotspot) {
     vr: lang === "ar" ? "مشهد واقع افتراضي" : lang === "fr" ? "Scène VR" : "VR scene",
     world: lang === "ar" ? "عالم افتراضي" : lang === "fr" ? "Monde VR" : "VR world",
     studio: lang === "ar" ? "محترف ليوناردو الافتراضي" : lang === "fr" ? "Atelier de Léonard en VR" : "Leonardo’s Studio in VR",
+    studioEnriched: lang === "ar" ? "محترف ليوناردو المطوّر" : lang === "fr" ? "Atelier enrichi de Léonard" : "Leonardo’s Enriched Studio",
     gallery: lang === "ar" ? "معرض غامر" : lang === "fr" ? "Galerie immersive" : "Immersive gallery"
   }[hotspot.type] || "Immersive layer";
 
@@ -726,14 +731,21 @@ function openExperience(definition, hotspot) {
           : "The VR world will open directly in this window."}</small>
       </div>
     `;
-  } else if (hotspot.type === "studio") {
+  } else if (hotspot.type === "studio" || hotspot.type === "studioEnriched") {
+    const enriched = hotspot.type === "studioEnriched";
     experienceBody.innerHTML = `
       <div class="experience-world">
-        <p>${lang === "fr"
-          ? "Entrez dans l’atelier de Léonard de Vinci et découvrez son univers en VR."
-          : "Enter Leonardo da Vinci’s studio and explore his world in VR."}</p>
+        <p>${lang === "ar"
+          ? (enriched ? "ادخل النسخة المطوّرة من محترف ليوناردو دافنشي واستكشف محتواها الغامر." : "ادخل محترف ليوناردو دافنشي واستكشف عالمه بالواقع الافتراضي.")
+          : lang === "fr"
+            ? (enriched ? "Entrez dans la version enrichie de l’atelier de Léonard de Vinci." : "Entrez dans l’atelier de Léonard de Vinci et découvrez son univers en VR.")
+            : (enriched ? "Enter the enriched version of Leonardo da Vinci’s studio." : "Enter Leonardo da Vinci’s studio and explore his world in VR.")}</p>
         <a href="${hotspot.url || LEONARDO_STUDIO_VR_WORLD_URL}">
-          ${lang === "fr" ? "Ouvrir l’atelier de Léonard en VR" : "Open Leonardo’s Studio in VR"}
+          ${lang === "ar"
+            ? (enriched ? "فتح محترف ليوناردو المطوّر" : "فتح محترف ليوناردو بالواقع الافتراضي")
+            : lang === "fr"
+              ? (enriched ? "Ouvrir l’atelier enrichi de Léonard" : "Ouvrir l’atelier de Léonard en VR")
+              : (enriched ? "Open Leonardo’s Enriched Studio" : "Open Leonardo’s Studio in VR")}
         </a>
         <small>${lang === "fr"
           ? "Le monde VR s’ouvrira directement dans cette fenêtre."

@@ -38,6 +38,7 @@ const FURNITURE_MODEL_EXHIBITS = [
 const STANDING_VAN_GOGH_MODEL = "assets/paintings/van-gogh/vangogh_istanding.glb";
 const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae";
 const LEONARDO_STUDIO_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/862ab5f6-8608-469c-a840-8cb10f3859ae";
+const LEONARDO_ENRICHED_STUDIO_URL = "https://marble.worldlabs.ai/project/c7853f32-4025-4d66-a536-54bb9db6162d";
 const CINEMA_ROOM_X = 14;
 const CINEMA_VIDEO_LIBRARY = [
   {
@@ -133,6 +134,7 @@ const COPY = {
     fastTravel: "QUICK ROOM ACCESS",
     bedroomVrWorld: "VISIT THE BEDROOM VR WORLD",
     leonardoStudioVrWorld: "VISIT LEONARDO'S STUDIO IN VR",
+    leonardoEnrichedStudio: "VISIT LEONARDO'S ENRICHED STUDIO",
     playVideo: "TRIGGER: PLAY / PAUSE",
     videoPlay: "Play video",
     videoPause: "Pause video",
@@ -185,6 +187,7 @@ const COPY = {
     fastTravel: "ACCÈS RAPIDE AUX SALLES",
     bedroomVrWorld: "VISITER LA CHAMBRE EN MONDE VR",
     leonardoStudioVrWorld: "VISITER L’ATELIER DE LÉONARD EN VR",
+    leonardoEnrichedStudio: "VISITER L’ATELIER ENRICHI DE LÉONARD",
     playVideo: "GÂCHETTE : LECTURE / PAUSE",
     videoPlay: "Lire la vidéo",
     videoPause: "Mettre la vidéo en pause",
@@ -237,6 +240,7 @@ const COPY = {
     fastTravel: "انتقال سريع بين القاعات",
     bedroomVrWorld: "زيارة عالم غرفة النوم",
     leonardoStudioVrWorld: "زيارة محترف ليوناردو بالواقع الافتراضي",
+    leonardoEnrichedStudio: "زيارة محترف ليوناردو المطوّر",
     playVideo: "الزناد: تشغيل / إيقاف",
     videoPlay: "تشغيل الفيديو",
     videoPause: "إيقاف الفيديو مؤقتاً",
@@ -383,6 +387,8 @@ function applyCopy() {
   document.getElementById("gallery-bedroom-world-link").href = BEDROOM_VR_WORLD_URL;
   document.getElementById("gallery-leonardo-world-link").textContent = text.leonardoStudioVrWorld;
   document.getElementById("gallery-leonardo-world-link").href = LEONARDO_STUDIO_VR_WORLD_URL;
+  document.getElementById("gallery-leonardo-enriched-link").textContent = text.leonardoEnrichedStudio;
+  document.getElementById("gallery-leonardo-enriched-link").href = LEONARDO_ENRICHED_STUDIO_URL;
   document.getElementById("gallery-cinema-link").textContent = text.cinemaEnter;
   document.getElementById("gallery-cinema-link").href = `gallery-vr.html?lang=${lang}&room=cinema`;
   document.getElementById("gallery-experiences-link").textContent = text.individualExperiences;
@@ -721,6 +727,12 @@ function addNavigationSigns() {
     width: 2,
     height: 0.36,
     exitUrl: LEONARDO_STUDIO_VR_WORLD_URL,
+    compact: true
+  });
+  createWallSign(text.leonardoEnrichedStudio, [8.12, 2.45, 37], Math.PI / 2, {
+    width: 2.2,
+    height: 0.4,
+    exitUrl: LEONARDO_ENRICHED_STUDIO_URL,
     compact: true
   });
   createWallSign(text.cinemaReturn, [8.12, 1.25, 30.6], Math.PI / 2, {
