@@ -658,15 +658,15 @@ function addNavigationSigns() {
     accent: true
   });
   createWallSign(text.cinemaEnter, [6.02, 3.42, 34], -Math.PI / 2, {
-    width: 1.9,
-    height: 0.34,
+    width: 2.3,
+    height: 0.42,
     destination: [CINEMA_ROOM_X, 0, 32],
     visitorYaw: Math.PI,
     compact: true
   });
   createWallSign(text.leonardoStudioVrWorld, [-5.85, 3.5, 37.15], Math.PI / 2, {
-    width: 1.45,
-    height: 0.27,
+    width: 2,
+    height: 0.36,
     exitUrl: LEONARDO_STUDIO_VR_WORLD_URL,
     compact: true
   });
@@ -683,26 +683,26 @@ function addNavigationSigns() {
     accent: true
   });
   createWallSign(text.bedroomVrWorld, [-5.85, 1.75, 24.5], Math.PI / 2, {
-    width: 1.75,
-    height: 0.32,
+    width: 2.25,
+    height: 0.4,
     exitUrl: BEDROOM_VR_WORLD_URL,
     compact: true
   });
   createWallSign(text.exitSign, [0, 0.5, -4.86], 0, {
-    width: 0.9,
-    height: 0.28,
+    width: 1.2,
+    height: 0.34,
     exitUrl: collectionUrl,
     compact: true
   });
   createWallSign(text.exitSign, [5.86, 3.48, 12.7], -Math.PI / 2, {
-    width: 0.9,
-    height: 0.28,
+    width: 1.2,
+    height: 0.34,
     exitUrl: collectionUrl,
     compact: true
   });
   createWallSign(text.exitSign, [-5.86, 3.12, 37.15], Math.PI / 2, {
-    width: 0.9,
-    height: 0.25,
+    width: 1.2,
+    height: 0.3,
     exitUrl: collectionUrl,
     compact: true
   });
@@ -744,7 +744,7 @@ function addCinemaEntranceHotspot() {
   const label = makeLabel(text.cinemaEnter);
   label.position.set(0, 0.035, 0.7);
   label.rotation.x = -Math.PI / 2;
-  label.scale.set(1.1, 0.27, 1);
+  label.scale.set(1.5, 0.36, 1);
   group.add(label);
   scene.add(group);
 }
@@ -819,17 +819,17 @@ function addFastTravelStations() {
 
   stations.forEach((station) => {
     const [x, y, z] = station.position;
-    const compactTop = 3.72;
+    const compactTop = 3.7;
     createWallSign(text.fastTravel, [x, compactTop, z], station.rotationY, {
-      width: 0.86,
-      height: 0.17,
+      width: 1.2,
+      height: 0.22,
       accent: true,
       compact: true
     });
     rooms.filter((room) => room.id !== station.room).forEach((room, index) => {
-      createWallSign(room.label, [x, compactTop - 0.21 - index * 0.19, z], station.rotationY, {
-        width: 0.86,
-        height: 0.15,
+      createWallSign(room.label, [x, compactTop - 0.27 - index * 0.21, z], station.rotationY, {
+        width: 1.2,
+        height: 0.19,
         destination: room.destination,
         visitorYaw: room.visitorYaw,
         compact: true
@@ -1200,7 +1200,8 @@ async function addCinemaSofaModel(cinema) {
     }
   });
 
-  sofa.rotation.y = 0;
+  // Face the seating toward the screen on the opposite wall.
+  sofa.rotation.y = Math.PI;
   sofa.updateMatrixWorld(true);
   let box = new THREE.Box3().setFromObject(sofa);
   let size = box.getSize(new THREE.Vector3());
@@ -1210,13 +1211,19 @@ async function addCinemaSofaModel(cinema) {
     box = new THREE.Box3().setFromObject(sofa);
     size = box.getSize(new THREE.Vector3());
   }
-  const scale = 3.75 / Math.max(size.x, 0.001);
+  const scale = 4.8 / Math.max(size.x, 0.001);
   sofa.scale.setScalar(scale);
   sofa.updateMatrixWorld(true);
   box = new THREE.Box3().setFromObject(sofa);
   const center = box.getCenter(new THREE.Vector3());
-  sofa.position.set(-center.x, -box.min.y, 29.12 - box.min.z);
+  // Keep the rear edge against the back wall while preserving usable floor space.
+  sofa.position.set(-center.x, -box.min.y, 29.18 - box.min.z);
   cinema.add(sofa);
+
+  const sofaLight = new THREE.SpotLight(0xffd2a1, 1.15, 6, Math.PI / 4, 0.58, 1.2);
+  sofaLight.position.set(0, 3.5, 31.4);
+  sofaLight.target = sofa;
+  cinema.add(sofaLight, sofaLight.target);
 }
 
 function addCinemaViewingSpot(cinema) {
