@@ -179,6 +179,13 @@ body {
   font-weight: 800;
 }
 
+.gallery-exit-links .cinema-link {
+  border-color: #b88b5e;
+  color: #fff0d5;
+  background: linear-gradient(135deg, #59303b, #211d27);
+  font-weight: 800;
+}
+
 .gallery-audio-controls .gallery-button {
   min-height: 34px;
   padding: 6px 10px;

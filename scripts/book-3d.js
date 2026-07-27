@@ -602,6 +602,25 @@ function updateBook() {
     const turned = index < currentLeaf;
     sheet.classList.toggle("turned", turned);
     sheet.style.zIndex = turned ? String(index + 1) : String(sheets.length - index + 5);
+
+    const front = sheet.querySelector(".page-front");
+    const back = sheet.querySelector(".page-back");
+    const frontIsVisible = index === currentLeaf;
+    const backIsVisible = index === currentLeaf - 1;
+    if (front) {
+      front.style.pointerEvents = frontIsVisible ? "auto" : "none";
+      front.setAttribute("aria-hidden", String(!frontIsVisible));
+      front.querySelectorAll(".page-hotspot").forEach((button) => {
+        button.tabIndex = frontIsVisible ? 0 : -1;
+      });
+    }
+    if (back) {
+      back.style.pointerEvents = backIsVisible ? "auto" : "none";
+      back.setAttribute("aria-hidden", String(!backIsVisible));
+      back.querySelectorAll(".page-hotspot").forEach((button) => {
+        button.tabIndex = backIsVisible ? 0 : -1;
+      });
+    }
   });
   previousButton.disabled = currentLeaf === 0;
   nextButton.disabled = currentLeaf === sheets.length;

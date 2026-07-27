@@ -22,15 +22,15 @@ const GALLERY_MODEL_OVERRIDES = {
 
 const FURNITURE_MODEL_EXHIBITS = [
   {
-    id: "sofa-a",
-    title: { en: "Sofa A", fr: "Canapé A" },
-    src: "assets/paintings/fourniture/sofa-a.glb",
+    id: "vermeer-girl",
+    title: { en: "Girl with a Pearl Earring", fr: "La Jeune Fille à la perle" },
+    src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring.glb",
     position: [-2.3, 7.25]
   },
   {
-    id: "sofa-b",
-    title: { en: "Sofa B", fr: "Canapé B" },
-    src: "assets/paintings/fourniture/sofa-b.glb",
+    id: "vermeer-girl-rig",
+    title: { en: "Girl with a Pearl Earring — Rigged", fr: "La Jeune Fille à la perle — animée" },
+    src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring-rig.glb",
     position: [2.3, 7.25]
   }
 ];
@@ -121,7 +121,7 @@ const COPY = {
     muteAudio: "Mute",
     unmuteAudio: "Unmute",
     loadingModels: "Loading 3D exhibits…",
-    modelsReady: "The painting models and two walk-around sofa exhibits are ready.",
+    modelsReady: "The painting models and two walk-around Vermeer exhibits are ready.",
     exitGallery: "Exit to collection",
     individualExperiences: "Individual experiences",
     paintingsRoom: "PAINTINGS",
@@ -173,7 +173,7 @@ const COPY = {
     muteAudio: "Couper le son",
     unmuteAudio: "Rétablir le son",
     loadingModels: "Chargement des œuvres 3D…",
-    modelsReady: "Les modèles des tableaux et deux canapés 3D observables sous tous les angles sont prêts.",
+    modelsReady: "Les modèles des tableaux et deux œuvres 3D de Vermeer observables sous tous les angles sont prêts.",
     exitGallery: "Sortir vers la collection",
     individualExperiences: "Expériences individuelles",
     paintingsRoom: "TABLEAUX",
@@ -330,6 +330,8 @@ function applyCopy() {
   document.getElementById("gallery-bedroom-world-link").href = BEDROOM_VR_WORLD_URL;
   document.getElementById("gallery-leonardo-world-link").textContent = text.leonardoStudioVrWorld;
   document.getElementById("gallery-leonardo-world-link").href = LEONARDO_STUDIO_VR_WORLD_URL;
+  document.getElementById("gallery-cinema-link").textContent = text.cinemaEnter;
+  document.getElementById("gallery-cinema-link").href = `gallery-vr.html?lang=${lang}&room=cinema`;
   document.getElementById("gallery-experiences-link").textContent = text.individualExperiences;
   document.getElementById("gallery-experiences-link").href = `space.html?painting=mona-lisa&lang=${lang}`;
   const languageSwitch = document.getElementById("gallery-language-switch");
@@ -423,7 +425,9 @@ function buildRoom() {
     { size: [5, 4], position: [3.5, 2, 29], rotation: [0, Math.PI, 0] },
     { size: [2, 1.1], position: [0, 3.45, 29], rotation: [0, Math.PI, 0] },
     { size: [10, 4], position: [-6, 2, 34], rotation: [0, Math.PI / 2, 0] },
-    { size: [10, 4], position: [6, 2, 34], rotation: [0, -Math.PI / 2, 0] },
+    { size: [3.7, 4], position: [6, 2, 31.15], rotation: [0, -Math.PI / 2, 0] },
+    { size: [3.7, 4], position: [6, 2, 36.85], rotation: [0, -Math.PI / 2, 0] },
+    { size: [2.6, 1.1], position: [6, 3.45, 34], rotation: [0, -Math.PI / 2, 0] },
     { size: [12, 4], position: [0, 2, 39], rotation: [0, Math.PI, 0] }
   ].forEach((wall) => {
     const mesh = new THREE.Mesh(
@@ -468,6 +472,15 @@ function buildRoom() {
   reimaginedRoomFloor.position.set(0, 0.008, 34);
   scene.add(reimaginedRoomFloor);
 
+  const cinemaCorridorFloor = new THREE.Mesh(
+    new THREE.PlaneGeometry(2.2, 2.6),
+    new THREE.MeshStandardMaterial({ color: 0x24151a, roughness: 0.94 })
+  );
+  cinemaCorridorFloor.rotation.x = -Math.PI / 2;
+  cinemaCorridorFloor.position.set(7, 0.009, 34);
+  cinemaCorridorFloor.receiveShadow = true;
+  scene.add(cinemaCorridorFloor);
+
   addLouvrePaintingsRoomDecor();
   addCinemaRoomArchitecture();
   addNavigationSigns();
@@ -502,7 +515,9 @@ function addCinemaRoomArchitecture() {
   [
     { size: [12, 4], position: [CINEMA_ROOM_X, 2, 29], rotationY: 0 },
     { size: [12, 4], position: [CINEMA_ROOM_X, 2, 39], rotationY: Math.PI },
-    { size: [10, 4], position: [8, 2, 34], rotationY: Math.PI / 2 },
+    { size: [3.7, 4], position: [8, 2, 31.15], rotationY: Math.PI / 2 },
+    { size: [3.7, 4], position: [8, 2, 36.85], rotationY: Math.PI / 2 },
+    { size: [2.6, 1.1], position: [8, 3.45, 34], rotationY: Math.PI / 2 },
     { size: [10, 4], position: [20, 2, 34], rotationY: -Math.PI / 2 }
   ].forEach((wall) => {
     const mesh = new THREE.Mesh(new THREE.PlaneGeometry(...wall.size), wallMaterial);
@@ -1435,7 +1450,7 @@ function addFurnitureGalleryModel(item, model) {
     box = new THREE.Box3().setFromObject(model);
     size = box.getSize(new THREE.Vector3());
   }
-  const scale = 1.92 / Math.max(size.x, 0.001);
+  const scale = 2.2 / Math.max(size.x, size.y, size.z, 0.001);
   model.scale.setScalar(scale);
   model.updateMatrixWorld(true);
   box = new THREE.Box3().setFromObject(model);
@@ -1449,7 +1464,7 @@ function addFurnitureGalleryModel(item, model) {
   display.add(model);
 
   const localizedTitle = item.title[lang] || item.title.en;
-  const label = makeLabel(`${lang === "fr" ? "Mobilier 3D" : "3D furniture"}\n${localizedTitle}`);
+  const label = makeLabel(`${lang === "fr" ? "Modèle 3D" : "3D model"}\n${localizedTitle}`);
   label.position.set(0, 0.5, -0.92);
   label.rotation.y = Math.PI;
   label.rotation.x = -Math.PI / 5;
