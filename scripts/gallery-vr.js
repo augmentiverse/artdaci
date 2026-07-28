@@ -22,12 +22,6 @@ const GALLERY_MODEL_OVERRIDES = {
 
 const FURNITURE_MODEL_EXHIBITS = [
   {
-    id: "vermeer-girl",
-    title: { en: "Girl with a Pearl Earring", fr: "La Jeune Fille à la perle", ar: "الفتاة ذات القرط اللؤلؤي" },
-    src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring.glb",
-    position: [-2.3, 7.25]
-  },
-  {
     id: "vermeer-girl-rig",
     title: { en: "Girl with a Pearl Earring — Rigged", fr: "La Jeune Fille à la perle — animée", ar: "الفتاة ذات القرط اللؤلؤي — متحركة" },
     src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring-rig.glb",
@@ -374,6 +368,7 @@ async function init() {
   if (isCinemaOnly) {
     scene.add(new THREE.HemisphereLight(0xffecd2, 0x17202a, 1.1));
     addCinemaRoomArchitecture();
+    addCinemaNavigationSigns();
     buildReimaginedVideoExhibits();
     await detectVR();
     status.textContent = text.ready;
@@ -519,6 +514,23 @@ function applyCopy() {
   document.getElementById("gallery-cinema-link").href = isCinemaOnly
     ? `gallery-vr.html?lang=${lang}`
     : `cinema-vr.html?lang=${lang}`;
+  const cinemaDestinations = [
+    ["cinema-paintings-link", text.paintingsRoom, "paintings"],
+    ["cinema-models-link", text.modelsRoom, "models"],
+    ["cinema-bedroom-link", text.bedroomRoom, "bedroom"],
+    ["cinema-reimagined-link", text.reimaginedRoom, "reimagined"]
+  ];
+  cinemaDestinations.forEach(([id, label, room]) => {
+    const link = document.getElementById(id);
+    if (!link) return;
+    link.textContent = label;
+    link.href = `gallery-vr.html?lang=${lang}&room=${room}`;
+  });
+  const cinemaBookLink = document.getElementById("cinema-book-link");
+  if (cinemaBookLink) {
+    cinemaBookLink.textContent = text.livingBook;
+    cinemaBookLink.href = `book-3d.html?lang=${lang}`;
+  }
   document.getElementById("gallery-experiences-link").textContent = text.individualExperiences;
   document.getElementById("gallery-experiences-link").href = `space.html?painting=mona-lisa&lang=${lang}`;
   const languageSwitch = document.getElementById("gallery-language-switch");
@@ -732,6 +744,30 @@ function addCinemaRoomArchitecture() {
     const strip = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.025, 8.8), aisleLightMaterial);
     strip.position.set(CINEMA_ROOM_X + offset, 0.025, 34);
     scene.add(strip);
+  });
+}
+
+function addCinemaNavigationSigns() {
+  const destinations = [
+    { label: text.paintingsRoom, url: `gallery-vr.html?lang=${lang}&room=paintings`, y: 3.35, z: 31.6 },
+    { label: text.modelsRoom, url: `gallery-vr.html?lang=${lang}&room=models`, y: 2.78, z: 31.6 },
+    { label: text.bedroomRoom, url: `gallery-vr.html?lang=${lang}&room=bedroom`, y: 2.21, z: 31.6 },
+    { label: text.reimaginedRoom, url: `gallery-vr.html?lang=${lang}&room=reimagined`, y: 3.35, z: 35.1 },
+    { label: text.livingBook, url: `book-3d.html?lang=${lang}`, y: 2.78, z: 35.1 },
+    {
+      label: text.exitGallery,
+      url: lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html",
+      y: 2.21,
+      z: 35.1
+    }
+  ];
+  destinations.forEach((destination) => {
+    createWallSign(destination.label, [19.88, destination.y, destination.z], -Math.PI / 2, {
+      width: 2.35,
+      height: 0.43,
+      exitUrl: destination.url,
+      compact: true
+    });
   });
 }
 
@@ -1568,7 +1604,7 @@ async function addCinemaSofaModel(cinema) {
     box = new THREE.Box3().setFromObject(sofa);
     size = box.getSize(new THREE.Vector3());
   }
-  const scale = 4.8 / Math.max(size.x, 0.001);
+  const scale = 3.1 / Math.max(size.x, 0.001);
   sofa.scale.setScalar(scale);
   sofa.updateMatrixWorld(true);
   box = new THREE.Box3().setFromObject(sofa);
@@ -1588,29 +1624,29 @@ async function addCinemaAudienceModels(cinema) {
     {
       src: "assets/paintings/mona-lisa/davinci-monalisa_c.glb",
       name: "cinema-sofa-left-davinci-mona-lisa",
-      x: -4.2,
+      x: -3.15,
       y: 0,
       z: 29.75,
       height: 1.66,
-      rotationY: Math.atan2(4.2, 6.55)
+      rotationY: Math.atan2(3.15, 6.55)
     },
     {
       src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring_sitting_c.glb",
       name: "cinema-sofa-left-vermeer",
-      x: -2.75,
+      x: -2.05,
       y: 0,
       z: 29.75,
       height: 1.28,
-      rotationY: Math.atan2(2.75, 6.55)
+      rotationY: Math.atan2(2.05, 6.55)
     },
     {
       src: "assets/paintings/van-gogh/vangogh-standing_c.glb",
       name: "cinema-sofa-right-van-gogh",
-      x: 3.35,
+      x: 2.65,
       y: 0,
       z: 29.65,
       height: 1.7,
-      rotationY: Math.atan2(-3.35, 6.65)
+      rotationY: Math.atan2(-2.65, 6.65)
     }
   ];
 
