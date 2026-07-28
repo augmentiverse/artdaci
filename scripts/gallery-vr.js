@@ -346,6 +346,10 @@ let snapTurnReady = true;
 let activeExhibit = null;
 let activeGalleryVideo = null;
 let audioMuted = false;
+let cinemaAudienceRoot = null;
+let cinemaAudienceLoadPromise = null;
+const isQuestBrowser = /OculusBrowser|Meta Quest|Quest/i.test(navigator.userAgent);
+const cinemaAudienceReadyAt = performance.now() + (isQuestBrowser ? 10000 : 3500);
 const controllerCommandState = new Map();
 
 init();
@@ -1163,6 +1167,7 @@ function buildReimaginedVideoExhibits() {
   const cinema = new THREE.Group();
   cinema.name = "artdaci-cinema";
   cinema.position.x = CINEMA_ROOM_X;
+  cinemaAudienceRoot = cinema;
 
   const darkMaterial = new THREE.MeshStandardMaterial({ color: 0x0d1015, roughness: 0.62 });
   const blueMaterial = new THREE.MeshStandardMaterial({ color: 0x19384a, roughness: 0.72 });
@@ -1291,9 +1296,6 @@ function buildReimaginedVideoExhibits() {
   addCinemaViewingSpot(cinema);
   addCinemaSofaModel(cinema).catch((error) => {
     console.warn("The cinema sofa model could not be loaded.", error);
-  });
-  addCinemaAudienceModels(cinema).catch((error) => {
-    console.warn("The cinema audience models could not be loaded.", error);
   });
   scene.add(cinema);
   setCinemaVideo(exhibit, 0, false);
@@ -1431,28 +1433,41 @@ async function addCinemaAudienceModels(cinema) {
     }
   ];
 
-  const models = await Promise.all(audience.map(async (entry) => {
-    const gltf = await modelLoader.loadAsync(entry.src);
-    const model = gltf.scene;
-    model.name = entry.name;
-    model.rotation.y = entry.rotationY;
-    model.updateMatrixWorld(true);
-    let box = new THREE.Box3().setFromObject(model);
-    const sourceHeight = box.getSize(new THREE.Vector3()).y;
-    model.scale.setScalar(entry.height / Math.max(sourceHeight, 0.001));
-    model.updateMatrixWorld(true);
-    box = new THREE.Box3().setFromObject(model);
-    const center = box.getCenter(new THREE.Vector3());
-    model.position.set(entry.x - center.x, -box.min.y, entry.z - center.z);
-    model.traverse((node) => {
-      if (!node.isMesh) return;
-      node.castShadow = true;
-      node.receiveShadow = true;
-    });
-    return model;
-  }));
+  for (const entry of audience) {
+    try {
+      const gltf = await modelLoader.loadAsync(entry.src);
+      const model = gltf.scene;
+      model.name = entry.name;
+      model.rotation.y = entry.rotationY;
+      model.updateMatrixWorld(true);
+      let box = new THREE.Box3().setFromObject(model);
+      const sourceHeight = box.getSize(new THREE.Vector3()).y;
+      model.scale.setScalar(entry.height / Math.max(sourceHeight, 0.001));
+      model.updateMatrixWorld(true);
+      box = new THREE.Box3().setFromObject(model);
+      const center = box.getCenter(new THREE.Vector3());
+      model.position.set(entry.x - center.x, -box.min.y, entry.z - center.z);
+      model.traverse((node) => {
+        if (!node.isMesh) return;
+        node.castShadow = true;
+        node.receiveShadow = true;
+      });
+      cinema.add(model);
+      // Let the Quest browser release the parser's temporary memory before
+      // beginning the next large GLB.
+      await new Promise((resolve) => setTimeout(resolve, isQuestBrowser ? 900 : 180));
+    } catch (error) {
+      console.warn(`Cinema character could not load: ${entry.name}`, error);
+    }
+  }
+}
 
-  models.forEach((model) => cinema.add(model));
+function maybeLoadCinemaAudience() {
+  if (!cinemaAudienceRoot || cinemaAudienceLoadPromise || performance.now() < cinemaAudienceReadyAt) return;
+  const dx = visitor.position.x - CINEMA_ROOM_X;
+  const dz = visitor.position.z - 34;
+  if (dx * dx + dz * dz > 56.25) return;
+  cinemaAudienceLoadPromise = addCinemaAudienceModels(cinemaAudienceRoot);
 }
 
 function addCinemaViewingSpot(cinema) {
@@ -2532,6 +2547,7 @@ function resize() {
 }
 
 function render() {
+  maybeLoadCinemaAudience();
   updateHandVisuals();
   updateLocomotion(Math.min(clock.getDelta(), 0.05));
   selectNearestAudioGuide();
