@@ -32,12 +32,6 @@ const FURNITURE_MODEL_EXHIBITS = [
     title: { en: "Girl with a Pearl Earring — Rigged", fr: "La Jeune Fille à la perle — animée", ar: "الفتاة ذات القرط اللؤلؤي — متحركة" },
     src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring-rig.glb",
     position: [2.3, 7.25]
-  },
-  {
-    id: "mona-lisa-standing",
-    title: { en: "Mona Lisa — Standing", fr: "La Joconde — debout", ar: "الموناليزا — واقفة" },
-    src: "assets/paintings/mona-lisa/mona-lisa_standing_c.glb",
-    position: [0, 12]
   }
 ];
 
@@ -391,6 +385,7 @@ async function init() {
     const paintings = await Promise.all(responses.map((response) => response.json()));
     await buildExhibition(paintings);
     await buildReimaginedExhibition();
+    await addReimaginedEntranceMonaLisa();
     await detectVR();
     void buildModelExhibits(paintings);
   } catch (error) {
@@ -971,23 +966,23 @@ function addNavigationSigns() {
     exitUrl: `cinema-vr.html?lang=${lang}`,
     compact: true
   });
+  createWallSign(text.leonardoStudioVrWorld, [6.02, 2.92, 34], -Math.PI / 2, {
+    width: 2.45,
+    height: 0.4,
+    exitUrl: LEONARDO_STUDIO_VR_WORLD_URL,
+    compact: true
+  });
+  createWallSign(text.bedroomVrWorld, [6.02, 2.43, 34], -Math.PI / 2, {
+    width: 2.35,
+    height: 0.4,
+    exitUrl: BEDROOM_VR_WORLD_URL,
+    compact: true
+  });
   createWallSign(text.leonardoStudioVrWorld, [-5.85, 3.5, 37.15], Math.PI / 2, {
     width: 2,
     height: 0.36,
     exitUrl: LEONARDO_STUDIO_VR_WORLD_URL,
     compact: true
-  });
-  createWallSign(text.leonardoEnrichedStudio, [8.12, 2.45, 37], Math.PI / 2, {
-    width: 2.2,
-    height: 0.4,
-    exitUrl: LEONARDO_ENRICHED_STUDIO_URL,
-    compact: true
-  });
-  createWallSign(text.cinemaReturn, [8.12, 1.25, 30.6], Math.PI / 2, {
-    width: 2.65,
-    height: 0.52,
-    destination: [0, 0, 34],
-    visitorYaw: Math.PI
   });
   createWallSign(text.bedroomRoom, [-5.86, 3.25, 24.5], Math.PI / 2, { width: 4.1 });
   createWallSign(text.bedroomLifeSize, [-5.85, 2.58, 24.5], Math.PI / 2, {
@@ -1267,6 +1262,44 @@ async function buildReimaginedExhibition() {
     scene.add(artwork);
     scene.add(createReimaginedHotspot(itemTitle, placement, artwork));
   }));
+}
+
+async function addReimaginedEntranceMonaLisa() {
+  const gltf = await modelLoader.loadAsync("assets/paintings/mona-lisa/mona-lisa_standing_c.glb");
+  const display = new THREE.Group();
+  display.name = "reimagined-portal-mona-lisa";
+  display.position.set(5.05, 0, 34);
+  display.rotation.y = -Math.PI / 2;
+
+  const model = gltf.scene;
+  model.updateMatrixWorld(true);
+  let box = new THREE.Box3().setFromObject(model);
+  const sourceHeight = box.getSize(new THREE.Vector3()).y;
+  model.scale.setScalar(1.72 / Math.max(sourceHeight, 0.001));
+  model.updateMatrixWorld(true);
+  box = new THREE.Box3().setFromObject(model);
+  const center = box.getCenter(new THREE.Vector3());
+  model.position.set(-center.x, -box.min.y, -center.z);
+  model.traverse((node) => {
+    if (!node.isMesh) return;
+    node.castShadow = true;
+    node.receiveShadow = true;
+  });
+  display.add(model);
+
+  const base = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.56, 0.62, 0.08, 48),
+    new THREE.MeshStandardMaterial({ color: 0x17191f, roughness: 0.56, metalness: 0.18 })
+  );
+  base.position.y = 0.04;
+  base.receiveShadow = true;
+  display.add(base);
+  scene.add(display);
+
+  const light = new THREE.SpotLight(0xffdfb0, 1.25, 5, Math.PI / 5, 0.54, 1.1);
+  light.position.set(3.7, 3.6, 34);
+  light.target = display;
+  scene.add(light, light.target);
 }
 
 function createReimaginedHotspot(title, placement, artwork) {
@@ -1552,20 +1585,20 @@ async function addCinemaAudienceModels(cinema) {
     {
       src: "assets/paintings/mona-lisa/davinci-monalisa_c.glb",
       name: "cinema-sofa-left-davinci-mona-lisa",
-      x: -3.35,
+      x: -4.2,
       y: 0,
-      z: 29.65,
+      z: 29.75,
       height: 1.66,
-      rotationY: Math.atan2(3.35, 6.65)
+      rotationY: Math.atan2(4.2, 6.55)
     },
     {
       src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring_sitting_c.glb",
-      name: "cinema-sofa-center-vermeer",
-      x: 0,
-      y: 0.58,
-      z: 29.62,
+      name: "cinema-sofa-left-vermeer",
+      x: -2.75,
+      y: 0,
+      z: 29.75,
       height: 1.28,
-      rotationY: 0
+      rotationY: Math.atan2(2.75, 6.55)
     },
     {
       src: "assets/paintings/van-gogh/vangogh-standing_c.glb",
