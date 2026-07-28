@@ -32,6 +32,12 @@ const FURNITURE_MODEL_EXHIBITS = [
     title: { en: "Girl with a Pearl Earring — Rigged", fr: "La Jeune Fille à la perle — animée", ar: "الفتاة ذات القرط اللؤلؤي — متحركة" },
     src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring-rig.glb",
     position: [2.3, 7.25]
+  },
+  {
+    id: "mona-lisa-standing",
+    title: { en: "Mona Lisa — Standing", fr: "La Joconde — debout", ar: "الموناليزا — واقفة" },
+    src: "assets/paintings/mona-lisa/mona-lisa_standing_c.glb",
+    position: [0, 12]
   }
 ];
 
@@ -130,7 +136,7 @@ const COPY = {
     muteAudio: "Mute",
     unmuteAudio: "Unmute",
     loadingModels: "Loading 3D exhibits…",
-    modelsReady: "The painting models and two walk-around Vermeer exhibits are ready.",
+    modelsReady: "The painting models and independent walk-around 3D exhibits are ready.",
     exitGallery: "Exit to collection",
     individualExperiences: "Individual experiences",
     paintingsRoom: "PAINTINGS",
@@ -161,6 +167,7 @@ const COPY = {
     cinemaForward: "+10 seconds",
     cinemaPlayPause: "Play / Pause",
     cinemaSound: "Sound on / off",
+    watchOnDevice: "Watch on this device",
     livingBook: "THE LIVING 3D BOOK",
     languageSwitch: "Français",
     languageSwitchLabel: "Voir la galerie en français",
@@ -184,7 +191,7 @@ const COPY = {
     muteAudio: "Couper le son",
     unmuteAudio: "Rétablir le son",
     loadingModels: "Chargement des œuvres 3D…",
-    modelsReady: "Les modèles des tableaux et deux œuvres 3D de Vermeer observables sous tous les angles sont prêts.",
+    modelsReady: "Les modèles des tableaux et les œuvres 3D autonomes observables sous tous les angles sont prêts.",
     exitGallery: "Sortir vers la collection",
     individualExperiences: "Expériences individuelles",
     paintingsRoom: "TABLEAUX",
@@ -215,6 +222,7 @@ const COPY = {
     cinemaForward: "+10 secondes",
     cinemaPlayPause: "Lecture / Pause",
     cinemaSound: "Son activé / coupé",
+    watchOnDevice: "Regarder sur cet appareil",
     livingBook: "LE LIVRE 3D VIVANT",
     languageSwitch: "English",
     languageSwitchLabel: "عرض النسخة الإنجليزية من المعرض",
@@ -242,7 +250,7 @@ const COPY = {
     muteAudio: "كتم الصوت",
     unmuteAudio: "تشغيل الصوت",
     loadingModels: "جارٍ تحميل النماذج ثلاثية الأبعاد...",
-    modelsReady: "نماذج اللوحات وأعمال فيرمير ثلاثية الأبعاد جاهزة.",
+    modelsReady: "نماذج اللوحات والأعمال ثلاثية الأبعاد المستقلة جاهزة.",
     exitGallery: "الخروج إلى المجموعة",
     individualExperiences: "تجارب فردية",
     paintingsRoom: "اللوحات",
@@ -273,6 +281,7 @@ const COPY = {
     cinemaForward: "+10 ثوانٍ",
     cinemaPlayPause: "تشغيل / إيقاف",
     cinemaSound: "تشغيل / كتم الصوت",
+    watchOnDevice: "المشاهدة على هذا الجهاز",
     livingBook: "الكتاب الحي ثلاثي الأبعاد",
     languageSwitch: "English",
     languageSwitchLabel: "عرض النسخة الإنجليزية من المعرض",
@@ -480,6 +489,8 @@ function applyCopy() {
   document.getElementById("gallery-title").textContent = isCinemaOnly ? text.cinema : text.title;
   document.getElementById("gallery-instructions").textContent = text.instructions;
   document.getElementById("gallery-count").textContent = isCinemaOnly ? text.cinemaLibrary : text.count;
+  const deviceViewerTitle = document.getElementById("cinema-device-title");
+  if (deviceViewerTitle) deviceViewerTitle.textContent = text.watchOnDevice;
   enterButton.textContent = isCinemaOnly ? text.cinemaEnter : text.enter;
   audioToggleButton.textContent = text.playAudio;
   audioRestartButton.textContent = text.restartAudio;
@@ -1314,14 +1325,16 @@ function buildReimaginedVideoExhibits() {
   backdrop.position.set(0, 2.02, 36.55);
   cinema.add(backdrop);
 
-  const video = document.createElement("video");
+  const video = document.getElementById("cinema-device-player") || document.createElement("video");
   video.crossOrigin = "anonymous";
   video.preload = "metadata";
   video.playsInline = true;
   video.loop = true;
   video.muted = true;
-  video.style.display = "none";
-  document.body.appendChild(video);
+  if (!video.id) {
+    video.style.display = "none";
+    document.body.appendChild(video);
+  }
 
   const texture = new THREE.VideoTexture(video);
   texture.encoding = THREE.sRGBEncoding;
@@ -1537,36 +1550,31 @@ async function addCinemaSofaModel(cinema) {
 async function addCinemaAudienceModels(cinema) {
   const audience = [
     {
-      src: "assets/paintings/mona-lisa/mona-lisa_standing_c.glb",
-      name: "cinema-entrance-mona-lisa",
-      x: -4.75,
-      z: 35.25,
-      height: 1.62,
-      rotationY: -Math.PI / 2
+      src: "assets/paintings/mona-lisa/davinci-monalisa_c.glb",
+      name: "cinema-sofa-left-davinci-mona-lisa",
+      x: -3.35,
+      y: 0,
+      z: 29.65,
+      height: 1.66,
+      rotationY: Math.atan2(3.35, 6.65)
     },
     {
-      src: "Autres/assets/paintings/van-gogh/van-gogh__standing-26mo.glb",
-      name: "cinema-entrance-van-gogh",
-      x: -4.75,
-      z: 32.75,
-      height: 1.68,
-      rotationY: -Math.PI / 2
+      src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring_sitting_c.glb",
+      name: "cinema-sofa-center-vermeer",
+      x: 0,
+      y: 0.58,
+      z: 29.62,
+      height: 1.28,
+      rotationY: 0
     },
     {
-      src: "assets/paintings/mona-lisa/davinci-monalisa.glb",
-      name: "cinema-screen-left-davinci-mona-lisa",
-      x: -4.25,
-      z: 35.15,
-      height: 1.58,
-      rotationY: -Math.PI / 2
-    },
-    {
-      src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring-rig.glb",
-      name: "cinema-screen-right-vermeer",
-      x: 4.25,
-      z: 35.15,
-      height: 1.58,
-      rotationY: Math.PI / 2
+      src: "assets/paintings/van-gogh/vangogh-standing_c.glb",
+      name: "cinema-sofa-right-van-gogh",
+      x: 3.35,
+      y: 0,
+      z: 29.65,
+      height: 1.7,
+      rotationY: Math.atan2(-3.35, 6.65)
     }
   ];
 
@@ -1583,7 +1591,7 @@ async function addCinemaAudienceModels(cinema) {
       model.updateMatrixWorld(true);
       box = new THREE.Box3().setFromObject(model);
       const center = box.getCenter(new THREE.Vector3());
-      model.position.set(entry.x - center.x, -box.min.y, entry.z - center.z);
+      model.position.set(entry.x - center.x, entry.y - box.min.y, entry.z - center.z);
       model.traverse((node) => {
         if (!node.isMesh) return;
         node.castShadow = true;

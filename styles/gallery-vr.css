@@ -232,6 +232,27 @@ html[dir="rtl"] .virtual-guide {
   border-top: 1px solid var(--line);
 }
 
+.cinema-device-viewer {
+  display: grid;
+  gap: 7px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.cinema-device-viewer video {
+  display: block;
+  width: min(100%, 560px);
+  max-height: 28vh;
+  border: 1px solid rgba(199, 164, 93, 0.62);
+  background: #050608;
+  object-fit: contain;
+}
+
+body[data-experience="cinema"] .gallery-guide {
+  max-width: min(620px, calc(100vw - 32px));
+}
+
 .gallery-exit-links {
   display: flex;
   flex-wrap: wrap;

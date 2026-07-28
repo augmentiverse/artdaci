@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0b1016" />
     <title>ARTDACI — VR Cinema</title>
-    <link rel="stylesheet" href="styles/gallery-vr.css?v=6" />
+    <link rel="stylesheet" href="styles/gallery-vr.css?v=7" />
     <script type="importmap">
       {"imports":{"three":"./vendor/three.module.js"}}
     </script>
@@ -27,6 +27,10 @@
       <aside class="gallery-guide">
         <strong id="gallery-count">Cinema room</strong>
         <span id="gallery-status" role="status">Preparing the cinema…</span>
+        <section class="cinema-device-viewer" aria-labelledby="cinema-device-title">
+          <strong id="cinema-device-title">Watch on this device</strong>
+          <video id="cinema-device-player" controls playsinline preload="metadata"></video>
+        </section>
         <div class="gallery-audio-controls" aria-label="Audio guide controls" hidden>
           <button id="gallery-audio-toggle" class="gallery-button" type="button">Play audio</button>
           <button id="gallery-audio-restart" class="gallery-button" type="button">Restart</button>
@@ -67,6 +71,6 @@
         </div>
       </details>
     </main>
-    <script type="module" src="scripts/gallery-vr.js?v=52"></script>
+    <script type="module" src="scripts/gallery-vr.js?v=54"></script>
   </body>
 </html>
