@@ -1398,15 +1398,35 @@ async function addCinemaSofaModel(cinema) {
 async function addCinemaAudienceModels(cinema) {
   const audience = [
     {
-      src: "assets/paintings/living-paintings/monalisa_out-of-frame_c.glb",
-      name: "cinema-audience-mona-lisa",
-      x: -4.25,
+      src: "assets/paintings/mona-lisa/mona-lisa_standing_c.glb",
+      name: "cinema-entrance-mona-lisa",
+      x: -4.75,
+      z: 35.25,
+      height: 1.62,
       rotationY: -Math.PI / 2
     },
     {
-      src: "assets/paintings/living-paintings/vermeer_girl.glb",
-      name: "cinema-audience-vermeer",
+      src: "Autres/assets/paintings/van-gogh/van-gogh__standing-26mo.glb",
+      name: "cinema-entrance-van-gogh",
+      x: -4.75,
+      z: 32.75,
+      height: 1.68,
+      rotationY: -Math.PI / 2
+    },
+    {
+      src: "assets/paintings/mona-lisa/davinci-monalisa.glb",
+      name: "cinema-screen-left-davinci-mona-lisa",
+      x: -4.25,
+      z: 35.15,
+      height: 1.58,
+      rotationY: -Math.PI / 2
+    },
+    {
+      src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring-rig.glb",
+      name: "cinema-screen-right-vermeer",
       x: 4.25,
+      z: 35.15,
+      height: 1.58,
       rotationY: Math.PI / 2
     }
   ];
@@ -1419,11 +1439,11 @@ async function addCinemaAudienceModels(cinema) {
     model.updateMatrixWorld(true);
     let box = new THREE.Box3().setFromObject(model);
     const sourceHeight = box.getSize(new THREE.Vector3()).y;
-    model.scale.setScalar(1.55 / Math.max(sourceHeight, 0.001));
+    model.scale.setScalar(entry.height / Math.max(sourceHeight, 0.001));
     model.updateMatrixWorld(true);
     box = new THREE.Box3().setFromObject(model);
     const center = box.getCenter(new THREE.Vector3());
-    model.position.set(entry.x - center.x, -box.min.y, 35.15 - center.z);
+    model.position.set(entry.x - center.x, -box.min.y, entry.z - center.z);
     model.traverse((node) => {
       if (!node.isMesh) return;
       node.castShadow = true;
