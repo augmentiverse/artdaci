@@ -39,6 +39,10 @@ body {
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
 }
 
+body[data-experience="gallery"] .gallery-video-controls {
+  display: none;
+}
+
 .gallery-shell,
 #gallery-stage {
   width: 100vw;

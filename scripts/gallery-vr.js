@@ -78,9 +78,10 @@ const REIMAGINED_ARTWORKS = [
 
 const params = new URLSearchParams(location.search);
 const lang = ["en", "fr", "ar"].includes(params.get("lang")) ? params.get("lang") : "en";
+const isCinemaOnly = document.body.dataset.experience === "cinema";
 const previewRoom = params.get("room");
-const previewPositionX = previewRoom === "cinema" ? CINEMA_ROOM_X : 0;
-const previewPositionZ = previewRoom === "cinema"
+const previewPositionX = isCinemaOnly || previewRoom === "cinema" ? CINEMA_ROOM_X : 0;
+const previewPositionZ = isCinemaOnly || previewRoom === "cinema"
   ? 32
   : previewRoom === "reimagined"
   ? 30
@@ -89,7 +90,7 @@ const previewPositionZ = previewRoom === "cinema"
     : previewRoom === "models"
       ? 14
       : 4;
-const previewRotationY = ["bedroom", "reimagined", "cinema"].includes(previewRoom) ? Math.PI : 0;
+const previewRotationY = isCinemaOnly || ["bedroom", "reimagined", "cinema"].includes(previewRoom) ? Math.PI : 0;
 const PAINTING_INFO = {
   en: {
     "mona-lisa": "Leonardo used delicate layers of sfumato to soften outlines and give the sitter a lifelike presence. Her expression and the imaginary landscape seem to change as we look.",
@@ -357,18 +358,27 @@ init();
 async function init() {
   applyCopy();
   setupVirtualGuide();
-  buildRoom();
   addControllers();
   addHands();
   bindUI();
 
+  if (isCinemaOnly) {
+    scene.add(new THREE.HemisphereLight(0xffecd2, 0x17202a, 1.1));
+    addCinemaRoomArchitecture();
+    buildReimaginedVideoExhibits();
+    await detectVR();
+    status.textContent = text.ready;
+    renderer.setAnimationLoop(render);
+    return;
+  }
+
+  buildRoom();
   try {
     const responses = await Promise.all(MANIFESTS.map((url) => fetch(url, { cache: "reload" })));
     if (responses.some((response) => !response.ok)) throw new Error("Manifest unavailable");
     const paintings = await Promise.all(responses.map((response) => response.json()));
     await buildExhibition(paintings);
     await buildReimaginedExhibition();
-    buildReimaginedVideoExhibits();
     await detectVR();
     void buildModelExhibits(paintings);
   } catch (error) {
@@ -459,13 +469,15 @@ function applyCopy() {
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
   document.title = `DACIART — ${text.title}`;
-  document.getElementById("gallery-back").textContent = text.back;
-  document.getElementById("gallery-back").href = lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html";
-  document.getElementById("gallery-kicker").textContent = text.kicker;
-  document.getElementById("gallery-title").textContent = text.title;
+  document.getElementById("gallery-back").textContent = isCinemaOnly ? text.cinemaReturn : text.back;
+  document.getElementById("gallery-back").href = isCinemaOnly
+    ? `gallery-vr.html?lang=${lang}`
+    : lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html";
+  document.getElementById("gallery-kicker").textContent = isCinemaOnly ? text.cinemaRoom : text.kicker;
+  document.getElementById("gallery-title").textContent = isCinemaOnly ? text.cinema : text.title;
   document.getElementById("gallery-instructions").textContent = text.instructions;
-  document.getElementById("gallery-count").textContent = text.count;
-  enterButton.textContent = text.enter;
+  document.getElementById("gallery-count").textContent = isCinemaOnly ? text.cinemaLibrary : text.count;
+  enterButton.textContent = isCinemaOnly ? text.cinemaEnter : text.enter;
   audioToggleButton.textContent = text.playAudio;
   audioRestartButton.textContent = text.restartAudio;
   audioMuteButton.textContent = text.muteAudio;
@@ -491,8 +503,10 @@ function applyCopy() {
   document.getElementById("gallery-leonardo-world-link").href = LEONARDO_STUDIO_VR_WORLD_URL;
   document.getElementById("gallery-leonardo-enriched-link").textContent = text.leonardoEnrichedStudio;
   document.getElementById("gallery-leonardo-enriched-link").href = LEONARDO_ENRICHED_STUDIO_URL;
-  document.getElementById("gallery-cinema-link").textContent = text.cinemaEnter;
-  document.getElementById("gallery-cinema-link").href = `gallery-vr.html?lang=${lang}&room=cinema`;
+  document.getElementById("gallery-cinema-link").textContent = isCinemaOnly ? text.cinemaReturn : text.cinemaEnter;
+  document.getElementById("gallery-cinema-link").href = isCinemaOnly
+    ? `gallery-vr.html?lang=${lang}`
+    : `cinema-vr.html?lang=${lang}`;
   document.getElementById("gallery-experiences-link").textContent = text.individualExperiences;
   document.getElementById("gallery-experiences-link").href = `space.html?painting=mona-lisa&lang=${lang}`;
   const languageSwitch = document.getElementById("gallery-language-switch");
@@ -502,7 +516,7 @@ function applyCopy() {
   languageSwitch.textContent = text.languageSwitch;
   languageSwitch.setAttribute("aria-label", text.languageSwitchLabel);
   languageSwitch.lang = targetLang;
-  languageSwitch.href = `gallery-vr.html?${targetParams.toString()}${location.hash}`;
+  languageSwitch.href = `${isCinemaOnly ? "cinema-vr.html" : "gallery-vr.html"}?${targetParams.toString()}${location.hash}`;
   status.textContent = text.loading;
 }
 
@@ -643,7 +657,6 @@ function buildRoom() {
   scene.add(cinemaCorridorFloor);
 
   addLouvrePaintingsRoomDecor();
-  addCinemaRoomArchitecture();
   addNavigationSigns();
   addCinemaEntranceHotspot();
   addFastTravelStations();
@@ -821,8 +834,7 @@ function addNavigationSigns() {
   createWallSign(text.cinemaEnter, [6.02, 3.42, 34], -Math.PI / 2, {
     width: 2.3,
     height: 0.42,
-    destination: [CINEMA_ROOM_X, 0, 32],
-    visitorYaw: Math.PI,
+    exitUrl: `cinema-vr.html?lang=${lang}`,
     compact: true
   });
   createWallSign(text.leonardoStudioVrWorld, [-5.85, 3.5, 37.15], Math.PI / 2, {
@@ -878,8 +890,6 @@ function addNavigationSigns() {
 function addCinemaEntranceHotspot() {
   const group = new THREE.Group();
   group.position.set(5.15, 0.02, 34);
-  group.userData.destination = new THREE.Vector3(CINEMA_ROOM_X, 0, 32);
-  group.userData.visitorYaw = Math.PI;
 
   const target = new THREE.Mesh(
     new THREE.CircleGeometry(0.52, 48),
@@ -891,7 +901,7 @@ function addCinemaEntranceHotspot() {
     })
   );
   target.rotation.x = -Math.PI / 2;
-  target.userData.hotspot = group;
+  target.userData.exitUrl = `cinema-vr.html?lang=${lang}`;
   group.add(target);
   teleportTargets.push(target);
 
@@ -973,15 +983,13 @@ function addFastTravelStations() {
     { id: "paintings", label: text.paintingsRoom, destination: [0, 0, 0.8], visitorYaw: 0 },
     { id: "models", label: text.modelsRoom, destination: [0, 0, 10], visitorYaw: 0 },
     { id: "bedroom", label: text.bedroomRoom, destination: [0, 0, 20.6], visitorYaw: Math.PI },
-    { id: "reimagined", label: text.reimaginedRoom, destination: [0, 0, 34], visitorYaw: Math.PI },
-    { id: "cinema", label: text.cinemaRoom, destination: [CINEMA_ROOM_X, 0, 32], visitorYaw: Math.PI }
+    { id: "reimagined", label: text.reimaginedRoom, destination: [0, 0, 34], visitorYaw: Math.PI }
   ];
   const stations = [
     { room: "paintings", position: [5.86, 3.35, 3.25], rotationY: -Math.PI / 2 },
     { room: "models", position: [5.86, 3.35, 7.15], rotationY: -Math.PI / 2 },
     { room: "bedroom", position: [5.86, 3.35, 17.4], rotationY: -Math.PI / 2 },
-    { room: "reimagined", position: [-5.86, 3.35, 30.6], rotationY: Math.PI / 2 },
-    { room: "cinema", position: [8.12, 3.35, 31], rotationY: Math.PI / 2 }
+    { room: "reimagined", position: [-5.86, 3.35, 30.6], rotationY: Math.PI / 2 }
   ];
 
   stations.forEach((station) => {
