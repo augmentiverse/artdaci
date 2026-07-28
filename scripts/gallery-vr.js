@@ -79,6 +79,7 @@ const REIMAGINED_ARTWORKS = [
 const params = new URLSearchParams(location.search);
 const lang = ["en", "fr", "ar"].includes(params.get("lang")) ? params.get("lang") : "en";
 const isCinemaOnly = document.body.dataset.experience === "cinema";
+const isQuestBrowser = /OculusBrowser|Meta Quest|Quest/i.test(navigator.userAgent);
 const previewRoom = params.get("room");
 const previewPositionX = isCinemaOnly || previewRoom === "cinema" ? CINEMA_ROOM_X : 0;
 const previewPositionZ = isCinemaOnly || previewRoom === "cinema"
@@ -317,11 +318,14 @@ visitor.rotation.y = previewRotationY;
 visitor.add(camera);
 scene.add(visitor);
 
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+const renderer = new THREE.WebGLRenderer({
+  antialias: !isQuestBrowser,
+  powerPreference: "high-performance"
+});
+renderer.setPixelRatio(isQuestBrowser ? 1 : Math.min(devicePixelRatio, 2));
 renderer.setSize(innerWidth, innerHeight);
 renderer.outputEncoding = THREE.sRGBEncoding;
-renderer.shadowMap.enabled = true;
+renderer.shadowMap.enabled = !isQuestBrowser;
 renderer.xr.enabled = true;
 renderer.xr.setReferenceSpaceType("local-floor");
 stage.appendChild(renderer.domElement);
@@ -355,7 +359,6 @@ let activeGalleryVideo = null;
 let audioMuted = false;
 let cinemaAudienceRoot = null;
 let cinemaAudienceLoadPromise = null;
-const isQuestBrowser = /OculusBrowser|Meta Quest|Quest/i.test(navigator.userAgent);
 const cinemaAudienceReadyAt = performance.now() + (isQuestBrowser ? 10000 : 3500);
 const controllerCommandState = new Map();
 
@@ -960,21 +963,21 @@ function addNavigationSigns() {
     height: 0.58,
     accent: true
   });
-  createWallSign(text.cinemaEnter, [6.02, 3.42, 34], -Math.PI / 2, {
-    width: 2.3,
-    height: 0.42,
+  createWallSign(text.cinemaEnter, [6.02, 3.55, 34], -Math.PI / 2, {
+    width: 2.5,
+    height: 0.44,
     exitUrl: `cinema-vr.html?lang=${lang}`,
     compact: true
   });
-  createWallSign(text.leonardoStudioVrWorld, [6.02, 2.92, 34], -Math.PI / 2, {
-    width: 2.45,
-    height: 0.4,
+  createWallSign(text.leonardoStudioVrWorld, [6.02, 3.02, 34], -Math.PI / 2, {
+    width: 2.55,
+    height: 0.42,
     exitUrl: LEONARDO_STUDIO_VR_WORLD_URL,
     compact: true
   });
-  createWallSign(text.bedroomVrWorld, [6.02, 2.43, 34], -Math.PI / 2, {
-    width: 2.35,
-    height: 0.4,
+  createWallSign(text.bedroomVrWorld, [6.02, 2.5, 34], -Math.PI / 2, {
+    width: 2.45,
+    height: 0.42,
     exitUrl: BEDROOM_VR_WORLD_URL,
     compact: true
   });
@@ -1877,19 +1880,19 @@ function toggleVideoFromPointer(event) {
 async function buildModelExhibits(paintings) {
   status.textContent = text.loadingModels;
   let loaded = 0;
-  const results = await Promise.allSettled(paintings.map(async (painting) => {
+  for (const painting of paintings) {
     const exhibit = exhibitsBySlug.get(painting.slug);
     const modelSrc = getDefaultModelSource(painting);
-    if (!exhibit || !modelSrc) return;
-    await addGalleryModel(exhibit, modelSrc);
-    loaded += 1;
-    status.textContent = `${text.loadingModels} ${loaded}/${paintings.length}`;
-  }));
-  results.forEach((result, index) => {
-    if (result.status === "rejected") {
-      console.error(`3D exhibit unavailable for ${paintings[index]?.slug || "unknown painting"}.`, result.reason);
+    if (!exhibit || !modelSrc) continue;
+    try {
+      await addGalleryModel(exhibit, modelSrc);
+      loaded += 1;
+      status.textContent = `${text.loadingModels} ${loaded}/${paintings.length}`;
+      await new Promise((resolve) => setTimeout(resolve, isQuestBrowser ? 500 : 80));
+    } catch (error) {
+      console.error(`3D exhibit unavailable for ${painting.slug}.`, error);
     }
-  });
+  }
   const furnitureLoaded = await buildFurnitureModelExhibits();
   status.textContent = loaded
     ? `${text.modelsReady} ${loaded + furnitureLoaded}/${paintings.length + FURNITURE_MODEL_EXHIBITS.length}`
@@ -1898,18 +1901,16 @@ async function buildModelExhibits(paintings) {
 
 async function buildFurnitureModelExhibits() {
   let loaded = 0;
-  const results = await Promise.allSettled(
-    FURNITURE_MODEL_EXHIBITS.map(async (item) => {
+  for (const item of FURNITURE_MODEL_EXHIBITS) {
+    try {
       const gltf = await modelLoader.loadAsync(item.src);
       addFurnitureGalleryModel(item, gltf.scene);
       loaded += 1;
-    })
-  );
-  results.forEach((result, index) => {
-    if (result.status === "rejected") {
-      console.error(`Furniture exhibit unavailable for ${FURNITURE_MODEL_EXHIBITS[index].id}.`, result.reason);
+      await new Promise((resolve) => setTimeout(resolve, isQuestBrowser ? 650 : 100));
+    } catch (error) {
+      console.error(`Furniture exhibit unavailable for ${item.id}.`, error);
     }
-  });
+  }
   return loaded;
 }
 
