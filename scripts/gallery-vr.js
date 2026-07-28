@@ -30,6 +30,7 @@ const FURNITURE_MODEL_EXHIBITS = [
 ];
 
 const STANDING_VAN_GOGH_MODEL = "assets/paintings/van-gogh/vangogh_istanding.glb";
+const PAINTINGS_MODELS_GATEWAY = "assets/paintings/fourniture/gateway-egypt.glb";
 const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae";
 const LEONARDO_STUDIO_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/862ab5f6-8608-469c-a840-8cb10f3859ae";
 const LEONARDO_ENRICHED_STUDIO_URL = "https://marble.worldlabs.ai/project/c7853f32-4025-4d66-a536-54bb9db6162d";
@@ -385,6 +386,7 @@ async function init() {
     await buildReimaginedExhibition();
     await addReimaginedEntranceMonaLisa();
     await detectVR();
+    await addPaintingsModelsGateway();
     void buildModelExhibits(paintings);
   } catch (error) {
     console.error(error);
@@ -745,6 +747,39 @@ function addCinemaRoomArchitecture() {
     strip.position.set(CINEMA_ROOM_X + offset, 0.025, 34);
     scene.add(strip);
   });
+}
+
+async function addPaintingsModelsGateway() {
+  try {
+    const gltf = await modelLoader.loadAsync(PAINTINGS_MODELS_GATEWAY);
+    const gateway = gltf.scene;
+    gateway.name = "paintings-models-egyptian-gateway";
+    gateway.updateMatrixWorld(true);
+
+    let box = new THREE.Box3().setFromObject(gateway);
+    let size = box.getSize(new THREE.Vector3());
+    if (size.z > size.x) {
+      gateway.rotation.y = Math.PI / 2;
+      gateway.updateMatrixWorld(true);
+      box = new THREE.Box3().setFromObject(gateway);
+      size = box.getSize(new THREE.Vector3());
+    }
+
+    const scale = Math.min(3.55 / Math.max(size.x, 0.001), 3.85 / Math.max(size.y, 0.001));
+    gateway.scale.setScalar(scale);
+    gateway.updateMatrixWorld(true);
+    box = new THREE.Box3().setFromObject(gateway);
+    const center = box.getCenter(new THREE.Vector3());
+    gateway.position.set(-center.x, -box.min.y, 5 - center.z);
+    gateway.traverse((node) => {
+      if (!node.isMesh) return;
+      node.castShadow = !isQuestBrowser;
+      node.receiveShadow = true;
+    });
+    scene.add(gateway);
+  } catch (error) {
+    console.error("Paintings/models gateway unavailable.", error);
+  }
 }
 
 function addCinemaNavigationSigns() {
