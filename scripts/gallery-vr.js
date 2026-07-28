@@ -161,6 +161,7 @@ const COPY = {
     cinemaForward: "+10 seconds",
     cinemaPlayPause: "Play / Pause",
     cinemaSound: "Sound on / off",
+    livingBook: "THE LIVING 3D BOOK",
     languageSwitch: "Français",
     languageSwitchLabel: "Voir la galerie en français",
     exitSign: "EXIT GALLERY"
@@ -214,6 +215,7 @@ const COPY = {
     cinemaForward: "+10 secondes",
     cinemaPlayPause: "Lecture / Pause",
     cinemaSound: "Son activé / coupé",
+    livingBook: "LE LIVRE 3D VIVANT",
     languageSwitch: "English",
     languageSwitchLabel: "عرض النسخة الإنجليزية من المعرض",
     audioControlsLabel: "أدوات التحكم في الدليل الصوتي",
@@ -271,6 +273,7 @@ const COPY = {
     cinemaForward: "+10 ثوانٍ",
     cinemaPlayPause: "تشغيل / إيقاف",
     cinemaSound: "تشغيل / كتم الصوت",
+    livingBook: "الكتاب الحي ثلاثي الأبعاد",
     languageSwitch: "English",
     languageSwitchLabel: "عرض النسخة الإنجليزية من المعرض",
     audioControlsLabel: "أدوات التحكم في الدليل الصوتي",
@@ -789,6 +792,126 @@ function addLouvrePaintingsRoomDecor() {
   });
   bench.position.set(0, 0, 2.55);
   scene.add(bench);
+  addLivingBookTable();
+}
+
+function addLivingBookTable() {
+  const table = new THREE.Group();
+  table.name = "living-book-table";
+  table.position.set(3.75, 0, 3.15);
+  table.rotation.y = -0.18;
+
+  const wood = new THREE.MeshStandardMaterial({
+    color: 0x4b2818,
+    roughness: 0.62,
+    metalness: 0.03
+  });
+  const edgeWood = new THREE.MeshStandardMaterial({ color: 0x2c160f, roughness: 0.72 });
+  const top = new THREE.Mesh(new THREE.BoxGeometry(1.65, 0.11, 0.92), wood);
+  top.position.y = 0.84;
+  top.castShadow = true;
+  top.receiveShadow = true;
+  table.add(top);
+  [
+    [-0.68, -0.32],
+    [0.68, -0.32],
+    [-0.68, 0.32],
+    [0.68, 0.32]
+  ].forEach(([x, z]) => {
+    const leg = new THREE.Mesh(new THREE.BoxGeometry(0.11, 0.82, 0.11), edgeWood);
+    leg.position.set(x, 0.41, z);
+    leg.castShadow = true;
+    table.add(leg);
+  });
+
+  const book = new THREE.Group();
+  book.name = "living-3d-book";
+  book.position.set(0, 0.94, 0);
+  book.rotation.y = -0.14;
+  const coverMaterial = new THREE.MeshStandardMaterial({
+    color: 0x182f48,
+    roughness: 0.48,
+    metalness: 0.08
+  });
+  const pagesMaterial = new THREE.MeshStandardMaterial({ color: 0xf0dfbd, roughness: 0.9 });
+  const goldMaterial = new THREE.MeshStandardMaterial({
+    color: 0xc9a55c,
+    roughness: 0.38,
+    metalness: 0.48
+  });
+  const lowerCover = new THREE.Mesh(new THREE.BoxGeometry(0.86, 0.035, 0.62), coverMaterial);
+  lowerCover.position.y = -0.055;
+  const pages = new THREE.Mesh(new THREE.BoxGeometry(0.81, 0.09, 0.57), pagesMaterial);
+  const upperCover = new THREE.Mesh(new THREE.BoxGeometry(0.86, 0.035, 0.62), coverMaterial);
+  upperCover.position.y = 0.065;
+  const spine = new THREE.Mesh(new THREE.BoxGeometry(0.055, 0.14, 0.62), goldMaterial);
+  spine.position.x = -0.43;
+  book.add(lowerCover, pages, upperCover, spine);
+
+  const coverCanvas = document.createElement("canvas");
+  coverCanvas.width = 1024;
+  coverCanvas.height = 720;
+  const context = coverCanvas.getContext("2d");
+  context.fillStyle = "#182f48";
+  context.fillRect(0, 0, coverCanvas.width, coverCanvas.height);
+  context.strokeStyle = "#c9a55c";
+  context.lineWidth = 28;
+  context.strokeRect(34, 34, coverCanvas.width - 68, coverCanvas.height - 68);
+  context.fillStyle = "#f4dfaa";
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  context.font = lang === "ar" ? "700 66px Tahoma" : "700 61px Georgia";
+  wrapCanvasText(context, text.livingBook, coverCanvas.width / 2, 310, 810, 82);
+  context.font = "700 34px Georgia";
+  context.fillText("ARTDACI", coverCanvas.width / 2, 575);
+  const coverTexture = new THREE.CanvasTexture(coverCanvas);
+  coverTexture.encoding = THREE.sRGBEncoding;
+  coverTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  const coverTitle = new THREE.Mesh(
+    new THREE.PlaneGeometry(0.76, 0.52),
+    new THREE.MeshBasicMaterial({ map: coverTexture })
+  );
+  coverTitle.rotation.x = -Math.PI / 2;
+  coverTitle.position.y = 0.084;
+  book.add(coverTitle);
+
+  const hitTarget = new THREE.Mesh(
+    new THREE.BoxGeometry(0.92, 0.2, 0.68),
+    new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 })
+  );
+  hitTarget.userData.exitUrl = `book-3d.html?lang=${lang}`;
+  book.add(hitTarget);
+  teleportTargets.push(hitTarget);
+
+  [lowerCover, pages, upperCover, spine].forEach((part) => {
+    part.castShadow = true;
+    part.receiveShadow = true;
+  });
+  table.add(book);
+
+  const label = makeLabel(text.livingBook);
+  label.position.set(0, 1.2, -0.58);
+  label.scale.set(1.55, 0.38, 1);
+  table.add(label);
+  scene.add(table);
+}
+
+function wrapCanvasText(context, message, x, y, maxWidth, lineHeight) {
+  const words = message.split(/\s+/);
+  const lines = [];
+  let line = "";
+  words.forEach((word) => {
+    const candidate = line ? `${line} ${word}` : word;
+    if (line && context.measureText(candidate).width > maxWidth) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = candidate;
+    }
+  });
+  if (line) lines.push(line);
+  const firstY = y - ((lines.length - 1) * lineHeight) / 2;
+  lines.forEach((item, index) => context.fillText(item, x, firstY + index * lineHeight));
 }
 
 function addNavigationSigns() {
@@ -1011,6 +1134,12 @@ function addFastTravelStations() {
         visitorYaw: room.visitorYaw,
         compact: true
       });
+    });
+    createWallSign(text.cinemaEnter, [x, 2.28, z], station.rotationY, {
+      width: 1.9,
+      height: 0.38,
+      exitUrl: `cinema-vr.html?lang=${lang}`,
+      compact: true
     });
   });
 }
