@@ -9,6 +9,27 @@ const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-
 const LEONARDO_STUDIO_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/862ab5f6-8608-469c-a840-8cb10f3859ae";
 const LEONARDO_ENRICHED_STUDIO_URL = "https://marble.worldlabs.ai/project/c7853f32-4025-4d66-a536-54bb9db6162d";
 
+const LEONARDO_TRIBUTE = {
+  en: {
+    eyebrow: "A TRIBUTE TO A VISIONARY",
+    title: "LEONARDO, BOUNDLESS CURIOSITY",
+    subtitle: "A Renaissance mind encountering an immersive art book",
+    body: "Leonardo da Vinci never knew virtual reality, augmented reality, 3D modelling, or spatial computing in their modern forms. Yet his notebooks reveal a mind continually trying to extend human vision: he studied optics and perspective, dissected bodies to understand movement, imagined machines, mapped spaces, and united art with experiment. He is therefore best understood not as their inventor, but as an intellectual precursor to the curiosity that drives immersive media. Had Leonardo been able to open ARTDACI, he would surely have explored its paintings from every angle, entered their spaces, tested their animated forms, and asked how technology could make seeing an active form of discovery. This page honours that restless curiosity—and invites every reader to continue it."
+  },
+  fr: {
+    eyebrow: "HOMMAGE À UN VISIONNAIRE",
+    title: "LÉONARD, LA CURIOSITÉ SANS FRONTIÈRES",
+    subtitle: "Un esprit de la Renaissance face à un livre d’art immersif",
+    body: "Léonard de Vinci n’a évidemment connu ni la réalité virtuelle, ni la réalité augmentée, ni la modélisation 3D ou l’informatique spatiale sous leurs formes modernes. Ses carnets révèlent pourtant un esprit qui cherchait sans cesse à prolonger la vision humaine : il étudiait l’optique et la perspective, disséquait les corps pour comprendre le mouvement, imaginait des machines, représentait l’espace et unissait l’art à l’expérimentation. Il est donc plus juste de voir en lui un précurseur intellectuel de la curiosité qui anime les médias immersifs. S’il avait pu ouvrir ARTDACI, Léonard aurait certainement observé les tableaux sous tous leurs angles, pénétré dans leurs espaces, expérimenté leurs formes animées et demandé comment la technologie pouvait transformer le regard en découverte active. Cette page rend hommage à cette curiosité insatiable et invite chaque lecteur à la poursuivre."
+  },
+  ar: {
+    eyebrow: "تحية إلى صاحب رؤية",
+    title: "ليوناردو، فضول بلا حدود",
+    subtitle: "عقل من عصر النهضة يلتقي بكتاب فني غامر",
+    body: "لم يعرف ليوناردو دافنشي الواقع الافتراضي أو الواقع المعزز أو النمذجة ثلاثية الأبعاد أو الحوسبة المكانية بصورها الحديثة. لكن دفاتره تكشف عن عقل كان يسعى باستمرار إلى توسيع حدود الرؤية البشرية؛ فقد درس البصريات والمنظور، وشرّح الأجسام لفهم الحركة، وتخيّل الآلات، ومثّل الفضاء، وجمع بين الفن والتجربة. لذلك من الأدق اعتباره سلفاً فكرياً للفضول الذي يحرك الوسائط الغامرة، لا مخترعاً مباشراً لها. لو استطاع ليوناردو فتح كتاب ARTDACI، لربما استكشف اللوحات من جميع الزوايا، ودخل فضاءاتها، واختبر أشكالها المتحركة، وتساءل كيف يمكن للتكنولوجيا أن تجعل النظر فعلاً حياً للاكتشاف. تهدي هذه الصفحة تحية إلى فضوله الذي لا يهدأ، وتدعو كل قارئ إلى مواصلة هذا النهج."
+  }
+};
+
 const BOOK_IMAGE_GALLERIES = {
   "mona-lisa": [
     "assets/paintings/mona-lisa/images/Mona-Lisa_out-of-frame.png",
@@ -275,6 +296,20 @@ function buildPageDefinitions(manifests) {
         ...(videos[1] ? [{ label: "▶", x: 82, y: 52, type: "video", video: videos[1] }] : [])
       ]
     });
+  });
+
+  const tribute = LEONARDO_TRIBUTE[lang] || LEONARDO_TRIBUTE.en;
+  pages.push({
+    kind: "tribute",
+    eyebrow: tribute.eyebrow,
+    title: tribute.title,
+    subtitle: tribute.subtitle,
+    image: "assets/paintings/mona-lisa/images/davinci-monalisa.png",
+    body: tribute.body,
+    hotspots: [
+      { label: "VR+", x: 82, y: 24, type: "studio", url: LEONARDO_STUDIO_VR_WORLD_URL },
+      { label: "VR++", x: 82, y: 38, type: "studioEnriched", url: LEONARDO_ENRICHED_STUDIO_URL }
+    ]
   });
 
   pages.push({
