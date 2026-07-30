@@ -11,22 +11,70 @@ const LEONARDO_ENRICHED_STUDIO_URL = "https://marble.worldlabs.ai/project/c7853f
 
 const LEONARDO_TRIBUTE = {
   en: {
-    eyebrow: "A TRIBUTE TO A VISIONARY",
-    title: "LEONARDO, BOUNDLESS CURIOSITY",
-    subtitle: "A Renaissance mind encountering an immersive art book",
-    body: "Leonardo da Vinci never knew virtual reality, augmented reality, 3D modelling, or spatial computing in their modern forms. Yet his notebooks reveal a mind continually trying to extend human vision: he studied optics and perspective, dissected bodies to understand movement, imagined machines, mapped spaces, and united art with experiment. He is therefore best understood not as their inventor, but as an intellectual precursor to the curiosity that drives immersive media. Had Leonardo been able to open ARTDACI, he would surely have explored its paintings from every angle, entered their spaces, tested their animated forms, and asked how technology could make seeing an active form of discovery. This page honours that restless curiosity—and invites every reader to continue it."
+    pages: [
+      {
+        eyebrow: "INTRODUCING ARTDACI",
+        title: "A PRINTED BOOK. A LIVING MUSEUM.",
+        subtitle: "Art, knowledge, and immersive discovery",
+        body: "ARTDACI is more than a collection of extraordinary paintings. It is an invitation to rediscover the world’s artistic heritage through the tools of the twenty-first century while honouring the genius of the Renaissance. Every printed page stands on its own as a space for reading and close observation, then becomes a gateway to deeper exploration. Artificial Intelligence, Augmented Reality, Virtual Reality, interactive 3D experiences, immersive storytelling, sound, video, and spatial computing allow masterpieces to be experienced as well as observed. These technologies are not presented as spectacle alone, but as instruments for curiosity, learning, accessibility, and creativity: ways to explore knowledge, enter history, and encounter art from new points of view."
+      },
+      {
+        eyebrow: "TO LEONARDO DA VINCI",
+        title: "A MIND THAT CHANGED TIME",
+        subtitle: "Some change their era. A very few change the future.",
+        body: "More than five centuries after Leonardo da Vinci’s remarkable life, his paintings still captivate millions, his notebooks inspire artists, scientists, and engineers, and his insatiable curiosity remains a model for anyone who seeks to understand and create. Leonardo never accepted the limits of his time. He looked beyond the visible, questioned the accepted, and imagined what others believed impossible. He united art and science not as separate disciplines, but as expressions of the same pursuit of truth through observation, imagination, and making. He never knew virtual reality, augmented reality, 3D modelling, or spatial computing in their modern forms; nevertheless, his studies of optics, perspective, anatomy, movement, machines, and space make him an intellectual precursor to the curiosity that animates immersive media."
+      },
+      {
+        eyebrow: "THE QUESTION CONTINUES",
+        title: "WHAT ELSE CAN WE DISCOVER?",
+        subtitle: "A dedication from ARTDACI",
+        body: "If Leonardo were among us today, one can imagine his fascination with these possibilities. He might walk through virtual reconstructions of his workshops, examine the human body layer by layer in three dimensions, simulate the flight of his visionary machines, and explore paintings from every angle. ARTDACI does not seek to modernise Leonardo’s art; it seeks to continue his way of thinking. It celebrates the belief that technology reaches its highest purpose when it deepens human understanding, enriches culture, and awakens imagination. May every reader feel the wonder that guided Leonardo throughout his life. May every masterpiece become a doorway to discovery, and every innovation remind us that progress begins with curiosity. To Leonardo—whose genius transcended centuries, whose imagination knew no boundaries, and whose legacy continues to inspire humanity—this book is respectfully and gratefully dedicated. Your works belong to history. Your ideas belong to the future. Your spirit belongs to us all."
+      }
+    ]
   },
   fr: {
-    eyebrow: "HOMMAGE À UN VISIONNAIRE",
-    title: "LÉONARD, LA CURIOSITÉ SANS FRONTIÈRES",
-    subtitle: "Un esprit de la Renaissance face à un livre d’art immersif",
-    body: "Léonard de Vinci n’a évidemment connu ni la réalité virtuelle, ni la réalité augmentée, ni la modélisation 3D ou l’informatique spatiale sous leurs formes modernes. Ses carnets révèlent pourtant un esprit qui cherchait sans cesse à prolonger la vision humaine : il étudiait l’optique et la perspective, disséquait les corps pour comprendre le mouvement, imaginait des machines, représentait l’espace et unissait l’art à l’expérimentation. Il est donc plus juste de voir en lui un précurseur intellectuel de la curiosité qui anime les médias immersifs. S’il avait pu ouvrir ARTDACI, Léonard aurait certainement observé les tableaux sous tous leurs angles, pénétré dans leurs espaces, expérimenté leurs formes animées et demandé comment la technologie pouvait transformer le regard en découverte active. Cette page rend hommage à cette curiosité insatiable et invite chaque lecteur à la poursuivre."
+    pages: [
+      {
+        eyebrow: "PRÉSENTATION D’ARTDACI",
+        title: "UN LIVRE IMPRIMÉ. UN MUSÉE VIVANT.",
+        subtitle: "Art, connaissance et découverte immersive",
+        body: "ARTDACI est bien davantage qu’une collection de peintures extraordinaires. C’est une invitation à redécouvrir le patrimoine artistique mondial avec les outils du XXIe siècle, tout en honorant le génie de la Renaissance. Chaque page imprimée constitue un espace autonome de lecture et d’observation, puis devient une porte vers une exploration plus profonde. Intelligence artificielle, réalité augmentée, réalité virtuelle, expériences 3D interactives, récits immersifs, son, vidéo et informatique spatiale permettent d’expérimenter les chefs-d’œuvre autant que de les contempler. Ces technologies ne sont pas de simples effets spectaculaires : elles deviennent des instruments de curiosité, d’apprentissage, d’accessibilité et de créativité."
+      },
+      {
+        eyebrow: "À LÉONARD DE VINCI",
+        title: "UN ESPRIT QUI A CHANGÉ LE TEMPS",
+        subtitle: "Certains transforment leur époque. Très peu transforment l’avenir.",
+        body: "Plus de cinq siècles après la vie remarquable de Léonard de Vinci, ses peintures captivent toujours des millions de personnes, ses carnets inspirent artistes, scientifiques et ingénieurs, et son insatiable curiosité demeure un modèle. Léonard n’acceptait pas les limites de son temps. Il regardait au-delà du visible, questionnait les certitudes et imaginait ce que d’autres croyaient impossible. Il unissait l’art et la science comme deux expressions d’une même recherche de vérité par l’observation, l’imagination et la création. Il n’a connu ni la VR, ni l’AR, ni la modélisation 3D ou l’informatique spatiale sous leurs formes modernes. Pourtant, ses recherches sur l’optique, la perspective, l’anatomie, le mouvement, les machines et l’espace en font un précurseur intellectuel de la curiosité qui anime les médias immersifs."
+      },
+      {
+        eyebrow: "LA QUESTION CONTINUE",
+        title: "QUE POUVONS-NOUS ENCORE DÉCOUVRIR ?",
+        subtitle: "Une dédicace d’ARTDACI",
+        body: "Si Léonard était parmi nous, on imagine sa fascination : il parcourrait des reconstitutions virtuelles de ses ateliers, examinerait le corps humain couche après couche en trois dimensions, simulerait le vol de ses machines et explorerait les tableaux sous tous leurs angles. ARTDACI ne cherche pas à moderniser son art, mais à prolonger sa manière de penser. La technologie atteint son but le plus élevé lorsqu’elle approfondit la compréhension humaine, enrichit la culture et éveille l’imagination. Puisse chaque lecteur ressentir l’émerveillement qui guida Léonard. Puisse chaque chef-d’œuvre devenir une porte vers la découverte, et chaque innovation nous rappeler que le progrès commence par la curiosité. À Léonard—dont le génie a traversé les siècles, dont l’imagination ne connaissait aucune frontière et dont l’héritage continue d’inspirer l’humanité—ce livre est respectueusement dédié. Vos œuvres appartiennent à l’histoire. Vos idées appartiennent à l’avenir. Votre esprit appartient à tous."
+      }
+    ]
   },
   ar: {
-    eyebrow: "تحية إلى صاحب رؤية",
-    title: "ليوناردو، فضول بلا حدود",
-    subtitle: "عقل من عصر النهضة يلتقي بكتاب فني غامر",
-    body: "لم يعرف ليوناردو دافنشي الواقع الافتراضي أو الواقع المعزز أو النمذجة ثلاثية الأبعاد أو الحوسبة المكانية بصورها الحديثة. لكن دفاتره تكشف عن عقل كان يسعى باستمرار إلى توسيع حدود الرؤية البشرية؛ فقد درس البصريات والمنظور، وشرّح الأجسام لفهم الحركة، وتخيّل الآلات، ومثّل الفضاء، وجمع بين الفن والتجربة. لذلك من الأدق اعتباره سلفاً فكرياً للفضول الذي يحرك الوسائط الغامرة، لا مخترعاً مباشراً لها. لو استطاع ليوناردو فتح كتاب ARTDACI، لربما استكشف اللوحات من جميع الزوايا، ودخل فضاءاتها، واختبر أشكالها المتحركة، وتساءل كيف يمكن للتكنولوجيا أن تجعل النظر فعلاً حياً للاكتشاف. تهدي هذه الصفحة تحية إلى فضوله الذي لا يهدأ، وتدعو كل قارئ إلى مواصلة هذا النهج."
+    pages: [
+      {
+        eyebrow: "تقديم ARTDACI",
+        title: "كتاب مطبوع. متحف حي.",
+        subtitle: "الفن والمعرفة والاكتشاف الغامر",
+        body: "ARTDACI ليس مجرد مجموعة من اللوحات الاستثنائية، بل دعوة إلى إعادة اكتشاف التراث الفني العالمي بأدوات القرن الحادي والعشرين مع تكريم عبقرية عصر النهضة. تشكل كل صفحة مطبوعة مساحة مستقلة للقراءة والتأمل، ثم تتحول إلى بوابة لاستكشاف أعمق. يتيح الذكاء الاصطناعي والواقع المعزز والواقع الافتراضي والتجارب التفاعلية ثلاثية الأبعاد والسرد الغامر والصوت والفيديو والحوسبة المكانية اختبار روائع الفن إلى جانب تأملها. ولا تقدم هذه التقنيات لمجرد الإبهار، بل بوصفها أدوات للفضول والتعلم والإتاحة والإبداع، ووسائل لدخول التاريخ ورؤية الفن من زوايا جديدة."
+      },
+      {
+        eyebrow: "إلى ليوناردو دافنشي",
+        title: "عقل غيّر الزمن",
+        subtitle: "بعض الناس يغيرون عصرهم، وقلة نادرة تغير المستقبل.",
+        body: "بعد أكثر من خمسة قرون على حياة ليوناردو دافنشي المدهشة، ما زالت لوحاته تأسر الملايين، وما زالت دفاتره تلهم الفنانين والعلماء والمهندسين، ولا يزال فضوله الذي لا يشبع نموذجاً لكل من يسعى إلى الفهم والإبداع. لم يقبل ليوناردو حدود عصره؛ نظر إلى ما وراء المرئي، وشكك في المسلّمات، وتخيل ما اعتبره الآخرون مستحيلاً. وجمع بين الفن والعلم باعتبارهما تعبيرين عن بحث واحد عن الحقيقة بالملاحظة والخيال والصنع. لم يعرف الواقع الافتراضي أو المعزز أو النمذجة ثلاثية الأبعاد أو الحوسبة المكانية بصورها الحديثة، لكن أبحاثه في البصريات والمنظور والتشريح والحركة والآلات والفضاء تجعله سلفاً فكرياً للفضول الذي يحرك الوسائط الغامرة."
+      },
+      {
+        eyebrow: "السؤال مستمر",
+        title: "ماذا يمكننا أن نكتشف أيضاً؟",
+        subtitle: "إهداء من ARTDACI",
+        body: "لو كان ليوناردو بيننا اليوم، لتخيلناه مفتوناً بهذه الإمكانات؛ يتجول في نماذج افتراضية لمحترفه، ويفحص جسم الإنسان طبقة بعد طبقة في ثلاثة أبعاد، ويحاكي طيران آلاته، ويستكشف اللوحات من جميع الزوايا. لا يسعى ARTDACI إلى تحديث فن ليوناردو، بل إلى مواصلة طريقته في التفكير. فالتكنولوجيا تبلغ أسمى غاياتها عندما تعمق الفهم الإنساني وتثري الثقافة وتوقظ الخيال. لعل كل قارئ يشعر بالدهشة التي قادت ليوناردو طوال حياته، ولعل كل تحفة تصبح باباً إلى الاكتشاف، وكل ابتكار يذكرنا بأن التقدم يبدأ بالفضول. إلى ليوناردو، الذي تجاوزت عبقريته القرون ولم يعرف خياله حدوداً وما زال إرثه يلهم الإنسانية، يُهدى هذا الكتاب بكل احترام وامتنان. أعمالك ملك للتاريخ. أفكارك ملك للمستقبل. وروحك ملك لنا جميعاً."
+      }
+    ]
   }
 };
 
@@ -299,17 +347,18 @@ function buildPageDefinitions(manifests) {
   });
 
   const tribute = LEONARDO_TRIBUTE[lang] || LEONARDO_TRIBUTE.en;
-  pages.push({
-    kind: "tribute",
-    eyebrow: tribute.eyebrow,
-    title: tribute.title,
-    subtitle: tribute.subtitle,
-    image: "assets/paintings/mona-lisa/images/davinci-monalisa.png",
-    body: tribute.body,
-    hotspots: [
-      { label: "VR+", x: 82, y: 24, type: "studio", url: LEONARDO_STUDIO_VR_WORLD_URL },
-      { label: "VR++", x: 82, y: 38, type: "studioEnriched", url: LEONARDO_ENRICHED_STUDIO_URL }
-    ]
+  tribute.pages.forEach((tributePage, index) => {
+    pages.push({
+      kind: "tribute",
+      ...tributePage,
+      image: index < 2 ? "assets/paintings/mona-lisa/images/davinci-monalisa.png" : undefined,
+      hotspots: index === 0
+        ? [
+            { label: "VR+", x: 82, y: 24, type: "studio", url: LEONARDO_STUDIO_VR_WORLD_URL },
+            { label: "VR++", x: 82, y: 38, type: "studioEnriched", url: LEONARDO_ENRICHED_STUDIO_URL }
+          ]
+        : []
+    });
   });
 
   pages.push({
