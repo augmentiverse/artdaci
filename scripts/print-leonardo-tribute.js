@@ -127,6 +127,7 @@ copy.pages.forEach((page, index) => {
   const article = document.createElement("article");
   article.className = `tribute-print-page tribute-print-page-${index + 1}`;
   article.innerHTML = `
+    <img class="artdaci-logo tribute-page-logo" src="assets/varia/artdaci-logo.png" alt="ARTDACI" />
     <div class="tribute-print-copy">
       <p class="eyebrow">${page.eyebrow}</p>
       <h1>${page.title}</h1>

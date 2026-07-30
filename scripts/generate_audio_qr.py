@@ -34,6 +34,7 @@ TARGETS = {
     "multimedia-book-fr.png": "book-3d.html?lang=fr",
     "multimedia-bedroom-world.png": "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae",
     "multimedia-leonardo-world.png": "https://marble.worldlabs.ai/worldvr/862ab5f6-8608-469c-a840-8cb10f3859ae",
+    "multimedia-leonardo-enriched-studio.png": "https://marble.worldlabs.ai/project/c7853f32-4025-4d66-a536-54bb9db6162d",
 }
 
 

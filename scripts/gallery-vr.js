@@ -48,12 +48,12 @@ const CINEMA_VIDEO_LIBRARY = [
     audioSrcAr: "assets/paintings/mona-lisa/audio-video/رقصة_خلف_الإطار.mp3"
   },
   {
-    title: { en: "Mona Lisa — Alternate Scene", fr: "La Joconde — scène alternative", ar: "الموناليزا — مشهد بديل" },
-    src: "assets/paintings/mona-lisa/audio-video/mona-lisa_video-1.mp4"
+    title: { en: "Leonardo’s Vision II", fr: "La vision de Léonard II", ar: "رؤية ليوناردو الثانية" },
+    src: "assets/paintings/mona-lisa/audio-video/dv2.mp4"
   },
   {
-    title: { en: "Beyond the Frame II", fr: "Au-delà du cadre II", ar: "خارج الإطار ٢" },
-    src: "assets/paintings/mona-lisa/audio-video/monalisa-out-of-frame-2.mp4"
+    title: { en: "Mona Lisa in Motion", fr: "La Joconde en mouvement", ar: "الموناليزا في حركة" },
+    src: "assets/paintings/mona-lisa/audio-video/m2Vmg.mp4"
   },
   {
     title: { en: "Beyond the Frame III", fr: "Au-delà du cadre III", ar: "خارج الإطار ٣" },

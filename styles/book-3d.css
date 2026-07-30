@@ -40,7 +40,7 @@ button, a { font: inherit; }
   position: relative;
   z-index: 20;
   display: grid;
-  grid-template-columns: auto minmax(180px, 1fr) auto;
+  grid-template-columns: auto auto minmax(180px, 1fr) auto;
   gap: 18px;
   align-items: center;
   min-height: 88px;
@@ -48,6 +48,12 @@ button, a { font: inherit; }
   border-bottom: 1px solid rgba(255,255,255,.16);
   background: rgba(18, 14, 11, .92);
   backdrop-filter: blur(16px);
+}
+
+.book-logo {
+  width: 62px;
+  height: 62px;
+  object-fit: contain;
 }
 
 .book-toolbar p, .book-toolbar h1 { margin: 0; }

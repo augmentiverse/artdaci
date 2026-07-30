@@ -73,6 +73,17 @@ a {
   min-height: 68vh;
 }
 
+.artdaci-logo {
+  display: block;
+  object-fit: contain;
+}
+
+.index-logo {
+  width: clamp(110px, 15vw, 180px);
+  max-height: 100px;
+  margin-bottom: 18px;
+}
+
 .plate {
   display: grid;
   place-items: center;
@@ -1010,12 +1021,21 @@ figcaption strong {
 }
 
 .qr-directory-header {
+  position: relative;
   display: grid;
   grid-template-columns: 1.15fr 1fr;
   column-gap: 34px;
   align-items: end;
   padding-bottom: 22px;
   border-bottom: 2px solid #b59154;
+}
+
+.qr-directory-logo {
+  position: absolute;
+  top: 24px;
+  right: 48px;
+  width: 88px;
+  max-height: 72px;
 }
 
 .qr-directory-header .eyebrow {
@@ -1356,6 +1376,11 @@ html[dir="rtl"] .leonardo-introduction {
   padding: 18px;
 }
 
+.tribute-toolbar-logo {
+  width: 62px;
+  height: 42px;
+}
+
 .tribute-print {
   width: min(100%, 210mm);
   margin: 0 auto 40px;
@@ -1377,6 +1402,15 @@ html[dir="rtl"] .leonardo-introduction {
   break-after: page;
   page-break-after: always;
   page: tribute-page;
+}
+
+.tribute-page-logo {
+  position: absolute;
+  z-index: 2;
+  top: 8mm;
+  inset-inline-end: 14mm;
+  width: 28mm;
+  height: 16mm;
 }
 
 .tribute-print-page-3 {
@@ -1543,7 +1577,58 @@ html[dir="rtl"] .tribute-print-page {
   }
 
   .qr-directory-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .qr-directory-header {
+    display: block;
+    padding-bottom: 12px;
+    padding-right: 120px;
+  }
+
+  .qr-directory-header h1 {
+    margin-top: 3px;
+    font-size: 38px;
+  }
+
+  .qr-directory-header > p:last-child {
+    margin-top: 5px;
+  }
+
+  .qr-directory-card {
+    grid-template-columns: 62px minmax(0, 1fr);
+    gap: 9px;
+    min-height: 108px;
+    padding: 9px;
+    overflow: hidden;
+  }
+
+  .qr-directory-card img {
+    width: 62px;
+    height: 62px;
+    border-width: 3px;
+  }
+
+  .qr-directory-card > div {
+    min-width: 0;
+  }
+
+  .qr-directory-card h2 {
+    overflow-wrap: anywhere;
+    font-size: 15px;
+  }
+
+  .qr-directory-card p {
+    margin-bottom: 5px;
+    font-size: 9.5px;
+    line-height: 1.25;
+  }
+
+  .qr-directory-footer {
+    margin-top: 10px;
+    padding-top: 8px;
   }
 
   .qr-directory-footer {
