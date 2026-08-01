@@ -3,13 +3,15 @@ const PRINT_PAGES = {
     "mona-lisa": "print-target.html",
     "van-gogh": "print-van-gogh.html",
     "van-gogh-bedroom": "print-van-gogh-bedroom.html",
-    "vermeer-girl-with-a-pearl-earring": "print-vermeer-girl-with-a-pearl-earring.html"
+    "vermeer-girl-with-a-pearl-earring": "print-vermeer-girl-with-a-pearl-earring.html",
+    "monet-impression-sunrise": "print-monet-impression-sunrise.html"
   },
   fr: {
     "mona-lisa": "print-target-fr.html",
     "van-gogh": "print-van-gogh-fr.html",
     "van-gogh-bedroom": "print-van-gogh-bedroom-fr.html",
-    "vermeer-girl-with-a-pearl-earring": "print-vermeer-girl-with-a-pearl-earring-fr.html"
+    "vermeer-girl-with-a-pearl-earring": "print-vermeer-girl-with-a-pearl-earring-fr.html",
+    "monet-impression-sunrise": "print-monet-impression-sunrise-fr.html"
   }
   ,
   ar: {
@@ -89,7 +91,8 @@ const UI = {
 const FR_TITLES = {
   "van-gogh": "Autoportrait",
   "van-gogh-bedroom": "La Chambre",
-  "vermeer-girl-with-a-pearl-earring": "La Jeune Fille à la perle"
+  "vermeer-girl-with-a-pearl-earring": "La Jeune Fille à la perle",
+  "monet-impression-sunrise": "Impression, soleil levant"
 };
 
 const AR_TITLES = {
@@ -245,6 +248,10 @@ function renderCard(manifest, lang, text) {
   const artist = lang === "ar" ? arMeta.artist || manifest.artist?.name || "" : manifest.artist?.name || "";
   const date = lang === "ar" ? arMeta.date || manifest.date || "" : manifest.date || "";
   const displayLocation = lang === "ar" ? arMeta.location || location : location;
+  const immersiveActions = slug === "monet-impression-sunrise"
+    ? `<a class="button" href="gallery-vr.html?lang=${lang}&amp;artist=monet">${lang === "fr" ? "Salle Monet" : "Monet Room"}</a>`
+    : `<a class="button" href="ar.html?painting=${slug}&amp;lang=${lang}">${text.ar}</a>
+       <a class="button" href="space.html?painting=${slug}&amp;lang=${lang}">${text.space}</a>`;
 
   return `
     <article class="artwork-card">
@@ -265,8 +272,7 @@ function renderCard(manifest, lang, text) {
         </div>
         <div class="card-actions">
           <a class="button primary" href="${printUrl}">${text.print}</a>
-          <a class="button" href="ar.html?painting=${slug}&amp;lang=${lang}">${text.ar}</a>
-          <a class="button" href="space.html?painting=${slug}&amp;lang=${lang}">${text.space}</a>
+          ${immersiveActions}
           ${audioOverview ? `<a class="button" href="${escapeHtml(audioOverview.src)}">${text.audioOverview}</a>` : ""}
         </div>
       </div>

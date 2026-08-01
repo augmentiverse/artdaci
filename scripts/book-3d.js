@@ -2,7 +2,8 @@ const MANIFEST_URLS = [
   "content/paintings/mona-lisa.json?v=2",
   "content/paintings/van-gogh.json?v=2",
   "content/paintings/van-gogh-bedroom.json?v=2",
-  "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=2"
+  "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=2",
+  "content/paintings/monet-impression-sunrise.json?v=1"
 ];
 
 const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae";
@@ -97,6 +98,11 @@ const BOOK_IMAGE_GALLERIES = {
     "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/images/Girl_with_a_Pearl_Earring_standing.jpg",
     "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/images/vermeer_Girl-with-a-Pearl-Earring_sitting.png",
     "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/images/vermeer_Girl-with-a-Pearl-Earring_room.png"
+  ],
+  "monet-impression-sunrise": [
+    "assets/paintings/monet/Tableaux/Impression-Sunrise_Monet.webp",
+    "assets/paintings/monet/Tableaux/Water Lilies_Monet.webp",
+    "assets/paintings/monet/Tableaux/The Japanese Bridge_Monet.webp"
   ]
 };
 
@@ -148,6 +154,12 @@ const BOOK_FRENCH_TEXT = {
     looking: "Le corps se tourne dans une direction tandis que la tête revient vers nous. Ce mouvement en spirale aboutit au contact du regard et aux lèvres entrouvertes. Le col clair sépare le visage du vêtement, et la perle répond aux reflets des yeux et de la bouche. Quelques accents lumineux suffisent à faire émerger la figure de l’obscurité.",
     technique: "Vermeer emploie un outremer naturel coûteux, obtenu à partir de lapis-lazuli, pour le foulard bleu. Le fond était autrefois une surface vert sombre plus brillante, dont les pigments organiques ont pâli. L’étude scientifique de 2018 a utilisé microscope 3D, MA-XRF et imagerie infrarouge. Elle a révélé de minuscules cils et confirmé que la « perle » n’a ni contour complet ni crochet visible.",
     legacy: "Acquise en 1881 pour seulement deux florins et trente centimes, l’œuvre entre au Mauritshuis en 1902. Sa simplicité, son silence narratif et son identité ouverte ont inspiré romans, cinéma, photographie et mode. Les théories sur une camera obscura restent possibles mais non prouvées : aucune preuve documentaire ou trace matérielle ne confirme l’emploi d’un appareil précis."
+  },
+  "monet-impression-sunrise": {
+    story: "Monet peint l’avant-port du Havre depuis la fenêtre de l’hôtel de l’Amirauté, au petit matin, vers novembre 1872. Présentée en 1874 lors de la première exposition du groupe indépendant, la toile inspire au critique Louis Leroy le terme « impressionnistes ». Ce mot moqueur devient bientôt le nom d’une révolution artistique.",
+    looking: "Les barques sombres du premier plan conduisent le regard vers les mâts, grues et cheminées qui se dissolvent dans la brume. Le soleil orange et son reflet interrompu forment le contraste le plus vif. Monet ne décrit pas chaque objet : il organise une sensation de profondeur avec la lumière, la vapeur et quelques silhouettes.",
+    technique: "Des touches rapides et minces préservent l’aspect fugitif de l’aube. Les gris bleutés dominent, tandis que l’orange complémentaire du soleil paraît vibrer. Des éléments comme les barques et le reflet ont été ajoutés à la fin. La surface conserve ainsi la vitesse de l’observation au lieu de masquer le travail du pinceau.",
+    legacy: "Impression, soleil levant a contribué à donner son nom à l’impressionnisme et à déplacer l’ambition de la peinture : saisir une lumière et un instant pouvait compter davantage qu’une description achevée. Le port moderne associe nature, industrie et mobilité. La toile est aujourd’hui conservée au musée Marmottan Monet à Paris."
   }
 };
 
@@ -202,6 +214,12 @@ const BOOK_ENGLISH_TEXT = {
     looking: "Her body turns one way while her head returns toward us. This spiral movement ends in direct eye contact and parted lips. The bright collar separates the face from the jacket, while the earring echoes highlights in the eyes and mouth. A small number of precisely placed accents is enough to bring the figure out of darkness.",
     technique: "Vermeer used costly natural ultramarine made from lapis lazuli in the blue headscarf. The background was once a glossier deep green but its organic pigments faded. The 2018 examination used 3D microscopy, MA-XRF, and infrared imaging. It revealed tiny eyelashes and confirmed that the “pearl” has neither a complete contour nor a visible hook.",
     legacy: "Bought in 1881 for only two guilders and thirty cents, the painting entered the Mauritshuis collection in 1902. Its visual economy, narrative silence, and open identity have inspired novels, film, photography, and fashion. Camera-obscura theories remain possible but unproven: no document or physical trace confirms that Vermeer used a particular optical device."
+  },
+  "monet-impression-sunrise": {
+    story: "Monet painted the outer harbour of Le Havre from a room in the Hôtel de l’Amirauté in the early morning, around November 1872. Shown in 1874 at the independent group’s first exhibition, the canvas prompted critic Louis Leroy to use the label ‘Impressionists’. A term of ridicule became the name of an artistic revolution.",
+    looking: "Dark rowing boats lead the eye toward masts, cranes, and smokestacks dissolving into mist. The orange sun and its broken reflection create the strongest contrast. Rather than describe every object, Monet builds depth from light, vapour, silhouettes, and the spaces between them.",
+    technique: "Thin, rapid strokes preserve the fleeting appearance of dawn. Blue-greys dominate while the complementary orange sun seems to vibrate. Elements including the boats and reflection were added near the end. The surface keeps the speed of observation visible instead of hiding the painter’s process.",
+    legacy: "Impression, Sunrise helped give Impressionism its name and changed what a finished painting could seek to achieve: capturing light and a passing instant could matter more than polished description. Its modern harbour brings together nature, industry, and movement. The painting is held by the Musée Marmottan Monet in Paris."
   }
 };
 
@@ -261,6 +279,18 @@ function applyLanguage() {
 
 function buildPageDefinitions(manifests) {
   const sectionCopy = BOOK_SECTION_COPY[lang];
+  const tribute = LEONARDO_TRIBUTE[lang] || LEONARDO_TRIBUTE.en;
+  const openingPages = tribute.pages.map((tributePage, index) => ({
+    kind: "tribute",
+    ...tributePage,
+    image: index < 2 ? "assets/paintings/Da Vinci/mona-lisa/images/davinci-monalisa.png" : undefined,
+    hotspots: index === 0
+      ? [
+          { label: "VR+", x: 82, y: 24, type: "studio", url: LEONARDO_STUDIO_VR_WORLD_URL },
+          { label: "VR++", x: 82, y: 38, type: "studioEnriched", url: LEONARDO_ENRICHED_STUDIO_URL }
+        ]
+      : []
+  }));
   const pages = [
     {
       kind: "cover",
@@ -268,6 +298,7 @@ function buildPageDefinitions(manifests) {
       title: lang === "ar" ? "روائع فنية حية" : lang === "fr" ? "CHEFS-D’ŒUVRE VIVANTS" : "MASTERPIECES ALIVE",
       subtitle: lang === "ar" ? "كتاب مطبوع، ومتحف مكاني." : lang === "fr" ? "Un livre imprimé. Un musée spatial." : "A printed book. A spatial museum."
     },
+    ...openingPages,
     {
       kind: "intro",
       eyebrow: lang === "ar" ? "طريقة الاستكشاف" : lang === "fr" ? "MODE D’EMPLOI" : "HOW TO EXPLORE",
@@ -286,6 +317,7 @@ function buildPageDefinitions(manifests) {
     const videos = manifest.media?.videos || [];
     const texts = getBookTexts(manifest);
     const galleryImages = BOOK_IMAGE_GALLERIES[manifest.slug] || [];
+    const hasImmersiveAssets = manifest.slug !== "monet-impression-sunrise";
     pages.push({
       kind: "artwork",
       eyebrow: `${String(index + 1).padStart(2, "0")} · ${sectionCopy.story}`,
@@ -294,12 +326,14 @@ function buildPageDefinitions(manifests) {
       image: manifest.media?.image || manifest.print?.imageTargetSource,
       body: texts.story,
       manifest,
-      hotspots: [
-        { label: "3D", x: 83, y: 23, type: "space" },
-        { label: "♪", x: 83, y: 35, type: "audio", audio },
-        { label: "AR", x: 83, y: 47, type: "ar" },
-        ...(videos[0] ? [{ label: "▶", x: 83, y: 59, type: "video", video: videos[0] }] : [])
-      ]
+      hotspots: hasImmersiveAssets
+        ? [
+            { label: "3D", x: 83, y: 23, type: "space" },
+            { label: "♪", x: 83, y: 35, type: "audio", audio },
+            { label: "AR", x: 83, y: 47, type: "ar" },
+            ...(videos[0] ? [{ label: "▶", x: 83, y: 59, type: "video", video: videos[0] }] : [])
+          ]
+        : [{ label: "VR", x: 83, y: 23, type: "gallery" }]
     });
     pages.push({
       kind: "analysis",
@@ -310,7 +344,7 @@ function buildPageDefinitions(manifests) {
       body: texts.looking,
       manifest,
       hotspots: [
-        { label: "VR", x: 82, y: 24, type: manifest.slug === "van-gogh-bedroom" ? "world" : "vr" },
+        ...(hasImmersiveAssets ? [{ label: "VR", x: 82, y: 24, type: manifest.slug === "van-gogh-bedroom" ? "world" : "vr" }] : []),
         { label: "◉", x: 82, y: 38, type: "gallery" },
         ...(manifest.slug === "mona-lisa"
           ? [
@@ -327,10 +361,10 @@ function buildPageDefinitions(manifests) {
       image: galleryImages[1] || manifest.media?.image || manifest.print?.imageTargetSource,
       body: texts.technique,
       manifest,
-      hotspots: [
+      hotspots: hasImmersiveAssets ? [
         ...(videos[0] ? [{ label: "▶", x: 82, y: 25, type: "video", video: videos[0] }] : []),
         { label: "AR", x: 82, y: 39, type: "ar" }
-      ]
+      ] : [{ label: "VR", x: 82, y: 25, type: "gallery" }]
     });
     pages.push({
       kind: "legacy",
@@ -340,26 +374,11 @@ function buildPageDefinitions(manifests) {
       body: texts.legacy,
       facts: lang === "ar" ? [] : (manifest.texts?.interestingFacts || []).slice(0, 3),
       manifest,
-      hotspots: [
+      hotspots: hasImmersiveAssets ? [
         { label: "3D", x: 82, y: 24, type: "space" },
         { label: "♪", x: 82, y: 38, type: "audio", audio },
         ...(videos[1] ? [{ label: "▶", x: 82, y: 52, type: "video", video: videos[1] }] : [])
-      ]
-    });
-  });
-
-  const tribute = LEONARDO_TRIBUTE[lang] || LEONARDO_TRIBUTE.en;
-  tribute.pages.forEach((tributePage, index) => {
-    pages.push({
-      kind: "tribute",
-      ...tributePage,
-      image: index < 2 ? "assets/paintings/Da Vinci/mona-lisa/images/davinci-monalisa.png" : undefined,
-      hotspots: index === 0
-        ? [
-            { label: "VR+", x: 82, y: 24, type: "studio", url: LEONARDO_STUDIO_VR_WORLD_URL },
-            { label: "VR++", x: 82, y: 38, type: "studioEnriched", url: LEONARDO_ENRICHED_STUDIO_URL }
-          ]
-        : []
+      ] : [{ label: "VR", x: 82, y: 24, type: "gallery" }]
     });
   });
 
@@ -625,14 +644,16 @@ function localizedTitle(manifest) {
     "mona-lisa": "الموناليزا",
     "van-gogh": "بورتريه ذاتي",
     "van-gogh-bedroom": "غرفة النوم",
-    "vermeer-girl-with-a-pearl-earring": "الفتاة ذات القرط اللؤلؤي"
+    "vermeer-girl-with-a-pearl-earring": "الفتاة ذات القرط اللؤلؤي",
+    "monet-impression-sunrise": "انطباع، شروق الشمس"
   }[manifest.slug] || manifest.title;
   if (lang !== "fr") return manifest.title;
   return {
     "mona-lisa": "La Joconde",
     "van-gogh": "Autoportrait",
     "van-gogh-bedroom": "La Chambre",
-    "vermeer-girl-with-a-pearl-earring": "La Jeune Fille à la perle"
+    "vermeer-girl-with-a-pearl-earring": "La Jeune Fille à la perle",
+    "monet-impression-sunrise": "Impression, soleil levant"
   }[manifest.slug] || manifest.title;
 }
 
@@ -938,7 +959,10 @@ function getExperienceUrl(manifest, type) {
   if (type === "space") return `space.html?painting=${slug}&lang=${lang}`;
   if (type === "ar") return `ar.html?painting=${slug}&lang=${lang}`;
   if (type === "vr") return `vr.html?painting=${slug}&lang=${lang}`;
-  if (type === "gallery") return `gallery-vr.html?lang=${lang}`;
+  if (type === "gallery") {
+    const artist = manifest.slug === "monet-impression-sunrise" ? "monet" : "";
+    return `gallery-vr.html?lang=${lang}${artist ? `&artist=${artist}` : ""}`;
+  }
   if (type === "world") return BEDROOM_VR_WORLD_URL;
   return `space.html?painting=${slug}&lang=${lang}`;
 }

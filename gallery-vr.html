@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#171411" />
     <title>DACIART — VR Gallery</title>
-    <link rel="stylesheet" href="styles/gallery-vr.css?v=7" />
+    <link rel="stylesheet" href="styles/gallery-vr.css?v=8" />
     <script type="importmap">
       {
         "imports": {
@@ -16,7 +16,8 @@
   </head>
   <body data-experience="gallery">
     <main class="gallery-shell">
-      <header class="gallery-toolbar">
+      <button id="gallery-ui-toggle" class="gallery-ui-toggle" type="button" aria-expanded="true" aria-controls="gallery-toolbar gallery-guide">Hide menu</button>
+      <header id="gallery-toolbar" class="gallery-toolbar">
         <a id="gallery-back" class="gallery-button" href="index.html">Back to collection</a>
         <div>
           <p id="gallery-kicker">Immersive exhibition</p>
@@ -29,7 +30,7 @@
         </div>
       </header>
 
-      <aside class="gallery-guide">
+      <aside id="gallery-guide" class="gallery-guide">
         <strong id="gallery-count">Four masterpieces</strong>
         <span id="gallery-status" role="status">Preparing the gallery…</span>
         <div class="gallery-audio-controls" aria-label="Audio guide controls">
@@ -87,6 +88,6 @@
       </details>
     </main>
 
-  <script type="module" src="scripts/gallery-vr.js?v=61"></script>
+  <script type="module" src="scripts/gallery-vr.js?v=63"></script>
   </body>
 </html>

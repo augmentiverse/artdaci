@@ -129,6 +129,9 @@ const isQuestBrowser = /OculusBrowser|Meta Quest|Quest/i.test(navigator.userAgen
 const previewRoom = params.get("room");
 const artistRoomId = params.get("artist");
 const artistRoom = ARTIST_ROOMS[artistRoomId] || null;
+const isConnectedMuseum = Boolean(artistRoom) || !previewRoom || previewRoom === "paintings";
+const ARTIST_ROOM_ORDER = ["da-vinci", "van-gogh", "vermeer", "monet"];
+const connectedStartZ = Math.max(0, ARTIST_ROOM_ORDER.indexOf(artistRoomId)) * 16 - 5.2;
 const activeRoom = ["paintings", "models", "bedroom", "reimagined"].includes(previewRoom)
   ? previewRoom
   : "paintings";
@@ -355,6 +358,7 @@ const videoPreviousButton = document.getElementById("gallery-video-previous");
 const videoNextButton = document.getElementById("gallery-video-next");
 const videoBackButton = document.getElementById("gallery-video-back");
 const videoForwardButton = document.getElementById("gallery-video-forward");
+const uiToggleButton = document.getElementById("gallery-ui-toggle");
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x191714);
 scene.fog = new THREE.Fog(0x191714, 16, 44);
@@ -441,16 +445,16 @@ async function init() {
     return;
   }
 
-  if (artistRoom) {
-    document.getElementById("gallery-title").textContent = artistRoom.name;
-    document.getElementById("gallery-count").textContent = lang === "fr" ? "Six œuvres majeures" : "Six major works";
+  if (isConnectedMuseum) {
+    document.getElementById("gallery-title").textContent = lang === "fr" ? "L’aile des quatre maîtres" : "The Four Masters Wing";
+    document.getElementById("gallery-count").textContent = lang === "fr" ? "Quatre salles · vingt-quatre œuvres" : "Four rooms · twenty-four works";
     document.getElementById("gallery-instructions").textContent = lang === "fr"
-      ? "Écran : glissez pour regarder, utilisez les flèches ou WASD pour vous déplacer. Casque : gâchette ou pincement pour vous téléporter."
-      : "Screen: drag to look and use arrows or WASD to move. Headset: trigger or pinch to teleport.";
-    buildArtistRoomArchitecture(artistRoom);
+      ? "Marchez librement d’une salle à l’autre. Écran : glissez pour regarder et utilisez les flèches ou WASD. Casque : gâchette ou pincement."
+      : "Walk freely from room to room. Screen: drag to look and use arrows or WASD. Headset: trigger or pinch.";
+    buildConnectedMuseumArchitecture();
     renderer.setAnimationLoop(render);
     try {
-      await buildArtistExhibition(artistRoom);
+      await buildConnectedMuseumExhibitions();
       await detectVR();
       status.textContent = text.ready;
     } catch (error) {
@@ -640,6 +644,15 @@ function applyCopy() {
   languageSwitch.lang = targetLang;
   languageSwitch.href = `${isCinemaOnly ? "cinema-vr.html" : "gallery-vr.html"}?${targetParams.toString()}${location.hash}`;
   status.textContent = text.loading;
+  updateScreenUiToggle();
+}
+
+function updateScreenUiToggle() {
+  const collapsed = document.body.classList.contains("screen-ui-collapsed");
+  uiToggleButton.setAttribute("aria-expanded", String(!collapsed));
+  uiToggleButton.textContent = collapsed
+    ? (lang === "ar" ? "القائمة" : lang === "fr" ? "Menu" : "Menu")
+    : (lang === "ar" ? "إخفاء القائمة" : lang === "fr" ? "Masquer le menu" : "Hide menu");
 }
 
 function buildRoom() {
@@ -872,6 +885,223 @@ async function buildArtistExhibition(room) {
     status.textContent = `${index + 1}/6 — ${title}`;
     await new Promise((resolve) => setTimeout(resolve, isQuestBrowser ? 120 : 30));
   }
+}
+
+function buildConnectedMuseumArchitecture() {
+  const roomCenters = [0, 16, 32, 48];
+  const startIndex = Math.max(0, ARTIST_ROOM_ORDER.indexOf(artistRoomId));
+  visitor.position.set(0, 0, roomCenters[startIndex] - 5.2);
+  visitor.rotation.y = startIndex ? Math.PI : 0;
+  scene.background = new THREE.Color(0x171717);
+  scene.fog = new THREE.Fog(0x171717, 25, 76);
+  scene.add(new THREE.HemisphereLight(0xfff1dc, 0x252525, isQuestBrowser ? 1.35 : 1.6));
+
+  roomCenters.forEach((centerZ, index) => {
+    const id = ARTIST_ROOM_ORDER[index];
+    const room = ARTIST_ROOMS[id];
+    addConnectedRoomShell(id, room, centerZ, index);
+    addConnectedRoomNavigation(id, centerZ);
+  });
+  addConnectedMuseumPartitions();
+}
+
+function addConnectedRoomShell(id, room, centerZ, index) {
+  const schemes = {
+    "da-vinci": { wall: 0x101d38, floor: 0x4c392d, trim: 0xc5a15b, ceiling: 0xe9dfce },
+    "van-gogh": { wall: 0xd8b36c, floor: 0x8c5b31, trim: 0x315f83, ceiling: 0xf2dfb2 },
+    vermeer: { wall: 0xe4e0d3, floor: 0x554d47, trim: 0x356b83, ceiling: 0xf4f0e6 },
+    monet: { wall: 0xcbdcca, floor: 0x8a806d, trim: 0x7298a3, ceiling: 0xeaf3ed }
+  };
+  const scheme = schemes[id];
+  const wallMaterial = new THREE.MeshStandardMaterial({ color: scheme.wall, roughness: 0.94, side: THREE.DoubleSide });
+  const floorMaterial = new THREE.MeshStandardMaterial({ color: scheme.floor, roughness: 0.9 });
+  const ceilingMaterial = new THREE.MeshStandardMaterial({ color: scheme.ceiling, roughness: 1, side: THREE.DoubleSide });
+  const trimMaterial = new THREE.MeshStandardMaterial({ color: scheme.trim, roughness: 0.48, metalness: id === "da-vinci" ? 0.28 : 0.04 });
+
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(14, 16), floorMaterial);
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.z = centerZ;
+  floor.receiveShadow = true;
+  scene.add(floor);
+  const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(14, 16), ceilingMaterial);
+  ceiling.rotation.x = Math.PI / 2;
+  ceiling.position.set(0, 4.4, centerZ);
+  scene.add(ceiling);
+  [-7, 7].forEach((x) => {
+    const wall = new THREE.Mesh(new THREE.PlaneGeometry(16, 4.4), wallMaterial);
+    wall.position.set(x, 2.2, centerZ);
+    wall.rotation.y = x < 0 ? Math.PI / 2 : -Math.PI / 2;
+    scene.add(wall);
+    [0.38, 3.86].forEach((y) => {
+      const rail = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.09, 15.7), trimMaterial);
+      rail.position.set(x + (x < 0 ? 0.04 : -0.04), y, centerZ);
+      scene.add(rail);
+    });
+  });
+
+  if (id === "da-vinci") addDaVinciDecor(centerZ, trimMaterial);
+  if (id === "van-gogh") addVanGoghDecor(centerZ, trimMaterial);
+  if (id === "vermeer") addVermeerDecor(centerZ, trimMaterial);
+  if (id === "monet") addMonetDecor(centerZ, trimMaterial);
+
+  createWallSign(room.name.toUpperCase(), [-6.88, 3.65, centerZ], Math.PI / 2, {
+    width: 4.5,
+    height: 0.56,
+    compact: true
+  });
+  const lightCount = isQuestBrowser ? 2 : 4;
+  for (let lightIndex = 0; lightIndex < lightCount; lightIndex += 1) {
+    const x = lightIndex % 2 ? 3.6 : -3.6;
+    const z = centerZ + (lightIndex < 2 ? -3.4 : 3.4);
+    const light = new THREE.PointLight(0xffe7c8, isQuestBrowser ? 0.72 : 0.92, 8.5);
+    light.position.set(x, 3.8, z);
+    scene.add(light);
+  }
+}
+
+function addConnectedMuseumPartitions() {
+  const neutral = new THREE.MeshStandardMaterial({ color: 0xd8cebf, roughness: 0.96, side: THREE.DoubleSide });
+  [-8, 8, 24, 40, 56].forEach((z, index) => {
+    const hasDoor = index > 0 && index < 4;
+    const segments = hasDoor
+      ? [[-4.5, 5], [4.5, 5]]
+      : [[0, 14]];
+    segments.forEach(([x, width]) => {
+      const wall = new THREE.Mesh(new THREE.PlaneGeometry(width, 4.4), neutral);
+      wall.position.set(x, 2.2, z);
+      scene.add(wall);
+    });
+    if (hasDoor) {
+      const lintel = new THREE.Mesh(new THREE.BoxGeometry(4, 1.05, 0.18), neutral);
+      lintel.position.set(0, 3.88, z);
+      scene.add(lintel);
+      const glow = new THREE.Mesh(
+        new THREE.BoxGeometry(3.75, 0.055, 0.16),
+        new THREE.MeshBasicMaterial({ color: 0xe0b867 })
+      );
+      glow.position.set(0, 3.34, z - 0.03);
+      scene.add(glow);
+    }
+  });
+}
+
+function addConnectedRoomNavigation(currentId, centerZ) {
+  const others = ARTIST_ROOM_ORDER.filter((id) => id !== currentId);
+  createWallSign(lang === "fr" ? "ACCÈS DIRECT AUX SALLES" : "DIRECT ROOM ACCESS", [6.88, 3.62, centerZ], -Math.PI / 2, {
+    width: 3.5, height: 0.42, accent: true, compact: true
+  });
+  others.forEach((id, index) => {
+    const destinationIndex = ARTIST_ROOM_ORDER.indexOf(id);
+    createWallSign(ARTIST_ROOMS[id].name, [6.87, 3.05 - index * 0.55, centerZ], -Math.PI / 2, {
+      width: 2.75,
+      height: 0.4,
+      destination: [0, 0, destinationIndex * 16 - 4.5],
+      visitorYaw: 0,
+      compact: true
+    });
+  });
+}
+
+function addDaVinciDecor(centerZ, material) {
+  [-5.8, -2.9, 0, 2.9, 5.8].forEach((x) => {
+    const column = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.16, 3.65, 12), material);
+    column.position.set(x, 1.83, centerZ - 7.86);
+    scene.add(column);
+  });
+  const rug = new THREE.Mesh(new THREE.PlaneGeometry(5, 8.5), new THREE.MeshStandardMaterial({ color: 0x6e2731, roughness: 0.92 }));
+  rug.rotation.x = -Math.PI / 2;
+  rug.position.set(0, 0.012, centerZ);
+  scene.add(rug);
+}
+
+function addVanGoghDecor(centerZ, material) {
+  [-5.2, -2.6, 0, 2.6, 5.2].forEach((x) => {
+    const beam = new THREE.Mesh(new THREE.BoxGeometry(0.13, 0.13, 15.5), material);
+    beam.position.set(x, 4.26, centerZ);
+    scene.add(beam);
+  });
+  const rug = new THREE.Mesh(new THREE.PlaneGeometry(5.4, 7.4), new THREE.MeshStandardMaterial({ color: 0x355f79, roughness: 0.94 }));
+  rug.rotation.x = -Math.PI / 2;
+  rug.position.set(0, 0.012, centerZ);
+  scene.add(rug);
+}
+
+function addVermeerDecor(centerZ, material) {
+  for (let z = centerZ - 7.5; z <= centerZ + 7.5; z += 1.05) {
+    [-6.92, 6.92].forEach((x) => {
+      const tileLine = new THREE.Mesh(new THREE.BoxGeometry(0.035, 0.045, 0.92), material);
+      tileLine.position.set(x, 0.75, z);
+      scene.add(tileLine);
+    });
+  }
+  const bench = new THREE.Mesh(new THREE.BoxGeometry(2.8, 0.48, 0.75), new THREE.MeshStandardMaterial({ color: 0x294a5c, roughness: 0.8 }));
+  bench.position.set(0, 0.3, centerZ);
+  scene.add(bench);
+}
+
+function addMonetDecor(centerZ, material) {
+  const skylight = new THREE.Mesh(
+    new THREE.PlaneGeometry(9.8, 10.5),
+    new THREE.MeshBasicMaterial({ color: 0xdff4f4, transparent: true, opacity: 0.88, side: THREE.DoubleSide })
+  );
+  skylight.rotation.x = Math.PI / 2;
+  skylight.position.set(0, 4.36, centerZ);
+  scene.add(skylight);
+  [-4.8, 0, 4.8].forEach((x) => {
+    const frame = new THREE.Mesh(new THREE.BoxGeometry(0.055, 0.06, 10.4), material);
+    frame.position.set(x, 4.34, centerZ);
+    scene.add(frame);
+  });
+  const island = new THREE.Mesh(new THREE.CylinderGeometry(2.2, 2.4, 0.08, 48), new THREE.MeshStandardMaterial({ color: 0x739084, roughness: 0.88 }));
+  island.position.set(0, 0.05, centerZ);
+  scene.add(island);
+}
+
+async function buildConnectedMuseumExhibitions() {
+  for (let roomIndex = 0; roomIndex < ARTIST_ROOM_ORDER.length; roomIndex += 1) {
+    const id = ARTIST_ROOM_ORDER[roomIndex];
+    const room = ARTIST_ROOMS[id];
+    const centerZ = roomIndex * 16;
+    status.textContent = lang === "fr" ? `Chargement de ${room.name}…` : `Loading ${room.name}…`;
+    for (let workIndex = 0; workIndex < room.works.length; workIndex += 1) {
+      await addConnectedMuseumArtwork(room, room.works[workIndex], centerZ, workIndex);
+      await new Promise((resolve) => setTimeout(resolve, isQuestBrowser ? 110 : 20));
+    }
+  }
+}
+
+async function addConnectedMuseumArtwork(room, work, centerZ, index) {
+  const [title, source] = work;
+  const texture = await textureLoader.loadAsync(source);
+  texture.encoding = THREE.sRGBEncoding;
+  texture.minFilter = THREE.LinearFilter;
+  const aspect = texture.image.width / texture.image.height;
+  const height = Math.min(1.82, 2.55 / aspect);
+  const width = height * aspect;
+  const leftSide = index < 3;
+  const x = leftSide ? -6.91 : 6.91;
+  const z = centerZ + [-4.6, 0, 4.6][index % 3];
+  const rotationY = leftSide ? Math.PI / 2 : -Math.PI / 2;
+  const artwork = new THREE.Group();
+  artwork.position.set(x, 2.25, z);
+  artwork.rotation.y = rotationY;
+  const frame = new THREE.Mesh(
+    new THREE.BoxGeometry(width + 0.18, height + 0.18, 0.1),
+    new THREE.MeshStandardMaterial({ color: room.accent, roughness: 0.46, metalness: 0.14 })
+  );
+  const image = new THREE.Mesh(new THREE.PlaneGeometry(width, height), new THREE.MeshBasicMaterial({ map: texture }));
+  image.position.z = 0.056;
+  artwork.add(frame, image);
+  const label = makeLabel(title);
+  label.position.set(0, -height / 2 - 0.22, 0.07);
+  label.scale.set(Math.min(2.25, width + 0.45), 0.68, 1);
+  artwork.add(label);
+  scene.add(artwork);
+  const hotspot = createReimaginedHotspot(title, {
+    hotspot: [leftSide ? -4.65 : 4.65, z],
+    visitorYaw: rotationY
+  }, artwork);
+  scene.add(hotspot);
 }
 
 function addPaintingsReimaginedPortal() {
@@ -2828,6 +3058,12 @@ async function exitGallery(url) {
 }
 
 function bindUI() {
+  document.body.classList.add("screen-ui-collapsed");
+  updateScreenUiToggle();
+  uiToggleButton.addEventListener("click", () => {
+    document.body.classList.toggle("screen-ui-collapsed");
+    updateScreenUiToggle();
+  });
   enterButton.addEventListener("click", toggleVR);
   audioToggleButton.addEventListener("click", toggleAudioGuide);
   audioRestartButton.addEventListener("click", restartAudioGuide);
@@ -2910,9 +3146,9 @@ function updateScreenLocomotion(delta) {
   if (!local.lengthSq()) return;
   local.normalize().applyAxisAngle(new THREE.Vector3(0, 1, 0), visitor.rotation.y);
   visitor.position.addScaledVector(local, delta * 2.45);
-  const bounds = artistRoom ? 6.25 : 19.3;
-  visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, artistRoom ? -6.25 : -5.3, bounds);
-  visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, artistRoom ? -7.25 : -4.3, artistRoom ? 7.25 : 38.3);
+  const connected = isConnectedMuseum;
+  visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, connected ? -6.3 : -5.3, connected ? 6.3 : 19.3);
+  visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, connected ? -7.3 : -4.3, connected ? 55.3 : 38.3);
 }
 
 async function detectVR() {
@@ -2938,11 +3174,11 @@ async function toggleVR() {
       currentSession = null;
       enterButton.textContent = text.enter;
       stopAllAudioGuides();
-      visitor.position.set(previewPositionX, 0, previewPositionZ);
+      visitor.position.set(isConnectedMuseum ? 0 : previewPositionX, 0, isConnectedMuseum ? connectedStartZ : previewPositionZ);
       visitor.rotation.set(0, previewRotationY, 0);
     }, { once: true });
     await renderer.xr.setSession(currentSession);
-    visitor.position.set(previewPositionX, 0, previewPositionZ);
+    visitor.position.set(isConnectedMuseum ? 0 : previewPositionX, 0, isConnectedMuseum ? connectedStartZ : previewPositionZ);
     visitor.rotation.set(0, previewRotationY, 0);
     await audioListener.context.resume();
     enterButton.textContent = text.exit;
@@ -3100,8 +3336,8 @@ function updateLocomotion(delta) {
     if (source.handedness === "left") {
       visitor.position.addScaledVector(right, x * delta * 1.8);
       visitor.position.addScaledVector(forward, -y * delta * 1.8);
-      visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, -5.3, 19.3);
-      visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, -4.3, 38.3);
+      visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, isConnectedMuseum ? -6.3 : -5.3, isConnectedMuseum ? 6.3 : 19.3);
+      visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, isConnectedMuseum ? -7.3 : -4.3, isConnectedMuseum ? 55.3 : 38.3);
     }
 
     if (source.handedness === "right") {

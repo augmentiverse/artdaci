@@ -62,22 +62,56 @@ body[data-experience="gallery"] .gallery-video-controls {
   z-index: 15;
   display: grid;
   justify-items: center;
-  gap: 5px;
+  gap: 4px;
+  opacity: .62;
+  transition: opacity .2s ease;
   direction: ltr;
   touch-action: none;
 }
 
-.screen-navigation div { display: flex; gap: 5px; }
+.screen-navigation:hover,
+.screen-navigation:focus-within { opacity: 1; }
+.screen-navigation div { display: flex; gap: 4px; }
 .screen-navigation button {
-  width: 48px;
-  height: 48px;
+  width: 38px;
+  height: 38px;
   border: 1px solid rgba(255,255,255,.55);
-  border-radius: 12px;
+  border-radius: 9px;
   color: #fff;
-  background: rgba(14,20,26,.78);
-  font-size: 19px;
+  background: rgba(14,20,26,.58);
+  font-size: 15px;
   cursor: pointer;
   backdrop-filter: blur(8px);
+}
+
+.gallery-ui-toggle {
+  position: fixed;
+  top: max(10px, env(safe-area-inset-top));
+  right: max(10px, env(safe-area-inset-right));
+  z-index: 30;
+  border: 1px solid rgba(255,255,255,.42);
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: #fff;
+  background: rgba(14,18,22,.68);
+  font: 700 12px/1 Inter, ui-sans-serif, system-ui, sans-serif;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+}
+
+body.screen-ui-collapsed .gallery-toolbar,
+body.screen-ui-collapsed .gallery-guide,
+body.screen-ui-collapsed .virtual-guide {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-18px);
+}
+
+.gallery-toolbar,
+.gallery-guide,
+.virtual-guide {
+  transition: opacity .22s ease, transform .22s ease, visibility .22s;
 }
 .screen-navigation button:active { background: #276a7e; transform: scale(.96); }
 .screen-navigation span {
@@ -368,8 +402,14 @@ body[data-experience="cinema"] .gallery-guide {
     display: none;
   }
 
-  .screen-navigation button { width: 54px; height: 54px; }
+  .screen-navigation {
+    right: max(8px, env(safe-area-inset-right));
+    bottom: max(8px, env(safe-area-inset-bottom));
+    opacity: .5;
+  }
+  .screen-navigation button { width: 40px; height: 40px; font-size: 15px; }
   .screen-navigation span { display: none; }
+  .gallery-ui-toggle { padding: 7px 10px; font-size: 11px; }
 }
 
 @media (hover: none) and (pointer: coarse) {

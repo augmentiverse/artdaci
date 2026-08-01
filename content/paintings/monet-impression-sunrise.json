@@ -1,0 +1,37 @@
+{
+  "slug": "monet-impression-sunrise",
+  "bookOrder": 5,
+  "title": "Impression, Sunrise",
+  "artist": {
+    "name": "Claude Monet",
+    "birthDeath": "1840–1926"
+  },
+  "date": "1872",
+  "movement": ["Impressionism"],
+  "medium": "Oil on canvas",
+  "dimensions": {
+    "widthCm": 65,
+    "heightCm": 50
+  },
+  "collection": "Musée Marmottan Monet, Paris",
+  "currentLocation": { "museum": "Musée Marmottan Monet", "city": "Paris" },
+  "media": {
+    "image": "assets/paintings/monet/Tableaux/Impression-Sunrise_Monet.webp"
+  },
+  "print": {
+    "spreadNumber": 5,
+    "imageTargetSource": "assets/paintings/monet/Tableaux/Impression-Sunrise_Monet.png"
+  },
+  "education": { "vocabulary": ["Impressionism", "complementary colour", "atmosphere", "plein air"] },
+  "texts": {
+    "historicalContext": "Monet painted the outer harbour of Le Havre from a hotel window in the early morning. Exhibited in 1874, the picture helped give the Impressionist movement its name.",
+    "artisticAnalysis": "Boats, cranes, masts and chimneys dissolve into blue-grey mist. The small orange sun and its broken reflection create the strongest colour contrast and organise the whole scene.",
+    "palette": "Thin, rapid strokes preserve changing light rather than describing every object. Orange and blue-grey act as complementary colours, making the sun appear unusually intense.",
+    "culturalSignificance": "The painting became a defining statement of modern vision: an image of atmosphere, industry and a fleeting moment rather than a polished academic narrative.",
+    "interestingFacts": [
+      "The canvas measures 50 × 65 cm.",
+      "It depicts the port of Le Havre at dawn.",
+      "Its title inspired the name Impressionism after the 1874 exhibition."
+    ]
+  }
+}
