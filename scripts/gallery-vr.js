@@ -3,14 +3,14 @@ import { GLTFLoader } from "../vendor/GLTFLoader.module.js";
 import { DRACOLoader } from "../vendor/DRACOLoader.module.js";
 
 const MANIFESTS = [
-  "content/paintings/mona-lisa.json",
-  "content/paintings/van-gogh.json",
-  "content/paintings/van-gogh-bedroom.json",
-  "content/paintings/vermeer-girl-with-a-pearl-earring.json"
+  "content/paintings/mona-lisa.json?v=2",
+  "content/paintings/van-gogh.json?v=2",
+  "content/paintings/van-gogh-bedroom.json?v=2",
+  "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=2"
 ];
 
 const GALLERY_IMAGES = {
-  "mona-lisa": "assets/paintings/mona-lisa/images/monalisa-t.png",
+  "mona-lisa": "assets/paintings/Da Vinci/mona-lisa/images/monalisa-t.png",
   "van-gogh": "assets/paintings/van-gogh/images/van-gogh_portrait-p.png",
   "van-gogh-bedroom": "assets/paintings/van-gogh-bedroom/images/van-gogh_bedroom-t.png",
   "vermeer-girl-with-a-pearl-earring": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/images/vermee_girl-earring-t.png"
@@ -38,26 +38,26 @@ const CINEMA_ROOM_X = 14;
 const CINEMA_VIDEO_LIBRARY = [
   {
     title: { en: "Leonardo Painting the Mona Lisa", fr: "Léonard peignant La Joconde", ar: "ليوناردو يرسم الموناليزا" },
-    src: "assets/paintings/mona-lisa/audio-video/davinci_painting_monalisa.mp4"
+    src: "assets/paintings/Da Vinci/mona-lisa/audio-video/davinci_painting_monalisa.mp4"
   },
   {
     title: { en: "Mona Lisa Reimagined", fr: "La Joconde réimaginée", ar: "الموناليزا معاد تخيلها" },
-    src: "assets/paintings/mona-lisa/audio-video/mona-lisa_video.mp4",
-    audioSrc: "assets/paintings/mona-lisa/audio-video/Centuries_Behind_Glass.mp3",
-    audioSrcFr: "assets/paintings/mona-lisa/audio-video/La_Joconde_s_évade.mp3",
-    audioSrcAr: "assets/paintings/mona-lisa/audio-video/رقصة_خلف_الإطار.mp3"
+    src: "assets/paintings/Da Vinci/mona-lisa/audio-video/mona-lisa_video.mp4",
+    audioSrc: "assets/paintings/Da Vinci/mona-lisa/audio-video/Centuries_Behind_Glass.mp3",
+    audioSrcFr: "assets/paintings/Da Vinci/mona-lisa/audio-video/La_Joconde_s_évade.mp3",
+    audioSrcAr: "assets/paintings/Da Vinci/mona-lisa/audio-video/رقصة_خلف_الإطار.mp3"
   },
   {
     title: { en: "Leonardo’s Vision II", fr: "La vision de Léonard II", ar: "رؤية ليوناردو الثانية" },
-    src: "assets/paintings/mona-lisa/audio-video/dv2.mp4"
+    src: "assets/paintings/Da Vinci/mona-lisa/audio-video/dv2.mp4"
   },
   {
     title: { en: "Mona Lisa in Motion", fr: "La Joconde en mouvement", ar: "الموناليزا في حركة" },
-    src: "assets/paintings/mona-lisa/audio-video/m2Vmg.mp4"
+    src: "assets/paintings/Da Vinci/mona-lisa/audio-video/m2Vmg.mp4"
   },
   {
     title: { en: "Beyond the Frame III", fr: "Au-delà du cadre III", ar: "خارج الإطار ٣" },
-    src: "assets/paintings/mona-lisa/audio-video/monalisa-out-of-frame-3.mp4"
+    src: "assets/paintings/Da Vinci/mona-lisa/audio-video/monalisa-out-of-frame-3.mp4"
   }
 ];
 
@@ -71,11 +71,64 @@ const REIMAGINED_ARTWORKS = [
   { src: "assets/gallery/reimagined/vermeer_Girl-with-a-Pearl-Earring_sitting.png", title: "Girl with a Pearl Earring — Seated", titleAr: "الفتاة ذات القرط اللؤلؤي — جالسة" }
 ];
 
+const ARTIST_ROOMS = {
+  "da-vinci": {
+    name: "Leonardo da Vinci",
+    accent: 0x9d7040,
+    works: [
+      ["Mona Lisa", "assets/paintings/Da Vinci/Tableaux/Mana Lisa_DaVici.webp"],
+      ["The Last Supper", "assets/paintings/Da Vinci/Tableaux/The Last Supper_DaVinci.webp"],
+      ["Lady with an Ermine", "assets/paintings/Da Vinci/Tableaux/The Lady with an Ermine_DaVinci.webp"],
+      ["The Annunciation", "assets/paintings/Da Vinci/Tableaux/The Annunciation_DaVinci.webp"],
+      ["Ginevra de' Benci", "assets/paintings/Da Vinci/Tableaux/Ginevra de' Benci.webp"],
+      ["La Belle Ferronnière", "assets/paintings/Da Vinci/Tableaux/La Belle Ferronnière_DaVinci.webp"]
+    ]
+  },
+  "van-gogh": {
+    name: "Vincent van Gogh",
+    accent: 0xd2a62e,
+    works: [
+      ["The Starry Night", "assets/paintings/van-gogh/tableaux/The Starry Night_VanGogh.webp"],
+      ["Sunflowers", "assets/paintings/van-gogh/tableaux/Tournesols_VanGogh.webp"],
+      ["Self-Portrait", "assets/paintings/van-gogh/tableaux/Autoportrait_VanGogh.webp"],
+      ["The Bedroom", "assets/paintings/van-gogh/tableaux/The Bedroom_VanGogh.webp"],
+      ["Café Terrace at Night", "assets/paintings/van-gogh/tableaux/Café Terrasse at Night_VanGogh.webp"],
+      ["The Night Café", "assets/paintings/van-gogh/tableaux/The Night Café_VanGogh.webp"]
+    ]
+  },
+  vermeer: {
+    name: "Johannes Vermeer",
+    accent: 0x315d78,
+    works: [
+      ["Girl with a Pearl Earring", "assets/paintings/Vermeer/Girl with a Pearl Earring_Vermeer.webp"],
+      ["The Milkmaid", "assets/paintings/Vermeer/The Milkmaid_Vermeer.webp"],
+      ["View of Delft", "assets/paintings/Vermeer/View of Delft_Vermeer.webp"],
+      ["The Art of Painting", "assets/paintings/Vermeer/The Art of Painting_Vermeer.webp"],
+      ["The Astronomer", "assets/paintings/Vermeer/The Astronomer_Vermeer.webp"],
+      ["Woman Holding a Balance", "assets/paintings/Vermeer/Woman Holding a Balance_Vermeer.webp"]
+    ]
+  },
+  monet: {
+    name: "Claude Monet",
+    accent: 0x668d74,
+    works: [
+      ["Impression, Sunrise", "assets/paintings/monet/Tableaux/Impression-Sunrise_Monet.webp"],
+      ["Water Lilies", "assets/paintings/monet/Tableaux/Water Lilies_Monet.webp"],
+      ["The Japanese Bridge", "assets/paintings/monet/Tableaux/The Japanese Bridge_Monet.webp"],
+      ["Poppies", "assets/paintings/monet/Tableaux/Poppies_Monet.webp"],
+      ["Woman with a Parasol", "assets/paintings/monet/Tableaux/Woman with a parasol_Monet.webp"],
+      ["Le Pont d'Argenteuil", "assets/paintings/monet/Tableaux/Le Pont d'Argenteuil_Monet.webp"]
+    ]
+  }
+};
+
 const params = new URLSearchParams(location.search);
 const lang = ["en", "fr", "ar"].includes(params.get("lang")) ? params.get("lang") : "en";
 const isCinemaOnly = document.body.dataset.experience === "cinema";
 const isQuestBrowser = /OculusBrowser|Meta Quest|Quest/i.test(navigator.userAgent);
 const previewRoom = params.get("room");
+const artistRoomId = params.get("artist");
+const artistRoom = ARTIST_ROOMS[artistRoomId] || null;
 const activeRoom = ["paintings", "models", "bedroom", "reimagined"].includes(previewRoom)
   ? previewRoom
   : "paintings";
@@ -121,8 +174,8 @@ const COPY = {
     exit: "Exit VR",
     count: "Four masterpieces",
     loading: "Preparing the gallery…",
-    ready: "Gallery ready. Open this page in your headset and enter VR.",
-    unsupported: "The gallery preview is ready. For immersive access, open it in Meta Quest Browser or another WebXR headset.",
+    ready: "Gallery ready. Explore on screen or enter VR with a compatible headset.",
+    unsupported: "Gallery ready for touch, mouse, and keyboard navigation. This device does not offer immersive VR.",
     failed: "The gallery could not be loaded.",
     playAudio: "Play audio",
     pauseAudio: "Pause audio",
@@ -176,8 +229,8 @@ const COPY = {
     exit: "Quitter la VR",
     count: "Quatre chefs-d’œuvre",
     loading: "Préparation de la galerie…",
-    ready: "Galerie prête. Ouvrez cette page dans votre casque puis entrez en VR.",
-    unsupported: "L’aperçu de la galerie est prêt. Pour l’immersion, ouvrez-la dans Meta Quest Browser ou un autre casque WebXR.",
+    ready: "Galerie prête. Explorez sur écran ou entrez en VR avec un casque compatible.",
+    unsupported: "Galerie prête pour la navigation tactile, à la souris et au clavier. Cet appareil ne propose pas de VR immersive.",
     failed: "La galerie n’a pas pu être chargée.",
     playAudio: "Lire l’audio",
     pauseAudio: "Pause",
@@ -360,6 +413,13 @@ let cinemaAudienceRoot = null;
 let cinemaAudienceLoadPromise = null;
 const cinemaAudienceReadyAt = performance.now() + (isQuestBrowser ? 10000 : 3500);
 const controllerCommandState = new Map();
+const screenMove = new Set();
+const screenKeys = new Set();
+let screenLookPointer = null;
+let screenLookX = 0;
+let screenLookY = 0;
+let screenPitch = 0;
+let screenLookMoved = false;
 
 init();
 
@@ -378,6 +438,25 @@ async function init() {
     await detectVR();
     status.textContent = text.ready;
     renderer.setAnimationLoop(render);
+    return;
+  }
+
+  if (artistRoom) {
+    document.getElementById("gallery-title").textContent = artistRoom.name;
+    document.getElementById("gallery-count").textContent = lang === "fr" ? "Six œuvres majeures" : "Six major works";
+    document.getElementById("gallery-instructions").textContent = lang === "fr"
+      ? "Écran : glissez pour regarder, utilisez les flèches ou WASD pour vous déplacer. Casque : gâchette ou pincement pour vous téléporter."
+      : "Screen: drag to look and use arrows or WASD to move. Headset: trigger or pinch to teleport.";
+    buildArtistRoomArchitecture(artistRoom);
+    renderer.setAnimationLoop(render);
+    try {
+      await buildArtistExhibition(artistRoom);
+      await detectVR();
+      status.textContent = text.ready;
+    } catch (error) {
+      console.error(error);
+      status.textContent = `${text.failed} ${error.message}`;
+    }
     return;
   }
 
@@ -547,6 +626,11 @@ function applyCopy() {
   }
   document.getElementById("gallery-experiences-link").textContent = text.individualExperiences;
   document.getElementById("gallery-experiences-link").href = `space.html?painting=mona-lisa&lang=${lang}`;
+  document.querySelectorAll(".artist-room-link").forEach((link) => {
+    const url = new URL(link.href);
+    url.searchParams.set("lang", lang);
+    link.href = `${url.pathname.split("/").pop()}?${url.searchParams.toString()}`;
+  });
   const languageSwitch = document.getElementById("gallery-language-switch");
   const targetLang = lang === "en" ? "fr" : lang === "fr" ? "ar" : "en";
   const targetParams = new URLSearchParams(location.search);
@@ -699,6 +783,95 @@ function buildRoom() {
   addPaintingsReimaginedPortal();
   addCinemaEntranceHotspot();
   addFastTravelStations();
+}
+
+function buildArtistRoomArchitecture(room) {
+  scene.background = new THREE.Color(0x151515);
+  scene.fog = new THREE.Fog(0x151515, 14, 28);
+  visitor.position.set(0, 0, 5.8);
+  visitor.rotation.y = 0;
+  scene.add(new THREE.HemisphereLight(0xfff0d8, 0x20242a, 1.45));
+  const floorMaterial = new THREE.MeshStandardMaterial({ color: 0x4b4036, roughness: 0.92 });
+  const wallMaterial = new THREE.MeshStandardMaterial({ color: 0xe0d4c3, roughness: 0.96, side: THREE.DoubleSide });
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(14, 16), floorMaterial);
+  floor.rotation.x = -Math.PI / 2;
+  floor.receiveShadow = true;
+  scene.add(floor);
+  const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(14, 16), wallMaterial);
+  ceiling.rotation.x = Math.PI / 2;
+  ceiling.position.y = 4.2;
+  scene.add(ceiling);
+  [
+    [[0, 2.1, -8], [14, 4.2], 0],
+    [[-7, 2.1, 0], [16, 4.2], Math.PI / 2],
+    [[7, 2.1, 0], [16, 4.2], -Math.PI / 2],
+    [[0, 2.1, 8], [14, 4.2], Math.PI]
+  ].forEach(([position, size, rotationY]) => {
+    const wall = new THREE.Mesh(new THREE.PlaneGeometry(...size), wallMaterial);
+    wall.position.set(...position);
+    wall.rotation.y = rotationY;
+    scene.add(wall);
+  });
+  createWallSign(room.name.toUpperCase(), [0, 3.55, -7.92], 0, { width: 5.5, height: 0.72 });
+  const otherRooms = Object.entries(ARTIST_ROOMS).filter(([id]) => id !== artistRoomId);
+  otherRooms.forEach(([id, target], index) => {
+    createWallSign(target.name, [-4.5 + index * 4.5, 3.5, 7.9], Math.PI, {
+      width: 3.5,
+      height: 0.48,
+      exitUrl: `gallery-vr.html?lang=${lang}&artist=${id}`,
+      compact: true
+    });
+  });
+  createWallSign(text.livingBook, [0, 2.85, 7.9], Math.PI, {
+    width: 2.8,
+    height: 0.42,
+    exitUrl: `book-3d.html?lang=${lang}`,
+    compact: true
+  });
+}
+
+async function buildArtistExhibition(room) {
+  status.textContent = lang === "fr" ? `Chargement de la salle ${room.name}…` : `Loading ${room.name} room…`;
+  const placements = [
+    { position: [-3.6, 2.25, -7.91], rotationY: 0, hotspot: [-3.6, -5.6], yaw: 0 },
+    { position: [3.6, 2.25, -7.91], rotationY: 0, hotspot: [3.6, -5.6], yaw: 0 },
+    { position: [-6.91, 2.25, -3.2], rotationY: Math.PI / 2, hotspot: [-4.6, -3.2], yaw: Math.PI / 2 },
+    { position: [-6.91, 2.25, 3.2], rotationY: Math.PI / 2, hotspot: [-4.6, 3.2], yaw: Math.PI / 2 },
+    { position: [6.91, 2.25, -3.2], rotationY: -Math.PI / 2, hotspot: [4.6, -3.2], yaw: -Math.PI / 2 },
+    { position: [6.91, 2.25, 3.2], rotationY: -Math.PI / 2, hotspot: [4.6, 3.2], yaw: -Math.PI / 2 }
+  ];
+  for (let index = 0; index < room.works.length; index += 1) {
+    const [title, source] = room.works[index];
+    const texture = await textureLoader.loadAsync(source);
+    texture.encoding = THREE.sRGBEncoding;
+    texture.minFilter = THREE.LinearFilter;
+    const aspect = texture.image.width / texture.image.height;
+    const height = Math.min(2.15, 3.05 / aspect);
+    const width = height * aspect;
+    const placement = placements[index];
+    const artwork = new THREE.Group();
+    artwork.position.set(...placement.position);
+    artwork.rotation.y = placement.rotationY;
+    const frame = new THREE.Mesh(
+      new THREE.BoxGeometry(width + 0.18, height + 0.18, 0.1),
+      new THREE.MeshStandardMaterial({ color: room.accent, roughness: 0.48, metalness: 0.16 })
+    );
+    const image = new THREE.Mesh(new THREE.PlaneGeometry(width, height), new THREE.MeshBasicMaterial({ map: texture }));
+    image.position.z = 0.056;
+    artwork.add(frame, image);
+    const label = makeLabel(title);
+    label.position.set(0, -height / 2 - 0.23, 0.07);
+    label.scale.set(Math.min(2.5, width + 0.5), 0.72, 1);
+    artwork.add(label);
+    scene.add(artwork);
+    const hotspot = createReimaginedHotspot(title, {
+      hotspot: placement.hotspot,
+      visitorYaw: placement.yaw
+    }, artwork);
+    scene.add(hotspot);
+    status.textContent = `${index + 1}/6 — ${title}`;
+    await new Promise((resolve) => setTimeout(resolve, isQuestBrowser ? 120 : 30));
+  }
 }
 
 function addPaintingsReimaginedPortal() {
@@ -1390,7 +1563,7 @@ async function buildReimaginedExhibition() {
 }
 
 async function addReimaginedEntranceMonaLisa() {
-  const gltf = await modelLoader.loadAsync("assets/paintings/mona-lisa/mona-lisa_standing_c.glb");
+  const gltf = await modelLoader.loadAsync("assets/paintings/Da Vinci/mona-lisa/mona-lisa_standing_c.glb");
   const display = new THREE.Group();
   display.name = "reimagined-portal-mona-lisa";
   display.position.set(5.05, 0, 34);
@@ -1708,7 +1881,7 @@ async function addCinemaSofaModel(cinema) {
 async function addCinemaAudienceModels(cinema) {
   const audience = [
     {
-      src: "assets/paintings/mona-lisa/davinci-monalisa_c.glb",
+      src: "assets/paintings/Da Vinci/mona-lisa/davinci-monalisa_c.glb",
       name: "cinema-sofa-left-davinci-mona-lisa",
       x: -3.15,
       y: 0,
@@ -2668,7 +2841,78 @@ function bindUI() {
   videoBackButton.addEventListener("click", () => runCinemaAction({ type: "seek", value: -10 }));
   videoForwardButton.addEventListener("click", () => runCinemaAction({ type: "seek", value: 10 }));
   renderer.domElement.addEventListener("pointerdown", toggleVideoFromPointer);
+  renderer.domElement.addEventListener("pointerdown", beginScreenLook);
+  renderer.domElement.addEventListener("pointermove", updateScreenLook);
+  renderer.domElement.addEventListener("pointerup", endScreenLook);
+  renderer.domElement.addEventListener("pointercancel", endScreenLook);
+  document.querySelectorAll("[data-move]").forEach((button) => {
+    const direction = button.dataset.move;
+    const start = (event) => { event.preventDefault(); screenMove.add(direction); };
+    const stop = () => screenMove.delete(direction);
+    button.addEventListener("pointerdown", start);
+    button.addEventListener("pointerup", stop);
+    button.addEventListener("pointercancel", stop);
+    button.addEventListener("pointerleave", stop);
+  });
+  addEventListener("keydown", (event) => screenKeys.add(event.key.toLowerCase()));
+  addEventListener("keyup", (event) => screenKeys.delete(event.key.toLowerCase()));
   addEventListener("resize", resize);
+}
+
+function beginScreenLook(event) {
+  if (currentSession || event.target !== renderer.domElement) return;
+  screenLookPointer = event.pointerId;
+  screenLookX = event.clientX;
+  screenLookY = event.clientY;
+  screenLookMoved = false;
+  renderer.domElement.setPointerCapture?.(event.pointerId);
+}
+
+function updateScreenLook(event) {
+  if (currentSession || event.pointerId !== screenLookPointer) return;
+  const dx = event.clientX - screenLookX;
+  const dy = event.clientY - screenLookY;
+  if (Math.abs(dx) + Math.abs(dy) > 2) screenLookMoved = true;
+  screenLookX = event.clientX;
+  screenLookY = event.clientY;
+  visitor.rotation.y -= dx * 0.004;
+  screenPitch = THREE.MathUtils.clamp(screenPitch - dy * 0.003, -1.05, 1.05);
+  camera.rotation.x = screenPitch;
+}
+
+function endScreenLook(event) {
+  if (event.pointerId !== screenLookPointer) return;
+  screenLookPointer = null;
+  if (!screenLookMoved) activateScreenInteraction(event);
+}
+
+function activateScreenInteraction(event) {
+  const bounds = renderer.domElement.getBoundingClientRect();
+  const pointer = new THREE.Vector2(
+    ((event.clientX - bounds.left) / bounds.width) * 2 - 1,
+    -((event.clientY - bounds.top) / bounds.height) * 2 + 1
+  );
+  teleportRaycaster.setFromCamera(pointer, camera);
+  activateInteractionHit(teleportRaycaster.intersectObjects(teleportTargets, false)[0]);
+}
+
+function updateScreenLocomotion(delta) {
+  if (currentSession) return;
+  const forwardPressed = screenMove.has("forward") || screenKeys.has("w") || screenKeys.has("arrowup");
+  const backwardPressed = screenMove.has("backward") || screenKeys.has("s") || screenKeys.has("arrowdown");
+  const leftPressed = screenMove.has("left") || screenKeys.has("a") || screenKeys.has("arrowleft");
+  const rightPressed = screenMove.has("right") || screenKeys.has("d") || screenKeys.has("arrowright");
+  const local = new THREE.Vector3(
+    (rightPressed ? 1 : 0) - (leftPressed ? 1 : 0),
+    0,
+    (backwardPressed ? 1 : 0) - (forwardPressed ? 1 : 0)
+  );
+  if (!local.lengthSq()) return;
+  local.normalize().applyAxisAngle(new THREE.Vector3(0, 1, 0), visitor.rotation.y);
+  visitor.position.addScaledVector(local, delta * 2.45);
+  const bounds = artistRoom ? 6.25 : 19.3;
+  visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, artistRoom ? -6.25 : -5.3, bounds);
+  visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, artistRoom ? -7.25 : -4.3, artistRoom ? 7.25 : 38.3);
 }
 
 async function detectVR() {
@@ -2880,7 +3124,9 @@ function resize() {
 function render() {
   maybeLoadCinemaAudience();
   updateHandVisuals();
-  updateLocomotion(Math.min(clock.getDelta(), 0.05));
+  const delta = Math.min(clock.getDelta(), 0.05);
+  updateLocomotion(delta);
+  updateScreenLocomotion(delta);
   selectNearestAudioGuide();
   updateAudioVolume();
   updateGalleryVideoVolume();

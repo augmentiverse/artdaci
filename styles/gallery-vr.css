@@ -55,6 +55,39 @@ body[data-experience="gallery"] .gallery-video-controls {
   height: 100%;
 }
 
+.screen-navigation {
+  position: fixed;
+  right: max(14px, env(safe-area-inset-right));
+  bottom: max(14px, env(safe-area-inset-bottom));
+  z-index: 15;
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  direction: ltr;
+  touch-action: none;
+}
+
+.screen-navigation div { display: flex; gap: 5px; }
+.screen-navigation button {
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: 12px;
+  color: #fff;
+  background: rgba(14,20,26,.78);
+  font-size: 19px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+.screen-navigation button:active { background: #276a7e; transform: scale(.96); }
+.screen-navigation span {
+  padding: 4px 7px;
+  border-radius: 6px;
+  color: #fff;
+  background: rgba(0,0,0,.58);
+  font-size: 11px;
+}
+
 .gallery-toolbar,
 .gallery-guide {
   position: fixed;
@@ -334,4 +367,12 @@ body[data-experience="cinema"] .gallery-guide {
   #gallery-instructions {
     display: none;
   }
+
+  .screen-navigation button { width: 54px; height: 54px; }
+  .screen-navigation span { display: none; }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .gallery-toolbar { max-height: 35vh; overflow: auto; }
+  .gallery-guide { max-width: calc(100vw - 20px); }
 }

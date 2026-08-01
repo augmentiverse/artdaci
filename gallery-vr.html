@@ -48,6 +48,10 @@
           <button id="gallery-video-next" class="gallery-button" type="button" disabled>Next</button>
         </div>
         <nav class="gallery-exit-links" aria-label="Exit gallery links">
+          <a class="gallery-button artist-room-link" href="gallery-vr.html?artist=da-vinci">Da Vinci</a>
+          <a class="gallery-button artist-room-link" href="gallery-vr.html?artist=van-gogh">Van Gogh</a>
+          <a class="gallery-button artist-room-link" href="gallery-vr.html?artist=vermeer">Vermeer</a>
+          <a class="gallery-button artist-room-link" href="gallery-vr.html?artist=monet">Monet</a>
           <a id="gallery-cinema-link" class="gallery-button cinema-link" href="cinema-vr.html?lang=en">Enter the cinema</a>
           <a id="gallery-leonardo-world-link" class="gallery-button vr-world-link" href="https://marble.worldlabs.ai/worldvr/862ab5f6-8608-469c-a840-8cb10f3859ae">Visit Leonardo's Studio in VR</a>
           <a id="gallery-leonardo-enriched-link" class="gallery-button vr-world-link" href="https://marble.worldlabs.ai/project/c7853f32-4025-4d66-a536-54bb9db6162d">Visit Leonardo's Enriched Studio</a>
@@ -58,6 +62,15 @@
       </aside>
 
       <div id="gallery-stage" aria-label="Virtual gallery containing four paintings"></div>
+      <div class="screen-navigation" aria-label="Screen navigation controls">
+        <button type="button" data-move="forward" aria-label="Move forward">▲</button>
+        <div>
+          <button type="button" data-move="left" aria-label="Move left">◀</button>
+          <button type="button" data-move="backward" aria-label="Move backward">▼</button>
+          <button type="button" data-move="right" aria-label="Move right">▶</button>
+        </div>
+        <span>Drag to look · WASD / arrows to move</span>
+      </div>
       <details id="virtual-guide" class="virtual-guide">
         <summary id="virtual-guide-title">Virtual guide</summary>
         <div class="virtual-guide-body">
@@ -74,6 +87,6 @@
       </details>
     </main>
 
-  <script type="module" src="scripts/gallery-vr.js?v=59"></script>
+  <script type="module" src="scripts/gallery-vr.js?v=61"></script>
   </body>
 </html>

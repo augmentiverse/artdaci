@@ -7,7 +7,7 @@ const PAINTINGS_AR = {
     medium: "زيت على لوح من خشب الحور",
     dimensions: "77 × 53 سم",
     location: "متحف اللوفر، باريس",
-    image: "assets/paintings/mona-lisa/images/mona-lisa.jpg",
+    image: "assets/paintings/Da Vinci/mona-lisa/images/mona-lisa.jpg",
     intro: "بورتريه يتغير مع النظرة",
     lead: "نسّق ليوناردو النظرة واليدين والابتسامة والمنظر الطبيعي ليخلق حضوراً يبدو مختلفاً كلما طال التأمل.",
     sections: [
@@ -21,7 +21,7 @@ const PAINTINGS_AR = {
       ["السرقة والحفظ", "سُرقت اللوحة من اللوفر سنة 1911 واستعيدت سنة 1913. وهي اليوم محفوظة داخل صندوق واقٍ مضبوط الحرارة والرطوبة."]
     ],
     details: ["راقب كيف تتغير الابتسامة عندما تنقل نظرك إلى العينين.", "قارن جانبي الأفق خلف الكتفين.", "اتبع المثلث البصري من اليدين إلى الوجه.", "لاحظ غياب الحدود الحادة حول الخدين والشعر."],
-    audio: "assets/paintings/mona-lisa/audio-video/الموناليزا_لغز_الابتسامة_والسرقة_والرموش_المفقودة.mp3"
+    audio: "assets/paintings/Da Vinci/mona-lisa/audio-video/الموناليزا_لغز_الابتسامة_والسرقة_والرموش_المفقودة.mp3"
   },
   "van-gogh": {
     title: "بورتريه ذاتي",

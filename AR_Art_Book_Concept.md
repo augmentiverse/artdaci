@@ -64,8 +64,8 @@ The book now opens with **Leonardo da Vinci's Mona Lisa** as the first complete 
 - Date: **c. 1503-1519**
 - Movement: **High Renaissance**
 - Museum: **Musee du Louvre, Paris**
-- Printed image target: `assets/paintings/mona-lisa/images/mona-lisa.jpg`
-- AR model: `assets/paintings/mona-lisa/mona-lisa.glb`
+- Printed image target: `assets/paintings/Da Vinci/mona-lisa/images/mona-lisa.jpg`
+- AR model: `assets/paintings/Da Vinci/mona-lisa/mona-lisa.glb`
 - Data record: `content/paintings/mona-lisa.json`
 - Book order: `1`
 - Image target ID: `target-001-mona-lisa`

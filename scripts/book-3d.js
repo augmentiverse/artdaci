@@ -1,8 +1,8 @@
 const MANIFEST_URLS = [
-  "content/paintings/mona-lisa.json",
-  "content/paintings/van-gogh.json",
-  "content/paintings/van-gogh-bedroom.json",
-  "content/paintings/vermeer-girl-with-a-pearl-earring.json"
+  "content/paintings/mona-lisa.json?v=2",
+  "content/paintings/van-gogh.json?v=2",
+  "content/paintings/van-gogh-bedroom.json?v=2",
+  "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=2"
 ];
 
 const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae";
@@ -80,9 +80,9 @@ const LEONARDO_TRIBUTE = {
 
 const BOOK_IMAGE_GALLERIES = {
   "mona-lisa": [
-    "assets/paintings/mona-lisa/images/Mona-Lisa_out-of-frame.png",
-    "assets/paintings/mona-lisa/images/davinci-monalisa.png",
-    "assets/paintings/mona-lisa/images/monalisa-t.png"
+    "assets/paintings/Da Vinci/mona-lisa/images/Mona-Lisa_out-of-frame.png",
+    "assets/paintings/Da Vinci/mona-lisa/images/davinci-monalisa.png",
+    "assets/paintings/Da Vinci/mona-lisa/images/monalisa-t.png"
   ],
   "van-gogh": [
     "assets/paintings/van-gogh/images/van-gogh-out-of-frame.png",
@@ -217,6 +217,7 @@ const experienceTitle = document.getElementById("experience-title");
 const experienceKicker = document.getElementById("experience-kicker");
 const experienceBody = document.getElementById("experience-body");
 const closeExperienceButton = document.getElementById("experience-close");
+const zoomButton = document.getElementById("book-zoom");
 
 let currentLeaf = 0;
 let sheets = [];
@@ -231,7 +232,7 @@ init();
 
 async function init() {
   applyLanguage();
-  const responses = await Promise.all(MANIFEST_URLS.map((url) => fetch(url, { cache: "reload" })));
+  const responses = await Promise.all(MANIFEST_URLS.map((url) => fetch(url)));
   if (responses.some((response) => !response.ok)) throw new Error("Book content is unavailable.");
   const manifests = await Promise.all(responses.map((response) => response.json()));
   pageDefinitions = buildPageDefinitions(manifests);
@@ -255,6 +256,7 @@ function applyLanguage() {
   previousButton.textContent = lang === "ar" ? "→ السابق" : lang === "fr" ? "← Précédent" : "← Previous";
   nextButton.textContent = lang === "ar" ? "التالي ←" : lang === "fr" ? "Suivant →" : "Next →";
   closeExperienceButton.textContent = lang === "ar" ? "العودة إلى الكتاب ✕" : lang === "fr" ? "Retour au livre ✕" : "Return to book ✕";
+  zoomButton.textContent = lang === "ar" ? "A+ تكبير" : lang === "fr" ? "A+ Agrandir" : "A+ Enlarge";
 }
 
 function buildPageDefinitions(manifests) {
@@ -351,7 +353,7 @@ function buildPageDefinitions(manifests) {
     pages.push({
       kind: "tribute",
       ...tributePage,
-      image: index < 2 ? "assets/paintings/mona-lisa/images/davinci-monalisa.png" : undefined,
+      image: index < 2 ? "assets/paintings/Da Vinci/mona-lisa/images/davinci-monalisa.png" : undefined,
       hotspots: index === 0
         ? [
             { label: "VR+", x: 82, y: 24, type: "studio", url: LEONARDO_STUDIO_VR_WORLD_URL },
@@ -600,7 +602,20 @@ function loadImage(src) {
   return new Promise((resolve, reject) => {
     const image = new Image();
     image.onload = () => resolve(image);
-    image.onerror = reject;
+    image.onerror = () => {
+      console.warn(`Book image unavailable: ${src}`);
+      const fallback = document.createElement("canvas");
+      fallback.width = 1200;
+      fallback.height = 800;
+      const context = fallback.getContext("2d");
+      context.fillStyle = "#d8c6a7";
+      context.fillRect(0, 0, fallback.width, fallback.height);
+      context.fillStyle = "#6f5842";
+      context.font = "56px Georgia";
+      context.textAlign = "center";
+      context.fillText("ARTDACI", fallback.width / 2, fallback.height / 2);
+      resolve(fallback);
+    };
     image.src = src;
   });
 }
@@ -649,6 +664,13 @@ function getBookTexts(manifest) {
 function bindControls() {
   previousButton.addEventListener("click", previousPage);
   nextButton.addEventListener("click", nextPage);
+  zoomButton.addEventListener("click", () => {
+    const zoomed = book.classList.toggle("zoomed");
+    zoomButton.setAttribute("aria-pressed", String(zoomed));
+    zoomButton.textContent = zoomed
+      ? (lang === "ar" ? "A− تصغير" : lang === "fr" ? "A− Réduire" : "A− Reduce")
+      : (lang === "ar" ? "A+ تكبير" : lang === "fr" ? "A+ Agrandir" : "A+ Enlarge");
+  });
   closeExperienceButton.addEventListener("click", closeExperience);
   dialog.addEventListener("cancel", (event) => {
     event.preventDefault();
