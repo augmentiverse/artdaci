@@ -76,6 +76,10 @@ const lang = ["en", "fr", "ar"].includes(params.get("lang")) ? params.get("lang"
 const isCinemaOnly = document.body.dataset.experience === "cinema";
 const isQuestBrowser = /OculusBrowser|Meta Quest|Quest/i.test(navigator.userAgent);
 const previewRoom = params.get("room");
+const activeRoom = ["paintings", "models", "bedroom", "reimagined"].includes(previewRoom)
+  ? previewRoom
+  : "paintings";
+const isModelsRoom = activeRoom === "models";
 const previewPositionX = isCinemaOnly || previewRoom === "cinema" ? CINEMA_ROOM_X : 0;
 const previewPositionZ = isCinemaOnly || previewRoom === "cinema"
   ? 32
@@ -378,22 +382,30 @@ async function init() {
   }
 
   buildRoom();
+  renderer.setAnimationLoop(render);
   try {
-    const responses = await Promise.all(MANIFESTS.map((url) => fetch(url, { cache: "reload" })));
+    const responses = await Promise.all(MANIFESTS.map((url) => fetch(url)));
     if (responses.some((response) => !response.ok)) throw new Error("Manifest unavailable");
     const paintings = await Promise.all(responses.map((response) => response.json()));
-    await buildExhibition(paintings);
-    await buildReimaginedExhibition();
-    await addReimaginedEntranceMonaLisa();
+    if (activeRoom === "paintings") await buildExhibition(paintings);
+    if (activeRoom === "reimagined") await buildReimaginedExhibition();
     await detectVR();
-    await addPaintingsModelsGateway();
-    void buildModelExhibits(paintings);
+    status.textContent = text.ready;
+    if (isModelsRoom) {
+      prepareStandaloneModelExhibits(paintings);
+      void buildModelExhibits(paintings);
+    } else if (activeRoom === "bedroom") {
+      const bedroom = paintings.find((painting) => painting.slug === "van-gogh-bedroom");
+      if (bedroom) {
+        prepareStandaloneModelExhibits([bedroom], true);
+        void buildModelExhibits([bedroom]);
+      }
+    }
   } catch (error) {
     console.error(error);
     status.textContent = `${text.failed} ${error.message}`;
   }
 
-  renderer.setAnimationLoop(render);
 }
 
 function setupVirtualGuide() {
@@ -567,7 +579,7 @@ function buildRoom() {
     [-3, 3.5, 37],
     [3, 3.5, 37]
   ];
-  ceilingLights.forEach(([x, y, z]) => {
+  (isQuestBrowser ? ceilingLights.filter((_, index) => index % 3 === 0) : ceilingLights).forEach(([x, y, z]) => {
     const light = new THREE.PointLight(0xffe7c2, 0.82, 9);
     light.position.set(x, y, z);
     scene.add(light);
@@ -684,8 +696,35 @@ function buildRoom() {
 
   addLouvrePaintingsRoomDecor();
   addNavigationSigns();
+  addPaintingsReimaginedPortal();
   addCinemaEntranceHotspot();
   addFastTravelStations();
+}
+
+function addPaintingsReimaginedPortal() {
+  const fromPaintings = activeRoom === "paintings";
+  const fromReimagined = activeRoom === "reimagined";
+  if (!fromPaintings && !fromReimagined) return;
+  const z = fromPaintings ? 4.86 : 29.14;
+  const rotationY = fromPaintings ? Math.PI : 0;
+  const destination = fromPaintings ? "reimagined" : "paintings";
+  const label = fromPaintings ? text.reimaginedRoom : text.paintingsRoom;
+  const portal = new THREE.Group();
+  portal.name = "paintings-reimagined-portal";
+  const material = new THREE.MeshBasicMaterial({ color: 0x67d8ef });
+  [[-1.35, 1.65, 0.12, 3.3, 0.12], [1.35, 1.65, 0.12, 3.3, 0.12], [0, 3.28, 2.82, 0.12, 0.12]]
+    .forEach(([x, y, width, height, depth]) => {
+      const beam = new THREE.Mesh(new THREE.BoxGeometry(width, height, depth), material);
+      beam.position.set(x, y, z);
+      portal.add(beam);
+    });
+  scene.add(portal);
+  createWallSign(label, [0, 2.86, z + (fromPaintings ? -0.08 : 0.08)], rotationY, {
+    width: 2.35,
+    height: 0.48,
+    exitUrl: `gallery-vr.html?lang=${lang}&room=${destination}`,
+    compact: true
+  });
 }
 
 function addCinemaRoomArchitecture() {
@@ -1183,10 +1222,10 @@ function createWallSign(message, position, rotationY, options = {}) {
 
 function addFastTravelStations() {
   const rooms = [
-    { id: "paintings", label: text.paintingsRoom, destination: [0, 0, 0.8], visitorYaw: 0 },
-    { id: "models", label: text.modelsRoom, destination: [0, 0, 10], visitorYaw: 0 },
-    { id: "bedroom", label: text.bedroomRoom, destination: [0, 0, 20.6], visitorYaw: Math.PI },
-    { id: "reimagined", label: text.reimaginedRoom, destination: [0, 0, 34], visitorYaw: Math.PI }
+    { id: "paintings", label: text.paintingsRoom },
+    { id: "models", label: text.modelsRoom },
+    { id: "bedroom", label: text.bedroomRoom },
+    { id: "reimagined", label: text.reimaginedRoom }
   ];
   const stations = [
     { room: "paintings", position: [5.86, 3.35, 3.25], rotationY: -Math.PI / 2 },
@@ -1210,8 +1249,7 @@ function addFastTravelStations() {
       createWallSign(room.label, [x, rowY, z + columnOffset], station.rotationY, {
         width: 1.78,
         height: 0.36,
-        destination: room.destination,
-        visitorYaw: room.visitorYaw,
+        exitUrl: `gallery-vr.html?lang=${lang}&room=${room.id}`,
         compact: true
       });
     });
@@ -1220,6 +1258,19 @@ function addFastTravelStations() {
       height: 0.38,
       exitUrl: `cinema-vr.html?lang=${lang}`,
       compact: true
+    });
+  });
+}
+
+function prepareStandaloneModelExhibits(paintings, bedroomOnly = false) {
+  const positions = bedroomOnly
+    ? [[0, 22]]
+    : [[-3.2, 10.25], [0, 10.25], [0, 22], [3.2, 10.25]];
+  paintings.forEach((painting, index) => {
+    exhibitsBySlug.set(painting.slug, {
+      painting,
+      modelPosition: positions[index] || [0, 10.25],
+      modelDisplay: null
     });
   });
 }
@@ -1964,7 +2015,7 @@ async function buildModelExhibits(paintings) {
       console.error(`3D exhibit unavailable for ${painting.slug}.`, error);
     }
   }
-  const furnitureLoaded = await buildFurnitureModelExhibits();
+  const furnitureLoaded = isModelsRoom ? await buildFurnitureModelExhibits() : 0;
   status.textContent = loaded
     ? `${text.modelsReady} ${loaded + furnitureLoaded}/${paintings.length + FURNITURE_MODEL_EXHIBITS.length}`
     : text.ready;
@@ -2041,6 +2092,7 @@ function addFurnitureGalleryModel(item, model) {
   };
   const hotspot = createModelTeleportHotspot(pseudoExhibit, display);
   scene.add(hotspot);
+  revealLoadedDisplay(display);
 }
 
 function getDefaultModelSource(painting) {
@@ -2099,6 +2151,32 @@ async function addGalleryModel(exhibit, modelSrc) {
   exhibit.modelDisplay = display;
   const hotspot = createModelTeleportHotspot(exhibit, display);
   scene.add(hotspot);
+  revealLoadedDisplay(display);
+}
+
+function revealLoadedDisplay(display) {
+  const materials = [];
+  display.traverse((node) => {
+    if (!node.isMesh) return;
+    const nodeMaterials = Array.isArray(node.material) ? node.material : [node.material];
+    nodeMaterials.forEach((material) => {
+      if (!material || materials.includes(material)) return;
+      materials.push(material);
+      material.userData.galleryOpacity = material.opacity;
+      material.transparent = true;
+      material.opacity = 0;
+    });
+  });
+  const startedAt = performance.now();
+  const fade = (now) => {
+    const progress = Math.min((now - startedAt) / 650, 1);
+    materials.forEach((material) => {
+      material.opacity = material.userData.galleryOpacity * progress;
+      material.needsUpdate = true;
+    });
+    if (progress < 1) requestAnimationFrame(fade);
+  };
+  requestAnimationFrame(fade);
 }
 
 async function addLifeSizeBedroom(exhibit, model) {
@@ -2115,10 +2193,13 @@ async function addLifeSizeBedroom(exhibit, model) {
     if (node.material) node.material.side = THREE.DoubleSide;
   });
   display.add(model);
-  const standingGltf = await modelLoader.loadAsync(STANDING_VAN_GOGH_MODEL);
-  addLifeSizeStandingVanGogh(display, standingGltf.scene);
+  if (!isQuestBrowser) {
+    const standingGltf = await modelLoader.loadAsync(STANDING_VAN_GOGH_MODEL);
+    addLifeSizeStandingVanGogh(display, standingGltf.scene);
+  }
   scene.add(display);
   exhibit.modelDisplay = display;
+  revealLoadedDisplay(display);
 
   const dimensionsText = `${dimensions.width.toFixed(1)} × ${dimensions.depth.toFixed(1)} × ${dimensions.height.toFixed(1)} m`;
   const information = makeLabel(
