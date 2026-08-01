@@ -908,9 +908,9 @@ function buildConnectedMuseumArchitecture() {
 function addConnectedRoomShell(id, room, centerZ, index) {
   const schemes = {
     "da-vinci": { wall: 0x101d38, floor: 0x4c392d, trim: 0xc5a15b, ceiling: 0xe9dfce },
-    "van-gogh": { wall: 0xd8b36c, floor: 0x8c5b31, trim: 0x315f83, ceiling: 0xf2dfb2 },
-    vermeer: { wall: 0xe4e0d3, floor: 0x554d47, trim: 0x356b83, ceiling: 0xf4f0e6 },
-    monet: { wall: 0xcbdcca, floor: 0x8a806d, trim: 0x7298a3, ceiling: 0xeaf3ed }
+    "van-gogh": { wall: 0x5b1938, floor: 0x38233f, trim: 0xd2aa4f, ceiling: 0xead9ad },
+    vermeer: { wall: 0x173f66, floor: 0x252c3b, trim: 0xd5b45d, ceiling: 0xf1eadb },
+    monet: { wall: 0x174f48, floor: 0x243f3b, trim: 0xd0b35d, ceiling: 0xe8f1e8 }
   };
   const scheme = schemes[id];
   const wallMaterial = new THREE.MeshStandardMaterial({ color: scheme.wall, roughness: 0.94, side: THREE.DoubleSide });
@@ -987,16 +987,33 @@ function addConnectedMuseumPartitions() {
 
 function addConnectedRoomNavigation(currentId, centerZ) {
   const others = ARTIST_ROOM_ORDER.filter((id) => id !== currentId);
-  createWallSign(lang === "fr" ? "ACCÈS DIRECT AUX SALLES" : "DIRECT ROOM ACCESS", [6.88, 3.62, centerZ], -Math.PI / 2, {
-    width: 3.5, height: 0.42, accent: true, compact: true
+  const signZ = centerZ + 7.86;
+  createWallSign(lang === "fr" ? "ACCÈS DIRECT AUX SALLES" : "DIRECT ROOM ACCESS", [-4.5, 3.62, signZ], Math.PI, {
+    width: 3.8, height: 0.42, accent: true, compact: true
   });
   others.forEach((id, index) => {
     const destinationIndex = ARTIST_ROOM_ORDER.indexOf(id);
-    createWallSign(ARTIST_ROOMS[id].name, [6.87, 3.05 - index * 0.55, centerZ], -Math.PI / 2, {
-      width: 2.75,
+    createWallSign(ARTIST_ROOMS[id].name, [-4.5, 3.05 - index * 0.55, signZ], Math.PI, {
+      width: 3.2,
       height: 0.4,
       destination: [0, 0, destinationIndex * 16 - 4.5],
       visitorYaw: 0,
+      compact: true
+    });
+  });
+  createWallSign(lang === "fr" ? "EXPLORER ARTDACI" : "EXPLORE ARTDACI", [4.5, 3.62, signZ], Math.PI, {
+    width: 3.4, height: 0.42, accent: true, compact: true
+  });
+  const usefulLinks = [
+    [text.livingBook, `book-3d.html?lang=${lang}`],
+    [text.cinemaEnter, `cinema-vr.html?lang=${lang}`],
+    [text.exitGallery, lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html"]
+  ];
+  usefulLinks.forEach(([label, url], index) => {
+    createWallSign(label, [4.5, 3.05 - index * 0.55, signZ], Math.PI, {
+      width: 3.2,
+      height: 0.4,
+      exitUrl: url,
       compact: true
     });
   });
@@ -1020,7 +1037,7 @@ function addVanGoghDecor(centerZ, material) {
     beam.position.set(x, 4.26, centerZ);
     scene.add(beam);
   });
-  const rug = new THREE.Mesh(new THREE.PlaneGeometry(5.4, 7.4), new THREE.MeshStandardMaterial({ color: 0x355f79, roughness: 0.94 }));
+  const rug = new THREE.Mesh(new THREE.PlaneGeometry(5.4, 7.4), new THREE.MeshStandardMaterial({ color: 0x183f73, roughness: 0.94 }));
   rug.rotation.x = -Math.PI / 2;
   rug.position.set(0, 0.012, centerZ);
   scene.add(rug);
@@ -1034,7 +1051,7 @@ function addVermeerDecor(centerZ, material) {
       scene.add(tileLine);
     });
   }
-  const bench = new THREE.Mesh(new THREE.BoxGeometry(2.8, 0.48, 0.75), new THREE.MeshStandardMaterial({ color: 0x294a5c, roughness: 0.8 }));
+  const bench = new THREE.Mesh(new THREE.BoxGeometry(2.8, 0.48, 0.75), new THREE.MeshStandardMaterial({ color: 0x6c1e36, roughness: 0.8 }));
   bench.position.set(0, 0.3, centerZ);
   scene.add(bench);
 }
@@ -1052,7 +1069,7 @@ function addMonetDecor(centerZ, material) {
     frame.position.set(x, 4.34, centerZ);
     scene.add(frame);
   });
-  const island = new THREE.Mesh(new THREE.CylinderGeometry(2.2, 2.4, 0.08, 48), new THREE.MeshStandardMaterial({ color: 0x739084, roughness: 0.88 }));
+  const island = new THREE.Mesh(new THREE.CylinderGeometry(2.2, 2.4, 0.08, 48), new THREE.MeshStandardMaterial({ color: 0x0e6a63, roughness: 0.88 }));
   island.position.set(0, 0.05, centerZ);
   scene.add(island);
 }

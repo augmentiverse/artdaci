@@ -97,11 +97,15 @@ button, a { font: inherit; }
   aspect-ratio: 1.42;
   top: 15px;
   transform: rotateX(7deg);
+  transform-origin: top center;
+  transition: transform .18s ease-out;
   transform-style: preserve-3d;
   filter: drop-shadow(0 34px 34px rgba(0,0,0,.55));
   touch-action: none;
   user-select: none;
 }
+
+.book.zoomed { transform: rotateX(7deg) scale(1.1); }
 
 .book::after {
   content: "";
@@ -254,12 +258,17 @@ button, a { font: inherit; }
   }
   .book {
     flex: 0 0 auto;
-    width: min(96vw, 680px);
+    width: min(82vw, 560px);
     aspect-ratio: 1600 / 2200;
     top: 0;
     transform: none;
+    transform-origin: top center;
   }
-  .book.zoomed { width: min(165vw, 900px); }
+  .book.zoomed {
+    width: min(82vw, 560px);
+    margin-bottom: 16vh;
+    transform: scale(1.16);
+  }
   .book-cover-left, .book-spine { display: none; }
   .book-cover-right { left: 0; width: 100%; border-radius: 12px; }
   .sheet { right: 0; width: 100%; }
@@ -269,5 +278,5 @@ button, a { font: inherit; }
 }
 
 @media (min-width: 761px) and (max-width: 1180px) {
-  .book { width: min(96vw, calc((100vh - 130px) * 1.42), 1380px); }
+  .book { width: min(88vw, calc((100vh - 130px) * 1.42), 1180px); }
 }
