@@ -16,7 +16,30 @@
   "collection": "Musée Marmottan Monet, Paris",
   "currentLocation": { "museum": "Musée Marmottan Monet", "city": "Paris" },
   "media": {
-    "image": "assets/paintings/monet/Tableaux/Impression-Sunrise_Monet.webp"
+    "image": "assets/paintings/monet/Tableaux/Impression-Sunrise_Monet.webp",
+    "audioOverviews": [
+      {
+        "id": "monet-impression-sunrise-overview-en",
+        "lang": "en",
+        "title": "Impression, Sunrise audio overview",
+        "src": "assets/paintings/monet/audio-video/Monet_s_optical_illusion_that_birthed_Impressionism.mp3",
+        "type": "audio/mpeg"
+      },
+      {
+        "id": "monet-impression-sunrise-overview-fr",
+        "lang": "fr",
+        "title": "Présentation audio d’Impression, soleil levant",
+        "src": "assets/paintings/monet/audio-video/Le_hack_neurologique_du_soleil_de_Monet.mp3",
+        "type": "audio/mpeg"
+      },
+      {
+        "id": "monet-impression-sunrise-overview-ar",
+        "lang": "ar",
+        "title": "تقديم صوتي للوحة انطباع، شروق الشمس",
+        "src": "assets/paintings/monet/audio-video/خدعة_الشمس_النابضة_وسر_تسمية_الانطباعية.mp3",
+        "type": "audio/mpeg"
+      }
+    ]
   },
   "print": {
     "spreadNumber": 5,

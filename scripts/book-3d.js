@@ -3,7 +3,7 @@ const MANIFEST_URLS = [
   "content/paintings/van-gogh.json?v=2",
   "content/paintings/van-gogh-bedroom.json?v=2",
   "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=2",
-  "content/paintings/monet-impression-sunrise.json?v=1"
+  "content/paintings/monet-impression-sunrise.json?v=2"
 ];
 
 const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae";
@@ -333,7 +333,10 @@ function buildPageDefinitions(manifests) {
             { label: "AR", x: 83, y: 47, type: "ar" },
             ...(videos[0] ? [{ label: "▶", x: 83, y: 59, type: "video", video: videos[0] }] : [])
           ]
-        : [{ label: "VR", x: 83, y: 23, type: "gallery" }]
+        : [
+            { label: "\u266a", x: 83, y: 23, type: "audio", audio },
+            { label: "VR", x: 83, y: 38, type: "gallery" }
+          ]
     });
     pages.push({
       kind: "analysis",
@@ -378,7 +381,10 @@ function buildPageDefinitions(manifests) {
         { label: "3D", x: 82, y: 24, type: "space" },
         { label: "♪", x: 82, y: 38, type: "audio", audio },
         ...(videos[1] ? [{ label: "▶", x: 82, y: 52, type: "video", video: videos[1] }] : [])
-      ] : [{ label: "VR", x: 82, y: 24, type: "gallery" }]
+      ] : [
+        { label: "\u266a", x: 82, y: 24, type: "audio", audio },
+        { label: "VR", x: 82, y: 39, type: "gallery" }
+      ]
     });
   });
 

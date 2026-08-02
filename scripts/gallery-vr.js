@@ -8,6 +8,14 @@ const MANIFESTS = [
   "content/paintings/van-gogh-bedroom.json?v=2",
   "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=2"
 ];
+const PRINTED_MANIFESTS = [...MANIFESTS, "content/paintings/monet-impression-sunrise.json?v=2"];
+const CONNECTED_AUDIO_WORKS = {
+  "da-vinci:0": "mona-lisa",
+  "van-gogh:2": "van-gogh",
+  "van-gogh:3": "van-gogh-bedroom",
+  "vermeer:0": "vermeer-girl-with-a-pearl-earring",
+  "monet:0": "monet-impression-sunrise"
+};
 
 const GALLERY_IMAGES = {
   "mona-lisa": "assets/paintings/Da Vinci/mona-lisa/images/monalisa-t.png",
@@ -454,7 +462,10 @@ async function init() {
     buildConnectedMuseumArchitecture();
     renderer.setAnimationLoop(render);
     try {
-      await buildConnectedMuseumExhibitions();
+      const manifestResponses = await Promise.all(PRINTED_MANIFESTS.map((url) => fetch(url)));
+      if (manifestResponses.some((response) => !response.ok)) throw new Error("Printed artwork manifest unavailable");
+      const printedManifests = await Promise.all(manifestResponses.map((response) => response.json()));
+      await buildConnectedMuseumExhibitions(printedManifests);
       await detectVR();
       status.textContent = text.ready;
     } catch (error) {
@@ -1074,20 +1085,22 @@ function addMonetDecor(centerZ, material) {
   scene.add(island);
 }
 
-async function buildConnectedMuseumExhibitions() {
+async function buildConnectedMuseumExhibitions(printedManifests) {
+  const manifestsBySlug = new Map(printedManifests.map((manifest) => [manifest.slug, manifest]));
   for (let roomIndex = 0; roomIndex < ARTIST_ROOM_ORDER.length; roomIndex += 1) {
     const id = ARTIST_ROOM_ORDER[roomIndex];
     const room = ARTIST_ROOMS[id];
     const centerZ = roomIndex * 16;
     status.textContent = lang === "fr" ? `Chargement de ${room.name}…` : `Loading ${room.name}…`;
     for (let workIndex = 0; workIndex < room.works.length; workIndex += 1) {
-      await addConnectedMuseumArtwork(room, room.works[workIndex], centerZ, workIndex);
+      const manifestSlug = CONNECTED_AUDIO_WORKS[`${id}:${workIndex}`];
+      await addConnectedMuseumArtwork(room, room.works[workIndex], centerZ, workIndex, manifestsBySlug.get(manifestSlug));
       await new Promise((resolve) => setTimeout(resolve, isQuestBrowser ? 110 : 20));
     }
   }
 }
 
-async function addConnectedMuseumArtwork(room, work, centerZ, index) {
+async function addConnectedMuseumArtwork(room, work, centerZ, index, manifest) {
   const [title, source] = work;
   const texture = await textureLoader.loadAsync(source);
   texture.encoding = THREE.sRGBEncoding;
@@ -1119,6 +1132,23 @@ async function addConnectedMuseumArtwork(room, work, centerZ, index) {
     visitorYaw: rotationY
   }, artwork);
   scene.add(hotspot);
+  if (manifest) {
+    const exhibit = {
+      painting: manifest,
+      artwork,
+      hotspot,
+      audio: null,
+      audioReady: false,
+      started: false,
+      modelDisplay: null
+    };
+    hotspot.userData.exhibit = exhibit;
+    exhibits.push(exhibit);
+    exhibitsBySlug.set(manifest.slug, exhibit);
+    loadAudioGuide(exhibit).catch((error) => {
+      console.warn(`Audio guide unavailable for ${manifest.slug}.`, error);
+    });
+  }
 }
 
 function addPaintingsReimaginedPortal() {
@@ -3114,6 +3144,7 @@ function bindUI() {
 
 function beginScreenLook(event) {
   if (currentSession || event.target !== renderer.domElement) return;
+  audioListener.context.resume().catch(() => {});
   screenLookPointer = event.pointerId;
   screenLookX = event.clientX;
   screenLookY = event.clientY;
@@ -3206,7 +3237,7 @@ async function toggleVR() {
 }
 
 function selectNearestAudioGuide(force = false) {
-  if ((!currentSession && !force) || !exhibits.length) return;
+  if (!exhibits.length || (!force && audioListener.context.state !== "running")) return;
   const head = getListenerPosition();
   let nearest = null;
   let nearestDistance = Infinity;
