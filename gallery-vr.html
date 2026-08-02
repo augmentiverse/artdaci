@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#171411" />
     <title>DACIART — VR Gallery</title>
-    <link rel="stylesheet" href="styles/gallery-vr.css?v=8" />
+    <link rel="stylesheet" href="styles/gallery-vr.css?v=9" />
     <script type="importmap">
       {
         "imports": {
@@ -38,6 +38,10 @@
           <button id="gallery-audio-restart" class="gallery-button" type="button">Restart</button>
           <button id="gallery-audio-mute" class="gallery-button" type="button">Mute</button>
         </div>
+        <div class="gallery-ambience-controls" aria-label="Room music controls">
+          <button id="gallery-ambience-toggle" class="gallery-button" type="button">Play room music</button>
+          <button id="gallery-ambience-stop" class="gallery-button" type="button">Stop room music</button>
+        </div>
         <div class="gallery-video-controls" aria-label="Video controls">
           <select id="gallery-video-select" class="gallery-video-select" aria-label="Choose a cinema video" disabled></select>
           <button id="gallery-video-previous" class="gallery-button" type="button" disabled>Previous</button>
@@ -53,6 +57,11 @@
           <a class="gallery-button artist-room-link" href="gallery-vr.html?artist=van-gogh">Van Gogh</a>
           <a class="gallery-button artist-room-link" href="gallery-vr.html?artist=vermeer">Vermeer</a>
           <a class="gallery-button artist-room-link" href="gallery-vr.html?artist=monet">Monet</a>
+          <a id="gallery-models-link" class="gallery-button" href="gallery-vr.html?lang=en&amp;room=models">3D Models Gallery</a>
+          <a id="gallery-paintings-link" class="gallery-button" href="gallery-vr.html?lang=en&amp;room=paintings">Paintings Gallery</a>
+          <a id="gallery-bedroom-link" class="gallery-button" href="gallery-vr.html?lang=en&amp;room=bedroom">Van Gogh's Bedroom in 3D</a>
+          <a id="gallery-reimagined-link" class="gallery-button" href="gallery-vr.html?lang=en&amp;room=reimagined">Reimagined Masterpieces</a>
+          <a id="gallery-book-link" class="gallery-button" href="book-3d.html?lang=en">Living Book</a>
           <a id="gallery-cinema-link" class="gallery-button cinema-link" href="cinema-vr.html?lang=en">Enter the cinema</a>
           <a id="gallery-leonardo-world-link" class="gallery-button vr-world-link" href="https://marble.worldlabs.ai/worldvr/862ab5f6-8608-469c-a840-8cb10f3859ae">Visit Leonardo's Studio in VR</a>
           <a id="gallery-leonardo-enriched-link" class="gallery-button vr-world-link" href="https://marble.worldlabs.ai/project/c7853f32-4025-4d66-a536-54bb9db6162d">Visit Leonardo's Enriched Studio</a>
@@ -88,6 +97,6 @@
       </details>
     </main>
 
-  <script type="module" src="scripts/gallery-vr.js?v=65"></script>
+  <script type="module" src="scripts/gallery-vr.js?v=66"></script>
   </body>
 </html>

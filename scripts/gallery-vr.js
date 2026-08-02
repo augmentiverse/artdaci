@@ -28,14 +28,8 @@ const GALLERY_MODEL_OVERRIDES = {
   "van-gogh-bedroom": "assets/paintings/van-gogh-bedroom/bed.glb"
 };
 
-const FURNITURE_MODEL_EXHIBITS = [
-  {
-    id: "vermeer-girl-rig",
-    title: { en: "Girl with a Pearl Earring — Rigged", fr: "La Jeune Fille à la perle — animée", ar: "الفتاة ذات القرط اللؤلؤي — متحركة" },
-    src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring-rig.glb",
-    position: [2.3, 7.25]
-  }
-];
+// Optional furniture exhibits can be restored here when their GLB assets are present.
+const FURNITURE_MODEL_EXHIBITS = [];
 
 const STANDING_VAN_GOGH_MODEL = "assets/paintings/van-gogh/vangogh_istanding.glb";
 const PAINTINGS_MODELS_GATEWAY = "assets/paintings/fourniture/gateway-egypt.glb";
@@ -139,7 +133,10 @@ const artistRoomId = params.get("artist");
 const artistRoom = ARTIST_ROOMS[artistRoomId] || null;
 const isConnectedMuseum = Boolean(artistRoom) || !previewRoom || previewRoom === "paintings";
 const ARTIST_ROOM_ORDER = ["da-vinci", "van-gogh", "vermeer", "monet"];
-const connectedStartZ = Math.max(0, ARTIST_ROOM_ORDER.indexOf(artistRoomId)) * 16 - 5.2;
+const connectedStartIndex = Math.max(0, ARTIST_ROOM_ORDER.indexOf(artistRoomId));
+const connectedStartZ = connectedStartIndex === 0 ? -4.6 : connectedStartIndex * 16 - 5.2;
+const connectedStartX = connectedStartIndex === 0 ? -3.75 : 0;
+const connectedStartYaw = connectedStartIndex === 0 ? Math.PI / 2 : Math.PI;
 const activeRoom = ["paintings", "models", "bedroom", "reimagined"].includes(previewRoom)
   ? previewRoom
   : "paintings";
@@ -358,6 +355,8 @@ const enterButton = document.getElementById("enter-gallery-vr");
 const audioToggleButton = document.getElementById("gallery-audio-toggle");
 const audioRestartButton = document.getElementById("gallery-audio-restart");
 const audioMuteButton = document.getElementById("gallery-audio-mute");
+const ambienceToggleButton = document.getElementById("gallery-ambience-toggle");
+const ambienceStopButton = document.getElementById("gallery-ambience-stop");
 const videoToggleButton = document.getElementById("gallery-video-toggle");
 const videoRestartButton = document.getElementById("gallery-video-restart");
 const videoMuteButton = document.getElementById("gallery-video-mute");
@@ -421,6 +420,9 @@ let snapTurnReady = true;
 let activeExhibit = null;
 let activeGalleryVideo = null;
 let audioMuted = false;
+let ambienceEnabled = true;
+let ambientRoomId = null;
+let ambientNodes = null;
 let cinemaAudienceRoot = null;
 let cinemaAudienceLoadPromise = null;
 const cinemaAudienceReadyAt = performance.now() + (isQuestBrowser ? 10000 : 3500);
@@ -596,6 +598,8 @@ function applyCopy() {
   audioToggleButton.textContent = text.playAudio;
   audioRestartButton.textContent = text.restartAudio;
   audioMuteButton.textContent = text.muteAudio;
+  if (ambienceToggleButton) ambienceToggleButton.textContent = lang === "ar" ? "تشغيل موسيقى القاعة" : lang === "fr" ? "Jouer la musique de la salle" : "Play room music";
+  if (ambienceStopButton) ambienceStopButton.textContent = lang === "ar" ? "إيقاف موسيقى القاعة" : lang === "fr" ? "Arrêter la musique de la salle" : "Stop room music";
   videoToggleButton.textContent = text.videoPlay;
   videoRestartButton.textContent = text.videoRestart;
   videoMuteButton.textContent = text.videoUnmute;
@@ -641,6 +645,20 @@ function applyCopy() {
   }
   document.getElementById("gallery-experiences-link").textContent = text.individualExperiences;
   document.getElementById("gallery-experiences-link").href = `space.html?painting=mona-lisa&lang=${lang}`;
+  const productLinks = [
+    ["gallery-models-link", text.modelsRoom, `gallery-vr.html?lang=${lang}&room=models`],
+    ["gallery-paintings-link", text.paintingsRoom, `gallery-vr.html?lang=${lang}&room=paintings`],
+    ["gallery-bedroom-link", text.bedroomRoom, `gallery-vr.html?lang=${lang}&room=bedroom`],
+    ["gallery-reimagined-link", text.reimaginedRoom, `gallery-vr.html?lang=${lang}&room=reimagined`],
+    ["gallery-book-link", text.livingBook, `book-3d.html?lang=${lang}`]
+  ];
+  productLinks.forEach(([id, label, href]) => {
+    const link = document.getElementById(id);
+    if (link) {
+      link.textContent = label;
+      link.href = href;
+    }
+  });
   document.querySelectorAll(".artist-room-link").forEach((link) => {
     const url = new URL(link.href);
     url.searchParams.set("lang", lang);
@@ -659,6 +677,7 @@ function applyCopy() {
 }
 
 function updateScreenUiToggle() {
+  if (!uiToggleButton) return;
   const collapsed = document.body.classList.contains("screen-ui-collapsed");
   uiToggleButton.setAttribute("aria-expanded", String(!collapsed));
   uiToggleButton.textContent = collapsed
@@ -901,8 +920,8 @@ async function buildArtistExhibition(room) {
 function buildConnectedMuseumArchitecture() {
   const roomCenters = [0, 16, 32, 48];
   const startIndex = Math.max(0, ARTIST_ROOM_ORDER.indexOf(artistRoomId));
-  visitor.position.set(0, 0, roomCenters[startIndex] - 5.2);
-  visitor.rotation.y = startIndex ? Math.PI : 0;
+  visitor.position.set(connectedStartX, 0, connectedStartZ);
+  visitor.rotation.y = connectedStartYaw;
   scene.background = new THREE.Color(0x171717);
   scene.fog = new THREE.Fog(0x171717, 25, 76);
   scene.add(new THREE.HemisphereLight(0xfff1dc, 0x252525, isQuestBrowser ? 1.35 : 1.6));
@@ -992,6 +1011,21 @@ function addConnectedMuseumPartitions() {
       );
       glow.position.set(0, 3.34, z - 0.03);
       scene.add(glow);
+
+      const previousRoom = ARTIST_ROOMS[ARTIST_ROOM_ORDER[index - 1]];
+      const nextRoom = ARTIST_ROOMS[ARTIST_ROOM_ORDER[index]];
+      createWallSign(`↑  ${nextRoom.name}`, [0, 3.7, z - 0.11], Math.PI, {
+        width: 3.4,
+        height: 0.42,
+        accent: true,
+        compact: true
+      });
+      createWallSign(`↑  ${previousRoom.name}`, [0, 3.7, z + 0.11], 0, {
+        width: 3.4,
+        height: 0.42,
+        accent: true,
+        compact: true
+      });
     }
   });
 }
@@ -1018,12 +1052,15 @@ function addConnectedRoomNavigation(currentId, centerZ) {
   const usefulLinks = [
     [text.livingBook, `book-3d.html?lang=${lang}`],
     [text.cinemaEnter, `cinema-vr.html?lang=${lang}`],
+    [text.modelsRoom, `gallery-vr.html?lang=${lang}&room=models`],
+    [text.bedroomRoom, `gallery-vr.html?lang=${lang}&room=bedroom`],
+    [text.reimaginedRoom, `gallery-vr.html?lang=${lang}&room=reimagined`],
     [text.exitGallery, lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html"]
   ];
   usefulLinks.forEach(([label, url], index) => {
-    createWallSign(label, [4.5, 3.05 - index * 0.55, signZ], Math.PI, {
+    createWallSign(label, [4.5, 3.05 - index * 0.48, signZ], Math.PI, {
       width: 3.2,
-      height: 0.4,
+      height: 0.35,
       exitUrl: url,
       compact: true
     });
@@ -1707,6 +1744,18 @@ function addFastTravelStations() {
       width: 1.9,
       height: 0.38,
       exitUrl: `cinema-vr.html?lang=${lang}`,
+      compact: true
+    });
+    createWallSign(text.livingBook, [x, 1.84, z - 0.78], station.rotationY, {
+      width: 1.78,
+      height: 0.34,
+      exitUrl: `book-3d.html?lang=${lang}`,
+      compact: true
+    });
+    createWallSign(text.bedroomVrWorld, [x, 1.84, z + 0.78], station.rotationY, {
+      width: 1.78,
+      height: 0.34,
+      exitUrl: BEDROOM_VR_WORLD_URL,
       compact: true
     });
   });
@@ -3099,6 +3148,7 @@ function activateInteractionHit(hit) {
 
 async function exitGallery(url) {
   stopAllAudioGuides();
+  stopRoomAmbience();
   galleryVideoExhibits.forEach((exhibit) => exhibit.video.pause());
   if (currentSession) await currentSession.end();
   location.href = url;
@@ -3107,7 +3157,7 @@ async function exitGallery(url) {
 function bindUI() {
   document.body.classList.add("screen-ui-collapsed");
   updateScreenUiToggle();
-  uiToggleButton.addEventListener("click", () => {
+  uiToggleButton?.addEventListener("click", () => {
     document.body.classList.toggle("screen-ui-collapsed");
     updateScreenUiToggle();
   });
@@ -3115,6 +3165,8 @@ function bindUI() {
   audioToggleButton.addEventListener("click", toggleAudioGuide);
   audioRestartButton.addEventListener("click", restartAudioGuide);
   audioMuteButton.addEventListener("click", toggleAudioMute);
+  ambienceToggleButton?.addEventListener("click", toggleRoomAmbience);
+  ambienceStopButton?.addEventListener("click", stopRoomAmbienceByVisitor);
   videoToggleButton.addEventListener("click", () => toggleGalleryVideo());
   videoRestartButton.addEventListener("click", () => restartGalleryVideo());
   videoMuteButton.addEventListener("click", () => toggleGalleryVideoMute());
@@ -3222,12 +3274,12 @@ async function toggleVR() {
       currentSession = null;
       enterButton.textContent = text.enter;
       stopAllAudioGuides();
-      visitor.position.set(isConnectedMuseum ? 0 : previewPositionX, 0, isConnectedMuseum ? connectedStartZ : previewPositionZ);
-      visitor.rotation.set(0, previewRotationY, 0);
+      visitor.position.set(isConnectedMuseum ? connectedStartX : previewPositionX, 0, isConnectedMuseum ? connectedStartZ : previewPositionZ);
+      visitor.rotation.set(0, isConnectedMuseum ? connectedStartYaw : previewRotationY, 0);
     }, { once: true });
     await renderer.xr.setSession(currentSession);
-    visitor.position.set(isConnectedMuseum ? 0 : previewPositionX, 0, isConnectedMuseum ? connectedStartZ : previewPositionZ);
-    visitor.rotation.set(0, previewRotationY, 0);
+    visitor.position.set(isConnectedMuseum ? connectedStartX : previewPositionX, 0, isConnectedMuseum ? connectedStartZ : previewPositionZ);
+    visitor.rotation.set(0, isConnectedMuseum ? connectedStartYaw : previewRotationY, 0);
     await audioListener.context.resume();
     enterButton.textContent = text.exit;
   } catch (error) {
@@ -3273,6 +3325,7 @@ function selectNearestAudioGuide(force = false) {
 
 function startAudioGuide(exhibit) {
   if (!exhibit.audioReady || exhibit.started || audioListener.context.state !== "running") return;
+  stopRoomAmbience();
   exhibit.audio.play();
   exhibit.started = true;
   updateAudioButtons();
@@ -3285,6 +3338,7 @@ function stopAllAudioGuides() {
   });
   activeExhibit = null;
   updateAudioButtons();
+  updateRoomAmbience(true);
 }
 
 async function toggleAudioGuide() {
@@ -3294,7 +3348,9 @@ async function toggleAudioGuide() {
 
   if (activeExhibit.audio.isPlaying) {
     activeExhibit.audio.pause();
+    updateRoomAmbience(true);
   } else {
+    stopRoomAmbience();
     activeExhibit.audio.play();
     activeExhibit.started = true;
   }
@@ -3312,6 +3368,8 @@ async function restartAudioGuide() {
 
 function toggleAudioMute() {
   audioMuted = !audioMuted;
+  if (audioMuted) stopRoomAmbience();
+  else updateRoomAmbience(true);
   updateAudioButtons();
 }
 
@@ -3334,6 +3392,100 @@ function updateAudioVolume() {
   );
   const volume = audioMuted ? 0 : THREE.MathUtils.clamp(1.18 - distance / 4.2, 0.12, 1);
   activeExhibit.audio.setVolume(volume);
+}
+
+function roomAtVisitorPosition() {
+  if (isCinemaOnly) return null;
+  if (isConnectedMuseum) {
+    const index = THREE.MathUtils.clamp(Math.floor((visitor.position.z + 8) / 16), 0, ARTIST_ROOM_ORDER.length - 1);
+    return ARTIST_ROOM_ORDER[index];
+  }
+  return activeRoom;
+}
+
+function ambientFrequencies(roomId) {
+  return {
+    "da-vinci": [146.83, 220, 293.66],
+    "van-gogh": [130.81, 196, 261.63],
+    vermeer: [174.61, 261.63, 349.23],
+    monet: [164.81, 246.94, 329.63],
+    paintings: [146.83, 220, 293.66],
+    models: [110, 164.81, 220],
+    bedroom: [130.81, 196, 261.63],
+    reimagined: [123.47, 185, 246.94]
+  }[roomId] || [146.83, 220, 293.66];
+}
+
+function startRoomAmbience(roomId = roomAtVisitorPosition()) {
+  if (!roomId || !ambienceEnabled || ambientNodes || audioMuted || audioListener.context.state !== "running") return;
+  if (activeExhibit?.audio?.isPlaying) return;
+  const context = audioListener.context;
+  const master = context.createGain();
+  master.gain.setValueAtTime(0.0001, context.currentTime);
+  master.gain.exponentialRampToValueAtTime(0.026, context.currentTime + 1.8);
+  master.connect(context.destination);
+  const oscillators = ambientFrequencies(roomId).map((frequency, index) => {
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+    oscillator.type = index === 1 ? "triangle" : "sine";
+    oscillator.frequency.value = frequency / (index === 2 ? 2 : 1);
+    oscillator.detune.value = (index - 1) * 3;
+    gain.gain.value = index === 0 ? 0.34 : 0.2;
+    oscillator.connect(gain).connect(master);
+    oscillator.start();
+    return oscillator;
+  });
+  ambientNodes = { roomId, master, oscillators };
+  ambientRoomId = roomId;
+  updateAmbienceButtons();
+}
+
+function stopRoomAmbience() {
+  if (!ambientNodes) return;
+  const { master, oscillators } = ambientNodes;
+  const context = audioListener.context;
+  master.gain.cancelScheduledValues(context.currentTime);
+  master.gain.setTargetAtTime(0.0001, context.currentTime, 0.12);
+  oscillators.forEach((oscillator) => {
+    try { oscillator.stop(context.currentTime + 0.55); } catch (_) {}
+  });
+  ambientNodes = null;
+  updateAmbienceButtons();
+}
+
+function updateRoomAmbience(force = false) {
+  if (isCinemaOnly || audioListener.context.state !== "running") return;
+  const nextRoom = roomAtVisitorPosition();
+  if (nextRoom !== ambientRoomId) {
+    stopRoomAmbience();
+    ambientRoomId = nextRoom;
+  }
+  if ((force || !ambientNodes) && !activeExhibit?.audio?.isPlaying) startRoomAmbience(nextRoom);
+}
+
+async function toggleRoomAmbience() {
+  await audioListener.context.resume();
+  ambienceEnabled = true;
+  const narrationWasPlaying = Boolean(activeExhibit?.audio?.isPlaying);
+  if (narrationWasPlaying) stopAllAudioGuides();
+  if (!narrationWasPlaying && ambientNodes) stopRoomAmbience();
+  else if (!ambientNodes) startRoomAmbience();
+  updateAmbienceButtons();
+}
+
+function stopRoomAmbienceByVisitor() {
+  ambienceEnabled = false;
+  stopRoomAmbience();
+  updateAmbienceButtons();
+}
+
+function updateAmbienceButtons() {
+  if (!ambienceToggleButton) return;
+  const playing = Boolean(ambientNodes);
+  ambienceToggleButton.classList.toggle("active", playing);
+  ambienceToggleButton.textContent = playing
+    ? (lang === "ar" ? "إيقاف الموسيقى مؤقتاً" : lang === "fr" ? "Mettre la musique en pause" : "Pause room music")
+    : (lang === "ar" ? "تشغيل موسيقى القاعة" : lang === "fr" ? "Jouer la musique de la salle" : "Play room music");
 }
 
 function getListenerPosition() {
@@ -3413,6 +3565,7 @@ function render() {
   updateScreenLocomotion(delta);
   selectNearestAudioGuide();
   updateAudioVolume();
+  updateRoomAmbience();
   updateGalleryVideoVolume();
   updateControllerAudioCommands();
   renderer.render(scene, camera);

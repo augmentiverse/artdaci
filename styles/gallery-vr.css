@@ -290,6 +290,25 @@ html[dir="rtl"] .virtual-guide {
   margin-top: 7px;
 }
 
+.gallery-ambience-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 4px;
+}
+
+.gallery-ambience-controls .gallery-button {
+  min-height: 34px;
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+.gallery-ambience-controls .active {
+  border-color: #537e68;
+  color: #07130d;
+  background: #a8d8b8;
+}
+
 .gallery-video-controls {
   display: flex;
   flex-wrap: wrap;
