@@ -937,15 +937,6 @@ function buildConnectedMuseumArchitecture() {
   scene.fog = new THREE.Fog(0x171717, 25, 76);
   scene.add(new THREE.HemisphereLight(0xfff1dc, 0x252525, isQuestBrowser ? 1.35 : 1.6));
 
-  const courtyard = new THREE.Mesh(
-    new THREE.PlaneGeometry(18, 10),
-    new THREE.MeshStandardMaterial({ color: 0x77716a, roughness: 0.96 })
-  );
-  courtyard.rotation.x = -Math.PI / 2;
-  courtyard.position.set(0, 0, -13);
-  courtyard.receiveShadow = true;
-  scene.add(courtyard);
-
   roomCenters.forEach((centerZ, index) => {
     const id = ARTIST_ROOM_ORDER[index];
     const room = ARTIST_ROOMS[id];
@@ -1012,7 +1003,7 @@ function addConnectedRoomShell(id, room, centerZ, index) {
 function addConnectedMuseumPartitions() {
   const neutral = new THREE.MeshStandardMaterial({ color: 0xd8cebf, roughness: 0.96, side: THREE.DoubleSide });
   [-8, 8, 24, 40, 56].forEach((z, index) => {
-    const hasDoor = index < 4;
+    const hasDoor = index > 0 && index < 4;
     const segments = hasDoor
       ? [[-4.5, 5], [4.5, 5]]
       : [[0, 14]];
@@ -1032,20 +1023,14 @@ function addConnectedMuseumPartitions() {
       glow.position.set(0, 3.34, z - 0.03);
       scene.add(glow);
 
-      if (index === 0) {
-        createWallSign("MUSÉE DU LOUVRE  ↑", [0, 3.7, z - 0.11], Math.PI, {
-          width: 3.8, height: 0.42, accent: true, compact: true
-        });
-      } else {
-        const previousRoom = ARTIST_ROOMS[ARTIST_ROOM_ORDER[index - 1]];
-        const nextRoom = ARTIST_ROOMS[ARTIST_ROOM_ORDER[index]];
-        createWallSign(`↑  ${nextRoom.name}`, [0, 3.7, z - 0.11], Math.PI, {
-          width: 3.4, height: 0.42, accent: true, compact: true
-        });
-        createWallSign(`↑  ${previousRoom.name}`, [0, 3.7, z + 0.11], 0, {
-          width: 3.4, height: 0.42, accent: true, compact: true
-        });
-      }
+      const previousRoom = ARTIST_ROOMS[ARTIST_ROOM_ORDER[index - 1]];
+      const nextRoom = ARTIST_ROOMS[ARTIST_ROOM_ORDER[index]];
+      createWallSign(`↑  ${nextRoom.name}`, [0, 3.7, z - 0.11], Math.PI, {
+        width: 3.4, height: 0.42, accent: true, compact: true
+      });
+      createWallSign(`↑  ${previousRoom.name}`, [0, 3.7, z + 0.11], 0, {
+        width: 3.4, height: 0.42, accent: true, compact: true
+      });
     }
   });
 }
@@ -1070,7 +1055,7 @@ async function ensureLouvreFacade() {
     facade.updateMatrixWorld(true);
     box = new THREE.Box3().setFromObject(facade);
     const center = box.getCenter(new THREE.Vector3());
-    facade.position.set(-center.x, -box.min.y, -8.15 - center.z);
+    facade.position.set(-center.x, -box.min.y, 55.82 - center.z);
     facade.traverse((node) => {
       if (!node.isMesh) return;
       node.castShadow = false;
@@ -1087,15 +1072,26 @@ async function ensureLouvreFacade() {
   return louvreFacadePromise;
 }
 
+function maybeLoadLouvreFacade() {
+  if (!isConnectedMuseum || louvreFacadeRoot || louvreFacadePromise) return;
+  if (visitor.position.z < 42) return;
+  void ensureLouvreFacade();
+}
+
 function addConnectedRoomNavigation(currentId, centerZ) {
   const others = ARTIST_ROOM_ORDER.filter((id) => id !== currentId);
   const signZ = centerZ + 7.86;
-  createWallSign(lang === "fr" ? "ACCÈS DIRECT AUX SALLES" : "DIRECT ROOM ACCESS", [-4.5, 3.62, signZ], Math.PI, {
+  const isMonetEnd = currentId === "monet";
+  const roomAccessPosition = isMonetEnd ? [-6.88, 3.62, centerZ + 2.2] : [-4.5, 3.62, signZ];
+  const productsPosition = isMonetEnd ? [6.88, 3.62, centerZ + 2.2] : [4.5, 3.62, signZ];
+  const roomAccessRotation = isMonetEnd ? Math.PI / 2 : Math.PI;
+  const productsRotation = isMonetEnd ? -Math.PI / 2 : Math.PI;
+  createWallSign(lang === "fr" ? "ACCÈS DIRECT AUX SALLES" : "DIRECT ROOM ACCESS", roomAccessPosition, roomAccessRotation, {
     width: 3.8, height: 0.42, accent: true, compact: true
   });
   others.forEach((id, index) => {
     const destinationIndex = ARTIST_ROOM_ORDER.indexOf(id);
-    createWallSign(ARTIST_ROOMS[id].name, [-4.5, 3.05 - index * 0.55, signZ], Math.PI, {
+    createWallSign(ARTIST_ROOMS[id].name, [roomAccessPosition[0], 3.05 - index * 0.55, roomAccessPosition[2]], roomAccessRotation, {
       width: 3.2,
       height: 0.4,
       destination: [0, 0, destinationIndex * 16 - 4.5],
@@ -1103,7 +1099,7 @@ function addConnectedRoomNavigation(currentId, centerZ) {
       compact: true
     });
   });
-  createWallSign(lang === "fr" ? "EXPLORER ARTDACI" : "EXPLORE ARTDACI", [4.5, 3.62, signZ], Math.PI, {
+  createWallSign(lang === "fr" ? "EXPLORER ARTDACI" : "EXPLORE ARTDACI", productsPosition, productsRotation, {
     width: 3.4, height: 0.42, accent: true, compact: true
   });
   const usefulLinks = [
@@ -1115,7 +1111,7 @@ function addConnectedRoomNavigation(currentId, centerZ) {
     [text.exitGallery, lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html"]
   ];
   usefulLinks.forEach(([label, url], index) => {
-    createWallSign(label, [4.5, 3.05 - index * 0.48, signZ], Math.PI, {
+    createWallSign(label, [productsPosition[0], 3.05 - index * 0.48, productsPosition[2]], productsRotation, {
       width: 3.2,
       height: 0.35,
       exitUrl: url,
@@ -3303,7 +3299,7 @@ async function exitGallery(url) {
 }
 
 function bindUI() {
-  document.body.classList.add("screen-ui-collapsed");
+  if (uiToggleButton) document.body.classList.add("screen-ui-collapsed");
   updateScreenUiToggle();
   uiToggleButton?.addEventListener("click", () => {
     document.body.classList.toggle("screen-ui-collapsed");
@@ -3401,7 +3397,7 @@ function updateScreenLocomotion(delta) {
   visitor.position.addScaledVector(local, delta * 2.45);
   const connected = isConnectedMuseum;
   visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, connected ? -6.3 : -5.3, connected ? 6.3 : 19.3);
-  visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, connected ? -17 : -4.3, connected ? 55.3 : 38.3);
+  visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, connected ? -7.3 : -4.3, connected ? 55.3 : 38.3);
 }
 
 async function detectVR() {
@@ -3431,14 +3427,8 @@ async function toggleVR() {
       visitor.rotation.set(0, isConnectedMuseum ? connectedStartYaw : previewRotationY, 0);
     }, { once: true });
     await renderer.xr.setSession(currentSession);
-    if (isConnectedMuseum) {
-      visitor.position.set(0, 0, -14.2);
-      visitor.rotation.set(0, Math.PI, 0);
-      void ensureLouvreFacade();
-    } else {
-      visitor.position.set(previewPositionX, 0, previewPositionZ);
-      visitor.rotation.set(0, previewRotationY, 0);
-    }
+    visitor.position.set(isConnectedMuseum ? connectedStartX : previewPositionX, 0, isConnectedMuseum ? connectedStartZ : previewPositionZ);
+    visitor.rotation.set(0, isConnectedMuseum ? connectedStartYaw : previewRotationY, 0);
     await audioListener.context.resume();
     enterButton.textContent = text.exit;
   } catch (error) {
@@ -3696,7 +3686,7 @@ function updateLocomotion(delta) {
       visitor.position.addScaledVector(right, x * delta * 1.8);
       visitor.position.addScaledVector(forward, -y * delta * 1.8);
       visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, isConnectedMuseum ? -6.3 : -5.3, isConnectedMuseum ? 6.3 : 19.3);
-      visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, isConnectedMuseum ? -17 : -4.3, isConnectedMuseum ? 55.3 : 38.3);
+      visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, isConnectedMuseum ? -7.3 : -4.3, isConnectedMuseum ? 55.3 : 38.3);
     }
 
     if (source.handedness === "right") {
@@ -3719,6 +3709,7 @@ function resize() {
 function render() {
   maybeLoadCinemaAudience();
   maybeLoadOpenBookModel();
+  maybeLoadLouvreFacade();
   updateHandVisuals();
   const delta = Math.min(clock.getDelta(), 0.05);
   updateLocomotion(delta);
