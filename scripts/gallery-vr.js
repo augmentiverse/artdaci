@@ -437,10 +437,6 @@ let ambientNodes = null;
 let cinemaAudienceRoot = null;
 let cinemaAudienceLoadPromise = null;
 const cinemaAudienceReadyAt = performance.now() + (isQuestBrowser ? 10000 : 3500);
-let cinemaGatewayRoot = null;
-let cinemaGatewayPromise = null;
-let cinemaGatewayAttempted = false;
-const cinemaGatewayReadyAt = performance.now() + 5000;
 const controllerCommandState = new Map();
 const screenMove = new Set();
 const screenKeys = new Set();
@@ -463,6 +459,10 @@ async function init() {
   addControllers();
   addHands();
   bindUI();
+  // Enable the headset entry control immediately. Gallery assets continue
+  // loading in the background and must never block WebXR access.
+  if (isQuestBrowser && navigator.xr) enterButton.disabled = false;
+  void detectVR();
 
   if (isCinemaOnly) {
     scene.add(new THREE.HemisphereLight(0xffecd2, 0x17202a, 1.1));
@@ -1366,44 +1366,6 @@ function addCinemaRoomArchitecture() {
   });
 }
 
-async function addCinemaGatewayDecor() {
-  try {
-    const gltf = await modelLoader.loadAsync(PAINTINGS_MODELS_GATEWAY);
-    const gateway = gltf.scene;
-    gateway.name = "cinema-egyptian-gateway";
-    gateway.rotation.y = Math.PI / 2;
-    gateway.updateMatrixWorld(true);
-    let box = new THREE.Box3().setFromObject(gateway);
-    const size = box.getSize(new THREE.Vector3());
-    gateway.scale.setScalar(Math.min(3.5 / Math.max(size.y, 0.001), 3.6 / Math.max(size.x, size.z, 0.001)));
-    gateway.updateMatrixWorld(true);
-    box = new THREE.Box3().setFromObject(gateway);
-    const center = box.getCenter(new THREE.Vector3());
-    gateway.position.set(8.12 - center.x, -box.min.y, 34 - center.z);
-    gateway.traverse((node) => {
-      if (!node.isMesh) return;
-      node.castShadow = !isQuestBrowser && !isIOSDevice;
-      node.receiveShadow = true;
-    });
-    scene.add(gateway);
-    cinemaGatewayRoot = gateway;
-  } catch (error) {
-    console.warn("Cinema gateway unavailable.", error);
-  }
-}
-
-function maybeLoadCinemaGateway() {
-  if (!isCinemaOnly || cinemaGatewayRoot || cinemaGatewayPromise || cinemaGatewayAttempted) return;
-  if (performance.now() < cinemaGatewayReadyAt) return;
-  const dx = visitor.position.x - 8.12;
-  const dz = visitor.position.z - 34;
-  if (dx * dx + dz * dz > 16) return;
-  cinemaGatewayAttempted = true;
-  cinemaGatewayPromise = addCinemaGatewayDecor().finally(() => {
-    cinemaGatewayPromise = null;
-  });
-}
-
 async function addPaintingsModelsGateway() {
   try {
     const gltf = await modelLoader.loadAsync(PAINTINGS_MODELS_GATEWAY);
@@ -1906,17 +1868,30 @@ function addFastTravelStations() {
     { id: "bedroom", label: text.bedroomRoom },
     { id: "reimagined", label: text.reimaginedRoom }
   ];
-  const stations = [
-    { room: "paintings", position: [5.86, 3.35, 3.25], rotationY: -Math.PI / 2 },
-    { room: "models", position: [5.86, 3.35, 7.15], rotationY: -Math.PI / 2 },
-    { room: "bedroom", position: [5.86, 3.35, 17.4], rotationY: -Math.PI / 2 },
-    { room: "reimagined", position: [-5.86, 3.35, 30.6], rotationY: Math.PI / 2 }
-  ];
+  // In the reimagined exhibition the side walls belong to the artworks.
+  // Put navigation on the partition walls so links never cover an image.
+  const stations = activeRoom === "reimagined"
+    ? [
+        { room: "paintings", position: [-3.55, 3.35, 4.84], rotationY: Math.PI },
+        { room: "models", position: [-3.55, 3.35, 14.84], rotationY: Math.PI },
+        { room: "bedroom", position: [-3.55, 3.35, 28.84], rotationY: Math.PI },
+        { room: "reimagined", position: [-3.55, 3.35, 38.84], rotationY: Math.PI }
+      ]
+    : [
+        { room: "paintings", position: [5.86, 3.35, 3.25], rotationY: -Math.PI / 2 },
+        { room: "models", position: [5.86, 3.35, 7.15], rotationY: -Math.PI / 2 },
+        { room: "bedroom", position: [5.86, 3.35, 17.4], rotationY: -Math.PI / 2 },
+        { room: "reimagined", position: [-5.86, 3.35, 30.6], rotationY: Math.PI / 2 }
+      ];
 
   stations.forEach((station) => {
     const [x, , z] = station.position;
+    const onPartitionWall = activeRoom === "reimagined";
+    const signPosition = (y, offset = 0) => onPartitionWall
+      ? [x + offset, y, z]
+      : [x, y, z + offset];
     const compactTop = 3.62;
-    createWallSign(text.fastTravel, [x, compactTop, z], station.rotationY, {
+    createWallSign(text.fastTravel, signPosition(compactTop), station.rotationY, {
       width: 2.7,
       height: 0.4,
       accent: true,
@@ -1925,26 +1900,26 @@ function addFastTravelStations() {
     rooms.filter((room) => room.id !== station.room).forEach((room, index) => {
       const columnOffset = index % 2 === 0 ? -0.78 : 0.78;
       const rowY = 3.16 - Math.floor(index / 2) * 0.42;
-      createWallSign(room.label, [x, rowY, z + columnOffset], station.rotationY, {
+      createWallSign(room.label, signPosition(rowY, columnOffset), station.rotationY, {
         width: 1.78,
         height: 0.36,
         exitUrl: `gallery-vr.html?lang=${lang}&room=${room.id}`,
         compact: true
       });
     });
-    createWallSign(text.cinemaEnter, [x, 2.28, z], station.rotationY, {
+    createWallSign(text.cinemaEnter, signPosition(2.28), station.rotationY, {
       width: 1.9,
       height: 0.38,
       exitUrl: `cinema-vr.html?lang=${lang}`,
       compact: true
     });
-    createWallSign(text.livingBook, [x, 1.84, z - 0.78], station.rotationY, {
+    createWallSign(text.livingBook, signPosition(1.84, -0.78), station.rotationY, {
       width: 1.78,
       height: 0.34,
       exitUrl: `book-3d.html?lang=${lang}`,
       compact: true
     });
-    createWallSign(text.bedroomVrWorld, [x, 1.84, z + 0.78], station.rotationY, {
+    createWallSign(text.bedroomVrWorld, signPosition(1.84, 0.78), station.rotationY, {
       width: 1.78,
       height: 0.34,
       exitUrl: BEDROOM_VR_WORLD_URL,
@@ -3767,7 +3742,6 @@ function resize() {
 
 function render() {
   maybeLoadCinemaAudience();
-  maybeLoadCinemaGateway();
   maybeLoadOpenBookModel();
   maybeLoadLouvreFacade();
   updateHandVisuals();
