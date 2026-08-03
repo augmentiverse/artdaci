@@ -75,6 +75,13 @@ const REIMAGINED_ARTWORKS = [
   { src: "assets/gallery/reimagined/vermeer_Girl-with-a-Pearl-Earring_sitting.png", title: "Girl with a Pearl Earring — Seated", titleAr: "الفتاة ذات القرط اللؤلؤي — جالسة" }
 ];
 
+function getReimaginedPainter(item) {
+  if (/bedroom|van-gogh/i.test(item.src)) return "van-gogh";
+  if (/vermeer/i.test(item.src)) return "vermeer";
+  if (/monet/i.test(item.src)) return "monet";
+  return "da-vinci";
+}
+
 const ARTIST_ROOMS = {
   "da-vinci": {
     name: "Leonardo da Vinci",
@@ -149,7 +156,7 @@ const previewPositionX = isCinemaOnly || previewRoom === "cinema" ? CINEMA_ROOM_
 const previewPositionZ = isCinemaOnly || previewRoom === "cinema"
   ? 32
   : previewRoom === "reimagined"
-  ? 30
+  ? -3
   : previewRoom === "bedroom"
     ? 17.4
     : previewRoom === "models"
@@ -430,6 +437,10 @@ let ambientNodes = null;
 let cinemaAudienceRoot = null;
 let cinemaAudienceLoadPromise = null;
 const cinemaAudienceReadyAt = performance.now() + (isQuestBrowser ? 10000 : 3500);
+let cinemaGatewayRoot = null;
+let cinemaGatewayPromise = null;
+let cinemaGatewayAttempted = false;
+const cinemaGatewayReadyAt = performance.now() + 5000;
 const controllerCommandState = new Map();
 const screenMove = new Set();
 const screenKeys = new Set();
@@ -456,7 +467,6 @@ async function init() {
   if (isCinemaOnly) {
     scene.add(new THREE.HemisphereLight(0xffecd2, 0x17202a, 1.1));
     addCinemaRoomArchitecture();
-    void addCinemaGatewayDecor();
     addCinemaNavigationSigns();
     buildReimaginedVideoExhibits();
     await detectVR();
@@ -832,7 +842,8 @@ function buildRoom() {
   scene.add(cinemaCorridorFloor);
 
   addLouvrePaintingsRoomDecor();
-  addNavigationSigns();
+  if (activeRoom === "reimagined") addReimaginedPainterRoomSigns();
+  else addNavigationSigns();
   addPaintingsReimaginedPortal();
   addCinemaEntranceHotspot();
   addFastTravelStations();
@@ -914,8 +925,8 @@ async function buildArtistExhibition(room) {
     image.position.z = 0.056;
     artwork.add(frame, image);
     const label = makeLabel(title);
-    label.position.set(0, -height / 2 - 0.23, 0.07);
-    label.scale.set(Math.min(2.5, width + 0.5), 0.72, 1);
+    label.position.set(0, -height / 2 - 0.31, 0.07);
+    label.scale.set(Math.min(2.35, width + 0.45), 0.62, 1);
     artwork.add(label);
     scene.add(artwork);
     const hotspot = createReimaginedHotspot(title, {
@@ -944,6 +955,7 @@ function buildConnectedMuseumArchitecture() {
     addConnectedRoomNavigation(id, centerZ);
   });
   addConnectedMuseumPartitions();
+  addLivingBookTable([0, 0, 52.1], 0);
 }
 
 function addConnectedRoomShell(id, room, centerZ, index) {
@@ -1051,6 +1063,10 @@ async function ensureLouvreFacade() {
       box = new THREE.Box3().setFromObject(facade);
       size = box.getSize(new THREE.Vector3());
     }
+    facade.rotation.y += Math.PI;
+    facade.updateMatrixWorld(true);
+    box = new THREE.Box3().setFromObject(facade);
+    size = box.getSize(new THREE.Vector3());
     facade.scale.setScalar(Math.min(14 / Math.max(size.x, 0.001), 5.4 / Math.max(size.y, 0.001)));
     facade.updateMatrixWorld(true);
     box = new THREE.Box3().setFromObject(facade);
@@ -1214,8 +1230,8 @@ async function addConnectedMuseumArtwork(room, work, centerZ, index, manifest) {
   image.position.z = 0.056;
   artwork.add(frame, image);
   const label = makeLabel(title);
-  label.position.set(0, -height / 2 - 0.22, 0.07);
-  label.scale.set(Math.min(2.25, width + 0.45), 0.68, 1);
+  label.position.set(0, -height / 2 - 0.3, 0.07);
+  label.scale.set(Math.min(2.15, width + 0.4), 0.58, 1);
   artwork.add(label);
   scene.add(artwork);
   const hotspot = createReimaginedHotspot(title, {
@@ -1267,7 +1283,7 @@ function addPaintingsReimaginedPortal() {
   const fromPaintings = activeRoom === "paintings";
   const fromReimagined = activeRoom === "reimagined";
   if (!fromPaintings && !fromReimagined) return;
-  const z = fromPaintings ? 4.86 : 29.14;
+  const z = fromPaintings ? 4.86 : -4.86;
   const rotationY = fromPaintings ? Math.PI : 0;
   const destination = fromPaintings ? "reimagined" : "paintings";
   const label = fromPaintings ? text.reimaginedRoom : text.paintingsRoom;
@@ -1370,9 +1386,22 @@ async function addCinemaGatewayDecor() {
       node.receiveShadow = true;
     });
     scene.add(gateway);
+    cinemaGatewayRoot = gateway;
   } catch (error) {
     console.warn("Cinema gateway unavailable.", error);
   }
+}
+
+function maybeLoadCinemaGateway() {
+  if (!isCinemaOnly || cinemaGatewayRoot || cinemaGatewayPromise || cinemaGatewayAttempted) return;
+  if (performance.now() < cinemaGatewayReadyAt) return;
+  const dx = visitor.position.x - 8.12;
+  const dz = visitor.position.z - 34;
+  if (dx * dx + dz * dz > 16) return;
+  cinemaGatewayAttempted = true;
+  cinemaGatewayPromise = addCinemaGatewayDecor().finally(() => {
+    cinemaGatewayPromise = null;
+  });
 }
 
 async function addPaintingsModelsGateway() {
@@ -1498,14 +1527,14 @@ function addLouvrePaintingsRoomDecor() {
   });
   bench.position.set(0, 0, 2.55);
   scene.add(bench);
-  addLivingBookTable();
+  addLivingBookTable([0, 0, 36.2], 0);
 }
 
-function addLivingBookTable() {
+function addLivingBookTable(position = [3.75, 0, 3.15], rotationY = -0.18) {
   const table = new THREE.Group();
   table.name = "living-book-table";
-  table.position.set(3.75, 0, 3.15);
-  table.rotation.y = -0.18;
+  table.position.set(...position);
+  table.rotation.y = rotationY;
 
   const wood = new THREE.MeshStandardMaterial({
     color: 0x4b2818,
@@ -1596,10 +1625,6 @@ function addLivingBookTable() {
   table.add(book);
   openBookTable = table;
   openBookFallback = book;
-  if (!isIOSDevice) {
-    openBookLoadStarted = true;
-    void addOpenBookModel(table, book);
-  }
 
   const label = makeLabel(text.livingBook);
   label.position.set(0, 1.2, -0.58);
@@ -1638,9 +1663,10 @@ async function addOpenBookModel(table, fallbackBook) {
 }
 
 function maybeLoadOpenBookModel() {
-  if (!isIOSDevice || openBookLoadStarted || !openBookTable || !openBookFallback) return;
+  if (openBookLoadStarted || !openBookTable || !openBookFallback) return;
+  if (isConnectedMuseum && louvreFacadePromise && !louvreFacadeRoot) return;
   const tablePosition = openBookTable.getWorldPosition(new THREE.Vector3());
-  if (tablePosition.distanceTo(getListenerPosition()) > 5.5) return;
+  if (tablePosition.distanceTo(getListenerPosition()) > 4.5) return;
   openBookLoadStarted = true;
   void addOpenBookModel(openBookTable, openBookFallback);
 }
@@ -1756,6 +1782,29 @@ function addNavigationSigns() {
     height: 0.3,
     exitUrl: collectionUrl,
     compact: true
+  });
+}
+
+function addReimaginedPainterRoomSigns() {
+  const roomNames = [
+    { id: "da-vinci", centerZ: 0, name: lang === "fr" ? "LÉONARD DE VINCI — RÉIMAGINÉ" : "LEONARDO DA VINCI — REIMAGINED" },
+    { id: "van-gogh", centerZ: 10, name: lang === "fr" ? "VAN GOGH — RÉIMAGINÉ" : "VAN GOGH — REIMAGINED" },
+    { id: "vermeer", centerZ: 22, name: lang === "fr" ? "VERMEER — RÉIMAGINÉ" : "VERMEER — REIMAGINED" },
+    { id: "monet", centerZ: 34, name: lang === "fr" ? "MONET — RÉIMAGINÉ" : "MONET — REIMAGINED" }
+  ];
+  roomNames.forEach((room) => {
+    createWallSign(room.name, [-5.86, 3.48, room.centerZ], Math.PI / 2, {
+      width: 4.15, height: 0.5, accent: true, compact: true
+    });
+  });
+  [
+    [4.88, roomNames[1].name, Math.PI], [5.12, roomNames[0].name, 0],
+    [14.88, roomNames[2].name, Math.PI], [15.12, roomNames[1].name, 0],
+    [28.88, roomNames[3].name, Math.PI], [29.12, roomNames[2].name, 0]
+  ].forEach(([z, label, rotationY]) => {
+    createWallSign(`↑  ${label}`, [0, 3.48, z], rotationY, {
+      width: 3.6, height: 0.48, accent: true, compact: true
+    });
   });
 }
 
@@ -1986,23 +2035,27 @@ async function addPainting(painting, placement) {
 }
 
 async function buildReimaginedExhibition() {
-  const placements = [
-    { position: [-3.7, 1.72, 38.92], rotationY: Math.PI, hotspot: [-3.7, 36.45], visitorYaw: Math.PI },
-    { position: [0, 1.72, 38.92], rotationY: Math.PI, hotspot: [0, 36.45], visitorYaw: Math.PI },
-    { position: [3.7, 1.72, 38.92], rotationY: Math.PI, hotspot: [3.7, 36.45], visitorYaw: Math.PI },
-    { position: [-5.92, 1.9, 32.2], rotationY: Math.PI / 2, hotspot: [-3.45, 32.2], visitorYaw: Math.PI / 2 },
-    { position: [-5.92, 1.9, 35.8], rotationY: Math.PI / 2, hotspot: [-3.45, 35.8], visitorYaw: Math.PI / 2 },
-    { position: [5.92, 1.9, 30.85], rotationY: -Math.PI / 2, hotspot: [3.45, 30.85], visitorYaw: -Math.PI / 2 },
-    { position: [5.92, 1.9, 37.15], rotationY: -Math.PI / 2, hotspot: [3.45, 37.15], visitorYaw: -Math.PI / 2 }
-  ];
+  const roomCenters = { "da-vinci": 0, "van-gogh": 10, vermeer: 22, monet: 34 };
+  const roomSlots = new Map();
+  const placementFor = (painter) => {
+    const centerZ = roomCenters[painter];
+    const index = roomSlots.get(painter) || 0;
+    roomSlots.set(painter, index + 1);
+    const side = index % 2 === 0 ? -1 : 1;
+    const row = Math.floor(index / 2);
+    const z = centerZ - 2.45 + row * 2.45;
+    return side < 0
+      ? { position: [-5.92, 1.95, z], rotationY: Math.PI / 2, hotspot: [-3.45, z], visitorYaw: Math.PI / 2 }
+      : { position: [5.92, 1.95, z], rotationY: -Math.PI / 2, hotspot: [3.45, z], visitorYaw: -Math.PI / 2 };
+  };
 
-  await Promise.all(REIMAGINED_ARTWORKS.map(async (item, index) => {
+  await Promise.all(REIMAGINED_ARTWORKS.map(async (item) => {
     const texture = await textureLoader.loadAsync(item.src);
     texture.encoding = THREE.sRGBEncoding;
     const aspect = texture.image.width / texture.image.height;
-    const height = Math.min(1.32, 2.2 / aspect);
+    const height = Math.min(1.2, 1.9 / aspect);
     const width = height * aspect;
-    const placement = placements[index];
+    const placement = placementFor(getReimaginedPainter(item));
 
     const artwork = new THREE.Group();
     artwork.position.set(...placement.position);
@@ -2023,12 +2076,18 @@ async function buildReimaginedExhibition() {
 
     const itemTitle = lang === "ar" ? item.titleAr || item.title : item.title;
     const title = makeLabel(itemTitle);
-    title.position.set(0, -height / 2 - 0.22, 0.07);
-    title.scale.set(Math.min(2.15, width + 0.62), 0.9, 1);
+    title.position.set(0, -height / 2 - 0.31, 0.07);
+    title.scale.set(Math.min(1.9, width + 0.42), 0.62, 1);
     artwork.add(title);
     scene.add(artwork);
     scene.add(createReimaginedHotspot(itemTitle, placement, artwork));
   }));
+
+  if (!REIMAGINED_ARTWORKS.some((item) => getReimaginedPainter(item) === "monet")) {
+    createWallSign(lang === "fr" ? "NOUVELLES ŒUVRES À VENIR" : "MORE REIMAGINED WORKS COMING SOON", [0, 2.15, 38.88], Math.PI, {
+      width: 4.8, height: 0.64, accent: true, compact: true
+    });
+  }
 }
 
 async function addReimaginedEntranceMonaLisa() {
@@ -2408,7 +2467,7 @@ async function addCinemaAudienceModels(cinema) {
 }
 
 function maybeLoadCinemaAudience() {
-  if (isIOSDevice) return;
+  if (isIOSDevice || isQuestBrowser) return;
   if (!cinemaAudienceRoot || cinemaAudienceLoadPromise || performance.now() < cinemaAudienceReadyAt) return;
   const dx = visitor.position.x - CINEMA_ROOM_X;
   const dz = visitor.position.z - 34;
@@ -3708,6 +3767,7 @@ function resize() {
 
 function render() {
   maybeLoadCinemaAudience();
+  maybeLoadCinemaGateway();
   maybeLoadOpenBookModel();
   maybeLoadLouvreFacade();
   updateHandVisuals();
