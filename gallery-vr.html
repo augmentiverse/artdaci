@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#171411" />
     <title>DACIART — VR Gallery</title>
-    <link rel="stylesheet" href="styles/gallery-vr.css?v=9" />
+    <link rel="stylesheet" href="styles/gallery-vr.css?v=10" />
     <script type="importmap">
       {
         "imports": {
@@ -79,6 +79,10 @@
           <button type="button" data-move="backward" aria-label="Move backward">▼</button>
           <button type="button" data-move="right" aria-label="Move right">▶</button>
         </div>
+        <div class="screen-turn-controls">
+          <button type="button" data-turn="left" aria-label="Turn left">↶</button>
+          <button type="button" data-turn="right" aria-label="Turn right">↷</button>
+        </div>
         <span>Drag to look · WASD / arrows to move</span>
       </div>
       <details id="virtual-guide" class="virtual-guide">
@@ -97,6 +101,6 @@
       </details>
     </main>
 
-  <script type="module" src="scripts/gallery-vr.js?v=66"></script>
+  <script type="module" src="scripts/gallery-vr.js?v=68"></script>
   </body>
 </html>

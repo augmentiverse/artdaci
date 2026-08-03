@@ -259,20 +259,20 @@ button, a { font: inherit; }
   }
   .book {
     flex: 0 0 auto;
-    width: min(82vw, 560px);
-    aspect-ratio: 1600 / 2200;
+    width: 96vw;
+    aspect-ratio: 1.42;
     top: 0;
     transform: none;
     transform-origin: top center;
   }
   .book.zoomed {
-    width: min(82vw, 560px);
+    width: 96vw;
     margin-bottom: 16vh;
     transform: scale(1.16);
   }
-  .book-cover-left, .book-spine { display: none; }
-  .book-cover-right { left: 0; width: 100%; border-radius: 12px; }
-  .sheet { right: 0; width: 100%; }
+  .book-cover-left, .book-spine { display: block; }
+  .book-cover-right { left: auto; width: 50%; border-radius: 4px 12px 12px 4px; }
+  .sheet { right: 1.2%; width: 48.8%; }
   .book-hint { display: none; }
   .page-hotspot { width: 42px; height: 42px; font-size: 14px; }
   #book-zoom { border-color: var(--gold); }

@@ -33,6 +33,8 @@ const FURNITURE_MODEL_EXHIBITS = [];
 
 const STANDING_VAN_GOGH_MODEL = "assets/paintings/van-gogh/vangogh_istanding.glb";
 const PAINTINGS_MODELS_GATEWAY = "assets/paintings/fourniture/gateway-egypt.glb";
+const LOUVRE_FACADE_MODEL = "assets/paintings/fourniture/louvre-facade_c.glb";
+const OPEN_BOOK_MODEL = "assets/paintings/fourniture/open-book_c.glb";
 const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae";
 const LEONARDO_STUDIO_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/862ab5f6-8608-469c-a840-8cb10f3859ae";
 const LEONARDO_ENRICHED_STUDIO_URL = "https://marble.worldlabs.ai/project/c7853f32-4025-4d66-a536-54bb9db6162d";
@@ -128,6 +130,8 @@ const params = new URLSearchParams(location.search);
 const lang = ["en", "fr", "ar"].includes(params.get("lang")) ? params.get("lang") : "en";
 const isCinemaOnly = document.body.dataset.experience === "cinema";
 const isQuestBrowser = /OculusBrowser|Meta Quest|Quest/i.test(navigator.userAgent);
+const isIOSDevice = /iP(hone|ad|od)/i.test(navigator.userAgent)
+  || (/Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
 const previewRoom = params.get("room");
 const artistRoomId = params.get("artist");
 const artistRoom = ARTIST_ROOMS[artistRoomId] || null;
@@ -382,13 +386,13 @@ visitor.add(camera);
 scene.add(visitor);
 
 const renderer = new THREE.WebGLRenderer({
-  antialias: !isQuestBrowser,
-  powerPreference: "high-performance"
+  antialias: !isQuestBrowser && !isIOSDevice,
+  powerPreference: isIOSDevice ? "default" : "high-performance"
 });
-renderer.setPixelRatio(isQuestBrowser ? 1 : Math.min(devicePixelRatio, 2));
+renderer.setPixelRatio(isQuestBrowser || isIOSDevice ? 1 : Math.min(devicePixelRatio, 2));
 renderer.setSize(innerWidth, innerHeight);
 renderer.outputEncoding = THREE.sRGBEncoding;
-renderer.shadowMap.enabled = !isQuestBrowser;
+renderer.shadowMap.enabled = !isQuestBrowser && !isIOSDevice;
 renderer.xr.enabled = true;
 renderer.xr.setReferenceSpaceType("local-floor");
 stage.appendChild(renderer.domElement);
@@ -434,6 +438,11 @@ let screenLookX = 0;
 let screenLookY = 0;
 let screenPitch = 0;
 let screenLookMoved = false;
+let louvreFacadeRoot = null;
+let louvreFacadePromise = null;
+let openBookTable = null;
+let openBookFallback = null;
+let openBookLoadStarted = false;
 
 init();
 
@@ -447,6 +456,7 @@ async function init() {
   if (isCinemaOnly) {
     scene.add(new THREE.HemisphereLight(0xffecd2, 0x17202a, 1.1));
     addCinemaRoomArchitecture();
+    void addCinemaGatewayDecor();
     addCinemaNavigationSigns();
     buildReimaginedVideoExhibits();
     await detectVR();
@@ -886,6 +896,7 @@ async function buildArtistExhibition(room) {
   for (let index = 0; index < room.works.length; index += 1) {
     const [title, source] = room.works[index];
     const texture = await textureLoader.loadAsync(source);
+    optimizeTextureForMobile(texture);
     texture.encoding = THREE.sRGBEncoding;
     texture.minFilter = THREE.LinearFilter;
     const aspect = texture.image.width / texture.image.height;
@@ -925,6 +936,15 @@ function buildConnectedMuseumArchitecture() {
   scene.background = new THREE.Color(0x171717);
   scene.fog = new THREE.Fog(0x171717, 25, 76);
   scene.add(new THREE.HemisphereLight(0xfff1dc, 0x252525, isQuestBrowser ? 1.35 : 1.6));
+
+  const courtyard = new THREE.Mesh(
+    new THREE.PlaneGeometry(18, 10),
+    new THREE.MeshStandardMaterial({ color: 0x77716a, roughness: 0.96 })
+  );
+  courtyard.rotation.x = -Math.PI / 2;
+  courtyard.position.set(0, 0, -13);
+  courtyard.receiveShadow = true;
+  scene.add(courtyard);
 
   roomCenters.forEach((centerZ, index) => {
     const id = ARTIST_ROOM_ORDER[index];
@@ -992,7 +1012,7 @@ function addConnectedRoomShell(id, room, centerZ, index) {
 function addConnectedMuseumPartitions() {
   const neutral = new THREE.MeshStandardMaterial({ color: 0xd8cebf, roughness: 0.96, side: THREE.DoubleSide });
   [-8, 8, 24, 40, 56].forEach((z, index) => {
-    const hasDoor = index > 0 && index < 4;
+    const hasDoor = index < 4;
     const segments = hasDoor
       ? [[-4.5, 5], [4.5, 5]]
       : [[0, 14]];
@@ -1012,22 +1032,59 @@ function addConnectedMuseumPartitions() {
       glow.position.set(0, 3.34, z - 0.03);
       scene.add(glow);
 
-      const previousRoom = ARTIST_ROOMS[ARTIST_ROOM_ORDER[index - 1]];
-      const nextRoom = ARTIST_ROOMS[ARTIST_ROOM_ORDER[index]];
-      createWallSign(`↑  ${nextRoom.name}`, [0, 3.7, z - 0.11], Math.PI, {
-        width: 3.4,
-        height: 0.42,
-        accent: true,
-        compact: true
-      });
-      createWallSign(`↑  ${previousRoom.name}`, [0, 3.7, z + 0.11], 0, {
-        width: 3.4,
-        height: 0.42,
-        accent: true,
-        compact: true
-      });
+      if (index === 0) {
+        createWallSign("MUSÉE DU LOUVRE  ↑", [0, 3.7, z - 0.11], Math.PI, {
+          width: 3.8, height: 0.42, accent: true, compact: true
+        });
+      } else {
+        const previousRoom = ARTIST_ROOMS[ARTIST_ROOM_ORDER[index - 1]];
+        const nextRoom = ARTIST_ROOMS[ARTIST_ROOM_ORDER[index]];
+        createWallSign(`↑  ${nextRoom.name}`, [0, 3.7, z - 0.11], Math.PI, {
+          width: 3.4, height: 0.42, accent: true, compact: true
+        });
+        createWallSign(`↑  ${previousRoom.name}`, [0, 3.7, z + 0.11], 0, {
+          width: 3.4, height: 0.42, accent: true, compact: true
+        });
+      }
     }
   });
+}
+
+async function ensureLouvreFacade() {
+  if (louvreFacadeRoot) return louvreFacadeRoot;
+  if (louvreFacadePromise) return louvreFacadePromise;
+  louvreFacadePromise = (async () => {
+    const gltf = await modelLoader.loadAsync(LOUVRE_FACADE_MODEL);
+    const facade = gltf.scene;
+    facade.name = "louvre-vr-entrance";
+    facade.updateMatrixWorld(true);
+    let box = new THREE.Box3().setFromObject(facade);
+    let size = box.getSize(new THREE.Vector3());
+    if (size.z > size.x) {
+      facade.rotation.y = Math.PI / 2;
+      facade.updateMatrixWorld(true);
+      box = new THREE.Box3().setFromObject(facade);
+      size = box.getSize(new THREE.Vector3());
+    }
+    facade.scale.setScalar(Math.min(14 / Math.max(size.x, 0.001), 5.4 / Math.max(size.y, 0.001)));
+    facade.updateMatrixWorld(true);
+    box = new THREE.Box3().setFromObject(facade);
+    const center = box.getCenter(new THREE.Vector3());
+    facade.position.set(-center.x, -box.min.y, -8.15 - center.z);
+    facade.traverse((node) => {
+      if (!node.isMesh) return;
+      node.castShadow = false;
+      node.receiveShadow = true;
+    });
+    scene.add(facade);
+    louvreFacadeRoot = facade;
+    return facade;
+  })().catch((error) => {
+    louvreFacadePromise = null;
+    console.warn("Louvre facade unavailable.", error);
+    return null;
+  });
+  return louvreFacadePromise;
 }
 
 function addConnectedRoomNavigation(currentId, centerZ) {
@@ -1140,6 +1197,7 @@ async function buildConnectedMuseumExhibitions(printedManifests) {
 async function addConnectedMuseumArtwork(room, work, centerZ, index, manifest) {
   const [title, source] = work;
   const texture = await textureLoader.loadAsync(source);
+  optimizeTextureForMobile(texture);
   texture.encoding = THREE.sRGBEncoding;
   texture.minFilter = THREE.LinearFilter;
   const aspect = texture.image.width / texture.image.height;
@@ -1186,6 +1244,27 @@ async function addConnectedMuseumArtwork(room, work, centerZ, index, manifest) {
       console.warn(`Audio guide unavailable for ${manifest.slug}.`, error);
     });
   }
+}
+
+function optimizeTextureForMobile(texture) {
+  if (!isIOSDevice || !texture?.image) return texture;
+  const image = texture.image;
+  const width = image.naturalWidth || image.videoWidth || image.width || 0;
+  const height = image.naturalHeight || image.videoHeight || image.height || 0;
+  const maximum = 768;
+  if (width > maximum || height > maximum) {
+    const scale = Math.min(maximum / width, maximum / height);
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round(width * scale));
+    canvas.height = Math.max(1, Math.round(height * scale));
+    canvas.getContext("2d", { alpha: false }).drawImage(image, 0, 0, canvas.width, canvas.height);
+    texture.image = canvas;
+  }
+  texture.generateMipmaps = false;
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  texture.needsUpdate = true;
+  return texture;
 }
 
 function addPaintingsReimaginedPortal() {
@@ -1273,6 +1352,31 @@ function addCinemaRoomArchitecture() {
     strip.position.set(CINEMA_ROOM_X + offset, 0.025, 34);
     scene.add(strip);
   });
+}
+
+async function addCinemaGatewayDecor() {
+  try {
+    const gltf = await modelLoader.loadAsync(PAINTINGS_MODELS_GATEWAY);
+    const gateway = gltf.scene;
+    gateway.name = "cinema-egyptian-gateway";
+    gateway.rotation.y = Math.PI / 2;
+    gateway.updateMatrixWorld(true);
+    let box = new THREE.Box3().setFromObject(gateway);
+    const size = box.getSize(new THREE.Vector3());
+    gateway.scale.setScalar(Math.min(3.5 / Math.max(size.y, 0.001), 3.6 / Math.max(size.x, size.z, 0.001)));
+    gateway.updateMatrixWorld(true);
+    box = new THREE.Box3().setFromObject(gateway);
+    const center = box.getCenter(new THREE.Vector3());
+    gateway.position.set(8.12 - center.x, -box.min.y, 34 - center.z);
+    gateway.traverse((node) => {
+      if (!node.isMesh) return;
+      node.castShadow = !isQuestBrowser && !isIOSDevice;
+      node.receiveShadow = true;
+    });
+    scene.add(gateway);
+  } catch (error) {
+    console.warn("Cinema gateway unavailable.", error);
+  }
 }
 
 async function addPaintingsModelsGateway() {
@@ -1494,12 +1598,55 @@ function addLivingBookTable() {
     part.receiveShadow = true;
   });
   table.add(book);
+  openBookTable = table;
+  openBookFallback = book;
+  if (!isIOSDevice) {
+    openBookLoadStarted = true;
+    void addOpenBookModel(table, book);
+  }
 
   const label = makeLabel(text.livingBook);
   label.position.set(0, 1.2, -0.58);
   label.scale.set(1.55, 0.38, 1);
   table.add(label);
   scene.add(table);
+}
+
+async function addOpenBookModel(table, fallbackBook) {
+  try {
+    const gltf = await modelLoader.loadAsync(OPEN_BOOK_MODEL);
+    const model = gltf.scene;
+    model.name = "living-book-open-model";
+    model.updateMatrixWorld(true);
+    let box = new THREE.Box3().setFromObject(model);
+    const size = box.getSize(new THREE.Vector3());
+    const longestSide = Math.max(size.x, size.z, 0.001);
+    model.scale.setScalar(1.25 / longestSide);
+    model.updateMatrixWorld(true);
+    box = new THREE.Box3().setFromObject(model);
+    const center = box.getCenter(new THREE.Vector3());
+    model.position.set(-center.x, 0.91 - box.min.y, -center.z);
+    model.rotation.y = -0.12;
+    model.traverse((node) => {
+      if (!node.isMesh) return;
+      node.castShadow = !isIOSDevice && !isQuestBrowser;
+      node.receiveShadow = true;
+      node.userData.exitUrl = `book-3d.html?lang=${lang}`;
+      teleportTargets.push(node);
+    });
+    table.add(model);
+    fallbackBook.visible = false;
+  } catch (error) {
+    console.warn("Open Living Book model unavailable; using the lightweight fallback.", error);
+  }
+}
+
+function maybeLoadOpenBookModel() {
+  if (!isIOSDevice || openBookLoadStarted || !openBookTable || !openBookFallback) return;
+  const tablePosition = openBookTable.getWorldPosition(new THREE.Vector3());
+  if (tablePosition.distanceTo(getListenerPosition()) > 5.5) return;
+  openBookLoadStarted = true;
+  void addOpenBookModel(openBookTable, openBookFallback);
 }
 
 function wrapCanvasText(context, message, x, y, maxWidth, lineHeight) {
@@ -2265,6 +2412,7 @@ async function addCinemaAudienceModels(cinema) {
 }
 
 function maybeLoadCinemaAudience() {
+  if (isIOSDevice) return;
   if (!cinemaAudienceRoot || cinemaAudienceLoadPromise || performance.now() < cinemaAudienceReadyAt) return;
   const dx = visitor.position.x - CINEMA_ROOM_X;
   const dz = visitor.position.z - 34;
@@ -3189,6 +3337,11 @@ function bindUI() {
     button.addEventListener("pointercancel", stop);
     button.addEventListener("pointerleave", stop);
   });
+  document.querySelectorAll("[data-turn]").forEach((button) => {
+    button.addEventListener("click", () => {
+      visitor.rotation.y += button.dataset.turn === "left" ? Math.PI / 8 : -Math.PI / 8;
+    });
+  });
   addEventListener("keydown", (event) => screenKeys.add(event.key.toLowerCase()));
   addEventListener("keyup", (event) => screenKeys.delete(event.key.toLowerCase()));
   addEventListener("resize", resize);
@@ -3248,7 +3401,7 @@ function updateScreenLocomotion(delta) {
   visitor.position.addScaledVector(local, delta * 2.45);
   const connected = isConnectedMuseum;
   visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, connected ? -6.3 : -5.3, connected ? 6.3 : 19.3);
-  visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, connected ? -7.3 : -4.3, connected ? 55.3 : 38.3);
+  visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, connected ? -17 : -4.3, connected ? 55.3 : 38.3);
 }
 
 async function detectVR() {
@@ -3278,8 +3431,14 @@ async function toggleVR() {
       visitor.rotation.set(0, isConnectedMuseum ? connectedStartYaw : previewRotationY, 0);
     }, { once: true });
     await renderer.xr.setSession(currentSession);
-    visitor.position.set(isConnectedMuseum ? connectedStartX : previewPositionX, 0, isConnectedMuseum ? connectedStartZ : previewPositionZ);
-    visitor.rotation.set(0, isConnectedMuseum ? connectedStartYaw : previewRotationY, 0);
+    if (isConnectedMuseum) {
+      visitor.position.set(0, 0, -14.2);
+      visitor.rotation.set(0, Math.PI, 0);
+      void ensureLouvreFacade();
+    } else {
+      visitor.position.set(previewPositionX, 0, previewPositionZ);
+      visitor.rotation.set(0, previewRotationY, 0);
+    }
     await audioListener.context.resume();
     enterButton.textContent = text.exit;
   } catch (error) {
@@ -3537,7 +3696,7 @@ function updateLocomotion(delta) {
       visitor.position.addScaledVector(right, x * delta * 1.8);
       visitor.position.addScaledVector(forward, -y * delta * 1.8);
       visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, isConnectedMuseum ? -6.3 : -5.3, isConnectedMuseum ? 6.3 : 19.3);
-      visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, isConnectedMuseum ? -7.3 : -4.3, isConnectedMuseum ? 55.3 : 38.3);
+      visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, isConnectedMuseum ? -17 : -4.3, isConnectedMuseum ? 55.3 : 38.3);
     }
 
     if (source.handedness === "right") {
@@ -3559,6 +3718,7 @@ function resize() {
 
 function render() {
   maybeLoadCinemaAudience();
+  maybeLoadOpenBookModel();
   updateHandVisuals();
   const delta = Math.min(clock.getDelta(), 0.05);
   updateLocomotion(delta);
