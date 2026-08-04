@@ -147,7 +147,10 @@ const isHandheldMobile = !isQuestBrowser && (
 const previewRoom = params.get("room");
 const artistRoomId = params.get("artist");
 const artistRoom = ARTIST_ROOMS[artistRoomId] || null;
-const isConnectedMuseum = Boolean(artistRoom) || !previewRoom || previewRoom === "paintings";
+// The standalone cinema has no `room` query parameter, but it must never be
+// treated as the connected museum. Otherwise entering WebXR moves the visitor
+// to the gallery entrance while the cinema remains tens of metres away.
+const isConnectedMuseum = !isCinemaOnly && (Boolean(artistRoom) || !previewRoom || previewRoom === "paintings");
 const ARTIST_ROOM_ORDER = ["da-vinci", "van-gogh", "vermeer", "monet"];
 const connectedStartIndex = Math.max(0, ARTIST_ROOM_ORDER.indexOf(artistRoomId));
 const connectedStartZ = connectedStartIndex === 0 ? -4.6 : connectedStartIndex * 16 - 5.2;
