@@ -139,6 +139,11 @@ const isCinemaOnly = document.body.dataset.experience === "cinema";
 const isQuestBrowser = /OculusBrowser|Meta Quest|Quest/i.test(navigator.userAgent);
 const isIOSDevice = /iP(hone|ad|od)/i.test(navigator.userAgent)
   || (/Macintosh/i.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
+const isHandheldMobile = !isQuestBrowser && (
+  isIOSDevice
+  || /Android|Mobile|IEMobile|Opera Mini/i.test(navigator.userAgent)
+  || (matchMedia("(pointer: coarse)").matches && Math.min(screen.width, screen.height) < 900)
+);
 const previewRoom = params.get("room");
 const artistRoomId = params.get("artist");
 const artistRoom = ARTIST_ROOMS[artistRoomId] || null;
@@ -450,6 +455,9 @@ let louvreFacadePromise = null;
 let openBookTable = null;
 let openBookFallback = null;
 let openBookLoadStarted = false;
+let connectedManifestMap = null;
+const connectedRoomsLoaded = new Set();
+const connectedRoomLoads = new Map();
 
 init();
 
@@ -469,9 +477,8 @@ async function init() {
     addCinemaRoomArchitecture();
     addCinemaNavigationSigns();
     buildReimaginedVideoExhibits();
-    await detectVR();
-    status.textContent = text.ready;
     renderer.setAnimationLoop(render);
+    status.textContent = text.ready;
     return;
   }
 
@@ -1192,18 +1199,39 @@ function addMonetDecor(centerZ, material) {
 }
 
 async function buildConnectedMuseumExhibitions(printedManifests) {
-  const manifestsBySlug = new Map(printedManifests.map((manifest) => [manifest.slug, manifest]));
+  connectedManifestMap = new Map(printedManifests.map((manifest) => [manifest.slug, manifest]));
+  if (isHandheldMobile || isQuestBrowser) {
+    await loadConnectedMuseumRoom(connectedStartIndex);
+    return;
+  }
   for (let roomIndex = 0; roomIndex < ARTIST_ROOM_ORDER.length; roomIndex += 1) {
+    await loadConnectedMuseumRoom(roomIndex);
+  }
+}
+
+async function loadConnectedMuseumRoom(roomIndex) {
+  if (!connectedManifestMap || connectedRoomsLoaded.has(roomIndex)) return;
+  if (connectedRoomLoads.has(roomIndex)) return connectedRoomLoads.get(roomIndex);
+  const load = (async () => {
+    connectedRoomsLoaded.add(roomIndex);
     const id = ARTIST_ROOM_ORDER[roomIndex];
     const room = ARTIST_ROOMS[id];
     const centerZ = roomIndex * 16;
     status.textContent = lang === "fr" ? `Chargement de ${room.name}…` : `Loading ${room.name}…`;
     for (let workIndex = 0; workIndex < room.works.length; workIndex += 1) {
       const manifestSlug = CONNECTED_AUDIO_WORKS[`${id}:${workIndex}`];
-      await addConnectedMuseumArtwork(room, room.works[workIndex], centerZ, workIndex, manifestsBySlug.get(manifestSlug));
+      await addConnectedMuseumArtwork(room, room.works[workIndex], centerZ, workIndex, connectedManifestMap.get(manifestSlug));
       await new Promise((resolve) => setTimeout(resolve, isQuestBrowser ? 110 : 20));
     }
-  }
+  })().finally(() => connectedRoomLoads.delete(roomIndex));
+  connectedRoomLoads.set(roomIndex, load);
+  return load;
+}
+
+function maybeLoadConnectedMuseumRoom() {
+  if (!isConnectedMuseum || (!isHandheldMobile && !isQuestBrowser) || !connectedManifestMap) return;
+  const roomIndex = THREE.MathUtils.clamp(Math.floor((visitor.position.z + 8) / 16), 0, ARTIST_ROOM_ORDER.length - 1);
+  if (!connectedRoomsLoaded.has(roomIndex)) void loadConnectedMuseumRoom(roomIndex);
 }
 
 async function addConnectedMuseumArtwork(room, work, centerZ, index, manifest) {
@@ -1259,11 +1287,11 @@ async function addConnectedMuseumArtwork(room, work, centerZ, index, manifest) {
 }
 
 function optimizeTextureForMobile(texture) {
-  if (!isIOSDevice || !texture?.image) return texture;
+  if ((!isHandheldMobile && !isQuestBrowser) || !texture?.image) return texture;
   const image = texture.image;
   const width = image.naturalWidth || image.videoWidth || image.width || 0;
   const height = image.naturalHeight || image.videoHeight || image.height || 0;
-  const maximum = 768;
+  const maximum = isQuestBrowser ? 768 : 512;
   if (width > maximum || height > maximum) {
     const scale = Math.min(maximum / width, maximum / height);
     const canvas = document.createElement("canvas");
@@ -2278,9 +2306,11 @@ function buildReimaginedVideoExhibits() {
   });
 
   addCinemaViewingSpot(cinema);
-  addCinemaSofaModel(cinema).catch((error) => {
-    console.warn("The cinema sofa model could not be loaded.", error);
-  });
+  if (!isQuestBrowser && !isHandheldMobile) {
+    addCinemaSofaModel(cinema).catch((error) => {
+      console.warn("The cinema sofa model could not be loaded.", error);
+    });
+  }
   scene.add(cinema);
   setCinemaVideo(exhibit, 0, false);
   updateGalleryVideoButtons();
@@ -2490,7 +2520,13 @@ function setCinemaVideo(exhibit, index, autoplay = true) {
     : lang === "fr" && item.audioSrcFr
       ? item.audioSrcFr
       : item.audioSrc;
-  exhibit.video.src = item.src;
+  if (isQuestBrowser && !autoplay) {
+    exhibit.video.removeAttribute("src");
+    exhibit.video.dataset.pendingSrc = item.src;
+  } else {
+    exhibit.video.src = item.src;
+    delete exhibit.video.dataset.pendingSrc;
+  }
   exhibit.video.currentTime = 0;
   exhibit.video.muted = logicalMuted;
   exhibit.video.volume = companionAudioSrc ? 0 : 1;
@@ -2540,6 +2576,11 @@ function runCinemaAction(action) {
 async function toggleGalleryVideo(exhibit) {
   exhibit = exhibit || activeGalleryVideo || getNearestGalleryVideo();
   if (!exhibit?.video) return;
+  if (exhibit.video.dataset.pendingSrc) {
+    exhibit.video.src = exhibit.video.dataset.pendingSrc;
+    delete exhibit.video.dataset.pendingSrc;
+    exhibit.video.load();
+  }
   activeGalleryVideo = exhibit;
   galleryVideoExhibits.forEach((item) => {
     if (item !== exhibit) {
@@ -3439,9 +3480,17 @@ async function detectVR() {
     status.textContent = text.unsupported;
     return;
   }
-  const supported = await navigator.xr.isSessionSupported("immersive-vr");
-  enterButton.disabled = !supported;
-  status.textContent = supported ? text.ready : text.unsupported;
+  try {
+    const supported = await navigator.xr.isSessionSupported("immersive-vr");
+    enterButton.disabled = !supported;
+    status.textContent = supported ? text.ready : text.unsupported;
+  } catch (error) {
+    console.warn("WebXR capability detection failed.", error);
+    // Some Quest Browser releases have intermittently rejected the capability
+    // probe while still accepting requestSession from a user gesture.
+    enterButton.disabled = !isQuestBrowser;
+    status.textContent = isQuestBrowser ? text.ready : text.unsupported;
+  }
 }
 
 async function toggleVR() {
@@ -3463,7 +3512,7 @@ async function toggleVR() {
     await renderer.xr.setSession(currentSession);
     visitor.position.set(isConnectedMuseum ? connectedStartX : previewPositionX, 0, isConnectedMuseum ? connectedStartZ : previewPositionZ);
     visitor.rotation.set(0, isConnectedMuseum ? connectedStartYaw : previewRotationY, 0);
-    await audioListener.context.resume();
+    await audioListener.context.resume().catch(() => {});
     enterButton.textContent = text.exit;
   } catch (error) {
     console.error(error);
@@ -3742,6 +3791,7 @@ function resize() {
 
 function render() {
   maybeLoadCinemaAudience();
+  maybeLoadConnectedMuseumRoom();
   maybeLoadOpenBookModel();
   maybeLoadLouvreFacade();
   updateHandVisuals();
