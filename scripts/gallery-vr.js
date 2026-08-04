@@ -30,6 +30,19 @@ const GALLERY_MODEL_OVERRIDES = {
 
 // Optional furniture exhibits can be restored here when their GLB assets are present.
 const FURNITURE_MODEL_EXHIBITS = [];
+const MODEL_ARTIST_EXHIBITS = {
+  "da-vinci": [
+    { title: { en: "Leonardo and Mona Lisa", fr: "Léonard et La Joconde" }, src: "assets/paintings/Da Vinci/mona-lisa/davinci-monalisa_c.glb" }
+  ],
+  "van-gogh": [
+    { title: { en: "Vincent van Gogh", fr: "Vincent van Gogh" }, src: "assets/paintings/van-gogh/vangogh-standing_c.glb" }
+  ],
+  vermeer: [
+    { title: { en: "Girl with a Pearl Earring", fr: "La Jeune Fille à la perle" }, src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring_sitting_c.glb" },
+    { title: { en: "The Astronomer", fr: "L’Astronome" }, src: "assets/paintings/Vermeer/astronomer_vermeer_c.glb" }
+  ],
+  monet: []
+};
 
 const STANDING_VAN_GOGH_MODEL = "assets/paintings/van-gogh/vangogh_istanding.glb";
 const PAINTINGS_MODELS_GATEWAY = "assets/paintings/fourniture/gateway-egypt.glb";
@@ -111,12 +124,12 @@ const ARTIST_ROOMS = {
     name: "Johannes Vermeer",
     accent: 0x315d78,
     works: [
-      ["Girl with a Pearl Earring", "assets/paintings/Vermeer/Girl with a Pearl Earring_Vermeer.webp"],
-      ["The Milkmaid", "assets/paintings/Vermeer/The Milkmaid_Vermeer.webp"],
-      ["View of Delft", "assets/paintings/Vermeer/View of Delft_Vermeer.webp"],
-      ["The Art of Painting", "assets/paintings/Vermeer/The Art of Painting_Vermeer.webp"],
-      ["The Astronomer", "assets/paintings/Vermeer/The Astronomer_Vermeer.webp"],
-      ["Woman Holding a Balance", "assets/paintings/Vermeer/Woman Holding a Balance_Vermeer.webp"]
+      ["Girl with a Pearl Earring", "assets/paintings/Vermeer/Tableaux/Girl with a Pearl Earring_Vermeer.webp"],
+      ["The Milkmaid", "assets/paintings/Vermeer/Tableaux/The Milkmaid_Vermeer.webp"],
+      ["View of Delft", "assets/paintings/Vermeer/Tableaux/View of Delft_Vermeer.webp"],
+      ["The Art of Painting", "assets/paintings/Vermeer/Tableaux/The Art of Painting_Vermeer.webp"],
+      ["The Astronomer", "assets/paintings/Vermeer/Tableaux/The Astronomer_Vermeer.webp"],
+      ["Woman Holding a Balance", "assets/paintings/Vermeer/Tableaux/Woman Holding a Balance_Vermeer.webp"]
     ]
   },
   monet: {
@@ -147,10 +160,11 @@ const isHandheldMobile = !isQuestBrowser && (
 const previewRoom = params.get("room");
 const artistRoomId = params.get("artist");
 const artistRoom = ARTIST_ROOMS[artistRoomId] || null;
+const isModelMuseum = previewRoom === "models";
 // The standalone cinema has no `room` query parameter, but it must never be
 // treated as the connected museum. Otherwise entering WebXR moves the visitor
 // to the gallery entrance while the cinema remains tens of metres away.
-const isConnectedMuseum = !isCinemaOnly && (Boolean(artistRoom) || !previewRoom || previewRoom === "paintings");
+const isConnectedMuseum = !isCinemaOnly && !isModelMuseum && (Boolean(artistRoom) || !previewRoom || previewRoom === "paintings");
 const ARTIST_ROOM_ORDER = ["da-vinci", "van-gogh", "vermeer", "monet"];
 const connectedStartIndex = Math.max(0, ARTIST_ROOM_ORDER.indexOf(artistRoomId));
 const connectedStartZ = connectedStartIndex === 0 ? -4.6 : connectedStartIndex * 16 - 5.2;
@@ -168,9 +182,9 @@ const previewPositionZ = isCinemaOnly || previewRoom === "cinema"
   : previewRoom === "bedroom"
     ? 17.4
     : previewRoom === "models"
-      ? 14
+      ? connectedStartIndex * 16 - 5.2
       : 4;
-const previewRotationY = isCinemaOnly || ["bedroom", "reimagined", "cinema"].includes(previewRoom) ? Math.PI : 0;
+const previewRotationY = isCinemaOnly || ["models", "bedroom", "reimagined", "cinema"].includes(previewRoom) ? Math.PI : 0;
 const PAINTING_INFO = {
   en: {
     "mona-lisa": "Leonardo used delicate layers of sfumato to soften outlines and give the sitter a lifelike presence. Her expression and the imaginary landscape seem to change as we look.",
@@ -444,6 +458,7 @@ let ambientRoomId = null;
 let ambientNodes = null;
 let cinemaAudienceRoot = null;
 let cinemaAudienceLoadPromise = null;
+let cinemaSofaLoaded = false;
 const cinemaAudienceReadyAt = performance.now() + (isQuestBrowser ? 10000 : 3500);
 const controllerCommandState = new Map();
 const screenMove = new Set();
@@ -461,6 +476,8 @@ let openBookLoadStarted = false;
 let connectedManifestMap = null;
 const connectedRoomsLoaded = new Set();
 const connectedRoomLoads = new Map();
+const modelRoomsLoaded = new Set();
+const modelRoomLoads = new Map();
 
 init();
 
@@ -481,6 +498,14 @@ async function init() {
     addCinemaNavigationSigns();
     buildReimaginedVideoExhibits();
     renderer.setAnimationLoop(render);
+    status.textContent = text.ready;
+    return;
+  }
+
+  if (isModelMuseum) {
+    buildModelMuseumArchitecture();
+    renderer.setAnimationLoop(render);
+    void loadModelMuseumRoom(Math.max(0, ARTIST_ROOM_ORDER.indexOf(artistRoomId)));
     status.textContent = text.ready;
     return;
   }
@@ -692,6 +717,7 @@ function applyCopy() {
   document.querySelectorAll(".artist-room-link").forEach((link) => {
     const url = new URL(link.href);
     url.searchParams.set("lang", lang);
+    if (isModelMuseum) url.searchParams.set("room", "models");
     link.href = `${url.pathname.split("/").pop()}?${url.searchParams.toString()}`;
   });
   const languageSwitch = document.getElementById("gallery-language-switch");
@@ -966,6 +992,108 @@ function buildConnectedMuseumArchitecture() {
   });
   addConnectedMuseumPartitions();
   addLivingBookTable([0, 0, 52.1], 0);
+}
+
+function buildModelMuseumArchitecture() {
+  const startIndex = Math.max(0, ARTIST_ROOM_ORDER.indexOf(artistRoomId));
+  visitor.position.set(0, 0, startIndex * 16 - 5.2);
+  visitor.rotation.y = Math.PI;
+  scene.background = new THREE.Color(0x11171d);
+  scene.fog = new THREE.Fog(0x11171d, 24, 76);
+  scene.add(new THREE.HemisphereLight(0xfff1dc, 0x202832, isQuestBrowser ? 1.25 : 1.5));
+  document.getElementById("gallery-title").textContent = lang === "fr" ? "L’aile des modèles 3D" : "The Four Masters — 3D Model Wing";
+  document.getElementById("gallery-count").textContent = lang === "fr" ? "Quatre salles de modèles 3D" : "Four dedicated 3D model rooms";
+
+  ARTIST_ROOM_ORDER.forEach((id, index) => {
+    const centerZ = index * 16;
+    addConnectedRoomShell(id, ARTIST_ROOMS[id], centerZ, index);
+    addModelRoomNavigation(id, centerZ);
+  });
+  addConnectedMuseumPartitions();
+}
+
+function addModelRoomNavigation(currentId, centerZ) {
+  const otherRooms = ARTIST_ROOM_ORDER.filter((id) => id !== currentId);
+  createWallSign(lang === "fr" ? "MODÈLES 3D" : "3D MODELS", [-6.88, 3.08, centerZ], Math.PI / 2, {
+    width: 3.3, height: 0.44, accent: true, compact: true
+  });
+  createWallSign(lang === "fr" ? "AUTRES SALLES 3D" : "OTHER 3D ROOMS", [6.88, 3.68, centerZ], -Math.PI / 2, {
+    width: 3.5, height: 0.42, accent: true, compact: true
+  });
+  otherRooms.forEach((id, index) => {
+    createWallSign(ARTIST_ROOMS[id].name, [6.88, 3.13 - index * 0.52, centerZ], -Math.PI / 2, {
+      width: 2.8,
+      height: 0.38,
+      exitUrl: `gallery-vr.html?lang=${lang}&room=models&artist=${id}`,
+      compact: true
+    });
+  });
+}
+
+async function loadModelMuseumRoom(roomIndex) {
+  if (!isModelMuseum || modelRoomsLoaded.has(roomIndex)) return;
+  if (modelRoomLoads.has(roomIndex)) return modelRoomLoads.get(roomIndex);
+  const load = (async () => {
+    modelRoomsLoaded.add(roomIndex);
+    const id = ARTIST_ROOM_ORDER[roomIndex];
+    const centerZ = roomIndex * 16;
+    const items = MODEL_ARTIST_EXHIBITS[id] || [];
+    if (!items.length) {
+      createWallSign(lang === "fr" ? "MODÈLES MONET À VENIR" : "MONET 3D MODELS COMING SOON", [0, 2.15, centerZ + 7.86], Math.PI, {
+        width: 4.5, height: 0.62, accent: true, compact: true
+      });
+      return;
+    }
+    for (let index = 0; index < items.length; index += 1) {
+      await addDedicatedArtistModel(items[index], centerZ, index, items.length);
+      await new Promise((resolve) => setTimeout(resolve, isQuestBrowser ? 1100 : 120));
+    }
+  })().finally(() => modelRoomLoads.delete(roomIndex));
+  modelRoomLoads.set(roomIndex, load);
+  return load;
+}
+
+async function addDedicatedArtistModel(item, centerZ, index, count) {
+  const gltf = await modelLoader.loadAsync(item.src);
+  const display = new THREE.Group();
+  const x = count === 1 ? 0 : (index === 0 ? -2.35 : 2.35);
+  display.position.set(x, 0, centerZ);
+  const pedestal = new THREE.Mesh(
+    new THREE.CylinderGeometry(1.25, 1.4, 0.26, 32),
+    new THREE.MeshStandardMaterial({ color: 0xc7b898, roughness: 0.72 })
+  );
+  pedestal.position.y = 0.13;
+  display.add(pedestal);
+  const model = gltf.scene;
+  normalizeGalleryModel(model);
+  model.position.y += 0.27;
+  model.traverse((node) => {
+    if (!node.isMesh) return;
+    node.castShadow = false;
+    node.receiveShadow = true;
+  });
+  display.add(model);
+  const titleText = item.title[lang] || item.title.en;
+  const label = makeLabel(titleText);
+  label.position.set(0, 0.48, -1.03);
+  label.rotation.x = -Math.PI / 5;
+  label.rotation.y = Math.PI;
+  label.scale.set(1.85, 0.56, 1);
+  display.add(label);
+  scene.add(display);
+  const light = new THREE.SpotLight(0xffe6bd, 0.9, 7, Math.PI / 4.5, 0.5);
+  light.position.set(x, 3.8, centerZ - 1.2);
+  light.target = display;
+  scene.add(light);
+  const pseudoExhibit = { painting: { slug: item.src, title: titleText }, modelDisplay: display };
+  scene.add(createModelTeleportHotspot(pseudoExhibit, display));
+  revealLoadedDisplay(display);
+}
+
+function maybeLoadModelMuseumRoom() {
+  if (!isModelMuseum) return;
+  const roomIndex = THREE.MathUtils.clamp(Math.floor((visitor.position.z + 8) / 16), 0, ARTIST_ROOM_ORDER.length - 1);
+  if (!modelRoomsLoaded.has(roomIndex)) void loadModelMuseumRoom(roomIndex);
 }
 
 function addConnectedRoomShell(id, room, centerZ, index) {
@@ -2375,6 +2503,8 @@ function createCinemaButton(label, options) {
 }
 
 async function addCinemaSofaModel(cinema) {
+  if (cinemaSofaLoaded) return;
+  cinemaSofaLoaded = true;
   const gltf = await modelLoader.loadAsync("assets/paintings/fourniture/sofa.glb");
   const sofa = gltf.scene;
   sofa.name = "cinema-sofa-model";
@@ -2475,12 +2605,22 @@ async function addCinemaAudienceModels(cinema) {
 }
 
 function maybeLoadCinemaAudience() {
-  if (isIOSDevice || isQuestBrowser) return;
+  if (isIOSDevice) return;
   if (!cinemaAudienceRoot || cinemaAudienceLoadPromise || performance.now() < cinemaAudienceReadyAt) return;
   const dx = visitor.position.x - CINEMA_ROOM_X;
   const dz = visitor.position.z - 34;
   if (dx * dx + dz * dz > 56.25) return;
-  cinemaAudienceLoadPromise = addCinemaAudienceModels(cinemaAudienceRoot);
+  cinemaAudienceLoadPromise = (async () => {
+    if (!cinemaSofaLoaded) {
+      try {
+        await addCinemaSofaModel(cinemaAudienceRoot);
+      } catch (error) {
+        console.warn("The cinema sofa model could not be loaded.", error);
+      }
+      await new Promise((resolve) => setTimeout(resolve, isQuestBrowser ? 1200 : 180));
+    }
+    await addCinemaAudienceModels(cinemaAudienceRoot);
+  })();
 }
 
 function addCinemaViewingSpot(cinema) {
@@ -3473,9 +3613,9 @@ function updateScreenLocomotion(delta) {
   if (!local.lengthSq()) return;
   local.normalize().applyAxisAngle(new THREE.Vector3(0, 1, 0), visitor.rotation.y);
   visitor.position.addScaledVector(local, delta * 2.45);
-  const connected = isConnectedMuseum;
-  visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, connected ? -6.3 : -5.3, connected ? 6.3 : 19.3);
-  visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, connected ? -7.3 : -4.3, connected ? 55.3 : 38.3);
+  const museumWing = isConnectedMuseum || isModelMuseum;
+  visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, museumWing ? -6.3 : -5.3, museumWing ? 6.3 : 19.3);
+  visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, museumWing ? -7.3 : -4.3, museumWing ? 55.3 : 38.3);
 }
 
 async function detectVR() {
@@ -3771,8 +3911,9 @@ function updateLocomotion(delta) {
     if (source.handedness === "left") {
       visitor.position.addScaledVector(right, x * delta * 1.8);
       visitor.position.addScaledVector(forward, -y * delta * 1.8);
-      visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, isConnectedMuseum ? -6.3 : -5.3, isConnectedMuseum ? 6.3 : 19.3);
-      visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, isConnectedMuseum ? -7.3 : -4.3, isConnectedMuseum ? 55.3 : 38.3);
+      const museumWing = isConnectedMuseum || isModelMuseum;
+      visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, museumWing ? -6.3 : -5.3, museumWing ? 6.3 : 19.3);
+      visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, museumWing ? -7.3 : -4.3, museumWing ? 55.3 : 38.3);
     }
 
     if (source.handedness === "right") {
@@ -3795,6 +3936,7 @@ function resize() {
 function render() {
   maybeLoadCinemaAudience();
   maybeLoadConnectedMuseumRoom();
+  maybeLoadModelMuseumRoom();
   maybeLoadOpenBookModel();
   maybeLoadLouvreFacade();
   updateHandVisuals();
