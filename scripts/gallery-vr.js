@@ -30,16 +30,27 @@ const GALLERY_MODEL_OVERRIDES = {
 
 // Optional furniture exhibits can be restored here when their GLB assets are present.
 const FURNITURE_MODEL_EXHIBITS = [];
+const GALLERY_FURNITURE = [
+  { id: "armchair", src: "assets/paintings/fourniture/gallery-furniture/armchair-w.glb", position: [-3.7, 0, 2.6], rotationY: 0.35, maxSize: 1.55 },
+  { id: "brochure-stand", src: "assets/paintings/fourniture/gallery-furniture/brochure_stand.glb", position: [4.65, 0, 3.55], rotationY: -2.4, maxSize: 1.45 },
+  { id: "gallery-table", src: "assets/paintings/fourniture/gallery-furniture/table-w.glb", position: [0, 0, 2.55], rotationY: 0, maxSize: 1.9 },
+  { id: "vitrine-table", src: "assets/paintings/fourniture/gallery-furniture/table-vitrine-w.glb", position: [3.45, 0, 1.25], rotationY: -0.25, maxSize: 1.8 }
+];
+const LIVING_BOOK_TABLE_MODEL = "assets/paintings/fourniture/gallery-furniture/table-w.glb";
+const GROUP_EXHIBIT = {
+  model: "assets/paintings/groups/dvvm_selfy.glb",
+  image: "assets/paintings/groups/DVVM_Louvre.png"
+};
 const MODEL_ARTIST_EXHIBITS = {
   "da-vinci": [
-    { title: { en: "Leonardo and Mona Lisa", fr: "Léonard et La Joconde" }, src: "assets/paintings/Da Vinci/mona-lisa/davinci-monalisa_c.glb" }
+    { title: { en: "Leonardo and Mona Lisa", fr: "Léonard et La Joconde" }, src: "assets/paintings/Da Vinci/mona-lisa/davinci-monalisa_c.glb", rotationY: Math.PI }
   ],
   "van-gogh": [
     { title: { en: "Vincent van Gogh", fr: "Vincent van Gogh" }, src: "assets/paintings/van-gogh/vangogh-standing_c.glb" }
   ],
   vermeer: [
-    { title: { en: "Girl with a Pearl Earring", fr: "La Jeune Fille à la perle" }, src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring_sitting_c.glb" },
-    { title: { en: "The Astronomer", fr: "L’Astronome" }, src: "assets/paintings/Vermeer/astronomer_vermeer_c.glb" }
+    { title: { en: "Girl with a Pearl Earring", fr: "La Jeune Fille à la perle" }, src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring_sitting_c.glb", rotationY: Math.PI },
+    { title: { en: "The Astronomer", fr: "L’Astronome" }, src: "assets/paintings/Vermeer/astronomer_vermeer_c.glb", rotationY: Math.PI }
   ],
   monet: []
 };
@@ -170,7 +181,7 @@ const connectedStartIndex = Math.max(0, ARTIST_ROOM_ORDER.indexOf(artistRoomId))
 const connectedStartZ = connectedStartIndex === 0 ? -4.6 : connectedStartIndex * 16 - 5.2;
 const connectedStartX = connectedStartIndex === 0 ? -3.75 : 0;
 const connectedStartYaw = connectedStartIndex === 0 ? Math.PI / 2 : Math.PI;
-const activeRoom = ["paintings", "models", "bedroom", "reimagined"].includes(previewRoom)
+const activeRoom = ["paintings", "models", "bedroom", "reimagined", "groups"].includes(previewRoom)
   ? previewRoom
   : "paintings";
 const isModelsRoom = activeRoom === "models";
@@ -184,7 +195,7 @@ const previewPositionZ = isCinemaOnly || previewRoom === "cinema"
     : previewRoom === "models"
       ? connectedStartIndex * 16 - 5.2
       : 4;
-const previewRotationY = isCinemaOnly || ["models", "bedroom", "reimagined", "cinema"].includes(previewRoom) ? Math.PI : 0;
+const previewRotationY = isCinemaOnly || ["models", "bedroom", "reimagined", "groups", "cinema"].includes(previewRoom) ? Math.PI : 0;
 const PAINTING_INFO = {
   en: {
     "mona-lisa": "Leonardo used delicate layers of sfumato to soften outlines and give the sitter a lifelike presence. Her expression and the imaginary landscape seem to change as we look.",
@@ -510,6 +521,20 @@ async function init() {
     return;
   }
 
+  if (activeRoom === "groups") {
+    buildGroupGalleryRoom();
+    renderer.setAnimationLoop(render);
+    try {
+      await buildGroupExhibit();
+      await detectVR();
+      status.textContent = text.ready;
+    } catch (error) {
+      console.error(error);
+      status.textContent = `${text.failed} ${error.message}`;
+    }
+    return;
+  }
+
   if (isConnectedMuseum) {
     document.getElementById("gallery-title").textContent = lang === "fr" ? "L’aile des quatre maîtres" : "The Four Masters Wing";
     document.getElementById("gallery-count").textContent = lang === "fr" ? "Quatre salles · vingt-quatre œuvres" : "Four rooms · twenty-four works";
@@ -705,6 +730,7 @@ function applyCopy() {
     ["gallery-paintings-link", text.paintingsRoom, `gallery-vr.html?lang=${lang}&room=paintings`],
     ["gallery-bedroom-link", text.bedroomRoom, `gallery-vr.html?lang=${lang}&room=bedroom`],
     ["gallery-reimagined-link", text.reimaginedRoom, `gallery-vr.html?lang=${lang}&room=reimagined`],
+    ["gallery-groups-link", lang === "fr" ? "Groupes de peintres en 3D" : lang === "ar" ? "مجموعات الرسامين ثلاثية الأبعاد" : "Painter Groups in 3D", `gallery-vr.html?lang=${lang}&room=groups`],
     ["gallery-book-link", text.livingBook, `book-3d.html?lang=${lang}`]
   ];
   productLinks.forEach(([id, label, href]) => {
@@ -1012,6 +1038,71 @@ function buildModelMuseumArchitecture() {
   addConnectedMuseumPartitions();
 }
 
+function buildGroupGalleryRoom() {
+  document.getElementById("gallery-title").textContent = lang === "fr" ? "Groupes de peintres réimaginés" : "Reimagined Painter Groups";
+  document.getElementById("gallery-count").textContent = lang === "fr" ? "Une installation 3D" : "One 3D installation";
+  scene.background = new THREE.Color(0x111821);
+  scene.fog = new THREE.Fog(0x111821, 18, 34);
+  visitor.position.set(0, 0, 5.8);
+  visitor.rotation.y = 0;
+  scene.add(new THREE.HemisphereLight(0xfff1dc, 0x172334, 1.55));
+  const wallMaterial = new THREE.MeshStandardMaterial({ color: 0x18314a, roughness: 0.94, side: THREE.DoubleSide });
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(14, 16), new THREE.MeshStandardMaterial({ color: 0x392f2a, roughness: 0.9 }));
+  floor.rotation.x = -Math.PI / 2;
+  floor.receiveShadow = true;
+  scene.add(floor);
+  const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(14, 16), wallMaterial);
+  ceiling.rotation.x = Math.PI / 2;
+  ceiling.position.y = 4.4;
+  scene.add(ceiling);
+  [
+    [[0, 2.2, -8], [14, 4.4], 0],
+    [[-7, 2.2, 0], [16, 4.4], Math.PI / 2],
+    [[7, 2.2, 0], [16, 4.4], -Math.PI / 2],
+    [[0, 2.2, 8], [14, 4.4], Math.PI]
+  ].forEach(([position, size, rotationY]) => {
+    const wall = new THREE.Mesh(new THREE.PlaneGeometry(...size), wallMaterial);
+    wall.position.set(...position);
+    wall.rotation.y = rotationY;
+    scene.add(wall);
+  });
+  createWallSign(lang === "fr" ? "GROUPES RÉIMAGINÉS" : "REIMAGINED GROUPS", [0, 3.72, -7.9], 0, { width: 5.2, height: 0.58, accent: true });
+  createWallSign(text.paintingsRoom, [-4.4, 3.55, 7.9], Math.PI, { width: 3, height: 0.42, exitUrl: `gallery-vr.html?lang=${lang}&room=paintings`, compact: true });
+  createWallSign(text.modelsRoom, [0, 3.55, 7.9], Math.PI, { width: 3, height: 0.42, exitUrl: `gallery-vr.html?lang=${lang}&room=models`, compact: true });
+  createWallSign(text.reimaginedRoom, [4.4, 3.55, 7.9], Math.PI, { width: 3, height: 0.42, exitUrl: `gallery-vr.html?lang=${lang}&room=reimagined`, compact: true });
+}
+
+async function buildGroupExhibit() {
+  const texture = await textureLoader.loadAsync(GROUP_EXHIBIT.image);
+  texture.encoding = THREE.sRGBEncoding;
+  const aspect = texture.image.width / texture.image.height;
+  const imageHeight = Math.min(2.25, 5.1 / aspect);
+  const imageWidth = imageHeight * aspect;
+  const frame = new THREE.Mesh(new THREE.BoxGeometry(imageWidth + 0.18, imageHeight + 0.18, 0.1), new THREE.MeshStandardMaterial({ color: 0xc7a45d, roughness: 0.5, metalness: 0.24 }));
+  frame.position.set(0, 2.35, -7.84);
+  scene.add(frame);
+  const image = new THREE.Mesh(new THREE.PlaneGeometry(imageWidth, imageHeight), new THREE.MeshStandardMaterial({ map: texture, roughness: 0.7 }));
+  image.position.set(0, 2.35, -7.78);
+  scene.add(image);
+
+  const gltf = await modelLoader.loadAsync(GROUP_EXHIBIT.model);
+  const model = gltf.scene;
+  normalizeGalleryModel(model);
+  model.scale.multiplyScalar(1.65);
+  model.position.set(0, 0, -1.1);
+  model.rotation.y = Math.PI;
+  model.traverse((node) => {
+    if (!node.isMesh) return;
+    node.castShadow = !isQuestBrowser;
+    node.receiveShadow = true;
+  });
+  scene.add(model);
+  const light = new THREE.SpotLight(0xffe5bb, 1.2, 9, Math.PI / 4, 0.45);
+  light.position.set(0, 4.1, 2.3);
+  light.target = model;
+  scene.add(light);
+}
+
 function addModelRoomNavigation(currentId, centerZ) {
   const otherRooms = ARTIST_ROOM_ORDER.filter((id) => id !== currentId);
   createWallSign(lang === "fr" ? "MODÈLES 3D" : "3D MODELS", [-6.88, 3.08, centerZ], Math.PI / 2, {
@@ -1066,6 +1157,7 @@ async function addDedicatedArtistModel(item, centerZ, index, count) {
   display.add(pedestal);
   const model = gltf.scene;
   normalizeGalleryModel(model);
+  model.rotation.y = item.rotationY || 0;
   model.position.y += 0.27;
   model.traverse((node) => {
     if (!node.isMesh) return;
@@ -1679,11 +1771,12 @@ function addLivingBookTable(position = [3.75, 0, 3.15], rotationY = -0.18) {
     leg.castShadow = true;
     table.add(leg);
   });
+  table.userData.fallbackTableParts = table.children.slice();
 
   const book = new THREE.Group();
   book.name = "living-3d-book";
   book.position.set(0, 0.94, 0);
-  book.rotation.y = -0.14;
+  book.rotation.y = Math.PI - 0.14;
   const coverMaterial = new THREE.MeshStandardMaterial({
     color: 0x182f48,
     roughness: 0.48,
@@ -1752,6 +1845,31 @@ function addLivingBookTable(position = [3.75, 0, 3.15], rotationY = -0.18) {
   label.scale.set(1.55, 0.38, 1);
   table.add(label);
   scene.add(table);
+  void loadLivingBookTableFurniture(table);
+}
+
+async function loadLivingBookTableFurniture(table) {
+  try {
+    const gltf = await modelLoader.loadAsync(LIVING_BOOK_TABLE_MODEL);
+    const furniture = gltf.scene;
+    furniture.updateMatrixWorld(true);
+    let box = new THREE.Box3().setFromObject(furniture);
+    const size = box.getSize(new THREE.Vector3());
+    furniture.scale.setScalar(1.65 / Math.max(size.x, size.z, 0.001));
+    furniture.updateMatrixWorld(true);
+    box = new THREE.Box3().setFromObject(furniture);
+    const center = box.getCenter(new THREE.Vector3());
+    furniture.position.set(-center.x, -box.min.y, -center.z);
+    furniture.traverse((node) => {
+      if (!node.isMesh) return;
+      node.castShadow = !isQuestBrowser;
+      node.receiveShadow = true;
+    });
+    table.add(furniture);
+    table.userData.fallbackTableParts.forEach((part) => { part.visible = false; });
+  } catch (error) {
+    console.warn("Living Book furniture unavailable; using the fallback table.", error);
+  }
 }
 
 async function addOpenBookModel(table, fallbackBook) {
@@ -1768,7 +1886,7 @@ async function addOpenBookModel(table, fallbackBook) {
     box = new THREE.Box3().setFromObject(model);
     const center = box.getCenter(new THREE.Vector3());
     model.position.set(-center.x, 0.91 - box.min.y, -center.z);
-    model.rotation.y = -0.12;
+    model.rotation.y = Math.PI - 0.12;
     model.traverse((node) => {
       if (!node.isMesh) return;
       node.castShadow = !isIOSDevice && !isQuestBrowser;
@@ -2100,6 +2218,34 @@ function prepareStandaloneModelExhibits(paintings, bedroomOnly = false) {
   });
 }
 
+async function addPaintingsGalleryFurniture() {
+  for (const item of GALLERY_FURNITURE) {
+    try {
+      const gltf = await modelLoader.loadAsync(item.src);
+      const model = gltf.scene;
+      model.updateMatrixWorld(true);
+      let box = new THREE.Box3().setFromObject(model);
+      const size = box.getSize(new THREE.Vector3());
+      model.scale.setScalar(item.maxSize / Math.max(size.x, size.y, size.z, 0.001));
+      model.rotation.y = item.rotationY;
+      model.updateMatrixWorld(true);
+      box = new THREE.Box3().setFromObject(model);
+      const center = box.getCenter(new THREE.Vector3());
+      model.position.set(item.position[0] - center.x, item.position[1] - box.min.y, item.position[2] - center.z);
+      model.name = `paintings-room-${item.id}`;
+      model.traverse((node) => {
+        if (!node.isMesh) return;
+        node.castShadow = !isQuestBrowser;
+        node.receiveShadow = true;
+      });
+      scene.add(model);
+      await new Promise((resolve) => setTimeout(resolve, isQuestBrowser ? 500 : 60));
+    } catch (error) {
+      console.warn(`Gallery furniture unavailable for ${item.id}.`, error);
+    }
+  }
+}
+
 async function buildExhibition(paintings) {
   const placements = [
     { position: [-2.2, 2.15, -4.92], rotationY: 0, hotspot: [-2.2, -2.55], visitorYaw: 0, modelPosition: [-3.2, 10.25] },
@@ -2107,6 +2253,8 @@ async function buildExhibition(paintings) {
     { position: [-5.92, 2.1, -1.9], rotationY: Math.PI / 2, hotspot: [-3.55, -1.9], visitorYaw: Math.PI / 2, modelPosition: [1.4, 10.25] },
     { position: [2.2, 2.15, -4.92], rotationY: 0, hotspot: [2.2, -2.55], visitorYaw: 0, modelPosition: [3.2, 10.25] }
   ];
+
+  void addPaintingsGalleryFurniture();
 
   await Promise.all(paintings.map((painting, index) => addPainting(painting, placements[index])));
 }
