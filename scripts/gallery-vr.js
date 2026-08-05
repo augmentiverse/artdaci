@@ -58,7 +58,6 @@ const MODEL_ARTIST_EXHIBITS = {
 const STANDING_VAN_GOGH_MODEL = "assets/paintings/van-gogh/vangogh_istanding.glb";
 const PAINTINGS_MODELS_GATEWAY = "assets/paintings/fourniture/gateway-egypt.glb";
 const LOUVRE_FACADE_MODEL = "assets/paintings/fourniture/louvre-facade_c.glb";
-const OPEN_BOOK_MODEL = "assets/paintings/fourniture/open-book_c.glb";
 const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae";
 const LEONARDO_STUDIO_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/862ab5f6-8608-469c-a840-8cb10f3859ae";
 const LEONARDO_ENRICHED_STUDIO_URL = "https://marble.worldlabs.ai/project/c7853f32-4025-4d66-a536-54bb9db6162d";
@@ -483,7 +482,6 @@ let louvreFacadeRoot = null;
 let louvreFacadePromise = null;
 let openBookTable = null;
 let openBookFallback = null;
-let openBookLoadStarted = false;
 let connectedManifestMap = null;
 const connectedRoomsLoaded = new Set();
 const connectedRoomLoads = new Map();
@@ -1018,6 +1016,27 @@ function buildConnectedMuseumArchitecture() {
   });
   addConnectedMuseumPartitions();
   addLivingBookTable([0, 0, 52.1], 0);
+  void addFurnitureModel({
+    src: GALLERY_FURNITURE.find((item) => item.id === "brochure-stand").src,
+    name: "mona-lisa-brochure-stand",
+    position: [-5.35, 0, -2.65],
+    rotationY: Math.PI / 2,
+    maxSize: 1.55
+  });
+  void addFurnitureModel({
+    src: GALLERY_FURNITURE.find((item) => item.id === "vitrine-table").src,
+    name: "paintings-gallery-vitrine-table",
+    position: [0, 0, 0],
+    rotationY: 0,
+    maxSize: 2.15
+  });
+  void addFurnitureModel({
+    src: GALLERY_FURNITURE.find((item) => item.id === "armchair").src,
+    name: "monet-living-book-armchair",
+    position: [2.55, 0, 52.1],
+    rotationY: -Math.PI / 2,
+    maxSize: 1.55
+  });
 }
 
 function buildModelMuseumArchitecture() {
@@ -1101,6 +1120,13 @@ async function buildGroupExhibit() {
   light.position.set(0, 4.1, 2.3);
   light.target = model;
   scene.add(light);
+  await addFurnitureModel({
+    src: GALLERY_FURNITURE.find((item) => item.id === "armchair").src,
+    name: "groups-gallery-armchair",
+    position: [4.6, 0, 1.4],
+    rotationY: -Math.PI / 2,
+    maxSize: 1.65
+  });
 }
 
 function addModelRoomNavigation(currentId, centerZ) {
@@ -1841,6 +1867,7 @@ function addLivingBookTable(position = [3.75, 0, 3.15], rotationY = -0.18) {
   openBookFallback = book;
 
   const label = makeLabel(text.livingBook);
+  label.name = "living-book-label";
   label.position.set(0, 1.2, -0.58);
   label.scale.set(1.55, 0.38, 1);
   table.add(label);
@@ -1867,47 +1894,14 @@ async function loadLivingBookTableFurniture(table) {
     });
     table.add(furniture);
     table.userData.fallbackTableParts.forEach((part) => { part.visible = false; });
+    const tabletopY = furniture.position.y + box.max.y;
+    const book = table.getObjectByName("living-3d-book");
+    if (book) book.position.y = tabletopY + 0.09;
+    const label = table.getObjectByName("living-book-label");
+    if (label) label.position.y = tabletopY + 0.32;
   } catch (error) {
     console.warn("Living Book furniture unavailable; using the fallback table.", error);
   }
-}
-
-async function addOpenBookModel(table, fallbackBook) {
-  try {
-    const gltf = await modelLoader.loadAsync(OPEN_BOOK_MODEL);
-    const model = gltf.scene;
-    model.name = "living-book-open-model";
-    model.updateMatrixWorld(true);
-    let box = new THREE.Box3().setFromObject(model);
-    const size = box.getSize(new THREE.Vector3());
-    const longestSide = Math.max(size.x, size.z, 0.001);
-    model.scale.setScalar(1.25 / longestSide);
-    model.updateMatrixWorld(true);
-    box = new THREE.Box3().setFromObject(model);
-    const center = box.getCenter(new THREE.Vector3());
-    model.position.set(-center.x, 0.91 - box.min.y, -center.z);
-    model.rotation.y = Math.PI - 0.12;
-    model.traverse((node) => {
-      if (!node.isMesh) return;
-      node.castShadow = !isIOSDevice && !isQuestBrowser;
-      node.receiveShadow = true;
-      node.userData.exitUrl = `book-3d.html?lang=${lang}`;
-      teleportTargets.push(node);
-    });
-    table.add(model);
-    fallbackBook.visible = false;
-  } catch (error) {
-    console.warn("Open Living Book model unavailable; using the lightweight fallback.", error);
-  }
-}
-
-function maybeLoadOpenBookModel() {
-  if (openBookLoadStarted || !openBookTable || !openBookFallback) return;
-  if (isConnectedMuseum && louvreFacadePromise && !louvreFacadeRoot) return;
-  const tablePosition = openBookTable.getWorldPosition(new THREE.Vector3());
-  if (tablePosition.distanceTo(getListenerPosition()) > 4.5) return;
-  openBookLoadStarted = true;
-  void addOpenBookModel(openBookTable, openBookFallback);
 }
 
 function wrapCanvasText(context, message, x, y, maxWidth, lineHeight) {
@@ -2243,6 +2237,33 @@ async function addPaintingsGalleryFurniture() {
     } catch (error) {
       console.warn(`Gallery furniture unavailable for ${item.id}.`, error);
     }
+  }
+}
+
+async function addFurnitureModel({ src, name, position, rotationY = 0, maxSize = 1.6, parent = scene }) {
+  try {
+    const gltf = await modelLoader.loadAsync(src);
+    const model = gltf.scene;
+    model.name = name;
+    model.rotation.y = rotationY;
+    model.updateMatrixWorld(true);
+    let box = new THREE.Box3().setFromObject(model);
+    const size = box.getSize(new THREE.Vector3());
+    model.scale.setScalar(maxSize / Math.max(size.x, size.y, size.z, 0.001));
+    model.updateMatrixWorld(true);
+    box = new THREE.Box3().setFromObject(model);
+    const center = box.getCenter(new THREE.Vector3());
+    model.position.set(position[0] - center.x, position[1] - box.min.y, position[2] - center.z);
+    model.traverse((node) => {
+      if (!node.isMesh) return;
+      node.castShadow = !isQuestBrowser;
+      node.receiveShadow = true;
+    });
+    parent.add(model);
+    return model;
+  } catch (error) {
+    console.warn(`Furniture unavailable: ${name}`, error);
+    return null;
   }
 }
 
@@ -2585,6 +2606,14 @@ function buildReimaginedVideoExhibits() {
   });
 
   addCinemaViewingSpot(cinema);
+  void addFurnitureModel({
+    src: GALLERY_FURNITURE.find((item) => item.id === "armchair").src,
+    name: "cinema-armchair",
+    position: [4.55, 0, 31.7],
+    rotationY: Math.PI,
+    maxSize: 1.55,
+    parent: cinema
+  });
   if (!isQuestBrowser && !isHandheldMobile) {
     addCinemaSofaModel(cinema).catch((error) => {
       console.warn("The cinema sofa model could not be loaded.", error);
@@ -4085,7 +4114,6 @@ function render() {
   maybeLoadCinemaAudience();
   maybeLoadConnectedMuseumRoom();
   maybeLoadModelMuseumRoom();
-  maybeLoadOpenBookModel();
   maybeLoadLouvreFacade();
   updateHandVisuals();
   const delta = Math.min(clock.getDelta(), 0.05);
