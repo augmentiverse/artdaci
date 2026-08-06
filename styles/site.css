@@ -123,7 +123,7 @@ h2 {
 }
 
 .intro h1 {
-  max-width: 9ch;
+  
   font-size: clamp(54px, 9vw, 104px);
   line-height: 0.9;
 }
