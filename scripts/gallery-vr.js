@@ -43,14 +43,17 @@ const GROUP_EXHIBIT = {
 };
 const MODEL_ARTIST_EXHIBITS = {
   "da-vinci": [
-    { title: { en: "Leonardo and Mona Lisa", fr: "Léonard et La Joconde" }, src: "assets/paintings/Da Vinci/mona-lisa/davinci-monalisa_c.glb", rotationY: Math.PI }
+    { title: { en: "Leonardo and Mona Lisa", fr: "Léonard et La Joconde" }, src: "assets/paintings/Da Vinci/mona-lisa/davinci-monalisa_c.glb", rotationY: Math.PI },
+    { title: { en: "Leonardo Painting Mona Lisa", fr: "Léonard peignant La Joconde" }, src: "assets/paintings/Da Vinci/mona-lisa/davinci-painting-mona.glb", rotationY: Math.PI }
   ],
   "van-gogh": [
     { title: { en: "Vincent van Gogh", fr: "Vincent van Gogh" }, src: "assets/paintings/van-gogh/vangogh-standing_c.glb" }
   ],
   vermeer: [
     { title: { en: "Girl with a Pearl Earring", fr: "La Jeune Fille à la perle" }, src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring_sitting_c.glb", rotationY: Math.PI },
-    { title: { en: "The Astronomer", fr: "L’Astronome" }, src: "assets/paintings/Vermeer/astronomer_vermeer_c.glb", rotationY: Math.PI }
+    { title: { en: "The Astronomer", fr: "L’Astronome" }, src: "assets/paintings/Vermeer/astronomer_vermeer_c.glb", rotationY: Math.PI },
+    { title: { en: "The Milkmaid", fr: "La Laitière" }, src: "assets/paintings/Vermeer/Milkmaid_vermeer_c100.glb", rotationY: Math.PI },
+    { title: { en: "The Astronomer — Study", fr: "L’Astronome — étude" }, src: "assets/paintings/Vermeer/the-astronomer_vermeer_c2.glb", rotationY: Math.PI }
   ],
   monet: []
 };
@@ -63,6 +66,18 @@ const LEONARDO_STUDIO_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/862ab5
 const LEONARDO_ENRICHED_STUDIO_URL = "https://marble.worldlabs.ai/project/c7853f32-4025-4d66-a536-54bb9db6162d";
 const CINEMA_ROOM_X = 14;
 const CINEMA_VIDEO_LIBRARY = [
+  {
+    title: { en: "The Four Painters — New Selfie", fr: "Les quatre peintres — nouveau selfie", ar: "الرسامون الأربعة — صورة ذاتية جديدة" },
+    src: "assets/paintings/groups/audio-video/dvvm-n-selfy.mp4"
+  },
+  {
+    title: { en: "The Four Painters — Selfie", fr: "Les quatre peintres — selfie", ar: "الرسامون الأربعة — صورة ذاتية" },
+    src: "assets/paintings/groups/audio-video/dvvm-selfy.mp4"
+  },
+  {
+    title: { en: "Leonardo and Mona Lisa in Paris", fr: "Léonard et La Joconde à Paris", ar: "ليوناردو والموناليزا في باريس" },
+    src: "assets/paintings/Da Vinci/mona-lisa/audio-video/Davinci-Mona-Paris.mp4"
+  },
   {
     title: { en: "Leonardo Painting the Mona Lisa", fr: "Léonard peignant La Joconde", ar: "ليوناردو يرسم الموناليزا" },
     src: "assets/paintings/Da Vinci/mona-lisa/audio-video/davinci_painting_monalisa.mp4"
@@ -1019,8 +1034,8 @@ function buildConnectedMuseumArchitecture() {
   void addFurnitureModel({
     src: GALLERY_FURNITURE.find((item) => item.id === "brochure-stand").src,
     name: "mona-lisa-brochure-stand",
-    position: [-5.35, 0, -2.65],
-    rotationY: Math.PI / 2,
+    position: [0, 0, -7.1],
+    rotationY: 0,
     maxSize: 1.55
   });
   void addFurnitureModel({
@@ -1106,10 +1121,15 @@ async function buildGroupExhibit() {
 
   const gltf = await modelLoader.loadAsync(GROUP_EXHIBIT.model);
   const model = gltf.scene;
-  normalizeGalleryModel(model);
-  model.scale.multiplyScalar(1.65);
-  model.position.set(0, 0, -1.1);
   model.rotation.y = Math.PI;
+  model.updateMatrixWorld(true);
+  let modelBox = new THREE.Box3().setFromObject(model);
+  const modelHeight = modelBox.getSize(new THREE.Vector3()).y;
+  model.scale.setScalar(2.15 / Math.max(modelHeight, 0.001));
+  model.updateMatrixWorld(true);
+  modelBox = new THREE.Box3().setFromObject(model);
+  const modelCenter = modelBox.getCenter(new THREE.Vector3());
+  model.position.set(-modelCenter.x, -modelBox.min.y, -1.1 - modelCenter.z);
   model.traverse((node) => {
     if (!node.isMesh) return;
     node.castShadow = !isQuestBrowser;
@@ -1173,7 +1193,7 @@ async function loadModelMuseumRoom(roomIndex) {
 async function addDedicatedArtistModel(item, centerZ, index, count) {
   const gltf = await modelLoader.loadAsync(item.src);
   const display = new THREE.Group();
-  const x = count === 1 ? 0 : (index === 0 ? -2.35 : 2.35);
+  const x = count === 1 ? 0 : (index - (count - 1) / 2) * 2.55;
   display.position.set(x, 0, centerZ);
   const pedestal = new THREE.Mesh(
     new THREE.CylinderGeometry(1.25, 1.4, 0.26, 32),
@@ -2610,7 +2630,7 @@ function buildReimaginedVideoExhibits() {
     src: GALLERY_FURNITURE.find((item) => item.id === "armchair").src,
     name: "cinema-armchair",
     position: [4.55, 0, 31.7],
-    rotationY: Math.PI,
+    rotationY: 0,
     maxSize: 1.55,
     parent: cinema
   });
