@@ -1,0 +1,28 @@
+.visitor-guide-link {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 1000;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 225, 166, .78);
+  border-radius: 999px;
+  padding: 10px 14px;
+  color: #fffaf1;
+  background: rgba(31, 50, 66, .9);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .32);
+  backdrop-filter: blur(10px);
+  font: 700 13px/1.1 Inter, system-ui, sans-serif;
+  text-decoration: none;
+}
+
+.visitor-guide-link::before { content: "✦"; color: #e5be6c; }
+.visitor-guide-link:hover, .visitor-guide-link:focus-visible { background: #294b61; }
+
+html[dir="rtl"] .visitor-guide-link { right: auto; left: 18px; }
+
+@media (max-width: 640px) {
+  .visitor-guide-link { right: 10px; bottom: 10px; padding: 9px 11px; font-size: 12px; }
+  html[dir="rtl"] .visitor-guide-link { right: auto; left: 10px; }
+}

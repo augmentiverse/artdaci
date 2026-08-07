@@ -425,7 +425,9 @@ function createPageSurface(definition, texture, side) {
     button.type = "button";
     button.className = "page-hotspot";
     button.textContent = hotspot.label;
-    button.style.left = `${hotspot.x}%`;
+    // Keep controls on the outside edge of the visible page so they never
+    // cover the printed text. A sheet back becomes the left-hand page.
+    button.style.left = side === "front" ? "94%" : "6%";
     button.style.top = `${hotspot.y}%`;
     button.setAttribute("aria-label", `${hotspot.type}: ${definition.title}`);
     button.addEventListener("click", (event) => {

@@ -47,13 +47,12 @@ const MODEL_ARTIST_EXHIBITS = {
     { title: { en: "Leonardo Painting Mona Lisa", fr: "Léonard peignant La Joconde" }, src: "assets/paintings/Da Vinci/mona-lisa/davinci-painting-mona.glb", rotationY: Math.PI }
   ],
   "van-gogh": [
-    { title: { en: "Vincent van Gogh", fr: "Vincent van Gogh" }, src: "assets/paintings/van-gogh/vangogh-standing_c.glb" }
+    { title: { en: "Vincent van Gogh", fr: "Vincent van Gogh" }, src: "assets/paintings/van-gogh/vangogh-standing_c.glb", rotationY: Math.PI }
   ],
   vermeer: [
     { title: { en: "Girl with a Pearl Earring", fr: "La Jeune Fille à la perle" }, src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring_sitting_c.glb", rotationY: Math.PI },
-    { title: { en: "The Astronomer", fr: "L’Astronome" }, src: "assets/paintings/Vermeer/astronomer_vermeer_c.glb", rotationY: Math.PI },
     { title: { en: "The Milkmaid", fr: "La Laitière" }, src: "assets/paintings/Vermeer/Milkmaid_vermeer_c100.glb", rotationY: Math.PI },
-    { title: { en: "The Astronomer — Study", fr: "L’Astronome — étude" }, src: "assets/paintings/Vermeer/the-astronomer_vermeer_c2.glb", rotationY: Math.PI }
+    { title: { en: "The Astronomer", fr: "L’Astronome" }, src: "assets/paintings/Vermeer/the-astronomer_vermeer_c2.glb", rotationY: Math.PI }
   ],
   monet: []
 };
@@ -518,6 +517,7 @@ async function init() {
     scene.add(new THREE.HemisphereLight(0xffecd2, 0x17202a, 1.1));
     addCinemaRoomArchitecture();
     addCinemaNavigationSigns();
+    addVirtualGuideStation([19.88, 1.42, 33.35], -Math.PI / 2, "the ARTDACI virtual cinema and its reimagined artist films");
     buildReimaginedVideoExhibits();
     renderer.setAnimationLoop(render);
     status.textContent = text.ready;
@@ -666,8 +666,8 @@ function setupVirtualGuide() {
 
   const updateLinks = () => {
     const prompt = question.value.trim() || guideCopy.questions[0];
-    const contextualPrompt = `${prompt}\n\nContext: ARTDACI virtual art gallery featuring the Mona Lisa, Van Gogh Self-Portrait, The Bedroom, and Girl with a Pearl Earring. Reply in ${lang === "ar" ? "Arabic" : lang === "fr" ? "French" : "English"}.`;
-    chatgpt.href = `https://chatgpt.com/?q=${encodeURIComponent(contextualPrompt)}`;
+    chatgpt.href = makeVirtualGuideUrl(getCurrentGuideContext(), prompt);
+    const contextualPrompt = `${prompt}\n\nContext: ${getCurrentGuideContext()}. Reply in ${lang === "ar" ? "Arabic" : lang === "fr" ? "French" : "English"}.`;
     gemini.href = `https://gemini.google.com/app?q=${encodeURIComponent(contextualPrompt)}`;
   };
 
@@ -683,6 +683,31 @@ function setupVirtualGuide() {
   });
   question.addEventListener("input", updateLinks);
   updateLinks();
+}
+
+function getCurrentGuideContext() {
+  if (isCinemaOnly) return "ARTDACI virtual cinema and its reimagined artist films";
+  if (activeRoom === "louvre") return "the ARTDACI Louvre room, its photographs, and its 3D facade";
+  if (activeRoom === "groups") return "the ARTDACI reimagined painter-groups room";
+  if (isModelMuseum) return `${ARTIST_ROOMS[artistRoomId]?.name || "the Four Masters"} 3D model room`;
+  if (artistRoom) return `${artistRoom.name}'s painting room`;
+  return `the ARTDACI ${activeRoom} room featuring Leonardo da Vinci, Van Gogh, Vermeer, and Monet`;
+}
+
+function makeVirtualGuideUrl(context, question = "Welcome me, explain what I can discover here, and ask what I would like to explore.") {
+  const replyLanguage = lang === "ar" ? "Arabic" : lang === "fr" ? "French" : "English";
+  const prompt = `You are the ARTDACI virtual museum guide. Help visitors understand artworks with clear, engaging, age-appropriate explanations. Distinguish established facts from interpretation, encourage close looking, and keep the first answer concise. Current location: ${context}. Visitor request: ${question} Reply in ${replyLanguage}.`;
+  return `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`;
+}
+
+function addVirtualGuideStation(position, rotationY, context) {
+  const label = lang === "ar" ? "اسأل دليل ChatGPT" : lang === "fr" ? "DEMANDER AU GUIDE CHATGPT" : "ASK THE CHATGPT GUIDE";
+  return createWallSign(label, position, rotationY, {
+    width: 3.25,
+    height: 0.46,
+    exitUrl: makeVirtualGuideUrl(context),
+    compact: true
+  });
 }
 
 function applyCopy() {
@@ -935,6 +960,13 @@ function buildRoom() {
   addPaintingsReimaginedPortal();
   addCinemaEntranceHotspot();
   addFastTravelStations();
+  const guideStations = {
+    paintings: [[5.88, 1.25, 4.15], -Math.PI / 2, "the ARTDACI paintings gallery"],
+    models: [[5.88, 1.25, 14.1], -Math.PI / 2, "the ARTDACI 3D models gallery"],
+    bedroom: [[5.88, 1.25, 27.6], -Math.PI / 2, "Van Gogh's Bedroom in 3D"],
+    reimagined: [[5.88, 1.25, 38.1], -Math.PI / 2, "the ARTDACI reimagined masterpieces gallery"]
+  };
+  addVirtualGuideStation(...guideStations[activeRoom]);
 }
 
 function buildArtistRoomArchitecture(room) {
@@ -1041,6 +1073,7 @@ function buildConnectedMuseumArchitecture() {
     const room = ARTIST_ROOMS[id];
     addConnectedRoomShell(id, room, centerZ, index);
     addConnectedRoomNavigation(id, centerZ);
+    addVirtualGuideStation([-6.88, 1.18, centerZ + 6.35], Math.PI / 2, `${room.name}'s painting room`);
   });
   addConnectedMuseumPartitions();
   addLivingBookTable([0, 0, 52.1], 0);
@@ -1081,6 +1114,7 @@ function buildModelMuseumArchitecture() {
     const centerZ = index * 16;
     addConnectedRoomShell(id, ARTIST_ROOMS[id], centerZ, index);
     addModelRoomNavigation(id, centerZ);
+    addVirtualGuideStation([-6.88, 1.18, centerZ + 6.35], Math.PI / 2, `${ARTIST_ROOMS[id].name}'s 3D model room`);
   });
   addConnectedMuseumPartitions();
 }
@@ -1117,6 +1151,7 @@ function buildGroupGalleryRoom() {
   createWallSign(text.paintingsRoom, [-4.4, 3.55, 7.9], Math.PI, { width: 3, height: 0.42, exitUrl: `gallery-vr.html?lang=${lang}&room=paintings`, compact: true });
   createWallSign(text.modelsRoom, [0, 3.55, 7.9], Math.PI, { width: 3, height: 0.42, exitUrl: `gallery-vr.html?lang=${lang}&room=models`, compact: true });
   createWallSign(text.reimaginedRoom, [4.4, 3.55, 7.9], Math.PI, { width: 3, height: 0.42, exitUrl: `gallery-vr.html?lang=${lang}&room=reimagined`, compact: true });
+  addVirtualGuideStation([-6.88, 1.25, 5.9], Math.PI / 2, "the ARTDACI reimagined painter-groups room");
 }
 
 function buildLouvreMuseumRoom() {
@@ -1141,6 +1176,7 @@ function buildLouvreMuseumRoom() {
   });
   createWallSign(lang === "fr" ? "PHOTOS ET MODÈLES 3D DU LOUVRE" : lang === "ar" ? "صور ونماذج اللوفر ثلاثية الأبعاد" : "LOUVRE PHOTOS AND 3D MODELS", [0, 3.72, -8.88], 0, { width: 5.6, height: 0.52, accent: true, compact: true });
   createWallSign(lang === "fr" ? "RETOUR À LA GALERIE" : lang === "ar" ? "العودة إلى المعرض" : "BACK TO THE GALLERY", [0, 2.15, 8.88], Math.PI, { width: 3.5, height: 0.48, exitUrl: `gallery-vr.html?lang=${lang}`, compact: true });
+  addVirtualGuideStation([-6.88, 1.25, 5.9], Math.PI / 2, "the ARTDACI Louvre room, its photographs, and its 3D facade");
 }
 
 async function buildLouvreMuseumExhibits() {
@@ -1185,7 +1221,7 @@ async function buildGroupExhibit() {
 
   const gltf = await modelLoader.loadAsync(GROUP_EXHIBIT.model);
   const model = gltf.scene;
-  model.rotation.y = Math.PI;
+  model.rotation.y = 0;
   model.updateMatrixWorld(true);
   let modelBox = new THREE.Box3().setFromObject(model);
   const modelHeight = modelBox.getSize(new THREE.Vector3()).y;
@@ -2684,8 +2720,8 @@ function buildReimaginedVideoExhibits() {
   void addFurnitureModel({
     src: GALLERY_FURNITURE.find((item) => item.id === "armchair").src,
     name: "cinema-armchair",
-    position: [4.55, 0, 31.7],
-    rotationY: 0,
+    position: [3.72, 0, 29.72],
+    rotationY: -Math.PI / 2,
     maxSize: 1.55,
     parent: cinema
   });

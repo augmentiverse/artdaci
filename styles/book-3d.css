@@ -196,21 +196,22 @@ button, a { font: inherit; }
   z-index: 4;
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
-  border: 2px solid #fff8df;
+  width: 24px;
+  height: 24px;
+  border: 1.4px solid rgba(255,248,223,.82);
   border-radius: 50%;
   color: #21170e;
-  background: var(--gold);
-  box-shadow: 0 0 0 7px rgba(208,168,93,.22), 0 0 18px rgba(255,224,158,.95);
+  background: rgba(208,168,93,.72);
+  box-shadow: 0 0 0 5px rgba(208,168,93,.13), 0 0 13px rgba(255,224,158,.68);
   cursor: pointer;
-  font-size: 15px;
+  font-size: 11px;
   font-weight: 900;
+  opacity: .78;
   animation: hotspot-pulse 2.2s ease-in-out infinite;
 }
 
 @keyframes hotspot-pulse {
-  50% { box-shadow: 0 0 0 11px rgba(208,168,93,.09), 0 0 26px rgba(255,224,158,1); }
+  50% { box-shadow: 0 0 0 8px rgba(208,168,93,.06), 0 0 18px rgba(255,224,158,.76); }
 }
 
 .book-experience {
@@ -280,7 +281,7 @@ button, a { font: inherit; }
   .book-cover-right { left: auto; width: 50%; border-radius: 4px 12px 12px 4px; }
   .sheet { right: 1.2%; width: 48.8%; }
   .book-hint { display: none; }
-  .page-hotspot { width: 42px; height: 42px; font-size: 14px; }
+  .page-hotspot { width: 29px; height: 29px; font-size: 10px; }
   #book-zoom { border-color: var(--gold); }
 }
 
