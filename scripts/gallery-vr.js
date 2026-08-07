@@ -448,6 +448,7 @@ renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.shadowMap.enabled = !isQuestBrowser && !isIOSDevice;
 renderer.xr.enabled = true;
 renderer.xr.setReferenceSpaceType("local-floor");
+if (isQuestBrowser) renderer.xr.setFramebufferScaleFactor?.(0.82);
 stage.appendChild(renderer.domElement);
 
 const textureLoader = new THREE.TextureLoader();
@@ -456,6 +457,7 @@ const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath("vendor/draco/");
 const modelLoader = new GLTFLoader();
 modelLoader.setDRACOLoader(dracoLoader);
+const furnitureSourceCache = new Map();
 const controllers = [renderer.xr.getController(0), renderer.xr.getController(1)];
 const hands = [renderer.xr.getHand(0), renderer.xr.getHand(1)];
 const handJointGeometry = new THREE.SphereGeometry(0.008, 12, 8);
@@ -495,6 +497,7 @@ let screenLookMoved = false;
 let openBookTable = null;
 let openBookFallback = null;
 let connectedManifestMap = null;
+let lastSpatialUpdateAt = 0;
 const connectedRoomsLoaded = new Set();
 const connectedRoomLoads = new Map();
 const modelRoomsLoaded = new Set();
@@ -1085,11 +1088,11 @@ function buildConnectedMuseumArchitecture() {
     maxSize: 1.55
   });
   void addFurnitureModel({
-    src: GALLERY_FURNITURE.find((item) => item.id === "vitrine-table").src,
-    name: "paintings-gallery-vitrine-table",
+    src: GALLERY_FURNITURE.find((item) => item.id === "brochure-stand").src,
+    name: "da-vinci-center-brochure-stand",
     position: [0, 0, 0],
     rotationY: 0,
-    maxSize: 2.15
+    maxSize: 1.55
   });
   void addFurnitureModel({
     src: GALLERY_FURNITURE.find((item) => item.id === "armchair").src,
@@ -1378,7 +1381,7 @@ function addConnectedRoomShell(id, room, centerZ, index) {
     height: 0.56,
     compact: true
   });
-  const lightCount = isQuestBrowser ? 2 : 4;
+  const lightCount = isQuestBrowser ? 1 : 4;
   for (let lightIndex = 0; lightIndex < lightCount; lightIndex += 1) {
     const x = lightIndex % 2 ? 3.6 : -3.6;
     const z = centerZ + (lightIndex < 2 ? -3.4 : 3.4);
@@ -2193,33 +2196,34 @@ function addCinemaEntranceHotspot() {
 
 function createWallSign(message, position, rotationY, options = {}) {
   const canvas = document.createElement("canvas");
-  canvas.width = 1600;
-  canvas.height = 480;
+  canvas.width = isQuestBrowser ? 640 : 1600;
+  canvas.height = isQuestBrowser ? 192 : 480;
+  const canvasScale = canvas.width / 1600;
   const context = canvas.getContext("2d");
   const isExit = Boolean(options.exitUrl);
   const isTravel = Boolean(options.destination);
   context.fillStyle = isExit ? "#812f38" : isTravel ? "#17566a" : options.accent ? "#273f51" : "#211c17";
   context.fillRect(0, 0, canvas.width, canvas.height);
   context.strokeStyle = isExit ? "#ffd8d8" : isTravel ? "#a9efff" : "#c7a45d";
-  context.lineWidth = 14;
-  context.strokeRect(7, 7, canvas.width - 14, canvas.height - 14);
+  context.lineWidth = 14 * canvasScale;
+  context.strokeRect(7 * canvasScale, 7 * canvasScale, canvas.width - 14 * canvasScale, canvas.height - 14 * canvasScale);
   context.fillStyle = "#fffaf1";
   context.textAlign = "center";
   context.textBaseline = "middle";
-  let wallFontSize = options.compact
+  let wallFontSize = (options.compact
     ? (message.length > 28 ? 60 : message.length > 18 ? 68 : 76)
-    : (message.length > 28 ? 88 : message.length > 18 ? 104 : 126);
+    : (message.length > 28 ? 88 : message.length > 18 ? 104 : 126)) * canvasScale;
   context.font = `800 ${wallFontSize}px Arial`;
-  while (context.measureText(message).width > canvas.width - 110) {
-    wallFontSize = Math.max(wallFontSize - 4, 58);
+  while (context.measureText(message).width > canvas.width - 110 * canvasScale) {
+    wallFontSize = Math.max(wallFontSize - 4 * canvasScale, 58 * canvasScale);
     context.font = `800 ${wallFontSize}px Arial`;
-    if (wallFontSize === 58) break;
+    if (wallFontSize === 58 * canvasScale) break;
   }
   context.fillText(message, canvas.width / 2, canvas.height / 2);
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.encoding = THREE.sRGBEncoding;
-  texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  texture.anisotropy = isQuestBrowser ? 1 : renderer.capabilities.getMaxAnisotropy();
   const sign = new THREE.Mesh(
     new THREE.PlaneGeometry(options.width || 3.1, options.height || 0.94),
     new THREE.MeshBasicMaterial({ map: texture })
@@ -2353,8 +2357,11 @@ async function addPaintingsGalleryFurniture() {
 
 async function addFurnitureModel({ src, name, position, rotationY = 0, maxSize = 1.6, parent = scene }) {
   try {
-    const gltf = await modelLoader.loadAsync(src);
-    const model = gltf.scene;
+    if (!furnitureSourceCache.has(src)) {
+      furnitureSourceCache.set(src, modelLoader.loadAsync(src).then((gltf) => gltf.scene));
+    }
+    const source = await furnitureSourceCache.get(src);
+    const model = source.clone(true);
     model.name = name;
     model.rotation.y = rotationY;
     model.updateMatrixWorld(true);
@@ -3622,31 +3629,35 @@ function localizedTitle(painting) {
 
 function makeLabel(message) {
   const canvas = document.createElement("canvas");
-  canvas.width = 1600;
-  canvas.height = 400;
+  const logicalWidth = 1600;
+  const logicalHeight = 400;
+  const labelScale = isQuestBrowser ? 0.4 : 1;
+  canvas.width = logicalWidth * labelScale;
+  canvas.height = logicalHeight * labelScale;
   const context = canvas.getContext("2d");
+  context.scale(labelScale, labelScale);
   context.fillStyle = "#f2eadc";
-  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.fillRect(0, 0, logicalWidth, logicalHeight);
   context.strokeStyle = "#4b3c2d";
   context.lineWidth = 12;
-  context.strokeRect(6, 6, canvas.width - 12, canvas.height - 12);
+  context.strokeRect(6, 6, logicalWidth - 12, logicalHeight - 12);
   context.fillStyle = "#251f19";
   context.textAlign = "center";
   const lines = message.split("\n");
   let titleSize = 84;
   context.font = `700 ${titleSize}px Georgia`;
-  while (context.measureText(lines[0]).width > canvas.width - 100 && titleSize > 54) {
+  while (context.measureText(lines[0]).width > logicalWidth - 100 && titleSize > 54) {
     titleSize -= 4;
     context.font = `700 ${titleSize}px Georgia`;
   }
-  context.fillText(lines[0], canvas.width / 2, lines[1] ? 158 : 220);
+  context.fillText(lines[0], logicalWidth / 2, lines[1] ? 158 : 220);
   context.font = "600 54px Arial";
   context.fillStyle = "#65584b";
-  context.fillText(lines[1] || "", canvas.width / 2, 278);
+  context.fillText(lines[1] || "", logicalWidth / 2, 278);
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.encoding = THREE.sRGBEncoding;
-  texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  texture.anisotropy = isQuestBrowser ? 1 : renderer.capabilities.getMaxAnisotropy();
   return new THREE.Mesh(
     new THREE.PlaneGeometry(1.28, 0.32),
     new THREE.MeshBasicMaterial({ map: texture })
@@ -3655,20 +3666,24 @@ function makeLabel(message) {
 
 function makeInformationPanel(painting, title) {
   const canvas = document.createElement("canvas");
-  canvas.width = 1800;
-  canvas.height = 780;
+  const logicalWidth = 1800;
+  const logicalHeight = 780;
+  const panelScale = isQuestBrowser ? 0.4 : 1;
+  canvas.width = logicalWidth * panelScale;
+  canvas.height = logicalHeight * panelScale;
   const context = canvas.getContext("2d");
+  context.scale(panelScale, panelScale);
   context.fillStyle = "#f4ecdf";
-  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.fillRect(0, 0, logicalWidth, logicalHeight);
   context.strokeStyle = "#4b3c2d";
   context.lineWidth = 14;
-  context.strokeRect(7, 7, canvas.width - 14, canvas.height - 14);
+  context.strokeRect(7, 7, logicalWidth - 14, logicalHeight - 14);
 
   context.textAlign = "left";
   context.fillStyle = "#211b16";
   let panelTitleSize = 106;
   context.font = `700 ${panelTitleSize}px Georgia`;
-  while (context.measureText(title).width > canvas.width - 160 && panelTitleSize > 72) {
+  while (context.measureText(title).width > logicalWidth - 160 && panelTitleSize > 72) {
     panelTitleSize -= 4;
     context.font = `700 ${panelTitleSize}px Georgia`;
   }
@@ -3681,11 +3696,11 @@ function makeInformationPanel(painting, title) {
   context.fillStyle = "#332b24";
   context.font = "54px Georgia";
   const body = PAINTING_INFO[lang]?.[painting.slug] || painting.texts?.curatorInsight || "";
-  drawWrappedText(context, body, 80, 330, canvas.width - 160, 72, 6);
+  drawWrappedText(context, body, 80, 330, logicalWidth - 160, 72, 6);
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.encoding = THREE.sRGBEncoding;
-  texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  texture.anisotropy = isQuestBrowser ? 1 : renderer.capabilities.getMaxAnisotropy();
   return new THREE.Mesh(
     new THREE.PlaneGeometry(1, 0.433),
     new THREE.MeshBasicMaterial({ map: texture })
@@ -3941,6 +3956,8 @@ async function toggleVR() {
       visitor.rotation.set(0, isConnectedMuseum ? connectedStartYaw : previewRotationY, 0);
     }, { once: true });
     await renderer.xr.setSession(currentSession);
+    const xrLayer = currentSession.renderState?.baseLayer;
+    if (isQuestBrowser && xrLayer && "fixedFoveation" in xrLayer) xrLayer.fixedFoveation = 1;
     visitor.position.set(isConnectedMuseum ? connectedStartX : previewPositionX, 0, isConnectedMuseum ? connectedStartZ : previewPositionZ);
     visitor.rotation.set(0, isConnectedMuseum ? connectedStartYaw : previewRotationY, 0);
     await audioListener.context.resume().catch(() => {});
@@ -4221,7 +4238,7 @@ function resize() {
   renderer.setSize(innerWidth, innerHeight);
 }
 
-function render() {
+function render(now = performance.now()) {
   maybeLoadCinemaAudience();
   maybeLoadConnectedMuseumRoom();
   maybeLoadModelMuseumRoom();
@@ -4229,10 +4246,14 @@ function render() {
   const delta = Math.min(clock.getDelta(), 0.05);
   updateLocomotion(delta);
   updateScreenLocomotion(delta);
-  selectNearestAudioGuide();
-  updateAudioVolume();
-  updateRoomAmbience();
-  updateGalleryVideoVolume();
+  const spatialUpdateInterval = isQuestBrowser ? 160 : 80;
+  if (now - lastSpatialUpdateAt >= spatialUpdateInterval) {
+    lastSpatialUpdateAt = now;
+    selectNearestAudioGuide();
+    updateAudioVolume();
+    updateRoomAmbience();
+    updateGalleryVideoVolume();
+  }
   updateControllerAudioCommands();
   renderer.render(scene, camera);
 }
