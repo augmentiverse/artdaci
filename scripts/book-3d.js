@@ -264,9 +264,6 @@ function applyLanguage() {
   document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
   document.querySelector(".book-back").href = lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html";
   document.querySelector(".book-back").textContent = lang === "ar" ? "العودة إلى المجموعة" : lang === "fr" ? "Retour à la collection" : "Back to collection";
-  const handBookLink = document.getElementById("hand-book-link");
-  handBookLink.href = `h-book.html?lang=${lang === "ar" ? "en" : lang}`;
-  handBookLink.textContent = lang === "ar" ? "كتاب VR بتتبع اليدين" : lang === "fr" ? "Livre VR contrôlé par les mains" : "Hand-tracked VR Book";
   document.querySelector(".book-toolbar p").textContent = lang === "ar" ? "كتاب فني تفاعلي" : lang === "fr" ? "Livre d’art interactif" : "Interactive art book";
   document.querySelector(".book-toolbar h1").textContent = lang === "ar" ? "الكتاب الحي" : lang === "fr" ? "Le Livre Vivant" : "The Living Book";
   document.querySelector(".book-hint").textContent = lang === "ar"
@@ -430,7 +427,7 @@ function createPageSurface(definition, texture, side) {
     button.textContent = hotspot.label;
     // Keep controls on the outside edge of the visible page so they never
     // cover the printed text. A sheet back becomes the left-hand page.
-    button.style.left = side === "front" ? "90%" : "10%";
+    button.style.left = side === "front" ? "86%" : "14%";
     button.style.top = `${hotspot.y}%`;
     button.setAttribute("aria-label", `${hotspot.type}: ${definition.title}`);
     button.addEventListener("click", (event) => {

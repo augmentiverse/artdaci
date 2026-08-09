@@ -37,6 +37,8 @@ const GALLERY_FURNITURE = [
   { id: "vitrine-table", src: "assets/paintings/fourniture/gallery-furniture/table-vitrine-w.glb", position: [3.45, 0, 1.25], rotationY: -0.25, maxSize: 1.8 }
 ];
 const LIVING_BOOK_TABLE_MODEL = "assets/paintings/fourniture/gallery-furniture/table-w.glb";
+const LIVING_BOOK_MODEL = "assets/paintings/fourniture/gallery-furniture/book-artdaci_en-web-c.glb";
+const LIVING_BOOK_MODEL_LOW_POWER = "assets/paintings/fourniture/gallery-furniture/book-artdaci_en_100k.glb";
 const GROUP_EXHIBIT = {
   model: "assets/paintings/groups/dvvm_selfy.glb",
   image: "assets/paintings/groups/DVVM_Louvre.png"
@@ -501,8 +503,10 @@ let screenPitch = 0;
 let screenLookMoved = false;
 let openBookTable = null;
 let openBookFallback = null;
+let livingBookAssetsPromise = null;
 let connectedManifestMap = null;
 let lastSpatialUpdateAt = 0;
+let lastMobileRenderAt = 0;
 const connectedRoomsLoaded = new Set();
 const connectedPortraitsLoaded = new Set();
 const connectedRoomLoads = new Map();
@@ -791,8 +795,7 @@ function applyCopy() {
     ["gallery-reimagined-link", text.reimaginedRoom, `gallery-vr.html?lang=${lang}&room=reimagined`],
     ["gallery-groups-link", lang === "fr" ? "Groupes de peintres en 3D" : lang === "ar" ? "مجموعات الرسامين ثلاثية الأبعاد" : "Painter Groups in 3D", `gallery-vr.html?lang=${lang}&room=groups`],
     ["gallery-louvre-link", lang === "fr" ? "Musée du Louvre" : lang === "ar" ? "متحف اللوفر" : "Louvre Museum", `gallery-vr.html?lang=${lang}&room=louvre`],
-    ["gallery-book-link", text.livingBook, `book-3d.html?lang=${lang}`],
-    ["gallery-hand-book-link", lang === "fr" ? "Livre contrôlé par les mains" : lang === "ar" ? "كتاب بتتبع اليدين" : "Hand-tracked Book", `h-book.html?lang=${lang === "ar" ? "en" : lang}`]
+    ["gallery-book-link", text.livingBook, `book-3d.html?lang=${lang}`]
   ];
   productLinks.forEach(([id, label, href]) => {
     const link = document.getElementById(id);
@@ -2033,6 +2036,9 @@ function addLivingBookTable(position = [3.75, 0, 3.15], rotationY = -0.18) {
     part.receiveShadow = true;
   });
   table.add(book);
+  // The procedural placeholder is retained only as an invisible interaction
+  // target while the real ARTDACI book is loaded.
+  book.visible = false;
   openBookTable = table;
   openBookFallback = book;
 
@@ -2042,10 +2048,25 @@ function addLivingBookTable(position = [3.75, 0, 3.15], rotationY = -0.18) {
   label.scale.set(1.55, 0.38, 1);
   table.add(label);
   scene.add(table);
-  void loadLivingBookTableFurniture(table);
+  if (!isLowPowerDevice) void ensureLivingBookAssetsLoaded();
+}
+
+function ensureLivingBookAssetsLoaded() {
+  if (!openBookTable) return Promise.resolve();
+  if (!livingBookAssetsPromise) {
+    livingBookAssetsPromise = loadLivingBookTableFurniture(openBookTable);
+  }
+  return livingBookAssetsPromise;
+}
+
+function maybeLoadLivingBookAssets() {
+  if (!isLowPowerDevice || !openBookTable || livingBookAssetsPromise) return;
+  const tablePosition = openBookTable.getWorldPosition(new THREE.Vector3());
+  if (tablePosition.distanceTo(getListenerPosition()) < 13) void ensureLivingBookAssetsLoaded();
 }
 
 async function loadLivingBookTableFurniture(table) {
+  let tabletopY = 0.895;
   try {
     const gltf = await modelLoader.loadAsync(LIVING_BOOK_TABLE_MODEL);
     const furniture = gltf.scene;
@@ -2064,13 +2085,41 @@ async function loadLivingBookTableFurniture(table) {
     });
     table.add(furniture);
     table.userData.fallbackTableParts.forEach((part) => { part.visible = false; });
-    const tabletopY = furniture.position.y + box.max.y;
-    const book = table.getObjectByName("living-3d-book");
-    if (book) book.position.y = tabletopY + 0.09;
+    tabletopY = furniture.position.y + box.max.y;
     const label = table.getObjectByName("living-book-label");
     if (label) label.position.y = tabletopY + 0.32;
   } catch (error) {
     console.warn("Living Book furniture unavailable; using the fallback table.", error);
+  }
+  await loadLivingBookModel(table, tabletopY);
+}
+
+async function loadLivingBookModel(table, tabletopY) {
+  try {
+    const gltf = await modelLoader.loadAsync(isLowPowerDevice ? LIVING_BOOK_MODEL_LOW_POWER : LIVING_BOOK_MODEL);
+    const model = gltf.scene;
+    model.name = "living-book-artdaci-model";
+    model.rotation.y = Math.PI;
+    model.updateMatrixWorld(true);
+    let box = new THREE.Box3().setFromObject(model);
+    const size = box.getSize(new THREE.Vector3());
+    model.scale.setScalar(0.92 / Math.max(size.x, size.z, 0.001));
+    model.updateMatrixWorld(true);
+    box = new THREE.Box3().setFromObject(model);
+    const center = box.getCenter(new THREE.Vector3());
+    model.position.set(-center.x, tabletopY - box.min.y + 0.018, -center.z);
+    model.traverse((node) => {
+      if (!node.isMesh) return;
+      node.castShadow = !isLowPowerDevice;
+      node.receiveShadow = !isLowPowerDevice;
+      if (node.material?.map) {
+        node.material.map.anisotropy = isLowPowerDevice ? 1 : renderer.capabilities.getMaxAnisotropy();
+        node.material.map.needsUpdate = true;
+      }
+    });
+    table.add(model);
+  } catch (error) {
+    console.warn("The ARTDACI Living Book model could not be loaded.", error);
   }
 }
 
@@ -2784,7 +2833,7 @@ function buildReimaginedVideoExhibits() {
     src: GALLERY_FURNITURE.find((item) => item.id === "armchair").src,
     name: "cinema-armchair",
     position: [3.72, 0, 29.72],
-    rotationY: -Math.PI / 2,
+    rotationY: Math.PI / 2,
     maxSize: 1.55,
     parent: cinema
   });
@@ -4299,9 +4348,12 @@ function resize() {
 }
 
 function render(now = performance.now()) {
+  if (isHandheldMobile && !currentSession && now - lastMobileRenderAt < 33) return;
+  lastMobileRenderAt = now;
   maybeLoadCinemaAudience();
   maybeLoadConnectedMuseumRoom();
   maybeLoadModelMuseumRoom();
+  maybeLoadLivingBookAssets();
   updateHandVisuals();
   const delta = Math.min(clock.getDelta(), 0.05);
   updateLocomotion(delta);
