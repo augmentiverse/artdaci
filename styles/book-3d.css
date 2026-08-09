@@ -207,6 +207,7 @@ button, a { font: inherit; }
   font-size: 11px;
   font-weight: 900;
   opacity: .78;
+  transform: translate(-50%, -50%);
   animation: hotspot-pulse 2.2s ease-in-out infinite;
 }
 
@@ -281,7 +282,14 @@ button, a { font: inherit; }
   .book-cover-right { left: auto; width: 50%; border-radius: 4px 12px 12px 4px; }
   .sheet { right: 1.2%; width: 48.8%; }
   .book-hint { display: none; }
-  .page-hotspot { width: 29px; height: 29px; font-size: 10px; }
+  .page-hotspot {
+    width: 34px;
+    height: 34px;
+    border-width: 2px;
+    font-size: 12px;
+    opacity: .95;
+    box-shadow: 0 0 0 5px rgba(208,168,93,.2), 0 0 16px rgba(255,224,158,.9);
+  }
   #book-zoom { border-color: var(--gold); }
 }
 

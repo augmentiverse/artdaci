@@ -122,6 +122,7 @@ function getReimaginedPainter(item) {
 const ARTIST_ROOMS = {
   "da-vinci": {
     name: "Leonardo da Vinci",
+    portrait: "assets/varia/da-vinci.png",
     accent: 0x9d7040,
     works: [
       ["Mona Lisa", "assets/paintings/Da Vinci/Tableaux/Mana Lisa_DaVici.webp"],
@@ -134,6 +135,7 @@ const ARTIST_ROOMS = {
   },
   "van-gogh": {
     name: "Vincent van Gogh",
+    portrait: "assets/varia/van-gogh.png",
     accent: 0xd2a62e,
     works: [
       ["The Starry Night", "assets/paintings/van-gogh/tableaux/The Starry Night_VanGogh.webp"],
@@ -146,6 +148,7 @@ const ARTIST_ROOMS = {
   },
   vermeer: {
     name: "Johannes Vermeer",
+    portrait: "assets/varia/vermeer.png",
     accent: 0x315d78,
     works: [
       ["Girl with a Pearl Earring", "assets/paintings/Vermeer/Tableaux/Girl with a Pearl Earring_Vermeer.webp"],
@@ -158,6 +161,7 @@ const ARTIST_ROOMS = {
   },
   monet: {
     name: "Claude Monet",
+    portrait: "assets/varia/monet.png",
     accent: 0x668d74,
     works: [
       ["Impression, Sunrise", "assets/paintings/monet/Tableaux/Impression-Sunrise_Monet.webp"],
@@ -181,6 +185,7 @@ const isHandheldMobile = !isQuestBrowser && (
   || /Android|Mobile|IEMobile|Opera Mini/i.test(navigator.userAgent)
   || (matchMedia("(pointer: coarse)").matches && Math.min(screen.width, screen.height) < 900)
 );
+const isLowPowerDevice = isQuestBrowser || isHandheldMobile;
 const previewRoom = params.get("room");
 const artistRoomId = params.get("artist");
 const artistRoom = ARTIST_ROOMS[artistRoomId] || null;
@@ -439,13 +444,13 @@ visitor.add(camera);
 scene.add(visitor);
 
 const renderer = new THREE.WebGLRenderer({
-  antialias: !isQuestBrowser && !isIOSDevice,
+  antialias: !isLowPowerDevice && !isIOSDevice,
   powerPreference: isIOSDevice ? "default" : "high-performance"
 });
-renderer.setPixelRatio(isQuestBrowser || isIOSDevice ? 1 : Math.min(devicePixelRatio, 2));
+renderer.setPixelRatio(isLowPowerDevice || isIOSDevice ? 1 : Math.min(devicePixelRatio, 2));
 renderer.setSize(innerWidth, innerHeight);
 renderer.outputEncoding = THREE.sRGBEncoding;
-renderer.shadowMap.enabled = !isQuestBrowser && !isIOSDevice;
+renderer.shadowMap.enabled = !isLowPowerDevice && !isIOSDevice;
 renderer.xr.enabled = true;
 renderer.xr.setReferenceSpaceType("local-floor");
 if (isQuestBrowser) renderer.xr.setFramebufferScaleFactor?.(0.82);
@@ -499,6 +504,7 @@ let openBookFallback = null;
 let connectedManifestMap = null;
 let lastSpatialUpdateAt = 0;
 const connectedRoomsLoaded = new Set();
+const connectedPortraitsLoaded = new Set();
 const connectedRoomLoads = new Map();
 const modelRoomsLoaded = new Set();
 const modelRoomLoads = new Map();
@@ -785,7 +791,8 @@ function applyCopy() {
     ["gallery-reimagined-link", text.reimaginedRoom, `gallery-vr.html?lang=${lang}&room=reimagined`],
     ["gallery-groups-link", lang === "fr" ? "Groupes de peintres en 3D" : lang === "ar" ? "مجموعات الرسامين ثلاثية الأبعاد" : "Painter Groups in 3D", `gallery-vr.html?lang=${lang}&room=groups`],
     ["gallery-louvre-link", lang === "fr" ? "Musée du Louvre" : lang === "ar" ? "متحف اللوفر" : "Louvre Museum", `gallery-vr.html?lang=${lang}&room=louvre`],
-    ["gallery-book-link", text.livingBook, `book-3d.html?lang=${lang}`]
+    ["gallery-book-link", text.livingBook, `book-3d.html?lang=${lang}`],
+    ["gallery-hand-book-link", lang === "fr" ? "Livre contrôlé par les mains" : lang === "ar" ? "كتاب بتتبع اليدين" : "Hand-tracked Book", `h-book.html?lang=${lang === "ar" ? "en" : lang}`]
   ];
   productLinks.forEach(([id, label, href]) => {
     const link = document.getElementById(id);
@@ -842,7 +849,7 @@ function buildRoom() {
     [-3, 3.5, 37],
     [3, 3.5, 37]
   ];
-  (isQuestBrowser ? ceilingLights.filter((_, index) => index % 3 === 0) : ceilingLights).forEach(([x, y, z]) => {
+  (isLowPowerDevice ? ceilingLights.filter((_, index) => index % 3 === 0) : ceilingLights).forEach(([x, y, z]) => {
     const light = new THREE.PointLight(0xffe7c2, 0.82, 9);
     light.position.set(x, y, z);
     scene.add(light);
@@ -1082,16 +1089,9 @@ function buildConnectedMuseumArchitecture() {
   addLivingBookTable([0, 0, 52.1], 0);
   void addFurnitureModel({
     src: GALLERY_FURNITURE.find((item) => item.id === "brochure-stand").src,
-    name: "mona-lisa-brochure-stand",
-    position: [0, 0, -7.1],
-    rotationY: 0,
-    maxSize: 1.55
-  });
-  void addFurnitureModel({
-    src: GALLERY_FURNITURE.find((item) => item.id === "brochure-stand").src,
     name: "da-vinci-center-brochure-stand",
     position: [0, 0, 0],
-    rotationY: 0,
+    rotationY: Math.PI,
     maxSize: 1.55
   });
   void addFurnitureModel({
@@ -1101,6 +1101,7 @@ function buildConnectedMuseumArchitecture() {
     rotationY: -Math.PI / 2,
     maxSize: 1.55
   });
+  void addMonetFinalWallLogo();
 }
 
 function buildModelMuseumArchitecture() {
@@ -1381,7 +1382,7 @@ function addConnectedRoomShell(id, room, centerZ, index) {
     height: 0.56,
     compact: true
   });
-  const lightCount = isQuestBrowser ? 1 : 4;
+  const lightCount = isLowPowerDevice ? 1 : 4;
   for (let lightIndex = 0; lightIndex < lightCount; lightIndex += 1) {
     const x = lightIndex % 2 ? 3.6 : -3.6;
     const z = centerZ + (lightIndex < 2 ? -3.4 : 3.4);
@@ -1507,7 +1508,7 @@ function addConnectedRoomNavigation(currentId, centerZ) {
 }
 
 function addDaVinciDecor(centerZ, material) {
-  [-5.8, -2.9, 0, 2.9, 5.8].forEach((x) => {
+  [-5.8, -2.9, 2.9, 5.8].forEach((x) => {
     const column = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.16, 3.65, 12), material);
     column.position.set(x, 1.83, centerZ - 7.86);
     scene.add(column);
@@ -1581,6 +1582,7 @@ async function loadConnectedMuseumRoom(roomIndex) {
     const room = ARTIST_ROOMS[id];
     const centerZ = roomIndex * 16;
     status.textContent = lang === "fr" ? `Chargement de ${room.name}…` : `Loading ${room.name}…`;
+    await addArtistEntrancePortrait(id, room, centerZ);
     for (let workIndex = 0; workIndex < room.works.length; workIndex += 1) {
       const manifestSlug = CONNECTED_AUDIO_WORKS[`${id}:${workIndex}`];
       await addConnectedMuseumArtwork(room, room.works[workIndex], centerZ, workIndex, connectedManifestMap.get(manifestSlug));
@@ -1589,6 +1591,58 @@ async function loadConnectedMuseumRoom(roomIndex) {
   })().finally(() => connectedRoomLoads.delete(roomIndex));
   connectedRoomLoads.set(roomIndex, load);
   return load;
+}
+
+async function addArtistEntrancePortrait(id, room, centerZ) {
+  if (!room.portrait || connectedPortraitsLoaded.has(id)) return;
+  connectedPortraitsLoaded.add(id);
+  try {
+    const texture = await textureLoader.loadAsync(room.portrait);
+    optimizeTextureForMobile(texture);
+    texture.encoding = THREE.sRGBEncoding;
+    texture.minFilter = THREE.LinearFilter;
+    const aspect = texture.image.width / texture.image.height;
+    const isDaVinciEntrance = id === "da-vinci";
+    const height = isDaVinciEntrance ? 1.82 : 1.58;
+    const width = height * aspect;
+    const portrait = new THREE.Group();
+    portrait.name = `${id}-entrance-portrait`;
+    portrait.position.set(isDaVinciEntrance ? 0 : -4.5, 2.18, centerZ - 7.88);
+    const frame = new THREE.Mesh(
+      new THREE.BoxGeometry(width + 0.16, height + 0.16, 0.08),
+      new THREE.MeshStandardMaterial({ color: room.accent, roughness: 0.48, metalness: 0.12 })
+    );
+    const image = new THREE.Mesh(new THREE.PlaneGeometry(width, height), new THREE.MeshBasicMaterial({ map: texture }));
+    image.position.z = 0.046;
+    portrait.add(frame, image);
+    const label = makeLabel(room.name);
+    label.position.set(0, -height / 2 - 0.22, 0.05);
+    label.scale.set(1.45, 0.38, 1);
+    portrait.add(label);
+    scene.add(portrait);
+  } catch (error) {
+    connectedPortraitsLoaded.delete(id);
+    console.warn(`Entrance portrait unavailable for ${id}.`, error);
+  }
+}
+
+async function addMonetFinalWallLogo() {
+  try {
+    const texture = await textureLoader.loadAsync("assets/varia/artdaci-logo.png");
+    optimizeTextureForMobile(texture);
+    texture.encoding = THREE.sRGBEncoding;
+    texture.minFilter = THREE.LinearFilter;
+    const logo = new THREE.Mesh(
+      new THREE.PlaneGeometry(2.25, 2.25),
+      new THREE.MeshBasicMaterial({ map: texture, transparent: true, side: THREE.DoubleSide })
+    );
+    logo.name = "monet-final-wall-artdaci-logo";
+    logo.position.set(0, 2.45, 55.88);
+    logo.rotation.y = Math.PI;
+    scene.add(logo);
+  } catch (error) {
+    console.warn("ARTDACI final-wall logo unavailable.", error);
+  }
 }
 
 function maybeLoadConnectedMuseumRoom() {
@@ -1938,24 +1992,26 @@ function addLivingBookTable(position = [3.75, 0, 3.15], rotationY = -0.18) {
   book.add(lowerCover, pages, upperCover, spine);
 
   const coverCanvas = document.createElement("canvas");
-  coverCanvas.width = 1024;
-  coverCanvas.height = 720;
+  const coverScale = isLowPowerDevice ? 0.5 : 1;
+  coverCanvas.width = 1024 * coverScale;
+  coverCanvas.height = 720 * coverScale;
   const context = coverCanvas.getContext("2d");
+  context.scale(coverScale, coverScale);
   context.fillStyle = "#182f48";
-  context.fillRect(0, 0, coverCanvas.width, coverCanvas.height);
+  context.fillRect(0, 0, 1024, 720);
   context.strokeStyle = "#c9a55c";
   context.lineWidth = 28;
-  context.strokeRect(34, 34, coverCanvas.width - 68, coverCanvas.height - 68);
+  context.strokeRect(34, 34, 1024 - 68, 720 - 68);
   context.fillStyle = "#f4dfaa";
   context.textAlign = "center";
   context.textBaseline = "middle";
-  context.font = lang === "ar" ? "700 66px Tahoma" : "700 61px Georgia";
-  wrapCanvasText(context, text.livingBook, coverCanvas.width / 2, 310, 810, 82);
-  context.font = "700 34px Georgia";
-  context.fillText("ARTDACI", coverCanvas.width / 2, 575);
+  context.font = '700 61px "Segoe UI", Tahoma, Arial, sans-serif';
+  wrapCanvasText(context, text.livingBook, 512, 310, 810, 82);
+  context.font = '700 34px "Segoe UI", Arial, sans-serif';
+  context.fillText("ARTDACI", 512, 575);
   const coverTexture = new THREE.CanvasTexture(coverCanvas);
   coverTexture.encoding = THREE.sRGBEncoding;
-  coverTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  coverTexture.anisotropy = isLowPowerDevice ? 1 : renderer.capabilities.getMaxAnisotropy();
   const coverTitle = new THREE.Mesh(
     new THREE.PlaneGeometry(0.76, 0.52),
     new THREE.MeshBasicMaterial({ map: coverTexture })
@@ -2196,8 +2252,8 @@ function addCinemaEntranceHotspot() {
 
 function createWallSign(message, position, rotationY, options = {}) {
   const canvas = document.createElement("canvas");
-  canvas.width = isQuestBrowser ? 640 : 1600;
-  canvas.height = isQuestBrowser ? 192 : 480;
+  canvas.width = isLowPowerDevice ? 640 : 1600;
+  canvas.height = isLowPowerDevice ? 192 : 480;
   const canvasScale = canvas.width / 1600;
   const context = canvas.getContext("2d");
   const isExit = Boolean(options.exitUrl);
@@ -2213,17 +2269,17 @@ function createWallSign(message, position, rotationY, options = {}) {
   let wallFontSize = (options.compact
     ? (message.length > 28 ? 60 : message.length > 18 ? 68 : 76)
     : (message.length > 28 ? 88 : message.length > 18 ? 104 : 126)) * canvasScale;
-  context.font = `800 ${wallFontSize}px Arial`;
+  context.font = `750 ${wallFontSize}px "Segoe UI", Arial, sans-serif`;
   while (context.measureText(message).width > canvas.width - 110 * canvasScale) {
     wallFontSize = Math.max(wallFontSize - 4 * canvasScale, 58 * canvasScale);
-    context.font = `800 ${wallFontSize}px Arial`;
+    context.font = `750 ${wallFontSize}px "Segoe UI", Arial, sans-serif`;
     if (wallFontSize === 58 * canvasScale) break;
   }
   context.fillText(message, canvas.width / 2, canvas.height / 2);
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.encoding = THREE.sRGBEncoding;
-  texture.anisotropy = isQuestBrowser ? 1 : renderer.capabilities.getMaxAnisotropy();
+  texture.anisotropy = isLowPowerDevice ? 1 : renderer.capabilities.getMaxAnisotropy();
   const sign = new THREE.Mesh(
     new THREE.PlaneGeometry(options.width || 3.1, options.height || 0.94),
     new THREE.MeshBasicMaterial({ map: texture })
@@ -2748,21 +2804,25 @@ function localizedCinemaTitle(item) {
 
 function createCinemaButton(label, options) {
   const canvas = document.createElement("canvas");
-  canvas.width = 900;
-  canvas.height = 220;
+  const logicalWidth = 900;
+  const logicalHeight = 220;
+  const buttonScale = isLowPowerDevice ? 0.5 : 1;
+  canvas.width = logicalWidth * buttonScale;
+  canvas.height = logicalHeight * buttonScale;
   const context = canvas.getContext("2d");
-  const background = context.createLinearGradient(0, 0, canvas.width, canvas.height);
+  context.scale(buttonScale, buttonScale);
+  const background = context.createLinearGradient(0, 0, logicalWidth, logicalHeight);
   background.addColorStop(0, options.compact ? "#132331" : "#17384a");
   background.addColorStop(1, options.compact ? "#0b151e" : "#102b3a");
   context.fillStyle = background;
-  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.fillRect(0, 0, logicalWidth, logicalHeight);
   context.strokeStyle = options.compact ? "#b99a60" : "#a9efff";
   context.lineWidth = options.compact ? 5 : 10;
-  context.strokeRect(8, 8, canvas.width - 16, canvas.height - 16);
+  context.strokeRect(8, 8, logicalWidth - 16, logicalHeight - 16);
   if (options.compact) {
     context.strokeStyle = "rgba(255, 241, 210, .24)";
     context.lineWidth = 2;
-    context.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+    context.strokeRect(20, 20, logicalWidth - 40, logicalHeight - 40);
   }
   context.fillStyle = options.compact ? "#f0dfbf" : "#fffaf1";
   context.textAlign = "center";
@@ -2770,12 +2830,12 @@ function createCinemaButton(label, options) {
   let size = options.compact
     ? (label.length > 20 ? 34 : label.length > 12 ? 40 : 46)
     : (label.length > 24 ? 46 : label.length > 12 ? 58 : 78);
-  context.font = options.compact ? `600 ${size}px Georgia` : `800 ${size}px Arial`;
-  while (context.measureText(label).width > canvas.width - 70 && size > 30) {
+  context.font = `700 ${size}px "Segoe UI", Arial, sans-serif`;
+  while (context.measureText(label).width > logicalWidth - 70 && size > 30) {
     size -= 2;
-    context.font = options.compact ? `600 ${size}px Georgia` : `800 ${size}px Arial`;
+    context.font = `700 ${size}px "Segoe UI", Arial, sans-serif`;
   }
-  context.fillText(label, canvas.width / 2, canvas.height / 2);
+  context.fillText(label, logicalWidth / 2, logicalHeight / 2);
   const texture = new THREE.CanvasTexture(canvas);
   texture.encoding = THREE.sRGBEncoding;
   const faceMaterial = new THREE.MeshBasicMaterial({ map: texture });
@@ -3631,7 +3691,7 @@ function makeLabel(message) {
   const canvas = document.createElement("canvas");
   const logicalWidth = 1600;
   const logicalHeight = 400;
-  const labelScale = isQuestBrowser ? 0.4 : 1;
+  const labelScale = isLowPowerDevice ? 0.4 : 1;
   canvas.width = logicalWidth * labelScale;
   canvas.height = logicalHeight * labelScale;
   const context = canvas.getContext("2d");
@@ -3645,19 +3705,19 @@ function makeLabel(message) {
   context.textAlign = "center";
   const lines = message.split("\n");
   let titleSize = 84;
-  context.font = `700 ${titleSize}px Georgia`;
+  context.font = `700 ${titleSize}px "Segoe UI", Arial, sans-serif`;
   while (context.measureText(lines[0]).width > logicalWidth - 100 && titleSize > 54) {
     titleSize -= 4;
-    context.font = `700 ${titleSize}px Georgia`;
+    context.font = `700 ${titleSize}px "Segoe UI", Arial, sans-serif`;
   }
   context.fillText(lines[0], logicalWidth / 2, lines[1] ? 158 : 220);
-  context.font = "600 54px Arial";
+  context.font = '600 54px "Segoe UI", Arial, sans-serif';
   context.fillStyle = "#65584b";
   context.fillText(lines[1] || "", logicalWidth / 2, 278);
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.encoding = THREE.sRGBEncoding;
-  texture.anisotropy = isQuestBrowser ? 1 : renderer.capabilities.getMaxAnisotropy();
+  texture.anisotropy = isLowPowerDevice ? 1 : renderer.capabilities.getMaxAnisotropy();
   return new THREE.Mesh(
     new THREE.PlaneGeometry(1.28, 0.32),
     new THREE.MeshBasicMaterial({ map: texture })
@@ -3668,7 +3728,7 @@ function makeInformationPanel(painting, title) {
   const canvas = document.createElement("canvas");
   const logicalWidth = 1800;
   const logicalHeight = 780;
-  const panelScale = isQuestBrowser ? 0.4 : 1;
+  const panelScale = isLowPowerDevice ? 0.4 : 1;
   canvas.width = logicalWidth * panelScale;
   canvas.height = logicalHeight * panelScale;
   const context = canvas.getContext("2d");
@@ -3682,25 +3742,25 @@ function makeInformationPanel(painting, title) {
   context.textAlign = "left";
   context.fillStyle = "#211b16";
   let panelTitleSize = 106;
-  context.font = `700 ${panelTitleSize}px Georgia`;
+  context.font = `700 ${panelTitleSize}px "Segoe UI", Arial, sans-serif`;
   while (context.measureText(title).width > logicalWidth - 160 && panelTitleSize > 72) {
     panelTitleSize -= 4;
-    context.font = `700 ${panelTitleSize}px Georgia`;
+    context.font = `700 ${panelTitleSize}px "Segoe UI", Arial, sans-serif`;
   }
   context.fillText(title, 78, 142);
 
   context.fillStyle = "#7b2937";
-  context.font = "700 52px Arial";
+  context.font = '700 52px "Segoe UI", Arial, sans-serif';
   context.fillText(`${painting.artist?.name || ""} · ${painting.date || ""}`, 80, 222);
 
   context.fillStyle = "#332b24";
-  context.font = "54px Georgia";
+  context.font = '500 54px "Segoe UI", Arial, sans-serif';
   const body = PAINTING_INFO[lang]?.[painting.slug] || painting.texts?.curatorInsight || "";
   drawWrappedText(context, body, 80, 330, logicalWidth - 160, 72, 6);
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.encoding = THREE.sRGBEncoding;
-  texture.anisotropy = isQuestBrowser ? 1 : renderer.capabilities.getMaxAnisotropy();
+  texture.anisotropy = isLowPowerDevice ? 1 : renderer.capabilities.getMaxAnisotropy();
   return new THREE.Mesh(
     new THREE.PlaneGeometry(1, 0.433),
     new THREE.MeshBasicMaterial({ map: texture })
