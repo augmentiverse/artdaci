@@ -795,7 +795,8 @@ function applyCopy() {
     ["gallery-reimagined-link", text.reimaginedRoom, `gallery-vr.html?lang=${lang}&room=reimagined`],
     ["gallery-groups-link", lang === "fr" ? "Groupes de peintres en 3D" : lang === "ar" ? "مجموعات الرسامين ثلاثية الأبعاد" : "Painter Groups in 3D", `gallery-vr.html?lang=${lang}&room=groups`],
     ["gallery-louvre-link", lang === "fr" ? "Musée du Louvre" : lang === "ar" ? "متحف اللوفر" : "Louvre Museum", `gallery-vr.html?lang=${lang}&room=louvre`],
-    ["gallery-book-link", text.livingBook, `book-3d.html?lang=${lang}`]
+    ["gallery-book-link", text.livingBook, `book-3d.html?lang=${lang}`],
+    ["gallery-printed-book-link", lang === "ar" ? "تنزيل الكتاب المطبوع (بالفرنسية)" : lang === "fr" ? "Télécharger le livre imprimé" : "Download Printed Book (FR)", "artifacts/ARTDACI_Livre_imprime_Quatre_Maitres_FR.docx"]
   ];
   productLinks.forEach(([id, label, href]) => {
     const link = document.getElementById(id);
@@ -1493,6 +1494,7 @@ function addConnectedRoomNavigation(currentId, centerZ) {
   });
   const usefulLinks = [
     [text.livingBook, `book-3d.html?lang=${lang}`],
+    [lang === "ar" ? "الكتاب المطبوع (بالفرنسية)" : lang === "fr" ? "LIVRE IMPRIMÉ ENRICHI" : "ENRICHED PRINTED BOOK (FR)", "artifacts/ARTDACI_Livre_imprime_Quatre_Maitres_FR.docx"],
     [text.cinemaEnter, `cinema-vr.html?lang=${lang}`],
     [text.modelsRoom, `gallery-vr.html?lang=${lang}&room=models`],
     [text.bedroomRoom, `gallery-vr.html?lang=${lang}&room=bedroom`],
@@ -1501,7 +1503,7 @@ function addConnectedRoomNavigation(currentId, centerZ) {
     [text.exitGallery, lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html"]
   ];
   usefulLinks.forEach(([label, url], index) => {
-    createWallSign(label, [productsPosition[0], 3.05 - index * 0.48, productsPosition[2]], productsRotation, {
+    createWallSign(label, [productsPosition[0], 3.05 - index * 0.4, productsPosition[2]], productsRotation, {
       width: 3.2,
       height: 0.35,
       exitUrl: url,
@@ -1610,7 +1612,7 @@ async function addArtistEntrancePortrait(id, room, centerZ) {
     const width = height * aspect;
     const portrait = new THREE.Group();
     portrait.name = `${id}-entrance-portrait`;
-    portrait.position.set(isDaVinciEntrance ? 0 : -4.5, 2.18, centerZ - 7.88);
+    portrait.position.set(0, 2.18, centerZ - 7.88);
     const frame = new THREE.Mesh(
       new THREE.BoxGeometry(width + 0.16, height + 0.16, 0.08),
       new THREE.MeshStandardMaterial({ color: room.accent, roughness: 0.48, metalness: 0.12 })
@@ -1677,10 +1679,6 @@ async function addConnectedMuseumArtwork(room, work, centerZ, index, manifest) {
   const image = new THREE.Mesh(new THREE.PlaneGeometry(width, height), new THREE.MeshBasicMaterial({ map: texture }));
   image.position.z = 0.056;
   artwork.add(frame, image);
-  const label = makeLabel(title);
-  label.position.set(0, -height / 2 - 0.3, 0.07);
-  label.scale.set(Math.min(2.15, width + 0.4), 0.58, 1);
-  artwork.add(label);
   scene.add(artwork);
   const hotspot = createReimaginedHotspot(title, {
     hotspot: [leftSide ? -4.65 : 4.65, z],
@@ -2107,7 +2105,9 @@ async function loadLivingBookModel(table, tabletopY) {
     model.updateMatrixWorld(true);
     box = new THREE.Box3().setFromObject(model);
     const center = box.getCenter(new THREE.Vector3());
-    model.position.set(-center.x, tabletopY - box.min.y + 0.018, -center.z);
+    // Keep the lowest vertex almost flush with the tabletop. The tiny offset
+    // prevents flickering without making the book appear to float.
+    model.position.set(-center.x, tabletopY - box.min.y + 0.002, -center.z);
     model.traverse((node) => {
       if (!node.isMesh) return;
       node.castShadow = !isLowPowerDevice;
@@ -2307,21 +2307,21 @@ function createWallSign(message, position, rotationY, options = {}) {
   const context = canvas.getContext("2d");
   const isExit = Boolean(options.exitUrl);
   const isTravel = Boolean(options.destination);
-  context.fillStyle = isExit ? "#812f38" : isTravel ? "#17566a" : options.accent ? "#273f51" : "#211c17";
+  context.fillStyle = isExit ? "#712832" : isTravel ? "#0b5064" : options.accent ? "#1b354a" : "#0f1b26";
   context.fillRect(0, 0, canvas.width, canvas.height);
-  context.strokeStyle = isExit ? "#ffd8d8" : isTravel ? "#a9efff" : "#c7a45d";
+  context.strokeStyle = isExit ? "#ffe4e7" : isTravel ? "#bdefff" : "#e0bd73";
   context.lineWidth = 14 * canvasScale;
   context.strokeRect(7 * canvasScale, 7 * canvasScale, canvas.width - 14 * canvasScale, canvas.height - 14 * canvasScale);
-  context.fillStyle = "#fffaf1";
+  context.fillStyle = "#ffffff";
   context.textAlign = "center";
   context.textBaseline = "middle";
   let wallFontSize = (options.compact
     ? (message.length > 28 ? 60 : message.length > 18 ? 68 : 76)
     : (message.length > 28 ? 88 : message.length > 18 ? 104 : 126)) * canvasScale;
-  context.font = `750 ${wallFontSize}px "Segoe UI", Arial, sans-serif`;
+  context.font = `700 ${wallFontSize}px "Segoe UI Variable", "Segoe UI", Arial, sans-serif`;
   while (context.measureText(message).width > canvas.width - 110 * canvasScale) {
     wallFontSize = Math.max(wallFontSize - 4 * canvasScale, 58 * canvasScale);
-    context.font = `750 ${wallFontSize}px "Segoe UI", Arial, sans-serif`;
+    context.font = `700 ${wallFontSize}px "Segoe UI Variable", "Segoe UI", Arial, sans-serif`;
     if (wallFontSize === 58 * canvasScale) break;
   }
   context.fillText(message, canvas.width / 2, canvas.height / 2);
@@ -3745,23 +3745,23 @@ function makeLabel(message) {
   canvas.height = logicalHeight * labelScale;
   const context = canvas.getContext("2d");
   context.scale(labelScale, labelScale);
-  context.fillStyle = "#f2eadc";
+  context.fillStyle = "#101923";
   context.fillRect(0, 0, logicalWidth, logicalHeight);
-  context.strokeStyle = "#4b3c2d";
-  context.lineWidth = 12;
+  context.strokeStyle = "#d3ae61";
+  context.lineWidth = 10;
   context.strokeRect(6, 6, logicalWidth - 12, logicalHeight - 12);
-  context.fillStyle = "#251f19";
+  context.fillStyle = "#f8fbff";
   context.textAlign = "center";
   const lines = message.split("\n");
   let titleSize = 84;
-  context.font = `700 ${titleSize}px "Segoe UI", Arial, sans-serif`;
+  context.font = `650 ${titleSize}px "Segoe UI Variable", "Segoe UI", Arial, sans-serif`;
   while (context.measureText(lines[0]).width > logicalWidth - 100 && titleSize > 54) {
     titleSize -= 4;
-    context.font = `700 ${titleSize}px "Segoe UI", Arial, sans-serif`;
+    context.font = `650 ${titleSize}px "Segoe UI Variable", "Segoe UI", Arial, sans-serif`;
   }
   context.fillText(lines[0], logicalWidth / 2, lines[1] ? 158 : 220);
-  context.font = '600 54px "Segoe UI", Arial, sans-serif';
-  context.fillStyle = "#65584b";
+  context.font = '550 54px "Segoe UI Variable", "Segoe UI", Arial, sans-serif';
+  context.fillStyle = "#c8d5df";
   context.fillText(lines[1] || "", logicalWidth / 2, 278);
 
   const texture = new THREE.CanvasTexture(canvas);
@@ -3782,30 +3782,21 @@ function makeInformationPanel(painting, title) {
   canvas.height = logicalHeight * panelScale;
   const context = canvas.getContext("2d");
   context.scale(panelScale, panelScale);
-  context.fillStyle = "#f4ecdf";
+  context.fillStyle = "#0f1822";
   context.fillRect(0, 0, logicalWidth, logicalHeight);
-  context.strokeStyle = "#4b3c2d";
-  context.lineWidth = 14;
+  context.strokeStyle = "#d3ae61";
+  context.lineWidth = 10;
   context.strokeRect(7, 7, logicalWidth - 14, logicalHeight - 14);
 
   context.textAlign = "left";
-  context.fillStyle = "#211b16";
-  let panelTitleSize = 106;
-  context.font = `700 ${panelTitleSize}px "Segoe UI", Arial, sans-serif`;
-  while (context.measureText(title).width > logicalWidth - 160 && panelTitleSize > 72) {
-    panelTitleSize -= 4;
-    context.font = `700 ${panelTitleSize}px "Segoe UI", Arial, sans-serif`;
-  }
-  context.fillText(title, 78, 142);
+  context.fillStyle = "#e4bd6b";
+  context.font = '650 62px "Segoe UI Variable", "Segoe UI", Arial, sans-serif';
+  context.fillText(`${painting.artist?.name || ""} · ${painting.date || ""}`, 80, 122);
 
-  context.fillStyle = "#7b2937";
-  context.font = '700 52px "Segoe UI", Arial, sans-serif';
-  context.fillText(`${painting.artist?.name || ""} · ${painting.date || ""}`, 80, 222);
-
-  context.fillStyle = "#332b24";
-  context.font = '500 54px "Segoe UI", Arial, sans-serif';
+  context.fillStyle = "#f4f7fa";
+  context.font = '500 54px "Segoe UI Variable", "Segoe UI", Arial, sans-serif';
   const body = PAINTING_INFO[lang]?.[painting.slug] || painting.texts?.curatorInsight || "";
-  drawWrappedText(context, body, 80, 330, logicalWidth - 160, 72, 6);
+  drawWrappedText(context, body, 80, 245, logicalWidth - 160, 72, 7);
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.encoding = THREE.sRGBEncoding;

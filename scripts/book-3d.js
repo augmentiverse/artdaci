@@ -264,6 +264,8 @@ function applyLanguage() {
   document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
   document.querySelector(".book-back").href = lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html";
   document.querySelector(".book-back").textContent = lang === "ar" ? "العودة إلى المجموعة" : lang === "fr" ? "Retour à la collection" : "Back to collection";
+  const printedBookDownload = document.getElementById("printed-book-download");
+  printedBookDownload.textContent = lang === "ar" ? "تنزيل الكتاب المطبوع (بالفرنسية)" : lang === "fr" ? "Télécharger le livre imprimé" : "Download Printed Book (FR)";
   document.querySelector(".book-toolbar p").textContent = lang === "ar" ? "كتاب فني تفاعلي" : lang === "fr" ? "Livre d’art interactif" : "Interactive art book";
   document.querySelector(".book-toolbar h1").textContent = lang === "ar" ? "الكتاب الحي" : lang === "fr" ? "Le Livre Vivant" : "The Living Book";
   document.querySelector(".book-hint").textContent = lang === "ar"
