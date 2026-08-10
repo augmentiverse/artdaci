@@ -189,7 +189,15 @@
         "description": "Courte introduction française pour l'expérience AR sur image."
       }
     ],
-    "videos": [],
+    "videos": [
+      {
+        "id": "van-gogh-self-portrait-animation",
+        "title": "Van Gogh Self-Portrait Animation",
+        "src": "assets/animations/artdaci-Van_Gogh_animation.mp4",
+        "type": "video/mp4",
+        "description": "Animation displayed beneath the 3D model when the printed self-portrait is recognized."
+      }
+    ],
     "subtitles": [],
     "signLanguage": [],
     "imageCredits": [],

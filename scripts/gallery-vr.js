@@ -3,12 +3,12 @@ import { GLTFLoader } from "../vendor/GLTFLoader.module.js";
 import { DRACOLoader } from "../vendor/DRACOLoader.module.js";
 
 const MANIFESTS = [
-  "content/paintings/mona-lisa.json?v=3",
-  "content/paintings/van-gogh.json?v=2",
+  "content/paintings/mona-lisa.json?v=4",
+  "content/paintings/van-gogh.json?v=3",
   "content/paintings/van-gogh-bedroom.json?v=2",
-  "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=2"
+  "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=3"
 ];
-const PRINTED_MANIFESTS = [...MANIFESTS, "content/paintings/monet-impression-sunrise.json?v=2"];
+const PRINTED_MANIFESTS = [...MANIFESTS, "content/paintings/monet-impression-sunrise.json?v=3"];
 const CONNECTED_AUDIO_WORKS = {
   "da-vinci:0": "mona-lisa",
   "van-gogh:2": "van-gogh",
@@ -2822,7 +2822,7 @@ function buildReimaginedVideoExhibits() {
     name: "cinema-armchair",
     position: [3.72, 0, 29.72],
     rotationY: Math.PI / 2,
-    maxSize: 1.55,
+    maxSize: 0.95,
     parent: cinema
   });
   if (!isQuestBrowser && !isHandheldMobile) {

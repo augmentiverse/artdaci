@@ -21,10 +21,10 @@ const CONFIG = {
 };
 
 const PAINTINGS = {
-  "mona-lisa": "content/paintings/mona-lisa.json?v=3",
-  "van-gogh": "content/paintings/van-gogh.json",
+  "mona-lisa": "content/paintings/mona-lisa.json?v=4",
+  "van-gogh": "content/paintings/van-gogh.json?v=3",
   "van-gogh-bedroom": "content/paintings/van-gogh-bedroom.json",
-  "vermeer-girl-with-a-pearl-earring": "content/paintings/vermeer-girl-with-a-pearl-earring.json"
+  "vermeer-girl-with-a-pearl-earring": "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=3"
 };
 
 const UI_TEXT = {

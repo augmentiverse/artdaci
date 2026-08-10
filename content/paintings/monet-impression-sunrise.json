@@ -17,6 +17,15 @@
   "currentLocation": { "museum": "Musée Marmottan Monet", "city": "Paris" },
   "media": {
     "image": "assets/paintings/monet/Tableaux/Impression-Sunrise_Monet.webp",
+    "videos": [
+      {
+        "id": "monet-impression-sunrise-animation",
+        "title": "Impression, Sunrise Animation",
+        "src": "assets/animations/artdaci-Impression_Sunrise_animation.mp4",
+        "type": "video/mp4",
+        "description": "Animation prepared for the image-tracking experience."
+      }
+    ],
     "audioOverviews": [
       {
         "id": "monet-impression-sunrise-overview-en",

@@ -96,7 +96,7 @@
       { "id": "vermeer-pearl-audio-fr", "lang": "fr", "title": "La Jeune Fille à la perle", "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring_1m54_fr.m4a", "type": "audio/mp4", "description": "Présentation audio brève en français pour l’expérience AR sur image." }
     ],
     "videos": [
-      { "id": "vermeer-pearl-room-video", "title": "Girl with a Pearl Earring room experience", "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring_room.mp4", "type": "video/mp4", "description": "Short spatial room presentation." }
+      { "id": "vermeer-pearl-animation", "title": "Girl with a Pearl Earring Animation", "src": "assets/animations/artdaci-girl-pearl-earring_animation.mp4", "type": "video/mp4", "description": "Animation displayed beneath the 3D model when the printed painting is recognized." }
     ],
     "subtitles": [], "signLanguage": [], "imageCredits": [],
     "audioOverviews": [
