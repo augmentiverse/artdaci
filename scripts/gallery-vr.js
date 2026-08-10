@@ -3,7 +3,7 @@ import { GLTFLoader } from "../vendor/GLTFLoader.module.js";
 import { DRACOLoader } from "../vendor/DRACOLoader.module.js";
 
 const MANIFESTS = [
-  "content/paintings/mona-lisa.json?v=2",
+  "content/paintings/mona-lisa.json?v=3",
   "content/paintings/van-gogh.json?v=2",
   "content/paintings/van-gogh-bedroom.json?v=2",
   "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=2"
@@ -124,7 +124,7 @@ function getReimaginedPainter(item) {
 const ARTIST_ROOMS = {
   "da-vinci": {
     name: "Leonardo da Vinci",
-    portrait: "assets/varia/da-vinci.png",
+    portrait: "assets/peintres/da-vinci-f.png",
     accent: 0x9d7040,
     works: [
       ["Mona Lisa", "assets/paintings/Da Vinci/Tableaux/Mana Lisa_DaVici.webp"],
@@ -137,7 +137,7 @@ const ARTIST_ROOMS = {
   },
   "van-gogh": {
     name: "Vincent van Gogh",
-    portrait: "assets/varia/van-gogh.png",
+    portrait: "assets/peintres/van-goh-f.png",
     accent: 0xd2a62e,
     works: [
       ["The Starry Night", "assets/paintings/van-gogh/tableaux/The Starry Night_VanGogh.webp"],
@@ -150,7 +150,7 @@ const ARTIST_ROOMS = {
   },
   vermeer: {
     name: "Johannes Vermeer",
-    portrait: "assets/varia/vermeer.png",
+    portrait: "assets/peintres/vermeer-f.png",
     accent: 0x315d78,
     works: [
       ["Girl with a Pearl Earring", "assets/paintings/Vermeer/Tableaux/Girl with a Pearl Earring_Vermeer.webp"],
@@ -163,7 +163,7 @@ const ARTIST_ROOMS = {
   },
   monet: {
     name: "Claude Monet",
-    portrait: "assets/varia/monet.png",
+    portrait: "assets/peintres/monet-f.png",
     accent: 0x668d74,
     works: [
       ["Impression, Sunrise", "assets/paintings/monet/Tableaux/Impression-Sunrise_Monet.webp"],
