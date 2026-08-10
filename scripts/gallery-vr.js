@@ -49,7 +49,7 @@ const MODEL_ARTIST_EXHIBITS = {
     { title: { en: "Leonardo Painting Mona Lisa", fr: "Léonard peignant La Joconde" }, src: "assets/paintings/Da Vinci/mona-lisa/davinci-painting-mona.glb", rotationY: Math.PI }
   ],
   "van-gogh": [
-    { title: { en: "Vincent van Gogh", fr: "Vincent van Gogh" }, src: "assets/paintings/van-gogh/vangogh-standing_c.glb", rotationY: Math.PI }
+    { title: { en: "Vincent van Gogh", fr: "Vincent van Gogh" }, src: "assets/peintres/3d models/van-gogh_standing_w_c.glb", rotationY: Math.PI }
   ],
   vermeer: [
     { title: { en: "Girl with a Pearl Earring", fr: "La Jeune Fille à la perle" }, src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring_sitting_c.glb", rotationY: Math.PI },
@@ -124,7 +124,7 @@ function getReimaginedPainter(item) {
 const ARTIST_ROOMS = {
   "da-vinci": {
     name: "Leonardo da Vinci",
-    portrait: "assets/peintres/da-vinci-f.png",
+    portrait: "assets/peintres/photos des peintres/da-vinci-f.png",
     accent: 0x9d7040,
     works: [
       ["Mona Lisa", "assets/paintings/Da Vinci/Tableaux/Mana Lisa_DaVici.webp"],
@@ -137,7 +137,7 @@ const ARTIST_ROOMS = {
   },
   "van-gogh": {
     name: "Vincent van Gogh",
-    portrait: "assets/peintres/van-goh-f.png",
+    portrait: "assets/peintres/photos des peintres/van-goh-f.png",
     accent: 0xd2a62e,
     works: [
       ["The Starry Night", "assets/paintings/van-gogh/tableaux/The Starry Night_VanGogh.webp"],
@@ -150,7 +150,7 @@ const ARTIST_ROOMS = {
   },
   vermeer: {
     name: "Johannes Vermeer",
-    portrait: "assets/peintres/vermeer-f.png",
+    portrait: "assets/peintres/photos des peintres/vermeer-f.png",
     accent: 0x315d78,
     works: [
       ["Girl with a Pearl Earring", "assets/paintings/Vermeer/Tableaux/Girl with a Pearl Earring_Vermeer.webp"],
@@ -163,7 +163,7 @@ const ARTIST_ROOMS = {
   },
   monet: {
     name: "Claude Monet",
-    portrait: "assets/peintres/monet-f.png",
+    portrait: "assets/peintres/photos des peintres/monet-f.png",
     accent: 0x668d74,
     works: [
       ["Impression, Sunrise", "assets/paintings/monet/Tableaux/Impression-Sunrise_Monet.webp"],
@@ -795,8 +795,7 @@ function applyCopy() {
     ["gallery-reimagined-link", text.reimaginedRoom, `gallery-vr.html?lang=${lang}&room=reimagined`],
     ["gallery-groups-link", lang === "fr" ? "Groupes de peintres en 3D" : lang === "ar" ? "مجموعات الرسامين ثلاثية الأبعاد" : "Painter Groups in 3D", `gallery-vr.html?lang=${lang}&room=groups`],
     ["gallery-louvre-link", lang === "fr" ? "Musée du Louvre" : lang === "ar" ? "متحف اللوفر" : "Louvre Museum", `gallery-vr.html?lang=${lang}&room=louvre`],
-    ["gallery-book-link", text.livingBook, `book-3d.html?lang=${lang}`],
-    ["gallery-printed-book-link", lang === "ar" ? "تنزيل الكتاب المطبوع (بالفرنسية)" : lang === "fr" ? "Télécharger le livre imprimé" : "Download Printed Book (FR)", "artifacts/ARTDACI_Livre_imprime_Quatre_Maitres_FR.docx"]
+    ["gallery-book-link", text.livingBook, `book-3d.html?lang=${lang}`]
   ];
   productLinks.forEach(([id, label, href]) => {
     const link = document.getElementById(id);
@@ -1087,7 +1086,6 @@ function buildConnectedMuseumArchitecture() {
     const room = ARTIST_ROOMS[id];
     addConnectedRoomShell(id, room, centerZ, index);
     addConnectedRoomNavigation(id, centerZ);
-    addVirtualGuideStation([-6.88, 1.18, centerZ + 6.35], Math.PI / 2, `${room.name}'s painting room`);
   });
   addConnectedMuseumPartitions();
   addLivingBookTable([0, 0, 52.1], 0);
@@ -1471,11 +1469,10 @@ async function ensureLouvreFacade() {
 function addConnectedRoomNavigation(currentId, centerZ) {
   const others = ARTIST_ROOM_ORDER.filter((id) => id !== currentId);
   const signZ = centerZ + 7.86;
-  const isMonetEnd = currentId === "monet";
-  const roomAccessPosition = isMonetEnd ? [-4.5, 3.62, centerZ - 7.86] : [-4.5, 3.62, signZ];
-  const productsPosition = isMonetEnd ? [4.5, 3.62, centerZ - 7.86] : [4.5, 3.62, signZ];
-  const roomAccessRotation = isMonetEnd ? 0 : Math.PI;
-  const productsRotation = isMonetEnd ? 0 : Math.PI;
+  const roomAccessPosition = [-4.5, 3.62, signZ];
+  const productsPosition = [4.5, 3.62, signZ];
+  const roomAccessRotation = Math.PI;
+  const productsRotation = Math.PI;
   createWallSign(lang === "fr" ? "ACCÈS DIRECT AUX SALLES" : "DIRECT ROOM ACCESS", roomAccessPosition, roomAccessRotation, {
     width: 3.8, height: 0.42, accent: true, compact: true
   });
@@ -1494,7 +1491,7 @@ function addConnectedRoomNavigation(currentId, centerZ) {
   });
   const usefulLinks = [
     [text.livingBook, `book-3d.html?lang=${lang}`],
-    [lang === "ar" ? "الكتاب المطبوع (بالفرنسية)" : lang === "fr" ? "LIVRE IMPRIMÉ ENRICHI" : "ENRICHED PRINTED BOOK (FR)", "artifacts/ARTDACI_Livre_imprime_Quatre_Maitres_FR.docx"],
+    [lang === "ar" ? "اسأل دليل ChatGPT" : lang === "fr" ? "DEMANDER AU GUIDE CHATGPT" : "ASK THE CHATGPT GUIDE", makeVirtualGuideUrl(`${ARTIST_ROOMS[currentId].name}'s painting room`)],
     [text.cinemaEnter, `cinema-vr.html?lang=${lang}`],
     [text.modelsRoom, `gallery-vr.html?lang=${lang}&room=models`],
     [text.bedroomRoom, `gallery-vr.html?lang=${lang}&room=bedroom`],
@@ -1612,7 +1609,7 @@ async function addArtistEntrancePortrait(id, room, centerZ) {
     const width = height * aspect;
     const portrait = new THREE.Group();
     portrait.name = `${id}-entrance-portrait`;
-    portrait.position.set(0, 2.18, centerZ - 7.88);
+    portrait.position.set(-4.55, 2.18, centerZ - 7.88);
     const frame = new THREE.Mesh(
       new THREE.BoxGeometry(width + 0.16, height + 0.16, 0.08),
       new THREE.MeshStandardMaterial({ color: room.accent, roughness: 0.48, metalness: 0.12 })
@@ -1620,10 +1617,6 @@ async function addArtistEntrancePortrait(id, room, centerZ) {
     const image = new THREE.Mesh(new THREE.PlaneGeometry(width, height), new THREE.MeshBasicMaterial({ map: texture }));
     image.position.z = 0.046;
     portrait.add(frame, image);
-    const label = makeLabel(room.name);
-    label.position.set(0, -height / 2 - 0.22, 0.05);
-    label.scale.set(1.45, 0.38, 1);
-    portrait.add(label);
     scene.add(portrait);
   } catch (error) {
     connectedPortraitsLoaded.delete(id);
@@ -2654,7 +2647,7 @@ async function addReimaginedEntranceMonaLisa() {
   scene.add(light, light.target);
 }
 
-function createReimaginedHotspot(title, placement, artwork) {
+function createReimaginedHotspot(_title, placement, artwork) {
   const group = new THREE.Group();
   group.position.set(placement.hotspot[0], 0.018, placement.hotspot[1]);
   group.userData.destination = new THREE.Vector3(placement.hotspot[0], 0, placement.hotspot[1]);
@@ -2688,11 +2681,6 @@ function createReimaginedHotspot(title, placement, artwork) {
   ring.position.y = 0.006;
   group.add(ring);
 
-  const marker = makeLabel(`${lang === "ar" ? "شاهد" : lang === "fr" ? "Voir" : "View"}\n${title}`);
-  marker.position.set(0, 0.035, 0.64);
-  marker.rotation.x = -Math.PI / 2;
-  marker.scale.set(1.35, 0.32, 1);
-  group.add(marker);
   return group;
 }
 
@@ -2969,7 +2957,7 @@ async function addCinemaAudienceModels(cinema) {
       rotationY: Math.atan2(2.05, 6.55)
     },
     {
-      src: "assets/paintings/van-gogh/vangogh-standing_c.glb",
+      src: "assets/peintres/3d models/van-gogh_standing_w_c.glb",
       name: "cinema-sofa-right-van-gogh",
       x: 2.65,
       y: 0,
