@@ -19,7 +19,7 @@ const CONNECTED_AUDIO_WORKS = {
 
 const GALLERY_IMAGES = {
   "mona-lisa": "assets/paintings/Da Vinci/mona-lisa/images/monalisa-t.png",
-  "van-gogh": "assets/paintings/van-gogh/images/van-gogh_portrait-p.png",
+  "van-gogh": "assets/paintings/van-gogh/reimagined-photos/van-gogh_portrait-p.png",
   "van-gogh-bedroom": "assets/paintings/van-gogh-bedroom/images/van-gogh_bedroom-t.png",
   "vermeer-girl-with-a-pearl-earring": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/images/vermee_girl-earring-t.png"
 };

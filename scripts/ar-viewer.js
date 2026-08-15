@@ -10,6 +10,8 @@ const CONFIG = {
   modelVariants: [],
   video: "",
   audio: "",
+  musicIntro: "",
+  audioSequence: false,
   manifest: "",
   initialScale: 0.42,
   initialRise: 0.18,
@@ -23,6 +25,7 @@ const CONFIG = {
 const PAINTINGS = {
   "mona-lisa": "content/paintings/mona-lisa.json?v=4",
   "van-gogh": "content/paintings/van-gogh.json?v=3",
+  "van-gogh-jo": "content/people/van-gogh-jo.json?v=1",
   "van-gogh-bedroom": "content/paintings/van-gogh-bedroom.json",
   "vermeer-girl-with-a-pearl-earring": "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=3"
 };
@@ -380,6 +383,8 @@ const state = {
   videoMesh: null,
   videoVisible: false,
   audio: null,
+  musicIntro: null,
+  audioSequencePlayed: false,
   spin: false,
   warmLight: false,
   speaking: false,
@@ -463,7 +468,7 @@ function applyStaticLanguage() {
 }
 
 function localizeManifest(manifest) {
-  const translation = AR_TRANSLATIONS[CONFIG.lang]?.[CONFIG.slug];
+  const translation = manifest.localizations?.[CONFIG.lang] || AR_TRANSLATIONS[CONFIG.lang]?.[CONFIG.slug];
   if (!translation) return manifest;
 
   const localized = JSON.parse(JSON.stringify(manifest));
@@ -743,17 +748,23 @@ function renderHotspotButtons(manifest) {
 
 function configureFromManifest(manifest) {
   const audioGuide = getLocalizedAudioGuide(manifest);
+  const musicIntro = getLocalizedMedia(manifest.media?.musicIntros || []);
   CONFIG.modelVariants = getModelVariants(manifest);
   state.selectedModelIndex = 0;
   CONFIG.target = manifest.ar?.compiledTarget || manifest.print?.compiledMindTarget || CONFIG.target;
   CONFIG.model = CONFIG.modelVariants[0]?.src || manifest.ar?.primaryModel || manifest.media?.model || CONFIG.model;
   CONFIG.video = manifest.media?.videos?.[0]?.src || "";
   CONFIG.audio = audioGuide?.src ? withAssetVersion(audioGuide.src) : "";
+  CONFIG.musicIntro = musicIntro?.src ? withAssetVersion(musicIntro.src) : "";
+  CONFIG.audioSequence = Boolean(manifest.ar?.audioSequence && CONFIG.musicIntro && CONFIG.audio);
   CONFIG.initialScale = manifest.ar?.viewer?.initialScale ?? CONFIG.initialScale;
   CONFIG.initialRise = manifest.ar?.viewer?.initialRise ?? CONFIG.initialRise;
   CONFIG.modelRotation = manifest.ar?.viewer?.modelRotation || CONFIG.modelRotation;
   state.audio?.pause();
   state.audio = null;
+  state.musicIntro?.pause();
+  state.musicIntro = null;
+  state.audioSequencePlayed = false;
   state.speaking = false;
   state.targetScale = CONFIG.initialScale;
   state.targetRise = CONFIG.initialRise;
@@ -763,11 +774,17 @@ function configureFromManifest(manifest) {
 
 function getLocalizedAudioGuide(manifest) {
   const guides = manifest.media?.audioGuides || [];
-  const mediaLang = CONFIG.lang === "ar" ? "fr" : CONFIG.lang;
-  const localizedGuide = guides.find((guide) => guide.lang === mediaLang);
+  const localizedGuide = guides.find((guide) => guide.lang === CONFIG.lang);
   if (localizedGuide) return localizedGuide;
   if (CONFIG.lang !== "en") return guides.find((guide) => guide.lang === "fr") || guides.find((guide) => guide.lang === "en") || null;
   return null;
+}
+
+function getLocalizedMedia(items) {
+  return items.find((item) => item.lang === CONFIG.lang)
+    || items.find((item) => item.lang === "en")
+    || items[0]
+    || null;
 }
 
 function getModelVariants(manifest) {
@@ -951,6 +968,7 @@ async function startAR() {
       if (!state.modelLoaded) {
         document.getElementById("panel-body").textContent = t("trackingReady");
       }
+      playTargetAudioSequence();
     };
 
     state.anchor.onTargetLost = () => {
@@ -1122,7 +1140,7 @@ async function loadModel(group) {
         state.modelLoading = false;
         updateModelVariantControls();
         showHotspot("intro");
-        playNativeAudioGuide(true);
+        if (!CONFIG.audioSequence) playNativeAudioGuide(true);
         resolve();
       },
       undefined,
@@ -1287,6 +1305,28 @@ function ensureNativeAudioGuide() {
   return audio;
 }
 
+function playTargetAudioSequence() {
+  if (!CONFIG.audioSequence || state.audioSequencePlayed) return;
+  state.audioSequencePlayed = true;
+
+  const music = new Audio(CONFIG.musicIntro);
+  music.preload = "auto";
+  music.playsInline = true;
+  state.musicIntro = music;
+  music.addEventListener("ended", () => {
+    state.musicIntro = null;
+    playNativeAudioGuide(true);
+  }, { once: true });
+  music.addEventListener("error", () => {
+    state.musicIntro = null;
+    playNativeAudioGuide(true);
+  }, { once: true });
+  music.play().catch(() => {
+    state.audioSequencePlayed = false;
+    state.musicIntro = null;
+  });
+}
+
 function playNativeAudioGuide(quiet = false) {
   const audio = ensureNativeAudioGuide();
   if (!audio) return;
@@ -1314,6 +1354,13 @@ function playNativeAudioGuide(quiet = false) {
 }
 
 function toggleNativeAudioGuide() {
+  if (state.musicIntro && !state.musicIntro.paused) {
+    state.musicIntro.pause();
+    state.musicIntro.currentTime = 0;
+    state.musicIntro = null;
+    playNativeAudioGuide();
+    return;
+  }
   const audio = ensureNativeAudioGuide();
   const button = document.getElementById("audio-guide");
   if (!audio) return;

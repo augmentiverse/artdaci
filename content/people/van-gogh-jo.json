@@ -1,0 +1,121 @@
+{
+  "id": "jo-van-gogh-bonger-1862-1925",
+  "slug": "van-gogh-jo",
+  "title": "Jo van Gogh-Bonger",
+  "artist": {
+    "name": "Johanna van Gogh-Bonger",
+    "birthYear": 1862,
+    "deathYear": 1925,
+    "nationality": "Dutch"
+  },
+  "print": {
+    "spreadNumber": "2A",
+    "chapter": "The People Behind the Painter",
+    "imageTargetId": "target-van-gogh-jo",
+    "imageTargetSource": "assets/people-behind-painters/Van Gogh/images/vincent_van_gogh-Jo_van_Gogh_Bonger .png",
+    "compiledMindTarget": "assets/targets/vangogh-jo.mind",
+    "qrUrl": "ar.html?painting=van-gogh-jo&v=42"
+  },
+  "texts": {
+    "historicalContext": "After Vincent van Gogh died in 1890 and Theo died in 1891, Jo inherited a large collection of Vincent's paintings, drawings, and letters while raising her infant son, Vincent Willem.",
+    "artisticAnalysis": "Jo built public interest patiently. She lent works to exhibitions, arranged carefully chosen sales, maintained important works as a coherent collection, and cultivated relationships with artists, critics, dealers, and museums.",
+    "composition": "Her landmark 1905 exhibition at Amsterdam's Stedelijk Museum presented 472 works. In 1914 she published Vincent's letters to Theo in three volumes, helping readers understand the artist through his own words.",
+    "palette": "Jo balanced circulation and preservation: enough sales and loans to place Van Gogh before the public, while retaining a core collection that later formed the foundation of the Van Gogh Museum.",
+    "perspectiveTechnique": "Her work joined exhibition-making, publishing, translation, networking, and strategic stewardship. Van Gogh's reputation was not an overnight discovery but the result of sustained cultural work.",
+    "culturalSignificance": "Jo van Gogh-Bonger was one of the principal architects of Vincent van Gogh's posthumous recognition. Her son Vincent Willem later continued that stewardship and helped establish the Van Gogh Museum.",
+    "interestingFacts": [
+      "Jo was only 28 when Theo died in 1891.",
+      "The 1905 Stedelijk Museum exhibition included 472 works by Van Gogh.",
+      "She published Vincent's letters to Theo in three volumes in 1914."
+    ]
+  },
+  "hotspots": [
+    {
+      "id": "legacy",
+      "label": "A legacy entrusted",
+      "category": "history",
+      "body": "After the deaths of Vincent and Theo, Jo became responsible for an extraordinary but still little-understood artistic legacy."
+    },
+    {
+      "id": "exhibitions",
+      "label": "Exhibitions and loans",
+      "category": "public recognition",
+      "body": "Jo placed Van Gogh's work before artists, critics, collectors, and museum audiences through loans, sales exhibitions, and the major 1905 Amsterdam retrospective."
+    },
+    {
+      "id": "letters",
+      "label": "Vincent's letters",
+      "category": "publishing",
+      "body": "By publishing Vincent's letters to Theo, Jo gave readers access to his artistic thought and helped connect the paintings with a compelling human voice."
+    }
+  ],
+  "ar": {
+    "startMode": "legacy-story",
+    "imageTarget": "assets/people-behind-painters/Van Gogh/images/vincent_van_gogh-Jo_van_Gogh_Bonger .png",
+    "compiledTarget": "assets/targets/vangogh-jo.mind",
+    "primaryModel": "assets/people-behind-painters/Van Gogh/3d models/bou-veil.glb",
+    "audioSequence": true,
+    "viewer": {
+      "initialScale": 0.5,
+      "initialRise": 0.16,
+      "modelRotation": { "x": 0, "y": 0, "z": 0 }
+    }
+  },
+  "media": {
+    "image": "assets/people-behind-painters/Van Gogh/images/vincent_van_gogh-Jo_van_Gogh_Bonger .png",
+    "model": "assets/people-behind-painters/Van Gogh/3d models/bou-veil.glb",
+    "musicIntros": [
+      { "lang": "en", "src": "assets/people-behind-painters/Van Gogh/music/Jo van Gogh-Bonger (Theo's wife)-Letters_and_Lonely_Reds.mp3", "type": "audio/mpeg" },
+      { "lang": "fr", "src": "assets/people-behind-painters/Van Gogh/music/Jo van Gogh-Bonger (Theo's wife)-Le_champ_de_tournesols.mp3", "type": "audio/mpeg" },
+      { "lang": "ar", "src": "assets/people-behind-painters/Van Gogh/music/Jo van Gogh-Bonger (Theo's wife)-Letters_and_Lonely_Reds.mp3", "type": "audio/mpeg" }
+    ],
+    "audioGuides": [
+      { "id": "jo-short-en", "lang": "en", "title": "The woman who made Van Gogh famous", "src": "assets/people-behind-painters/Van Gogh/audio/short_audio/The_woman_who_made_Van_Gogh_famous__short.m4a", "type": "audio/mp4" },
+      { "id": "jo-short-fr", "lang": "fr", "title": "La femme qui a fait connaître Van Gogh", "src": "assets/people-behind-painters/Van Gogh/audio/short_audio/La_femme_qui_a_inventé_Van_Gogh_short.m4a", "type": "audio/mp4" },
+      { "id": "jo-short-ar", "lang": "ar", "title": "جو بونغر، المرأة التي خلدت فان غوخ", "src": "assets/people-behind-painters/Van Gogh/audio/short_audio/جو_بونغر_المرأة_التي_خلدت_فان_غوخ_short.m4a", "type": "audio/mp4" }
+    ],
+    "videos": []
+  },
+  "localizations": {
+    "fr": {
+      "title": "Jo van Gogh-Bonger",
+      "texts": {
+        "historicalContext": "Après la mort de Vincent en 1890 puis celle de Theo en 1891, Jo hérite d'un vaste ensemble de tableaux, dessins et lettres, tout en élevant son fils encore bébé, Vincent Willem.",
+        "artisticAnalysis": "Jo construit patiemment l'intérêt du public : prêts aux expositions, ventes soigneusement choisies et relations avec artistes, critiques, marchands et musées.",
+        "composition": "En 1905, elle organise au Stedelijk Museum d'Amsterdam une exposition majeure réunissant 472 œuvres. En 1914, elle publie en trois volumes les lettres de Vincent à Theo.",
+        "palette": "Elle équilibre circulation et préservation : faire connaître suffisamment d'œuvres tout en conservant un noyau cohérent qui rejoindra plus tard le Van Gogh Museum.",
+        "perspectiveTechnique": "Son action conjugue expositions, édition, traduction, réseaux et gestion stratégique. La renommée de Van Gogh résulte d'un long travail culturel, non d'une découverte soudaine.",
+        "culturalSignificance": "Jo van Gogh-Bonger fut l'une des principales architectes de la reconnaissance posthume de Vincent van Gogh. Son fils Vincent Willem poursuivit ensuite cette mission."
+      },
+      "hotspots": {
+        "legacy": { "label": "Un héritage confié", "category": "histoire", "body": "Après les morts de Vincent et Theo, Jo devient responsable d'un héritage artistique extraordinaire mais encore peu compris." },
+        "exhibitions": { "label": "Expositions et prêts", "category": "reconnaissance", "body": "Jo place les œuvres devant les artistes, critiques, collectionneurs et publics des musées grâce aux prêts et aux expositions." },
+        "letters": { "label": "Les lettres de Vincent", "category": "édition", "body": "En publiant les lettres à Theo, Jo donne accès à la pensée artistique de Vincent et relie les tableaux à sa propre voix." }
+      }
+    },
+    "ar": {
+      "title": "جو فان غوخ-بونغر",
+      "texts": {
+        "historicalContext": "بعد وفاة فنسنت سنة 1890 ثم ثيو سنة 1891، ورثت جو مجموعة كبيرة من اللوحات والرسوم والرسائل، بينما كانت تربي ابنها الرضيع فنسنت فيليم.",
+        "artisticAnalysis": "بنت جو اهتمام الجمهور بصبر، فأعارت الأعمال للمعارض ونظمت مبيعات مدروسة وربطت صلات بالفنانين والنقاد والتجار والمتاحف.",
+        "composition": "نظمت سنة 1905 معرضاً كبيراً في متحف ستيديليك بأمستردام ضم 472 عملاً، ونشرت سنة 1914 رسائل فنسنت إلى ثيو في ثلاثة مجلدات.",
+        "palette": "وازنت بين نشر الأعمال وحفظها، فعرّفت الجمهور بعدد كاف منها مع إبقاء مجموعة أساسية متماسكة أصبحت لاحقاً نواة متحف فان غوخ.",
+        "perspectiveTechnique": "جمعت مهمتها بين تنظيم المعارض والنشر والترجمة وبناء العلاقات والإدارة الاستراتيجية للتراث.",
+        "culturalSignificance": "كانت جو فان غوخ-بونغر من أهم صناع شهرة فنسنت فان غوخ بعد وفاته، ثم واصل ابنها فنسنت فيليم رعاية هذا الإرث."
+      },
+      "hotspots": {
+        "legacy": { "label": "إرث مؤتمن عليه", "category": "التاريخ", "body": "بعد وفاة فنسنت وثيو أصبحت جو مسؤولة عن إرث فني استثنائي لم يكن معروفاً بعد على نطاق واسع." },
+        "exhibitions": { "label": "المعارض والإعارات", "category": "الاعتراف العام", "body": "قدمت جو أعمال فان غوخ للفنانين والنقاد والجامعين وجمهور المتاحف عبر الإعارات والمعارض." },
+        "letters": { "label": "رسائل فنسنت", "category": "النشر", "body": "أتاحت رسائل فنسنت إلى ثيو للقراء فهم أفكاره الفنية وربط اللوحات بصوته الإنساني." }
+      }
+    }
+  },
+  "rights": {
+    "imageLicense": "User-provided project asset",
+    "assetRestrictions": "Confirm source and reproduction requirements before commercial publication."
+  },
+  "references": [
+    "Van Gogh Museum, permanent collection gallery texts and family timeline",
+    "Van Gogh Museum, 50 Years of the Van Gogh Museum: A Living Museum"
+  ]
+}

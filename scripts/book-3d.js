@@ -86,9 +86,9 @@ const BOOK_IMAGE_GALLERIES = {
     "assets/paintings/Da Vinci/mona-lisa/images/monalisa-t.png"
   ],
   "van-gogh": [
-    "assets/paintings/van-gogh/images/van-gogh-out-of-frame.png",
-    "assets/paintings/van-gogh/images/van-gogh_in_bedroom-standing.png",
-    "assets/paintings/van-gogh/images/van-gogh__Portrait.jpg"
+    "assets/paintings/van-gogh/reimagined-photos/van-gogh-out-of-frame.png",
+    "assets/paintings/van-gogh/reimagined-photos/van-gogh_in_bedroom-standing.png",
+    "assets/paintings/van-gogh/reimagined-photos/van-gogh__Portrait.jpg"
   ],
   "van-gogh-bedroom": [
     "assets/paintings/van-gogh-bedroom/images/bed_van-gogh.jpeg",
@@ -127,6 +127,31 @@ const BOOK_SECTION_COPY = {
     technique: "المواد والاكتشافات",
     legacy: "المعنى والإرث",
     notice: "تفاصيل جديرة بالتذكر"
+  }
+};
+
+const PEOPLE_BEHIND_PAINTERS = {
+  "van-gogh": {
+    image: "assets/people-behind-painters/Van Gogh/images/vincent_van_gogh-Jo_van_Gogh_Bonger .png",
+    manifest: { slug: "van-gogh-jo" },
+    en: {
+      eyebrow: "THE PEOPLE BEHIND THE PAINTER",
+      title: "JO VAN GOGH-BONGER",
+      subtitle: "The strategist who built Vincent's legacy",
+      body: "After Vincent died in 1890 and Theo in 1891, Jo inherited hundreds of works and the brothers' correspondence. Through carefully chosen sales, loans, exhibitions, and relationships with critics and collectors, she created sustained public interest without dispersing the collection. Her 1905 Stedelijk Museum exhibition presented 472 works; in 1914 she published Vincent's letters to Theo in three volumes. Her patient work was decisive in transforming a little-understood legacy into international recognition. Scan the image to see the available 3D model and hear a musical introduction followed by the English narration."
+    },
+    fr: {
+      eyebrow: "LES PERSONNES DERRIÈRE LE PEINTRE",
+      title: "JO VAN GOGH-BONGER",
+      subtitle: "La stratège qui construisit l'héritage de Vincent",
+      body: "Après la mort de Vincent en 1890 puis celle de Theo en 1891, Jo hérite de centaines d'œuvres et de la correspondance des deux frères. Par des ventes choisies, des prêts, des expositions et ses liens avec critiques et collectionneurs, elle suscite durablement l'intérêt sans disperser la collection. Son exposition de 1905 au Stedelijk Museum réunit 472 œuvres ; en 1914, elle publie en trois volumes les lettres de Vincent à Theo. Son travail patient fut décisif pour la reconnaissance internationale de Van Gogh. Scannez l'image pour voir le modèle 3D disponible, puis écouter l'introduction musicale et la narration française."
+    },
+    ar: {
+      eyebrow: "الأشخاص وراء الفنان",
+      title: "جو فان غوخ-بونغر",
+      subtitle: "الاستراتيجية التي بنت إرث فنسنت",
+      body: "بعد وفاة فنسنت سنة 1890 ثم ثيو سنة 1891، ورثت جو مئات الأعمال ومراسلات الأخوين. ومن خلال المبيعات المدروسة والإعارات والمعارض وعلاقاتها بالنقاد والجامعين، بنت اهتماماً دائماً من دون تفكيك المجموعة. عرض معرضها في متحف ستيديليك سنة 1905 ما مجموعه 472 عملاً، ونشرت سنة 1914 رسائل فنسنت إلى ثيو في ثلاثة مجلدات. كان عملها الصبور حاسماً في بناء شهرة فان غوخ العالمية. امسح الصورة لعرض النموذج الثلاثي الأبعاد المتاح وسماع مقدمة موسيقية تتبعها الرواية العربية."
+    }
   }
 };
 
@@ -386,6 +411,21 @@ function buildPageDefinitions(manifests) {
         { label: "VR", x: 82, y: 39, type: "gallery" }
       ]
     });
+
+    const supporter = PEOPLE_BEHIND_PAINTERS[manifest.slug];
+    if (supporter) {
+      const copy = supporter[lang] || supporter.en;
+      pages.push({
+        kind: "supporter",
+        eyebrow: copy.eyebrow,
+        title: copy.title,
+        subtitle: copy.subtitle,
+        image: supporter.image,
+        body: copy.body,
+        manifest: supporter.manifest,
+        hotspots: [{ label: "AR", x: 83, y: 26, type: "ar" }]
+      });
+    }
   });
 
   pages.push({

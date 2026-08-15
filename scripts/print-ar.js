@@ -31,7 +31,7 @@ const PAINTINGS_AR = {
     medium: "زيت على قماش",
     dimensions: "لوحة بورتريه",
     location: "متحف فان غوخ، أمستردام",
-    image: "assets/paintings/van-gogh/images/van-gogh__Portrait.jpg",
+    image: "assets/paintings/van-gogh/reimagined-photos/van-gogh__Portrait.jpg",
     intro: "الوجه بوصفه مختبراً للون",
     lead: "استخدم فان غوخ صورته لأنه لم يكن يملك دائماً المال لاستئجار عارض، فحوّل المرآة إلى أداة لدراسة اللون والهوية.",
     sections: [
