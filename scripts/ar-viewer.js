@@ -378,6 +378,7 @@ const state = {
   anchor: null,
   contentGroup: null,
   model: null,
+  fallbackObject: null,
   modelLoaded: false,
   video: null,
   videoMesh: null,
@@ -432,8 +433,11 @@ async function init() {
   selectPainting();
   bindUI();
   applyStaticLanguage();
+  const startButton = document.getElementById("start-ar");
+  startButton.disabled = true;
   await loadManifest();
   setStartupMessage(t("ready"));
+  startButton.disabled = false;
 }
 
 function selectPainting() {
@@ -487,6 +491,7 @@ function localizeManifest(manifest) {
 function bindUI() {
   document.getElementById("start-ar").addEventListener("click", async (event) => {
     if (state.started) return;
+    primeSequenceAudio();
     state.started = true;
     event.currentTarget.disabled = true;
     event.currentTarget.textContent = t("starting");
@@ -958,6 +963,7 @@ async function startAR() {
     state.contentGroup.matrixAutoUpdate = false;
     state.contentGroup.visible = false;
     scene.add(state.contentGroup);
+    addTrackingPreview(state.contentGroup).catch(() => {});
 
     state.anchor.onTargetFound = () => {
       state.targetFoundOnce = true;
@@ -983,9 +989,11 @@ async function startAR() {
     renderer.setAnimationLoop(() => renderFrame(renderer, scene, camera));
     loadModel(state.contentGroup).catch((error) => {
       console.error(error);
-      document.getElementById("panel-title").textContent = t("modelErrorTitle");
-      document.getElementById("panel-body").textContent = t("modelErrorBody");
-      document.getElementById("info-panel").classList.remove("collapsed");
+      addFallbackImage(state.contentGroup).catch(() => {
+        document.getElementById("panel-title").textContent = t("modelErrorTitle");
+        document.getElementById("panel-body").textContent = t("modelErrorBody");
+        document.getElementById("info-panel").classList.remove("collapsed");
+      });
     });
     if (CONFIG.video) {
       addVideoLayer(state.contentGroup);
@@ -1119,6 +1127,13 @@ async function loadModel(group) {
     loader.load(
       CONFIG.model,
       (gltf) => {
+        if (state.fallbackObject) {
+          group.remove(state.fallbackObject);
+          state.fallbackObject.geometry?.dispose?.();
+          state.fallbackObject.material?.map?.dispose?.();
+          state.fallbackObject.material?.dispose?.();
+          state.fallbackObject = null;
+        }
         state.model = gltf.scene;
         state.model.name = "mona-lisa-model";
         state.model.scale.setScalar(CONFIG.initialScale);
@@ -1151,6 +1166,37 @@ async function loadModel(group) {
       }
     );
   });
+}
+
+async function addFallbackImage(group) {
+  if (state.fallbackObject) {
+    state.model = state.fallbackObject;
+    state.modelLoaded = true;
+    state.targetScale = 1;
+    state.targetRise = CONFIG.initialRise;
+    showHotspot("intro");
+    return;
+  }
+  await addTrackingPreview(group);
+  state.model = state.fallbackObject;
+  state.modelLoaded = true;
+  state.targetScale = 1;
+  state.targetRise = CONFIG.initialRise;
+  showHotspot("intro");
+}
+
+async function addTrackingPreview(group) {
+  const src = state.manifest?.ar?.fallbackImage || state.manifest?.media?.image;
+  if (!src) throw new Error("No fallback image is configured.");
+  const texture = await new THREE.TextureLoader().loadAsync(src);
+  texture.encoding = THREE.sRGBEncoding;
+  const aspect = texture.image.width / texture.image.height;
+  const height = 0.75;
+  const material = new THREE.MeshBasicMaterial({ map: texture, transparent: true, side: THREE.DoubleSide });
+  const plane = new THREE.Mesh(new THREE.PlaneGeometry(height * aspect, height), material);
+  plane.position.set(0, 0.15, CONFIG.initialRise);
+  group.add(plane);
+  state.fallbackObject = plane;
 }
 
 function renderFrame(renderer, scene, camera) {
@@ -1309,10 +1355,7 @@ function playTargetAudioSequence() {
   if (!CONFIG.audioSequence || state.audioSequencePlayed) return;
   state.audioSequencePlayed = true;
 
-  const music = new Audio(CONFIG.musicIntro);
-  music.preload = "auto";
-  music.playsInline = true;
-  state.musicIntro = music;
+  const music = ensureMusicIntro();
   music.addEventListener("ended", () => {
     state.musicIntro = null;
     playNativeAudioGuide(true);
@@ -1324,6 +1367,32 @@ function playTargetAudioSequence() {
   music.play().catch(() => {
     state.audioSequencePlayed = false;
     state.musicIntro = null;
+  });
+}
+
+function ensureMusicIntro() {
+  if (!CONFIG.musicIntro) return null;
+  if (state.musicIntro) return state.musicIntro;
+  const music = new Audio(CONFIG.musicIntro);
+  music.preload = "auto";
+  music.playsInline = true;
+  state.musicIntro = music;
+  return music;
+}
+
+function primeSequenceAudio() {
+  if (!CONFIG.audioSequence) return;
+  [ensureMusicIntro(), ensureNativeAudioGuide()].filter(Boolean).forEach((audio) => {
+    audio.muted = true;
+    const promise = audio.play();
+    if (!promise) return;
+    promise.then(() => {
+      audio.pause();
+      audio.currentTime = 0;
+      audio.muted = false;
+    }).catch(() => {
+      audio.muted = false;
+    });
   });
 }
 

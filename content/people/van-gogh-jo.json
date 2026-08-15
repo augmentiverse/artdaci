@@ -14,7 +14,7 @@
     "imageTargetId": "target-van-gogh-jo",
     "imageTargetSource": "assets/people-behind-painters/Van Gogh/images/vincent_van_gogh-Jo_van_Gogh_Bonger .png",
     "compiledMindTarget": "assets/targets/vangogh-jo.mind",
-    "qrUrl": "ar.html?painting=van-gogh-jo&v=42"
+    "qrUrl": "ar.html?painting=van-gogh-jo&v=43"
   },
   "texts": {
     "historicalContext": "After Vincent van Gogh died in 1890 and Theo died in 1891, Jo inherited a large collection of Vincent's paintings, drawings, and letters while raising her infant son, Vincent Willem.",
@@ -53,7 +53,8 @@
     "startMode": "legacy-story",
     "imageTarget": "assets/people-behind-painters/Van Gogh/images/vincent_van_gogh-Jo_van_Gogh_Bonger .png",
     "compiledTarget": "assets/targets/vangogh-jo.mind",
-    "primaryModel": "assets/people-behind-painters/Van Gogh/3d models/bou-veil.glb",
+    "primaryModel": "https://media.githubusercontent.com/media/augmentiverse/artdaci/main/assets/people-behind-painters/Van%20Gogh/3d%20models/bou-veil.glb",
+    "fallbackImage": "assets/people-behind-painters/Van Gogh/images/Jo van Gogh-Bonger (Theo's wife).png",
     "audioSequence": true,
     "viewer": {
       "initialScale": 0.5,
@@ -63,16 +64,16 @@
   },
   "media": {
     "image": "assets/people-behind-painters/Van Gogh/images/vincent_van_gogh-Jo_van_Gogh_Bonger .png",
-    "model": "assets/people-behind-painters/Van Gogh/3d models/bou-veil.glb",
+    "model": "https://media.githubusercontent.com/media/augmentiverse/artdaci/main/assets/people-behind-painters/Van%20Gogh/3d%20models/bou-veil.glb",
     "musicIntros": [
-      { "lang": "en", "src": "assets/people-behind-painters/Van Gogh/music/Jo van Gogh-Bonger (Theo's wife)-Letters_and_Lonely_Reds.mp3", "type": "audio/mpeg" },
-      { "lang": "fr", "src": "assets/people-behind-painters/Van Gogh/music/Jo van Gogh-Bonger (Theo's wife)-Le_champ_de_tournesols.mp3", "type": "audio/mpeg" },
-      { "lang": "ar", "src": "assets/people-behind-painters/Van Gogh/music/Jo van Gogh-Bonger (Theo's wife)-Letters_and_Lonely_Reds.mp3", "type": "audio/mpeg" }
+      { "lang": "en", "src": "https://media.githubusercontent.com/media/augmentiverse/artdaci/main/assets/people-behind-painters/Van%20Gogh/music/Jo%20van%20Gogh-Bonger%20%28Theo%27s%20wife%29-Letters_and_Lonely_Reds.mp3", "type": "audio/mpeg" },
+      { "lang": "fr", "src": "https://media.githubusercontent.com/media/augmentiverse/artdaci/main/assets/people-behind-painters/Van%20Gogh/music/Jo%20van%20Gogh-Bonger%20%28Theo%27s%20wife%29-Le_champ_de_tournesols.mp3", "type": "audio/mpeg" },
+      { "lang": "ar", "src": "https://media.githubusercontent.com/media/augmentiverse/artdaci/main/assets/people-behind-painters/Van%20Gogh/music/Jo%20van%20Gogh-Bonger%20%28Theo%27s%20wife%29-Letters_and_Lonely_Reds.mp3", "type": "audio/mpeg" }
     ],
     "audioGuides": [
-      { "id": "jo-short-en", "lang": "en", "title": "The woman who made Van Gogh famous", "src": "assets/people-behind-painters/Van Gogh/audio/short_audio/The_woman_who_made_Van_Gogh_famous__short.m4a", "type": "audio/mp4" },
-      { "id": "jo-short-fr", "lang": "fr", "title": "La femme qui a fait connaître Van Gogh", "src": "assets/people-behind-painters/Van Gogh/audio/short_audio/La_femme_qui_a_inventé_Van_Gogh_short.m4a", "type": "audio/mp4" },
-      { "id": "jo-short-ar", "lang": "ar", "title": "جو بونغر، المرأة التي خلدت فان غوخ", "src": "assets/people-behind-painters/Van Gogh/audio/short_audio/جو_بونغر_المرأة_التي_خلدت_فان_غوخ_short.m4a", "type": "audio/mp4" }
+      { "id": "jo-short-en", "lang": "en", "title": "The woman who made Van Gogh famous", "src": "https://media.githubusercontent.com/media/augmentiverse/artdaci/main/assets/people-behind-painters/Van%20Gogh/audio/short_audio/The_woman_who_made_Van_Gogh_famous__short.m4a", "type": "audio/mp4" },
+      { "id": "jo-short-fr", "lang": "fr", "title": "La femme qui a fait connaître Van Gogh", "src": "https://media.githubusercontent.com/media/augmentiverse/artdaci/main/assets/people-behind-painters/Van%20Gogh/audio/short_audio/La_femme_qui_a_invent%C3%A9_Van_Gogh_short.m4a", "type": "audio/mp4" },
+      { "id": "jo-short-ar", "lang": "ar", "title": "جو بونغر، المرأة التي خلدت فان غوخ", "src": "https://media.githubusercontent.com/media/augmentiverse/artdaci/main/assets/people-behind-painters/Van%20Gogh/audio/short_audio/%D8%AC%D9%88_%D8%A8%D9%88%D9%86%D8%BA%D8%B1_%D8%A7%D9%84%D9%85%D8%B1%D8%A3%D8%A9_%D8%A7%D9%84%D8%AA%D9%8A_%D8%AE%D9%84%D8%AF%D8%AA_%D9%81%D8%A7%D9%86_%D8%BA%D9%88%D8%AE_short.m4a", "type": "audio/mp4" }
     ],
     "videos": []
   },
