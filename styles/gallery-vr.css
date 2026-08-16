@@ -414,6 +414,160 @@ body[data-experience="cinema"] .gallery-guide {
   background: var(--gold);
 }
 
+/* Room-aware screen menu, echoing the framed navigation walls inside VR. */
+body {
+  --room-menu-panel: rgba(49, 24, 18, .94);
+  --room-menu-button: #4b2719;
+  --room-menu-button-hover: #67402c;
+  --room-menu-gold: #d1a15b;
+  --room-menu-text: #fff1dc;
+  --room-menu-muted: #dbc8aa;
+}
+
+body[data-gallery-room="models"] {
+  --room-menu-panel: rgba(21, 42, 54, .95);
+  --room-menu-button: #243b4a;
+  --room-menu-button-hover: #355568;
+  --room-menu-gold: #b9d1d8;
+  --room-menu-text: #f4fbff;
+  --room-menu-muted: #c5d9df;
+}
+
+body[data-gallery-room="bedroom"] {
+  --room-menu-panel: rgba(20, 48, 69, .95);
+  --room-menu-button: #254b68;
+  --room-menu-button-hover: #32688f;
+  --room-menu-gold: #e3ae48;
+  --room-menu-text: #fff2ce;
+  --room-menu-muted: #e4d1a7;
+}
+
+body[data-gallery-room="reimagined"] {
+  --room-menu-panel: rgba(23, 39, 51, .95);
+  --room-menu-button: #314d60;
+  --room-menu-button-hover: #42687f;
+  --room-menu-gold: #d5ad65;
+  --room-menu-text: #fff1dc;
+  --room-menu-muted: #d4c5ae;
+}
+
+body[data-gallery-room="groups"] {
+  --room-menu-panel: rgba(47, 20, 29, .95);
+  --room-menu-button: #51212d;
+  --room-menu-button-hover: #6f3040;
+  --room-menu-gold: #d2a05d;
+  --room-menu-text: #fff0de;
+  --room-menu-muted: #d9bdac;
+}
+
+body[data-gallery-room="louvre"] {
+  --room-menu-panel: rgba(5, 18, 39, .96);
+  --room-menu-button: #0b2749;
+  --room-menu-button-hover: #123b69;
+  --room-menu-gold: #c7a25b;
+  --room-menu-text: #f7ead1;
+  --room-menu-muted: #cfc3aa;
+}
+
+body[data-gallery-room="people"] {
+  --room-menu-panel: rgba(7, 40, 36, .96);
+  --room-menu-button: #4b171d;
+  --room-menu-button-hover: #70252d;
+  --room-menu-gold: #d9ac58;
+  --room-menu-text: #fff3df;
+  --room-menu-muted: #d8c8aa;
+}
+
+body[data-gallery-room="cinema"] {
+  --room-menu-panel: rgba(28, 12, 19, .96);
+  --room-menu-button: #30131d;
+  --room-menu-button-hover: #50202e;
+  --room-menu-gold: #d5a454;
+  --room-menu-text: #fff1dc;
+  --room-menu-muted: #d8bfaa;
+}
+
+body[data-gallery-artist="van-gogh"][data-gallery-room="paintings"] {
+  --room-menu-panel: rgba(14, 39, 59, .96);
+  --room-menu-button: #173b5a;
+  --room-menu-button-hover: #24587f;
+  --room-menu-gold: #e0ad42;
+  --room-menu-text: #fff4d0;
+}
+
+body[data-gallery-artist="vermeer"][data-gallery-room="paintings"] {
+  --room-menu-panel: rgba(10, 49, 52, .96);
+  --room-menu-button: #174b50;
+  --room-menu-button-hover: #236970;
+  --room-menu-gold: #c9aa69;
+  --room-menu-text: #f5ead7;
+}
+
+body[data-gallery-artist="monet"][data-gallery-room="paintings"] {
+  --room-menu-panel: rgba(36, 63, 53, .96);
+  --room-menu-button: #3d5d50;
+  --room-menu-button-hover: #577b6b;
+  --room-menu-gold: #d4ca83;
+  --room-menu-text: #f5f1dc;
+}
+
+body .gallery-toolbar,
+body .gallery-guide,
+body .virtual-guide {
+  border: 2px solid var(--room-menu-gold);
+  color: var(--room-menu-text);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.035), rgba(0,0,0,.13)),
+    var(--room-menu-panel);
+  box-shadow:
+    inset 0 0 0 3px rgba(8, 9, 10, .7),
+    inset 0 0 0 4px color-mix(in srgb, var(--room-menu-gold) 72%, transparent),
+    0 12px 34px rgba(0,0,0,.42);
+}
+
+body #gallery-kicker,
+body .gallery-guide span {
+  color: var(--room-menu-muted);
+}
+
+body .gallery-button,
+body .gallery-exit-links .gallery-button,
+body .gallery-exit-links .vr-world-link,
+body .gallery-exit-links .bedroom-world-link,
+body .gallery-exit-links .cinema-link {
+  position: relative;
+  border: 2px solid var(--room-menu-gold);
+  border-radius: 0;
+  color: var(--room-menu-text);
+  background: var(--room-menu-button);
+  box-shadow:
+    inset 0 0 0 2px rgba(19, 12, 10, .72),
+    inset 0 0 0 3px color-mix(in srgb, var(--room-menu-gold) 58%, transparent),
+    0 5px 12px rgba(0,0,0,.28);
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  letter-spacing: .015em;
+  transition: transform .16s ease, background .16s ease, box-shadow .16s ease;
+}
+
+body .gallery-button:hover,
+body .gallery-button:focus-visible {
+  color: var(--room-menu-text);
+  background: var(--room-menu-button-hover);
+  box-shadow:
+    inset 0 0 0 2px rgba(19, 12, 10, .72),
+    inset 0 0 0 3px var(--room-menu-gold),
+    0 8px 18px rgba(0,0,0,.36);
+  transform: translateY(-1px);
+}
+
+body .gallery-button.primary {
+  border-color: var(--room-menu-gold);
+  color: #17120c;
+  background: var(--room-menu-gold);
+  box-shadow: inset 0 0 0 3px rgba(255,255,255,.2), 0 5px 12px rgba(0,0,0,.3);
+}
+
 @media (max-width: 720px) {
   .gallery-toolbar {
     grid-template-columns: auto 1fr;

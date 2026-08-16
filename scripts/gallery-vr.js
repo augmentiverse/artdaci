@@ -259,6 +259,8 @@ const connectedStartYaw = connectedStartIndex === 0 ? Math.PI / 2 : Math.PI;
 const activeRoom = ["paintings", "models", "bedroom", "reimagined", "groups", "louvre", "people"].includes(previewRoom)
   ? previewRoom
   : "paintings";
+document.body.dataset.galleryRoom = isCinemaOnly ? "cinema" : activeRoom;
+document.body.dataset.galleryArtist = artistRoomId || (activeRoom === "paintings" ? "da-vinci" : "all");
 const isModelsRoom = activeRoom === "models";
 const previewPositionX = isCinemaOnly || previewRoom === "cinema" ? CINEMA_ROOM_X : 0;
 const previewPositionZ = isCinemaOnly || previewRoom === "cinema"
@@ -2617,6 +2619,38 @@ function addCinemaEntranceHotspot() {
   scene.add(group);
 }
 
+function navigationMenuPalette(position, options) {
+  if (options.peopleMenu || activeRoom === "people") {
+    return { background: options.heading ? "#09232b" : options.active ? "#70252d" : "#4b171d", border: "#d9ac58", text: "#fff3df", icon: "#e5b856" };
+  }
+  if (isCinemaOnly || previewRoom === "cinema") {
+    return { background: "#30131d", border: "#d5a454", text: "#fff1dc", icon: "#efbd68" };
+  }
+
+  const painterPalettes = {
+    "da-vinci": { background: "#4b2719", border: "#d1a15b", text: "#fff1dc", icon: "#e4b96f" },
+    "van-gogh": { background: "#173b5a", border: "#e0ad42", text: "#fff4d0", icon: "#f2c44f" },
+    vermeer: { background: "#174b50", border: "#c9aa69", text: "#f5ead7", icon: "#ddbd77" },
+    monet: { background: "#3d5d50", border: "#d4ca83", text: "#f5f1dc", icon: "#e4d996" }
+  };
+  let painterId = ARTIST_ROOMS[artistRoomId] ? artistRoomId : null;
+  const z = position[2] || 0;
+  if (activeRoom === "reimagined") {
+    painterId = z < 5 ? "da-vinci" : z < 16 ? "van-gogh" : z < 29 ? "vermeer" : "monet";
+  } else if (activeRoom === "paintings" && isConnectedMuseum) {
+    painterId = z < 8 ? "da-vinci" : z < 24 ? "van-gogh" : z < 40 ? "vermeer" : "monet";
+  }
+  if (painterId) return painterPalettes[painterId];
+
+  const roomPalettes = {
+    models: { background: "#243b4a", border: "#b9d1d8", text: "#f4fbff", icon: "#d2e4e9" },
+    bedroom: { background: "#254b68", border: "#e3ae48", text: "#fff2ce", icon: "#f1c45c" },
+    groups: { background: "#51212d", border: "#d2a05d", text: "#fff0de", icon: "#e6b66f" },
+    louvre: { background: "#071b36", border: "#c7a25b", text: "#f7ead1", icon: "#dfbd78" }
+  };
+  return roomPalettes[activeRoom] || { background: "#142c3c", border: "#d2aa62", text: "#fff2df", icon: "#e5bb70" };
+}
+
 function createWallSign(message, position, rotationY, options = {}) {
   const canvas = document.createElement("canvas");
   canvas.width = isLowPowerDevice ? 640 : 1600;
@@ -2625,34 +2659,36 @@ function createWallSign(message, position, rotationY, options = {}) {
   const context = canvas.getContext("2d");
   const isExit = Boolean(options.exitUrl);
   const isTravel = Boolean(options.destination);
-  context.fillStyle = options.peopleMenu
-    ? (options.heading ? "#09232b" : options.active ? "#70252d" : "#4b171d")
+  const hasMenuEffect = options.peopleMenu || isExit || isTravel;
+  const menuPalette = navigationMenuPalette(position, options);
+  context.fillStyle = hasMenuEffect
+    ? menuPalette.background
     : isExit ? "#712832" : isTravel ? "#0b5064" : options.accent ? "#1b354a" : "#0f1b26";
   context.fillRect(0, 0, canvas.width, canvas.height);
-  context.strokeStyle = options.peopleMenu ? "#d9ac58" : isExit ? "#ffe4e7" : isTravel ? "#bdefff" : "#e0bd73";
-  context.lineWidth = (options.peopleMenu ? 8 : 14) * canvasScale;
+  context.strokeStyle = hasMenuEffect ? menuPalette.border : "#e0bd73";
+  context.lineWidth = (hasMenuEffect ? 8 : 14) * canvasScale;
   context.strokeRect(7 * canvasScale, 7 * canvasScale, canvas.width - 14 * canvasScale, canvas.height - 14 * canvasScale);
-  if (options.peopleMenu) {
+  if (hasMenuEffect) {
     context.lineWidth = 3 * canvasScale;
     context.strokeRect(24 * canvasScale, 24 * canvasScale, canvas.width - 48 * canvasScale, canvas.height - 48 * canvasScale);
   }
-  context.fillStyle = options.peopleMenu ? "#fff3df" : "#ffffff";
+  context.fillStyle = hasMenuEffect ? menuPalette.text : "#ffffff";
   context.textAlign = "center";
   context.textBaseline = "middle";
   let wallFontSize = (options.compact
     ? (message.length > 28 ? 60 : message.length > 18 ? 68 : 76)
     : (message.length > 28 ? 88 : message.length > 18 ? 104 : 126)) * canvasScale;
-  const fontFamily = options.peopleMenu ? 'Georgia, "Times New Roman", serif' : '"Segoe UI Variable", "Segoe UI", Arial, sans-serif';
-  context.font = `${options.peopleMenu ? 600 : 700} ${wallFontSize}px ${fontFamily}`;
+  const fontFamily = hasMenuEffect ? 'Georgia, "Times New Roman", serif' : '"Segoe UI Variable", "Segoe UI", Arial, sans-serif';
+  context.font = `${hasMenuEffect ? 600 : 700} ${wallFontSize}px ${fontFamily}`;
   const iconSpace = options.icon ? 250 * canvasScale : 0;
   while (context.measureText(message).width > canvas.width - (110 * canvasScale) - iconSpace) {
     wallFontSize = Math.max(wallFontSize - 4 * canvasScale, 58 * canvasScale);
-    context.font = `${options.peopleMenu ? 600 : 700} ${wallFontSize}px ${fontFamily}`;
+    context.font = `${hasMenuEffect ? 600 : 700} ${wallFontSize}px ${fontFamily}`;
     if (wallFontSize === 58 * canvasScale) break;
   }
   context.fillText(message, canvas.width / 2 + (options.icon ? 70 * canvasScale : 0), canvas.height / 2);
   if (options.icon) {
-    context.fillStyle = "#e5b856";
+    context.fillStyle = menuPalette.icon;
     context.font = `700 ${118 * canvasScale}px "Segoe UI Symbol", "Segoe UI", sans-serif`;
     context.fillText(options.icon, 155 * canvasScale, canvas.height / 2);
   }
