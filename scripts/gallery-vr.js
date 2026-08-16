@@ -115,15 +115,59 @@ const REIMAGINED_ARTWORKS = [
 ];
 
 const PEOPLE_BEHIND_PAINTERS = [
-  { src: "assets/people-behind-painters/Da Vinci/images/davinci-françois1er-2.png", title: { en: "Leonardo and Francis I", fr: "Léonard et François Ier", ar: "ليوناردو وفرنسوا الأول" } },
-  { src: "assets/people-behind-painters/Da Vinci/images/davinci-françois1er.png", title: { en: "Francis I — Leonardo's Royal Patron", fr: "François Ier — mécène royal de Léonard", ar: "فرنسوا الأول — راعي ليوناردو الملكي" } },
-  { src: "assets/people-behind-painters/Van Gogh/images/vangogh-Jo van Gogh-Bonger .png", title: { en: "Jo van Gogh-Bonger", fr: "Jo van Gogh-Bonger", ar: "جو فان غوخ-بونغر" } },
-  { src: "assets/people-behind-painters/Van Gogh/images/vincent_van_gogh-Jo_van_Gogh_Bonger .png", title: { en: "Vincent and Jo — A Legacy Preserved", fr: "Vincent et Jo — un héritage préservé", ar: "فنسنت وجو — إرث محفوظ" } },
-  { src: "assets/people-behind-painters/Vermeer/images/Gemini_Generated_Image_fejfq8fejfq8fejf.png", title: { en: "Vermeer and His Patrons", fr: "Vermeer et ses mécènes", ar: "فيرمير ورعاته" } },
-  { src: "assets/people-behind-painters/Vermeer/images/Vermeer_Pieter-van-Ruijven_1.png", title: { en: "Pieter van Ruijven and Maria de Knuijt", fr: "Pieter van Ruijven et Maria de Knuijt", ar: "بيتر فان راوفن وماريا دي كنويت" } },
-  { src: "assets/people-behind-painters/Monet/images/Monet_Paul-Durand-Ruel-2.jpg", title: { en: "Monet and Paul Durand-Ruel", fr: "Monet et Paul Durand-Ruel", ar: "مونيه وبول دوران-رويل" } },
-  { src: "assets/people-behind-painters/Monet/images/Monet_Paul-Durand-Ruel.png", title: { en: "Paul Durand-Ruel — Champion of Impressionism", fr: "Paul Durand-Ruel — défenseur de l'impressionnisme", ar: "بول دوران-رويل — نصير الانطباعية" } }
+  { painter: "da-vinci", src: "assets/people-behind-painters/Da Vinci/images/davinci-françois1er-2.png", title: { en: "Leonardo and Francis I", fr: "Léonard et François Ier", ar: "ليوناردو وفرنسوا الأول" } },
+  { painter: "da-vinci", src: "assets/people-behind-painters/Da Vinci/images/davinci-françois1er.png", title: { en: "Francis I — Leonardo's Royal Patron", fr: "François Ier — mécène royal de Léonard", ar: "فرنسوا الأول — راعي ليوناردو الملكي" } },
+  { painter: "van-gogh", src: "assets/people-behind-painters/Van Gogh/images/vangogh-Jo van Gogh-Bonger .png", title: { en: "Jo van Gogh-Bonger", fr: "Jo van Gogh-Bonger", ar: "جو فان غوخ-بونغر" } },
+  { painter: "van-gogh", src: "assets/people-behind-painters/Van Gogh/images/vincent_van_gogh-Jo_van_Gogh_Bonger .png", title: { en: "Vincent and Jo — A Legacy Preserved", fr: "Vincent et Jo — un héritage préservé", ar: "فنسنت وجو — إرث محفوظ" } },
+  { painter: "vermeer", src: "assets/people-behind-painters/Vermeer/images/Vermeer_Pieter_Maria.png", title: { en: "Vermeer with Pieter van Ruijven and Maria de Knuijt", fr: "Vermeer avec Pieter van Ruijven et Maria de Knuijt", ar: "فيرمير مع بيتر فان راوفن وماريا دي كنويت" } },
+  { painter: "vermeer", src: "assets/people-behind-painters/Vermeer/images/Vermeer_Pieter-van-Ruijven_1.png", title: { en: "Pieter van Ruijven and Maria de Knuijt", fr: "Pieter van Ruijven et Maria de Knuijt", ar: "بيتر فان راوفن وماريا دي كنويت" } },
+  { painter: "vermeer", src: "assets/people-behind-painters/Vermeer/images/Vermeer_Pieter-van-Ruijven_2.png", title: { en: "The Patrons Behind Vermeer's Delft Legacy", fr: "Les mécènes à l’origine de l’héritage delftois de Vermeer", ar: "الرعاة وراء إرث فيرمير في دلفت" } },
+  { painter: "monet", src: "assets/people-behind-painters/Monet/images/Monet_Paul-Durand-Ruel-2.jpg", title: { en: "Monet and Paul Durand-Ruel", fr: "Monet et Paul Durand-Ruel", ar: "مونيه وبول دوران-رويل" } },
+  { painter: "monet", src: "assets/people-behind-painters/Monet/images/Monet_Paul-Durand-Ruel.png", title: { en: "Paul Durand-Ruel — Champion of Impressionism", fr: "Paul Durand-Ruel — défenseur de l'impressionnisme", ar: "بول دوران-رويل — نصير الانطباعية" } }
 ];
+
+const PEOPLE_ROOM_CONFIG = {
+  "da-vinci": {
+    name: { en: "Leonardo da Vinci", fr: "Léonard de Vinci", ar: "ليوناردو دافنشي" },
+    subtitle: { en: "Royal patronage and a Renaissance legacy", fr: "Mécénat royal et héritage de la Renaissance", ar: "الرعاية الملكية وإرث عصر النهضة" },
+    wall: 0x4b2719, wood: 0x24150d, floor: 0x4a3321, light: 0xffd7a0,
+    event: {
+      en: "assets/people-behind-painters/Da Vinci/images/events illustration/Leonardo and François I _ Renaissance Journey_en.webp",
+      fr: "assets/people-behind-painters/Da Vinci/images/events illustration/Leonardo and François I _ Renaissance Journey_fr.webp",
+      ar: "assets/people-behind-painters/Da Vinci/images/events illustration/Leonardo and François I _ Renaissance Journey_ar.webp"
+    }
+  },
+  "van-gogh": {
+    name: { en: "Vincent van Gogh", fr: "Vincent van Gogh", ar: "فنسنت فان غوخ" },
+    subtitle: { en: "Devotion, letters, and the making of a legacy", fr: "Dévouement, lettres et construction d'un héritage", ar: "الإخلاص والرسائل وبناء الإرث" },
+    wall: 0x183b56, wood: 0x472717, floor: 0x6a4928, light: 0xffc85f,
+    event: {
+      en: "assets/people-behind-painters/Van Gogh/images/events illustration/Van Gogh Family Legacy Timeline_en.webp",
+      fr: "assets/people-behind-painters/Van Gogh/images/events illustration/Van Gogh Family Legacy Timeline_fr.webp",
+      ar: "assets/people-behind-painters/Van Gogh/images/events illustration/Van Gogh Family Legacy Timeline_ar.webp"
+    }
+  },
+  vermeer: {
+    name: { en: "Johannes Vermeer", fr: "Johannes Vermeer", ar: "يوهانس فيرمير" },
+    subtitle: { en: "Quiet patronage in Delft", fr: "Un mécénat discret à Delft", ar: "رعاية هادئة في دلفت" },
+    wall: 0x173f42, wood: 0x291a12, floor: 0x493a2c, light: 0xffe0a8,
+    event: {
+      en: "assets/people-behind-painters/Vermeer/images/events illustration/Vermeer-s Patronage Story Timeline_en.webp",
+      fr: "assets/people-behind-painters/Vermeer/images/events illustration/Vermeer-s Patronage Story Timeline_fr.webp",
+      ar: "assets/people-behind-painters/Vermeer/images/events illustration/Vermeer-s Patronage Story Timeline_ar.webp"
+    }
+  },
+  monet: {
+    name: { en: "Claude Monet", fr: "Claude Monet", ar: "كلود مونيه" },
+    subtitle: { en: "A dealer's faith in Impressionism", fr: "La confiance d'un marchand dans l'impressionnisme", ar: "إيمان تاجر بالفن الانطباعي" },
+    wall: 0x425a54, wood: 0x293527, floor: 0x65583e, light: 0xddebb5,
+    event: {
+      en: "assets/people-behind-painters/Monet/images/events illustration/Monet and Durand-Ruel An Impressionist Partnership_en.webp",
+      fr: "assets/people-behind-painters/Monet/images/events illustration/Monet and Durand-Ruel An Impressionist Partnership_fr.webp",
+      ar: "assets/people-behind-painters/Monet/images/events illustration/Monet and Durand-Ruel An Impressionist Partnership_ar.webp"
+    }
+  }
+};
 
 function getReimaginedPainter(item) {
   if (/bedroom|van-gogh/i.test(item.src)) return "van-gogh";
@@ -206,7 +250,7 @@ const isModelMuseum = previewRoom === "models";
 // The standalone cinema has no `room` query parameter, but it must never be
 // treated as the connected museum. Otherwise entering WebXR moves the visitor
 // to the gallery entrance while the cinema remains tens of metres away.
-const isConnectedMuseum = !isCinemaOnly && !isModelMuseum && (Boolean(artistRoom) || !previewRoom || previewRoom === "paintings");
+const isConnectedMuseum = !isCinemaOnly && !isModelMuseum && previewRoom !== "people" && (Boolean(artistRoom) || !previewRoom || previewRoom === "paintings");
 const ARTIST_ROOM_ORDER = ["da-vinci", "van-gogh", "vermeer", "monet"];
 const connectedStartIndex = Math.max(0, ARTIST_ROOM_ORDER.indexOf(artistRoomId));
 const connectedStartZ = connectedStartIndex === 0 ? -4.6 : connectedStartIndex * 16 - 5.2;
@@ -821,7 +865,7 @@ function applyCopy() {
     ["gallery-reimagined-link", text.reimaginedRoom, `gallery-vr.html?lang=${lang}&room=reimagined`],
     ["gallery-groups-link", lang === "fr" ? "Groupes de peintres en 3D" : lang === "ar" ? "مجموعات الرسامين ثلاثية الأبعاد" : "Painter Groups in 3D", `gallery-vr.html?lang=${lang}&room=groups`],
     ["gallery-louvre-link", lang === "fr" ? "Musée du Louvre" : lang === "ar" ? "متحف اللوفر" : "Louvre Museum", `gallery-vr.html?lang=${lang}&room=louvre`],
-    ["gallery-people-link", lang === "fr" ? "Les personnes derrière les peintres" : lang === "ar" ? "الأشخاص وراء الرسامين" : "People Behind the Painters", `gallery-vr.html?lang=${lang}&room=people`],
+    ["gallery-people-link", lang === "fr" ? "Les personnes derrière les peintres" : lang === "ar" ? "الأشخاص وراء الرسامين" : "People Behind the Painters", `gallery-vr.html?lang=${lang}&room=people&artist=da-vinci`],
     ["gallery-book-link", text.livingBook, `book-3d.html?lang=${lang}`]
   ];
   productLinks.forEach(([id, label, href]) => {
@@ -995,7 +1039,10 @@ function buildRoom() {
   scene.add(cinemaCorridorFloor);
 
   addLouvrePaintingsRoomDecor();
-  if (activeRoom === "reimagined") addReimaginedPainterRoomSigns();
+  if (activeRoom === "reimagined") {
+    addReimaginedPainterRoomDecor();
+    addReimaginedPainterRoomSigns();
+  }
   else addNavigationSigns();
   addPaintingsReimaginedPortal();
   addCinemaEntranceHotspot();
@@ -1240,23 +1287,21 @@ async function buildLouvreMuseumExhibits() {
 }
 
 function buildPeopleBehindPaintersRoom() {
-  document.getElementById("gallery-title").textContent = lang === "fr"
-    ? "Les personnes derrière les peintres"
-    : lang === "ar" ? "الأشخاص وراء الرسامين" : "People Behind the Painters";
-  document.getElementById("gallery-count").textContent = lang === "fr"
-    ? "Quatre histoires · huit images"
-    : lang === "ar" ? "أربع حكايات · ثماني صور" : "Four stories · eight images";
+  const roomId = PEOPLE_ROOM_CONFIG[artistRoomId] ? artistRoomId : "da-vinci";
+  const room = PEOPLE_ROOM_CONFIG[roomId];
+  document.getElementById("gallery-title").textContent = `${room.name[lang] || room.name.en} — ${lang === "fr" ? "les personnes derrière le peintre" : lang === "ar" ? "الأشخاص وراء الفنان" : "People Behind the Painter"}`;
+  document.getElementById("gallery-count").textContent = room.subtitle[lang] || room.subtitle.en;
   document.getElementById("gallery-instructions").textContent = lang === "fr"
     ? "Découvrez les mécènes, proches et défenseurs qui ont fait vivre ces héritages artistiques."
     : lang === "ar" ? "اكتشف الرعاة والأقارب والمدافعين الذين حافظوا على هذه الموروثات الفنية." : "Meet the patrons, relatives, and advocates who sustained these artistic legacies.";
 
-  scene.background = new THREE.Color(0x14090b);
-  scene.fog = new THREE.Fog(0x14090b, 20, 38);
+  scene.background = new THREE.Color(room.wood);
+  scene.fog = new THREE.Fog(room.wood, 20, 38);
   visitor.position.set(0, 0, 6.4);
   visitor.rotation.y = 0;
-  scene.add(new THREE.HemisphereLight(0xffe6c4, 0x1b0a0d, isQuestBrowser ? 0.78 : 0.94));
+  scene.add(new THREE.HemisphereLight(room.light, room.wood, isQuestBrowser ? 0.78 : 0.94));
 
-  const floorMaterial = new THREE.MeshStandardMaterial({ color: 0x2b160d, roughness: 0.76 });
+  const floorMaterial = new THREE.MeshStandardMaterial({ color: room.floor, roughness: 0.76 });
   const floor = new THREE.Mesh(new THREE.PlaneGeometry(14, 18), floorMaterial);
   floor.rotation.x = -Math.PI / 2;
   floor.receiveShadow = true;
@@ -1274,8 +1319,8 @@ function buildPeopleBehindPaintersRoom() {
     }
   }
 
-  const burgundy = new THREE.MeshStandardMaterial({ color: 0x470c1c, roughness: 0.94, side: THREE.DoubleSide });
-  const wood = new THREE.MeshStandardMaterial({ color: 0x1b0d08, roughness: 0.72, side: THREE.DoubleSide });
+  const burgundy = new THREE.MeshStandardMaterial({ color: room.wall, roughness: 0.94, side: THREE.DoubleSide });
+  const wood = new THREE.MeshStandardMaterial({ color: room.wood, roughness: 0.72, side: THREE.DoubleSide });
   const cream = new THREE.MeshStandardMaterial({ color: 0xd9c9ae, roughness: 0.92, side: THREE.DoubleSide });
   [[-7, 2.25, 0, Math.PI / 2, 18], [7, 2.25, 0, -Math.PI / 2, 18], [0, 2.25, -9, 0, 14], [0, 2.25, 9, Math.PI, 14]].forEach(([x, y, z, rotationY, width]) => {
     const wall = new THREE.Mesh(new THREE.PlaneGeometry(width, 4.5), burgundy);
@@ -1311,31 +1356,78 @@ function buildPeopleBehindPaintersRoom() {
 
   [-5.5, 0, 5.5].forEach((z) => {
     [-4.5, 0, 4.5].forEach((x) => {
-      const light = new THREE.PointLight(0xffd39a, isLowPowerDevice ? 0.28 : 0.46, 8.5);
+      const light = new THREE.PointLight(room.light, isLowPowerDevice ? 0.28 : 0.46, 8.5);
       light.position.set(x, 4.05, z);
       scene.add(light);
     });
   });
 
-  createWallSign(
-    lang === "fr" ? "LES PERSONNES DERRIÈRE LES PEINTRES" : lang === "ar" ? "الأشخاص وراء الرسامين" : "PEOPLE BEHIND THE PAINTERS",
-    [0, 3.92, -8.87], 0, { width: 5.6, height: 0.5, accent: true, compact: true }
+  addPeopleRoomNavigation(roomId);
+  addVirtualGuideStation([-6.88, 1.25, 7], Math.PI / 2, `the people who sustained ${room.name.en}'s artistic legacy`);
+}
+
+function addPeopleRoomNavigation(currentRoomId) {
+  const menuBackdrop = new THREE.Mesh(
+    new THREE.PlaneGeometry(13.45, 4.15),
+    new THREE.MeshStandardMaterial({ color: 0x0b302b, roughness: 0.88, side: THREE.DoubleSide })
   );
-  createWallSign(
-    lang === "fr" ? "RETOUR À LA GALERIE" : lang === "ar" ? "العودة إلى المعرض" : "BACK TO THE GALLERY",
-    [0, 2.1, 8.87], Math.PI, { width: 3.4, height: 0.46, exitUrl: `gallery-vr.html?lang=${lang}`, compact: true }
-  );
-  addVirtualGuideStation([-6.88, 1.25, 7], Math.PI / 2, "the patrons, relatives, collectors, and advocates behind the four painters");
+  // The visitor approaches this wall from lower Z values. Keep the backdrop
+  // behind every clickable sign so it cannot hide the menu.
+  menuBackdrop.position.set(0, 2.25, 8.895);
+  menuBackdrop.rotation.y = Math.PI;
+  scene.add(menuBackdrop);
+  const menuGold = new THREE.MeshStandardMaterial({ color: 0xc99b4a, roughness: 0.48, metalness: 0.24 });
+  [[13.3, 0.025, 0, 4.27], [13.3, 0.025, 0, 0.23], [0.025, 4.06, -6.58, 2.25], [0.025, 4.06, 6.58, 2.25]].forEach(([width, height, x, y]) => {
+    const border = new THREE.Mesh(new THREE.PlaneGeometry(width, height), menuGold);
+    border.position.set(x, y, 8.885);
+    border.rotation.y = Math.PI;
+    scene.add(border);
+  });
+  const roomHeading = lang === "fr" ? "AUTRES SALLES" : lang === "ar" ? "غرف أخرى" : "OTHER ROOMS";
+  createWallSign(roomHeading, [0, 3.84, 8.87], Math.PI, {
+    width: 4.1, height: 0.56, peopleMenu: true, heading: true, compact: true
+  });
+  const painterIcons = { "da-vinci": "◇", "van-gogh": "✿", vermeer: "⌕", monet: "◉" };
+  Object.entries(PEOPLE_ROOM_CONFIG).reverse().forEach(([id, room], index) => {
+    const x = -4.65 + index * 3.1;
+    createWallSign(room.name[lang] || room.name.en, [x, 3.18, 8.87], Math.PI, {
+      width: 2.78, height: 0.5,
+      exitUrl: `gallery-vr.html?lang=${lang}&room=people&artist=${id}`,
+      compact: true,
+      peopleMenu: true,
+      icon: painterIcons[id],
+      active: id === currentRoomId
+    });
+  });
+  const destinations = [
+    [text.modelsRoom, `gallery-vr.html?lang=${lang}&room=models`, "⬡"],
+    [text.paintingsRoom, `gallery-vr.html?lang=${lang}&room=paintings`, "▣"],
+    [lang === "fr" ? "GALERIE PRINCIPALE" : lang === "ar" ? "المعرض الرئيسي" : "MAIN GALLERY", `gallery-vr.html?lang=${lang}`, "⌂"],
+    [text.livingBook, `book-3d.html?lang=${lang}`, "▤"],
+    [text.cinemaEnter, `cinema-vr.html?lang=${lang}`, "◎"],
+    [text.reimaginedRoom, `gallery-vr.html?lang=${lang}&room=reimagined`, "▧"]
+  ];
+  destinations.forEach(([label, url, icon], index) => {
+    const column = index % 3;
+    const row = Math.floor(index / 3);
+    createWallSign(label, [-4.15 + column * 4.15, 2.43 - row * 0.66, 8.87], Math.PI, {
+      width: 3.72, height: 0.53, exitUrl: url, compact: true, peopleMenu: true, icon
+    });
+  });
 }
 
 async function buildPeopleBehindPaintersExhibits() {
-  const placements = [
-    [-6.88, 2.42, -4.7, Math.PI / 2], [-6.88, 2.42, 0, Math.PI / 2], [-6.88, 2.42, 4.7, Math.PI / 2],
-    [6.88, 2.42, -4.7, -Math.PI / 2], [6.88, 2.42, 0, -Math.PI / 2], [6.88, 2.42, 4.7, -Math.PI / 2],
-    [-2.45, 2.42, -8.88, 0], [2.45, 2.42, -8.88, 0]
-  ];
+  const roomId = PEOPLE_ROOM_CONFIG[artistRoomId] ? artistRoomId : "da-vinci";
+  const room = PEOPLE_ROOM_CONFIG[roomId];
+  const portraits = PEOPLE_BEHIND_PAINTERS.filter((item) => item.painter === roomId);
+  const portraitPlacement = (index) => {
+    const side = index % 2 === 0 ? -1 : 1;
+    const row = Math.floor(index / 2);
+    const z = portraits.length <= 2 ? 0.2 : -2.45 + row * 4.9;
+    return [side * 6.88, 2.42, z, side < 0 ? Math.PI / 2 : -Math.PI / 2];
+  };
 
-  await Promise.all(PEOPLE_BEHIND_PAINTERS.map(async (item, index) => {
+  await Promise.all(portraits.map(async (item, index) => {
     const texture = await textureLoader.loadAsync(item.src);
     optimizeTextureForMobile(texture);
     texture.encoding = THREE.sRGBEncoding;
@@ -1343,7 +1435,7 @@ async function buildPeopleBehindPaintersExhibits() {
     const aspect = texture.image.width / texture.image.height;
     const height = Math.min(1.72, 2.35 / aspect);
     const width = height * aspect;
-    const [x, y, z, rotationY] = placements[index];
+    const [x, y, z, rotationY] = portraitPlacement(index);
     const display = new THREE.Group();
     display.position.set(x, y, z);
     display.rotation.y = rotationY;
@@ -1367,6 +1459,27 @@ async function buildPeopleBehindPaintersExhibits() {
     display.add(label);
     scene.add(display);
   }));
+
+  const eventSrc = room.event?.[lang] || room.event?.en || portraits[0]?.src;
+  if (!eventSrc) return;
+  const eventTexture = await textureLoader.loadAsync(eventSrc);
+  optimizeTextureForMobile(eventTexture);
+  eventTexture.encoding = THREE.sRGBEncoding;
+  eventTexture.minFilter = THREE.LinearFilter;
+  const eventAspect = eventTexture.image.width / eventTexture.image.height;
+  const eventHeight = Math.min(3.42, 11.7 / eventAspect);
+  const eventWidth = eventHeight * eventAspect;
+  const storyWall = new THREE.Group();
+  storyWall.position.set(0, 2.32, -8.87);
+  const border = new THREE.Mesh(
+    new THREE.BoxGeometry(eventWidth + 0.28, eventHeight + 0.28, 0.12),
+    new THREE.MeshStandardMaterial({ color: 0xd2ad63, roughness: 0.34, metalness: 0.36 })
+  );
+  storyWall.add(border);
+  const storyImage = new THREE.Mesh(new THREE.PlaneGeometry(eventWidth, eventHeight), new THREE.MeshBasicMaterial({ map: eventTexture }));
+  storyImage.position.z = 0.071;
+  storyWall.add(storyImage);
+  scene.add(storyWall);
 }
 
 async function buildGroupExhibit() {
@@ -2410,6 +2523,61 @@ function addReimaginedPainterRoomSigns() {
   });
 }
 
+function addReimaginedPainterRoomDecor() {
+  const rooms = [
+    { centerZ: 0, depth: 10, wall: 0x4b2719, panel: 0x24150d, floor: 0x4a3321, trim: 0xc79a58 },
+    { centerZ: 10, depth: 10, wall: 0x244f72, panel: 0x183247, floor: 0x79552d, trim: 0xe0ad42 },
+    { centerZ: 22, depth: 14, wall: 0x245d61, panel: 0x173c3f, floor: 0x514238, trim: 0xc9a96a },
+    { centerZ: 34, depth: 10, wall: 0x557063, panel: 0x2f473c, floor: 0x695e42, trim: 0xd7c982 }
+  ];
+  const cream = new THREE.MeshStandardMaterial({ color: 0xe5d8c2, roughness: 0.94, side: THREE.DoubleSide });
+
+  rooms.forEach((room) => {
+    const wallMaterial = new THREE.MeshStandardMaterial({ color: room.wall, roughness: 0.94, side: THREE.DoubleSide });
+    const panelMaterial = new THREE.MeshStandardMaterial({ color: room.panel, roughness: 0.76, side: THREE.DoubleSide });
+    const trimMaterial = new THREE.MeshStandardMaterial({ color: room.trim, roughness: 0.52, metalness: 0.12 });
+    const floor = new THREE.Mesh(
+      new THREE.PlaneGeometry(11.75, room.depth - 0.12),
+      new THREE.MeshStandardMaterial({ color: room.floor, roughness: 0.82 })
+    );
+    floor.rotation.x = -Math.PI / 2;
+    floor.position.set(0, 0.012, room.centerZ);
+    floor.receiveShadow = true;
+    scene.add(floor);
+
+    [-1, 1].forEach((side) => {
+      const x = side * 5.985;
+      const rotationY = side < 0 ? Math.PI / 2 : -Math.PI / 2;
+      const wall = new THREE.Mesh(new THREE.PlaneGeometry(room.depth, 4), wallMaterial);
+      wall.position.set(x, 2, room.centerZ);
+      wall.rotation.y = rotationY;
+      scene.add(wall);
+      const panel = new THREE.Mesh(new THREE.PlaneGeometry(room.depth, 1.08), panelMaterial);
+      panel.position.set(x - side * 0.008, 0.54, room.centerZ);
+      panel.rotation.y = rotationY;
+      scene.add(panel);
+      const rail = new THREE.Mesh(new THREE.BoxGeometry(0.065, 0.1, room.depth), trimMaterial);
+      rail.position.set(x - side * 0.025, 1.1, room.centerZ);
+      scene.add(rail);
+      for (let offset = -room.depth / 2 + 1.35; offset < room.depth / 2; offset += 2.7) {
+        const moulding = new THREE.Mesh(new THREE.BoxGeometry(0.07, 1.0, 0.055), trimMaterial);
+        moulding.position.set(x - side * 0.03, 0.55, room.centerZ + offset);
+        scene.add(moulding);
+      }
+    });
+
+    const ceilingInset = new THREE.Mesh(new THREE.PlaneGeometry(7.4, room.depth - 0.45), cream);
+    ceilingInset.rotation.x = Math.PI / 2;
+    ceilingInset.position.set(0, 3.985, room.centerZ);
+    scene.add(ceilingInset);
+    [-3.9, 3.9].forEach((x) => {
+      const ceilingTrim = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.08, room.depth - 0.35), trimMaterial);
+      ceilingTrim.position.set(x, 3.94, room.centerZ);
+      scene.add(ceilingTrim);
+    });
+  });
+}
+
 function addCinemaEntranceHotspot() {
   const group = new THREE.Group();
   group.position.set(5.15, 0.02, 34);
@@ -2457,24 +2625,37 @@ function createWallSign(message, position, rotationY, options = {}) {
   const context = canvas.getContext("2d");
   const isExit = Boolean(options.exitUrl);
   const isTravel = Boolean(options.destination);
-  context.fillStyle = isExit ? "#712832" : isTravel ? "#0b5064" : options.accent ? "#1b354a" : "#0f1b26";
+  context.fillStyle = options.peopleMenu
+    ? (options.heading ? "#09232b" : options.active ? "#70252d" : "#4b171d")
+    : isExit ? "#712832" : isTravel ? "#0b5064" : options.accent ? "#1b354a" : "#0f1b26";
   context.fillRect(0, 0, canvas.width, canvas.height);
-  context.strokeStyle = isExit ? "#ffe4e7" : isTravel ? "#bdefff" : "#e0bd73";
-  context.lineWidth = 14 * canvasScale;
+  context.strokeStyle = options.peopleMenu ? "#d9ac58" : isExit ? "#ffe4e7" : isTravel ? "#bdefff" : "#e0bd73";
+  context.lineWidth = (options.peopleMenu ? 8 : 14) * canvasScale;
   context.strokeRect(7 * canvasScale, 7 * canvasScale, canvas.width - 14 * canvasScale, canvas.height - 14 * canvasScale);
-  context.fillStyle = "#ffffff";
+  if (options.peopleMenu) {
+    context.lineWidth = 3 * canvasScale;
+    context.strokeRect(24 * canvasScale, 24 * canvasScale, canvas.width - 48 * canvasScale, canvas.height - 48 * canvasScale);
+  }
+  context.fillStyle = options.peopleMenu ? "#fff3df" : "#ffffff";
   context.textAlign = "center";
   context.textBaseline = "middle";
   let wallFontSize = (options.compact
     ? (message.length > 28 ? 60 : message.length > 18 ? 68 : 76)
     : (message.length > 28 ? 88 : message.length > 18 ? 104 : 126)) * canvasScale;
-  context.font = `700 ${wallFontSize}px "Segoe UI Variable", "Segoe UI", Arial, sans-serif`;
-  while (context.measureText(message).width > canvas.width - 110 * canvasScale) {
+  const fontFamily = options.peopleMenu ? 'Georgia, "Times New Roman", serif' : '"Segoe UI Variable", "Segoe UI", Arial, sans-serif';
+  context.font = `${options.peopleMenu ? 600 : 700} ${wallFontSize}px ${fontFamily}`;
+  const iconSpace = options.icon ? 250 * canvasScale : 0;
+  while (context.measureText(message).width > canvas.width - (110 * canvasScale) - iconSpace) {
     wallFontSize = Math.max(wallFontSize - 4 * canvasScale, 58 * canvasScale);
-    context.font = `700 ${wallFontSize}px "Segoe UI Variable", "Segoe UI", Arial, sans-serif`;
+    context.font = `${options.peopleMenu ? 600 : 700} ${wallFontSize}px ${fontFamily}`;
     if (wallFontSize === 58 * canvasScale) break;
   }
-  context.fillText(message, canvas.width / 2, canvas.height / 2);
+  context.fillText(message, canvas.width / 2 + (options.icon ? 70 * canvasScale : 0), canvas.height / 2);
+  if (options.icon) {
+    context.fillStyle = "#e5b856";
+    context.font = `700 ${118 * canvasScale}px "Segoe UI Symbol", "Segoe UI", sans-serif`;
+    context.fillText(options.icon, 155 * canvasScale, canvas.height / 2);
+  }
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.encoding = THREE.sRGBEncoding;
