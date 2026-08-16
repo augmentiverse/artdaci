@@ -270,7 +270,7 @@
           "en": "Model 2",
           "fr": "Modèle 2"
         },
-        "src": "assets/paintings/Da Vinci/mona-lisa/mona-lisa-out-of-frame.glb"
+        "src": "assets/paintings/Da Vinci/mona-lisa/mona-lisa-out-of-frame_c.glb"
       },
       {
         "id": "framed-scene",
@@ -278,7 +278,7 @@
           "en": "Framed scene",
           "fr": "Scène encadrée"
         },
-        "src": "assets/paintings/Da Vinci/mona-lisa/monalisa_framed.glb"
+        "src": "assets/paintings/Da Vinci/mona-lisa/monalisa_framed_c.glb"
       },
       {
         "id": "davinci-monalisa",
@@ -286,7 +286,7 @@
           "en": "Da Vinci and Mona Lisa",
           "fr": "De Vinci et Mona Lisa"
         },
-        "src": "assets/paintings/Da Vinci/mona-lisa/davinci_monalisa.glb"
+        "src": "assets/paintings/Da Vinci/mona-lisa/davinci-monalisa_c.glb"
       }
     ],
     "scaleMeters": {
@@ -360,7 +360,7 @@
           "en": "Model 2",
           "fr": "Modèle 2"
         },
-        "src": "assets/paintings/Da Vinci/mona-lisa/mona-lisa-out-of-frame.glb"
+        "src": "assets/paintings/Da Vinci/mona-lisa/mona-lisa-out-of-frame_c.glb"
       },
       {
         "id": "framed-scene",
@@ -376,7 +376,7 @@
           "en": "Da Vinci and Mona Lisa",
           "fr": "De Vinci et Mona Lisa"
         },
-        "src": "assets/paintings/Da Vinci/mona-lisa/davinci_monalisa.glb"
+        "src": "assets/paintings/Da Vinci/mona-lisa/davinci-monalisa_c.glb"
       },
       {
         "id": "davinci-monalisa-alternative",
@@ -384,7 +384,7 @@
           "en": "Da Vinci and Mona Lisa — Alternative",
           "fr": "De Vinci et Mona Lisa — Variante"
         },
-        "src": "assets/paintings/Da Vinci/mona-lisa/davinci-monalisa.glb"
+        "src": "assets/paintings/Da Vinci/mona-lisa/davinci-monalisa_c.glb"
       }
     ],
     "audioGuides": [

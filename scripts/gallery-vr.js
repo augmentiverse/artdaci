@@ -46,22 +46,30 @@ const GROUP_EXHIBIT = {
 const MODEL_ARTIST_EXHIBITS = {
   "da-vinci": [
     { title: { en: "Leonardo and Mona Lisa", fr: "Léonard et La Joconde" }, src: "assets/paintings/Da Vinci/mona-lisa/davinci-monalisa_c.glb", rotationY: Math.PI },
-    { title: { en: "Leonardo Painting Mona Lisa", fr: "Léonard peignant La Joconde" }, src: "assets/paintings/Da Vinci/mona-lisa/davinci-painting-mona.glb", rotationY: Math.PI }
+    { title: { en: "Leonardo Painting Mona Lisa", fr: "Léonard peignant La Joconde" }, src: "assets/paintings/Da Vinci/mona-lisa/davinci-painting-mona.glb", rotationY: Math.PI },
+    { title: { en: "Leonardo da Vinci", fr: "Léonard de Vinci", ar: "ليوناردو دافنشي" }, src: "assets/paintings/Da Vinci/reimagined-3dmodels/DaVinci_standing_c.glb", rotationY: Math.PI },
+    { title: { en: "Leonardo and Francis I", fr: "Léonard et François Ier", ar: "ليوناردو وفرنسوا الأول" }, src: "assets/paintings/Da Vinci/reimagined-3dmodels/DaVinci-François1er.glb", rotationY: Math.PI }
   ],
   "van-gogh": [
-    { title: { en: "Vincent van Gogh", fr: "Vincent van Gogh" }, src: "assets/peintres/3d models/van-gogh_standing_w_c.glb", rotationY: Math.PI }
+    { title: { en: "Vincent van Gogh", fr: "Vincent van Gogh" }, src: "assets/peintres/3d models/van-gogh_standing_w_c.glb", rotationY: Math.PI },
+    { title: { en: "Jo van Gogh-Bonger", fr: "Jo van Gogh-Bonger", ar: "جو فان غوخ-بونغر" }, src: "assets/people-behind-painters/Van Gogh/3d models/Van-Gogh_Jo_c.glb", rotationY: Math.PI }
   ],
   vermeer: [
     { title: { en: "Girl with a Pearl Earring", fr: "La Jeune Fille à la perle" }, src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring_sitting_c.glb", rotationY: Math.PI },
     { title: { en: "The Milkmaid", fr: "La Laitière" }, src: "assets/paintings/Vermeer/Milkmaid_vermeer_c100.glb", rotationY: Math.PI },
-    { title: { en: "The Astronomer", fr: "L’Astronome" }, src: "assets/paintings/Vermeer/the-astronomer_vermeer_c2.glb", rotationY: Math.PI }
+    { title: { en: "The Astronomer", fr: "L’Astronome" }, src: "assets/paintings/Vermeer/the-astronomer_vermeer_c2.glb", rotationY: Math.PI },
+    { title: { en: "Vermeer and His Patrons", fr: "Vermeer et ses mécènes", ar: "فيرمير ورعاته" }, src: "assets/paintings/Vermeer/reimagined-3dmodels/Vermeer_Pieter-van-Ruijven_rig.glb", rotationY: Math.PI }
   ],
-  monet: []
+  monet: [
+    { title: { en: "Claude Monet", fr: "Claude Monet", ar: "كلود مونيه" }, src: "assets/paintings/monet/reinmagined-3dmodels/Claude-Monet_standing_c.glb", rotationY: Math.PI },
+    { title: { en: "Monet and Paul Durand-Ruel", fr: "Monet et Paul Durand-Ruel", ar: "مونيه وبول دوران-رويل" }, src: "assets/paintings/monet/reinmagined-3dmodels/Claude-Monet_Pauld-Durand-Ruel_c.glb", rotationY: Math.PI }
+  ]
 };
 
 const STANDING_VAN_GOGH_MODEL = "assets/paintings/van-gogh/vangogh_istanding.glb";
-const PAINTINGS_MODELS_GATEWAY = "assets/paintings/fourniture/gateway-egypt.glb";
-const LOUVRE_FACADE_MODEL = "assets/paintings/fourniture/louvre-facade_c.glb";
+const PAINTINGS_MODELS_GATEWAY = null;
+const LOUVRE_FACADE_MODEL = null;
+const CINEMA_SOFA_MODEL = null;
 const LOUVRE_PHOTO_EXHIBITS = [
   { src: "assets/paintings/groups/DVVM_Louvre.png", title: { en: "The Four Masters at the Louvre", fr: "Les quatre maîtres au Louvre", ar: "الأساتذة الأربعة في اللوفر" } },
   { src: "assets/gallery/reimagined/Monalisa-louvre-1.png", title: { en: "Mona Lisa at the Louvre", fr: "La Joconde au Louvre", ar: "الموناليزا في اللوفر" } }
@@ -132,9 +140,9 @@ const PEOPLE_ROOM_CONFIG = {
     subtitle: { en: "Royal patronage and a Renaissance legacy", fr: "Mécénat royal et héritage de la Renaissance", ar: "الرعاية الملكية وإرث عصر النهضة" },
     wall: 0x4b2719, wood: 0x24150d, floor: 0x4a3321, light: 0xffd7a0,
     event: {
-      en: "assets/people-behind-painters/Da Vinci/images/events illustration/Leonardo and François I _ Renaissance Journey_en.webp",
-      fr: "assets/people-behind-painters/Da Vinci/images/events illustration/Leonardo and François I _ Renaissance Journey_fr.webp",
-      ar: "assets/people-behind-painters/Da Vinci/images/events illustration/Leonardo and François I _ Renaissance Journey_ar.webp"
+      en: "assets/people-behind-painters/Da Vinci/images/events illustration/Leonardo and François I _ Renaissance Journey_en.png",
+      fr: "assets/people-behind-painters/Da Vinci/images/events illustration/Leonardo and François I _ Renaissance Journey_fr.png",
+      ar: "assets/people-behind-painters/Da Vinci/images/events illustration/Leonardo and François I _ Renaissance Journey_ar.png"
     }
   },
   "van-gogh": {
@@ -142,9 +150,9 @@ const PEOPLE_ROOM_CONFIG = {
     subtitle: { en: "Devotion, letters, and the making of a legacy", fr: "Dévouement, lettres et construction d'un héritage", ar: "الإخلاص والرسائل وبناء الإرث" },
     wall: 0x183b56, wood: 0x472717, floor: 0x6a4928, light: 0xffc85f,
     event: {
-      en: "assets/people-behind-painters/Van Gogh/images/events illustration/Van Gogh Family Legacy Timeline_en.webp",
-      fr: "assets/people-behind-painters/Van Gogh/images/events illustration/Van Gogh Family Legacy Timeline_fr.webp",
-      ar: "assets/people-behind-painters/Van Gogh/images/events illustration/Van Gogh Family Legacy Timeline_ar.webp"
+      en: "assets/people-behind-painters/Van Gogh/images/events illustration/Van Gogh Family Legacy Timeline_en.png",
+      fr: "assets/people-behind-painters/Van Gogh/images/events illustration/Van Gogh Family Legacy Timeline_fr.png",
+      ar: "assets/people-behind-painters/Van Gogh/images/events illustration/Van Gogh Family Legacy Timeline_ar.png"
     }
   },
   vermeer: {
@@ -152,9 +160,9 @@ const PEOPLE_ROOM_CONFIG = {
     subtitle: { en: "Quiet patronage in Delft", fr: "Un mécénat discret à Delft", ar: "رعاية هادئة في دلفت" },
     wall: 0x173f42, wood: 0x291a12, floor: 0x493a2c, light: 0xffe0a8,
     event: {
-      en: "assets/people-behind-painters/Vermeer/images/events illustration/Vermeer-s Patronage Story Timeline_en.webp",
-      fr: "assets/people-behind-painters/Vermeer/images/events illustration/Vermeer-s Patronage Story Timeline_fr.webp",
-      ar: "assets/people-behind-painters/Vermeer/images/events illustration/Vermeer-s Patronage Story Timeline_ar.webp"
+      en: "assets/people-behind-painters/Vermeer/images/events illustration/Vermeer-s Patronage Story Timeline_en.png",
+      fr: "assets/people-behind-painters/Vermeer/images/events illustration/Vermeer-s Patronage Story Timeline_fr.png",
+      ar: "assets/people-behind-painters/Vermeer/images/events illustration/Vermeer-s Patronage Story Timeline_ar.png"
     }
   },
   monet: {
@@ -162,9 +170,9 @@ const PEOPLE_ROOM_CONFIG = {
     subtitle: { en: "A dealer's faith in Impressionism", fr: "La confiance d'un marchand dans l'impressionnisme", ar: "إيمان تاجر بالفن الانطباعي" },
     wall: 0x425a54, wood: 0x293527, floor: 0x65583e, light: 0xddebb5,
     event: {
-      en: "assets/people-behind-painters/Monet/images/events illustration/Monet and Durand-Ruel An Impressionist Partnership_en.webp",
-      fr: "assets/people-behind-painters/Monet/images/events illustration/Monet and Durand-Ruel An Impressionist Partnership_fr.webp",
-      ar: "assets/people-behind-painters/Monet/images/events illustration/Monet and Durand-Ruel An Impressionist Partnership_ar.webp"
+      en: "assets/people-behind-painters/Monet/images/events illustration/Monet and Durand-Ruel An Impressionist Partnership_en.png",
+      fr: "assets/people-behind-painters/Monet/images/events illustration/Monet and Durand-Ruel An Impressionist Partnership_fr.png",
+      ar: "assets/people-behind-painters/Monet/images/events illustration/Monet and Durand-Ruel An Impressionist Partnership_ar.png"
     }
   }
 };
@@ -517,9 +525,23 @@ stage.appendChild(renderer.domElement);
 
 const textureLoader = new THREE.TextureLoader();
 const audioLoader = new THREE.AudioLoader();
-const dracoLoader = new DRACOLoader();
+const modelLoadingManager = new THREE.LoadingManager();
+const isPublishedGitHubGallery = location.hostname === "augmentiverse.github.io"
+  && location.pathname.toLowerCase().startsWith("/artdaci/");
+modelLoadingManager.setURLModifier((source) => {
+  if (!isPublishedGitHubGallery || !/\.glb(?:$|[?#])/i.test(source)) return source;
+  const absolute = new URL(source, location.href);
+  const repositoryPath = decodeURIComponent(absolute.pathname).replace(/^\/artdaci\//i, "");
+  // GitHub Pages exposes Git LFS pointer files instead of their binary content.
+  // media.githubusercontent.com resolves those pointers and sends the real GLB.
+  return `https://media.githubusercontent.com/media/augmentiverse/artdaci/main/${repositoryPath
+    .split("/")
+    .map(encodeURIComponent)
+    .join("/")}`;
+});
+const dracoLoader = new DRACOLoader(modelLoadingManager);
 dracoLoader.setDecoderPath("vendor/draco/");
-const modelLoader = new GLTFLoader();
+const modelLoader = new GLTFLoader(modelLoadingManager);
 modelLoader.setDRACOLoader(dracoLoader);
 const furnitureSourceCache = new Map();
 const controllers = [renderer.xr.getController(0), renderer.xr.getController(1)];
@@ -1702,6 +1724,7 @@ function addConnectedMuseumPartitions() {
 }
 
 async function ensureLouvreFacade() {
+  if (!LOUVRE_FACADE_MODEL) return null;
   if (scene.getObjectByName("louvre-vr-exhibit")) return scene.getObjectByName("louvre-vr-exhibit");
   return (async () => {
     const gltf = await modelLoader.loadAsync(LOUVRE_FACADE_MODEL);
@@ -2078,6 +2101,7 @@ function addCinemaRoomArchitecture() {
 }
 
 async function addPaintingsModelsGateway() {
+  if (!PAINTINGS_MODELS_GATEWAY) return;
   try {
     const gltf = await modelLoader.loadAsync(PAINTINGS_MODELS_GATEWAY);
     const gateway = gltf.scene;
@@ -3270,8 +3294,9 @@ function createCinemaButton(label, options) {
 
 async function addCinemaSofaModel(cinema) {
   if (cinemaSofaLoaded) return;
+  if (!CINEMA_SOFA_MODEL) return;
   cinemaSofaLoaded = true;
-  const gltf = await modelLoader.loadAsync("assets/paintings/fourniture/sofa.glb");
+  const gltf = await modelLoader.loadAsync(CINEMA_SOFA_MODEL);
   const sofa = gltf.scene;
   sofa.name = "cinema-sofa-model";
   sofa.traverse((node) => {
