@@ -94,11 +94,44 @@ const PAINTINGS_AR = {
     ],
     details: ["لاحظ أن القرط لا يملك حدوداً كاملة.", "قارن حواف الوجه الناعمة بحواف غطاء الرأس.", "راقب اللمعة الرطبة على الشفاه.", "تخيل الستار الأخضر الذي كشفت عنه الفحوص."],
     audio: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring_1m54_fr.m4a"
+  },
+  "monet-impression-sunrise": {
+    title: "انطباع، شروق الشمس",
+    artist: "كلود مونيه",
+    date: "1872",
+    movement: "الانطباعية",
+    medium: "زيت على قماش",
+    dimensions: "نحو 48 × 63 سم",
+    location: "متحف مارموتان مونيه، باريس",
+    image: "assets/paintings/monet/Tableaux/Impression-Sunrise_Monet.png",
+    intro: "اللوحة التي منحت حركة فنية اسمها",
+    lead: "حوّل مونيه فجر ميناء لوهافر إلى بيان للرؤية الحديثة، حيث تحل الإضاءة والجو والإدراك اللحظي محل الوصف الأكاديمي المصقول.",
+    sections: [
+      ["السياق التاريخي", "رسم مونيه الميناء الخارجي في لوهافر من نافذة فندق الأميرالية نحو نوفمبر 1872، في مدينة كان يعرفها منذ شبابه وكانت تتغير بفعل التجارة والصناعة."],
+      ["اسم الانطباعية", "عُرضت اللوحة سنة 1874 في أول معرض للمجموعة المستقلة. واستخدم الناقد لويس لوروا عنوانها ساخراً ليصوغ تسمية «الانطباعيين»، ثم أصبح الاسم عنواناً لحركة فنية كاملة."],
+      ["تكوين محسوب", "تقود ثلاثة قوارب داكنة العين إلى عمق الميناء. وتشكل الشمس المنحرفة قليلاً عن المركز وانعكاسها العمودي محوراً يقابله الإيقاع الأفقي لضربات الماء."],
+      ["اللون والضوء", "تملأ الدرجات الزرقاء الرمادية الضباب والماء، بينما يهتز البرتقالي المكمل في الشمس وانعكاسها. وبذلك تصبح الإضاءة نفسها موضوع اللوحة الحقيقي."],
+      ["الفرشاة والإدراك", "من قرب، تتفكك المياه والقوارب والدخان إلى ضربات سريعة ومقتصدة. ومن بعيد، تجمع العين هذه العلامات في مشهد مقنع؛ فلا يحتاج الإدراك إلى وصف كل تفصيل."],
+      ["عمق من الجو", "تبدو القوارب الأمامية أكثر صلابة، ثم تفقد الصواري والرافعات والمداخن حدودها تدريجياً في الضباب. ويُبنى العمق بالضوء والبخار أكثر مما يُبنى بالمنظور الهندسي."],
+      ["منظر طبيعي حديث", "لا يعرض مونيه طبيعة مثالية بعيدة عن البشر، بل يجمع جمال الفجر بالمداخن والرافعات والسفن والعمل. فاللوحة تسجل تحول المجتمع الفرنسي الصناعي بقدر ما تسجل تغير الضوء."],
+      ["أثر بحجم متواضع", "رغم أن أبعادها لا تتجاوز نحو 48 × 63 سم، غيّرت اللوحة فكرة العمل المكتمل: صار نقل الانطباع الذي يولده العالم في لحظة معينة هدفاً فنياً قائماً بذاته."]
+    ],
+    details: ["اتبع الانعكاس البرتقالي العمودي فوق ضربات الماء الأفقية.", "قارن القوارب الواضحة بالخلفية الصناعية الذائبة.", "اقترب لرؤية العلامات المنفصلة ثم ابتعد لترى الميناء يتكون.", "لاحظ كيف يصنع البرتقالي والأزرق الرمادي إحساساً بضوء نابض."],
+    audio: "assets/paintings/monet/audio-video/خدعة_الشمس_النابضة_وسر_تسمية_الانطباعية.mp3"
   }
 };
 
 const slug = new URLSearchParams(location.search).get("painting");
-const painting = PAINTINGS_AR[slug] || PAINTINGS_AR["mona-lisa"];
+const paintingSlug = PAINTINGS_AR[slug] ? slug : "mona-lisa";
+const painting = PAINTINGS_AR[paintingSlug];
+const PRINT_PAGE_LINKS = {
+  "mona-lisa": { en: "print-target.html", fr: "print-target-fr.html" },
+  "van-gogh": { en: "print-van-gogh.html", fr: "print-van-gogh-fr.html" },
+  "van-gogh-bedroom": { en: "print-van-gogh-bedroom.html", fr: "print-van-gogh-bedroom-fr.html" },
+  "vermeer-girl-with-a-pearl-earring": { en: "print-vermeer-girl-with-a-pearl-earring.html", fr: "print-vermeer-girl-with-a-pearl-earring-fr.html" },
+  "monet-impression-sunrise": { en: "print-monet-impression-sunrise.html", fr: "print-monet-impression-sunrise-fr.html" }
+};
+const languagePages = PRINT_PAGE_LINKS[paintingSlug];
 const root = document.getElementById("arabic-print");
 document.title = `${painting.title} — الصفحة المطبوعة`;
 
@@ -130,9 +163,11 @@ root.innerHTML = `
       <h2>تابع التجربة رقمياً</h2>
       <p>يمكنك فتح الواقع المعزز، وضع النموذج ثلاثي الأبعاد في مساحتك، أو الاستماع إلى الدليل الصوتي.</p>
       <div class="mode-strip" aria-label="التجارب المتاحة"><span>واقع معزز</span><span>صوت</span><span>ثلاثي الأبعاد</span><span>واقع افتراضي</span></div>
-      <a class="button primary" href="ar.html?painting=${slug || "mona-lisa"}&amp;lang=ar">فتح الواقع المعزز</a>
-      <a class="button" href="space.html?painting=${slug || "mona-lisa"}&amp;lang=ar">وضع النموذج في المساحة</a>
+      <a class="button primary" href="ar.html?painting=${paintingSlug}&amp;lang=ar">فتح الواقع المعزز</a>
+      <a class="button" href="space.html?painting=${paintingSlug}&amp;lang=ar">وضع النموذج في المساحة</a>
       <a class="button" href="${painting.audio}">تشغيل الدليل الصوتي</a>
       <a class="button" href="index-ar.html">العودة إلى الفهرس العربي</a>
+      <a class="button" href="${languagePages.en}" lang="en" dir="ltr">English</a>
+      <a class="button" href="${languagePages.fr}" lang="fr" dir="ltr">Français</a>
     </aside>
   </section>`;

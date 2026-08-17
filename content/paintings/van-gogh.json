@@ -45,6 +45,7 @@
     "culturalSignificance": "Van Gogh's self-portraits became icons of modern artistic identity, linking visible brushwork with interior feeling and turning the artist's face into a record of perception itself.",
     "influence": "The work anticipates Expressionism and later modern portraiture by making color, touch, and psychological intensity as important as likeness.",
     "interestingFacts": [
+      "Van Gogh painted approximately 35–36 self-portraits, almost all between 1886 and 1889; more than twenty date from his Paris stay.",
       "Van Gogh painted many self-portraits because he often could not pay models.",
       "The red-green and orange-blue contrasts reflect his study of modern color theory in Paris.",
       "The dense, short strokes show his transition toward the more expressive style of his later years."
@@ -70,6 +71,11 @@
       "year": 1888,
       "label": "Van Gogh leaves Paris for Arles, where his color becomes even more intense.",
       "type": "artist"
+    },
+    {
+      "year": 1889,
+      "label": "The bandaged-ear portraits and the final Saint-Remy self-portraits turn the series into an increasingly introspective visual diary.",
+      "type": "artwork"
     },
     {
       "year": 1890,
@@ -249,6 +255,9 @@
   },
   "references": [
     "Standard Vincent van Gogh and Post-Impressionism scholarship",
-    "Technical art history studies on Van Gogh's Paris-period color and brushwork"
+    "Technical art history studies on Van Gogh's Paris-period color and brushwork",
+    "Rijksmuseum, Vincent van Gogh — Dutch Masters overview",
+    "The Metropolitan Museum of Art, Self-Portrait with a Straw Hat — collection entry",
+    "National Gallery of Art, Understanding Van Gogh Through One of His Final Self-Portraits"
   ]
 }

@@ -75,13 +75,6 @@ const COPY = {
     iosNote: "يتوفر الواقع المعزز المكاني عندما يوجد ملف متوافق مع جهازك.",
     intro: "ضع النموذج ثلاثي الأبعاد في مساحتك، ثم حرّكه وأدره وغيّر حجمه باستخدام أدوات الواقع المعزز."
   }
-  ,
-  ar: {
-    "mona-lisa": "print-ar.html?painting=mona-lisa",
-    "van-gogh": "print-ar.html?painting=van-gogh",
-    "van-gogh-bedroom": "print-ar.html?painting=van-gogh-bedroom",
-    "vermeer-girl-with-a-pearl-earring": "print-ar.html?painting=vermeer-girl-with-a-pearl-earring"
-  }
 };
 
 const PRINT_PAGES = {
@@ -96,6 +89,12 @@ const PRINT_PAGES = {
     "van-gogh": "print-van-gogh-fr.html",
     "van-gogh-bedroom": "print-van-gogh-bedroom-fr.html",
     "vermeer-girl-with-a-pearl-earring": "print-vermeer-girl-with-a-pearl-earring-fr.html"
+  },
+  ar: {
+    "mona-lisa": "print-ar.html?painting=mona-lisa",
+    "van-gogh": "print-ar.html?painting=van-gogh",
+    "van-gogh-bedroom": "print-ar.html?painting=van-gogh-bedroom",
+    "vermeer-girl-with-a-pearl-earring": "print-ar.html?painting=vermeer-girl-with-a-pearl-earring"
   }
 };
 
@@ -160,15 +159,22 @@ function configureViewer(manifest) {
   document.title = `DACIART - ${title} - ${COPY[lang].kicker}`;
   document.getElementById("space-title").textContent = title;
 
+  if (!src) throw new Error("No 3D model is configured for this painting.");
+  const status = document.getElementById("space-status");
+  model.addEventListener("load", () => {
+    status.textContent = usdz ? COPY[lang].readyWithUsdz : COPY[lang].readyWithoutUsdz;
+  }, { once: true });
+  model.addEventListener("error", (event) => {
+    console.error(`Room AR model failed to load: ${src}`, event);
+    status.textContent = `${COPY[lang].unsupported} (${src})`;
+  }, { once: true });
   model.setAttribute("src", src);
   model.alt = `${title} 3D model`;
   if (poster) model.poster = poster;
   if (usdz) {
     model.setAttribute("ios-src", usdz);
-    document.getElementById("space-status").textContent = COPY[lang].readyWithUsdz;
   } else {
     document.getElementById("ios-note").hidden = false;
-    document.getElementById("space-status").textContent = COPY[lang].readyWithoutUsdz;
   }
 
   document.getElementById("image-ar-link").href = `ar.html?painting=${slug}&lang=${lang}`;

@@ -34,8 +34,10 @@ const GALLERY_FURNITURE = [
   { id: "armchair", src: "assets/paintings/fourniture/gallery-furniture/armchair-w.glb", position: [-3.7, 0, 2.6], rotationY: 0.35, maxSize: 1.55 },
   { id: "brochure-stand", src: "assets/paintings/fourniture/gallery-furniture/brochure_stand.glb", position: [4.65, 0, 3.55], rotationY: -2.4, maxSize: 1.45 },
   { id: "gallery-table", src: "assets/paintings/fourniture/gallery-furniture/table-w.glb", position: [0, 0, 2.55], rotationY: 0, maxSize: 1.9 },
-  { id: "vitrine-table", src: "assets/paintings/fourniture/gallery-furniture/table-vitrine-w.glb", position: [3.45, 0, 1.25], rotationY: -0.25, maxSize: 1.8 }
+  { id: "vitrine-table", src: "assets/paintings/fourniture/gallery-furniture/table-vitrine-w.glb", position: [3.45, 0, 1.25], rotationY: -0.25, maxSize: 1.8 },
+  { id: "louvre-bench", src: "assets/paintings/fourniture/gallery-furniture/banc-louvre_c.glb", position: [0, 0, -0.25], rotationY: 0, maxSize: 2.65 }
 ];
+const LOUVRE_BENCH_MODEL = "assets/paintings/fourniture/gallery-furniture/banc-louvre_c.glb";
 const LIVING_BOOK_TABLE_MODEL = "assets/paintings/fourniture/gallery-furniture/table-w.glb";
 const LIVING_BOOK_MODEL = "assets/paintings/fourniture/gallery-furniture/book-artdaci_en.glb";
 const LIVING_BOOK_MODEL_LOW_POWER = "assets/paintings/fourniture/gallery-furniture/book-artdaci_en.glb";
@@ -640,9 +642,44 @@ let cinemaAudienceLoadPromise = null;
 let cinemaSofaLoaded = false;
 const narrationPlayer = new Audio();
 const musicPlayer = new Audio();
+const roomAmbiencePlayer = new Audio();
+const ROOM_AMBIENCE_TRACKS = [
+  "assets/music/Afternoon_Light_on_Linen.mp3",
+  "assets/music/Morning_on_the_Veranda.mp3",
+  "assets/music/Solstice_at_Noon.mp3",
+  "assets/music/The_Marble_Gallery.mp3",
+  "assets/music/A_Debt_of_Stone.mp3"
+];
+const ROOM_AMBIENCE_OFFSETS = {
+  "da-vinci": 0,
+  "van-gogh": 1,
+  vermeer: 2,
+  monet: 3,
+  paintings: 0,
+  models: 4,
+  bedroom: 1,
+  reimagined: 2,
+  groups: 3,
+  louvre: 4,
+  people: 0
+};
+let roomAmbienceTrackIndex = 0;
+let roomAmbienceSourceRoom = null;
 narrationPlayer.preload = "metadata";
 musicPlayer.preload = "metadata";
 musicPlayer.volume = 0.82;
+roomAmbiencePlayer.preload = "auto";
+roomAmbiencePlayer.volume = 0.34;
+roomAmbiencePlayer.addEventListener("ended", () => {
+  const roomId = ambientNodes?.roomId;
+  if (!roomId || !ambienceEnabled || audioMuted) return;
+  selectRoomAmbience(roomId, true);
+  roomAmbiencePlayer.play().catch((error) => {
+    console.warn("The next room music track is waiting for a visitor gesture.", error);
+    ambientNodes = null;
+    updateAmbienceButtons();
+  });
+});
 const cinemaAudienceReadyAt = performance.now() + (isQuestBrowser ? 10000 : 3500);
 const controllerCommandState = new Map();
 const screenMove = new Set();
@@ -1788,6 +1825,13 @@ function addLouvreGalleryFurniture() {
     position: [5.45, 0, -1.5],
     rotationY: -Math.PI / 2,
     maxSize: 1.2
+  });
+  void addFurnitureModel({
+    src: LOUVRE_BENCH_MODEL,
+    name: "louvre-gallery-bench",
+    position: [0, 0, -1.15],
+    rotationY: 0,
+    maxSize: 2.9
   });
 }
 
@@ -4979,52 +5023,34 @@ function roomAtVisitorPosition() {
   return activeRoom;
 }
 
-function ambientFrequencies(roomId) {
-  return {
-    "da-vinci": [146.83, 220, 293.66],
-    "van-gogh": [130.81, 196, 261.63],
-    vermeer: [174.61, 261.63, 349.23],
-    monet: [164.81, 246.94, 329.63],
-    paintings: [146.83, 220, 293.66],
-    models: [110, 164.81, 220],
-    bedroom: [130.81, 196, 261.63],
-    reimagined: [123.47, 185, 246.94]
-  }[roomId] || [146.83, 220, 293.66];
+function selectRoomAmbience(roomId, advance = false) {
+  if (advance) roomAmbienceTrackIndex = (roomAmbienceTrackIndex + 1) % ROOM_AMBIENCE_TRACKS.length;
+  else roomAmbienceTrackIndex = ROOM_AMBIENCE_OFFSETS[roomId] ?? 0;
+  const src = ROOM_AMBIENCE_TRACKS[roomAmbienceTrackIndex];
+  if (roomAmbiencePlayer.src !== new URL(src, location.href).href) {
+    roomAmbiencePlayer.src = src;
+    roomAmbiencePlayer.load();
+  }
+  roomAmbienceSourceRoom = roomId;
 }
 
 function startRoomAmbience(roomId = roomAtVisitorPosition()) {
   if (!roomId || !ambienceEnabled || ambientNodes || audioMuted || audioListener.context.state !== "running") return;
-  if (activeExhibit?.audio?.isPlaying) return;
-  const context = audioListener.context;
-  const master = context.createGain();
-  master.gain.setValueAtTime(0.0001, context.currentTime);
-  master.gain.exponentialRampToValueAtTime(0.026, context.currentTime + 1.8);
-  master.connect(context.destination);
-  const oscillators = ambientFrequencies(roomId).map((frequency, index) => {
-    const oscillator = context.createOscillator();
-    const gain = context.createGain();
-    oscillator.type = index === 1 ? "triangle" : "sine";
-    oscillator.frequency.value = frequency / (index === 2 ? 2 : 1);
-    oscillator.detune.value = (index - 1) * 3;
-    gain.gain.value = index === 0 ? 0.34 : 0.2;
-    oscillator.connect(gain).connect(master);
-    oscillator.start();
-    return oscillator;
-  });
-  ambientNodes = { roomId, master, oscillators };
+  if (activeExhibit?.audio?.isPlaying || !narrationPlayer.paused || !musicPlayer.paused) return;
+  if (roomAmbienceSourceRoom !== roomId) selectRoomAmbience(roomId);
+  ambientNodes = { roomId, media: roomAmbiencePlayer };
   ambientRoomId = roomId;
+  roomAmbiencePlayer.play().catch((error) => {
+    console.warn("Room music is waiting for a visitor gesture.", error);
+    ambientNodes = null;
+    updateAmbienceButtons();
+  });
   updateAmbienceButtons();
 }
 
 function stopRoomAmbience() {
   if (!ambientNodes) return;
-  const { master, oscillators } = ambientNodes;
-  const context = audioListener.context;
-  master.gain.cancelScheduledValues(context.currentTime);
-  master.gain.setTargetAtTime(0.0001, context.currentTime, 0.12);
-  oscillators.forEach((oscillator) => {
-    try { oscillator.stop(context.currentTime + 0.55); } catch (_) {}
-  });
+  ambientNodes.media?.pause();
   ambientNodes = null;
   updateAmbienceButtons();
 }
@@ -5041,17 +5067,22 @@ function updateRoomAmbience(force = false) {
 
 async function toggleRoomAmbience() {
   await audioListener.context.resume();
-  ambienceEnabled = true;
   const narrationWasPlaying = Boolean(activeExhibit?.audio?.isPlaying);
   if (narrationWasPlaying) stopAllAudioGuides();
-  if (!narrationWasPlaying && ambientNodes) stopRoomAmbience();
-  else if (!ambientNodes) startRoomAmbience();
+  if (!narrationWasPlaying && ambientNodes) {
+    ambienceEnabled = false;
+    stopRoomAmbience();
+  } else if (!ambientNodes) {
+    ambienceEnabled = true;
+    startRoomAmbience();
+  }
   updateAmbienceButtons();
 }
 
 function stopRoomAmbienceByVisitor() {
   ambienceEnabled = false;
   stopRoomAmbience();
+  roomAmbiencePlayer.currentTime = 0;
   updateAmbienceButtons();
 }
 

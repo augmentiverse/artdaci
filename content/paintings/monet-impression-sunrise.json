@@ -10,8 +10,8 @@
   "movement": ["Impressionism"],
   "medium": "Oil on canvas",
   "dimensions": {
-    "widthCm": 65,
-    "heightCm": 50
+    "widthCm": 63,
+    "heightCm": 48
   },
   "collection": "Musée Marmottan Monet, Paris",
   "currentLocation": { "museum": "Musée Marmottan Monet", "city": "Paris" },
@@ -56,12 +56,12 @@
   },
   "education": { "vocabulary": ["Impressionism", "complementary colour", "atmosphere", "plein air"] },
   "texts": {
-    "historicalContext": "Monet painted the outer harbour of Le Havre from a hotel window in the early morning. Exhibited in 1874, the picture helped give the Impressionist movement its name.",
-    "artisticAnalysis": "Boats, cranes, masts and chimneys dissolve into blue-grey mist. The small orange sun and its broken reflection create the strongest colour contrast and organise the whole scene.",
-    "palette": "Thin, rapid strokes preserve changing light rather than describing every object. Orange and blue-grey act as complementary colours, making the sun appear unusually intense.",
-    "culturalSignificance": "The painting became a defining statement of modern vision: an image of atmosphere, industry and a fleeting moment rather than a polished academic narrative.",
+    "historicalContext": "Monet painted the outer harbour of Le Havre from a hotel window in the early morning. Exhibited in 1874, the picture prompted Louis Leroy’s mocking label ‘Impressionists’, which the artists soon adopted.",
+    "artisticAnalysis": "Dark boats guide the eye toward cranes, masts and chimneys dissolving into blue-grey mist. The slightly off-centre orange sun and its vertical broken reflection organise the scene against the horizontal strokes of the water.",
+    "palette": "Thin, rapid, visible strokes preserve changing light rather than describing every object. Orange and blue-grey act as complementary colours, making the sun appear unusually intense; viewed from farther away, the eye assembles the separate marks into a convincing harbour.",
+    "culturalSignificance": "The modestly sized painting became a defining statement of modern vision: immediate perception replaces polished academic description, while natural light shares the scene with the industry and movement of a modern port.",
     "interestingFacts": [
-      "The canvas measures 50 × 65 cm.",
+      "The canvas measures approximately 48 × 63 cm.",
       "It depicts the port of Le Havre at dawn.",
       "Its title inspired the name Impressionism after the 1874 exhibition."
     ]
