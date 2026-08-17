@@ -324,6 +324,43 @@ html[dir="rtl"] .virtual-guide {
   border-top: 1px solid var(--line);
 }
 
+.gallery-media-library {
+  display: none;
+  grid-template-columns: minmax(150px, 1fr) auto;
+  gap: 7px 10px;
+  align-items: end;
+  margin-top: 7px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+body[data-experience="cinema"] .gallery-media-library,
+body[data-gallery-room="people"] .gallery-media-library {
+  display: grid;
+}
+
+body[data-gallery-room="people"] .gallery-video-controls {
+  display: flex;
+}
+
+.gallery-media-library label {
+  display: grid;
+  gap: 4px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.gallery-media-library > div {
+  display: flex;
+  gap: 6px;
+}
+
+.gallery-media-library .gallery-button {
+  min-height: 34px;
+  padding: 6px 9px;
+  font-size: 12px;
+}
+
 .cinema-device-viewer {
   display: grid;
   gap: 7px;

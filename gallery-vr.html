@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#171411" />
     <title>DACIART — VR Gallery</title>
-    <link rel="stylesheet" href="styles/gallery-vr.css?v=11" />
+    <link rel="stylesheet" href="styles/gallery-vr.css?v=12" />
     <script type="importmap">
       {
         "imports": {
@@ -52,6 +52,24 @@
           <button id="gallery-video-forward" class="gallery-button" type="button" disabled>+10 sec</button>
           <button id="gallery-video-next" class="gallery-button" type="button" disabled>Next</button>
         </div>
+        <div class="gallery-media-library" aria-label="Audio and music library">
+          <label>
+            <span id="gallery-narration-label">Audio stories</span>
+            <select id="gallery-narration-select" class="gallery-video-select"></select>
+          </label>
+          <div>
+            <button id="gallery-narration-toggle" class="gallery-button" type="button">Play audio</button>
+            <button id="gallery-narration-stop" class="gallery-button" type="button">Stop</button>
+          </div>
+          <label>
+            <span id="gallery-music-label">Music</span>
+            <select id="gallery-music-select" class="gallery-video-select"></select>
+          </label>
+          <div>
+            <button id="gallery-music-toggle" class="gallery-button" type="button">Play music</button>
+            <button id="gallery-music-stop" class="gallery-button" type="button">Stop</button>
+          </div>
+        </div>
         <nav class="gallery-exit-links" aria-label="Exit gallery links">
           <a class="gallery-button artist-room-link" href="gallery-vr.html?artist=da-vinci">Da Vinci</a>
           <a class="gallery-button artist-room-link" href="gallery-vr.html?artist=van-gogh">Van Gogh</a>
@@ -63,6 +81,7 @@
           <a id="gallery-reimagined-link" class="gallery-button" href="gallery-vr.html?lang=en&amp;room=reimagined">Reimagined Masterpieces</a>
           <a id="gallery-groups-link" class="gallery-button" href="gallery-vr.html?lang=en&amp;room=groups">Painter Groups in 3D</a>
           <a id="gallery-louvre-link" class="gallery-button" href="gallery-vr.html?lang=en&amp;room=louvre">Louvre Museum</a>
+          <a id="gallery-louvre-world-link" class="gallery-button vr-world-link" href="https://marble.worldlabs.ai/worldvr/5327a462-1e90-479b-8cec-d2a52a33e04f">Explore a Louvre Gallery in VR</a>
           <a id="gallery-people-link" class="gallery-button" href="gallery-vr.html?lang=en&amp;room=people&amp;artist=da-vinci">People Behind the Painters</a>
           <a id="gallery-book-link" class="gallery-button" href="book-3d.html?lang=en">Living Book</a>
           <a id="gallery-cinema-link" class="gallery-button cinema-link" href="cinema-vr.html?lang=en">Enter the cinema</a>
@@ -104,6 +123,6 @@
       </details>
     </main>
 
-  <script type="module" src="scripts/gallery-vr.js?v=92"></script>
+  <script type="module" src="scripts/gallery-vr.js?v=99"></script>
   </body>
 </html>

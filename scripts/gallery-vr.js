@@ -37,8 +37,8 @@ const GALLERY_FURNITURE = [
   { id: "vitrine-table", src: "assets/paintings/fourniture/gallery-furniture/table-vitrine-w.glb", position: [3.45, 0, 1.25], rotationY: -0.25, maxSize: 1.8 }
 ];
 const LIVING_BOOK_TABLE_MODEL = "assets/paintings/fourniture/gallery-furniture/table-w.glb";
-const LIVING_BOOK_MODEL = "assets/paintings/fourniture/gallery-furniture/book-artdaci_en-web-c.glb";
-const LIVING_BOOK_MODEL_LOW_POWER = "assets/paintings/fourniture/gallery-furniture/book-artdaci_en_100k.glb";
+const LIVING_BOOK_MODEL = "assets/paintings/fourniture/gallery-furniture/book-artdaci_en.glb";
+const LIVING_BOOK_MODEL_LOW_POWER = "assets/paintings/fourniture/gallery-furniture/book-artdaci_en.glb";
 const GROUP_EXHIBIT = {
   model: "assets/paintings/groups/dvvm_selfy.glb",
   image: "assets/paintings/groups/DVVM_Louvre.png"
@@ -68,8 +68,11 @@ const MODEL_ARTIST_EXHIBITS = {
 
 const STANDING_VAN_GOGH_MODEL = "assets/paintings/van-gogh/vangogh_istanding.glb";
 const PAINTINGS_MODELS_GATEWAY = null;
-const LOUVRE_FACADE_MODEL = null;
-const CINEMA_SOFA_MODEL = null;
+const LOUVRE_FACADE_MODEL = "assets/paintings/fourniture/gallery-furniture/Louvre_facade_c.glb";
+const CINEMA_SOFA_MODEL = "assets/paintings/fourniture/gallery-furniture/sofa_c.glb";
+const ORNATE_PILL_MODEL = "assets/paintings/fourniture/gallery-furniture/Ornate_Turquoise_Pill_c.glb";
+const ACCENT_SOFA_MODEL = "assets/paintings/fourniture/gallery-furniture/sofa1.glb";
+const CINEMA_GATEWAY_MODEL = "assets/paintings/fourniture/gallery-furniture/Gateway_Egypt_c.glb";
 const LOUVRE_PHOTO_EXHIBITS = [
   { src: "assets/paintings/groups/DVVM_Louvre.png", title: { en: "The Four Masters at the Louvre", fr: "Les quatre maîtres au Louvre", ar: "الأساتذة الأربعة في اللوفر" } },
   { src: "assets/gallery/reimagined/Monalisa-louvre-1.png", title: { en: "Mona Lisa at the Louvre", fr: "La Joconde au Louvre", ar: "الموناليزا في اللوفر" } }
@@ -77,6 +80,7 @@ const LOUVRE_PHOTO_EXHIBITS = [
 const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae";
 const LEONARDO_STUDIO_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/862ab5f6-8608-469c-a840-8cb10f3859ae";
 const LEONARDO_ENRICHED_STUDIO_URL = "https://marble.worldlabs.ai/project/c7853f32-4025-4d66-a536-54bb9db6162d";
+const LOUVRE_GALLERY_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/5327a462-1e90-479b-8cec-d2a52a33e04f";
 const CINEMA_ROOM_X = 14;
 const CINEMA_VIDEO_LIBRARY = [
   {
@@ -111,6 +115,76 @@ const CINEMA_VIDEO_LIBRARY = [
     src: "assets/paintings/Da Vinci/mona-lisa/audio-video/m2Vmg.mp4"
   }
 ];
+
+const PEOPLE_MEDIA_LIBRARY = {
+  "da-vinci": {
+    videos: [{ title: { en: "Leonardo Thanks King Francis I", fr: "Léonard remercie le roi François Ier", ar: "ليوناردو يشكر الملك فرانسوا الأول" }, src: "assets/people-behind-painters/Da Vinci/video/Leonardo_da_Vinci_thanking_king_202608151400.mp4" }],
+    audio: [],
+    music: [
+      { lang: "ar", title: "Davinci-François — منكَ المدادُ", src: "assets/people-behind-painters/Da Vinci/music/Davinci-François-منكَ_المدادُ.mp3" },
+      { lang: "fr", title: "Sous le sceau royal", src: "assets/people-behind-painters/Da Vinci/music/Davinci-François1-Sous_le_sceau_royal.mp3" },
+      { lang: "en", title: "A Study in Grace", src: "assets/people-behind-painters/Da Vinci/music/Davinci-Study_in_Grace.mp3" }
+    ]
+  },
+  "van-gogh": {
+    videos: [{ title: { en: "Vincent, Theo and Jo — Last Words", fr: "Vincent, Theo et Jo — dernières paroles", ar: "فنسنت وثيو وجو — الكلمات الأخيرة" }, src: "assets/people-behind-painters/Van Gogh/video/Vincent-Theo-Jo_last-words.mp4" }],
+    audio: [
+      { lang: "fr", title: "La femme qui a inventé Van Gogh", src: "assets/people-behind-painters/Van Gogh/audio/short_audio/La_femme_qui_a_inventé_Van_Gogh_short.m4a" },
+      { lang: "en", title: "The Woman Who Made Van Gogh Famous", src: "assets/people-behind-painters/Van Gogh/audio/short_audio/The_woman_who_made_Van_Gogh_famous__short.m4a" },
+      { lang: "ar", title: "جو بونغر — المرأة التي خلدت فان غوخ", src: "assets/people-behind-painters/Van Gogh/audio/short_audio/جو_بونغر_المرأة_التي_خلدت_فان_غوخ_short.m4a" }
+    ],
+    music: [
+      { lang: "fr", title: "Jo van Gogh-Bonger — Le champ de tournesols", src: "assets/people-behind-painters/Van Gogh/music/Jo van Gogh-Bonger (Theo's wife)-Le_champ_de_tournesols.mp3" },
+      { lang: "en", title: "Jo van Gogh-Bonger — Letters and Lonely Reds", src: "assets/people-behind-painters/Van Gogh/music/Jo van Gogh-Bonger (Theo's wife)-Letters_and_Lonely_Reds.mp3" },
+      { lang: "fr", title: "Vincent et Theo — Mon frère, mon ancre", src: "assets/people-behind-painters/Van Gogh/music/Vincent_van_Gogh-Theo-Mon_frère_mon_ancre.mp3" }
+    ]
+  },
+  vermeer: {
+    videos: [
+      { title: { en: "Vermeer Thanks Pieter and Maria", fr: "Vermeer remercie Pieter et Maria", ar: "فيرمير يشكر بيتر وماريا" }, src: "assets/people-behind-painters/Vermeer/video/Animating_Vermeer_thanking_patrons_Pieter van Ruijven_Maria de Knuijt.mp4" },
+      { title: { en: "Vermeer and His Patrons", fr: "Vermeer et ses mécènes", ar: "فيرمير ورعاته" }, src: "assets/people-behind-painters/Vermeer/video/Vermeer_thanking_Pieter_an_Maria_for_support.mp4" }
+    ],
+    audio: [{ lang: "ar", title: "عشرون لوحة — Vermeer et Maria", src: "assets/people-behind-painters/Vermeer/audio/عشرون_لوحةvermeer-maria_.mp3" }],
+    music: [
+      { lang: "en", title: "Gilded Delft Days", src: "assets/people-behind-painters/Vermeer/music/Vermeer-Pieter_van_Ruijven-Gilded_Delft_Days_en.mp3" },
+      { lang: "fr", title: "Le silence de Delft", src: "assets/people-behind-painters/Vermeer/music/Vermeer-Pieter_van_Ruijven-Le_silence_de_Delft_fr.mp3" },
+      { lang: "ar", title: "لوحاتٌ من ذهب", src: "assets/people-behind-painters/Vermeer/music/Vermeer-Pieter_van_Ruijven-لوحاتٌ_من_ذهب_ar.mp3" },
+      { lang: "en", title: "Impasto Sky", src: "assets/people-behind-painters/Vermeer/music/Vincent_van_Gogh-Theo-Impasto_Sky.mp3" }
+    ]
+  },
+  monet: {
+    videos: [],
+    audio: [
+      { lang: "fr", title: "Le marchand qui a sauvé l'impressionnisme", src: "assets/people-behind-painters/Monet/audio/Le_marchand_qui_a_sauvé_l_impressionnisme.mp3" },
+      { lang: "en", title: "The Man Who Bankrolled Impressionism", src: "assets/people-behind-painters/Monet/audio/The_man_who_bankrolled_Impressionism.mp3" },
+      { lang: "ar", title: "التاجر الذي أنقذ الانطباعية", src: "assets/people-behind-painters/Monet/audio/التاجر_الذي_أنقذ_الانطباعية_من_الانتحار.mp3" }
+    ],
+    music: [
+      { lang: "fr", title: "Au-delà des lourdes portes", src: "assets/people-behind-painters/Monet/music/Monet-Paul_Durand_Ruel-Au_delà_des_lourdes_portes.mp3" },
+      { lang: "en", title: "Jagged Line", src: "assets/people-behind-painters/Monet/music/Monet-Paul_Durand_Ruel-Jagged_Line.mp3" },
+      { lang: "ar", title: "يا خير سند", src: "assets/people-behind-painters/Monet/music/Monet-Paul_Durand_Ruel-يا_خيرَ_سند.mp3" }
+    ]
+  }
+};
+
+function getCinemaVideoLibrary() {
+  return [
+    ...CINEMA_VIDEO_LIBRARY,
+    ...Object.entries(PEOPLE_MEDIA_LIBRARY).flatMap(([painter, library]) => (library.videos || []).map((item) => {
+      const painterName = PEOPLE_ROOM_CONFIG[painter]?.name || { en: painter, fr: painter, ar: painter };
+      const original = typeof item.title === "string" ? { en: item.title, fr: item.title, ar: item.title } : item.title;
+      return {
+        ...item,
+        painter,
+        title: {
+          en: `${painterName.en} — ${original.en || original.fr || original.ar}`,
+          fr: `${painterName.fr || painterName.en} — ${original.fr || original.en || original.ar}`,
+          ar: `${painterName.ar || painterName.en} — ${original.ar || original.en || original.fr}`
+        }
+      };
+    }))
+  ];
+}
 
 const REIMAGINED_ARTWORKS = [
   { src: "assets/gallery/reimagined/mona-lisa_out.png", title: "Mona Lisa — Beyond the frame", titleAr: "الموناليزا — خارج الإطار" },
@@ -494,6 +568,12 @@ const videoPreviousButton = document.getElementById("gallery-video-previous");
 const videoNextButton = document.getElementById("gallery-video-next");
 const videoBackButton = document.getElementById("gallery-video-back");
 const videoForwardButton = document.getElementById("gallery-video-forward");
+const narrationSelect = document.getElementById("gallery-narration-select");
+const narrationToggleButton = document.getElementById("gallery-narration-toggle");
+const narrationStopButton = document.getElementById("gallery-narration-stop");
+const musicSelect = document.getElementById("gallery-music-select");
+const musicToggleButton = document.getElementById("gallery-music-toggle");
+const musicStopButton = document.getElementById("gallery-music-stop");
 const uiToggleButton = document.getElementById("gallery-ui-toggle");
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x191714);
@@ -558,6 +638,11 @@ let ambientNodes = null;
 let cinemaAudienceRoot = null;
 let cinemaAudienceLoadPromise = null;
 let cinemaSofaLoaded = false;
+const narrationPlayer = new Audio();
+const musicPlayer = new Audio();
+narrationPlayer.preload = "metadata";
+musicPlayer.preload = "metadata";
+musicPlayer.volume = 0.82;
 const cinemaAudienceReadyAt = performance.now() + (isQuestBrowser ? 10000 : 3500);
 const controllerCommandState = new Map();
 const screenMove = new Set();
@@ -583,6 +668,7 @@ init();
 
 async function init() {
   applyCopy();
+  configurePeopleMediaLibrary();
   setupVirtualGuide();
   addControllers();
   addHands();
@@ -613,6 +699,7 @@ async function init() {
 
   if (activeRoom === "groups") {
     buildGroupGalleryRoom();
+    decorateGalleryRoom("groups", true);
     renderer.setAnimationLoop(render);
     try {
       await buildGroupExhibit();
@@ -627,6 +714,8 @@ async function init() {
 
   if (activeRoom === "louvre") {
     buildLouvreMuseumRoom();
+    decorateGalleryRoom("louvre", true);
+    addLouvreGalleryFurniture();
     renderer.setAnimationLoop(render);
     try {
       await buildLouvreMuseumExhibits();
@@ -644,6 +733,8 @@ async function init() {
     renderer.setAnimationLoop(render);
     try {
       await buildPeopleBehindPaintersExhibits();
+      await buildPeopleRoomVideoExhibits();
+      decoratePeopleRoom();
       await detectVR();
       status.textContent = text.ready;
     } catch (error) {
@@ -844,6 +935,13 @@ function applyCopy() {
   document.getElementById("gallery-bedroom-world-link").href = BEDROOM_VR_WORLD_URL;
   document.getElementById("gallery-leonardo-world-link").textContent = text.leonardoStudioVrWorld;
   document.getElementById("gallery-leonardo-world-link").href = LEONARDO_STUDIO_VR_WORLD_URL;
+  const louvreWorldLink = document.getElementById("gallery-louvre-world-link");
+  if (louvreWorldLink) {
+    louvreWorldLink.textContent = lang === "fr"
+      ? "Explorer une galerie du Louvre en VR"
+      : lang === "ar" ? "استكشاف إحدى قاعات اللوفر بالواقع الافتراضي" : "Explore a Louvre Gallery in VR";
+    louvreWorldLink.href = LOUVRE_GALLERY_VR_WORLD_URL;
+  }
   document.getElementById("gallery-leonardo-enriched-link").textContent = text.leonardoEnrichedStudio;
   document.getElementById("gallery-leonardo-enriched-link").href = LEONARDO_ENRICHED_STUDIO_URL;
   document.getElementById("gallery-cinema-link").textContent = isCinemaOnly ? text.cinemaReturn : text.cinemaEnter;
@@ -1248,25 +1346,102 @@ function buildGroupGalleryRoom() {
 function buildLouvreMuseumRoom() {
   document.getElementById("gallery-title").textContent = lang === "fr" ? "Musée du Louvre — galerie virtuelle" : lang === "ar" ? "متحف اللوفر — معرض افتراضي" : "Louvre Museum — Virtual Gallery";
   document.getElementById("gallery-count").textContent = lang === "fr" ? "Deux photos · une façade 3D" : lang === "ar" ? "صورتان · واجهة ثلاثية الأبعاد" : "Two photographs · one 3D facade";
-  scene.background = new THREE.Color(0x0b1424);
-  scene.fog = new THREE.Fog(0x0b1424, 18, 34);
-  visitor.position.set(0, 0, 6.1);
+  scene.background = new THREE.Color(0x6f412e);
+  scene.fog = new THREE.Fog(0x6f412e, 24, 46);
+  visitor.position.set(0, 0, 7.1);
   visitor.rotation.y = 0;
-  scene.add(new THREE.HemisphereLight(0xfff1dc, 0x172334, isQuestBrowser ? 1.25 : 1.5));
+  scene.add(new THREE.HemisphereLight(0xfff3d3, 0x5d3524, isQuestBrowser ? 1.35 : 1.65));
 
-  const floor = new THREE.Mesh(new THREE.PlaneGeometry(14, 18), new THREE.MeshStandardMaterial({ color: 0x302a27, roughness: 0.92 }));
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(14, 20), new THREE.MeshStandardMaterial({ color: 0xb98242, roughness: 0.72 }));
   floor.rotation.x = -Math.PI / 2;
   floor.receiveShadow = true;
   scene.add(floor);
-  const wallMaterial = new THREE.MeshStandardMaterial({ color: 0x102342, roughness: 0.94, side: THREE.DoubleSide });
-  [[-7, 2.2, 0, Math.PI / 2], [7, 2.2, 0, -Math.PI / 2], [0, 2.2, -9, 0], [0, 2.2, 9, Math.PI]].forEach(([x, y, z, rotationY]) => {
-    const wall = new THREE.Mesh(new THREE.PlaneGeometry(z === 0 ? 18 : 14, 4.4), wallMaterial);
+  const parquetMaterial = new THREE.MeshBasicMaterial({ color: 0x6f3d1e, transparent: true, opacity: 0.34 });
+  const parquetStep = isLowPowerDevice ? 2 : 1;
+  for (let z = -9; z <= 9; z += parquetStep) {
+    for (let x = -6.2; x <= 6.2; x += 1.25 * parquetStep) {
+      const slat = new THREE.Mesh(new THREE.PlaneGeometry(1.12 * parquetStep, 0.055), parquetMaterial);
+      slat.rotation.x = -Math.PI / 2;
+      slat.rotation.z = ((Math.round(x + z) % 2) ? 1 : -1) * Math.PI / 4;
+      slat.position.set(x, 0.008, z);
+      scene.add(slat);
+    }
+  }
+
+  const wallMaterial = new THREE.MeshStandardMaterial({ color: 0x82462f, roughness: 0.9, side: THREE.DoubleSide });
+  [[-7, 2.45, 0, Math.PI / 2], [7, 2.45, 0, -Math.PI / 2], [0, 2.45, -10, 0], [0, 2.45, 10, Math.PI]].forEach(([x, y, z, rotationY]) => {
+    const wall = new THREE.Mesh(new THREE.PlaneGeometry(z === 0 ? 20 : 14, 4.9), wallMaterial);
     wall.position.set(x, y, z);
     wall.rotation.y = rotationY;
     scene.add(wall);
   });
-  createWallSign(lang === "fr" ? "PHOTOS ET MODÈLES 3D DU LOUVRE" : lang === "ar" ? "صور ونماذج اللوفر ثلاثية الأبعاد" : "LOUVRE PHOTOS AND 3D MODELS", [0, 3.72, -8.88], 0, { width: 5.6, height: 0.52, accent: true, compact: true });
-  createWallSign(lang === "fr" ? "RETOUR À LA GALERIE" : lang === "ar" ? "العودة إلى المعرض" : "BACK TO THE GALLERY", [0, 2.15, 8.88], Math.PI, { width: 3.5, height: 0.48, exitUrl: `gallery-vr.html?lang=${lang}`, compact: true });
+
+  const gold = new THREE.MeshStandardMaterial({ color: 0xb88935, roughness: 0.38, metalness: 0.48 });
+  const darkMarble = new THREE.MeshStandardMaterial({ color: 0x211b18, roughness: 0.5, metalness: 0.12 });
+  const paleStone = new THREE.MeshStandardMaterial({ color: 0xd7c5a4, roughness: 0.68 });
+  [-7, 7].forEach((x) => {
+    const side = x < 0 ? -1 : 1;
+    [0.23, 4.42].forEach((y) => {
+      const cornice = new THREE.Mesh(new THREE.BoxGeometry(0.16, y < 1 ? 0.32 : 0.28, 20), y < 1 ? darkMarble : gold);
+      cornice.position.set(x - side * 0.08, y, 0);
+      scene.add(cornice);
+    });
+    [-8.65, -5.75, -2.85, 0, 2.85, 5.75, 8.65].forEach((z) => {
+      const pilaster = new THREE.Mesh(new THREE.BoxGeometry(0.44, 4.9, 0.42), paleStone);
+      pilaster.position.set(x - side * 0.19, 2.45, z);
+      scene.add(pilaster);
+      const capital = new THREE.Mesh(new THREE.BoxGeometry(0.66, 0.24, 0.66), gold);
+      capital.position.set(x - side * 0.25, 4.56, z);
+      scene.add(capital);
+    });
+  });
+
+  // A luminous glazed vault with gilded ribs, echoing the Grande Galerie.
+  const glass = new THREE.MeshStandardMaterial({ color: 0xdcebf0, emissive: 0x758a91, emissiveIntensity: 0.28, transparent: true, opacity: 0.76, roughness: 0.34, side: THREE.DoubleSide });
+  for (let z = -9.5; z <= 9.5; z += 1.9) {
+    const pane = new THREE.Mesh(new THREE.PlaneGeometry(7.2, 1.72), glass);
+    pane.rotation.x = Math.PI / 2;
+    pane.position.set(0, 5.12, z);
+    scene.add(pane);
+    const rib = new THREE.Mesh(new THREE.BoxGeometry(7.7, 0.1, 0.12), gold);
+    rib.position.set(0, 5.08, z - 0.91);
+    scene.add(rib);
+  }
+  [-3.75, 3.75].forEach((x) => {
+    const rail = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.14, 20), gold);
+    rail.position.set(x, 5.05, 0);
+    scene.add(rail);
+  });
+
+  // Monumental framed openings at both ends preserve the long axial view.
+  [-9.78, 9.78].forEach((z, index) => {
+    [-4.5, 4.5].forEach((x) => {
+      const column = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.36, 4.8, 16), paleStone);
+      column.position.set(x, 2.4, z);
+      scene.add(column);
+      const capital = new THREE.Mesh(new THREE.BoxGeometry(0.82, 0.28, 0.72), gold);
+      capital.position.set(x, 4.7, z);
+      scene.add(capital);
+    });
+    const entablature = new THREE.Mesh(new THREE.BoxGeometry(10.2, 0.42, 0.54), gold);
+    entablature.position.set(0, 4.72, z);
+    scene.add(entablature);
+    if (index === 1) {
+      const portalDark = new THREE.Mesh(new THREE.PlaneGeometry(4.1, 3.9), darkMarble);
+      portalDark.position.set(0, 2.12, z - 0.02);
+      portalDark.rotation.y = Math.PI;
+      scene.add(portalDark);
+    }
+  });
+
+  [2.6, -3.0].forEach((z, index) => {
+    const warm = new THREE.PointLight(0xffd49a, isQuestBrowser ? 0.7 : 1.05, 13, 1.5);
+    warm.position.set(0, 4.45, z);
+    scene.add(warm);
+  });
+  createWallSign(lang === "fr" ? "GALERIE DU LOUVRE" : lang === "ar" ? "معرض اللوفر" : "THE LOUVRE GALLERY", [0, 4.18, -9.7], 0, { width: 4.7, height: 0.5, accent: true, compact: true });
+  createWallSign(lang === "fr" ? "EXPLORER LE LOUVRE EN VR" : lang === "ar" ? "استكشاف اللوفر بالواقع الافتراضي" : "EXPLORE THE LOUVRE IN VR", [0, 2.82, 9.72], Math.PI, { width: 4.25, height: 0.48, exitUrl: LOUVRE_GALLERY_VR_WORLD_URL, compact: true, accent: true });
+  createWallSign(lang === "fr" ? "RETOUR À LA GALERIE" : lang === "ar" ? "العودة إلى المعرض" : "BACK TO THE GALLERY", [0, 2.15, 9.72], Math.PI, { width: 3.5, height: 0.48, exitUrl: `gallery-vr.html?lang=${lang}`, compact: true });
   addVirtualGuideStation([-6.88, 1.25, 5.9], Math.PI / 2, "the ARTDACI Louvre room, its photographs, and its 3D facade");
 }
 
@@ -1331,7 +1506,8 @@ function buildPeopleBehindPaintersRoom() {
   }
 
   const burgundy = new THREE.MeshStandardMaterial({ color: room.wall, roughness: 0.94, side: THREE.DoubleSide });
-  const wood = new THREE.MeshStandardMaterial({ color: room.wood, roughness: 0.72, side: THREE.DoubleSide });
+  const matteTrimColors = { "da-vinci": 0x343b42, "van-gogh": 0x294558, vermeer: 0x294b4d, monet: 0x3d5148 };
+  const wood = new THREE.MeshStandardMaterial({ color: matteTrimColors[roomId], roughness: 1, metalness: 0, side: THREE.DoubleSide });
   const cream = new THREE.MeshStandardMaterial({ color: 0xd9c9ae, roughness: 0.92, side: THREE.DoubleSide });
   [[-7, 2.25, 0, Math.PI / 2, 18], [7, 2.25, 0, -Math.PI / 2, 18], [0, 2.25, -9, 0, 14], [0, 2.25, 9, Math.PI, 14]].forEach(([x, y, z, rotationY, width]) => {
     const wall = new THREE.Mesh(new THREE.PlaneGeometry(width, 4.5), burgundy);
@@ -1453,12 +1629,12 @@ async function buildPeopleBehindPaintersExhibits() {
 
     const outer = new THREE.Mesh(
       new THREE.BoxGeometry(width + 0.32, height + 0.32, 0.12),
-      new THREE.MeshStandardMaterial({ color: 0x8e6427, roughness: 0.38, metalness: 0.42 })
+      new THREE.MeshStandardMaterial({ color: 0x46545d, roughness: 1, metalness: 0 })
     );
     display.add(outer);
     const inner = new THREE.Mesh(
       new THREE.BoxGeometry(width + 0.17, height + 0.17, 0.145),
-      new THREE.MeshStandardMaterial({ color: 0xd0a451, roughness: 0.32, metalness: 0.38 })
+      new THREE.MeshStandardMaterial({ color: 0xb9aa84, roughness: 0.92, metalness: 0.03 })
     );
     display.add(inner);
     const image = new THREE.Mesh(new THREE.PlaneGeometry(width, height), new THREE.MeshBasicMaterial({ map: texture }));
@@ -1474,9 +1650,12 @@ async function buildPeopleBehindPaintersExhibits() {
   const eventSrc = room.event?.[lang] || room.event?.en || portraits[0]?.src;
   if (!eventSrc) return;
   const eventTexture = await textureLoader.loadAsync(eventSrc);
-  optimizeTextureForMobile(eventTexture);
   eventTexture.encoding = THREE.sRGBEncoding;
-  eventTexture.minFilter = THREE.LinearFilter;
+  eventTexture.anisotropy = isLowPowerDevice ? 2 : renderer.capabilities.getMaxAnisotropy();
+  eventTexture.generateMipmaps = true;
+  eventTexture.minFilter = THREE.LinearMipmapLinearFilter;
+  eventTexture.magFilter = THREE.LinearFilter;
+  eventTexture.needsUpdate = true;
   const eventAspect = eventTexture.image.width / eventTexture.image.height;
   const eventHeight = Math.min(3.42, 11.7 / eventAspect);
   const eventWidth = eventHeight * eventAspect;
@@ -1484,13 +1663,132 @@ async function buildPeopleBehindPaintersExhibits() {
   storyWall.position.set(0, 2.32, -8.87);
   const border = new THREE.Mesh(
     new THREE.BoxGeometry(eventWidth + 0.28, eventHeight + 0.28, 0.12),
-    new THREE.MeshStandardMaterial({ color: 0xd2ad63, roughness: 0.34, metalness: 0.36 })
+    new THREE.MeshStandardMaterial({ color: 0x52616b, roughness: 1, metalness: 0 })
   );
   storyWall.add(border);
   const storyImage = new THREE.Mesh(new THREE.PlaneGeometry(eventWidth, eventHeight), new THREE.MeshBasicMaterial({ map: eventTexture }));
   storyImage.position.z = 0.071;
   storyWall.add(storyImage);
   scene.add(storyWall);
+
+  const readingSpot = new THREE.Group();
+  readingSpot.position.set(0, 0.012, -8.05);
+  readingSpot.userData.destination = new THREE.Vector3(0, 0, -8.05);
+  readingSpot.userData.visitorYaw = 0;
+  const readingTarget = new THREE.Mesh(
+    new THREE.CircleGeometry(0.42, 32),
+    new THREE.MeshBasicMaterial({ color: 0xdde7e9, transparent: true, opacity: 0.16, side: THREE.DoubleSide })
+  );
+  readingTarget.rotation.x = -Math.PI / 2;
+  readingTarget.userData.hotspot = readingSpot;
+  readingSpot.add(readingTarget);
+  teleportTargets.push(readingTarget);
+  scene.add(readingSpot);
+}
+
+async function buildPeopleRoomVideoExhibits() {
+  const roomId = PEOPLE_ROOM_CONFIG[artistRoomId] ? artistRoomId : "da-vinci";
+  const videos = PEOPLE_MEDIA_LIBRARY[roomId]?.videos || [];
+  if (!videos.length) return;
+  videoSelect.innerHTML = "";
+  await Promise.all(videos.map(async (item, index) => {
+    const video = document.createElement("video");
+    video.crossOrigin = "anonymous";
+    video.preload = "metadata";
+    video.playsInline = true;
+    video.loop = true;
+    video.muted = true;
+    video.src = item.src;
+    const texture = new THREE.VideoTexture(video);
+    texture.encoding = THREE.sRGBEncoding;
+    texture.minFilter = THREE.LinearFilter;
+    const width = videos.length > 1 ? 2.75 : 3.15;
+    const display = new THREE.Group();
+    display.position.set(videos.length > 1 ? (index ? 4.95 : -4.95) : 4.85, 2.15, -8.78);
+    const frame = new THREE.Mesh(new THREE.BoxGeometry(width + 0.25, 2.02, 0.14), new THREE.MeshStandardMaterial({ color: 0xcaa255, roughness: 0.36, metalness: 0.38 }));
+    display.add(frame);
+    const screen = new THREE.Mesh(new THREE.PlaneGeometry(width, 1.72), new THREE.MeshBasicMaterial({ map: texture, color: 0xffffff }));
+    screen.position.z = 0.081;
+    display.add(screen);
+    const label = makeLabel(localizedCinemaTitle(item));
+    label.position.set(0, -1.25, 0.09);
+    label.scale.set(width, 0.48, 1);
+    display.add(label);
+    scene.add(display);
+    const exhibit = { title: item.title, src: item.src, display, screen, video, sound: null, cinema: true, playlistIndex: index, playlist: videos };
+    screen.userData.videoExhibit = exhibit;
+    galleryVideoExhibits.push(exhibit);
+    galleryVideoScreens.push(screen);
+    teleportTargets.push(screen);
+    if (!activeGalleryVideo) activeGalleryVideo = exhibit;
+    const option = document.createElement("option");
+    option.value = String(index);
+    option.textContent = `${index + 1}. ${localizedCinemaTitle(item)}`;
+    videoSelect.appendChild(option);
+  }));
+  updateGalleryVideoButtons();
+}
+
+function decoratePeopleRoom() {
+  const roomId = PEOPLE_ROOM_CONFIG[artistRoomId] ? artistRoomId : "da-vinci";
+  [-5.75, 5.75].forEach((x, index) => void addFurnitureModel({
+    src: ORNATE_PILL_MODEL,
+    name: `people-${roomId}-ornate-pill-${index + 1}`,
+    position: [x, 0, -7.35],
+    rotationY: index ? Math.PI : 0,
+    maxSize: 1.65
+  }));
+  if (["monet", "vermeer"].includes(roomId)) void addFurnitureModel({
+    src: ACCENT_SOFA_MODEL,
+    name: `people-${roomId}-accent-sofa`,
+    position: [0, 0, 5.1],
+    rotationY: Math.PI,
+    maxSize: 2.25
+  });
+}
+
+function decorateGalleryRoom(roomName, includeSofa = false) {
+  [-5.25, 5.25].forEach((x, index) => void addFurnitureModel({
+    src: ORNATE_PILL_MODEL,
+    name: `${roomName}-ornate-pill-${index + 1}`,
+    position: [x, 0, -6.6],
+    rotationY: index ? Math.PI : 0,
+    maxSize: 1.75
+  }));
+  if (includeSofa) void addFurnitureModel({
+    src: ACCENT_SOFA_MODEL,
+    name: `${roomName}-accent-sofa`,
+    position: [0, 0, 4.4],
+    rotationY: Math.PI,
+    maxSize: 2.35
+  });
+}
+
+function addLouvreGalleryFurniture() {
+  const armchairSrc = GALLERY_FURNITURE.find((item) => item.id === "armchair")?.src;
+  if (armchairSrc) {
+    [-4.65, 4.65].forEach((x, index) => void addFurnitureModel({
+      src: armchairSrc,
+      name: `louvre-armchair-${index + 1}`,
+      position: [x, 0, 6.25],
+      rotationY: Math.PI,
+      maxSize: 1.25
+    }));
+  }
+  void addFurnitureModel({
+    src: "assets/paintings/fourniture/gallery-furniture/table-vitrine-w.glb",
+    name: "louvre-central-vitrine",
+    position: [0, 0, 2.65],
+    rotationY: 0,
+    maxSize: 1.55
+  });
+  void addFurnitureModel({
+    src: "assets/paintings/fourniture/gallery-furniture/brochure_stand.glb",
+    name: "louvre-information-stand",
+    position: [5.45, 0, -1.5],
+    rotationY: -Math.PI / 2,
+    maxSize: 1.2
+  });
 }
 
 async function buildGroupExhibit() {
@@ -2056,7 +2354,7 @@ function addCinemaRoomArchitecture() {
     { size: [12, 4], position: [CINEMA_ROOM_X, 2, 39], rotationY: Math.PI },
     { size: [3.7, 4], position: [8, 2, 31.15], rotationY: Math.PI / 2 },
     { size: [3.7, 4], position: [8, 2, 36.85], rotationY: Math.PI / 2 },
-    { size: [2.6, 1.1], position: [8, 3.45, 34], rotationY: Math.PI / 2 },
+    { size: [2.6, 1.6], position: [8, 3.2, 34], rotationY: Math.PI / 2 },
     { size: [10, 4], position: [20, 2, 34], rotationY: -Math.PI / 2 }
   ].forEach((wall) => {
     const mesh = new THREE.Mesh(new THREE.PlaneGeometry(...wall.size), wallMaterial);
@@ -2831,6 +3129,17 @@ async function addPaintingsGalleryFurniture() {
         node.receiveShadow = true;
       });
       scene.add(model);
+      if (item.id === "gallery-table") {
+        model.updateMatrixWorld(true);
+        const placedBox = new THREE.Box3().setFromObject(model);
+        void addFurnitureModel({
+          src: LIVING_BOOK_MODEL,
+          name: "paintings-room-artdaci-book-on-table",
+          position: [item.position[0], placedBox.max.y + 0.006, item.position[2]],
+          rotationY: item.rotationY + Math.PI,
+          maxSize: 0.86
+        });
+      }
       await new Promise((resolve) => setTimeout(resolve, isQuestBrowser ? 500 : 60));
     } catch (error) {
       console.warn(`Gallery furniture unavailable for ${item.id}.`, error);
@@ -3070,6 +3379,7 @@ function createReimaginedHotspot(_title, placement, artwork) {
 }
 
 function buildReimaginedVideoExhibits() {
+  const cinemaPlaylist = getCinemaVideoLibrary();
   const cinema = new THREE.Group();
   cinema.name = "artdaci-cinema";
   cinema.position.x = CINEMA_ROOM_X;
@@ -3119,14 +3429,15 @@ function buildReimaginedVideoExhibits() {
   cinema.add(title);
 
   const exhibit = {
-    title: CINEMA_VIDEO_LIBRARY[0].title,
-    src: CINEMA_VIDEO_LIBRARY[0].src,
+    title: cinemaPlaylist[0].title,
+    src: cinemaPlaylist[0].src,
     display: television,
     screen,
     video,
     sound: null,
     cinema: true,
-    playlistIndex: 0
+    playlistIndex: 0,
+    playlist: cinemaPlaylist
   };
 
   video.addEventListener("timeupdate", () => {
@@ -3150,7 +3461,7 @@ function buildReimaginedVideoExhibits() {
   teleportTargets.push(screen);
   activeGalleryVideo = exhibit;
   videoSelect.innerHTML = "";
-  CINEMA_VIDEO_LIBRARY.forEach((item, index) => {
+  cinemaPlaylist.forEach((item, index) => {
     const option = document.createElement("option");
     option.value = String(index);
     option.textContent = `${index + 1}. ${localizedCinemaTitle(item)}`;
@@ -3183,13 +3494,14 @@ function buildReimaginedVideoExhibits() {
   libraryHeading.position.set(3.75, 3.72, 35.98);
   libraryHeading.scale.set(1.65, 0.42, 1);
   cinema.add(libraryHeading);
-  CINEMA_VIDEO_LIBRARY.forEach((item, index) => {
+  const cinemaLibrarySpacing = Math.min(0.42, 2.8 / Math.max(1, cinemaPlaylist.length - 1));
+  cinemaPlaylist.forEach((item, index) => {
     const button = createCinemaButton(`${index + 1}. ${localizedCinemaTitle(item)}`, {
       type: "select",
       value: index,
-      position: [3.75, 3.35 - index * 0.42, 35.98],
+      position: [3.75, 3.35 - index * cinemaLibrarySpacing, 35.98],
       width: 1.85,
-      height: 0.36,
+      height: Math.min(0.36, cinemaLibrarySpacing * 0.84),
       material: index === 0 ? goldMaterial : blueMaterial
     });
     cinema.add(button);
@@ -3206,15 +3518,29 @@ function buildReimaginedVideoExhibits() {
     src: GALLERY_FURNITURE.find((item) => item.id === "armchair").src,
     name: "cinema-armchair",
     position: [3.72, 0, 29.72],
-    rotationY: Math.PI / 2,
+    rotationY: 0,
     maxSize: 0.95,
     parent: cinema
   });
-  if (!isQuestBrowser && !isHandheldMobile) {
-    addCinemaSofaModel(cinema).catch((error) => {
-      console.warn("The cinema sofa model could not be loaded.", error);
-    });
-  }
+  addCinemaSofaModel(cinema).catch((error) => {
+    console.warn("The cinema sofa model could not be loaded.", error);
+  });
+  void addFurnitureModel({
+    src: CINEMA_GATEWAY_MODEL,
+    name: "cinema-egypt-gateway",
+    position: [-5.92, 0, 34],
+    rotationY: Math.PI * 1.5,
+    maxSize: 3.05,
+    parent: cinema
+  });
+  void addFurnitureModel({
+    src: ORNATE_PILL_MODEL,
+    name: "cinema-ornate-turquoise-pill",
+    position: [5.25, 0, 34.9],
+    rotationY: -Math.PI / 4,
+    maxSize: 1.8,
+    parent: cinema
+  });
   scene.add(cinema);
   setCinemaVideo(exhibit, 0, false);
   updateGalleryVideoButtons();
@@ -3307,6 +3633,10 @@ async function addCinemaSofaModel(cinema) {
     box = new THREE.Box3().setFromObject(sofa);
     size = box.getSize(new THREE.Vector3());
   }
+  sofa.rotation.y += Math.PI;
+  sofa.updateMatrixWorld(true);
+  box = new THREE.Box3().setFromObject(sofa);
+  size = box.getSize(new THREE.Vector3());
   const scale = 3.1 / Math.max(size.x, 0.001);
   sofa.scale.setScalar(scale);
   sofa.updateMatrixWorld(true);
@@ -3425,7 +3755,8 @@ function addCinemaViewingSpot(cinema) {
 
 function setCinemaVideo(exhibit, index, autoplay = true) {
   if (!exhibit?.cinema) return;
-  const item = CINEMA_VIDEO_LIBRARY[(index + CINEMA_VIDEO_LIBRARY.length) % CINEMA_VIDEO_LIBRARY.length];
+  const playlist = exhibit.playlist || CINEMA_VIDEO_LIBRARY;
+  const item = playlist[(index + playlist.length) % playlist.length];
   const logicalMuted = exhibit.video.muted;
   exhibit.video.pause();
   if (exhibit.sound) {
@@ -3433,7 +3764,7 @@ function setCinemaVideo(exhibit, index, autoplay = true) {
     exhibit.sound.remove();
     exhibit.sound = null;
   }
-  exhibit.playlistIndex = (index + CINEMA_VIDEO_LIBRARY.length) % CINEMA_VIDEO_LIBRARY.length;
+  exhibit.playlistIndex = (index + playlist.length) % playlist.length;
   exhibit.title = item.title;
   exhibit.src = item.src;
   const companionAudioSrc = lang === "ar" && item.audioSrcAr
@@ -4306,6 +4637,12 @@ function bindUI() {
   audioMuteButton.addEventListener("click", toggleAudioMute);
   ambienceToggleButton?.addEventListener("click", toggleRoomAmbience);
   ambienceStopButton?.addEventListener("click", stopRoomAmbienceByVisitor);
+  narrationToggleButton?.addEventListener("click", () => toggleLibraryAudio("audio"));
+  narrationStopButton?.addEventListener("click", () => stopLibraryAudio("audio"));
+  musicToggleButton?.addEventListener("click", () => toggleLibraryAudio("music"));
+  musicStopButton?.addEventListener("click", () => stopLibraryAudio("music"));
+  narrationSelect?.addEventListener("change", () => stopLibraryAudio("audio"));
+  musicSelect?.addEventListener("change", () => stopLibraryAudio("music"));
   videoToggleButton.addEventListener("click", () => toggleGalleryVideo());
   videoRestartButton.addEventListener("click", () => restartGalleryVideo());
   videoMuteButton.addEventListener("click", () => toggleGalleryVideoMute());
@@ -4337,6 +4674,90 @@ function bindUI() {
   addEventListener("keyup", (event) => screenKeys.delete(event.key.toLowerCase()));
   addEventListener("resize", resize);
 }
+
+function configurePeopleMediaLibrary() {
+  if (!narrationSelect || !musicSelect) return;
+  const roomId = PEOPLE_ROOM_CONFIG[artistRoomId] ? artistRoomId : "da-vinci";
+  const painterName = (id) => PEOPLE_ROOM_CONFIG[id]?.name?.[lang] || PEOPLE_ROOM_CONFIG[id]?.name?.en || id;
+  const collect = (kind) => {
+    if (!isCinemaOnly) return (PEOPLE_MEDIA_LIBRARY[roomId]?.[kind] || [])
+      .filter((item) => !item.lang || item.lang === lang)
+      .map((item) => ({ ...item, painter: roomId }));
+    return Object.entries(PEOPLE_MEDIA_LIBRARY).flatMap(([painter, library]) => (library[kind] || [])
+      .filter((item) => !item.lang || item.lang === lang)
+      .map((item) => ({ ...item, painter })));
+  };
+  const populate = (select, items) => {
+    select.innerHTML = "";
+    items.forEach((item, index) => {
+      const option = document.createElement("option");
+      option.value = item.src;
+      option.textContent = `${index + 1}. ${isCinemaOnly ? `${painterName(item.painter)} — ` : ""}${item.title}`;
+      select.appendChild(option);
+    });
+    select.disabled = !items.length;
+  };
+  populate(narrationSelect, collect("audio"));
+  populate(musicSelect, collect("music"));
+  const copy = lang === "fr"
+    ? { audio: "Récits audio", music: "Musiques", playAudio: "Lire le récit", playMusic: "Lire la musique", stop: "Arrêter" }
+    : lang === "ar"
+      ? { audio: "قصص صوتية", music: "موسيقى", playAudio: "تشغيل القصة", playMusic: "تشغيل الموسيقى", stop: "إيقاف" }
+      : { audio: "Audio stories", music: "Music", playAudio: "Play audio", playMusic: "Play music", stop: "Stop" };
+  document.getElementById("gallery-narration-label").textContent = copy.audio;
+  document.getElementById("gallery-music-label").textContent = copy.music;
+  narrationToggleButton.textContent = copy.playAudio;
+  musicToggleButton.textContent = copy.playMusic;
+  narrationStopButton.textContent = copy.stop;
+  musicStopButton.textContent = copy.stop;
+}
+
+async function toggleLibraryAudio(kind) {
+  const isMusic = kind === "music";
+  const player = isMusic ? musicPlayer : narrationPlayer;
+  const other = isMusic ? narrationPlayer : musicPlayer;
+  const select = isMusic ? musicSelect : narrationSelect;
+  const button = isMusic ? musicToggleButton : narrationToggleButton;
+  if (!select?.value) return;
+  stopRoomAmbience();
+  other.pause();
+  if (player.src && !player.paused) {
+    player.pause();
+  } else {
+    if (player.src !== new URL(select.value, location.href).href) {
+      player.src = select.value;
+      player.load();
+    }
+    await player.play().catch((error) => console.warn("Audio playback is waiting for a visitor gesture.", error));
+  }
+  updateLibraryAudioButtons();
+  button.classList.toggle("active", !player.paused);
+}
+
+function stopLibraryAudio(kind) {
+  const player = kind === "music" ? musicPlayer : narrationPlayer;
+  player.pause();
+  player.currentTime = 0;
+  updateLibraryAudioButtons();
+}
+
+function updateLibraryAudioButtons() {
+  const labels = lang === "fr"
+    ? { audio: "Lire le récit", music: "Lire la musique", pause: "Pause" }
+    : lang === "ar"
+      ? { audio: "تشغيل القصة", music: "تشغيل الموسيقى", pause: "إيقاف مؤقت" }
+      : { audio: "Play audio", music: "Play music", pause: "Pause" };
+  narrationToggleButton.textContent = narrationPlayer.paused ? labels.audio : labels.pause;
+  musicToggleButton.textContent = musicPlayer.paused ? labels.music : labels.pause;
+  narrationToggleButton.classList.toggle("active", !narrationPlayer.paused);
+  musicToggleButton.classList.toggle("active", !musicPlayer.paused);
+}
+
+[narrationPlayer, musicPlayer].forEach((player) => {
+  player.addEventListener("play", updateLibraryAudioButtons);
+  player.addEventListener("pause", updateLibraryAudioButtons);
+  player.addEventListener("ended", updateLibraryAudioButtons);
+});
 
 function beginScreenLook(event) {
   if (currentSession || event.target !== renderer.domElement) return;
@@ -4391,8 +4812,9 @@ function updateScreenLocomotion(delta) {
   local.normalize().applyAxisAngle(new THREE.Vector3(0, 1, 0), visitor.rotation.y);
   visitor.position.addScaledVector(local, delta * 2.45);
   const museumWing = isConnectedMuseum || isModelMuseum;
-  visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, museumWing ? -6.3 : -5.3, museumWing ? 6.3 : 19.3);
-  visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, museumWing ? -7.3 : -4.3, museumWing ? 55.3 : 38.3);
+  const peopleRoom = activeRoom === "people";
+  visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, museumWing ? -6.3 : peopleRoom ? -6.45 : -5.3, museumWing ? 6.3 : peopleRoom ? 6.45 : 19.3);
+  visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, museumWing ? -7.3 : peopleRoom ? -8.35 : -4.3, museumWing ? 55.3 : peopleRoom ? 8.35 : 38.3);
 }
 
 async function detectVR() {
@@ -4691,8 +5113,9 @@ function updateLocomotion(delta) {
       visitor.position.addScaledVector(right, x * delta * 1.8);
       visitor.position.addScaledVector(forward, -y * delta * 1.8);
       const museumWing = isConnectedMuseum || isModelMuseum;
-      visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, museumWing ? -6.3 : -5.3, museumWing ? 6.3 : 19.3);
-      visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, museumWing ? -7.3 : -4.3, museumWing ? 55.3 : 38.3);
+      const peopleRoom = activeRoom === "people";
+      visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, museumWing ? -6.3 : peopleRoom ? -6.45 : -5.3, museumWing ? 6.3 : peopleRoom ? 6.45 : 19.3);
+      visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, museumWing ? -7.3 : peopleRoom ? -8.35 : -4.3, museumWing ? 55.3 : peopleRoom ? 8.35 : 38.3);
     }
 
     if (source.handedness === "right") {
