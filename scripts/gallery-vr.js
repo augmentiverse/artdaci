@@ -526,19 +526,6 @@ stage.appendChild(renderer.domElement);
 const textureLoader = new THREE.TextureLoader();
 const audioLoader = new THREE.AudioLoader();
 const modelLoadingManager = new THREE.LoadingManager();
-const isPublishedGitHubGallery = location.hostname === "augmentiverse.github.io"
-  && location.pathname.toLowerCase().startsWith("/artdaci/");
-modelLoadingManager.setURLModifier((source) => {
-  if (!isPublishedGitHubGallery || !/\.glb(?:$|[?#])/i.test(source)) return source;
-  const absolute = new URL(source, location.href);
-  const repositoryPath = decodeURIComponent(absolute.pathname).replace(/^\/artdaci\//i, "");
-  // GitHub Pages exposes Git LFS pointer files instead of their binary content.
-  // media.githubusercontent.com resolves those pointers and sends the real GLB.
-  return `https://media.githubusercontent.com/media/augmentiverse/artdaci/main/${repositoryPath
-    .split("/")
-    .map(encodeURIComponent)
-    .join("/")}`;
-});
 const dracoLoader = new DRACOLoader(modelLoadingManager);
 dracoLoader.setDecoderPath("vendor/draco/");
 const modelLoader = new GLTFLoader(modelLoadingManager);
