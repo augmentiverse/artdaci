@@ -86,6 +86,10 @@ const LOUVRE_GALLERY_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/5327a46
 const CINEMA_ROOM_X = 14;
 const CINEMA_VIDEO_LIBRARY = [
   {
+    title: { en: "The Four Painters Introduce Themselves", fr: "Les quatre peintres se présentent", ar: "الرسامون الأربعة يقدمون أنفسهم" },
+    src: "assets/peintres/videos de présentation/4painters-presenting-themselves.mp4"
+  },
+  {
     title: { en: "The Four Painters — New Selfie", fr: "Les quatre peintres — nouveau selfie", ar: "الرسامون الأربعة — صورة ذاتية جديدة" },
     src: "assets/paintings/groups/audio-video/dvvm-n-selfy.mp4"
   },
@@ -115,6 +119,43 @@ const CINEMA_VIDEO_LIBRARY = [
   {
     title: { en: "Mona Lisa in Motion", fr: "La Joconde en mouvement", ar: "الموناليزا في حركة" },
     src: "assets/paintings/Da Vinci/mona-lisa/audio-video/m2Vmg.mp4"
+  }
+];
+
+const CINEMA_MUSIC_LIBRARY = [
+  "Afternoon_Light_on_Linen.mp3",
+  "Gentle Resonance.mp3",
+  "Morning_on_the_Veranda.mp3",
+  "Noble Vigil.mp3",
+  "Passing Clouds.mp3",
+  "Solstice_at_Noon.mp3",
+  "The Painted Hall.mp3",
+  "The_Marble_Gallery.mp3"
+].map((filename) => ({
+  title: filename.replace(/\.mp3$/i, "").replaceAll("_", " "),
+  src: `assets/music/${filename}`
+}));
+
+const PAINTER_PRESENTATION_VIDEOS = [
+  {
+    painter: "da-vinci",
+    title: { en: "Leonardo da Vinci Introduces Himself", fr: "Léonard de Vinci se présente", ar: "ليوناردو دافنشي يقدم نفسه" },
+    src: "assets/peintres/videos de présentation/Da_Vinci_speaking_English_202608182004.mp4"
+  },
+  {
+    painter: "van-gogh",
+    title: { en: "Vincent van Gogh Introduces Himself", fr: "Vincent van Gogh se présente", ar: "فنسنت فان غوخ يقدم نفسه" },
+    src: "assets/peintres/videos de présentation/Scène_initiale_-_2026-08-11_202608111329.mp4"
+  },
+  {
+    painter: "vermeer",
+    title: { en: "Johannes Vermeer Introduces Himself", fr: "Johannes Vermeer se présente", ar: "يوهانس فيرمير يقدم نفسه" },
+    src: "assets/peintres/videos de présentation/Vermeer_presenting_in_studio_202608182004.mp4"
+  },
+  {
+    painter: "monet",
+    title: { en: "Claude Monet Introduces Himself", fr: "Claude Monet se présente", ar: "كلود مونيه يقدم نفسه" },
+    src: "assets/peintres/videos de présentation/Monet_in_his_studio_202608182004.mp4"
   }
 ];
 
@@ -327,6 +368,9 @@ const isHandheldMobile = !isQuestBrowser && (
   || (matchMedia("(pointer: coarse)").matches && Math.min(screen.width, screen.height) < 900)
 );
 const isLowPowerDevice = isQuestBrowser || isHandheldMobile;
+// Phones and tablets get the painted collection without optional GLB props.
+// These models are decorative and can exhaust the browser's memory on mobile.
+const allowDecorative3DModels = !isHandheldMobile;
 const previewRoom = params.get("room");
 const artistRoomId = params.get("artist");
 const artistRoom = ARTIST_ROOMS[artistRoomId] || null;
@@ -640,6 +684,7 @@ let ambientNodes = null;
 let cinemaAudienceRoot = null;
 let cinemaAudienceLoadPromise = null;
 let cinemaSofaLoaded = false;
+let cinemaMusicIndex = 0;
 const narrationPlayer = new Audio();
 const musicPlayer = new Audio();
 const roomAmbiencePlayer = new Audio();
@@ -729,7 +774,9 @@ async function init() {
   if (isModelMuseum) {
     buildModelMuseumArchitecture();
     renderer.setAnimationLoop(render);
-    void loadModelMuseumRoom(Math.max(0, ARTIST_ROOM_ORDER.indexOf(artistRoomId)));
+    if (allowDecorative3DModels) {
+      void loadModelMuseumRoom(Math.max(0, ARTIST_ROOM_ORDER.indexOf(artistRoomId)));
+    }
     status.textContent = text.ready;
     return;
   }
@@ -1309,14 +1356,14 @@ function buildConnectedMuseumArchitecture() {
   });
   addConnectedMuseumPartitions();
   addLivingBookTable([0, 0, 52.1], 0);
-  void addFurnitureModel({
+  if (allowDecorative3DModels) void addFurnitureModel({
     src: GALLERY_FURNITURE.find((item) => item.id === "brochure-stand").src,
     name: "da-vinci-center-brochure-stand",
     position: [0, 0, 0],
     rotationY: Math.PI,
     maxSize: 1.55
   });
-  void addFurnitureModel({
+  if (allowDecorative3DModels) void addFurnitureModel({
     src: GALLERY_FURNITURE.find((item) => item.id === "armchair").src,
     name: "monet-living-book-armchair",
     position: [2.55, 0, 52.1],
@@ -1848,6 +1895,8 @@ async function buildGroupExhibit() {
   image.position.set(0, 2.35, -7.78);
   scene.add(image);
 
+  if (!allowDecorative3DModels) return;
+
   const gltf = await modelLoader.loadAsync(GROUP_EXHIBIT.model);
   const model = gltf.scene;
   model.rotation.y = 0;
@@ -1920,6 +1969,7 @@ async function loadModelMuseumRoom(roomIndex) {
 }
 
 async function addDedicatedArtistModel(item, centerZ, index, count) {
+  if (!allowDecorative3DModels) return;
   const gltf = await modelLoader.loadAsync(item.src);
   const display = new THREE.Group();
   const x = count === 1 ? 0 : (index - (count - 1) / 2) * 2.55;
@@ -2190,13 +2240,9 @@ function addMonetDecor(centerZ, material) {
 
 async function buildConnectedMuseumExhibitions(printedManifests) {
   connectedManifestMap = new Map(printedManifests.map((manifest) => [manifest.slug, manifest]));
-  if (isHandheldMobile || isQuestBrowser) {
-    await loadConnectedMuseumRoom(connectedStartIndex);
-    return;
-  }
-  for (let roomIndex = 0; roomIndex < ARTIST_ROOM_ORDER.length; roomIndex += 1) {
-    await loadConnectedMuseumRoom(roomIndex);
-  }
+  // Load only the arrival room. Other rooms are streamed shortly before the
+  // visitor crosses their entrance, on desktop as well as mobile and WebXR.
+  await loadConnectedMuseumRoom(connectedStartIndex);
 }
 
 async function loadConnectedMuseumRoom(roomIndex) {
@@ -2268,9 +2314,20 @@ async function addMonetFinalWallLogo() {
 }
 
 function maybeLoadConnectedMuseumRoom() {
-  if (!isConnectedMuseum || (!isHandheldMobile && !isQuestBrowser) || !connectedManifestMap) return;
-  const roomIndex = THREE.MathUtils.clamp(Math.floor((visitor.position.z + 8) / 16), 0, ARTIST_ROOM_ORDER.length - 1);
+  if (!isConnectedMuseum || !connectedManifestMap) return;
+  const z = visitor.position.z;
+  const roomIndex = THREE.MathUtils.clamp(Math.floor((z + 8) / 16), 0, ARTIST_ROOM_ORDER.length - 1);
   if (!connectedRoomsLoaded.has(roomIndex)) void loadConnectedMuseumRoom(roomIndex);
+
+  // Entrances between rooms are at z=8, 24 and 40. Begin streaming the next
+  // room within four metres, leaving time for its paintings to appear.
+  const preloadDistance = 4;
+  for (let boundaryIndex = 0; boundaryIndex < ARTIST_ROOM_ORDER.length - 1; boundaryIndex += 1) {
+    const boundaryZ = 8 + boundaryIndex * 16;
+    if (Math.abs(z - boundaryZ) > preloadDistance) continue;
+    const adjacentRoom = z < boundaryZ ? boundaryIndex + 1 : boundaryIndex;
+    if (!connectedRoomsLoaded.has(adjacentRoom)) void loadConnectedMuseumRoom(adjacentRoom);
+  }
 }
 
 async function addConnectedMuseumArtwork(room, work, centerZ, index, manifest) {
@@ -2664,7 +2721,7 @@ function addLivingBookTable(position = [3.75, 0, 3.15], rotationY = -0.18) {
   label.scale.set(1.55, 0.38, 1);
   table.add(label);
   scene.add(table);
-  if (!isLowPowerDevice) void ensureLivingBookAssetsLoaded();
+  if (allowDecorative3DModels && !isLowPowerDevice) void ensureLivingBookAssetsLoaded();
 }
 
 function ensureLivingBookAssetsLoaded() {
@@ -2676,7 +2733,7 @@ function ensureLivingBookAssetsLoaded() {
 }
 
 function maybeLoadLivingBookAssets() {
-  if (!isLowPowerDevice || !openBookTable || livingBookAssetsPromise) return;
+  if (!allowDecorative3DModels || !isLowPowerDevice || !openBookTable || livingBookAssetsPromise) return;
   const tablePosition = openBookTable.getWorldPosition(new THREE.Vector3());
   if (tablePosition.distanceTo(getListenerPosition()) < 13) void ensureLivingBookAssetsLoaded();
 }
@@ -3153,6 +3210,7 @@ function prepareStandaloneModelExhibits(paintings, bedroomOnly = false) {
 }
 
 async function addPaintingsGalleryFurniture() {
+  if (!allowDecorative3DModels) return;
   for (const item of GALLERY_FURNITURE) {
     try {
       const gltf = await modelLoader.loadAsync(item.src);
@@ -3192,6 +3250,7 @@ async function addPaintingsGalleryFurniture() {
 }
 
 async function addFurnitureModel({ src, name, position, rotationY = 0, maxSize = 1.6, parent = scene }) {
+  if (!allowDecorative3DModels) return null;
   try {
     if (!furnitureSourceCache.has(src)) {
       furnitureSourceCache.set(src, modelLoader.loadAsync(src).then((gltf) => gltf.scene));
@@ -3340,11 +3399,72 @@ async function buildReimaginedExhibition() {
     scene.add(createReimaginedHotspot(itemTitle, placement, artwork));
   }));
 
+  buildPainterPresentationVideos();
+
   if (!REIMAGINED_ARTWORKS.some((item) => getReimaginedPainter(item) === "monet")) {
     createWallSign(lang === "fr" ? "NOUVELLES ŒUVRES À VENIR" : "MORE REIMAGINED WORKS COMING SOON", [0, 2.15, 38.88], Math.PI, {
       width: 4.8, height: 0.64, accent: true, compact: true
     });
   }
+}
+
+function buildPainterPresentationVideos() {
+  const roomCenters = { "da-vinci": 0, "van-gogh": 10, vermeer: 22, monet: 34 };
+  PAINTER_PRESENTATION_VIDEOS.forEach((item) => {
+    const centerZ = roomCenters[item.painter];
+    const video = document.createElement("video");
+    video.crossOrigin = "anonymous";
+    video.preload = "metadata";
+    video.playsInline = true;
+    video.loop = true;
+    video.muted = true;
+    video.src = item.src;
+
+    const texture = new THREE.VideoTexture(video);
+    texture.encoding = THREE.sRGBEncoding;
+    texture.minFilter = THREE.LinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+
+    const display = new THREE.Group();
+    display.name = `${item.painter}-presentation-video`;
+    display.position.set(0, 2.15, centerZ + 4.82);
+    display.rotation.y = Math.PI;
+
+    const frame = new THREE.Mesh(
+      new THREE.BoxGeometry(3.46, 2.14, 0.14),
+      new THREE.MeshStandardMaterial({ color: 0xb78b43, roughness: 0.4, metalness: 0.32 })
+    );
+    display.add(frame);
+
+    const screen = new THREE.Mesh(
+      new THREE.PlaneGeometry(3.2, 1.8),
+      new THREE.MeshBasicMaterial({ map: texture, color: 0xffffff, side: THREE.DoubleSide })
+    );
+    screen.position.z = 0.081;
+    display.add(screen);
+
+    const localizedTitle = item.title[lang] || item.title.en;
+    const instruction = lang === "ar" ? "اختر للتشغيل أو الإيقاف" : lang === "fr" ? "Sélectionner pour lire ou mettre en pause" : "Select to play or pause";
+    const label = makeLabel(`${localizedTitle}\n${instruction}`);
+    label.position.set(0, -1.35, 0.09);
+    label.scale.set(3.35, 0.65, 1);
+    display.add(label);
+    scene.add(display);
+
+    const exhibit = {
+      title: item.title,
+      src: item.src,
+      display,
+      screen,
+      video,
+      sound: null,
+      cinema: false
+    };
+    screen.userData.videoExhibit = exhibit;
+    galleryVideoExhibits.push(exhibit);
+    galleryVideoScreens.push(screen);
+    teleportTargets.push(screen);
+  });
 }
 
 async function addReimaginedEntranceMonaLisa() {
@@ -3430,8 +3550,7 @@ function buildReimaginedVideoExhibits() {
   cinemaAudienceRoot = cinema;
 
   const darkMaterial = new THREE.MeshStandardMaterial({ color: 0x0d1015, roughness: 0.62 });
-  const blueMaterial = new THREE.MeshStandardMaterial({ color: 0x19384a, roughness: 0.72 });
-  const goldMaterial = new THREE.MeshStandardMaterial({ color: 0xb9914c, roughness: 0.44, metalness: 0.28 });
+  const brassMaterial = new THREE.MeshStandardMaterial({ color: 0x9b5f1d, roughness: 0.38, metalness: 0.42 });
 
   const backdrop = new THREE.Mesh(new THREE.BoxGeometry(5.55, 3.68, 0.2), darkMaterial);
   backdrop.position.set(0, 2.02, 36.55);
@@ -3467,7 +3586,7 @@ function buildReimaginedVideoExhibits() {
   screen.position.set(0, 2.22, 36.29);
   cinema.add(screen);
 
-  const title = makeLabel(text.cinema);
+  const title = makeCinemaPlaqueLabel(text.cinema);
   title.position.set(0, 3.73, 36.22);
   title.scale.set(3.5, 0.58, 1);
   cinema.add(title);
@@ -3528,13 +3647,49 @@ function buildReimaginedVideoExhibits() {
       position: [-3.75, 3.45 - index * 0.39, 36.02],
       width: 1.85,
       height: 0.34,
-      material: blueMaterial,
+      material: brassMaterial,
       compact: true
     });
     cinema.add(button);
   });
 
-  const libraryHeading = makeLabel(text.cinemaLibrary);
+  const musicHeading = makeCinemaPlaqueLabel(lang === "ar" ? "موسيقى السينما" : lang === "fr" ? "MUSIQUE DU CINÉMA" : "CINEMA MUSIC");
+  musicHeading.position.set(5.77, 3.72, 33.45);
+  musicHeading.rotation.y = -Math.PI / 2;
+  musicHeading.scale.set(1.65, 0.42, 1);
+  cinema.add(musicHeading);
+  const musicSpacing = Math.min(0.4, 2.35 / Math.max(1, CINEMA_MUSIC_LIBRARY.length - 1));
+  CINEMA_MUSIC_LIBRARY.forEach((item, index) => {
+    const button = createCinemaButton(`${index + 1}. ${item.title}`, {
+      type: "music-select",
+      value: index,
+      position: [5.76, 3.34 - index * musicSpacing, 33.45],
+      rotationY: -Math.PI / 2,
+      width: 1.9,
+      height: Math.min(0.34, musicSpacing * 0.82),
+      material: brassMaterial
+    });
+    cinema.add(button);
+  });
+  [
+    { label: lang === "fr" ? "PRÉCÉDENT" : lang === "ar" ? "السابق" : "PREVIOUS", type: "music-previous" },
+    { label: lang === "fr" ? "LECTURE / PAUSE" : lang === "ar" ? "تشغيل / إيقاف" : "PLAY / PAUSE", type: "music-toggle" },
+    { label: lang === "fr" ? "ARRÊTER" : lang === "ar" ? "إيقاف" : "STOP", type: "music-stop" },
+    { label: lang === "fr" ? "SUIVANT" : lang === "ar" ? "التالي" : "NEXT", type: "music-next" }
+  ].forEach((control, index) => {
+    const button = createCinemaButton(control.label, {
+      type: control.type,
+      position: [5.76, 0.86 - index * 0.25, 33.45],
+      rotationY: -Math.PI / 2,
+      width: 1.9,
+      height: 0.24,
+      material: brassMaterial,
+      compact: true
+    });
+    cinema.add(button);
+  });
+
+  const libraryHeading = makeCinemaPlaqueLabel(text.cinemaLibrary);
   libraryHeading.position.set(3.75, 3.72, 35.98);
   libraryHeading.scale.set(1.65, 0.42, 1);
   cinema.add(libraryHeading);
@@ -3546,7 +3701,7 @@ function buildReimaginedVideoExhibits() {
       position: [3.75, 3.35 - index * cinemaLibrarySpacing, 35.98],
       width: 1.85,
       height: Math.min(0.36, cinemaLibrarySpacing * 0.84),
-      material: index === 0 ? goldMaterial : blueMaterial
+      material: brassMaterial
     });
     cinema.add(button);
   });
@@ -3594,6 +3749,64 @@ function localizedCinemaTitle(item) {
   return typeof item.title === "string" ? item.title : item.title?.[lang] || item.title?.en || "";
 }
 
+function paintCinemaPlaque(context, width, height, label, heading = false) {
+  const brass = context.createLinearGradient(0, 0, width, height);
+  brass.addColorStop(0, "#d6a24d");
+  brass.addColorStop(0.45, "#b87825");
+  brass.addColorStop(1, "#7b4313");
+  context.fillStyle = brass;
+  context.fillRect(0, 0, width, height);
+
+  context.strokeStyle = "#4c280b";
+  context.lineWidth = 12;
+  context.strokeRect(7, 7, width - 14, height - 14);
+  context.strokeStyle = "#e3b760";
+  context.lineWidth = 5;
+  context.strokeRect(19, 19, width - 38, height - 38);
+  context.strokeStyle = "rgba(62, 28, 4, .55)";
+  context.lineWidth = 3;
+  context.strokeRect(29, 29, width - 58, height - 58);
+
+  [[38, 38], [width - 38, 38], [38, height - 38], [width - 38, height - 38]].forEach(([x, y]) => {
+    const stud = context.createRadialGradient(x - 4, y - 4, 2, x, y, 14);
+    stud.addColorStop(0, "#f1ca77");
+    stud.addColorStop(0.45, "#a6651f");
+    stud.addColorStop(1, "#3a1c06");
+    context.fillStyle = stud;
+    context.beginPath();
+    context.arc(x, y, 14, 0, Math.PI * 2);
+    context.fill();
+  });
+
+  context.fillStyle = "#211307";
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  let size = heading ? 82 : label.length > 30 ? 34 : label.length > 18 ? 40 : 48;
+  const family = lang === "ar" ? '"Segoe UI", Tahoma, Arial, sans-serif' : 'Georgia, "Times New Roman", serif';
+  context.font = `700 ${size}px ${family}`;
+  while (context.measureText(label).width > width - 110 && size > 28) {
+    size -= 2;
+    context.font = `700 ${size}px ${family}`;
+  }
+  context.fillText(label, width / 2, height / 2 + 2);
+}
+
+function makeCinemaPlaqueLabel(message) {
+  const canvas = document.createElement("canvas");
+  const scale = isLowPowerDevice ? 0.5 : 1;
+  canvas.width = 1200 * scale;
+  canvas.height = 260 * scale;
+  const context = canvas.getContext("2d");
+  context.scale(scale, scale);
+  paintCinemaPlaque(context, 1200, 260, message, true);
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.encoding = THREE.sRGBEncoding;
+  return new THREE.Mesh(
+    new THREE.PlaneGeometry(1.28, 0.32),
+    new THREE.MeshBasicMaterial({ map: texture })
+  );
+}
+
 function createCinemaButton(label, options) {
   const canvas = document.createElement("canvas");
   const logicalWidth = 900;
@@ -3603,31 +3816,7 @@ function createCinemaButton(label, options) {
   canvas.height = logicalHeight * buttonScale;
   const context = canvas.getContext("2d");
   context.scale(buttonScale, buttonScale);
-  const background = context.createLinearGradient(0, 0, logicalWidth, logicalHeight);
-  background.addColorStop(0, options.compact ? "#132331" : "#17384a");
-  background.addColorStop(1, options.compact ? "#0b151e" : "#102b3a");
-  context.fillStyle = background;
-  context.fillRect(0, 0, logicalWidth, logicalHeight);
-  context.strokeStyle = options.compact ? "#b99a60" : "#a9efff";
-  context.lineWidth = options.compact ? 5 : 10;
-  context.strokeRect(8, 8, logicalWidth - 16, logicalHeight - 16);
-  if (options.compact) {
-    context.strokeStyle = "rgba(255, 241, 210, .24)";
-    context.lineWidth = 2;
-    context.strokeRect(20, 20, logicalWidth - 40, logicalHeight - 40);
-  }
-  context.fillStyle = options.compact ? "#f0dfbf" : "#fffaf1";
-  context.textAlign = "center";
-  context.textBaseline = "middle";
-  let size = options.compact
-    ? (label.length > 20 ? 34 : label.length > 12 ? 40 : 46)
-    : (label.length > 24 ? 46 : label.length > 12 ? 58 : 78);
-  context.font = `700 ${size}px "Segoe UI", Arial, sans-serif`;
-  while (context.measureText(label).width > logicalWidth - 70 && size > 30) {
-    size -= 2;
-    context.font = `700 ${size}px "Segoe UI", Arial, sans-serif`;
-  }
-  context.fillText(label, logicalWidth / 2, logicalHeight / 2);
+  paintCinemaPlaque(context, logicalWidth, logicalHeight, label);
   const texture = new THREE.CanvasTexture(canvas);
   texture.encoding = THREE.sRGBEncoding;
   const faceMaterial = new THREE.MeshBasicMaterial({ map: texture });
@@ -3643,6 +3832,7 @@ function createCinemaButton(label, options) {
     ]
   );
   button.position.set(...options.position);
+  button.rotation.y = options.rotationY || 0;
   button.userData.cinemaAction = { type: options.type, value: options.value };
   cinemaControlMeshes.push(button);
   teleportTargets.push(button);
@@ -3757,7 +3947,7 @@ async function addCinemaAudienceModels(cinema) {
 }
 
 function maybeLoadCinemaAudience() {
-  if (isIOSDevice) return;
+  if (!allowDecorative3DModels || isIOSDevice) return;
   if (!cinemaAudienceRoot || cinemaAudienceLoadPromise || performance.now() < cinemaAudienceReadyAt) return;
   const dx = visitor.position.x - CINEMA_ROOM_X;
   const dz = visitor.position.z - 34;
@@ -3799,6 +3989,7 @@ function addCinemaViewingSpot(cinema) {
 
 function setCinemaVideo(exhibit, index, autoplay = true) {
   if (!exhibit?.cinema) return;
+  musicPlayer.pause();
   const playlist = exhibit.playlist || CINEMA_VIDEO_LIBRARY;
   const item = playlist[(index + playlist.length) % playlist.length];
   const logicalMuted = exhibit.video.muted;
@@ -3851,6 +4042,10 @@ function runCinemaAction(action) {
     ? activeGalleryVideo
     : galleryVideoExhibits.find((item) => item.cinema);
   if (!exhibit || !action) return;
+  if (action.type.startsWith("music-")) {
+    runCinemaMusicAction(action);
+    return;
+  }
   activeGalleryVideo = exhibit;
   if (action.type === "toggle") toggleGalleryVideo(exhibit);
   if (action.type === "restart") restartGalleryVideo(exhibit);
@@ -3869,6 +4064,35 @@ function runCinemaAction(action) {
   }
 }
 
+function setCinemaMusic(index, autoplay = true) {
+  const item = CINEMA_MUSIC_LIBRARY[(index + CINEMA_MUSIC_LIBRARY.length) % CINEMA_MUSIC_LIBRARY.length];
+  cinemaMusicIndex = (index + CINEMA_MUSIC_LIBRARY.length) % CINEMA_MUSIC_LIBRARY.length;
+  galleryVideoExhibits.forEach((videoExhibit) => videoExhibit.video.pause());
+  narrationPlayer.pause();
+  stopRoomAmbience();
+  if (musicPlayer.src !== new URL(item.src, location.href).href) {
+    musicPlayer.src = item.src;
+    musicPlayer.load();
+  }
+  musicPlayer.currentTime = 0;
+  if (musicSelect) musicSelect.value = item.src;
+  if (autoplay) musicPlayer.play().catch((error) => console.warn("Cinema music is waiting for a visitor gesture.", error));
+  status.textContent = `${lang === "fr" ? "Musique du cinéma" : lang === "ar" ? "موسيقى السينما" : "Cinema music"}: ${item.title}`;
+}
+
+function runCinemaMusicAction(action) {
+  if (!CINEMA_MUSIC_LIBRARY.length) return;
+  if (action.type === "music-select") setCinemaMusic(Number(action.value));
+  if (action.type === "music-previous") setCinemaMusic(cinemaMusicIndex - 1);
+  if (action.type === "music-next") setCinemaMusic(cinemaMusicIndex + 1);
+  if (action.type === "music-stop") stopLibraryAudio("music");
+  if (action.type === "music-toggle") {
+    if (!musicPlayer.src) setCinemaMusic(cinemaMusicIndex);
+    else if (musicPlayer.paused) musicPlayer.play().catch(() => {});
+    else musicPlayer.pause();
+  }
+}
+
 async function toggleGalleryVideo(exhibit) {
   exhibit = exhibit || activeGalleryVideo || getNearestGalleryVideo();
   if (!exhibit?.video) return;
@@ -3878,6 +4102,7 @@ async function toggleGalleryVideo(exhibit) {
     exhibit.video.load();
   }
   activeGalleryVideo = exhibit;
+  musicPlayer.pause();
   galleryVideoExhibits.forEach((item) => {
     if (item !== exhibit) {
       item.video.muted = true;
@@ -3885,7 +4110,9 @@ async function toggleGalleryVideo(exhibit) {
         item.sound.muted = true;
         item.sound.pause();
       }
-      if (!item.video.paused) item.video.play().catch(() => {});
+      // Only one gallery video should decode at a time. This is especially
+      // important now that every painter room has an optional presentation.
+      if (!item.video.paused) item.video.pause();
     }
   });
   if (activeExhibit?.audio?.isPlaying) activeExhibit.audio.pause();
@@ -4014,6 +4241,7 @@ function toggleVideoFromPointer(event) {
 }
 
 async function buildModelExhibits(paintings) {
+  if (!allowDecorative3DModels) return;
   status.textContent = text.loadingModels;
   let loaded = 0;
   for (const painting of paintings) {
@@ -4724,6 +4952,7 @@ function configurePeopleMediaLibrary() {
   const roomId = PEOPLE_ROOM_CONFIG[artistRoomId] ? artistRoomId : "da-vinci";
   const painterName = (id) => PEOPLE_ROOM_CONFIG[id]?.name?.[lang] || PEOPLE_ROOM_CONFIG[id]?.name?.en || id;
   const collect = (kind) => {
+    if (isCinemaOnly && kind === "music") return CINEMA_MUSIC_LIBRARY;
     if (!isCinemaOnly) return (PEOPLE_MEDIA_LIBRARY[roomId]?.[kind] || [])
       .filter((item) => !item.lang || item.lang === lang)
       .map((item) => ({ ...item, painter: roomId }));
@@ -4763,6 +4992,7 @@ async function toggleLibraryAudio(kind) {
   const select = isMusic ? musicSelect : narrationSelect;
   const button = isMusic ? musicToggleButton : narrationToggleButton;
   if (!select?.value) return;
+  if (isMusic) galleryVideoExhibits.forEach((exhibit) => exhibit.video.pause());
   stopRoomAmbience();
   other.pause();
   if (player.src && !player.paused) {
