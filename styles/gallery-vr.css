@@ -119,6 +119,21 @@ body.screen-ui-collapsed .virtual-guide {
 .virtual-guide {
   transition: opacity .22s ease, transform .22s ease, visibility .22s;
 }
+
+/* Keep the optional AI guide discoverable without covering the experience. */
+.virtual-guide:not([open]) {
+  width: auto;
+  max-width: min(230px, calc(100vw - 32px));
+  opacity: .76;
+}
+
+.virtual-guide:not([open]):hover,
+.virtual-guide:not([open]):focus-within { opacity: 1; }
+
+.virtual-guide:not([open]) summary {
+  padding: 8px 11px;
+  font-size: 12px;
+}
 .screen-navigation button:active { background: #276a7e; transform: scale(.96); }
 .screen-navigation span {
   padding: 4px 7px;
@@ -626,6 +641,21 @@ body .gallery-button.primary {
   .screen-navigation button { width: 40px; height: 40px; font-size: 15px; }
   .screen-navigation span { display: none; }
   .gallery-ui-toggle { padding: 7px 10px; font-size: 11px; }
+}
+
+@media (max-width: 900px), (pointer: coarse) {
+  body[data-experience="cinema"] .gallery-toolbar { padding: 8px; gap: 8px; }
+  body[data-experience="cinema"] .gallery-toolbar h1 { font-size: 20px; }
+  body[data-experience="cinema"] .gallery-guide {
+    max-height: 46vh;
+    overflow: auto;
+    padding: 8px;
+    font-size: 11px;
+  }
+  body[data-experience="cinema"] .cinema-device-viewer video { max-height: 15vh; }
+  body[data-experience="cinema"] .gallery-button,
+  body[data-experience="cinema"] .gallery-video-select { min-height: 29px; padding: 4px 7px; font-size: 10px; }
+  body[data-experience="cinema"] .gallery-media-library { grid-template-columns: 1fr; }
 }
 
 @media (hover: none) and (pointer: coarse) {

@@ -229,6 +229,12 @@ function getCinemaVideoLibrary() {
   ];
 }
 
+function getCinemaAudioLibrary() {
+  return Object.values(PEOPLE_MEDIA_LIBRARY)
+    .flatMap((library) => library.audio || [])
+    .filter((item) => !item.lang || item.lang === lang);
+}
+
 const REIMAGINED_ARTWORKS = [
   { src: "assets/gallery/reimagined/mona-lisa_out.png", title: "Mona Lisa — Beyond the frame", titleAr: "الموناليزا — خارج الإطار" },
   { src: "assets/gallery/reimagined/Monalisa-Davinci.png", title: "Mona Lisa and Leonardo", titleAr: "الموناليزا وليوناردو" },
@@ -467,8 +473,8 @@ const COPY = {
     cinemaSit: "SIT & WATCH",
     cinemaPrevious: "Previous",
     cinemaNext: "Next",
-    cinemaBack: "−10 seconds",
-    cinemaForward: "+10 seconds",
+    cinemaBack: "REWIND",
+    cinemaForward: "FORWARD",
     cinemaPlayPause: "Play / Pause",
     cinemaSound: "Sound on / off",
     watchOnDevice: "Watch on this device",
@@ -522,8 +528,8 @@ const COPY = {
     cinemaSit: "S’ASSEOIR ET REGARDER",
     cinemaPrevious: "Précédent",
     cinemaNext: "Suivant",
-    cinemaBack: "−10 secondes",
-    cinemaForward: "+10 secondes",
+    cinemaBack: "RECULER",
+    cinemaForward: "AVANCER",
     cinemaPlayPause: "Lecture / Pause",
     cinemaSound: "Son activé / coupé",
     watchOnDevice: "Regarder sur cet appareil",
@@ -581,8 +587,8 @@ const COPY = {
     cinemaSit: "اجلس وشاهد",
     cinemaPrevious: "السابق",
     cinemaNext: "التالي",
-    cinemaBack: "−10 ثوانٍ",
-    cinemaForward: "+10 ثوانٍ",
+    cinemaBack: "رجوع",
+    cinemaForward: "تقديم",
     cinemaPlayPause: "تشغيل / إيقاف",
     cinemaSound: "تشغيل / كتم الصوت",
     watchOnDevice: "المشاهدة على هذا الجهاز",
@@ -620,6 +626,14 @@ const narrationStopButton = document.getElementById("gallery-narration-stop");
 const musicSelect = document.getElementById("gallery-music-select");
 const musicToggleButton = document.getElementById("gallery-music-toggle");
 const musicStopButton = document.getElementById("gallery-music-stop");
+const narrationPreviousButton = document.getElementById("gallery-narration-previous");
+const narrationNextButton = document.getElementById("gallery-narration-next");
+const narrationBackButton = document.getElementById("gallery-narration-back");
+const narrationForwardButton = document.getElementById("gallery-narration-forward");
+const musicPreviousButton = document.getElementById("gallery-music-previous");
+const musicNextButton = document.getElementById("gallery-music-next");
+const musicBackButton = document.getElementById("gallery-music-back");
+const musicForwardButton = document.getElementById("gallery-music-forward");
 const uiToggleButton = document.getElementById("gallery-ui-toggle");
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x191714);
@@ -688,13 +702,7 @@ let cinemaMusicIndex = 0;
 const narrationPlayer = new Audio();
 const musicPlayer = new Audio();
 const roomAmbiencePlayer = new Audio();
-const ROOM_AMBIENCE_TRACKS = [
-  "assets/music/Afternoon_Light_on_Linen.mp3",
-  "assets/music/Morning_on_the_Veranda.mp3",
-  "assets/music/Solstice_at_Noon.mp3",
-  "assets/music/The_Marble_Gallery.mp3",
-  "assets/music/A_Debt_of_Stone.mp3"
-];
+const ROOM_AMBIENCE_TRACKS = CINEMA_MUSIC_LIBRARY.map((item) => item.src);
 const ROOM_AMBIENCE_OFFSETS = {
   "da-vinci": 0,
   "van-gogh": 1,
@@ -764,7 +772,7 @@ async function init() {
     scene.add(new THREE.HemisphereLight(0xffecd2, 0x17202a, 1.1));
     addCinemaRoomArchitecture();
     addCinemaNavigationSigns();
-    addVirtualGuideStation([19.88, 1.42, 33.35], -Math.PI / 2, "the ARTDACI virtual cinema and its reimagined artist films");
+    addVirtualGuideStation([19.88, 1.08, 29.65], -Math.PI / 2, "the ARTDACI virtual cinema and its reimagined artist films");
     buildReimaginedVideoExhibits();
     renderer.setAnimationLoop(render);
     status.textContent = text.ready;
@@ -972,10 +980,11 @@ function makeVirtualGuideUrl(context, question = "Welcome me, explain what I can
 function addVirtualGuideStation(position, rotationY, context) {
   const label = lang === "ar" ? "اسأل دليل ChatGPT" : lang === "fr" ? "DEMANDER AU GUIDE CHATGPT" : "ASK THE CHATGPT GUIDE";
   return createWallSign(label, position, rotationY, {
-    width: 3.25,
-    height: 0.46,
+    width: 2.2,
+    height: 0.31,
     exitUrl: makeVirtualGuideUrl(context),
-    compact: true
+    compact: true,
+    subtle: true
   });
 }
 
@@ -1015,10 +1024,10 @@ function applyCopy() {
   }
   document.getElementById("gallery-exit-link").textContent = text.exitGallery;
   document.getElementById("gallery-exit-link").href = lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html";
-  document.getElementById("gallery-bedroom-world-link").textContent = text.bedroomVrWorld;
-  document.getElementById("gallery-bedroom-world-link").href = BEDROOM_VR_WORLD_URL;
-  document.getElementById("gallery-leonardo-world-link").textContent = text.leonardoStudioVrWorld;
-  document.getElementById("gallery-leonardo-world-link").href = LEONARDO_STUDIO_VR_WORLD_URL;
+  const bedroomWorldLink = document.getElementById("gallery-bedroom-world-link");
+  if (bedroomWorldLink) { bedroomWorldLink.textContent = text.bedroomVrWorld; bedroomWorldLink.href = BEDROOM_VR_WORLD_URL; }
+  const leonardoWorldLink = document.getElementById("gallery-leonardo-world-link");
+  if (leonardoWorldLink) { leonardoWorldLink.textContent = text.leonardoStudioVrWorld; leonardoWorldLink.href = LEONARDO_STUDIO_VR_WORLD_URL; }
   const louvreWorldLink = document.getElementById("gallery-louvre-world-link");
   if (louvreWorldLink) {
     louvreWorldLink.textContent = lang === "fr"
@@ -1026,8 +1035,8 @@ function applyCopy() {
       : lang === "ar" ? "استكشاف إحدى قاعات اللوفر بالواقع الافتراضي" : "Explore a Louvre Gallery in VR";
     louvreWorldLink.href = LOUVRE_GALLERY_VR_WORLD_URL;
   }
-  document.getElementById("gallery-leonardo-enriched-link").textContent = text.leonardoEnrichedStudio;
-  document.getElementById("gallery-leonardo-enriched-link").href = LEONARDO_ENRICHED_STUDIO_URL;
+  const enrichedLink = document.getElementById("gallery-leonardo-enriched-link");
+  if (enrichedLink) { enrichedLink.textContent = text.leonardoEnrichedStudio; enrichedLink.href = LEONARDO_ENRICHED_STUDIO_URL; }
   document.getElementById("gallery-cinema-link").textContent = isCinemaOnly ? text.cinemaReturn : text.cinemaEnter;
   document.getElementById("gallery-cinema-link").href = isCinemaOnly
     ? `gallery-vr.html?lang=${lang}`
@@ -1049,8 +1058,8 @@ function applyCopy() {
     cinemaBookLink.textContent = text.livingBook;
     cinemaBookLink.href = `book-3d.html?lang=${lang}`;
   }
-  document.getElementById("gallery-experiences-link").textContent = text.individualExperiences;
-  document.getElementById("gallery-experiences-link").href = `space.html?painting=mona-lisa&lang=${lang}`;
+  const experiencesLink = document.getElementById("gallery-experiences-link");
+  if (experiencesLink) { experiencesLink.textContent = text.individualExperiences; experiencesLink.href = `space.html?painting=mona-lisa&lang=${lang}`; }
   const productLinks = [
     ["gallery-models-link", text.modelsRoom, `gallery-vr.html?lang=${lang}&room=models`],
     ["gallery-paintings-link", text.paintingsRoom, `gallery-vr.html?lang=${lang}&room=paintings`],
@@ -1082,6 +1091,15 @@ function applyCopy() {
   languageSwitch.setAttribute("aria-label", text.languageSwitchLabel);
   languageSwitch.lang = targetLang;
   languageSwitch.href = `${isCinemaOnly ? "cinema-vr.html" : "gallery-vr.html"}?${targetParams.toString()}${location.hash}`;
+  const secondarySwitch = document.getElementById("gallery-language-switch-secondary");
+  if (secondarySwitch) {
+    const secondaryLang = ["en", "fr", "ar"].find((code) => code !== lang && code !== targetLang);
+    const secondaryParams = new URLSearchParams(location.search);
+    secondaryParams.set("lang", secondaryLang);
+    secondarySwitch.textContent = secondaryLang === "ar" ? "العربية" : secondaryLang === "fr" ? "FRANÇAIS" : "ENGLISH";
+    secondarySwitch.lang = secondaryLang;
+    secondarySwitch.href = `cinema-vr.html?${secondaryParams.toString()}${location.hash}`;
+  }
   status.textContent = text.loading;
   updateScreenUiToggle();
 }
@@ -1541,9 +1559,10 @@ async function buildLouvreMuseumExhibits() {
     const width = height * aspect;
     const left = index === 0;
     const display = new THREE.Group();
-    display.position.set(left ? -6.88 : 6.88, 2.25, 2.7);
-    display.rotation.y = left ? Math.PI / 2 : -Math.PI / 2;
-    display.add(new THREE.Mesh(new THREE.BoxGeometry(width + 0.2, height + 0.2, 0.1), new THREE.MeshStandardMaterial({ color: 0xb8914f, roughness: 0.45, metalness: 0.25 })));
+    // Use the unobstructed end wall: the side-wall pilasters previously hid
+    // substantial parts of both works from the central visitor path.
+    display.position.set(left ? -2.65 : 2.65, 2.25, -9.66);
+    display.rotation.y = 0;
     const image = new THREE.Mesh(new THREE.PlaneGeometry(width, height), new THREE.MeshBasicMaterial({ map: texture }));
     image.position.z = 0.056;
     display.add(image);
@@ -1676,7 +1695,8 @@ function addPeopleRoomNavigation(currentRoomId) {
     [lang === "fr" ? "GALERIE PRINCIPALE" : lang === "ar" ? "المعرض الرئيسي" : "MAIN GALLERY", `gallery-vr.html?lang=${lang}`, "⌂"],
     [text.livingBook, `book-3d.html?lang=${lang}`, "▤"],
     [text.cinemaEnter, `cinema-vr.html?lang=${lang}`, "◎"],
-    [text.reimaginedRoom, `gallery-vr.html?lang=${lang}&room=reimagined`, "▧"]
+    [text.reimaginedRoom, `gallery-vr.html?lang=${lang}&room=reimagined`, "▧"],
+    [lang === "fr" ? "COLLECTION" : lang === "ar" ? "المجموعة" : "COLLECTION", lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html", "◫"]
   ];
   destinations.forEach(([label, url, icon], index) => {
     const column = index % 3;
@@ -1794,16 +1814,20 @@ async function buildPeopleRoomVideoExhibits() {
     const screen = new THREE.Mesh(new THREE.PlaneGeometry(width, 1.72), new THREE.MeshBasicMaterial({ map: texture, color: 0xffffff }));
     screen.position.z = 0.081;
     display.add(screen);
-    const label = makeLabel(localizedCinemaTitle(item));
-    label.position.set(0, -1.25, 0.09);
-    label.scale.set(width, 0.48, 1);
+    const label = makePeopleVideoCaption(localizedCinemaTitle(item), width);
+    label.position.set(0, -1.27, 0.09);
     display.add(label);
     scene.add(display);
     const exhibit = { title: item.title, src: item.src, display, screen, video, sound: null, cinema: true, playlistIndex: index, playlist: videos };
     screen.userData.videoExhibit = exhibit;
+    const playbackControl = makeLabel(lang === "ar" ? "تشغيل / إيقاف" : lang === "fr" ? "LECTURE / PAUSE" : "PLAY / PAUSE");
+    playbackControl.position.set(0, -1.76, 0.1);
+    playbackControl.scale.set(1.35, 0.32, 1);
+    playbackControl.userData.videoExhibit = exhibit;
+    display.add(playbackControl);
     galleryVideoExhibits.push(exhibit);
-    galleryVideoScreens.push(screen);
-    teleportTargets.push(screen);
+    galleryVideoScreens.push(screen, playbackControl);
+    teleportTargets.push(screen, playbackControl);
     if (!activeGalleryVideo) activeGalleryVideo = exhibit;
     const option = document.createElement("option");
     option.value = String(index);
@@ -2346,13 +2370,9 @@ async function addConnectedMuseumArtwork(room, work, centerZ, index, manifest) {
   const artwork = new THREE.Group();
   artwork.position.set(x, 2.25, z);
   artwork.rotation.y = rotationY;
-  const frame = new THREE.Mesh(
-    new THREE.BoxGeometry(width + 0.18, height + 0.18, 0.1),
-    new THREE.MeshStandardMaterial({ color: room.accent, roughness: 0.46, metalness: 0.14 })
-  );
-  const image = new THREE.Mesh(new THREE.PlaneGeometry(width, height), new THREE.MeshBasicMaterial({ map: texture }));
-  image.position.z = 0.056;
-  artwork.add(frame, image);
+    const image = new THREE.Mesh(new THREE.PlaneGeometry(width, height), new THREE.MeshBasicMaterial({ map: texture }));
+    image.position.z = 0.018;
+    artwork.add(image);
   scene.add(artwork);
   const hotspot = createReimaginedHotspot(title, {
     hotspot: [leftSide ? -4.65 : 4.65, z],
@@ -2522,20 +2542,19 @@ async function addPaintingsModelsGateway() {
 
 function addCinemaNavigationSigns() {
   const destinations = [
-    { label: text.paintingsRoom, url: `gallery-vr.html?lang=${lang}&room=paintings`, y: 3.35, z: 31.6 },
-    { label: text.modelsRoom, url: `gallery-vr.html?lang=${lang}&room=models`, y: 2.78, z: 31.6 },
-    { label: text.bedroomRoom, url: `gallery-vr.html?lang=${lang}&room=bedroom`, y: 2.21, z: 31.6 },
-    { label: text.reimaginedRoom, url: `gallery-vr.html?lang=${lang}&room=reimagined`, y: 3.35, z: 35.1 },
-    { label: text.livingBook, url: `book-3d.html?lang=${lang}`, y: 2.78, z: 35.1 },
+    { label: lang === "fr" ? "GALERIE VR" : lang === "ar" ? "معرض الواقع الافتراضي" : "VR GALLERY", url: `gallery-vr.html?lang=${lang}` },
     {
-      label: text.exitGallery,
-      url: lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html",
-      y: 2.21,
-      z: 35.1
-    }
+      label: lang === "fr" ? "COLLECTION" : lang === "ar" ? "المجموعة" : "COLLECTION",
+      url: lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html"
+    },
+    ...["en", "fr", "ar"].filter((code) => code !== lang).map((code) => ({
+      label: code === "ar" ? "العربية" : code === "fr" ? "FRANÇAIS" : "ENGLISH",
+      url: `cinema-vr.html?lang=${code}`
+    }))
   ];
-  destinations.forEach((destination) => {
-    createWallSign(destination.label, [19.88, destination.y, destination.z], -Math.PI / 2, {
+  // Keep navigation in one compact vertical column, away from the music menu.
+  destinations.forEach((destination, index) => {
+    createWallSign(destination.label, [19.88, 3.35 - index * 0.57, 29.65], -Math.PI / 2, {
       width: 2.35,
       height: 0.43,
       exitUrl: destination.url,
@@ -3062,9 +3081,10 @@ function navigationMenuPalette(position, options) {
 }
 
 function createWallSign(message, position, rotationY, options = {}) {
+  message = lang === "ar" ? message : message.toLocaleUpperCase(lang === "fr" ? "fr" : "en");
   const canvas = document.createElement("canvas");
-  canvas.width = isLowPowerDevice ? 640 : 1600;
-  canvas.height = isLowPowerDevice ? 192 : 480;
+  canvas.width = isLowPowerDevice ? 960 : 1600;
+  canvas.height = isLowPowerDevice ? 288 : 480;
   const canvasScale = canvas.width / 1600;
   const context = canvas.getContext("2d");
   const isExit = Boolean(options.exitUrl);
@@ -3106,9 +3126,15 @@ function createWallSign(message, position, rotationY, options = {}) {
   const texture = new THREE.CanvasTexture(canvas);
   texture.encoding = THREE.sRGBEncoding;
   texture.anisotropy = isLowPowerDevice ? 1 : renderer.capabilities.getMaxAnisotropy();
+  const signMaterial = new THREE.MeshBasicMaterial({
+    map: texture,
+    transparent: Boolean(options.subtle),
+    opacity: options.subtle ? 0.78 : 1,
+    depthWrite: !options.subtle
+  });
   const sign = new THREE.Mesh(
     new THREE.PlaneGeometry(options.width || 3.1, options.height || 0.94),
-    new THREE.MeshBasicMaterial({ map: texture })
+    signMaterial
   );
   sign.position.set(...position);
   sign.rotation.y = rotationY;
@@ -3654,7 +3680,7 @@ function buildReimaginedVideoExhibits() {
   });
 
   const musicHeading = makeCinemaPlaqueLabel(lang === "ar" ? "موسيقى السينما" : lang === "fr" ? "MUSIQUE DU CINÉMA" : "CINEMA MUSIC");
-  musicHeading.position.set(5.77, 3.72, 33.45);
+  musicHeading.position.set(5.77, 3.72, 34.65);
   musicHeading.rotation.y = -Math.PI / 2;
   musicHeading.scale.set(1.65, 0.42, 1);
   cinema.add(musicHeading);
@@ -3663,7 +3689,7 @@ function buildReimaginedVideoExhibits() {
     const button = createCinemaButton(`${index + 1}. ${item.title}`, {
       type: "music-select",
       value: index,
-      position: [5.76, 3.34 - index * musicSpacing, 33.45],
+      position: [5.76, 3.34 - index * musicSpacing, 34.65],
       rotationY: -Math.PI / 2,
       width: 1.9,
       height: Math.min(0.34, musicSpacing * 0.82),
@@ -3673,18 +3699,48 @@ function buildReimaginedVideoExhibits() {
   });
   [
     { label: lang === "fr" ? "PRÉCÉDENT" : lang === "ar" ? "السابق" : "PREVIOUS", type: "music-previous" },
+    { label: text.cinemaBack, type: "music-back" },
     { label: lang === "fr" ? "LECTURE / PAUSE" : lang === "ar" ? "تشغيل / إيقاف" : "PLAY / PAUSE", type: "music-toggle" },
+    { label: text.cinemaForward, type: "music-forward" },
     { label: lang === "fr" ? "ARRÊTER" : lang === "ar" ? "إيقاف" : "STOP", type: "music-stop" },
     { label: lang === "fr" ? "SUIVANT" : lang === "ar" ? "التالي" : "NEXT", type: "music-next" }
   ].forEach((control, index) => {
     const button = createCinemaButton(control.label, {
       type: control.type,
-      position: [5.76, 0.86 - index * 0.25, 33.45],
+      position: [5.76, 0.94 - index * 0.17, 34.65],
       rotationY: -Math.PI / 2,
       width: 1.9,
-      height: 0.24,
+      height: 0.15,
       material: brassMaterial,
       compact: true
+    });
+    cinema.add(button);
+  });
+
+  const cinemaAudio = getCinemaAudioLibrary();
+  const audioHeading = makeCinemaPlaqueLabel(lang === "ar" ? "البرامج الصوتية" : lang === "fr" ? "PROGRAMMES AUDIO" : "AUDIO PROGRAMS");
+  // The Egyptian gateway occupies the middle of this wall. Place audio on
+  // the clear wall section beside it instead of drawing controls over it.
+  audioHeading.position.set(-5.77, 3.72, 30.55);
+  audioHeading.rotation.y = Math.PI / 2;
+  audioHeading.scale.set(1.65, 0.42, 1);
+  cinema.add(audioHeading);
+  cinemaAudio.forEach((item, index) => {
+    const button = createCinemaButton(`${index + 1}. ${item.title}`, {
+      type: "audio-select", value: index,
+      position: [-5.76, 3.3 - index * 0.42, 30.55], rotationY: Math.PI / 2,
+      width: 1.9, height: 0.34, material: brassMaterial
+    });
+    cinema.add(button);
+  });
+  [
+    [text.cinemaPrevious, "audio-previous"], [text.cinemaBack, "audio-back"],
+    [text.cinemaPlayPause, "audio-toggle"], [text.cinemaForward, "audio-forward"],
+    [text.cinemaNext, "audio-next"], [lang === "fr" ? "ARRÊTER" : lang === "ar" ? "إيقاف" : "STOP", "audio-stop"]
+  ].forEach(([label, type], index) => {
+    const button = createCinemaButton(label, {
+      type, position: [-5.76, 1.25 - index * 0.22, 30.55], rotationY: Math.PI / 2,
+      width: 1.9, height: 0.19, material: brassMaterial, compact: true
     });
     cinema.add(button);
   });
@@ -3750,6 +3806,7 @@ function localizedCinemaTitle(item) {
 }
 
 function paintCinemaPlaque(context, width, height, label, heading = false) {
+  label = lang === "ar" ? label : label.toLocaleUpperCase(lang === "fr" ? "fr" : "en");
   const brass = context.createLinearGradient(0, 0, width, height);
   brass.addColorStop(0, "#d6a24d");
   brass.addColorStop(0.45, "#b87825");
@@ -4046,6 +4103,10 @@ function runCinemaAction(action) {
     runCinemaMusicAction(action);
     return;
   }
+  if (action.type.startsWith("audio-")) {
+    runCinemaAudioAction(action);
+    return;
+  }
   activeGalleryVideo = exhibit;
   if (action.type === "toggle") toggleGalleryVideo(exhibit);
   if (action.type === "restart") restartGalleryVideo(exhibit);
@@ -4091,6 +4152,24 @@ function runCinemaMusicAction(action) {
     else if (musicPlayer.paused) musicPlayer.play().catch(() => {});
     else musicPlayer.pause();
   }
+  if (action.type === "music-back") seekLibraryAudio("music", -10);
+  if (action.type === "music-forward") seekLibraryAudio("music", 10);
+}
+
+function runCinemaAudioAction(action) {
+  const library = getCinemaAudioLibrary();
+  if (!library.length) return;
+  if (action.type === "audio-select") {
+    narrationSelect.value = library[Number(action.value)].src;
+    stopLibraryAudio("audio");
+    void toggleLibraryAudio("audio");
+  }
+  if (action.type === "audio-previous") stepLibraryAudio("audio", -1);
+  if (action.type === "audio-next") stepLibraryAudio("audio", 1);
+  if (action.type === "audio-back") seekLibraryAudio("audio", -10);
+  if (action.type === "audio-forward") seekLibraryAudio("audio", 10);
+  if (action.type === "audio-toggle") void toggleLibraryAudio("audio");
+  if (action.type === "audio-stop") stopLibraryAudio("audio");
 }
 
 async function toggleGalleryVideo(exhibit) {
@@ -4103,6 +4182,7 @@ async function toggleGalleryVideo(exhibit) {
   }
   activeGalleryVideo = exhibit;
   musicPlayer.pause();
+  narrationPlayer.pause();
   galleryVideoExhibits.forEach((item) => {
     if (item !== exhibit) {
       item.video.muted = true;
@@ -4714,10 +4794,11 @@ function localizedTitle(painting) {
 }
 
 function makeLabel(message) {
+  message = lang === "ar" ? message : message.toLocaleUpperCase(lang === "fr" ? "fr" : "en");
   const canvas = document.createElement("canvas");
   const logicalWidth = 1600;
   const logicalHeight = 400;
-  const labelScale = isLowPowerDevice ? 0.4 : 1;
+  const labelScale = isLowPowerDevice ? 0.6 : 1;
   canvas.width = logicalWidth * labelScale;
   canvas.height = logicalHeight * labelScale;
   const context = canvas.getContext("2d");
@@ -4746,6 +4827,58 @@ function makeLabel(message) {
   texture.anisotropy = isLowPowerDevice ? 1 : renderer.capabilities.getMaxAnisotropy();
   return new THREE.Mesh(
     new THREE.PlaneGeometry(1.28, 0.32),
+    new THREE.MeshBasicMaterial({ map: texture })
+  );
+}
+
+function makePeopleVideoCaption(title, width = 3.15) {
+  const canvas = document.createElement("canvas");
+  const logicalWidth = 1600;
+  const logicalHeight = 360;
+  const scale = isLowPowerDevice ? 0.65 : 1;
+  canvas.width = logicalWidth * scale;
+  canvas.height = logicalHeight * scale;
+  const context = canvas.getContext("2d");
+  context.scale(scale, scale);
+
+  const background = context.createLinearGradient(0, 0, logicalWidth, logicalHeight);
+  background.addColorStop(0, "#102c30");
+  background.addColorStop(1, "#08191d");
+  context.fillStyle = background;
+  context.fillRect(0, 0, logicalWidth, logicalHeight);
+  context.strokeStyle = "#d5ad62";
+  context.lineWidth = 10;
+  context.strokeRect(7, 7, logicalWidth - 14, logicalHeight - 14);
+  context.strokeStyle = "rgba(255, 235, 190, .35)";
+  context.lineWidth = 3;
+  context.strokeRect(24, 24, logicalWidth - 48, logicalHeight - 48);
+
+  const displayTitle = lang === "ar" ? title : title.toLocaleUpperCase(lang === "fr" ? "fr" : "en");
+  const prompt = lang === "ar"
+    ? "اختر الشاشة للتشغيل أو الإيقاف المؤقت"
+    : lang === "fr"
+      ? "SÉLECTIONNEZ L’ÉCRAN POUR LIRE OU METTRE EN PAUSE"
+      : "SELECT THE SCREEN TO PLAY OR PAUSE";
+  const family = lang === "ar" ? '"Segoe UI", Tahoma, Arial, sans-serif' : 'Georgia, "Times New Roman", serif';
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  context.fillStyle = "#fff8e9";
+  let titleSize = 68;
+  context.font = `700 ${titleSize}px ${family}`;
+  while (context.measureText(displayTitle).width > logicalWidth - 150 && titleSize > 42) {
+    titleSize -= 3;
+    context.font = `700 ${titleSize}px ${family}`;
+  }
+  context.fillText(displayTitle, logicalWidth / 2, 142);
+  context.fillStyle = "#e5c47f";
+  context.font = `600 38px ${lang === "ar" ? family : 'Inter, "Segoe UI", Arial, sans-serif'}`;
+  context.fillText(prompt, logicalWidth / 2, 255);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.encoding = THREE.sRGBEncoding;
+  texture.anisotropy = isLowPowerDevice ? 2 : renderer.capabilities.getMaxAnisotropy();
+  return new THREE.Mesh(
+    new THREE.PlaneGeometry(width, 0.64),
     new THREE.MeshBasicMaterial({ map: texture })
   );
 }
@@ -4915,6 +5048,14 @@ function bindUI() {
   musicStopButton?.addEventListener("click", () => stopLibraryAudio("music"));
   narrationSelect?.addEventListener("change", () => stopLibraryAudio("audio"));
   musicSelect?.addEventListener("change", () => stopLibraryAudio("music"));
+  narrationPreviousButton?.addEventListener("click", () => stepLibraryAudio("audio", -1));
+  narrationNextButton?.addEventListener("click", () => stepLibraryAudio("audio", 1));
+  narrationBackButton?.addEventListener("click", () => seekLibraryAudio("audio", -10));
+  narrationForwardButton?.addEventListener("click", () => seekLibraryAudio("audio", 10));
+  musicPreviousButton?.addEventListener("click", () => stepLibraryAudio("music", -1));
+  musicNextButton?.addEventListener("click", () => stepLibraryAudio("music", 1));
+  musicBackButton?.addEventListener("click", () => seekLibraryAudio("music", -10));
+  musicForwardButton?.addEventListener("click", () => seekLibraryAudio("music", 10));
   videoToggleButton.addEventListener("click", () => toggleGalleryVideo());
   videoRestartButton.addEventListener("click", () => restartGalleryVideo());
   videoMuteButton.addEventListener("click", () => toggleGalleryVideoMute());
@@ -4983,6 +5124,15 @@ function configurePeopleMediaLibrary() {
   musicToggleButton.textContent = copy.playMusic;
   narrationStopButton.textContent = copy.stop;
   musicStopButton.textContent = copy.stop;
+  const transport = lang === "fr"
+    ? { previous: "Précédent", next: "Suivant", back: "Reculer", forward: "Avancer" }
+    : lang === "ar"
+      ? { previous: "السابق", next: "التالي", back: "رجوع", forward: "تقديم" }
+      : { previous: "Previous", next: "Next", back: "Rewind", forward: "Forward" };
+  [narrationPreviousButton, musicPreviousButton].forEach((button) => { if (button) button.textContent = transport.previous; });
+  [narrationNextButton, musicNextButton].forEach((button) => { if (button) button.textContent = transport.next; });
+  [narrationBackButton, musicBackButton].forEach((button) => { if (button) button.textContent = transport.back; });
+  [narrationForwardButton, musicForwardButton].forEach((button) => { if (button) button.textContent = transport.forward; });
 }
 
 async function toggleLibraryAudio(kind) {
@@ -4992,7 +5142,7 @@ async function toggleLibraryAudio(kind) {
   const select = isMusic ? musicSelect : narrationSelect;
   const button = isMusic ? musicToggleButton : narrationToggleButton;
   if (!select?.value) return;
-  if (isMusic) galleryVideoExhibits.forEach((exhibit) => exhibit.video.pause());
+  galleryVideoExhibits.forEach((exhibit) => exhibit.video.pause());
   stopRoomAmbience();
   other.pause();
   if (player.src && !player.paused) {
@@ -5013,6 +5163,21 @@ function stopLibraryAudio(kind) {
   player.pause();
   player.currentTime = 0;
   updateLibraryAudioButtons();
+}
+
+function stepLibraryAudio(kind, direction) {
+  const select = kind === "music" ? musicSelect : narrationSelect;
+  if (!select?.options.length) return;
+  select.selectedIndex = (select.selectedIndex + direction + select.options.length) % select.options.length;
+  stopLibraryAudio(kind);
+  void toggleLibraryAudio(kind);
+}
+
+function seekLibraryAudio(kind, seconds) {
+  const player = kind === "music" ? musicPlayer : narrationPlayer;
+  if (!player.src) return;
+  const duration = Number.isFinite(player.duration) ? player.duration : Infinity;
+  player.currentTime = THREE.MathUtils.clamp(player.currentTime + seconds, 0, duration);
 }
 
 function updateLibraryAudioButtons() {
