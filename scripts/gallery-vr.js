@@ -432,7 +432,7 @@ const COPY = {
     back: "Back to collection",
     kicker: "Immersive exhibition",
     title: "The ARTDACI Gallery",
-    instructions: "Trigger or hand pinch: select and teleport. A/X: play or pause. B/Y: restart audio. Press a thumbstick to mute.",
+    instructions: "Controller: trigger. Hands: point and pinch. Without controllers: look at a target until the reticle turns green.",
     enter: "Enter VR Gallery",
     exit: "Exit VR",
     count: "Four masterpieces",
@@ -487,7 +487,7 @@ const COPY = {
     back: "Retour à la collection",
     kicker: "Exposition immersive",
     title: "La galerie ARTDACI",
-    instructions: "Gâchette ou pincement de la main : sélectionner et se téléporter. A/X : lecture ou pause. B/Y : recommencer. Appuyez sur un joystick pour couper le son.",
+    instructions: "Manette : gâchette. Mains : pointez et pincez. Sans manette : regardez une cible jusqu’à ce que le viseur devienne vert.",
     enter: "Entrer dans la galerie VR",
     exit: "Quitter la VR",
     count: "Quatre chefs-d’œuvre",
@@ -546,7 +546,7 @@ const COPY = {
     back: "العودة إلى المجموعة",
     kicker: "معرض غامر",
     title: "معرض ARTDACI",
-    instructions: "استخدم الزناد أو قرص اليد للاختيار والانتقال. A/X للتشغيل والإيقاف، وB/Y لإعادة التشغيل، واضغط عصا التحكم لكتم الصوت.",
+    instructions: "باليد: أشِر ثم اقرص. بدون وحدات تحكم: انظر إلى الهدف حتى يتحول المؤشر إلى اللون الأخضر.",
     enter: "دخول المعرض بالواقع الافتراضي",
     exit: "الخروج من الواقع الافتراضي",
     count: "أربع روائع فنية",
@@ -678,6 +678,19 @@ const handJointMaterials = [
   new THREE.MeshBasicMaterial({ color: 0x8ee8ff, transparent: true, opacity: 0.82 }),
   new THREE.MeshBasicMaterial({ color: 0xffd58e, transparent: true, opacity: 0.82 })
 ];
+const gazeReticleMaterial = new THREE.MeshBasicMaterial({
+  color: 0xd4aa5c,
+  transparent: true,
+  opacity: 0.88,
+  depthTest: false,
+  depthWrite: false,
+  side: THREE.DoubleSide
+});
+const gazeReticle = new THREE.Mesh(new THREE.RingGeometry(0.012, 0.019, 40), gazeReticleMaterial);
+gazeReticle.position.set(0, 0, -1.15);
+gazeReticle.renderOrder = 1000;
+gazeReticle.visible = false;
+camera.add(gazeReticle);
 const teleportTargets = [];
 const exhibits = [];
 const exhibitsBySlug = new Map();
@@ -748,6 +761,10 @@ let livingBookAssetsPromise = null;
 let connectedManifestMap = null;
 let lastSpatialUpdateAt = 0;
 let lastMobileRenderAt = 0;
+let gazeTarget = null;
+let gazeTargetStartedAt = 0;
+let gazeBlockedTarget = null;
+const GAZE_DWELL_MS = 1650;
 const connectedRoomsLoaded = new Set();
 const connectedPortraitsLoaded = new Set();
 const connectedRoomLoads = new Map();
@@ -840,8 +857,8 @@ async function init() {
     document.getElementById("gallery-title").textContent = lang === "fr" ? "L’aile des quatre maîtres" : "The Four Masters Wing";
     document.getElementById("gallery-count").textContent = lang === "fr" ? "Quatre salles · vingt-quatre œuvres" : "Four rooms · twenty-four works";
     document.getElementById("gallery-instructions").textContent = lang === "fr"
-      ? "Marchez librement d’une salle à l’autre. Écran : glissez pour regarder et utilisez les flèches ou WASD. Casque : gâchette ou pincement."
-      : "Walk freely from room to room. Screen: drag to look and use arrows or WASD. Headset: trigger or pinch.";
+      ? "Déplacez-vous entre les salles. Avec les mains : pointez et pincez. Sans manette : fixez une cible jusqu’au changement de couleur du viseur."
+      : "Move between rooms. With hands: point and pinch. Without controllers: hold your gaze on a target until the reticle changes colour.";
     buildConnectedMuseumArchitecture();
     renderer.setAnimationLoop(render);
     try {
@@ -1113,6 +1130,88 @@ function updateScreenUiToggle() {
     : (lang === "ar" ? "إخفاء القائمة" : lang === "fr" ? "Masquer le menu" : "Hide menu");
 }
 
+function addMovementHotspot(position, destination, label, visitorYaw = 0, captionRotation = 0) {
+  const group = new THREE.Group();
+  group.position.set(position[0], 0.018, position[1]);
+  group.userData.destination = new THREE.Vector3(destination[0], 0, destination[1]);
+  group.userData.visitorYaw = visitorYaw;
+
+  const target = new THREE.Mesh(
+    new THREE.CircleGeometry(0.48, 40),
+    new THREE.MeshBasicMaterial({ color: 0x69c6d5, transparent: true, opacity: 0.2, side: THREE.DoubleSide })
+  );
+  target.rotation.x = -Math.PI / 2;
+  target.userData.hotspot = group;
+  group.add(target);
+
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(0.36, 0.48, 40),
+    new THREE.MeshBasicMaterial({ color: 0xbcecf2, transparent: true, opacity: 0.82, side: THREE.DoubleSide })
+  );
+  ring.rotation.x = -Math.PI / 2;
+  ring.position.y = 0.007;
+  group.add(ring);
+
+  const caption = makeLabel(label);
+  caption.position.set(0, 0.018, 0.73);
+  caption.rotation.x = -Math.PI / 2;
+  caption.rotation.z = captionRotation;
+  caption.scale.set(1.05, 0.68, 1);
+  group.add(caption);
+  teleportTargets.push(target);
+  scene.add(group);
+  return group;
+}
+
+function addMovementNetwork(roomCenters, roomLabels, x = 0) {
+  roomCenters.forEach((centerZ, index) => {
+    if (index > 0) {
+      const previous = lang === "ar" ? `← ${roomLabels[index - 1]}` : lang === "fr" ? `← SALLE PRÉCÉDENTE` : `← PREVIOUS ROOM`;
+      addMovementHotspot([x - 1.15, centerZ], [x, roomCenters[index - 1]], previous, Math.PI);
+    }
+    if (index < roomCenters.length - 1) {
+      const next = lang === "ar" ? `${roomLabels[index + 1]} →` : lang === "fr" ? `SALLE SUIVANTE →` : `NEXT ROOM →`;
+      // The visitor enters the first (Da Vinci) room facing the opposite side
+      // of this floor caption, so rotate that first NEXT ROOM label 180°.
+      addMovementHotspot(
+        [x + 1.15, centerZ],
+        [x, roomCenters[index + 1]],
+        next,
+        0,
+        index === 0 ? Math.PI : 0
+      );
+    }
+  });
+}
+
+function addReimaginedRoomLinks() {
+  const rooms = [
+    { centerZ: 0, label: lang === "ar" ? "ليوناردو دا فينشي" : "LEONARDO DA VINCI" },
+    { centerZ: 10, label: lang === "ar" ? "فان غوخ" : "VAN GOGH" },
+    { centerZ: 22, label: lang === "ar" ? "فيرمير" : "VERMEER" },
+    { centerZ: 34, label: lang === "ar" ? "مونيه" : "MONET" }
+  ];
+  const linkXPositions = [-3.25, 0, 3.25];
+
+  rooms.forEach((currentRoom) => {
+    rooms
+      .filter((destinationRoom) => destinationRoom.centerZ !== currentRoom.centerZ)
+      .forEach((destinationRoom, index) => {
+        addMovementHotspot(
+          [linkXPositions[index], currentRoom.centerZ + 3.15],
+          [0, destinationRoom.centerZ],
+          destinationRoom.label,
+          destinationRoom.centerZ < currentRoom.centerZ ? Math.PI : 0,
+          Math.PI
+        );
+      });
+  });
+}
+
+function addLocalMovementHotspots(points) {
+  points.forEach(({ position, label, yaw = 0 }) => addMovementHotspot(position, position, label, yaw));
+}
+
 function buildRoom() {
   scene.add(new THREE.HemisphereLight(0xfff5df, 0x342e27, 1.15));
 
@@ -1253,10 +1352,12 @@ function buildRoom() {
   if (activeRoom === "reimagined") {
     addReimaginedPainterRoomDecor();
     addReimaginedPainterRoomSigns();
+    addReimaginedRoomLinks();
   }
   else addNavigationSigns();
   addPaintingsReimaginedPortal();
   addCinemaEntranceHotspot();
+  addMovementNetwork([0, 10, 22, 34], [text.paintingsRoom, text.modelsRoom, text.bedroomRoom, text.reimaginedRoom]);
   addFastTravelStations();
   const guideStations = {
     paintings: [[5.88, 1.25, 4.15], -Math.PI / 2, "the ARTDACI paintings gallery"],
@@ -1389,6 +1490,7 @@ function buildConnectedMuseumArchitecture() {
     maxSize: 1.55
   });
   void addMonetFinalWallLogo();
+  addMovementNetwork(roomCenters, ARTIST_ROOM_ORDER.map((id) => ARTIST_ROOMS[id].name));
 }
 
 function buildModelMuseumArchitecture() {
@@ -1408,6 +1510,7 @@ function buildModelMuseumArchitecture() {
     addVirtualGuideStation([-6.88, 1.18, centerZ + 6.35], Math.PI / 2, `${ARTIST_ROOMS[id].name}'s 3D model room`);
   });
   addConnectedMuseumPartitions();
+  addMovementNetwork([0, 16, 32, 48], ARTIST_ROOM_ORDER.map((id) => ARTIST_ROOMS[id].name));
 }
 
 function buildGroupGalleryRoom() {
@@ -1443,6 +1546,11 @@ function buildGroupGalleryRoom() {
   createWallSign(text.modelsRoom, [0, 3.55, 7.9], Math.PI, { width: 3, height: 0.42, exitUrl: `gallery-vr.html?lang=${lang}&room=models`, compact: true });
   createWallSign(text.reimaginedRoom, [4.4, 3.55, 7.9], Math.PI, { width: 3, height: 0.42, exitUrl: `gallery-vr.html?lang=${lang}&room=reimagined`, compact: true });
   addVirtualGuideStation([-6.88, 1.25, 5.9], Math.PI / 2, "the ARTDACI reimagined painter-groups room");
+  addLocalMovementHotspots([
+    { position: [0, 5.6], label: lang === "fr" ? "ENTRÉE" : lang === "ar" ? "المدخل" : "ENTRANCE", yaw: 0 },
+    { position: [0, 0.8], label: lang === "fr" ? "EXPOSITION" : lang === "ar" ? "المعرض" : "EXHIBITION", yaw: Math.PI },
+    { position: [0, -5.2], label: lang === "fr" ? "ŒUVRE PRINCIPALE" : lang === "ar" ? "العمل الرئيسي" : "MAIN EXHIBIT", yaw: 0 }
+  ]);
 }
 
 function buildLouvreMuseumRoom() {
@@ -1545,6 +1653,11 @@ function buildLouvreMuseumRoom() {
   createWallSign(lang === "fr" ? "EXPLORER LE LOUVRE EN VR" : lang === "ar" ? "استكشاف اللوفر بالواقع الافتراضي" : "EXPLORE THE LOUVRE IN VR", [0, 2.82, 9.72], Math.PI, { width: 4.25, height: 0.48, exitUrl: LOUVRE_GALLERY_VR_WORLD_URL, compact: true, accent: true });
   createWallSign(lang === "fr" ? "RETOUR À LA GALERIE" : lang === "ar" ? "العودة إلى المعرض" : "BACK TO THE GALLERY", [0, 2.15, 9.72], Math.PI, { width: 3.5, height: 0.48, exitUrl: `gallery-vr.html?lang=${lang}`, compact: true });
   addVirtualGuideStation([-6.88, 1.25, 5.9], Math.PI / 2, "the ARTDACI Louvre room, its photographs, and its 3D facade");
+  addLocalMovementHotspots([
+    { position: [0, 7.1], label: lang === "fr" ? "ENTRÉE" : lang === "ar" ? "المدخل" : "ENTRANCE", yaw: 0 },
+    { position: [0, 1.8], label: lang === "fr" ? "CENTRE" : lang === "ar" ? "الوسط" : "CENTRE", yaw: 0 },
+    { position: [0, -6.8], label: lang === "fr" ? "TABLEAUX" : lang === "ar" ? "اللوحات" : "PAINTINGS", yaw: 0 }
+  ]);
 }
 
 async function buildLouvreMuseumExhibits() {
@@ -1654,6 +1767,12 @@ function buildPeopleBehindPaintersRoom() {
 
   addPeopleRoomNavigation(roomId);
   addVirtualGuideStation([-6.88, 1.25, 7], Math.PI / 2, `the people who sustained ${room.name.en}'s artistic legacy`);
+  addLocalMovementHotspots([
+    { position: [0, 6.2], label: lang === "fr" ? "ENTRÉE" : lang === "ar" ? "المدخل" : "ENTRANCE", yaw: 0 },
+    { position: [0, 0], label: lang === "fr" ? "PORTRAITS" : lang === "ar" ? "الصور" : "PORTRAITS", yaw: 0 },
+    { position: [0, -6.2], label: lang === "fr" ? "RÉCIT" : lang === "ar" ? "القصة" : "STORY", yaw: 0 },
+    { position: [0, 7.55], label: lang === "fr" ? "MENU" : lang === "ar" ? "القائمة" : "MENU", yaw: Math.PI }
+  ]);
 }
 
 function addPeopleRoomNavigation(currentRoomId) {
@@ -2239,9 +2358,6 @@ function addVermeerDecor(centerZ, material) {
       scene.add(tileLine);
     });
   }
-  const bench = new THREE.Mesh(new THREE.BoxGeometry(2.8, 0.48, 0.75), new THREE.MeshStandardMaterial({ color: 0x6c1e36, roughness: 0.8 }));
-  bench.position.set(0, 0.3, centerZ);
-  scene.add(bench);
 }
 
 function addMonetDecor(centerZ, material) {
@@ -2504,6 +2620,12 @@ function addCinemaRoomArchitecture() {
     strip.position.set(CINEMA_ROOM_X + offset, 0.025, 34);
     scene.add(strip);
   });
+  addLocalMovementHotspots([
+    { position: [CINEMA_ROOM_X, 30.1], label: lang === "fr" ? "ENTRÉE" : lang === "ar" ? "المدخل" : "ENTRANCE", yaw: Math.PI },
+    { position: [CINEMA_ROOM_X, 32.2], label: lang === "fr" ? "SIÈGES" : lang === "ar" ? "المقاعد" : "SEATING", yaw: Math.PI },
+    { position: [CINEMA_ROOM_X, 35.1], label: lang === "fr" ? "ÉCRAN" : lang === "ar" ? "الشاشة" : "SCREEN", yaw: Math.PI },
+    { position: [CINEMA_ROOM_X + 4.7, 33.8], label: lang === "fr" ? "MENUS" : lang === "ar" ? "القوائم" : "MENUS", yaw: -Math.PI / 2 }
+  ]);
 }
 
 async function addPaintingsModelsGateway() {
@@ -4957,6 +5079,63 @@ function addHands() {
   });
 }
 
+function updateGazeNavigation(now) {
+  if (!currentSession) {
+    gazeReticle.visible = false;
+    gazeTarget = null;
+    gazeBlockedTarget = null;
+    return;
+  }
+
+  // A controller remains the primary input when present. Gaze automatically
+  // becomes available for hand-only or completely controller-free sessions.
+  const hasPhysicalController = [...currentSession.inputSources].some((source) => source.gamepad && !source.hand);
+  if (hasPhysicalController) {
+    gazeReticle.visible = false;
+    gazeTarget = null;
+    return;
+  }
+
+  gazeReticle.visible = true;
+  const xrCamera = renderer.xr.getCamera(camera);
+  const origin = xrCamera.getWorldPosition(new THREE.Vector3());
+  const direction = new THREE.Vector3(0, 0, -1).applyQuaternion(xrCamera.getWorldQuaternion(new THREE.Quaternion())).normalize();
+  teleportRaycaster.set(origin, direction);
+  const hit = teleportRaycaster.intersectObjects(teleportTargets, false)[0];
+  const nextTarget = hit?.object || null;
+
+  if (!nextTarget) {
+    gazeTarget = null;
+    gazeBlockedTarget = null;
+    gazeReticleMaterial.color.set(0xd4aa5c);
+    gazeReticle.scale.setScalar(1);
+    return;
+  }
+
+  if (nextTarget === gazeBlockedTarget) {
+    gazeReticleMaterial.color.set(0x77b99a);
+    gazeReticle.scale.setScalar(1);
+    return;
+  }
+
+  if (nextTarget !== gazeTarget) {
+    gazeTarget = nextTarget;
+    gazeTargetStartedAt = now;
+  }
+  const progress = THREE.MathUtils.clamp((now - gazeTargetStartedAt) / GAZE_DWELL_MS, 0, 1);
+  gazeReticleMaterial.color.setRGB(
+    THREE.MathUtils.lerp(0.83, 0.36, progress),
+    THREE.MathUtils.lerp(0.67, 0.9, progress),
+    THREE.MathUtils.lerp(0.36, 0.72, progress)
+  );
+  gazeReticle.scale.setScalar(1 + progress * 0.55);
+  if (progress >= 1) {
+    gazeBlockedTarget = nextTarget;
+    gazeTarget = null;
+    activateInteractionHit(hit);
+  }
+}
+
 function updateHandVisuals() {
   hands.forEach((hand, handIndex) => {
     Object.values(hand.joints || {}).forEach((joint) => {
@@ -5569,6 +5748,7 @@ function render(now = performance.now()) {
   maybeLoadModelMuseumRoom();
   maybeLoadLivingBookAssets();
   updateHandVisuals();
+  updateGazeNavigation(now);
   const delta = Math.min(clock.getDelta(), 0.05);
   updateLocomotion(delta);
   updateScreenLocomotion(delta);
