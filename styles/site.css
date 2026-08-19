@@ -1708,3 +1708,21 @@ html[dir="rtl"] .tribute-print-page {
   size: A4 portrait;
   margin: 0;
 }
+/* Install control shared by the collection and immersive PWA entry points. */
+.artdaci-install-button {
+  position: fixed;
+  right: max(14px, env(safe-area-inset-right));
+  bottom: max(14px, env(safe-area-inset-bottom));
+  z-index: 1000;
+  border: 2px solid #d4aa5c;
+  border-radius: 999px;
+  padding: 10px 15px;
+  color: #fff6e4;
+  background: rgba(30, 23, 17, .94);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .35);
+  font: 700 12px/1.1 Inter, "Segoe UI", sans-serif;
+  letter-spacing: .05em;
+  cursor: pointer;
+}
+
+.artdaci-install-button[hidden] { display: none; }

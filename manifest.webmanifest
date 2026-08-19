@@ -1,0 +1,56 @@
+{
+  "id": "./gallery-vr.html",
+  "name": "ARTDACI — Immersive Art Gallery",
+  "short_name": "ARTDACI",
+  "description": "Explore masterpieces, artist stories, spatial audio, cinema, AR and WebXR galleries.",
+  "lang": "en",
+  "dir": "auto",
+  "start_url": "./gallery-vr.html?lang=en&source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "landscape",
+  "background_color": "#11100e",
+  "theme_color": "#191512",
+  "categories": ["education", "entertainment", "art"],
+  "icons": [
+    {
+      "src": "assets/varia/artdaci-logo.png",
+      "sizes": "1254x1254",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/app/artdaci-app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/app/artdaci-maskable-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "VR Gallery",
+      "short_name": "Gallery",
+      "url": "./gallery-vr.html?lang=en",
+      "icons": [{ "src": "assets/app/artdaci-app-icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "VR Cinema",
+      "short_name": "Cinema",
+      "url": "./cinema-vr.html?lang=en",
+      "icons": [{ "src": "assets/app/artdaci-app-icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Collection",
+      "short_name": "Collection",
+      "url": "./index.html",
+      "icons": [{ "src": "assets/app/artdaci-app-icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    }
+  ]
+}

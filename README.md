@@ -39,6 +39,25 @@ http://localhost:8080
 
 On a phone, the easiest route is to upload to GitHub Pages because camera access requires HTTPS on most mobile browsers.
 
+## Installable WebXR Prototype
+
+ARTDACI includes a Progressive Web App shell for the collection, VR gallery, and VR cinema:
+
+- `manifest.webmanifest` describes the installable application and its shortcuts.
+- `sw.js` caches only the lightweight application shell.
+- `scripts/pwa.js` registers the service worker and shows an install button when the browser exposes an installation prompt.
+- Heavy GLB, video, music, audio, MindAR, and ranged media requests deliberately remain network-loaded instead of filling the offline cache.
+
+To test installation:
+
+1. Publish the repository over HTTPS, or serve it from `localhost` during desktop development.
+2. Visit `gallery-vr.html` in a compatible browser.
+3. Use the **Install ARTDACI** prompt when it appears, or use the browser's installation menu.
+4. Launch the installed application; it opens directly in the VR gallery.
+5. On Meta Quest, open the HTTPS deployment in Quest Browser and use **Enter VR Gallery** to start the WebXR session.
+
+The service worker provides an offline application shell, not a fully offline museum. Gallery images, models, audio, and video continue to stream on demand so the initial installation stays small and Quest memory remains manageable. A store-distributed Quest APK would still require a native Android wrapper or a Unity/Meta XR build.
+
 ## How To Upload To GitHub Pages
 
 1. Create a new GitHub repository.

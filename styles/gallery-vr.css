@@ -23,6 +23,22 @@ html[dir="rtl"] .gallery-audio-controls {
   box-sizing: border-box;
 }
 
+.artdaci-install-button {
+  position: fixed;
+  right: max(12px, env(safe-area-inset-right));
+  bottom: max(64px, env(safe-area-inset-bottom));
+  z-index: 40;
+  border: 1px solid var(--room-menu-gold, #c7a45d);
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: var(--room-menu-text, #fffaf1);
+  background: rgba(23, 19, 15, .88);
+  font: 700 11px/1 Inter, sans-serif;
+  cursor: pointer;
+}
+
+.artdaci-install-button[hidden] { display: none; }
+
 html,
 body,
 .gallery-shell,
