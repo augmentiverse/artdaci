@@ -81,28 +81,28 @@ const LEONARDO_TRIBUTE = {
 
 const BOOK_IMAGE_GALLERIES = {
   "mona-lisa": [
-    "assets/paintings/Da Vinci/mona-lisa/images/Mona-Lisa_out-of-frame.png",
-    "assets/paintings/Da Vinci/mona-lisa/images/davinci-monalisa.png",
-    "assets/paintings/Da Vinci/mona-lisa/images/monalisa-t.png"
+    "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa-out-of-frame.png",
+    "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/davinci-monalisa.png",
+    "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/monalisa-t.png"
   ],
   "van-gogh": [
-    "assets/paintings/van-gogh/reimagined-photos/van-gogh-out-of-frame.png",
-    "assets/paintings/van-gogh/reimagined-photos/van-gogh_in_bedroom-standing.png",
-    "assets/paintings/van-gogh/reimagined-photos/van-gogh__Portrait.jpg"
+    "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-out-of-frame.png",
+    "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-in-bedroom-standing.png",
+    "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait.jpg"
   ],
   "van-gogh-bedroom": [
-    "assets/paintings/van-gogh-bedroom/images/bed_van-gogh.jpeg",
-    "assets/paintings/van-gogh-bedroom/images/van-gogh_bedroom-t.png"
+    "assets/artists/vincent-van-gogh/artworks/the-bedroom/images/bed-van-gogh.jpeg",
+    "assets/artists/vincent-van-gogh/artworks/the-bedroom/images/van-gogh-bedroom-t.png"
   ],
   "vermeer-girl-with-a-pearl-earring": [
-    "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/images/Girl_with_a_Pearl_Earring_standing.jpg",
-    "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/images/vermeer_Girl-with-a-Pearl-Earring_sitting.png",
-    "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/images/vermeer_Girl-with-a-Pearl-Earring_room.png"
+    "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/girl-with-a-pearl-earring-standing.jpg",
+    "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring-sitting.png",
+    "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring-room.png"
   ],
   "monet-impression-sunrise": [
-    "assets/paintings/monet/Tableaux/Impression-Sunrise_Monet.webp",
-    "assets/paintings/monet/Tableaux/Water Lilies_Monet.webp",
-    "assets/paintings/monet/Tableaux/The Japanese Bridge_Monet.webp"
+    "assets/artists/claude-monet/collection/impression-sunrise-monet.webp",
+    "assets/artists/claude-monet/collection/water-lilies-monet.webp",
+    "assets/artists/claude-monet/collection/the-japanese-bridge-monet.webp"
   ]
 };
 
@@ -132,7 +132,7 @@ const BOOK_SECTION_COPY = {
 
 const PEOPLE_BEHIND_PAINTERS = {
   "van-gogh": {
-    image: "assets/people-behind-painters/Van Gogh/images/vincent_van_gogh-Jo_van_Gogh_Bonger .png",
+    image: "assets/artists/vincent-van-gogh/supporters/images/vincent-van-gogh-jo-van-gogh-bonger.png",
     manifest: { slug: "van-gogh-jo" },
     en: {
       eyebrow: "THE PEOPLE BEHIND THE PAINTER",
@@ -314,7 +314,7 @@ function buildPageDefinitions(manifests) {
   const openingPages = tribute.pages.map((tributePage, index) => ({
     kind: "tribute",
     ...tributePage,
-    image: index < 2 ? "assets/paintings/Da Vinci/mona-lisa/images/davinci-monalisa.png" : undefined,
+    image: index < 2 ? "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/davinci-monalisa.png" : undefined,
     hotspots: index === 0
       ? [
           { label: "VR+", x: 82, y: 24, type: "studio", url: LEONARDO_STUDIO_VR_WORLD_URL },

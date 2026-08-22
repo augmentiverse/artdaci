@@ -7,7 +7,7 @@ const PAINTINGS_AR = {
     medium: "زيت على لوح من خشب الحور",
     dimensions: "77 × 53 سم",
     location: "متحف اللوفر، باريس",
-    image: "assets/paintings/Da Vinci/mona-lisa/images/mona-lisa.jpg",
+    image: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg",
     intro: "بورتريه يتغير مع النظرة",
     lead: "نسّق ليوناردو النظرة واليدين والابتسامة والمنظر الطبيعي ليخلق حضوراً يبدو مختلفاً كلما طال التأمل.",
     sections: [
@@ -21,7 +21,7 @@ const PAINTINGS_AR = {
       ["السرقة والحفظ", "سُرقت اللوحة من اللوفر سنة 1911 واستعيدت سنة 1913. وهي اليوم محفوظة داخل صندوق واقٍ مضبوط الحرارة والرطوبة."]
     ],
     details: ["راقب كيف تتغير الابتسامة عندما تنقل نظرك إلى العينين.", "قارن جانبي الأفق خلف الكتفين.", "اتبع المثلث البصري من اليدين إلى الوجه.", "لاحظ غياب الحدود الحادة حول الخدين والشعر."],
-    audio: "assets/paintings/Da Vinci/mona-lisa/audio-video/الموناليزا_لغز_الابتسامة_والسرقة_والرموش_المفقودة.mp3"
+    audio: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/الموناليزا-لغز-الابتسامة-والسرقة-والرموش-المفقودة.mp3"
   },
   "van-gogh": {
     title: "بورتريه ذاتي",
@@ -31,7 +31,7 @@ const PAINTINGS_AR = {
     medium: "زيت على قماش",
     dimensions: "لوحة بورتريه",
     location: "متحف فان غوخ، أمستردام",
-    image: "assets/paintings/van-gogh/reimagined-photos/van-gogh__Portrait.jpg",
+    image: "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait.jpg",
     intro: "الوجه بوصفه مختبراً للون",
     lead: "استخدم فان غوخ صورته لأنه لم يكن يملك دائماً المال لاستئجار عارض، فحوّل المرآة إلى أداة لدراسة اللون والهوية.",
     sections: [
@@ -45,7 +45,7 @@ const PAINTINGS_AR = {
       ["الإرث", "أصبحت هذه الأعمال نموذجاً للبورتريه الحديث الذي لا يكتفي بالشبه الخارجي، بل يجعل طريقة الرسم نفسها حاملة للشعور."]
     ],
     details: ["قارن البرتقالي في اللحية بالأزرق الأخضر حولها.", "اتبع اتجاه ضربات الفرشاة فوق الجبهة والخدين.", "لاحظ ثبات العينين أمام حركة الخلفية.", "راقب كيف يثبت المعطف الداكن أسفل التكوين."],
-    audio: "assets/paintings/van-gogh/audio-video/van-gogh_self-portrait_fr.mp3"
+    audio: "assets/artists/vincent-van-gogh/artworks/self-portrait/media/van-gogh-self-portrait-fr.mp3"
   },
   "van-gogh-bedroom": {
     title: "غرفة النوم",
@@ -55,7 +55,7 @@ const PAINTINGS_AR = {
     medium: "زيت على قماش",
     dimensions: "72.4 × 91.3 سم",
     location: "متحف فان غوخ، أمستردام",
-    image: "assets/paintings/van-gogh-bedroom/images/bed_van-gogh.jpeg",
+    image: "assets/artists/vincent-van-gogh/artworks/the-bedroom/images/bed-van-gogh.jpeg",
     intro: "غرفة صُممت لتريح الخيال",
     lead: "حوّل فان غوخ غرفته في البيت الأصفر بآرل إلى صورة للراحة المنشودة، مع أن المنظور المائل والألوان القوية يمنحانها توتراً واضحاً.",
     sections: [
@@ -73,7 +73,7 @@ const PAINTINGS_AR = {
       ["غرفة بوصفها بورتريهاً", "لا يظهر الفنان داخل اللوحة، لكن اختياراته تحيط بالمشاهد: صوره، أثاثه، ألوانه وطريقة ترتيب أشيائه. وهكذا تصبح الغرفة بورتريهاً ذاتياً بلا جسد وسجلاً للأمل والقلق معاً."]
     ],
     details: ["اتبع ألواح الأرضية نحو الجدار الخلفي.", "قارن حجم السرير بالكراسي والطاولة.", "ابحث عن البورتريهات الصغيرة على الجدار.", "تخيل الجدران بلون بنفسجي أقرب إلى مظهرها الأصلي."],
-    audio: "assets/paintings/van-gogh-bedroom/audio-video/Van-Gogh_la-chambre_fr.mp3"
+    audio: "assets/artists/vincent-van-gogh/artworks/the-bedroom/media/van-gogh-la-chambre-fr.mp3"
   },
   "vermeer-girl-with-a-pearl-earring": {
     title: "الفتاة ذات القرط اللؤلؤي",
@@ -83,7 +83,7 @@ const PAINTINGS_AR = {
     medium: "زيت على قماش",
     dimensions: "44.5 × 39 سم",
     location: "موريتشهاوس، لاهاي",
-    image: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/images/vermeer_Girl-with-a-Pearl-Earring.jpg",
+    image: "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg",
     intro: "لحظة التفات معلقة في الضوء",
     lead: "ليست اللوحة بورتريهاً رسمياً، بل «تروني»: دراسة لتعبير وملابس غير مألوفة تُظهر براعة الفنان أكثر مما توثق هوية شخص.",
     sections: [
@@ -97,7 +97,7 @@ const PAINTINGS_AR = {
       ["تاريخ الحفظ", "اشتُريت اللوحة سنة 1881 بمبلغ زهيد وهي في حالة إهمال، ثم دخلت مجموعة موريتشهاوس سنة 1902 وحُميت خلال الحرب العالمية الثانية."]
     ],
     details: ["لاحظ أن القرط لا يملك حدوداً كاملة.", "قارن حواف الوجه الناعمة بحواف غطاء الرأس.", "راقب اللمعة الرطبة على الشفاه.", "تخيل الستار الأخضر الذي كشفت عنه الفحوص."],
-    audio: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring_1m54_fr.m4a"
+    audio: "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/media/vermeer-girl-with-a-pearl-earring-1m54-fr.m4a"
   },
   "monet-impression-sunrise": {
     title: "انطباع، شروق الشمس",
@@ -107,7 +107,7 @@ const PAINTINGS_AR = {
     medium: "زيت على قماش",
     dimensions: "نحو 48 × 63 سم",
     location: "متحف مارموتان مونيه، باريس",
-    image: "assets/paintings/monet/Tableaux/Impression-Sunrise_Monet.png",
+    image: "assets/artists/claude-monet/collection/impression-sunrise-monet.png",
     intro: "اللوحة التي منحت حركة فنية اسمها",
     lead: "حوّل مونيه فجر ميناء لوهافر إلى بيان للرؤية الحديثة، حيث تحل الإضاءة والجو والإدراك اللحظي محل الوصف الأكاديمي المصقول.",
     sections: [
@@ -121,7 +121,7 @@ const PAINTINGS_AR = {
       ["أثر بحجم متواضع", "رغم أن أبعادها لا تتجاوز نحو 48 × 63 سم، غيّرت اللوحة فكرة العمل المكتمل: صار نقل الانطباع الذي يولده العالم في لحظة معينة هدفاً فنياً قائماً بذاته."]
     ],
     details: ["اتبع الانعكاس البرتقالي العمودي فوق ضربات الماء الأفقية.", "قارن القوارب الواضحة بالخلفية الصناعية الذائبة.", "اقترب لرؤية العلامات المنفصلة ثم ابتعد لترى الميناء يتكون.", "لاحظ كيف يصنع البرتقالي والأزرق الرمادي إحساساً بضوء نابض."],
-    audio: "assets/paintings/monet/audio-video/خدعة_الشمس_النابضة_وسر_تسمية_الانطباعية.mp3"
+    audio: "assets/artists/claude-monet/artworks/impression-sunrise/media/خدعة-الشمس-النابضة-وسر-تسمية-الانطباعية.mp3"
   }
 };
 

@@ -137,7 +137,7 @@ copy.pages.forEach((page, index) => {
     </div>
     ${index < 2 ? `
       <figure>
-        <img src="assets/paintings/Da Vinci/mona-lisa/images/davinci-monalisa.png" alt="" />
+        <img src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/davinci-monalisa.png" alt="" />
         <figcaption>ARTDACI · MASTERPIECES ALIVE</figcaption>
       </figure>` : ""}
     <footer>ARTDACI · ${String(index + 1).padStart(2, "0")}</footer>

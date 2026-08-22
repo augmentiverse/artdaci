@@ -27,7 +27,7 @@
     "spreadNumber": 4,
     "chapter": "The Dutch Golden Age",
     "imageTargetId": "target-004-vermeer-girl-pearl",
-    "imageTargetSource": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/images/vermeer_Girl-with-a-Pearl-Earring.jpg",
+    "imageTargetSource": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg",
     "compiledMindTarget": "assets/targets/vermeer_Girl-with-a-Pearl-Earring.mind",
     "qrUrl": "ar.html?painting=vermeer-girl-with-a-pearl-earring"
   },
@@ -75,34 +75,34 @@
   ],
   "ar": {
     "startMode": "painting-emergence",
-    "imageTarget": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/images/vermeer_Girl-with-a-Pearl-Earring.jpg",
+    "imageTarget": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg",
     "compiledTarget": "assets/targets/vermeer_Girl-with-a-Pearl-Earring.mind",
-    "primaryModel": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring.glb",
+    "primaryModel": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring.glb",
     "modelVariants": [
-      { "id": "portrait", "label": { "en": "Portrait", "fr": "Portrait" }, "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring.glb" },
-      { "id": "sitting", "label": { "en": "Sitting figure", "fr": "Figure assise" }, "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring_sitting_c.glb" }
+      { "id": "portrait", "label": { "en": "Portrait", "fr": "Portrait" }, "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring.glb" },
+      { "id": "sitting", "label": { "en": "Sitting figure", "fr": "Figure assise" }, "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring-sitting-c.glb" }
     ],
     "viewer": { "initialScale": 0.34, "initialRise": 0.14, "modelRotation": { "x": 0, "y": 0, "z": 0 } },
     "availableModes": ["painting-emergence", "artist", "history", "hidden-details", "brushstrokes", "ask-guide"]
   },
   "media": {
-    "image": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/images/vermeer_Girl-with-a-Pearl-Earring.jpg",
-    "model": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring.glb",
+    "image": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg",
+    "model": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring.glb",
     "modelVariants": [
-      { "id": "portrait", "label": { "en": "Portrait", "fr": "Portrait" }, "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring.glb" },
-      { "id": "sitting", "label": { "en": "Sitting figure", "fr": "Figure assise" }, "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring_sitting_c.glb" }
+      { "id": "portrait", "label": { "en": "Portrait", "fr": "Portrait" }, "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring.glb" },
+      { "id": "sitting", "label": { "en": "Sitting figure", "fr": "Figure assise" }, "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring-sitting-c.glb" }
     ],
     "audioGuides": [
-      { "id": "vermeer-pearl-audio-en", "lang": "en", "title": "Girl with a Pearl Earring", "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring_1m17_en.mp3", "type": "audio/mpeg", "description": "English audio guide for the image AR experience." },
-      { "id": "vermeer-pearl-audio-fr", "lang": "fr", "title": "La Jeune Fille à la perle", "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring_1m54_fr.m4a", "type": "audio/mp4", "description": "Présentation audio brève en français pour l’expérience AR sur image." }
+      { "id": "vermeer-pearl-audio-en", "lang": "en", "title": "Girl with a Pearl Earring", "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/media/vermeer-girl-with-a-pearl-earring-en.mp3", "type": "audio/mpeg", "description": "English audio guide for the image AR experience." },
+      { "id": "vermeer-pearl-audio-fr", "lang": "fr", "title": "La Jeune Fille à la perle", "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/media/vermeer-girl-with-a-pearl-earring-1m54-fr.m4a", "type": "audio/mp4", "description": "Présentation audio brève en français pour l’expérience AR sur image." }
     ],
     "videos": [
       { "id": "vermeer-pearl-animation", "title": "Girl with a Pearl Earring Animation", "src": "assets/animations/artdaci-girl-pearl-earring_animation.mp4", "type": "video/mp4", "description": "Animation displayed beneath the 3D model when the printed painting is recognized." }
     ],
     "subtitles": [], "signLanguage": [], "imageCredits": [],
     "audioOverviews": [
-      { "id": "vermeer-pearl-overview-en", "lang": "en", "title": "Girl with a Pearl Earring audio overview", "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring_en.mp3", "type": "audio/mpeg", "description": "English audio overview." },
-      { "id": "vermeer-pearl-overview-fr", "lang": "fr", "title": "Aperçu audio de La Jeune Fille à la perle", "src": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/audio-video/vermeer_Girl-with-a-Pearl-Earring_1m54_fr.m4a", "type": "audio/mp4", "description": "Présentation audio en français." }
+      { "id": "vermeer-pearl-overview-en", "lang": "en", "title": "Girl with a Pearl Earring audio overview", "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/media/vermeer-girl-with-a-pearl-earring-en.mp3", "type": "audio/mpeg", "description": "English audio overview." },
+      { "id": "vermeer-pearl-overview-fr", "lang": "fr", "title": "Aperçu audio de La Jeune Fille à la perle", "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/media/vermeer-girl-with-a-pearl-earring-1m54-fr.m4a", "type": "audio/mp4", "description": "Présentation audio en français." }
     ]
   },
   "education": {

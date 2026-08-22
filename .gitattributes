@@ -1,0 +1,14 @@
+* text=auto
+
+*.avif binary
+*.docx binary
+*.glb binary
+*.jpg binary
+*.m4a binary
+*.mind binary
+*.mp3 binary
+*.mp4 binary
+*.pdf binary
+*.png binary
+*.wasm binary
+*.webp binary

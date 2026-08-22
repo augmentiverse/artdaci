@@ -16,7 +16,7 @@
   "collection": "Musée Marmottan Monet, Paris",
   "currentLocation": { "museum": "Musée Marmottan Monet", "city": "Paris" },
   "media": {
-    "image": "assets/paintings/monet/Tableaux/Impression-Sunrise_Monet.webp",
+    "image": "assets/artists/claude-monet/collection/impression-sunrise-monet.webp",
     "videos": [
       {
         "id": "monet-impression-sunrise-animation",
@@ -31,28 +31,28 @@
         "id": "monet-impression-sunrise-overview-en",
         "lang": "en",
         "title": "Impression, Sunrise audio overview",
-        "src": "assets/paintings/monet/audio-video/Monet_s_optical_illusion_that_birthed_Impressionism.mp3",
+        "src": "assets/artists/claude-monet/artworks/impression-sunrise/media/monet-s-optical-illusion-that-birthed-impressionism.mp3",
         "type": "audio/mpeg"
       },
       {
         "id": "monet-impression-sunrise-overview-fr",
         "lang": "fr",
         "title": "Présentation audio d’Impression, soleil levant",
-        "src": "assets/paintings/monet/audio-video/Le_hack_neurologique_du_soleil_de_Monet.mp3",
+        "src": "assets/artists/claude-monet/artworks/impression-sunrise/media/le-hack-neurologique-du-soleil-de-monet.mp3",
         "type": "audio/mpeg"
       },
       {
         "id": "monet-impression-sunrise-overview-ar",
         "lang": "ar",
         "title": "تقديم صوتي للوحة انطباع، شروق الشمس",
-        "src": "assets/paintings/monet/audio-video/خدعة_الشمس_النابضة_وسر_تسمية_الانطباعية.mp3",
+        "src": "assets/artists/claude-monet/artworks/impression-sunrise/media/خدعة-الشمس-النابضة-وسر-تسمية-الانطباعية.mp3",
         "type": "audio/mpeg"
       }
     ]
   },
   "print": {
     "spreadNumber": 5,
-    "imageTargetSource": "assets/paintings/monet/Tableaux/Impression-Sunrise_Monet.png"
+    "imageTargetSource": "assets/artists/claude-monet/collection/impression-sunrise-monet.png"
   },
   "education": { "vocabulary": ["Impressionism", "complementary colour", "atmosphere", "plein air"] },
   "texts": {

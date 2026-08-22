@@ -1,6 +1,6 @@
 # DACIART WebAR Art Book
 
-This repository is a GitHub Pages-ready prototype for an augmented reality art book. It includes a print-first collection index, three catalogue spreads, image-tracked WebAR, room-placement AR, bilingual entry points, QR access, and data-driven painting manifests.
+This repository is a GitHub Pages-ready augmented-reality art book for four masters: Leonardo da Vinci, Vincent van Gogh, Johannes Vermeer, and Claude Monet. It includes print-first catalogue pages, image-tracked WebAR, room-placement AR, multilingual entry points, QR access, VR galleries, and data-driven manifests.
 
 ## What Is Included
 
@@ -12,16 +12,71 @@ This repository is a GitHub Pages-ready prototype for an augmented reality art b
 - `print-van-gogh.html` - rich printable Van Gogh catalogue spread.
 - `print-van-gogh-bedroom.html` - rich printable Van Gogh bedroom catalogue spread.
 - `scripts/catalogue.js` - manifest-driven catalogue UI with search, filtering, comparison, stats, and learning prompts.
-- `assets/paintings/Da Vinci/mona-lisa/images/mona-lisa.jpg` - printed target image.
-- `assets/paintings/Da Vinci/mona-lisa/mona-lisa.glb` - 3D model loaded in AR.
-- `assets/paintings/van-gogh/reimagined-photos/van-gogh__Portrait.jpg` - Van Gogh printed target image.
-- `assets/paintings/van-gogh/van-gogh__Portrait.glb` - Van Gogh 3D model loaded in AR.
+- `assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg` - printed target image.
+- `assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa.glb` - 3D model loaded in AR.
+- `assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait.jpg` - Van Gogh printed target image.
+- `assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh-portrait.glb` - Van Gogh 3D model loaded in AR.
 - `assets/targets/mona-lisa.mind` - compiled MindAR image target.
 - `content/paintings/mona-lisa.json` - structured painting data record.
 - `content/paintings/van-gogh.json` - structured Van Gogh painting data record.
 - `content/paintings/van-gogh-bedroom.json` - structured Van Gogh bedroom painting data record.
 - `vendor/` - local copies of Three.js, GLTFLoader, and MindAR used by the AR viewer.
-- `AR_Art_Book_Concept.md` - full product and editorial concept.
+- `docs/art-book-concept.md` - full product and editorial concept.
+
+## Repository Structure
+
+```text
+assets/
+  artists/
+    claude-monet/
+    johannes-vermeer/
+    leonardo-da-vinci/
+    vincent-van-gogh/
+  animations/       Shared animation clips
+  app/              PWA icons
+  environments/     Gallery and Louvre environment models
+  music/            Shared gallery music
+  qr/               Generated visitor QR codes
+  shared/            Four-painter and cross-collection media
+  targets/           Compiled MindAR targets
+content/
+  paintings/         One manifest per featured artwork
+  people/            Supporting-person manifests
+docs/
+  production/        Current production documents only
+scripts/             Runtime JavaScript and repository validation
+styles/              Page-specific and shared styles
+vendor/              Browser libraries served locally
+```
+
+Every artist directory follows the same vocabulary:
+
+- `profile/` — artist portrait, introductory media, and artist models.
+- `artworks/{artwork-slug}/` — `images/`, `media/`, and `models/` for a featured artwork.
+- `collection/` — images for the artist's wider body of work.
+- `reimagined/` — creative reinterpretations, separated into `images/` and `models/`.
+- `supporters/` — patrons, family, or collaborators, using `audio/`, `images/`, `models/`, `music/`, `timelines/`, and `video/` as needed.
+
+Artist directories and filenames use lowercase kebab-case. Language variants end in `-en`, `-fr`, or `-ar`; new optimized variants should use a descriptive suffix such as `-compressed`.
+
+## Public Pages
+
+- Collection entry points: `index.html`, `index-fr.html`, `index-ar.html`.
+- AR and spatial experiences: `ar.html`, `space.html`, `vr.html`.
+- Immersive experiences: `gallery-vr.html`, `cinema-vr.html`, `book-3d.html`, `atlas.html`.
+- Data-driven print page: `print-ar.html`.
+- Dedicated print layouts: all other `print-*.html` pages.
+- Developer utilities: `camera-test.html` and `compile-target.html`.
+
+## Validation
+
+Run the repository check after changing paths or manifests:
+
+```powershell
+./scripts/validate_repository.ps1
+```
+
+It validates JSON syntax, confirms literal runtime asset references exist, and rejects reintroduced legacy directory names.
 
 ## How To View Locally
 
@@ -82,8 +137,8 @@ For Van Gogh's bedroom, open `print-van-gogh-bedroom.html`, then use `ar.html?pa
 
 ## Adding Another Painting
 
-1. Add the painting image to `assets/paintings/{slug}/{slug}.jpg`.
-2. Add the GLB model to `assets/paintings/{slug}/{slug}.glb`.
+1. Add the painting image to `assets/artists/{artist-slug}/artworks/{artwork-slug}/images/{image}.jpg`.
+2. Add the GLB model to `assets/artists/{artist-slug}/artworks/{artwork-slug}/models/{model}.glb`.
 3. Generate a MindAR target file and save it to `assets/targets/{slug}.mind`.
 4. Add a JSON record in `content/paintings/{slug}.json`.
 5. Add the new slug to the `PAINTINGS` registry in `scripts/ar-viewer.js` and `scripts/space-viewer.js`.
@@ -119,5 +174,5 @@ This repo also includes `compile-target.html` as a developer utility for generat
 - Add institutional localization files for full bilingual parity.
 - Add WebXR immersive mode for compatible headsets.
 - Vendor `model-viewer` locally if the project must work without CDN access.
-- Add automated link, JSON, and browser smoke tests.
+- Add automated browser smoke tests.
 - Add analytics only after privacy review.

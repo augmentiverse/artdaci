@@ -1,3 +1,14 @@
 DACIART-from-gemini/
 .DS_Store
 Thumbs.db
+
+# Local tools and generated output
+tmp/
+output/
+*.tmp
+*.log
+
+# Editor and operating-system files
+.idea/
+.vscode/
+Desktop.ini

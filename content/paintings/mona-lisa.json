@@ -32,7 +32,7 @@
     "spreadNumber": 1,
     "chapter": "Renaissance",
     "imageTargetId": "target-001-mona-lisa",
-    "imageTargetSource": "assets/paintings/Da Vinci/mona-lisa/images/mona-lisa.jpg",
+    "imageTargetSource": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg",
     "compiledMindTarget": "assets/targets/mona-lisa.mind",
     "qrUrl": "https://augmentiverse.github.io/artdaci/ar.html?painting=mona-lisa"
   },
@@ -252,10 +252,10 @@
   ],
   "ar": {
     "startMode": "painting-emergence",
-    "imageTarget": "assets/paintings/Da Vinci/mona-lisa/images/mona-lisa.jpg",
+    "imageTarget": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg",
     "compiledTarget": "assets/targets/mona-lisa.mind",
-    "primaryModel": "assets/paintings/Da Vinci/mona-lisa/mona-lisa.glb",
-    "frameModel": "assets/paintings/Da Vinci/mona-lisa/mona-lisa.glb",
+    "primaryModel": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa.glb",
+    "frameModel": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa.glb",
     "modelVariants": [
       {
         "id": "model-1",
@@ -263,7 +263,7 @@
           "en": "Model 1",
           "fr": "Modèle 1"
         },
-        "src": "assets/paintings/Da Vinci/mona-lisa/mona-lisa.glb"
+        "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa.glb"
       },
       {
         "id": "model-2",
@@ -271,7 +271,7 @@
           "en": "Model 2",
           "fr": "Modèle 2"
         },
-        "src": "assets/paintings/Da Vinci/mona-lisa/mona-lisa-out-of-frame_c.glb"
+        "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa-out-of-frame-c.glb"
       },
       {
         "id": "framed-scene",
@@ -279,7 +279,7 @@
           "en": "Framed scene",
           "fr": "Scène encadrée"
         },
-        "src": "assets/paintings/Da Vinci/mona-lisa/monalisa_framed_c.glb"
+        "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/monalisa-framed-c.glb"
       },
       {
         "id": "davinci-monalisa",
@@ -287,7 +287,7 @@
           "en": "Da Vinci and Mona Lisa",
           "fr": "De Vinci et Mona Lisa"
         },
-        "src": "assets/paintings/Da Vinci/mona-lisa/davinci-monalisa_c.glb"
+        "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/davinci-monalisa-c.glb"
       }
     ],
     "scaleMeters": {
@@ -344,8 +344,8 @@
     }
   },
   "media": {
-    "image": "assets/paintings/Da Vinci/mona-lisa/images/mona-lisa.jpg",
-    "model": "assets/paintings/Da Vinci/mona-lisa/mona-lisa.glb",
+    "image": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg",
+    "model": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa.glb",
     "modelVariants": [
       {
         "id": "model-1",
@@ -353,7 +353,7 @@
           "en": "Model 1",
           "fr": "Modèle 1"
         },
-        "src": "assets/paintings/Da Vinci/mona-lisa/mona-lisa.glb"
+        "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa.glb"
       },
       {
         "id": "model-2",
@@ -361,7 +361,7 @@
           "en": "Model 2",
           "fr": "Modèle 2"
         },
-        "src": "assets/paintings/Da Vinci/mona-lisa/mona-lisa-out-of-frame_c.glb"
+        "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa-out-of-frame-c.glb"
       },
       {
         "id": "framed-scene",
@@ -369,7 +369,7 @@
           "en": "Framed scene",
           "fr": "Scène encadrée"
         },
-        "src": "assets/paintings/Da Vinci/mona-lisa/monalisa-tableau-c.glb"
+        "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/monalisa-tableau-c.glb"
       },
       {
         "id": "davinci-monalisa",
@@ -377,7 +377,7 @@
           "en": "Da Vinci and Mona Lisa",
           "fr": "De Vinci et Mona Lisa"
         },
-        "src": "assets/paintings/Da Vinci/mona-lisa/davinci-monalisa_c.glb"
+        "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/davinci-monalisa-c.glb"
       },
       {
         "id": "davinci-monalisa-alternative",
@@ -385,7 +385,7 @@
           "en": "Da Vinci and Mona Lisa — Alternative",
           "fr": "De Vinci et Mona Lisa — Variante"
         },
-        "src": "assets/paintings/Da Vinci/mona-lisa/davinci-monalisa_c.glb"
+        "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/davinci-monalisa-c.glb"
       }
     ],
     "audioGuides": [
@@ -393,7 +393,7 @@
         "id": "mona-lisa-audio-en",
         "lang": "en",
         "title": "Inside the Mona Lisa",
-        "src": "assets/paintings/Da Vinci/mona-lisa/audio-video/Inside_the_Mona_Lisa_1m40_en.m4a",
+        "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/inside-the-mona-lisa-1m40-en.m4a",
         "type": "audio/mp4",
         "description": "Short English audio guide for the Mona Lisa AR experience."
       },
@@ -401,7 +401,7 @@
         "id": "mona-lisa-audio-fr",
         "lang": "fr",
         "title": "Dans La Joconde",
-        "src": "assets/paintings/Da Vinci/mona-lisa/audio-video/Inside_the_Mona_Lisa_1m46_fr.m4a",
+        "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/inside-the-mona-lisa-1m46-fr.m4a",
         "type": "audio/mp4",
         "description": "Court guide audio français pour l'expérience AR de La Joconde."
       }
@@ -417,20 +417,20 @@
       {
         "id": "mona-lisa-reimagined-video",
         "title": "Mona Lisa Reimagined",
-        "src": "assets/paintings/Da Vinci/mona-lisa/audio-video/mona-lisa_video.mp4",
-        "audioSrc": "assets/paintings/Da Vinci/mona-lisa/audio-video/Centuries_Behind_Glass.mp3",
-        "audioSrcFr": "assets/paintings/Da Vinci/mona-lisa/audio-video/La_Joconde_s_évade.mp3",
-        "audioSrcAr": "assets/paintings/Da Vinci/mona-lisa/audio-video/رقصة_خلف_الإطار.mp3",
+        "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/mona-lisa-video.mp4",
+        "audioSrc": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/centuries-behind-glass.mp3",
+        "audioSrcFr": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/la-joconde-s-évade.mp3",
+        "audioSrcAr": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/رقصة-خلف-الإطار.mp3",
         "type": "video/mp4",
         "description": "A moving reinterpretation of the Mona Lisa."
       },
       {
         "id": "mona-lisa-video",
         "title": "Mona Lisa Video Guide",
-        "src": "assets/paintings/Da Vinci/mona-lisa/audio-video/mona-lisa_video.mp4",
-        "audioSrc": "assets/paintings/Da Vinci/mona-lisa/audio-video/Centuries_Behind_Glass.mp3",
-        "audioSrcFr": "assets/paintings/Da Vinci/mona-lisa/audio-video/La_Joconde_s_évade.mp3",
-        "audioSrcAr": "assets/paintings/Da Vinci/mona-lisa/audio-video/رقصة_خلف_الإطار.mp3",
+        "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/mona-lisa-video.mp4",
+        "audioSrc": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/centuries-behind-glass.mp3",
+        "audioSrcFr": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/la-joconde-s-évade.mp3",
+        "audioSrcAr": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/رقصة-خلف-الإطار.mp3",
         "type": "video/mp4",
         "description": "Short video layer for the Mona Lisa AR experience."
       }
@@ -443,7 +443,7 @@
         "id": "mona-lisa-overview-en",
         "lang": "en",
         "title": "Mona Lisa audio overview",
-        "src": "assets/paintings/Da Vinci/mona-lisa/audio-video/mona-lisa-en.mp3",
+        "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/mona-lisa-en.mp3",
         "type": "audio/mpeg",
         "description": "Detailed English discussion between two speakers about the Mona Lisa."
       },
@@ -451,7 +451,7 @@
         "id": "mona-lisa-overview-fr",
         "lang": "fr",
         "title": "Aperçu audio de La Joconde",
-        "src": "assets/paintings/Da Vinci/mona-lisa/audio-video/mona-lisa-fr.mp3",
+        "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/mona-lisa-fr.mp3",
         "type": "audio/mpeg",
         "description": "Discussion détaillée en français entre deux personnes au sujet de La Joconde."
       },
@@ -459,7 +459,7 @@
         "id": "mona-lisa-overview-ar",
         "lang": "ar",
         "title": "وصف صوتي مطوّل للموناليزا",
-        "src": "assets/paintings/Da Vinci/mona-lisa/audio-video/الموناليزا_لغز_الابتسامة_والسرقة_والرموش_المفقودة.mp3",
+        "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/الموناليزا-لغز-الابتسامة-والسرقة-والرموش-المفقودة.mp3",
         "type": "audio/mpeg",
         "description": "وصف صوتي عربي مطوّل عن ابتسامة الموناليزا وسرقتها وتفاصيلها المكتشفة."
       }

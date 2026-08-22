@@ -18,66 +18,66 @@ const CONNECTED_AUDIO_WORKS = {
 };
 
 const GALLERY_IMAGES = {
-  "mona-lisa": "assets/paintings/Da Vinci/mona-lisa/images/monalisa-t.png",
-  "van-gogh": "assets/paintings/van-gogh/reimagined-photos/van-gogh_portrait-p.png",
-  "van-gogh-bedroom": "assets/paintings/van-gogh-bedroom/images/van-gogh_bedroom-t.png",
-  "vermeer-girl-with-a-pearl-earring": "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/images/vermee_girl-earring-t.png"
+  "mona-lisa": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/monalisa-t.png",
+  "van-gogh": "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait-p.png",
+  "van-gogh-bedroom": "assets/artists/vincent-van-gogh/artworks/the-bedroom/images/van-gogh-bedroom-t.png",
+  "vermeer-girl-with-a-pearl-earring": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermee-girl-earring-t.png"
 };
 
 const GALLERY_MODEL_OVERRIDES = {
-  "van-gogh-bedroom": "assets/paintings/van-gogh-bedroom/bed.glb"
+  "van-gogh-bedroom": "assets/artists/vincent-van-gogh/artworks/the-bedroom/models/bed.glb"
 };
 
 // Optional furniture exhibits can be restored here when their GLB assets are present.
 const FURNITURE_MODEL_EXHIBITS = [];
 const GALLERY_FURNITURE = [
-  { id: "armchair", src: "assets/paintings/fourniture/gallery-furniture/armchair-w.glb", position: [-3.7, 0, 2.6], rotationY: 0.35, maxSize: 1.55 },
-  { id: "brochure-stand", src: "assets/paintings/fourniture/gallery-furniture/brochure_stand.glb", position: [4.65, 0, 3.55], rotationY: -2.4, maxSize: 1.45 },
-  { id: "gallery-table", src: "assets/paintings/fourniture/gallery-furniture/table-w.glb", position: [0, 0, 2.55], rotationY: 0, maxSize: 1.9 },
-  { id: "vitrine-table", src: "assets/paintings/fourniture/gallery-furniture/table-vitrine-w.glb", position: [3.45, 0, 1.25], rotationY: -0.25, maxSize: 1.8 },
-  { id: "louvre-bench", src: "assets/paintings/fourniture/gallery-furniture/banc-louvre_c.glb", position: [0, 0, -0.25], rotationY: 0, maxSize: 2.65 }
+  { id: "armchair", src: "assets/environments/gallery/models/armchair-w.glb", position: [-3.7, 0, 2.6], rotationY: 0.35, maxSize: 1.55 },
+  { id: "brochure-stand", src: "assets/environments/gallery/models/brochure_stand.glb", position: [4.65, 0, 3.55], rotationY: -2.4, maxSize: 1.45 },
+  { id: "gallery-table", src: "assets/environments/gallery/models/table-w.glb", position: [0, 0, 2.55], rotationY: 0, maxSize: 1.9 },
+  { id: "vitrine-table", src: "assets/environments/gallery/models/table-vitrine-w.glb", position: [3.45, 0, 1.25], rotationY: -0.25, maxSize: 1.8 },
+  { id: "louvre-bench", src: "assets/environments/gallery/models/banc-louvre_c.glb", position: [0, 0, -0.25], rotationY: 0, maxSize: 2.65 }
 ];
-const LOUVRE_BENCH_MODEL = "assets/paintings/fourniture/gallery-furniture/banc-louvre_c.glb";
-const LIVING_BOOK_TABLE_MODEL = "assets/paintings/fourniture/gallery-furniture/table-w.glb";
-const LIVING_BOOK_MODEL = "assets/paintings/fourniture/gallery-furniture/book-artdaci_en.glb";
-const LIVING_BOOK_MODEL_LOW_POWER = "assets/paintings/fourniture/gallery-furniture/book-artdaci_en.glb";
+const LOUVRE_BENCH_MODEL = "assets/environments/gallery/models/banc-louvre_c.glb";
+const LIVING_BOOK_TABLE_MODEL = "assets/environments/gallery/models/table-w.glb";
+const LIVING_BOOK_MODEL = "assets/environments/gallery/models/book-artdaci_en.glb";
+const LIVING_BOOK_MODEL_LOW_POWER = "assets/environments/gallery/models/book-artdaci_en.glb";
 const GROUP_EXHIBIT = {
-  model: "assets/paintings/groups/dvvm_selfy.glb",
-  image: "assets/paintings/groups/DVVM_Louvre.png"
+  model: "assets/shared/groups/dvvm_selfy.glb",
+  image: "assets/shared/groups/DVVM_Louvre.png"
 };
 const MODEL_ARTIST_EXHIBITS = {
   "da-vinci": [
-    { title: { en: "Leonardo and Mona Lisa", fr: "Léonard et La Joconde" }, src: "assets/paintings/Da Vinci/mona-lisa/davinci-monalisa_c.glb", rotationY: Math.PI },
-    { title: { en: "Leonardo Painting Mona Lisa", fr: "Léonard peignant La Joconde" }, src: "assets/paintings/Da Vinci/mona-lisa/davinci-painting-mona.glb", rotationY: Math.PI },
-    { title: { en: "Leonardo da Vinci", fr: "Léonard de Vinci", ar: "ليوناردو دافنشي" }, src: "assets/paintings/Da Vinci/reimagined-3dmodels/DaVinci_standing_c.glb", rotationY: Math.PI },
-    { title: { en: "Leonardo and Francis I", fr: "Léonard et François Ier", ar: "ليوناردو وفرنسوا الأول" }, src: "assets/paintings/Da Vinci/reimagined-3dmodels/DaVinci-François1er.glb", rotationY: Math.PI }
+    { title: { en: "Leonardo and Mona Lisa", fr: "Léonard et La Joconde" }, src: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/davinci-monalisa-c.glb", rotationY: Math.PI },
+    { title: { en: "Leonardo Painting Mona Lisa", fr: "Léonard peignant La Joconde" }, src: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/davinci-painting-mona.glb", rotationY: Math.PI },
+    { title: { en: "Leonardo da Vinci", fr: "Léonard de Vinci", ar: "ليوناردو دافنشي" }, src: "assets/artists/leonardo-da-vinci/reimagined/models/davinci-standing-c.glb", rotationY: Math.PI },
+    { title: { en: "Leonardo and Francis I", fr: "Léonard et François Ier", ar: "ليوناردو وفرنسوا الأول" }, src: "assets/artists/leonardo-da-vinci/reimagined/models/davinci-françois1er.glb", rotationY: Math.PI }
   ],
   "van-gogh": [
-    { title: { en: "Vincent van Gogh", fr: "Vincent van Gogh" }, src: "assets/peintres/3d models/van-gogh_standing_w_c.glb", rotationY: Math.PI },
-    { title: { en: "Jo van Gogh-Bonger", fr: "Jo van Gogh-Bonger", ar: "جو فان غوخ-بونغر" }, src: "assets/people-behind-painters/Van Gogh/3d models/Van-Gogh_Jo_c.glb", rotationY: Math.PI }
+    { title: { en: "Vincent van Gogh", fr: "Vincent van Gogh" }, src: "assets/artists/vincent-van-gogh/profile/models/standing.glb", rotationY: Math.PI },
+    { title: { en: "Jo van Gogh-Bonger", fr: "Jo van Gogh-Bonger", ar: "جو فان غوخ-بونغر" }, src: "assets/artists/vincent-van-gogh/supporters/models/van-gogh-jo-c.glb", rotationY: Math.PI }
   ],
   vermeer: [
-    { title: { en: "Girl with a Pearl Earring", fr: "La Jeune Fille à la perle" }, src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring_sitting_c.glb", rotationY: Math.PI },
-    { title: { en: "The Milkmaid", fr: "La Laitière" }, src: "assets/paintings/Vermeer/Milkmaid_vermeer_c100.glb", rotationY: Math.PI },
-    { title: { en: "The Astronomer", fr: "L’Astronome" }, src: "assets/paintings/Vermeer/the-astronomer_vermeer_c2.glb", rotationY: Math.PI },
-    { title: { en: "Vermeer and His Patrons", fr: "Vermeer et ses mécènes", ar: "فيرمير ورعاته" }, src: "assets/paintings/Vermeer/reimagined-3dmodels/Vermeer_Pieter-van-Ruijven_rig.glb", rotationY: Math.PI }
+    { title: { en: "Girl with a Pearl Earring", fr: "La Jeune Fille à la perle" }, src: "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring-sitting-c.glb", rotationY: Math.PI },
+    { title: { en: "The Milkmaid", fr: "La Laitière" }, src: "assets/artists/johannes-vermeer/profile/models/milkmaid-vermeer-c100.glb", rotationY: Math.PI },
+    { title: { en: "The Astronomer", fr: "L’Astronome" }, src: "assets/artists/johannes-vermeer/profile/models/the-astronomer-vermeer-c2.glb", rotationY: Math.PI },
+    { title: { en: "Vermeer and His Patrons", fr: "Vermeer et ses mécènes", ar: "فيرمير ورعاته" }, src: "assets/artists/johannes-vermeer/reimagined/models/vermeer-pieter-van-ruijven-rig.glb", rotationY: Math.PI }
   ],
   monet: [
-    { title: { en: "Claude Monet", fr: "Claude Monet", ar: "كلود مونيه" }, src: "assets/paintings/monet/reinmagined-3dmodels/Claude-Monet_standing_c.glb", rotationY: Math.PI },
-    { title: { en: "Monet and Paul Durand-Ruel", fr: "Monet et Paul Durand-Ruel", ar: "مونيه وبول دوران-رويل" }, src: "assets/paintings/monet/reinmagined-3dmodels/Claude-Monet_Pauld-Durand-Ruel_c.glb", rotationY: Math.PI }
+    { title: { en: "Claude Monet", fr: "Claude Monet", ar: "كلود مونيه" }, src: "assets/artists/claude-monet/reimagined/models/claude-monet-standing-c.glb", rotationY: Math.PI },
+    { title: { en: "Monet and Paul Durand-Ruel", fr: "Monet et Paul Durand-Ruel", ar: "مونيه وبول دوران-رويل" }, src: "assets/artists/claude-monet/reimagined/models/claude-monet-pauld-durand-ruel-c.glb", rotationY: Math.PI }
   ]
 };
 
-const STANDING_VAN_GOGH_MODEL = "assets/paintings/van-gogh/vangogh_istanding.glb";
+const STANDING_VAN_GOGH_MODEL = "assets/artists/vincent-van-gogh/artworks/self-portrait/models/vangogh-istanding.glb";
 const PAINTINGS_MODELS_GATEWAY = null;
-const LOUVRE_FACADE_MODEL = "assets/paintings/fourniture/gallery-furniture/Louvre_facade_c.glb";
-const CINEMA_SOFA_MODEL = "assets/paintings/fourniture/gallery-furniture/sofa_c.glb";
-const ORNATE_PILL_MODEL = "assets/paintings/fourniture/gallery-furniture/Ornate_Turquoise_Pill_c.glb";
-const ACCENT_SOFA_MODEL = "assets/paintings/fourniture/gallery-furniture/sofa1.glb";
-const CINEMA_GATEWAY_MODEL = "assets/paintings/fourniture/gallery-furniture/Gateway_Egypt_c.glb";
+const LOUVRE_FACADE_MODEL = "assets/environments/gallery/models/Louvre_facade_c.glb";
+const CINEMA_SOFA_MODEL = "assets/environments/gallery/models/sofa_c.glb";
+const ORNATE_PILL_MODEL = "assets/environments/gallery/models/Ornate_Turquoise_Pill_c.glb";
+const ACCENT_SOFA_MODEL = "assets/environments/gallery/models/sofa1.glb";
+const CINEMA_GATEWAY_MODEL = "assets/environments/gallery/models/Gateway_Egypt_c.glb";
 const LOUVRE_PHOTO_EXHIBITS = [
-  { src: "assets/paintings/groups/DVVM_Louvre.png", title: { en: "The Four Masters at the Louvre", fr: "Les quatre maîtres au Louvre", ar: "الأساتذة الأربعة في اللوفر" } },
-  { src: "assets/gallery/reimagined/Monalisa-louvre-1.png", title: { en: "Mona Lisa at the Louvre", fr: "La Joconde au Louvre", ar: "الموناليزا في اللوفر" } }
+  { src: "assets/shared/groups/DVVM_Louvre.png", title: { en: "The Four Masters at the Louvre", fr: "Les quatre maîtres au Louvre", ar: "الأساتذة الأربعة في اللوفر" } },
+  { src: "assets/shared/reimagined-gallery/Monalisa-louvre-1.png", title: { en: "Mona Lisa at the Louvre", fr: "La Joconde au Louvre", ar: "الموناليزا في اللوفر" } }
 ];
 const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae";
 const LEONARDO_STUDIO_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/862ab5f6-8608-469c-a840-8cb10f3859ae";
@@ -87,38 +87,38 @@ const CINEMA_ROOM_X = 14;
 const CINEMA_VIDEO_LIBRARY = [
   {
     title: { en: "The Four Painters Introduce Themselves", fr: "Les quatre peintres se présentent", ar: "الرسامون الأربعة يقدمون أنفسهم" },
-    src: "assets/peintres/videos de présentation/4painters-presenting-themselves.mp4"
+    src: "assets/shared/four-painters/introduction.mp4"
   },
   {
     title: { en: "The Four Painters — New Selfie", fr: "Les quatre peintres — nouveau selfie", ar: "الرسامون الأربعة — صورة ذاتية جديدة" },
-    src: "assets/paintings/groups/audio-video/dvvm-n-selfy.mp4"
+    src: "assets/shared/groups/audio-video/dvvm-n-selfy.mp4"
   },
   {
     title: { en: "The Four Painters — Selfie", fr: "Les quatre peintres — selfie", ar: "الرسامون الأربعة — صورة ذاتية" },
-    src: "assets/paintings/groups/audio-video/dvvm-selfy.mp4"
+    src: "assets/shared/groups/audio-video/dvvm-selfy.mp4"
   },
   {
     title: { en: "Leonardo and Mona Lisa in Paris", fr: "Léonard et La Joconde à Paris", ar: "ليوناردو والموناليزا في باريس" },
-    src: "assets/paintings/Da Vinci/mona-lisa/audio-video/davinci-monalisa-paris.mp4"
+    src: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/davinci-monalisa-paris.mp4"
   },
   {
     title: { en: "Leonardo Painting the Mona Lisa", fr: "Léonard peignant La Joconde", ar: "ليوناردو يرسم الموناليزا" },
-    src: "assets/paintings/Da Vinci/mona-lisa/audio-video/davinci_painting_monalisa.mp4"
+    src: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/davinci-painting-monalisa.mp4"
   },
   {
     title: { en: "Mona Lisa Reimagined", fr: "La Joconde réimaginée", ar: "الموناليزا معاد تخيلها" },
-    src: "assets/paintings/Da Vinci/mona-lisa/audio-video/mona-lisa_video.mp4",
-    audioSrc: "assets/paintings/Da Vinci/mona-lisa/audio-video/Centuries_Behind_Glass.mp3",
-    audioSrcFr: "assets/paintings/Da Vinci/mona-lisa/audio-video/La_Joconde_s_évade.mp3",
-    audioSrcAr: "assets/paintings/Da Vinci/mona-lisa/audio-video/رقصة_خلف_الإطار.mp3"
+    src: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/mona-lisa-video.mp4",
+    audioSrc: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/centuries-behind-glass.mp3",
+    audioSrcFr: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/la-joconde-s-évade.mp3",
+    audioSrcAr: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/رقصة-خلف-الإطار.mp3"
   },
   {
     title: { en: "Leonardo’s Vision II", fr: "La vision de Léonard II", ar: "رؤية ليوناردو الثانية" },
-    src: "assets/paintings/Da Vinci/mona-lisa/audio-video/dv2.mp4"
+    src: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/dv2.mp4"
   },
   {
     title: { en: "Mona Lisa in Motion", fr: "La Joconde en mouvement", ar: "الموناليزا في حركة" },
-    src: "assets/paintings/Da Vinci/mona-lisa/audio-video/m2Vmg.mp4"
+    src: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/m2vmg.mp4"
   }
 ];
 
@@ -140,72 +140,72 @@ const PAINTER_PRESENTATION_VIDEOS = [
   {
     painter: "da-vinci",
     title: { en: "Leonardo da Vinci Introduces Himself", fr: "Léonard de Vinci se présente", ar: "ليوناردو دافنشي يقدم نفسه" },
-    src: "assets/peintres/videos de présentation/Da_Vinci_speaking_English_202608182004.mp4"
+    src: "assets/artists/leonardo-da-vinci/profile/introduction.mp4"
   },
   {
     painter: "van-gogh",
     title: { en: "Vincent van Gogh Introduces Himself", fr: "Vincent van Gogh se présente", ar: "فنسنت فان غوخ يقدم نفسه" },
-    src: "assets/peintres/videos de présentation/Scène_initiale_-_2026-08-11_202608111329.mp4"
+    src: "assets/artists/vincent-van-gogh/profile/introduction.mp4"
   },
   {
     painter: "vermeer",
     title: { en: "Johannes Vermeer Introduces Himself", fr: "Johannes Vermeer se présente", ar: "يوهانس فيرمير يقدم نفسه" },
-    src: "assets/peintres/videos de présentation/Vermeer_presenting_in_studio_202608182004.mp4"
+    src: "assets/artists/johannes-vermeer/profile/introduction.mp4"
   },
   {
     painter: "monet",
     title: { en: "Claude Monet Introduces Himself", fr: "Claude Monet se présente", ar: "كلود مونيه يقدم نفسه" },
-    src: "assets/peintres/videos de présentation/Monet_in_his_studio_202608182004.mp4"
+    src: "assets/artists/claude-monet/profile/introduction.mp4"
   }
 ];
 
 const PEOPLE_MEDIA_LIBRARY = {
   "da-vinci": {
-    videos: [{ title: { en: "Leonardo Thanks King Francis I", fr: "Léonard remercie le roi François Ier", ar: "ليوناردو يشكر الملك فرانسوا الأول" }, src: "assets/people-behind-painters/Da Vinci/video/Leonardo_da_Vinci_thanking_king_202608151400.mp4" }],
+    videos: [{ title: { en: "Leonardo Thanks King Francis I", fr: "Léonard remercie le roi François Ier", ar: "ليوناردو يشكر الملك فرانسوا الأول" }, src: "assets/artists/leonardo-da-vinci/supporters/video/leonardo-da-vinci-thanking-king-202608151400.mp4" }],
     audio: [],
     music: [
-      { lang: "ar", title: "Davinci-François — منكَ المدادُ", src: "assets/people-behind-painters/Da Vinci/music/Davinci-François-منكَ_المدادُ.mp3" },
-      { lang: "fr", title: "Sous le sceau royal", src: "assets/people-behind-painters/Da Vinci/music/Davinci-François1-Sous_le_sceau_royal.mp3" },
-      { lang: "en", title: "A Study in Grace", src: "assets/people-behind-painters/Da Vinci/music/Davinci-Study_in_Grace.mp3" }
+      { lang: "ar", title: "Davinci-François — منكَ المدادُ", src: "assets/artists/leonardo-da-vinci/supporters/music/davinci-françois-منك-المداد.mp3" },
+      { lang: "fr", title: "Sous le sceau royal", src: "assets/artists/leonardo-da-vinci/supporters/music/davinci-françois1-sous-le-sceau-royal.mp3" },
+      { lang: "en", title: "A Study in Grace", src: "assets/artists/leonardo-da-vinci/supporters/music/davinci-study-in-grace.mp3" }
     ]
   },
   "van-gogh": {
-    videos: [{ title: { en: "Vincent, Theo and Jo — Last Words", fr: "Vincent, Theo et Jo — dernières paroles", ar: "فنسنت وثيو وجو — الكلمات الأخيرة" }, src: "assets/people-behind-painters/Van Gogh/video/Vincent-Theo-Jo_last-words.mp4" }],
+    videos: [{ title: { en: "Vincent, Theo and Jo — Last Words", fr: "Vincent, Theo et Jo — dernières paroles", ar: "فنسنت وثيو وجو — الكلمات الأخيرة" }, src: "assets/artists/vincent-van-gogh/supporters/video/vincent-theo-jo-last-words.mp4" }],
     audio: [
-      { lang: "fr", title: "La femme qui a inventé Van Gogh", src: "assets/people-behind-painters/Van Gogh/audio/short_audio/La_femme_qui_a_inventé_Van_Gogh_short.m4a" },
-      { lang: "en", title: "The Woman Who Made Van Gogh Famous", src: "assets/people-behind-painters/Van Gogh/audio/short_audio/The_woman_who_made_Van_Gogh_famous__short.m4a" },
-      { lang: "ar", title: "جو بونغر — المرأة التي خلدت فان غوخ", src: "assets/people-behind-painters/Van Gogh/audio/short_audio/جو_بونغر_المرأة_التي_خلدت_فان_غوخ_short.m4a" }
+      { lang: "fr", title: "La femme qui a inventé Van Gogh", src: "assets/artists/vincent-van-gogh/supporters/audio/short_audio/la-femme-qui-a-inventé-van-gogh-short.m4a" },
+      { lang: "en", title: "The Woman Who Made Van Gogh Famous", src: "assets/artists/vincent-van-gogh/supporters/audio/short_audio/the-woman-who-made-van-gogh-famous-short.m4a" },
+      { lang: "ar", title: "جو بونغر — المرأة التي خلدت فان غوخ", src: "assets/artists/vincent-van-gogh/supporters/audio/short_audio/جو-بونغر-المرأة-التي-خلدت-فان-غوخ-short.m4a" }
     ],
     music: [
-      { lang: "fr", title: "Jo van Gogh-Bonger — Le champ de tournesols", src: "assets/people-behind-painters/Van Gogh/music/Jo van Gogh-Bonger (Theo's wife)-Le_champ_de_tournesols.mp3" },
-      { lang: "en", title: "Jo van Gogh-Bonger — Letters and Lonely Reds", src: "assets/people-behind-painters/Van Gogh/music/Jo van Gogh-Bonger (Theo's wife)-Letters_and_Lonely_Reds.mp3" },
-      { lang: "fr", title: "Vincent et Theo — Mon frère, mon ancre", src: "assets/people-behind-painters/Van Gogh/music/Vincent_van_Gogh-Theo-Mon_frère_mon_ancre.mp3" }
+      { lang: "fr", title: "Jo van Gogh-Bonger — Le champ de tournesols", src: "assets/artists/vincent-van-gogh/supporters/music/jo-van-gogh-bonger-theo-s-wife-le-champ-de-tournesols.mp3" },
+      { lang: "en", title: "Jo van Gogh-Bonger — Letters and Lonely Reds", src: "assets/artists/vincent-van-gogh/supporters/music/jo-van-gogh-bonger-theo-s-wife-letters-and-lonely-reds.mp3" },
+      { lang: "fr", title: "Vincent et Theo — Mon frère, mon ancre", src: "assets/artists/vincent-van-gogh/supporters/music/vincent-van-gogh-theo-mon-frère-mon-ancre.mp3" }
     ]
   },
   vermeer: {
     videos: [
-      { title: { en: "Vermeer Thanks Pieter and Maria", fr: "Vermeer remercie Pieter et Maria", ar: "فيرمير يشكر بيتر وماريا" }, src: "assets/people-behind-painters/Vermeer/video/Animating_Vermeer_thanking_patrons_Pieter van Ruijven_Maria de Knuijt.mp4" },
-      { title: { en: "Vermeer and His Patrons", fr: "Vermeer et ses mécènes", ar: "فيرمير ورعاته" }, src: "assets/people-behind-painters/Vermeer/video/Vermeer_thanking_Pieter_an_Maria_for_support.mp4" }
+      { title: { en: "Vermeer Thanks Pieter and Maria", fr: "Vermeer remercie Pieter et Maria", ar: "فيرمير يشكر بيتر وماريا" }, src: "assets/artists/johannes-vermeer/supporters/video/animating-vermeer-thanking-patrons-pieter-van-ruijven-maria-de-knuijt.mp4" },
+      { title: { en: "Vermeer and His Patrons", fr: "Vermeer et ses mécènes", ar: "فيرمير ورعاته" }, src: "assets/artists/johannes-vermeer/supporters/video/vermeer-thanking-pieter-an-maria-for-support.mp4" }
     ],
-    audio: [{ lang: "ar", title: "عشرون لوحة — Vermeer et Maria", src: "assets/people-behind-painters/Vermeer/audio/عشرون_لوحةvermeer-maria_.mp3" }],
+    audio: [{ lang: "ar", title: "عشرون لوحة — Vermeer et Maria", src: "assets/artists/johannes-vermeer/supporters/audio/عشرون-لوحةvermeer-maria.mp3" }],
     music: [
-      { lang: "en", title: "Gilded Delft Days", src: "assets/people-behind-painters/Vermeer/music/Vermeer-Pieter_van_Ruijven-Gilded_Delft_Days_en.mp3" },
-      { lang: "fr", title: "Le silence de Delft", src: "assets/people-behind-painters/Vermeer/music/Vermeer-Pieter_van_Ruijven-Le_silence_de_Delft_fr.mp3" },
-      { lang: "ar", title: "لوحاتٌ من ذهب", src: "assets/people-behind-painters/Vermeer/music/Vermeer-Pieter_van_Ruijven-لوحاتٌ_من_ذهب_ar.mp3" },
-      { lang: "en", title: "Impasto Sky", src: "assets/people-behind-painters/Vermeer/music/Vincent_van_Gogh-Theo-Impasto_Sky.mp3" }
+      { lang: "en", title: "Gilded Delft Days", src: "assets/artists/johannes-vermeer/supporters/music/vermeer-pieter-van-ruijven-gilded-delft-days-en.mp3" },
+      { lang: "fr", title: "Le silence de Delft", src: "assets/artists/johannes-vermeer/supporters/music/vermeer-pieter-van-ruijven-le-silence-de-delft-fr.mp3" },
+      { lang: "ar", title: "لوحاتٌ من ذهب", src: "assets/artists/johannes-vermeer/supporters/music/vermeer-pieter-van-ruijven-لوحات-من-ذهب-ar.mp3" },
+      { lang: "en", title: "Impasto Sky", src: "assets/artists/johannes-vermeer/supporters/music/vincent-van-gogh-theo-impasto-sky.mp3" }
     ]
   },
   monet: {
     videos: [],
     audio: [
-      { lang: "fr", title: "Le marchand qui a sauvé l'impressionnisme", src: "assets/people-behind-painters/Monet/audio/Le_marchand_qui_a_sauvé_l_impressionnisme.mp3" },
-      { lang: "en", title: "The Man Who Bankrolled Impressionism", src: "assets/people-behind-painters/Monet/audio/The_man_who_bankrolled_Impressionism.mp3" },
-      { lang: "ar", title: "التاجر الذي أنقذ الانطباعية", src: "assets/people-behind-painters/Monet/audio/التاجر_الذي_أنقذ_الانطباعية_من_الانتحار.mp3" }
+      { lang: "fr", title: "Le marchand qui a sauvé l'impressionnisme", src: "assets/artists/claude-monet/supporters/audio/le-marchand-qui-a-sauvé-l-impressionnisme.mp3" },
+      { lang: "en", title: "The Man Who Bankrolled Impressionism", src: "assets/artists/claude-monet/supporters/audio/the-man-who-bankrolled-impressionism.mp3" },
+      { lang: "ar", title: "التاجر الذي أنقذ الانطباعية", src: "assets/artists/claude-monet/supporters/audio/التاجر-الذي-أنقذ-الانطباعية-من-الانتحار.mp3" }
     ],
     music: [
-      { lang: "fr", title: "Au-delà des lourdes portes", src: "assets/people-behind-painters/Monet/music/Monet-Paul_Durand_Ruel-Au_delà_des_lourdes_portes.mp3" },
-      { lang: "en", title: "Jagged Line", src: "assets/people-behind-painters/Monet/music/Monet-Paul_Durand_Ruel-Jagged_Line.mp3" },
-      { lang: "ar", title: "يا خير سند", src: "assets/people-behind-painters/Monet/music/Monet-Paul_Durand_Ruel-يا_خيرَ_سند.mp3" }
+      { lang: "fr", title: "Au-delà des lourdes portes", src: "assets/artists/claude-monet/supporters/music/monet-paul-durand-ruel-au-delà-des-lourdes-portes.mp3" },
+      { lang: "en", title: "Jagged Line", src: "assets/artists/claude-monet/supporters/music/monet-paul-durand-ruel-jagged-line.mp3" },
+      { lang: "ar", title: "يا خير سند", src: "assets/artists/claude-monet/supporters/music/monet-paul-durand-ruel-يا-خير-سند.mp3" }
     ]
   }
 };
@@ -236,25 +236,25 @@ function getCinemaAudioLibrary() {
 }
 
 const REIMAGINED_ARTWORKS = [
-  { src: "assets/gallery/reimagined/mona-lisa_out.png", title: "Mona Lisa — Beyond the frame", titleAr: "الموناليزا — خارج الإطار" },
-  { src: "assets/gallery/reimagined/Monalisa-Davinci.png", title: "Mona Lisa and Leonardo", titleAr: "الموناليزا وليوناردو" },
-  { src: "assets/gallery/reimagined/Monalisa-louvre-1.png", title: "Mona Lisa at the Louvre", titleAr: "الموناليزا في اللوفر" },
-  { src: "assets/gallery/reimagined/the-bedroom.avif", title: "The Bedroom — Reimagined", titleAr: "غرفة النوم — معاد تخيلها" },
-  { src: "assets/gallery/reimagined/van-gogh_in_bedroom-standing.png", title: "Van Gogh in The Bedroom", titleAr: "فان غوخ في غرفة النوم" },
-  { src: "assets/gallery/reimagined/vermeer_girl-earring-p.png", title: "Girl with a Pearl Earring — Portrait", titleAr: "الفتاة ذات القرط اللؤلؤي — بورتريه" },
-  { src: "assets/gallery/reimagined/vermeer_Girl-with-a-Pearl-Earring_sitting.png", title: "Girl with a Pearl Earring — Seated", titleAr: "الفتاة ذات القرط اللؤلؤي — جالسة" }
+  { src: "assets/shared/reimagined-gallery/mona-lisa_out.png", title: "Mona Lisa — Beyond the frame", titleAr: "الموناليزا — خارج الإطار" },
+  { src: "assets/shared/reimagined-gallery/Monalisa-Davinci.png", title: "Mona Lisa and Leonardo", titleAr: "الموناليزا وليوناردو" },
+  { src: "assets/shared/reimagined-gallery/Monalisa-louvre-1.png", title: "Mona Lisa at the Louvre", titleAr: "الموناليزا في اللوفر" },
+  { src: "assets/shared/reimagined-gallery/the-bedroom.avif", title: "The Bedroom — Reimagined", titleAr: "غرفة النوم — معاد تخيلها" },
+  { src: "assets/shared/reimagined-gallery/van-gogh_in_bedroom-standing.png", title: "Van Gogh in The Bedroom", titleAr: "فان غوخ في غرفة النوم" },
+  { src: "assets/shared/reimagined-gallery/vermeer_girl-earring-p.png", title: "Girl with a Pearl Earring — Portrait", titleAr: "الفتاة ذات القرط اللؤلؤي — بورتريه" },
+  { src: "assets/shared/reimagined-gallery/vermeer_Girl-with-a-Pearl-Earring_sitting.png", title: "Girl with a Pearl Earring — Seated", titleAr: "الفتاة ذات القرط اللؤلؤي — جالسة" }
 ];
 
 const PEOPLE_BEHIND_PAINTERS = [
-  { painter: "da-vinci", src: "assets/people-behind-painters/Da Vinci/images/davinci-françois1er-2.png", title: { en: "Leonardo and Francis I", fr: "Léonard et François Ier", ar: "ليوناردو وفرنسوا الأول" } },
-  { painter: "da-vinci", src: "assets/people-behind-painters/Da Vinci/images/davinci-françois1er.png", title: { en: "Francis I — Leonardo's Royal Patron", fr: "François Ier — mécène royal de Léonard", ar: "فرنسوا الأول — راعي ليوناردو الملكي" } },
-  { painter: "van-gogh", src: "assets/people-behind-painters/Van Gogh/images/vangogh-Jo van Gogh-Bonger .png", title: { en: "Jo van Gogh-Bonger", fr: "Jo van Gogh-Bonger", ar: "جو فان غوخ-بونغر" } },
-  { painter: "van-gogh", src: "assets/people-behind-painters/Van Gogh/images/vincent_van_gogh-Jo_van_Gogh_Bonger .png", title: { en: "Vincent and Jo — A Legacy Preserved", fr: "Vincent et Jo — un héritage préservé", ar: "فنسنت وجو — إرث محفوظ" } },
-  { painter: "vermeer", src: "assets/people-behind-painters/Vermeer/images/Vermeer_Pieter_Maria.png", title: { en: "Vermeer with Pieter van Ruijven and Maria de Knuijt", fr: "Vermeer avec Pieter van Ruijven et Maria de Knuijt", ar: "فيرمير مع بيتر فان راوفن وماريا دي كنويت" } },
-  { painter: "vermeer", src: "assets/people-behind-painters/Vermeer/images/Vermeer_Pieter-van-Ruijven_1.png", title: { en: "Pieter van Ruijven and Maria de Knuijt", fr: "Pieter van Ruijven et Maria de Knuijt", ar: "بيتر فان راوفن وماريا دي كنويت" } },
-  { painter: "vermeer", src: "assets/people-behind-painters/Vermeer/images/Vermeer_Pieter-van-Ruijven_2.png", title: { en: "The Patrons Behind Vermeer's Delft Legacy", fr: "Les mécènes à l’origine de l’héritage delftois de Vermeer", ar: "الرعاة وراء إرث فيرمير في دلفت" } },
-  { painter: "monet", src: "assets/people-behind-painters/Monet/images/Monet_Paul-Durand-Ruel-2.jpg", title: { en: "Monet and Paul Durand-Ruel", fr: "Monet et Paul Durand-Ruel", ar: "مونيه وبول دوران-رويل" } },
-  { painter: "monet", src: "assets/people-behind-painters/Monet/images/Monet_Paul-Durand-Ruel.png", title: { en: "Paul Durand-Ruel — Champion of Impressionism", fr: "Paul Durand-Ruel — défenseur de l'impressionnisme", ar: "بول دوران-رويل — نصير الانطباعية" } }
+  { painter: "da-vinci", src: "assets/artists/leonardo-da-vinci/supporters/images/davinci-françois1er-2.png", title: { en: "Leonardo and Francis I", fr: "Léonard et François Ier", ar: "ليوناردو وفرنسوا الأول" } },
+  { painter: "da-vinci", src: "assets/artists/leonardo-da-vinci/supporters/images/davinci-françois1er.png", title: { en: "Francis I — Leonardo's Royal Patron", fr: "François Ier — mécène royal de Léonard", ar: "فرنسوا الأول — راعي ليوناردو الملكي" } },
+  { painter: "van-gogh", src: "assets/artists/vincent-van-gogh/supporters/images/vangogh-jo-van-gogh-bonger.png", title: { en: "Jo van Gogh-Bonger", fr: "Jo van Gogh-Bonger", ar: "جو فان غوخ-بونغر" } },
+  { painter: "van-gogh", src: "assets/artists/vincent-van-gogh/supporters/images/vincent-van-gogh-jo-van-gogh-bonger.png", title: { en: "Vincent and Jo — A Legacy Preserved", fr: "Vincent et Jo — un héritage préservé", ar: "فنسنت وجو — إرث محفوظ" } },
+  { painter: "vermeer", src: "assets/artists/johannes-vermeer/supporters/images/vermeer-pieter-maria.png", title: { en: "Vermeer with Pieter van Ruijven and Maria de Knuijt", fr: "Vermeer avec Pieter van Ruijven et Maria de Knuijt", ar: "فيرمير مع بيتر فان راوفن وماريا دي كنويت" } },
+  { painter: "vermeer", src: "assets/artists/johannes-vermeer/supporters/images/vermeer-pieter-van-ruijven-1.png", title: { en: "Pieter van Ruijven and Maria de Knuijt", fr: "Pieter van Ruijven et Maria de Knuijt", ar: "بيتر فان راوفن وماريا دي كنويت" } },
+  { painter: "vermeer", src: "assets/artists/johannes-vermeer/supporters/images/vermeer-pieter-van-ruijven-2.png", title: { en: "The Patrons Behind Vermeer's Delft Legacy", fr: "Les mécènes à l’origine de l’héritage delftois de Vermeer", ar: "الرعاة وراء إرث فيرمير في دلفت" } },
+  { painter: "monet", src: "assets/artists/claude-monet/supporters/images/monet-paul-durand-ruel-2.jpg", title: { en: "Monet and Paul Durand-Ruel", fr: "Monet et Paul Durand-Ruel", ar: "مونيه وبول دوران-رويل" } },
+  { painter: "monet", src: "assets/artists/claude-monet/supporters/images/monet-paul-durand-ruel.png", title: { en: "Paul Durand-Ruel — Champion of Impressionism", fr: "Paul Durand-Ruel — défenseur de l'impressionnisme", ar: "بول دوران-رويل — نصير الانطباعية" } }
 ];
 
 const PEOPLE_ROOM_CONFIG = {
@@ -263,9 +263,9 @@ const PEOPLE_ROOM_CONFIG = {
     subtitle: { en: "Royal patronage and a Renaissance legacy", fr: "Mécénat royal et héritage de la Renaissance", ar: "الرعاية الملكية وإرث عصر النهضة" },
     wall: 0x4b2719, wood: 0x24150d, floor: 0x4a3321, light: 0xffd7a0,
     event: {
-      en: "assets/people-behind-painters/Da Vinci/images/events illustration/Leonardo and François I _ Renaissance Journey_en.png",
-      fr: "assets/people-behind-painters/Da Vinci/images/events illustration/Leonardo and François I _ Renaissance Journey_fr.png",
-      ar: "assets/people-behind-painters/Da Vinci/images/events illustration/Leonardo and François I _ Renaissance Journey_ar.png"
+      en: "assets/artists/leonardo-da-vinci/supporters/timelines/leonardo-and-françois-i-renaissance-journey-en.png",
+      fr: "assets/artists/leonardo-da-vinci/supporters/timelines/leonardo-and-françois-i-renaissance-journey-fr.png",
+      ar: "assets/artists/leonardo-da-vinci/supporters/timelines/leonardo-and-françois-i-renaissance-journey-ar.png"
     }
   },
   "van-gogh": {
@@ -273,9 +273,9 @@ const PEOPLE_ROOM_CONFIG = {
     subtitle: { en: "Devotion, letters, and the making of a legacy", fr: "Dévouement, lettres et construction d'un héritage", ar: "الإخلاص والرسائل وبناء الإرث" },
     wall: 0x183b56, wood: 0x472717, floor: 0x6a4928, light: 0xffc85f,
     event: {
-      en: "assets/people-behind-painters/Van Gogh/images/events illustration/Van Gogh Family Legacy Timeline_en.png",
-      fr: "assets/people-behind-painters/Van Gogh/images/events illustration/Van Gogh Family Legacy Timeline_fr.png",
-      ar: "assets/people-behind-painters/Van Gogh/images/events illustration/Van Gogh Family Legacy Timeline_ar.png"
+      en: "assets/artists/vincent-van-gogh/supporters/timelines/van-gogh-family-legacy-timeline-en.png",
+      fr: "assets/artists/vincent-van-gogh/supporters/timelines/van-gogh-family-legacy-timeline-fr.png",
+      ar: "assets/artists/vincent-van-gogh/supporters/timelines/van-gogh-family-legacy-timeline-ar.png"
     }
   },
   vermeer: {
@@ -283,9 +283,9 @@ const PEOPLE_ROOM_CONFIG = {
     subtitle: { en: "Quiet patronage in Delft", fr: "Un mécénat discret à Delft", ar: "رعاية هادئة في دلفت" },
     wall: 0x173f42, wood: 0x291a12, floor: 0x493a2c, light: 0xffe0a8,
     event: {
-      en: "assets/people-behind-painters/Vermeer/images/events illustration/Vermeer-s Patronage Story Timeline_en.png",
-      fr: "assets/people-behind-painters/Vermeer/images/events illustration/Vermeer-s Patronage Story Timeline_fr.png",
-      ar: "assets/people-behind-painters/Vermeer/images/events illustration/Vermeer-s Patronage Story Timeline_ar.png"
+      en: "assets/artists/johannes-vermeer/supporters/timelines/vermeer-s-patronage-story-timeline-en.png",
+      fr: "assets/artists/johannes-vermeer/supporters/timelines/vermeer-s-patronage-story-timeline-fr.png",
+      ar: "assets/artists/johannes-vermeer/supporters/timelines/vermeer-s-patronage-story-timeline-ar.png"
     }
   },
   monet: {
@@ -293,9 +293,9 @@ const PEOPLE_ROOM_CONFIG = {
     subtitle: { en: "A dealer's faith in Impressionism", fr: "La confiance d'un marchand dans l'impressionnisme", ar: "إيمان تاجر بالفن الانطباعي" },
     wall: 0x425a54, wood: 0x293527, floor: 0x65583e, light: 0xddebb5,
     event: {
-      en: "assets/people-behind-painters/Monet/images/events illustration/Monet and Durand-Ruel An Impressionist Partnership_en.png",
-      fr: "assets/people-behind-painters/Monet/images/events illustration/Monet and Durand-Ruel An Impressionist Partnership_fr.png",
-      ar: "assets/people-behind-painters/Monet/images/events illustration/Monet and Durand-Ruel An Impressionist Partnership_ar.png"
+      en: "assets/artists/claude-monet/supporters/timelines/monet-and-durand-ruel-an-impressionist-partnership-en.png",
+      fr: "assets/artists/claude-monet/supporters/timelines/monet-and-durand-ruel-an-impressionist-partnership-fr.png",
+      ar: "assets/artists/claude-monet/supporters/timelines/monet-and-durand-ruel-an-impressionist-partnership-ar.png"
     }
   }
 };
@@ -310,54 +310,54 @@ function getReimaginedPainter(item) {
 const ARTIST_ROOMS = {
   "da-vinci": {
     name: "Leonardo da Vinci",
-    portrait: "assets/peintres/photos des peintres/da-vinci-f.png",
+    portrait: "assets/artists/leonardo-da-vinci/profile/portrait.png",
     accent: 0x9d7040,
     works: [
-      ["Mona Lisa", "assets/paintings/Da Vinci/Tableaux/Mana Lisa_DaVici.webp"],
-      ["The Last Supper", "assets/paintings/Da Vinci/Tableaux/The Last Supper_DaVinci.webp"],
-      ["Lady with an Ermine", "assets/paintings/Da Vinci/Tableaux/The Lady with an Ermine_DaVinci.webp"],
-      ["The Annunciation", "assets/paintings/Da Vinci/Tableaux/The Annunciation_DaVinci.webp"],
-      ["Ginevra de' Benci", "assets/paintings/Da Vinci/Tableaux/Ginevra de' Benci.webp"],
-      ["La Belle Ferronnière", "assets/paintings/Da Vinci/Tableaux/La Belle Ferronnière_DaVinci.webp"]
+      ["Mona Lisa", "assets/artists/leonardo-da-vinci/collection/mana-lisa-davici.webp"],
+      ["The Last Supper", "assets/artists/leonardo-da-vinci/collection/the-last-supper-davinci.webp"],
+      ["Lady with an Ermine", "assets/artists/leonardo-da-vinci/collection/the-lady-with-an-ermine-davinci.webp"],
+      ["The Annunciation", "assets/artists/leonardo-da-vinci/collection/the-annunciation-davinci.webp"],
+      ["Ginevra de' Benci", "assets/artists/leonardo-da-vinci/collection/ginevra-de-benci.webp"],
+      ["La Belle Ferronnière", "assets/artists/leonardo-da-vinci/collection/la-belle-ferronnière-davinci.webp"]
     ]
   },
   "van-gogh": {
     name: "Vincent van Gogh",
-    portrait: "assets/peintres/photos des peintres/van-goh-f.png",
+    portrait: "assets/artists/vincent-van-gogh/profile/portrait.png",
     accent: 0xd2a62e,
     works: [
-      ["The Starry Night", "assets/paintings/van-gogh/tableaux/The Starry Night_VanGogh.webp"],
-      ["Sunflowers", "assets/paintings/van-gogh/tableaux/Tournesols_VanGogh.webp"],
-      ["Self-Portrait", "assets/paintings/van-gogh/tableaux/Autoportrait_VanGogh.webp"],
-      ["The Bedroom", "assets/paintings/van-gogh/tableaux/The Bedroom_VanGogh.webp"],
-      ["Café Terrace at Night", "assets/paintings/van-gogh/tableaux/Café Terrasse at Night_VanGogh.webp"],
-      ["The Night Café", "assets/paintings/van-gogh/tableaux/The Night Café_VanGogh.webp"]
+      ["The Starry Night", "assets/artists/vincent-van-gogh/collection/the-starry-night-vangogh.webp"],
+      ["Sunflowers", "assets/artists/vincent-van-gogh/collection/tournesols-vangogh.webp"],
+      ["Self-Portrait", "assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp"],
+      ["The Bedroom", "assets/artists/vincent-van-gogh/collection/the-bedroom-vangogh.webp"],
+      ["Café Terrace at Night", "assets/artists/vincent-van-gogh/collection/café-terrasse-at-night-vangogh.webp"],
+      ["The Night Café", "assets/artists/vincent-van-gogh/collection/the-night-café-vangogh.webp"]
     ]
   },
   vermeer: {
     name: "Johannes Vermeer",
-    portrait: "assets/peintres/photos des peintres/vermeer-f.png",
+    portrait: "assets/artists/johannes-vermeer/profile/portrait.png",
     accent: 0x315d78,
     works: [
-      ["Girl with a Pearl Earring", "assets/paintings/Vermeer/Tableaux/Girl with a Pearl Earring_Vermeer.webp"],
-      ["The Milkmaid", "assets/paintings/Vermeer/Tableaux/The Milkmaid_Vermeer.webp"],
-      ["View of Delft", "assets/paintings/Vermeer/Tableaux/View of Delft_Vermeer.webp"],
-      ["The Art of Painting", "assets/paintings/Vermeer/Tableaux/The Art of Painting_Vermeer.webp"],
-      ["The Astronomer", "assets/paintings/Vermeer/Tableaux/The Astronomer_Vermeer.webp"],
-      ["Woman Holding a Balance", "assets/paintings/Vermeer/Tableaux/Woman Holding a Balance_Vermeer.webp"]
+      ["Girl with a Pearl Earring", "assets/artists/johannes-vermeer/collection/girl-with-a-pearl-earring-vermeer.webp"],
+      ["The Milkmaid", "assets/artists/johannes-vermeer/collection/the-milkmaid-vermeer.webp"],
+      ["View of Delft", "assets/artists/johannes-vermeer/collection/view-of-delft-vermeer.webp"],
+      ["The Art of Painting", "assets/artists/johannes-vermeer/collection/the-art-of-painting-vermeer.webp"],
+      ["The Astronomer", "assets/artists/johannes-vermeer/collection/the-astronomer-vermeer.webp"],
+      ["Woman Holding a Balance", "assets/artists/johannes-vermeer/collection/woman-holding-a-balance-vermeer.webp"]
     ]
   },
   monet: {
     name: "Claude Monet",
-    portrait: "assets/peintres/photos des peintres/monet-f.png",
+    portrait: "assets/artists/claude-monet/profile/portrait.png",
     accent: 0x668d74,
     works: [
-      ["Impression, Sunrise", "assets/paintings/monet/Tableaux/Impression-Sunrise_Monet.webp"],
-      ["Water Lilies", "assets/paintings/monet/Tableaux/Water Lilies_Monet.webp"],
-      ["The Japanese Bridge", "assets/paintings/monet/Tableaux/The Japanese Bridge_Monet.webp"],
-      ["Poppies", "assets/paintings/monet/Tableaux/Poppies_Monet.webp"],
-      ["Woman with a Parasol", "assets/paintings/monet/Tableaux/Woman with a parasol_Monet.webp"],
-      ["Le Pont d'Argenteuil", "assets/paintings/monet/Tableaux/Le Pont d'Argenteuil_Monet.webp"]
+      ["Impression, Sunrise", "assets/artists/claude-monet/collection/impression-sunrise-monet.webp"],
+      ["Water Lilies", "assets/artists/claude-monet/collection/water-lilies-monet.webp"],
+      ["The Japanese Bridge", "assets/artists/claude-monet/collection/the-japanese-bridge-monet.webp"],
+      ["Poppies", "assets/artists/claude-monet/collection/poppies-monet.webp"],
+      ["Woman with a Parasol", "assets/artists/claude-monet/collection/woman-with-a-parasol-claude-monet.png"],
+      ["Le Pont d'Argenteuil", "assets/artists/claude-monet/collection/le-pont-d-argenteuil-monet.webp"]
     ]
   }
 };
@@ -2003,14 +2003,14 @@ function addLouvreGalleryFurniture() {
     }));
   }
   void addFurnitureModel({
-    src: "assets/paintings/fourniture/gallery-furniture/table-vitrine-w.glb",
+    src: "assets/environments/gallery/models/table-vitrine-w.glb",
     name: "louvre-central-vitrine",
     position: [0, 0, 2.65],
     rotationY: 0,
     maxSize: 1.55
   });
   void addFurnitureModel({
-    src: "assets/paintings/fourniture/gallery-furniture/brochure_stand.glb",
+    src: "assets/environments/gallery/models/brochure_stand.glb",
     name: "louvre-information-stand",
     position: [5.45, 0, -1.5],
     rotationY: -Math.PI / 2,
@@ -3616,7 +3616,7 @@ function buildPainterPresentationVideos() {
 }
 
 async function addReimaginedEntranceMonaLisa() {
-  const gltf = await modelLoader.loadAsync("assets/paintings/Da Vinci/mona-lisa/mona-lisa_standing_c.glb");
+  const gltf = await modelLoader.loadAsync("assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa-standing-c.glb");
   const display = new THREE.Group();
   display.name = "reimagined-portal-mona-lisa";
   display.position.set(5.05, 0, 34);
@@ -4068,7 +4068,7 @@ async function addCinemaSofaModel(cinema) {
 async function addCinemaAudienceModels(cinema) {
   const audience = [
     {
-      src: "assets/paintings/Da Vinci/mona-lisa/davinci-monalisa_c.glb",
+      src: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/davinci-monalisa-c.glb",
       name: "cinema-sofa-left-davinci-mona-lisa",
       x: -3.15,
       y: 0,
@@ -4077,7 +4077,7 @@ async function addCinemaAudienceModels(cinema) {
       rotationY: Math.atan2(3.15, 6.55)
     },
     {
-      src: "assets/paintings/vermeer_Girl-with-a-Pearl-Earring/vermeer_Girl-with-a-Pearl-Earring_sitting_c.glb",
+      src: "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring-sitting-c.glb",
       name: "cinema-sofa-left-vermeer",
       x: -2.05,
       y: 0,
@@ -4086,7 +4086,7 @@ async function addCinemaAudienceModels(cinema) {
       rotationY: Math.atan2(2.05, 6.55)
     },
     {
-      src: "assets/peintres/3d models/van-gogh_standing_w_c.glb",
+      src: "assets/artists/vincent-van-gogh/profile/models/standing.glb",
       name: "cinema-sofa-right-van-gogh",
       x: 2.65,
       y: 0,
