@@ -71,16 +71,15 @@ const MODEL_ARTIST_EXHIBITS = {
 const STANDING_VAN_GOGH_MODEL = "assets/artists/vincent-van-gogh/artworks/self-portrait/models/vangogh-istanding.glb";
 const PAINTINGS_MODELS_GATEWAY = null;
 const LOUVRE_FACADE_MODEL = "assets/environments/gallery/models/Louvre_facade_c.glb";
-const LOUVRE_REAR_MODEL = "assets/environments/gallery/models/Louvre_arrière_c.glb";
 const CINEMA_SOFA_MODEL = "assets/environments/gallery/models/sofa_c.glb";
 const ORNATE_PILL_MODEL = "assets/environments/gallery/models/Ornate_Turquoise_Pill_c.glb";
 const ACCENT_SOFA_MODEL = "assets/environments/gallery/models/sofa1.glb";
 const CINEMA_GATEWAY_MODEL = "assets/environments/gallery/models/Gateway_Egypt_c.glb";
+const LOUVRE_SIDE_OPENING_WIDTH = 9.04;
 const LOUVRE_PHOTO_EXHIBITS = [
-  { src: "assets/environments/gallery/images/louvre/Louvre-gauche.png", title: { en: "The Louvre — Left Wing", fr: "Le Louvre — aile gauche", ar: "اللوفر — الجناح الأيسر" }, wall: "left", z: -3.35 },
-  { src: "assets/environments/gallery/images/louvre/Louvre-arrière.png", title: { en: "The Louvre — Rear View", fr: "Le Louvre — vue arrière", ar: "اللوفر — المنظر الخلفي" }, wall: "left", z: 3.35 },
-  { src: "assets/environments/gallery/images/louvre/Louvre-droite.png", title: { en: "The Louvre — Right Wing", fr: "Le Louvre — aile droite", ar: "اللوفر — الجناح الأيمن" }, wall: "right", z: -3.35 },
-  { src: "assets/environments/gallery/images/louvre/Louvre-frontale.png", title: { en: "The Louvre — Front View", fr: "Le Louvre — vue frontale", ar: "اللوفر — الواجهة الأمامية" }, wall: "right", z: 3.35 }
+  { src: "assets/environments/gallery/images/louvre/Louvre-gauche.png", position: [-7.16, 2.45, 0], rotationY: Math.PI / 2, maxWidth: 20, maxHeight: 4.9, portal: true },
+  { src: "assets/environments/gallery/images/louvre/Louvre-droite.png", position: [7.16, 2.45, 0], rotationY: -Math.PI / 2, maxWidth: 20, maxHeight: 4.9, portal: true },
+  { src: "assets/environments/gallery/images/louvre/Louvre-arrière.png", position: [0, 2.15, 9.66], rotationY: Math.PI, maxWidth: 12.6, maxHeight: 3.85 }
 ];
 const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae";
 const LEONARDO_STUDIO_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/862ab5f6-8608-469c-a840-8cb10f3859ae";
@@ -1584,7 +1583,7 @@ function buildGroupGalleryRoom() {
 
 function buildLouvreMuseumRoom() {
   document.getElementById("gallery-title").textContent = lang === "fr" ? "Musée du Louvre — galerie virtuelle" : lang === "ar" ? "متحف اللوفر — معرض افتراضي" : "Louvre Museum — Virtual Gallery";
-  document.getElementById("gallery-count").textContent = lang === "fr" ? "Deux photos · une façade 3D" : lang === "ar" ? "صورتان · واجهة ثلاثية الأبعاد" : "Two photographs · one 3D facade";
+  document.getElementById("gallery-count").textContent = lang === "fr" ? "Trois photos · une façade 3D" : lang === "ar" ? "ثلاث صور · واجهة ثلاثية الأبعاد" : "Three photographs · one 3D facade";
   scene.background = new THREE.Color(0x6f412e);
   scene.fog = new THREE.Fog(0x6f412e, 24, 46);
   visitor.position.set(0, 0, 7.1);
@@ -1608,8 +1607,20 @@ function buildLouvreMuseumRoom() {
   }
 
   const wallMaterial = new THREE.MeshStandardMaterial({ color: 0x82462f, roughness: 0.9, side: THREE.DoubleSide });
-  [[-7, 2.45, 0, Math.PI / 2], [7, 2.45, 0, -Math.PI / 2], [0, 2.45, -10, 0], [0, 2.45, 10, Math.PI]].forEach(([x, y, z, rotationY]) => {
-    const wall = new THREE.Mesh(new THREE.PlaneGeometry(z === 0 ? 20 : 14, 4.9), wallMaterial);
+  // Build each side wall in two sections, leaving a genuine floor-to-ceiling
+  // opening for the photographic continuation of the room.
+  const sideWallSectionWidth = (20 - LOUVRE_SIDE_OPENING_WIDTH) / 2;
+  const sideWallSectionOffset = (LOUVRE_SIDE_OPENING_WIDTH + sideWallSectionWidth) / 2;
+  [-7, 7].forEach((x) => {
+    [-sideWallSectionOffset, sideWallSectionOffset].forEach((z) => {
+      const wall = new THREE.Mesh(new THREE.PlaneGeometry(sideWallSectionWidth, 4.9), wallMaterial);
+      wall.position.set(x, 2.45, z);
+      wall.rotation.y = x < 0 ? Math.PI / 2 : -Math.PI / 2;
+      scene.add(wall);
+    });
+  });
+  [[0, 2.45, -10, 0], [0, 2.45, 10, Math.PI]].forEach(([x, y, z, rotationY]) => {
+    const wall = new THREE.Mesh(new THREE.PlaneGeometry(14, 4.9), wallMaterial);
     wall.position.set(x, y, z);
     wall.rotation.y = rotationY;
     scene.add(wall);
@@ -1620,10 +1631,22 @@ function buildLouvreMuseumRoom() {
   [-7, 7].forEach((x) => {
     const side = x < 0 ? -1 : 1;
     [0.23, 4.42].forEach((y) => {
-      const cornice = new THREE.Mesh(new THREE.BoxGeometry(0.16, y < 1 ? 0.32 : 0.28, 20), y < 1 ? darkMarble : gold);
-      cornice.position.set(x - side * 0.08, y, 0);
-      scene.add(cornice);
+      [-sideWallSectionOffset, sideWallSectionOffset].forEach((z) => {
+        const cornice = new THREE.Mesh(new THREE.BoxGeometry(0.16, y < 1 ? 0.32 : 0.28, sideWallSectionWidth), y < 1 ? darkMarble : gold);
+        cornice.position.set(x - side * 0.08, y, z);
+        scene.add(cornice);
+      });
     });
+    // Dark, shallow jambs make the photograph read as space beyond the wall
+    // instead of a picture placed on its surface.
+    [-LOUVRE_SIDE_OPENING_WIDTH / 2, LOUVRE_SIDE_OPENING_WIDTH / 2].forEach((z) => {
+      const jamb = new THREE.Mesh(new THREE.BoxGeometry(0.34, 4.9, 0.13), darkMarble);
+      jamb.position.set(x + side * 0.08, 2.45, z);
+      scene.add(jamb);
+    });
+    const threshold = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.08, LOUVRE_SIDE_OPENING_WIDTH), darkMarble);
+    threshold.position.set(x + side * 0.08, 0.04, 0);
+    scene.add(threshold);
   });
 
   // A luminous glazed vault with gilded ribs, echoing the Grande Galerie.
@@ -1681,23 +1704,21 @@ async function buildLouvreMuseumExhibits() {
     texture.encoding = THREE.sRGBEncoding;
     texture.minFilter = THREE.LinearFilter;
     const aspect = texture.image.width / texture.image.height;
-    const height = Math.min(2.2, 3.5 / aspect);
+    const height = Math.min(item.maxHeight, item.maxWidth / aspect);
     const width = height * aspect;
     const display = new THREE.Group();
-    const left = item.wall === "left";
-    display.position.set(left ? -6.82 : 6.82, 2.35, item.z);
-    display.rotation.y = left ? Math.PI / 2 : -Math.PI / 2;
-    const image = new THREE.Mesh(new THREE.PlaneGeometry(width, height), new THREE.MeshBasicMaterial({ map: texture }));
-    image.position.z = 0.056;
+    display.position.set(...item.position);
+    display.rotation.y = item.rotationY;
+    const imageMaterial = new THREE.MeshBasicMaterial({
+      map: texture,
+      polygonOffset: false
+    });
+    const image = new THREE.Mesh(new THREE.PlaneGeometry(width, height), imageMaterial);
+    image.position.z = item.portal ? 0 : 0.056;
     display.add(image);
-    const label = makeLabel(item.title[lang] || item.title.en);
-    label.position.set(0, -height / 2 - 0.3, 0.07);
-    label.scale.set(Math.min(2.5, width + 0.4), 0.58, 1);
-    display.add(label);
     scene.add(display);
   }
   await ensureLouvreFacade();
-  await ensureLouvreRearModel();
 }
 
 function buildPeopleBehindPaintersRoom() {
@@ -2271,16 +2292,6 @@ async function ensureLouvreFacade() {
     z: -7.95,
     faceIntoRoom: Math.PI,
     warning: "Louvre facade unavailable."
-  });
-}
-
-async function ensureLouvreRearModel() {
-  return ensureLouvreWallModel({
-    src: LOUVRE_REAR_MODEL,
-    name: "louvre-rear-vr-exhibit",
-    z: 7.95,
-    faceIntoRoom: 0,
-    warning: "Louvre rear model unavailable."
   });
 }
 
