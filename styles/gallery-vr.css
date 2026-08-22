@@ -657,6 +657,15 @@ body :is(
   text-transform: uppercase;
 }
 
+/* The cinema has a deliberately emphatic, fully capitalized screen menu. */
+body[data-experience="cinema"] .gallery-toolbar,
+body[data-experience="cinema"] .gallery-guide,
+body[data-experience="cinema"] .virtual-guide,
+body[data-experience="cinema"] .gallery-video-select,
+body[data-experience="cinema"] .gallery-video-select option {
+  text-transform: uppercase;
+}
+
 @media (max-width: 720px) {
   .gallery-toolbar {
     grid-template-columns: auto 1fr;
