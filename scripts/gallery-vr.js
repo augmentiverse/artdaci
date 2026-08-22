@@ -381,6 +381,7 @@ const previewRoom = params.get("room");
 const artistRoomId = params.get("artist");
 const artistRoom = ARTIST_ROOMS[artistRoomId] || null;
 const isModelMuseum = previewRoom === "models";
+const modelArtistId = ARTIST_ROOMS[artistRoomId] ? artistRoomId : "da-vinci";
 // The standalone cinema has no `room` query parameter, but it must never be
 // treated as the connected museum. Otherwise entering WebXR moves the visitor
 // to the gallery entrance while the cinema remains tens of metres away.
@@ -394,7 +395,7 @@ const activeRoom = ["paintings", "models", "bedroom", "reimagined", "groups", "l
   ? previewRoom
   : "paintings";
 document.body.dataset.galleryRoom = isCinemaOnly ? "cinema" : activeRoom;
-document.body.dataset.galleryArtist = artistRoomId || (activeRoom === "paintings" ? "da-vinci" : "all");
+document.body.dataset.galleryArtist = isModelMuseum ? modelArtistId : artistRoomId || (activeRoom === "paintings" ? "da-vinci" : "all");
 const isModelsRoom = activeRoom === "models";
 const previewPositionX = isCinemaOnly || previewRoom === "cinema" ? CINEMA_ROOM_X : 0;
 const previewPositionZ = isCinemaOnly || previewRoom === "cinema"
@@ -404,7 +405,7 @@ const previewPositionZ = isCinemaOnly || previewRoom === "cinema"
   : previewRoom === "bedroom"
     ? 17.4
     : previewRoom === "models"
-      ? connectedStartIndex * 16 - 5.2
+      ? -5.2
       : 4;
 const previewRotationY = isCinemaOnly || ["models", "bedroom", "reimagined", "groups", "cinema"].includes(previewRoom) ? Math.PI : 0;
 const PAINTING_INFO = {
@@ -800,7 +801,7 @@ async function init() {
     buildModelMuseumArchitecture();
     renderer.setAnimationLoop(render);
     if (allowDecorative3DModels) {
-      void loadModelMuseumRoom(Math.max(0, ARTIST_ROOM_ORDER.indexOf(artistRoomId)));
+      void loadModelMuseumRoom(Math.max(0, ARTIST_ROOM_ORDER.indexOf(modelArtistId)));
     }
     status.textContent = text.ready;
     return;
@@ -1209,7 +1210,9 @@ function addReimaginedRoomLinks() {
 }
 
 function addLocalMovementHotspots(points) {
-  points.forEach(({ position, label, yaw = 0 }) => addMovementHotspot(position, position, label, yaw));
+  points.forEach(({ position, label, yaw = 0, captionRotation = 0 }) => {
+    addMovementHotspot(position, position, label, yaw, captionRotation);
+  });
 }
 
 function buildRoom() {
@@ -1494,23 +1497,37 @@ function buildConnectedMuseumArchitecture() {
 }
 
 function buildModelMuseumArchitecture() {
-  const startIndex = Math.max(0, ARTIST_ROOM_ORDER.indexOf(artistRoomId));
-  visitor.position.set(0, 0, startIndex * 16 - 5.2);
+  visitor.position.set(0, 0, -5.2);
   visitor.rotation.y = Math.PI;
   scene.background = new THREE.Color(0x11171d);
-  scene.fog = new THREE.Fog(0x11171d, 24, 76);
+  scene.fog = new THREE.Fog(0x11171d, 18, 34);
   scene.add(new THREE.HemisphereLight(0xfff1dc, 0x202832, isQuestBrowser ? 1.25 : 1.5));
-  document.getElementById("gallery-title").textContent = lang === "fr" ? "L’aile des modèles 3D" : "The Four Masters — 3D Model Wing";
-  document.getElementById("gallery-count").textContent = lang === "fr" ? "Quatre salles de modèles 3D" : "Four dedicated 3D model rooms";
+  const room = ARTIST_ROOMS[modelArtistId];
+  document.getElementById("gallery-title").textContent = lang === "fr"
+    ? `${room.name} — salle des modèles 3D`
+    : `${room.name} — Independent 3D Model Room`;
+  document.getElementById("gallery-count").textContent = lang === "fr"
+    ? "Une salle fermée · chargement indépendant"
+    : "One closed room · independent loading";
 
-  ARTIST_ROOM_ORDER.forEach((id, index) => {
-    const centerZ = index * 16;
-    addConnectedRoomShell(id, ARTIST_ROOMS[id], centerZ, index);
-    addModelRoomNavigation(id, centerZ);
-    addVirtualGuideStation([-6.88, 1.18, centerZ + 6.35], Math.PI / 2, `${ARTIST_ROOMS[id].name}'s 3D model room`);
+  addConnectedRoomShell(modelArtistId, room, 0, 0);
+  addStandaloneModelRoomEndWalls();
+  addModelRoomNavigation(modelArtistId, 0);
+  addVirtualGuideStation([-6.88, 1.18, 6.35], Math.PI / 2, `${room.name}'s 3D model room`);
+  addLocalMovementHotspots([
+    { position: [0, -5.2], label: lang === "fr" ? "ENTRÉE" : lang === "ar" ? "المدخل" : "ENTRANCE", yaw: Math.PI, captionRotation: Math.PI },
+    { position: [0, 0], label: lang === "fr" ? "MODÈLES 3D" : lang === "ar" ? "نماذج ثلاثية الأبعاد" : "3D MODELS", yaw: Math.PI, captionRotation: Math.PI }
+  ]);
+}
+
+function addStandaloneModelRoomEndWalls() {
+  const material = new THREE.MeshStandardMaterial({ color: 0x18222c, roughness: 0.95, side: THREE.DoubleSide });
+  [-8, 8].forEach((z, index) => {
+    const wall = new THREE.Mesh(new THREE.PlaneGeometry(14, 4.4), material);
+    wall.position.set(0, 2.2, z);
+    wall.rotation.y = index ? Math.PI : 0;
+    scene.add(wall);
   });
-  addConnectedMuseumPartitions();
-  addMovementNetwork([0, 16, 32, 48], ARTIST_ROOM_ORDER.map((id) => ARTIST_ROOMS[id].name));
 }
 
 function buildGroupGalleryRoom() {
@@ -1545,6 +1562,15 @@ function buildGroupGalleryRoom() {
   createWallSign(text.paintingsRoom, [-4.4, 3.55, 7.9], Math.PI, { width: 3, height: 0.42, exitUrl: `gallery-vr.html?lang=${lang}&room=paintings`, compact: true });
   createWallSign(text.modelsRoom, [0, 3.55, 7.9], Math.PI, { width: 3, height: 0.42, exitUrl: `gallery-vr.html?lang=${lang}&room=models`, compact: true });
   createWallSign(text.reimaginedRoom, [4.4, 3.55, 7.9], Math.PI, { width: 3, height: 0.42, exitUrl: `gallery-vr.html?lang=${lang}&room=reimagined`, compact: true });
+  createWallSign(lang === "fr" ? "GALERIE VR PRINCIPALE" : lang === "ar" ? "معرض الواقع الافتراضي الرئيسي" : "MAIN VR GALLERY", [-2.2, 2.9, 7.9], Math.PI, {
+    width: 3.3, height: 0.4, exitUrl: `gallery-vr.html?lang=${lang}`, compact: true
+  });
+  createWallSign(lang === "fr" ? "SORTIR VERS LA COLLECTION" : lang === "ar" ? "الخروج إلى المجموعة" : "EXIT TO COLLECTION", [2.2, 2.9, 7.9], Math.PI, {
+    width: 3.3,
+    height: 0.4,
+    exitUrl: lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html",
+    compact: true
+  });
   addVirtualGuideStation([-6.88, 1.25, 5.9], Math.PI / 2, "the ARTDACI reimagined painter-groups room");
   addLocalMovementHotspots([
     { position: [0, 5.6], label: lang === "fr" ? "ENTRÉE" : lang === "ar" ? "المدخل" : "ENTRANCE", yaw: 0 },
@@ -1651,8 +1677,14 @@ function buildLouvreMuseumRoom() {
   });
   createWallSign(lang === "fr" ? "GALERIE DU LOUVRE" : lang === "ar" ? "معرض اللوفر" : "THE LOUVRE GALLERY", [0, 4.18, -9.7], 0, { width: 4.7, height: 0.5, accent: true, compact: true });
   createWallSign(lang === "fr" ? "EXPLORER LE LOUVRE EN VR" : lang === "ar" ? "استكشاف اللوفر بالواقع الافتراضي" : "EXPLORE THE LOUVRE IN VR", [0, 2.82, 9.72], Math.PI, { width: 4.25, height: 0.48, exitUrl: LOUVRE_GALLERY_VR_WORLD_URL, compact: true, accent: true });
-  createWallSign(lang === "fr" ? "RETOUR À LA GALERIE" : lang === "ar" ? "العودة إلى المعرض" : "BACK TO THE GALLERY", [0, 2.15, 9.72], Math.PI, { width: 3.5, height: 0.48, exitUrl: `gallery-vr.html?lang=${lang}`, compact: true });
-  addVirtualGuideStation([-6.88, 1.25, 5.9], Math.PI / 2, "the ARTDACI Louvre room, its photographs, and its 3D facade");
+  createWallSign(lang === "fr" ? "RETOUR À LA GALERIE VR" : lang === "ar" ? "العودة إلى معرض الواقع الافتراضي" : "BACK TO THE VR GALLERY", [-3.55, 2.15, 9.72], Math.PI, { width: 3.2, height: 0.44, exitUrl: `gallery-vr.html?lang=${lang}`, compact: true });
+  createWallSign(lang === "fr" ? "SORTIR VERS LA COLLECTION" : lang === "ar" ? "الخروج إلى المجموعة" : "EXIT TO COLLECTION", [0, 2.15, 9.72], Math.PI, {
+    width: 3.2,
+    height: 0.44,
+    exitUrl: lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html",
+    compact: true
+  });
+  addVirtualGuideStation([3.55, 2.15, 9.72], Math.PI, "the ARTDACI Louvre room, its photographs, and its 3D facade");
   addLocalMovementHotspots([
     { position: [0, 7.1], label: lang === "fr" ? "ENTRÉE" : lang === "ar" ? "المدخل" : "ENTRANCE", yaw: 0 },
     { position: [0, 1.8], label: lang === "fr" ? "CENTRE" : lang === "ar" ? "الوسط" : "CENTRE", yaw: 0 },
@@ -1985,7 +2017,7 @@ function decorateGalleryRoom(roomName, includeSofa = false) {
   if (includeSofa) void addFurnitureModel({
     src: ACCENT_SOFA_MODEL,
     name: `${roomName}-accent-sofa`,
-    position: [0, 0, 4.4],
+    position: [0, 0, roomName === "louvre" ? 5.65 : 4.4],
     rotationY: Math.PI,
     maxSize: 2.35
   });
@@ -1998,14 +2030,14 @@ function addLouvreGalleryFurniture() {
       src: armchairSrc,
       name: `louvre-armchair-${index + 1}`,
       position: [x, 0, 6.25],
-      rotationY: Math.PI,
+      rotationY: 0,
       maxSize: 1.25
     }));
   }
   void addFurnitureModel({
     src: "assets/environments/gallery/models/table-vitrine-w.glb",
     name: "louvre-central-vitrine",
-    position: [0, 0, 2.65],
+    position: [0, 0, 3.9],
     rotationY: 0,
     maxSize: 1.55
   });
@@ -2086,6 +2118,13 @@ function addModelRoomNavigation(currentId, centerZ) {
       compact: true
     });
   });
+  const collectionUrl = lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html";
+  createWallSign(lang === "fr" ? "GALERIE VR PRINCIPALE" : lang === "ar" ? "معرض الواقع الافتراضي الرئيسي" : "MAIN VR GALLERY", [6.88, 1.47, centerZ], -Math.PI / 2, {
+    width: 3.1, height: 0.38, exitUrl: `gallery-vr.html?lang=${lang}`, compact: true
+  });
+  createWallSign(lang === "fr" ? "SORTIR VERS LA COLLECTION" : lang === "ar" ? "الخروج إلى المجموعة" : "EXIT TO COLLECTION", [6.88, 0.95, centerZ], -Math.PI / 2, {
+    width: 3.1, height: 0.38, exitUrl: collectionUrl, compact: true
+  });
 }
 
 async function loadModelMuseumRoom(roomIndex) {
@@ -2094,7 +2133,7 @@ async function loadModelMuseumRoom(roomIndex) {
   const load = (async () => {
     modelRoomsLoaded.add(roomIndex);
     const id = ARTIST_ROOM_ORDER[roomIndex];
-    const centerZ = roomIndex * 16;
+    const centerZ = 0;
     const items = MODEL_ARTIST_EXHIBITS[id] || [];
     if (!items.length) {
       createWallSign(lang === "fr" ? "MODÈLES MONET À VENIR" : "MONET 3D MODELS COMING SOON", [0, 2.15, centerZ + 7.86], Math.PI, {
@@ -2152,7 +2191,7 @@ async function addDedicatedArtistModel(item, centerZ, index, count) {
 
 function maybeLoadModelMuseumRoom() {
   if (!isModelMuseum) return;
-  const roomIndex = THREE.MathUtils.clamp(Math.floor((visitor.position.z + 8) / 16), 0, ARTIST_ROOM_ORDER.length - 1);
+  const roomIndex = Math.max(0, ARTIST_ROOM_ORDER.indexOf(modelArtistId));
   if (!modelRoomsLoaded.has(roomIndex)) void loadModelMuseumRoom(roomIndex);
 }
 
@@ -2307,6 +2346,7 @@ function addConnectedRoomNavigation(currentId, centerZ) {
     width: 3.4, height: 0.42, accent: true, compact: true
   });
   const usefulLinks = [
+    [lang === "fr" ? "GALERIE VR PRINCIPALE" : lang === "ar" ? "معرض الواقع الافتراضي الرئيسي" : "MAIN VR GALLERY", `gallery-vr.html?lang=${lang}`],
     [text.livingBook, `book-3d.html?lang=${lang}`],
     [lang === "ar" ? "اسأل دليل ChatGPT" : lang === "fr" ? "DEMANDER AU GUIDE CHATGPT" : "ASK THE CHATGPT GUIDE", makeVirtualGuideUrl(`${ARTIST_ROOMS[currentId].name}'s painting room`)],
     [text.cinemaEnter, `cinema-vr.html?lang=${lang}`],
@@ -2317,9 +2357,9 @@ function addConnectedRoomNavigation(currentId, centerZ) {
     [text.exitGallery, lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html"]
   ];
   usefulLinks.forEach(([label, url], index) => {
-    createWallSign(label, [productsPosition[0], 3.05 - index * 0.4, productsPosition[2]], productsRotation, {
+    createWallSign(label, [productsPosition[0], 3.05 - index * 0.34, productsPosition[2]], productsRotation, {
       width: 3.2,
-      height: 0.35,
+      height: 0.3,
       exitUrl: url,
       compact: true
     });
@@ -2621,10 +2661,10 @@ function addCinemaRoomArchitecture() {
     scene.add(strip);
   });
   addLocalMovementHotspots([
-    { position: [CINEMA_ROOM_X, 30.1], label: lang === "fr" ? "ENTRÉE" : lang === "ar" ? "المدخل" : "ENTRANCE", yaw: Math.PI },
-    { position: [CINEMA_ROOM_X, 32.2], label: lang === "fr" ? "SIÈGES" : lang === "ar" ? "المقاعد" : "SEATING", yaw: Math.PI },
-    { position: [CINEMA_ROOM_X, 35.1], label: lang === "fr" ? "ÉCRAN" : lang === "ar" ? "الشاشة" : "SCREEN", yaw: Math.PI },
-    { position: [CINEMA_ROOM_X + 4.7, 33.8], label: lang === "fr" ? "MENUS" : lang === "ar" ? "القوائم" : "MENUS", yaw: -Math.PI / 2 }
+    { position: [CINEMA_ROOM_X, 30.1], label: lang === "fr" ? "ENTRÉE" : lang === "ar" ? "المدخل" : "ENTRANCE", yaw: Math.PI, captionRotation: Math.PI },
+    { position: [CINEMA_ROOM_X, 32.2], label: lang === "fr" ? "SIÈGES" : lang === "ar" ? "المقاعد" : "SEATING", yaw: Math.PI, captionRotation: Math.PI },
+    { position: [CINEMA_ROOM_X, 35.1], label: lang === "fr" ? "ÉCRAN" : lang === "ar" ? "الشاشة" : "SCREEN", yaw: Math.PI, captionRotation: Math.PI },
+    { position: [CINEMA_ROOM_X + 4.7, 33.8], label: lang === "fr" ? "MENUS" : lang === "ar" ? "القوائم" : "MENUS", yaw: -Math.PI / 2, captionRotation: Math.PI }
   ]);
 }
 
@@ -3341,6 +3381,18 @@ function addFastTravelStations() {
       exitUrl: BEDROOM_VR_WORLD_URL,
       compact: true
     });
+    createWallSign(lang === "fr" ? "GALERIE VR PRINCIPALE" : lang === "ar" ? "معرض الواقع الافتراضي الرئيسي" : "MAIN VR GALLERY", signPosition(1.4, -0.78), station.rotationY, {
+      width: 1.78,
+      height: 0.34,
+      exitUrl: `gallery-vr.html?lang=${lang}`,
+      compact: true
+    });
+    createWallSign(lang === "fr" ? "SORTIR VERS LA COLLECTION" : lang === "ar" ? "الخروج إلى المجموعة" : "EXIT TO COLLECTION", signPosition(1.4, 0.78), station.rotationY, {
+      width: 1.78,
+      height: 0.34,
+      exitUrl: lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html",
+      compact: true
+    });
   });
 }
 
@@ -3908,14 +3960,6 @@ function buildReimaginedVideoExhibits() {
     position: [-5.92, 0, 34],
     rotationY: Math.PI * 1.5,
     maxSize: 3.05,
-    parent: cinema
-  });
-  void addFurnitureModel({
-    src: ORNATE_PILL_MODEL,
-    name: "cinema-ornate-turquoise-pill",
-    position: [5.25, 0, 34.9],
-    rotationY: -Math.PI / 4,
-    maxSize: 1.8,
     parent: cinema
   });
   scene.add(cinema);
@@ -5429,10 +5473,11 @@ function updateScreenLocomotion(delta) {
   if (!local.lengthSq()) return;
   local.normalize().applyAxisAngle(new THREE.Vector3(0, 1, 0), visitor.rotation.y);
   visitor.position.addScaledVector(local, delta * 2.45);
-  const museumWing = isConnectedMuseum || isModelMuseum;
+  const museumWing = isConnectedMuseum;
   const peopleRoom = activeRoom === "people";
-  visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, museumWing ? -6.3 : peopleRoom ? -6.45 : -5.3, museumWing ? 6.3 : peopleRoom ? 6.45 : 19.3);
-  visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, museumWing ? -7.3 : peopleRoom ? -8.35 : -4.3, museumWing ? 55.3 : peopleRoom ? 8.35 : 38.3);
+  const modelRoom = isModelMuseum;
+  visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, museumWing ? -6.3 : modelRoom ? -6.3 : peopleRoom ? -6.45 : -5.3, museumWing ? 6.3 : modelRoom ? 6.3 : peopleRoom ? 6.45 : 19.3);
+  visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, museumWing ? -7.3 : modelRoom ? -7.3 : peopleRoom ? -8.35 : -4.3, museumWing ? 55.3 : modelRoom ? 7.3 : peopleRoom ? 8.35 : 38.3);
 }
 
 async function detectVR() {
@@ -5717,10 +5762,11 @@ function updateLocomotion(delta) {
     if (source.handedness === "left") {
       visitor.position.addScaledVector(right, x * delta * 1.8);
       visitor.position.addScaledVector(forward, -y * delta * 1.8);
-      const museumWing = isConnectedMuseum || isModelMuseum;
+      const museumWing = isConnectedMuseum;
       const peopleRoom = activeRoom === "people";
-      visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, museumWing ? -6.3 : peopleRoom ? -6.45 : -5.3, museumWing ? 6.3 : peopleRoom ? 6.45 : 19.3);
-      visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, museumWing ? -7.3 : peopleRoom ? -8.35 : -4.3, museumWing ? 55.3 : peopleRoom ? 8.35 : 38.3);
+      const modelRoom = isModelMuseum;
+      visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, museumWing ? -6.3 : modelRoom ? -6.3 : peopleRoom ? -6.45 : -5.3, museumWing ? 6.3 : modelRoom ? 6.3 : peopleRoom ? 6.45 : 19.3);
+      visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, museumWing ? -7.3 : modelRoom ? -7.3 : peopleRoom ? -8.35 : -4.3, museumWing ? 55.3 : modelRoom ? 7.3 : peopleRoom ? 8.35 : 38.3);
     }
 
     if (source.handedness === "right") {

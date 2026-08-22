@@ -636,6 +636,27 @@ body .gallery-button.primary {
   box-shadow: inset 0 0 0 3px rgba(255,255,255,.2), 0 5px 12px rgba(0,0,0,.3);
 }
 
+/* Screen-menu typography: supporting actions stay quiet while the principal
+   destinations remain unmistakable. VR wall signs keep their own casing. */
+body .gallery-toolbar,
+body .gallery-guide,
+body .virtual-guide {
+  text-transform: lowercase;
+}
+
+body :is(
+  #gallery-paintings-link,
+  #gallery-models-link,
+  #gallery-cinema-link,
+  #gallery-people-link,
+  #gallery-reimagined-link,
+  #gallery-groups-link,
+  #gallery-experiences-link,
+  #gallery-exit-link
+) {
+  text-transform: uppercase;
+}
+
 @media (max-width: 720px) {
   .gallery-toolbar {
     grid-template-columns: auto 1fr;
