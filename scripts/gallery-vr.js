@@ -832,6 +832,7 @@ const museumRoomLoads = new Map();
 const museumPanelsLoaded = new Set();
 const museumPanelLoads = new Map();
 const museumRoomRetryAt = new Map();
+let fiveMuseumsPreloadPromise = null;
 
 init();
 
@@ -911,6 +912,7 @@ async function init() {
     buildFiveMuseumsWing();
     renderer.setAnimationLoop(render);
     await loadFiveMuseumsRoom(0);
+    void preloadFiveMuseumsWing();
     await detectVR();
     status.textContent = text.ready;
     return;
@@ -979,6 +981,21 @@ async function init() {
     status.textContent = `${text.failed} ${error.message}`;
   }
 
+}
+
+function preloadFiveMuseumsWing() {
+  if (fiveMuseumsPreloadPromise) return fiveMuseumsPreloadPromise;
+  fiveMuseumsPreloadPromise = (async () => {
+    for (let index = 1; index < MUSEUM_ROOMS.length; index += 1) {
+      let loaded = false;
+      for (let attempt = 0; attempt < 3 && !loaded; attempt += 1) {
+        loaded = Boolean(await loadFiveMuseumsRoom(index));
+        if (!loaded) await new Promise((resolve) => setTimeout(resolve, 2800));
+      }
+      await new Promise((resolve) => setTimeout(resolve, isQuestBrowser ? 900 : 350));
+    }
+  })();
+  return fiveMuseumsPreloadPromise;
 }
 
 function setupVirtualGuide() {
@@ -1716,13 +1733,13 @@ async function loadFiveMuseumsRoom(index) {
           ["louvre-face", room.views.face, 0, centerZ - 7.91, 0, "", { maxWidth: 8.8, maxHeight: 3.55, positionY: 2.05, hideLabel: true, highDetail: true, volumetric: true }],
           ["louvre-right", room.views.right, 6.91, centerZ, -Math.PI / 2, "", { maxWidth: 11.2, maxHeight: 3.5, positionY: 2.15, hideLabel: true, highDetail: true, volumetric: true }],
           ["louvre-left", room.views.left, -6.91, centerZ, Math.PI / 2, "", { maxWidth: 11.2, maxHeight: 3.5, positionY: 2.15, hideLabel: true, highDetail: true, volumetric: true }],
-          ["louvre-plan", room.plan, 0.35, centerZ + 7.91, Math.PI, lang === "fr" ? "PLAN DU BÂTIMENT" : lang === "ar" ? "مخطط المبنى" : "BUILDING PLAN", { maxWidth: 4.35, maxHeight: 2.55, positionY: 2.05, labelScale: 0.34, highDetail: true }],
-          ["louvre-timeline", room.timeline, -4.5, centerZ + 7.91, Math.PI, lang === "fr" ? "CHRONOLOGIE" : lang === "ar" ? "الخط الزمني" : "TIMELINE", { maxWidth: 4.8, maxHeight: 3.15, positionY: 2.25, labelScale: 0.34, highDetail: true }]
+          ["louvre-plan", room.plan, 0, centerZ + 7.91, Math.PI, lang === "fr" ? "PLAN DU BÂTIMENT" : lang === "ar" ? "مخطط المبنى" : "BUILDING PLAN", { maxWidth: 3.95, maxHeight: 2.35, positionY: 2.05, labelScale: 0.34, highDetail: true }],
+          ["louvre-timeline", room.timeline, -4.35, centerZ + 7.91, Math.PI, lang === "fr" ? "CHRONOLOGIE" : lang === "ar" ? "الخط الزمني" : "TIMELINE", { maxWidth: 4.4, maxHeight: 3.05, positionY: 2.25, labelScale: 0.34, highDetail: true }]
         ]
       : [
-          ["plan", room.plan, -6.91, centerZ - 3.7, Math.PI / 2, lang === "fr" ? "PLAN DU BÂTIMENT" : lang === "ar" ? "مخطط المبنى" : "BUILDING PLAN", { maxWidth: 4.6, maxHeight: 2.45, positionY: 2.25, highDetail: true }],
-          ["timeline", room.timeline, -6.91, centerZ + 3.2, Math.PI / 2, lang === "fr" ? "CHRONOLOGIE" : lang === "ar" ? "الخط الزمني" : "TIMELINE", { maxWidth: 6.7, maxHeight: 3.55, positionY: 2.25, labelScale: 0.34, labelAbove: true, highDetail: true }],
-          ["facade", room.facade, 6.91, centerZ, -Math.PI / 2, lang === "fr" ? "FAÇADE DU MUSÉE" : lang === "ar" ? "واجهة المتحف" : "MUSEUM FACADE", { maxWidth: 7.3, maxHeight: 3.55, positionY: 2.25, labelScale: 0.34, labelAbove: true, highDetail: true, volumetric: true }]
+          ["plan", room.plan, -6.91, centerZ - 3.5, Math.PI / 2, lang === "fr" ? "PLAN DU BÂTIMENT" : lang === "ar" ? "مخطط المبنى" : "BUILDING PLAN", { maxWidth: 4.3, maxHeight: 2.35, positionY: 2.25, highDetail: true }],
+          ["timeline", room.timeline, -6.91, centerZ + 3, Math.PI / 2, lang === "fr" ? "CHRONOLOGIE" : lang === "ar" ? "الخط الزمني" : "TIMELINE", { maxWidth: 6.2, maxHeight: 3.45, positionY: 2.25, labelScale: 0.34, labelAbove: true, highDetail: true }],
+          ["facade", room.facade, 6.91, centerZ - 0.15, -Math.PI / 2, lang === "fr" ? "FAÇADE DU MUSÉE" : lang === "ar" ? "واجهة المتحف" : "MUSEUM FACADE", { maxWidth: 6.8, maxHeight: 3.45, positionY: 2.25, labelScale: 0.34, labelAbove: true, highDetail: true, volumetric: true }]
         ];
     const results = await Promise.allSettled(panels.map(([panelId, ...args]) => loadMuseumPanelOnce(`${room.id}:${panelId}`, () => addMuseumInformationPanel(...args))));
     const failures = results.filter((result) => result.status === "rejected");
