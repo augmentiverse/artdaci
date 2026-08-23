@@ -537,6 +537,15 @@ body[data-gallery-room="louvre"] {
   --room-menu-muted: #cfc3aa;
 }
 
+body[data-gallery-room="museums"] {
+  --room-menu-panel: rgba(11, 25, 34, .96);
+  --room-menu-button: #193748;
+  --room-menu-button-hover: #27556b;
+  --room-menu-gold: #cdae70;
+  --room-menu-text: #fff3df;
+  --room-menu-muted: #d5c5aa;
+}
+
 body[data-gallery-room="people"] {
   --room-menu-panel: rgba(7, 40, 36, .96);
   --room-menu-button: #4b171d;
