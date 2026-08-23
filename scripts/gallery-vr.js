@@ -145,6 +145,11 @@ const MUSEUM_ROOMS = [
     plan: "assets/environments/gallery/images/Louvre/louvre_building_plan/louvre_building_plan_{lang}.png",
     timeline: "assets/environments/gallery/images/Louvre/louvre_timeline/louvre_timeline_{lang}.png",
     facade: "assets/environments/gallery/images/Louvre/louvre_building_plan/louvre_façade.png",
+    views: {
+      face: "assets/environments/gallery/images/Louvre/louvre_building/louvre_face.png",
+      right: "assets/environments/gallery/images/Louvre/louvre_building/louvre_droit.png",
+      left: "assets/environments/gallery/images/Louvre/louvre_building/louvre_gauche.png"
+    },
     colors: [0x132b46, 0xc7a25b]
   },
   {
@@ -824,6 +829,9 @@ const modelRoomsLoaded = new Set();
 const modelRoomLoads = new Map();
 const museumRoomsLoaded = new Set();
 const museumRoomLoads = new Map();
+const museumPanelsLoaded = new Set();
+const museumPanelLoads = new Map();
+const museumRoomRetryAt = new Map();
 
 init();
 
@@ -1176,7 +1184,7 @@ function applyCopy() {
   const targetLang = lang === "en" ? "fr" : lang === "fr" ? "ar" : "en";
   const targetParams = new URLSearchParams(location.search);
   targetParams.set("lang", targetLang);
-  languageSwitch.textContent = text.languageSwitch;
+  languageSwitch.textContent = targetLang === "ar" ? "العربية" : targetLang === "fr" ? "Français" : "English";
   languageSwitch.setAttribute("aria-label", text.languageSwitchLabel);
   languageSwitch.lang = targetLang;
   languageSwitch.href = `${isCinemaOnly ? "cinema-vr.html" : "gallery-vr.html"}?${targetParams.toString()}${location.hash}`;
@@ -1202,7 +1210,7 @@ function updateScreenUiToggle() {
     : (lang === "ar" ? "إخفاء القائمة" : lang === "fr" ? "Masquer le menu" : "Hide menu");
 }
 
-function addMovementHotspot(position, destination, label, visitorYaw = 0, captionRotation = 0) {
+function addMovementHotspot(position, destination, label, visitorYaw = 0, captionRotation = 0, labelOptions = {}) {
   const group = new THREE.Group();
   group.position.set(position[0], 0.018, position[1]);
   group.userData.destination = new THREE.Vector3(destination[0], 0, destination[1]);
@@ -1224,7 +1232,7 @@ function addMovementHotspot(position, destination, label, visitorYaw = 0, captio
   ring.position.y = 0.007;
   group.add(ring);
 
-  const caption = makeLabel(label);
+  const caption = makeLabel(label, labelOptions);
   caption.position.set(0, 0.018, 0.73);
   caption.rotation.x = -Math.PI / 2;
   caption.rotation.z = captionRotation;
@@ -1588,7 +1596,36 @@ function buildFiveMuseumsWing() {
 
   MUSEUM_ROOMS.forEach((room, index) => addFiveMuseumsRoomShell(room, roomCenters[index], index));
   addFiveMuseumsPartitions();
-  addMovementNetwork(roomCenters, MUSEUM_ROOMS.map(localizedMuseumName));
+  addFiveMuseumsMovementNetwork(roomCenters, MUSEUM_ROOMS.map(localizedMuseumName));
+}
+
+function addFiveMuseumsMovementNetwork(roomCenters, roomLabels) {
+  roomCenters.forEach((centerZ, index) => {
+    if (index > 0) {
+      const previous = lang === "ar" ? `← ${roomLabels[index - 1]}` : lang === "fr" ? "← SALLE PRÉCÉDENTE" : "← PREVIOUS ROOM";
+      const returningThroughLouvreDoor = index === 1;
+      addMovementHotspot(
+        returningThroughLouvreDoor ? [4.8, 11] : [-1.15, centerZ],
+        returningThroughLouvreDoor ? [4.8, 5] : [0, roomCenters[index - 1]],
+        previous,
+        Math.PI,
+        Math.PI,
+        { highDetail: true }
+      );
+    }
+    if (index < roomCenters.length - 1) {
+      const next = lang === "ar" ? `${roomLabels[index + 1]} →` : lang === "fr" ? "SALLE SUIVANTE →" : "NEXT ROOM →";
+      const leavingLouvre = index === 0;
+      addMovementHotspot(
+        leavingLouvre ? [4.8, 5] : [1.15, centerZ],
+        leavingLouvre ? [4.8, 11] : [0, roomCenters[index + 1]],
+        next,
+        0,
+        Math.PI,
+        { highDetail: true }
+      );
+    }
+  });
 }
 
 function addFiveMuseumsRoomShell(room, centerZ, index) {
@@ -1614,27 +1651,33 @@ function addFiveMuseumsRoomShell(room, centerZ, index) {
     scene.add(rail);
   });
   createWallSign(localizedMuseumName(room), [0, 4.12, centerZ - 7.86], 0, { width: 4.6, height: 0.38, compact: true });
-  addFiveMuseumsRoomLinks(centerZ);
+  addFiveMuseumsRoomLinks(centerZ, index);
   const light = new THREE.PointLight(0xffe7c8, isQuestBrowser ? 0.9 : 1.2, 11);
   light.position.set(0, 3.85, centerZ);
   scene.add(light);
 }
 
-function addFiveMuseumsRoomLinks(centerZ) {
+function addFiveMuseumsRoomLinks(centerZ, roomIndex) {
   const collectionUrl = lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html";
   const globalGalleryLabel = lang === "fr" ? "GALERIE VR GLOBALE" : lang === "ar" ? "معرض الواقع الافتراضي العام" : "GLOBAL VR GALLERY";
   const collectionLabel = lang === "fr" ? "COLLECTION ARTDACI" : lang === "ar" ? "مجموعة ARTDACI" : "ARTDACI COLLECTION";
-  createWallSign(globalGalleryLabel, [-4.45, 2.05, centerZ + 7.86], Math.PI, {
+  const onLouvreRearWall = roomIndex === 0;
+  const linkZ = centerZ + (onLouvreRearWall ? -7.86 : 7.86);
+  const linkRotation = onLouvreRearWall ? 0 : Math.PI;
+  const linkY = onLouvreRearWall ? 1.05 : 2.05;
+  createWallSign(globalGalleryLabel, [-4.75, linkY, linkZ], linkRotation, {
     width: 3.8,
     height: 0.5,
     exitUrl: `gallery-vr.html?lang=${lang}`,
-    compact: true
+    compact: true,
+    highDetail: true
   });
-  createWallSign(collectionLabel, [4.45, 2.05, centerZ + 7.86], Math.PI, {
+  createWallSign(collectionLabel, [4.75, linkY, linkZ], linkRotation, {
     width: 3.8,
     height: 0.5,
     exitUrl: collectionUrl,
-    compact: true
+    compact: true,
+    highDetail: true
   });
 }
 
@@ -1642,17 +1685,20 @@ function addFiveMuseumsPartitions() {
   const material = new THREE.MeshStandardMaterial({ color: 0xd9d0c2, roughness: 0.96, side: THREE.DoubleSide });
   [-8, 8, 24, 40, 56, 72].forEach((z, index) => {
     const hasDoor = index > 0 && index < 5;
-    (hasDoor ? [[-4.5, 5], [4.5, 5]] : [[0, 14]]).forEach(([x, width]) => {
+    const isLouvreExit = index === 1;
+    const segments = isLouvreExit ? [[-2, 10]] : hasDoor ? [[-4.5, 5], [4.5, 5]] : [[0, 14]];
+    segments.forEach(([x, width]) => {
       const panel = new THREE.Mesh(new THREE.PlaneGeometry(width, 4.4), material);
       panel.position.set(x, 2.2, z);
       scene.add(panel);
     });
     if (hasDoor) {
       const lintel = new THREE.Mesh(new THREE.BoxGeometry(4, 1.05, 0.18), material);
-      lintel.position.set(0, 3.88, z);
+      lintel.position.set(isLouvreExit ? 5 : 0, 3.88, z);
       scene.add(lintel);
-      createWallSign(`↑ ${localizedMuseumName(MUSEUM_ROOMS[index])}`, [0, 3.65, z - 0.11], Math.PI, { width: 3.5, height: 0.4, accent: true, compact: true });
-      createWallSign(`↑ ${localizedMuseumName(MUSEUM_ROOMS[index - 1])}`, [0, 3.65, z + 0.11], 0, { width: 3.5, height: 0.4, accent: true, compact: true });
+      const doorX = isLouvreExit ? 5 : 0;
+      createWallSign(`↑ ${localizedMuseumName(MUSEUM_ROOMS[index])}`, [doorX, 3.65, z - 0.11], Math.PI, { width: 3.5, height: 0.4, accent: true, compact: true, highDetail: true });
+      createWallSign(`↑ ${localizedMuseumName(MUSEUM_ROOMS[index - 1])}`, [doorX, 3.65, z + 0.11], 0, { width: 3.5, height: 0.4, accent: true, compact: true, highDetail: true });
     }
   });
   createWallSign(lang === "fr" ? "RETOUR À ARTDACI" : lang === "ar" ? "العودة إلى ARTDACI" : "BACK TO ARTDACI", [0, 2.2, 71.88], 0, { width: 3.6, height: 0.48, exitUrl: `gallery-vr.html?lang=${lang}`, compact: true });
@@ -1660,23 +1706,56 @@ function addFiveMuseumsPartitions() {
 
 async function loadFiveMuseumsRoom(index) {
   if (museumRoomsLoaded.has(index) || museumRoomLoads.has(index) || !MUSEUM_ROOMS[index]) return museumRoomLoads.get(index);
+  if ((museumRoomRetryAt.get(index) || 0) > performance.now()) return null;
   const task = (async () => {
-    museumRoomsLoaded.add(index);
     const room = MUSEUM_ROOMS[index];
     status.textContent = lang === "fr" ? `Chargement de ${localizedMuseumName(room)}…` : lang === "ar" ? `جارٍ تحميل ${localizedMuseumName(room)}…` : `Loading ${localizedMuseumName(room)}…`;
-    await Promise.all([
-      addMuseumInformationPanel(room.plan, -6.91, index * 16 - 3.7, Math.PI / 2, lang === "fr" ? "PLAN DU BÂTIMENT" : lang === "ar" ? "مخطط المبنى" : "BUILDING PLAN", { maxWidth: 4.6, maxHeight: 2.45, positionY: 2.25 }),
-      addMuseumInformationPanel(room.timeline, -6.91, index * 16 + 3.2, Math.PI / 2, lang === "fr" ? "CHRONOLOGIE" : lang === "ar" ? "الخط الزمني" : "TIMELINE", { maxWidth: 6.7, maxHeight: 3.55, positionY: 2.25, labelScale: 0.34, labelAbove: true }),
-      addMuseumInformationPanel(room.facade, 6.91, index * 16, -Math.PI / 2, lang === "fr" ? "FAÇADE DU MUSÉE" : lang === "ar" ? "واجهة المتحف" : "MUSEUM FACADE", { maxWidth: 7.3, maxHeight: 3.55, positionY: 2.25, labelScale: 0.34, labelAbove: true, volumetric: true })
-    ]);
+    const centerZ = index * 16;
+    const panels = index === 0
+      ? [
+          ["louvre-face", room.views.face, 0, centerZ - 7.91, 0, "", { maxWidth: 8.8, maxHeight: 3.55, positionY: 2.05, hideLabel: true, highDetail: true, volumetric: true }],
+          ["louvre-right", room.views.right, 6.91, centerZ, -Math.PI / 2, "", { maxWidth: 11.2, maxHeight: 3.5, positionY: 2.15, hideLabel: true, highDetail: true, volumetric: true }],
+          ["louvre-left", room.views.left, -6.91, centerZ, Math.PI / 2, "", { maxWidth: 11.2, maxHeight: 3.5, positionY: 2.15, hideLabel: true, highDetail: true, volumetric: true }],
+          ["louvre-plan", room.plan, 0.35, centerZ + 7.91, Math.PI, lang === "fr" ? "PLAN DU BÂTIMENT" : lang === "ar" ? "مخطط المبنى" : "BUILDING PLAN", { maxWidth: 4.35, maxHeight: 2.55, positionY: 2.05, labelScale: 0.34, highDetail: true }],
+          ["louvre-timeline", room.timeline, -4.5, centerZ + 7.91, Math.PI, lang === "fr" ? "CHRONOLOGIE" : lang === "ar" ? "الخط الزمني" : "TIMELINE", { maxWidth: 4.8, maxHeight: 3.15, positionY: 2.25, labelScale: 0.34, highDetail: true }]
+        ]
+      : [
+          ["plan", room.plan, -6.91, centerZ - 3.7, Math.PI / 2, lang === "fr" ? "PLAN DU BÂTIMENT" : lang === "ar" ? "مخطط المبنى" : "BUILDING PLAN", { maxWidth: 4.6, maxHeight: 2.45, positionY: 2.25, highDetail: true }],
+          ["timeline", room.timeline, -6.91, centerZ + 3.2, Math.PI / 2, lang === "fr" ? "CHRONOLOGIE" : lang === "ar" ? "الخط الزمني" : "TIMELINE", { maxWidth: 6.7, maxHeight: 3.55, positionY: 2.25, labelScale: 0.34, labelAbove: true, highDetail: true }],
+          ["facade", room.facade, 6.91, centerZ, -Math.PI / 2, lang === "fr" ? "FAÇADE DU MUSÉE" : lang === "ar" ? "واجهة المتحف" : "MUSEUM FACADE", { maxWidth: 7.3, maxHeight: 3.55, positionY: 2.25, labelScale: 0.34, labelAbove: true, highDetail: true, volumetric: true }]
+        ];
+    const results = await Promise.allSettled(panels.map(([panelId, ...args]) => loadMuseumPanelOnce(`${room.id}:${panelId}`, () => addMuseumInformationPanel(...args))));
+    const failures = results.filter((result) => result.status === "rejected");
+    if (failures.length) {
+      failures.forEach((failure) => console.warn(`Museum panel unavailable in ${room.id}.`, failure.reason));
+      museumRoomRetryAt.set(index, performance.now() + 2500);
+      return false;
+    }
+    museumRoomsLoaded.add(index);
+    museumRoomRetryAt.delete(index);
+    status.textContent = text.ready;
+    return true;
   })().finally(() => museumRoomLoads.delete(index));
   museumRoomLoads.set(index, task);
   return task;
 }
 
+function loadMuseumPanelOnce(key, loader) {
+  if (museumPanelsLoaded.has(key)) return Promise.resolve(true);
+  if (museumPanelLoads.has(key)) return museumPanelLoads.get(key);
+  const task = loader()
+    .then(() => {
+      museumPanelsLoaded.add(key);
+      return true;
+    })
+    .finally(() => museumPanelLoads.delete(key));
+  museumPanelLoads.set(key, task);
+  return task;
+}
+
 async function addMuseumInformationPanel(template, x, z, rotationY, labelText, options = {}) {
   const texture = await textureLoader.loadAsync(museumImagePath(template));
-  optimizeTextureForMobile(texture);
+  prepareMuseumInformationTexture(texture, options.highDetail);
   texture.encoding = THREE.sRGBEncoding;
   texture.minFilter = THREE.LinearFilter;
   const aspect = texture.image.width / texture.image.height;
@@ -1707,10 +1786,13 @@ async function addMuseumInformationPanel(template, x, z, rotationY, labelText, o
     inset.position.z = frameDepth / 2 + 0.004;
     group.add(inset);
   }
-  const label = makeLabel(labelText);
-  label.position.set(0, options.labelAbove ? height / 2 + 0.2 : -height / 2 - 0.28, frameDepth / 2 + (options.volumetric ? 0.075 : 0.025));
-  label.scale.set(Math.min(2.8, width + 0.3), options.labelScale || 0.48, 1);
-  group.add(frame, image, label);
+  group.add(frame, image);
+  if (!options.hideLabel) {
+    const label = makeLabel(labelText, { highDetail: options.highDetail });
+    label.position.set(0, options.labelAbove ? height / 2 + 0.2 : -height / 2 - 0.28, frameDepth / 2 + (options.volumetric ? 0.075 : 0.025));
+    label.scale.set(Math.min(2.8, width + 0.3), options.labelScale || 0.48, 1);
+    group.add(label);
+  }
   scene.add(group);
   if (options.volumetric && !isLowPowerDevice) {
     const light = new THREE.SpotLight(0xffe2b5, 0.78, 8, Math.PI / 5.5, 0.5);
@@ -1719,14 +1801,44 @@ async function addMuseumInformationPanel(template, x, z, rotationY, labelText, o
     scene.add(light);
   }
   revealLoadedDisplay(group);
+  return group;
+}
+
+function prepareMuseumInformationTexture(texture, highDetail = false) {
+  if (!texture?.image) return texture;
+  const image = texture.image;
+  const width = image.naturalWidth || image.videoWidth || image.width || 0;
+  const height = image.naturalHeight || image.videoHeight || image.height || 0;
+  const maximum = highDetail
+    ? (isQuestBrowser ? 2048 : isHandheldMobile ? 1536 : 4096)
+    : (isQuestBrowser ? 1536 : isHandheldMobile ? 1024 : 4096);
+  if (width > maximum || height > maximum) {
+    const scale = Math.min(maximum / width, maximum / height);
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round(width * scale));
+    canvas.height = Math.max(1, Math.round(height * scale));
+    const context = canvas.getContext("2d", { alpha: false });
+    context.imageSmoothingEnabled = true;
+    context.imageSmoothingQuality = "high";
+    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+    texture.image = canvas;
+  }
+  texture.generateMipmaps = false;
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), isQuestBrowser ? 4 : 8);
+  texture.needsUpdate = true;
+  return texture;
 }
 
 function maybeLoadFiveMuseumsRoom() {
   if (!isFiveMuseumsWing) return;
-  const index = THREE.MathUtils.clamp(Math.floor((visitor.position.z + 8) / 16), 0, MUSEUM_ROOMS.length - 1);
+  const visitorZ = currentSession ? getListenerPosition().z : visitor.position.z;
+  const index = THREE.MathUtils.clamp(Math.floor((visitorZ + 8) / 16), 0, MUSEUM_ROOMS.length - 1);
   if (!museumRoomsLoaded.has(index)) void loadFiveMuseumsRoom(index);
   const forward = THREE.MathUtils.clamp(index + 1, 0, MUSEUM_ROOMS.length - 1);
-  if (forward !== index && visitor.position.z > index * 16 + 3) void loadFiveMuseumsRoom(forward);
+  const nextBoundaryZ = 8 + index * 16;
+  if (forward !== index && visitorZ >= nextBoundaryZ - 6) void loadFiveMuseumsRoom(forward);
 }
 
 function buildModelMuseumArchitecture() {
@@ -3124,7 +3236,8 @@ function addLivingBookTable(position = [3.75, 0, 3.15], rotationY = -0.18) {
     new THREE.MeshBasicMaterial({ transparent: true, opacity: 0 })
   );
   hitTarget.userData.exitUrl = `book-3d.html?lang=${lang}`;
-  book.add(hitTarget);
+  hitTarget.position.set(0, 1.02, 0);
+  table.add(hitTarget);
   teleportTargets.push(hitTarget);
 
   [lowerCover, pages, upperCover, spine].forEach((part) => {
@@ -3487,8 +3600,9 @@ function navigationMenuPalette(position, options) {
 function createWallSign(message, position, rotationY, options = {}) {
   message = lang === "ar" ? message : message.toLocaleUpperCase(lang === "fr" ? "fr" : "en");
   const canvas = document.createElement("canvas");
-  canvas.width = isLowPowerDevice ? 960 : 1600;
-  canvas.height = isLowPowerDevice ? 288 : 480;
+  const signResolution = options.highDetail ? 1600 : isFiveMuseumsWing && isLowPowerDevice ? 1280 : isLowPowerDevice ? 960 : 1600;
+  canvas.width = signResolution;
+  canvas.height = Math.round(signResolution * 0.3);
   const canvasScale = canvas.width / 1600;
   const context = canvas.getContext("2d");
   const isExit = Boolean(options.exitUrl);
@@ -3529,7 +3643,9 @@ function createWallSign(message, position, rotationY, options = {}) {
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.encoding = THREE.sRGBEncoding;
-  texture.anisotropy = isLowPowerDevice ? 1 : renderer.capabilities.getMaxAnisotropy();
+  texture.anisotropy = options.highDetail
+    ? Math.min(renderer.capabilities.getMaxAnisotropy(), isQuestBrowser ? 4 : 8)
+    : isLowPowerDevice ? 1 : renderer.capabilities.getMaxAnisotropy();
   const signMaterial = new THREE.MeshBasicMaterial({
     map: texture,
     transparent: Boolean(options.subtle),
@@ -5201,12 +5317,12 @@ function localizedTitle(painting) {
   return titles[painting.slug] || painting.title || "";
 }
 
-function makeLabel(message) {
+function makeLabel(message, options = {}) {
   message = lang === "ar" ? message : message.toLocaleUpperCase(lang === "fr" ? "fr" : "en");
   const canvas = document.createElement("canvas");
   const logicalWidth = 1600;
   const logicalHeight = 400;
-  const labelScale = isLowPowerDevice ? 0.6 : 1;
+  const labelScale = options.highDetail ? 1 : isLowPowerDevice ? 0.6 : 1;
   canvas.width = logicalWidth * labelScale;
   canvas.height = logicalHeight * labelScale;
   const context = canvas.getContext("2d");
