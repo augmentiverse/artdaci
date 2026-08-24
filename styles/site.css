@@ -885,6 +885,18 @@ figcaption strong {
   border-top: 1px solid var(--line);
 }
 
+.museum-index-section { margin-top: 64px; padding: clamp(24px, 4vw, 48px); border-radius: 28px; background: linear-gradient(135deg, #102b38, #244c54); color: #fff8e9; }
+.museum-index-section > header { max-width: 760px; margin-bottom: 28px; }
+.museum-index-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; }
+.museum-index-card { overflow: hidden; border: 1px solid rgba(230,190,105,.55); border-radius: 20px; background: rgba(7,20,27,.72); box-shadow: 0 18px 45px rgba(0,0,0,.22); }
+.museum-index-card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #d8cbb5; }
+.museum-index-card > div { padding: 20px; }
+.museum-index-card h3 { margin: 0 0 10px; color: #f4cd7a; }
+.painting-museum-section { display: grid; grid-template-columns: minmax(240px, .8fr) minmax(280px, 1.2fr); gap: clamp(22px, 4vw, 48px); align-items: center; margin: 46px 0; padding: clamp(22px, 4vw, 42px); border: 2px solid #b88a43; border-radius: 24px; background: linear-gradient(135deg, #f4ead8, #dfcda9); box-shadow: 0 20px 55px rgba(54,35,15,.15); }
+.painting-museum-section img { width: 100%; max-height: 390px; object-fit: contain; border-radius: 14px; box-shadow: 0 12px 30px rgba(38,24,9,.22); }
+.painting-museum-section h2 { margin-top: 4px; }
+@media (max-width: 760px) { .painting-museum-section { grid-template-columns: 1fr; } }
+
 .patron-profile {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr);

@@ -1,0 +1,27 @@
+{
+  "id": "vermeer-view-of-delft-1660-1661",
+  "slug": "view-of-delft",
+  "bookOrder": 4,
+  "title": "View of Delft",
+  "artist": { "name": "Johannes Vermeer", "birthYear": 1632, "deathYear": 1675 },
+  "date": "c. 1660–1661",
+  "medium": "Oil on canvas",
+  "dimensions": { "heightCm": 96.5, "widthCm": 115.7 },
+  "currentLocation": { "museum": "Mauritshuis", "city": "The Hague", "country": "Netherlands" },
+  "print": { "chapter": "Dutch Golden Age", "imageTargetSource": "assets/artists/johannes-vermeer/collection/view-of-delft-vermeer.webp" },
+  "media": { "image": "assets/artists/johannes-vermeer/collection/view-of-delft-vermeer.webp" },
+  "texts": {
+    "historicalContext": "Vermeer painted Delft around 1660–1661, looking toward the city from the south. He turned a familiar urban prospect into a carefully ordered meditation on light, weather and civic identity.",
+    "artistBiography": "Johannes Vermeer worked in Delft and produced a small body of paintings renowned for controlled composition, luminous colour and optical subtlety.",
+    "artisticAnalysis": "A broad sky occupies most of the canvas. Clouds alternately shadow and illuminate the waterfront, while the bright tower of the Nieuwe Kerk becomes the visual focus. Reflections and small figures slow the viewer's gaze.",
+    "composition": "Horizontal bands of water, quay, buildings and sky create stability. Vermeer adjusts observed architecture to produce a more coherent rhythm and depth.",
+    "palette": "Cool blues and greys are balanced by ochres and sunlit cream. Tiny highlights suggest masonry, water and humid atmosphere without describing every detail.",
+    "perspectiveTechnique": "Linear recession, tonal distance and selective sharpness combine into a spatially convincing yet deliberately composed city view.",
+    "culturalSignificance": "View of Delft is both a portrait of a city and one of the most admired landscapes of the Dutch Golden Age.",
+    "influence": "Its balance of observation and reconstruction has shaped modern ideas of photographic looking long before photography."
+  },
+  "localizations": {
+    "fr": { "title": "Vue de Delft" },
+    "ar": { "title": "منظر دلفت" }
+  }
+}

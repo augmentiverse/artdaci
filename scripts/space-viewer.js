@@ -4,6 +4,13 @@ const PAINTINGS = {
   "van-gogh-bedroom": "content/paintings/van-gogh-bedroom.json",
   "vermeer-girl-with-a-pearl-earring": "content/paintings/vermeer-girl-with-a-pearl-earring.json"
 };
+const MUSEUMS = {
+  "louvre": "content/museums/louvre.json",
+  "mauritshuis": "content/museums/mauritshuis.json",
+  "czartoryski": "content/museums/czartoryski.json",
+  "orsay": "content/museums/orsay.json",
+  "van-gogh-museum": "content/museums/van-gogh-museum.json"
+};
 
 const COPY = {
   en: {
@@ -104,7 +111,10 @@ const FR_TITLES = {
 };
 
 const params = new URLSearchParams(window.location.search);
-const slug = PAINTINGS[params.get("painting")] ? params.get("painting") : "mona-lisa";
+const requestedMuseum = params.get("museum");
+const resourceType = requestedMuseum && MUSEUMS[requestedMuseum] ? "museum" : "painting";
+const catalogue = resourceType === "museum" ? MUSEUMS : PAINTINGS;
+const slug = catalogue[requestedMuseum || params.get("painting")] ? (requestedMuseum || params.get("painting")) : "mona-lisa";
 const lang = ["en", "fr", "ar"].includes(params.get("lang")) ? params.get("lang") : "en";
 
 init();
@@ -115,7 +125,7 @@ async function init() {
   applyStaticCopy();
 
   try {
-    const response = await fetch(PAINTINGS[slug], { cache: "reload" });
+    const response = await fetch(catalogue[slug] || PAINTINGS["mona-lisa"], { cache: "reload" });
     if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
     const manifest = await response.json();
     configureViewer(manifest);
@@ -177,7 +187,7 @@ function configureViewer(manifest) {
     document.getElementById("ios-note").hidden = false;
   }
 
-  document.getElementById("image-ar-link").href = `ar.html?painting=${slug}&lang=${lang}`;
+  document.getElementById("image-ar-link").href = `ar.html?${resourceType}=${slug}&lang=${lang}`;
   updateVrLink(0);
   document.getElementById("print-link").href = PRINT_PAGES[lang]?.[slug] || "index.html";
   renderModelVariantControls(model, modelVariants, usdz);
@@ -265,7 +275,9 @@ function renderModelVariantControls(model, variants, defaultUsdz) {
 function updateVrLink(modelIndex) {
   const link = document.getElementById("vr-link");
   if (!link) return;
-  link.href = `vr.html?painting=${encodeURIComponent(slug)}&lang=${lang}&model=${modelIndex}`;
+  link.href = resourceType === "museum"
+    ? `gallery-vr.html?lang=${lang}&room=museums&museum=${encodeURIComponent(slug)}`
+    : `vr.html?painting=${encodeURIComponent(slug)}&lang=${lang}&model=${modelIndex}`;
 }
 
 function getLocalizedAudioOverview(manifest) {

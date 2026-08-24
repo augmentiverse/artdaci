@@ -1,0 +1,8 @@
+{
+  "slug": "orsay", "title": "Musée d’Orsay",
+  "media": { "image": "assets/environments/gallery/images/Orsay/orsay_building_plan/Orsay_museum.png", "model": "assets/environments/gallery/models/museums/Orsay_museum_c3.glb" },
+  "print": { "imageTargetSource": "assets/environments/gallery/images/Orsay/orsay_building_plan/Orsay_museum.png", "compiledMindTarget": "assets/targets/Orsay_museum.mind" },
+  "ar": { "compiledTarget": "assets/targets/Orsay_museum.mind", "primaryModel": "assets/environments/gallery/models/museums/Orsay_museum_c3.glb", "viewer": { "initialScale": 0.3, "initialRise": 0.05 } },
+  "texts": { "artisticAnalysis": "Installed in the former railway station built for the 1900 Exposition, the Musée d’Orsay presents art from 1848 to 1914 and an exceptional Impressionist and Post-Impressionist collection." },
+  "localizations": { "fr": { "texts": { "artisticAnalysis": "Installé dans l’ancienne gare construite pour l’Exposition de 1900, le Musée d’Orsay présente les arts de 1848 à 1914 et une collection exceptionnelle d’œuvres impressionnistes et postimpressionnistes." } } }
+}

@@ -1,24 +1,34 @@
 const PRINT_PAGES = {
   en: {
     "mona-lisa": "print-target.html",
+    "lady-with-an-ermine": "print-artwork.html?painting=lady-with-an-ermine&lang=en",
     "van-gogh": "print-van-gogh.html",
     "van-gogh-bedroom": "print-van-gogh-bedroom.html",
     "vermeer-girl-with-a-pearl-earring": "print-vermeer-girl-with-a-pearl-earring.html",
-    "monet-impression-sunrise": "print-monet-impression-sunrise.html"
+    "view-of-delft": "print-artwork.html?painting=view-of-delft&lang=en",
+    "monet-impression-sunrise": "print-monet-impression-sunrise.html",
+    "pont-d-argenteuil": "print-artwork.html?painting=pont-d-argenteuil&lang=en"
   },
   fr: {
     "mona-lisa": "print-target-fr.html",
+    "lady-with-an-ermine": "print-artwork.html?painting=lady-with-an-ermine&lang=fr",
     "van-gogh": "print-van-gogh-fr.html",
     "van-gogh-bedroom": "print-van-gogh-bedroom-fr.html",
     "vermeer-girl-with-a-pearl-earring": "print-vermeer-girl-with-a-pearl-earring-fr.html",
-    "monet-impression-sunrise": "print-monet-impression-sunrise-fr.html"
+    "view-of-delft": "print-artwork.html?painting=view-of-delft&lang=fr",
+    "monet-impression-sunrise": "print-monet-impression-sunrise-fr.html",
+    "pont-d-argenteuil": "print-artwork.html?painting=pont-d-argenteuil&lang=fr"
   }
   ,
   ar: {
     "mona-lisa": "print-ar.html?painting=mona-lisa",
+    "lady-with-an-ermine": "print-artwork.html?painting=lady-with-an-ermine&lang=ar",
     "van-gogh": "print-ar.html?painting=van-gogh",
     "van-gogh-bedroom": "print-ar.html?painting=van-gogh-bedroom",
-    "vermeer-girl-with-a-pearl-earring": "print-ar.html?painting=vermeer-girl-with-a-pearl-earring"
+    "vermeer-girl-with-a-pearl-earring": "print-ar.html?painting=vermeer-girl-with-a-pearl-earring",
+    "view-of-delft": "print-artwork.html?painting=view-of-delft&lang=ar",
+    "monet-impression-sunrise": "print-ar.html?painting=monet-impression-sunrise",
+    "pont-d-argenteuil": "print-artwork.html?painting=pont-d-argenteuil&lang=ar"
   }
 };
 
@@ -43,6 +53,7 @@ const UI = {
     palette: "Palette",
     technique: "Technique",
     context: "Context"
+    , museums: "MUSEUMS", museumsIntro: "Discover the institutions that preserve these paintings and open their architectural models in VR, image AR, or spatial AR.", museumVr: "Museum VR", museumAr: "Image AR", museumSpace: "Space AR"
   },
   fr: {
     search: "Rechercher par titre, artiste, technique, période...",
@@ -64,6 +75,7 @@ const UI = {
     palette: "Palette",
     technique: "Technique",
     context: "Contexte"
+    , museums: "MUSÉES", museumsIntro: "Découvrez les institutions qui conservent ces tableaux et ouvrez leurs modèles architecturaux en VR, AR image ou AR espace.", museumVr: "VR du musée", museumAr: "AR image", museumSpace: "AR espace"
   },
   ar: {
     search: "ابحث بالعنوان أو الفنان أو التقنية أو الفترة...",
@@ -85,6 +97,7 @@ const UI = {
     palette: "الألوان",
     technique: "التقنية",
     context: "السياق"
+    , museums: "المتاحف", museumsIntro: "اكتشف المتاحف التي تحفظ هذه اللوحات وافتح نماذجها المعمارية في الواقع الافتراضي أو المعزز.", museumVr: "واقع افتراضي", museumAr: "واقع معزز بالصورة", museumSpace: "واقع معزز مكاني"
   }
 };
 
@@ -93,6 +106,7 @@ const FR_TITLES = {
   "van-gogh-bedroom": "La Chambre",
   "vermeer-girl-with-a-pearl-earring": "La Jeune Fille à la perle",
   "monet-impression-sunrise": "Impression, soleil levant"
+  ,"lady-with-an-ermine": "La Dame à l’hermine", "view-of-delft": "Vue de Delft", "pont-d-argenteuil": "Le Pont d’Argenteuil"
 };
 
 const AR_TITLES = {
@@ -100,6 +114,7 @@ const AR_TITLES = {
   "van-gogh": "بورتريه ذاتي",
   "van-gogh-bedroom": "غرفة النوم",
   "vermeer-girl-with-a-pearl-earring": "الفتاة ذات القرط اللؤلؤي"
+  ,"lady-with-an-ermine": "السيدة ذات القاقم", "view-of-delft": "منظر دلفت", "monet-impression-sunrise": "انطباع، شروق الشمس", "pont-d-argenteuil": "جسر أرجنتوي"
 };
 
 const AR_SUMMARIES = {
@@ -126,10 +141,14 @@ async function initCatalogue(root) {
   const manifestPaths = root.dataset.manifests.split(",").map((item) => item.trim()).filter(Boolean);
 
   try {
-    const manifests = await Promise.all(manifestPaths.map(loadManifest));
+    const museumPaths = (root.dataset.museums || "").split(",").map((item) => item.trim()).filter(Boolean);
+    const [manifests, museums] = await Promise.all([
+      Promise.all(manifestPaths.map(loadManifest)),
+      Promise.all(museumPaths.map(loadManifest))
+    ]);
     root.dataset.ready = "true";
     document.querySelector(".static-index")?.setAttribute("hidden", "");
-    renderCatalogue(root, manifests.sort((a, b) => a.bookOrder - b.bookOrder), lang, text);
+    renderCatalogue(root, manifests.sort((a, b) => a.bookOrder - b.bookOrder), museums, lang, text);
   } catch (error) {
     root.innerHTML = `<p class="catalogue-error">${escapeHtml(error.message)}</p>`;
   }
@@ -141,7 +160,7 @@ async function loadManifest(path) {
   return response.json();
 }
 
-function renderCatalogue(root, manifests, lang, text) {
+function renderCatalogue(root, manifests, museums, lang, text) {
   const movements = [...new Set(manifests.flatMap((item) => item.movement || []))].sort();
   const state = {
     query: "",
@@ -167,6 +186,10 @@ function renderCatalogue(root, manifests, lang, text) {
     <div class="catalogue-layout">
       <div class="artwork-grid"></div>
     </div>
+    <section class="museum-index-section">
+      <header><p class="eyebrow">ARTDACI</p><h2>${text.museums}</h2><p>${text.museumsIntro}</p></header>
+      <div class="museum-index-grid">${museums.map((museum) => renderMuseumCard(museum, lang, text)).join("")}</div>
+    </section>
   `;
 
   const input = root.querySelector("input");
@@ -200,6 +223,23 @@ function renderCatalogue(root, manifests, lang, text) {
   }
 
   update();
+}
+
+function renderMuseumCard(museum, lang, text) {
+  const localized = museum.localizations?.[lang] || {};
+  const title = localized.title || museum.title;
+  const body = localized.texts?.artisticAnalysis || museum.texts?.artisticAnalysis || "";
+  const slug = museum.slug;
+  return `<article class="museum-index-card">
+    <img src="${escapeHtml(museum.media?.image)}" alt="${escapeHtml(title)}" loading="lazy" />
+    <div><h3>${escapeHtml(title)}</h3><p>${escapeHtml(shorten(body, 190))}</p>
+      <div class="card-actions">
+        <a class="button primary" href="gallery-vr.html?lang=${lang}&amp;room=museums&amp;museum=${slug}">${text.museumVr}</a>
+        <a class="button" href="ar.html?museum=${slug}&amp;lang=${lang}">${text.museumAr}</a>
+        <a class="button" href="space.html?museum=${slug}&amp;lang=${lang}">${text.museumSpace}</a>
+      </div>
+    </div>
+  </article>`;
 }
 
 function matches(manifest, state) {

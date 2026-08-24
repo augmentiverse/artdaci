@@ -1,0 +1,27 @@
+{
+  "id": "monet-pont-d-argenteuil-1874",
+  "slug": "pont-d-argenteuil",
+  "bookOrder": 8,
+  "title": "The Bridge at Argenteuil",
+  "artist": { "name": "Claude Monet", "birthYear": 1840, "deathYear": 1926 },
+  "date": "1874",
+  "medium": "Oil on canvas",
+  "dimensions": { "heightCm": 60.5, "widthCm": 80 },
+  "currentLocation": { "museum": "Musée d’Orsay", "city": "Paris", "country": "France" },
+  "print": { "chapter": "Impressionism", "imageTargetSource": "assets/artists/claude-monet/collection/le-pont-d-argenteuil-monet.webp" },
+  "media": { "image": "assets/artists/claude-monet/collection/le-pont-d-argenteuil-monet.webp" },
+  "texts": {
+    "historicalContext": "Monet painted the bridge at Argenteuil in 1874, when the rapidly changing suburb joined leisure, modern engineering and life along the Seine.",
+    "artistBiography": "Claude Monet made changing light and atmosphere the central subject of painting. At Argenteuil he worked outdoors and repeatedly studied water, boats, bridges and weather.",
+    "artisticAnalysis": "The bridge crosses the composition with firm geometry while sails, ripples and reflections keep the scene in motion. Modern infrastructure and recreation coexist without becoming a literal report.",
+    "composition": "The bridge forms a strong horizontal, countered by masts and reflections. Open water leads the eye toward the arches and the bright distance.",
+    "palette": "Fresh blues, greens, whites and warm accents are laid in visible strokes. Broken colour lets the viewer's eye reconstruct sparkling light.",
+    "perspectiveTechnique": "Overlapping boats, diminishing bridge arches and reflections create depth, while abbreviated brushwork preserves the sensation of a changing moment.",
+    "culturalSignificance": "The painting is a landmark of Impressionism and a vivid record of modern life around Paris.",
+    "influence": "Its treatment of reflected light and contemporary landscape helped establish a new visual language for modern painting."
+  },
+  "localizations": {
+    "fr": { "title": "Le Pont d’Argenteuil" },
+    "ar": { "title": "جسر أرجنتوي" }
+  }
+}

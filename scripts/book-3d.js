@@ -1,10 +1,15 @@
 const MANIFEST_URLS = [
   "content/paintings/mona-lisa.json?v=2",
+  "content/paintings/lady-with-an-ermine.json?v=1",
+  "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=2",
+  "content/paintings/view-of-delft.json?v=1",
   "content/paintings/van-gogh.json?v=2",
   "content/paintings/van-gogh-bedroom.json?v=2",
-  "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=2",
-  "content/paintings/monet-impression-sunrise.json?v=3"
+  "content/paintings/monet-impression-sunrise.json?v=3",
+  "content/paintings/pont-d-argenteuil.json?v=1"
 ];
+const MUSEUM_MANIFEST_URLS = ["louvre", "mauritshuis", "czartoryski", "orsay", "van-gogh-museum"]
+  .map((slug) => `content/museums/${slug}.json?v=1`);
 
 const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae";
 const LEONARDO_STUDIO_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/862ab5f6-8608-469c-a840-8cb10f3859ae";
@@ -103,7 +108,10 @@ const BOOK_IMAGE_GALLERIES = {
     "assets/artists/claude-monet/collection/impression-sunrise-monet.webp",
     "assets/artists/claude-monet/collection/water-lilies-monet.webp",
     "assets/artists/claude-monet/collection/the-japanese-bridge-monet.webp"
-  ]
+  ],
+  "lady-with-an-ermine": ["assets/artists/leonardo-da-vinci/collection/the-lady-with-an-ermine-davinci.webp"],
+  "view-of-delft": ["assets/artists/johannes-vermeer/collection/view-of-delft-vermeer.webp"],
+  "pont-d-argenteuil": ["assets/artists/claude-monet/collection/le-pont-d-argenteuil-monet.webp"]
 };
 
 const BOOK_SECTION_COPY = {
@@ -281,10 +289,10 @@ init();
 
 async function init() {
   applyLanguage();
-  const responses = await Promise.all(MANIFEST_URLS.map((url) => fetch(url)));
+  const responses = await Promise.all([...MANIFEST_URLS, ...MUSEUM_MANIFEST_URLS].map((url) => fetch(url)));
   if (responses.some((response) => !response.ok)) throw new Error("Book content is unavailable.");
-  const manifests = await Promise.all(responses.map((response) => response.json()));
-  pageDefinitions = buildPageDefinitions(manifests);
+  const allManifests = await Promise.all(responses.map((response) => response.json()));
+  pageDefinitions = buildPageDefinitions(allManifests.slice(0, MANIFEST_URLS.length), allManifests.slice(MANIFEST_URLS.length));
   await buildBook(pageDefinitions);
   bindControls();
   updateBook();
@@ -308,7 +316,7 @@ function applyLanguage() {
   zoomButton.textContent = lang === "ar" ? "A+ تكبير" : lang === "fr" ? "A+ Agrandir" : "A+ Enlarge";
 }
 
-function buildPageDefinitions(manifests) {
+function buildPageDefinitions(manifests, museums = []) {
   const sectionCopy = BOOK_SECTION_COPY[lang];
   const tribute = LEONARDO_TRIBUTE[lang] || LEONARDO_TRIBUTE.en;
   const openingPages = tribute.pages.map((tributePage, index) => ({
@@ -348,7 +356,7 @@ function buildPageDefinitions(manifests) {
     const videos = manifest.media?.videos || [];
     const texts = getBookTexts(manifest);
     const galleryImages = BOOK_IMAGE_GALLERIES[manifest.slug] || [];
-    const hasImmersiveAssets = manifest.slug !== "monet-impression-sunrise";
+    const hasImmersiveAssets = Boolean((manifest.ar?.primaryModel || manifest.media?.model) && (manifest.ar?.compiledTarget || manifest.print?.compiledMindTarget));
     pages.push({
       kind: "artwork",
       eyebrow: `${String(index + 1).padStart(2, "0")} · ${sectionCopy.story}`,
@@ -432,6 +440,29 @@ function buildPageDefinitions(manifests) {
         hotspots: [{ label: "AR", x: 83, y: 26, type: "ar" }]
       });
     }
+  });
+
+  const museumCopy = lang === "fr"
+    ? { eyebrow: "LES CINQ MUSÉES", subtitle: "Image AR et modèle 3D disponibles", body: "Scannez l’image correspondante du livre pour faire apparaître le musée en AR, ou placez son modèle 3D dans votre espace." }
+    : lang === "ar"
+      ? { eyebrow: "المتاحف الخمسة", subtitle: "صورة واقع معزز ونموذج ثلاثي الأبعاد", body: "امسح صورة المتحف في الكتاب لإظهاره بالواقع المعزز، أو ضع نموذجه الثلاثي الأبعاد في مساحتك." }
+      : { eyebrow: "THE FIVE MUSEUMS", subtitle: "Image AR and 3D model available", body: "Scan the matching museum image in the printed book to reveal it in AR, or place its 3D model in your space." };
+  museums.forEach((museum) => {
+    const localized = museum.localizations?.[lang] || {};
+    pages.push({
+      kind: "museum",
+      eyebrow: museumCopy.eyebrow,
+      title: localized.title || museum.title,
+      subtitle: museumCopy.subtitle,
+      image: museum.media?.image,
+      body: `${localized.texts?.artisticAnalysis || museum.texts?.artisticAnalysis || ""} ${museumCopy.body}`,
+      manifest: museum,
+      hotspots: [
+        { label: "AR", x: 83, y: 25, type: "museumAr" },
+        { label: "3D", x: 83, y: 39, type: "museumSpace" },
+        { label: "VR", x: 83, y: 53, type: "museumVr" }
+      ]
+    });
   });
 
   pages.push({
@@ -700,6 +731,7 @@ function localizedTitle(manifest) {
     "van-gogh-bedroom": "غرفة النوم",
     "vermeer-girl-with-a-pearl-earring": "الفتاة ذات القرط اللؤلؤي",
     "monet-impression-sunrise": "انطباع، شروق الشمس"
+    ,"lady-with-an-ermine": "السيدة ذات القاقم", "view-of-delft": "منظر دلفت", "pont-d-argenteuil": "جسر أرجنتوي"
   }[manifest.slug] || manifest.title;
   if (lang !== "fr") return manifest.title;
   return {
@@ -708,6 +740,7 @@ function localizedTitle(manifest) {
     "van-gogh-bedroom": "La Chambre",
     "vermeer-girl-with-a-pearl-earring": "La Jeune Fille à la perle",
     "monet-impression-sunrise": "Impression, soleil levant"
+    ,"lady-with-an-ermine": "La Dame à l’hermine", "view-of-delft": "Vue de Delft", "pont-d-argenteuil": "Le Pont d’Argenteuil"
   }[manifest.slug] || manifest.title;
 }
 
@@ -717,7 +750,36 @@ function getAudio(manifest) {
   return list.find((item) => item.lang === mediaLang) || list.find((item) => item.lang === "fr") || list.find((item) => item.lang === "en") || list[0];
 }
 
+const ADDED_BOOK_TEXTS = {
+  fr: {
+    "lady-with-an-ermine": {
+      story: "Peinte vers 1489–1491 à la cour de Milan, l’œuvre représente Cecilia Gallerani, femme lettrée liée à Ludovic Sforza. Léonard transforme le portrait de cour en étude vivante du mouvement et de la présence.",
+      looking: "Cecilia tourne le buste comme si quelqu’un venait d’entrer. L’hermine accompagne ce mouvement. La main allongée, l’animal attentif et la lumière dirigée relient les deux corps dans un même instant.",
+      technique: "Les transitions douces donnent volume au visage, à la main et au pelage. Les examens techniques ont révélé des reprises : Léonard a construit l’image par observation, correction et expérimentation.",
+      legacy: "L’hermine peut évoquer la pureté, la modération, le nom de Cecilia et les emblèmes de Ludovic Sforza. Conservée au Musée des Princes Czartoryski à Cracovie, l’œuvre a renouvelé le portrait psychologique de la Renaissance."
+    },
+    "view-of-delft": {
+      story: "Vers 1660–1661, Vermeer observe Delft depuis le sud et transforme une vue urbaine familière en méditation sur la lumière, le climat et l’identité civique.",
+      looking: "Le ciel occupe la majeure partie de la toile. Les nuages font alterner ombre et lumière sur les quais, tandis que la tour éclairée de la Nieuwe Kerk devient le foyer du regard.",
+      technique: "Bandes horizontales, perspective, distance tonale et netteté sélective créent l’espace. De petites touches lumineuses suggèrent l’eau, la maçonnerie et l’humidité de l’air sans tout décrire.",
+      legacy: "À la fois portrait de ville et paysage construit, Vue de Delft est l’une des œuvres majeures du Mauritshuis et du Siècle d’or néerlandais."
+    },
+    "pont-d-argenteuil": {
+      story: "Monet peint Le Pont d’Argenteuil en 1874, dans une banlieue où se rencontrent loisirs, navigation, industrie et modernité des infrastructures.",
+      looking: "Le pont impose une forte horizontale, contrariée par les mâts, les voiles et les reflets. L’eau ouverte conduit l’œil vers les arches et la lumière du lointain.",
+      technique: "Bleus, verts, blancs et accents chauds sont posés en touches visibles. La couleur fragmentée laisse l’œil recomposer l’éclat mouvant de l’eau et de l’atmosphère.",
+      legacy: "Conservé au Musée d’Orsay, ce paysage est un jalon de l’impressionnisme et une vision essentielle de la vie moderne autour de Paris."
+    }
+  },
+  ar: {
+    "lady-with-an-ermine": { "story": "رسم ليوناردو هذه اللوحة نحو 1489–1491 في بلاط ميلانو، وتمثل سيسيليا غالراني.", "looking": "تلتفت سيسيليا والقاقم معاً كأن شخصاً دخل الغرفة للتو، فتبدو الصورة لحظة حية.", "technique": "تكشف الانتقالات الناعمة والمراجعات التقنية طريقة ليوناردو القائمة على الملاحظة والتجريب.", "legacy": "أصبحت اللوحة، المحفوظة في متحف أمراء تشارتوريسكي، نموذجاً للبورتريه النفسي في عصر النهضة." },
+    "view-of-delft": { "story": "رسم فيرمير دلفت نحو 1660–1661 وحوّل المشهد الحضري إلى دراسة للضوء والطقس.", "looking": "تملأ السماء معظم اللوحة، وتتبادل السحب الضوء والظل فوق الواجهة المائية.", "technique": "تجمع اللوحة المنظور والمسافات اللونية واللمسات المضيئة لبناء فضاء مقنع.", "legacy": "تعد منظر دلفت من أهم مناظر العصر الذهبي الهولندي ومن كنوز موريتشهاوس." },
+    "pont-d-argenteuil": { "story": "رسم مونيه جسر أرجنتوي سنة 1874 حيث التقت الحداثة والترفيه على نهر السين.", "looking": "يوازن الخط الأفقي للجسر صواري القوارب وانعكاساتها المتحركة.", "technique": "تعيد العين تركيب الضوء من ضربات زرقاء وخضراء وبيضاء ولمسات دافئة ظاهرة.", "legacy": "اللوحة المحفوظة في متحف أورسيه علامة بارزة في الانطباعية وتصوير الحياة الحديثة." }
+  }
+};
+
 function getBookTexts(manifest) {
+  if (ADDED_BOOK_TEXTS[lang]?.[manifest.slug]) return ADDED_BOOK_TEXTS[lang][manifest.slug];
   if (lang === "ar" && BOOK_ARABIC_TEXT[manifest.slug]) return BOOK_ARABIC_TEXT[manifest.slug];
   if (lang === "fr" && BOOK_FRENCH_TEXT[manifest.slug]) return BOOK_FRENCH_TEXT[manifest.slug];
   if (BOOK_ENGLISH_TEXT[manifest.slug]) return BOOK_ENGLISH_TEXT[manifest.slug];
@@ -1011,6 +1073,9 @@ function bindBookVideoControls() {
 function getExperienceUrl(manifest, type) {
   const slug = encodeURIComponent(manifest.slug);
   if (type === "space") return `space.html?painting=${slug}&lang=${lang}`;
+  if (type === "museumSpace") return `space.html?museum=${slug}&lang=${lang}`;
+  if (type === "museumAr") return `ar.html?museum=${slug}&lang=${lang}`;
+  if (type === "museumVr") return `gallery-vr.html?lang=${lang}&room=museums&museum=${slug}`;
   if (type === "ar") return `ar.html?painting=${slug}&lang=${lang}`;
   if (type === "vr") return `vr.html?painting=${slug}&lang=${lang}`;
   if (type === "gallery") {

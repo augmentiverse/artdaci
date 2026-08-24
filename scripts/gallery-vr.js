@@ -5,16 +5,30 @@ import { DRACOLoader } from "../vendor/DRACOLoader.module.js";
 const MANIFESTS = [
   "content/paintings/mona-lisa.json?v=4",
   "content/paintings/van-gogh.json?v=3",
-  "content/paintings/van-gogh-bedroom.json?v=2",
-  "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=3"
+  "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=3",
+  "content/paintings/van-gogh-bedroom.json?v=2"
 ];
-const PRINTED_MANIFESTS = [...MANIFESTS, "content/paintings/monet-impression-sunrise.json?v=3"];
+const PRINTED_MANIFESTS = [
+  "content/paintings/mona-lisa.json?v=4",
+  "content/paintings/lady-with-an-ermine.json?v=1",
+  "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=3",
+  "content/paintings/view-of-delft.json?v=1",
+  "content/paintings/van-gogh.json?v=3",
+  "content/paintings/van-gogh-bedroom.json?v=2",
+  "content/paintings/monet-impression-sunrise.json?v=3",
+  "content/paintings/pont-d-argenteuil.json?v=1"
+];
 const CONNECTED_AUDIO_WORKS = {
   "da-vinci:0": "mona-lisa",
   "van-gogh:2": "van-gogh",
   "van-gogh:3": "van-gogh-bedroom",
   "vermeer:0": "vermeer-girl-with-a-pearl-earring",
   "monet:0": "monet-impression-sunrise"
+};
+const EIGHT_MASTERPIECES_IMAGES = {
+  en: "assets/environments/gallery/images/8-masterpieces/8-masterpieces_en.png",
+  fr: "assets/environments/gallery/images/8-masterpieces/8-masterpieces_fr.png",
+  ar: "assets/environments/gallery/images/8-masterpieces/8-masterpieces_ar.png"
 };
 
 const GALLERY_IMAGES = {
@@ -149,7 +163,7 @@ const MUSEUM_ROOMS = [
       face: "assets/environments/gallery/images/Louvre/louvre_building/louvre_face.png",
       right: "assets/environments/gallery/images/Louvre/louvre_building/louvre_droit.png",
       left: "assets/environments/gallery/images/Louvre/louvre_building/louvre_gauche.png"
-    },
+    }, model: "assets/environments/gallery/models/museums/Louvre_museum_c3.glb",
     colors: [0x132b46, 0xc7a25b]
   },
   {
@@ -157,7 +171,7 @@ const MUSEUM_ROOMS = [
     name: { en: "Mauritshuis", fr: "Mauritshuis", ar: "متحف موريتشهاوس" },
     plan: "assets/environments/gallery/images/Mauritshuis/Mauritshuis_building_plan/Mauritshuis_building_plan_{lang}.png",
     timeline: "assets/environments/gallery/images/Mauritshuis/Mauritshuis_timeline/Mauritshuis_timeline_{lang}.png",
-    facade: "assets/environments/gallery/images/Mauritshuis/Mauritshuis_building_plan/Mauritshuis_façade.png",
+    facade: "assets/environments/gallery/images/Mauritshuis/Mauritshuis_building_plan/Mauritshuis_façade.png", model: "assets/environments/gallery/models/museums/Mauritshuis_museum_c3.glb",
     colors: [0x3d352b, 0xd3b471]
   },
   {
@@ -165,7 +179,7 @@ const MUSEUM_ROOMS = [
     name: { en: "Czartoryski Museum", fr: "Musée Czartoryski", ar: "متحف تشارتوريسكي" },
     plan: "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_building_plan_{lang}.png",
     timeline: "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_timeline/MNK-Czartoryski_timeline_{lang}.png",
-    facade: "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_façade.png",
+    facade: "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_façade.png", model: "assets/environments/gallery/models/museums/MNK-Czartoryski_museum_c3.glb",
     colors: [0x3a2131, 0xd0a36a]
   },
   {
@@ -173,7 +187,7 @@ const MUSEUM_ROOMS = [
     name: { en: "Musée d’Orsay", fr: "Musée d’Orsay", ar: "متحف أورسيه" },
     plan: "assets/environments/gallery/images/Orsay/orsay_building_plan/orsay_building_plan_{lang}.png",
     timeline: "assets/environments/gallery/images/Orsay/orsay_timeline/orsay_timeline_{lang}.png",
-    facade: "assets/environments/gallery/images/Orsay/orsay_building_plan/orsay_façade.png",
+    facade: "assets/environments/gallery/images/Orsay/orsay_building_plan/orsay_façade.png", model: "assets/environments/gallery/models/museums/Orsay_museum_c3.glb",
     colors: [0x183c40, 0xc9ad72]
   },
   {
@@ -181,7 +195,7 @@ const MUSEUM_ROOMS = [
     name: { en: "Van Gogh Museum", fr: "Musée Van Gogh", ar: "متحف فان غوخ" },
     plan: "assets/environments/gallery/images/Van-Gogh-s-Museum/vangogh-s-museum_building_plan/vangogh-s-museum_building_plan_{lang}.png",
     timeline: "assets/environments/gallery/images/Van-Gogh-s-Museum/vangogh-s-museum_timeline/vangogh-s-museum_timeline_{lang}.png",
-    facade: "assets/environments/gallery/images/Van-Gogh-s-Museum/vangogh-s-museum_building_plan/vangogh-s-museum.png",
+    facade: "assets/environments/gallery/images/Van-Gogh-s-Museum/vangogh-s-museum_building_plan/vangogh-s-museum.png", model: "assets/environments/gallery/models/museums/Vangogh_museum_c3.glb",
     colors: [0x28415b, 0xe0b84f]
   }
 ];
@@ -292,7 +306,18 @@ const REIMAGINED_ARTWORKS = [
   { src: "assets/shared/reimagined-gallery/the-bedroom.avif", title: "The Bedroom — Reimagined", titleAr: "غرفة النوم — معاد تخيلها" },
   { src: "assets/shared/reimagined-gallery/van-gogh_in_bedroom-standing.png", title: "Van Gogh in The Bedroom", titleAr: "فان غوخ في غرفة النوم" },
   { src: "assets/shared/reimagined-gallery/vermeer_girl-earring-p.png", title: "Girl with a Pearl Earring — Portrait", titleAr: "الفتاة ذات القرط اللؤلؤي — بورتريه" },
-  { src: "assets/shared/reimagined-gallery/vermeer_Girl-with-a-Pearl-Earring_sitting.png", title: "Girl with a Pearl Earring — Seated", titleAr: "الفتاة ذات القرط اللؤلؤي — جالسة" }
+  { src: "assets/shared/reimagined-gallery/vermeer_Girl-with-a-Pearl-Earring_sitting.png", title: "Girl with a Pearl Earring — Seated", titleAr: "الفتاة ذات القرط اللؤلؤي — جالسة" },
+  { src: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa-out-of-frame.png", title: "Mona Lisa — Out of the frame" },
+  { src: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/davinci-monalisa.png", title: "Leonardo and Mona Lisa" },
+  { src: "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-out-of-frame.png", title: "Van Gogh — Out of the frame" },
+  { src: "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-in-bedroom-standing.png", title: "Van Gogh in his bedroom" },
+  { src: "assets/artists/vincent-van-gogh/artworks/the-bedroom/images/bed-van-gogh.jpeg", title: "The Bedroom — Spatial interpretation" },
+  { src: "assets/artists/johannes-vermeer/reimagined/images/vermeer-pieter-van-ruijven-1.png", title: "Vermeer and his patrons I" },
+  { src: "assets/artists/johannes-vermeer/reimagined/images/vermeer-pieter-van-ruijven-2.png", title: "Vermeer and his patrons II" },
+  { src: "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring-sitting.png", title: "Girl with a Pearl Earring — Reimagined" },
+  { src: "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring-room.png", title: "Girl with a Pearl Earring — In the room" },
+  { src: "assets/artists/claude-monet/reimagined/images/monet-paul-durand-ruel.png", title: "Monet and Paul Durand-Ruel" },
+  { src: "assets/artists/claude-monet/artworks/impression-sunrise/images/woman-with-a-parasol-claude-monet.png", title: "Monet — Woman with a Parasol" }
 ];
 
 const PEOPLE_BEHIND_PAINTERS = [
@@ -432,12 +457,13 @@ const artistRoomId = params.get("artist");
 const artistRoom = ARTIST_ROOMS[artistRoomId] || null;
 const isModelMuseum = previewRoom === "models";
 const isFiveMuseumsWing = previewRoom === "museums";
+const requestedMuseumIndex = Math.max(0, MUSEUM_ROOMS.findIndex((room) => room.id === params.get("museum")));
 const modelArtistId = ARTIST_ROOMS[artistRoomId] ? artistRoomId : "da-vinci";
 // The standalone cinema has no `room` query parameter, but it must never be
 // treated as the connected museum. Otherwise entering WebXR moves the visitor
 // to the gallery entrance while the cinema remains tens of metres away.
 const isConnectedMuseum = !isCinemaOnly && !isModelMuseum && !isFiveMuseumsWing && previewRoom !== "people" && (Boolean(artistRoom) || !previewRoom || previewRoom === "paintings");
-const ARTIST_ROOM_ORDER = ["da-vinci", "van-gogh", "vermeer", "monet"];
+const ARTIST_ROOM_ORDER = ["da-vinci", "vermeer", "van-gogh", "monet"];
 const connectedStartIndex = Math.max(0, ARTIST_ROOM_ORDER.indexOf(artistRoomId));
 const connectedStartZ = connectedStartIndex === 0 ? -4.6 : connectedStartIndex * 16 - 5.2;
 const connectedStartX = connectedStartIndex === 0 ? -3.75 : 0;
@@ -833,6 +859,7 @@ const museumPanelsLoaded = new Set();
 const museumPanelLoads = new Map();
 const museumRoomRetryAt = new Map();
 let fiveMuseumsPreloadPromise = null;
+const eightMasterpiecesPanelsLoaded = new Set();
 
 init();
 
@@ -911,7 +938,7 @@ async function init() {
   if (isFiveMuseumsWing) {
     buildFiveMuseumsWing();
     renderer.setAnimationLoop(render);
-    await loadFiveMuseumsRoom(0);
+    await Promise.all([...new Set([0, requestedMuseumIndex])].map(loadFiveMuseumsRoom));
     void preloadFiveMuseumsWing();
     await detectVR();
     status.textContent = text.ready;
@@ -1081,7 +1108,7 @@ function getCurrentGuideContext() {
   if (activeRoom === "people") return "the ARTDACI People Behind the Painters room and the patrons who sustained four artistic legacies";
   if (isModelMuseum) return `${ARTIST_ROOMS[artistRoomId]?.name || "the Four Masters"} 3D model room`;
   if (artistRoom) return `${artistRoom.name}'s painting room`;
-  return `the ARTDACI ${activeRoom} room featuring Leonardo da Vinci, Van Gogh, Vermeer, and Monet`;
+  return `the ARTDACI ${activeRoom} room featuring Leonardo da Vinci, Vermeer, Van Gogh, and Monet`;
 }
 
 function makeVirtualGuideUrl(context, question = "Welcome me, explain what I can discover here, and ask what I would like to explore.") {
@@ -1602,7 +1629,7 @@ function museumImagePath(template) {
 
 function buildFiveMuseumsWing() {
   const roomCenters = MUSEUM_ROOMS.map((_, index) => index * 16);
-  visitor.position.set(0, 0, -5.2);
+  visitor.position.set(0, 0, requestedMuseumIndex ? requestedMuseumIndex * 16 - 5.2 : -5.2);
   visitor.rotation.y = Math.PI;
   scene.background = new THREE.Color(0x10171b);
   scene.fog = new THREE.Fog(0x10171b, 28, 88);
@@ -1614,6 +1641,14 @@ function buildFiveMuseumsWing() {
   MUSEUM_ROOMS.forEach((room, index) => addFiveMuseumsRoomShell(room, roomCenters[index], index));
   addFiveMuseumsPartitions();
   addFiveMuseumsMovementNetwork(roomCenters, MUSEUM_ROOMS.map(localizedMuseumName));
+  addLivingBookTable([0.65, 0, 1.35], 0);
+  if (allowDecorative3DModels) void addFurnitureModel({
+    src: ACCENT_SOFA_MODEL,
+    name: "five-museums-louvre-living-book-sofa",
+    position: [-2.35, 0, 1.35],
+    rotationY: Math.PI / 2,
+    maxSize: 2.35
+  });
 }
 
 function addFiveMuseumsMovementNetwork(roomCenters, roomLabels) {
@@ -1748,6 +1783,7 @@ async function loadFiveMuseumsRoom(index) {
       museumRoomRetryAt.set(index, performance.now() + 2500);
       return false;
     }
+    await loadMuseumArchitecturalModel(room, index, centerZ);
     museumRoomsLoaded.add(index);
     museumRoomRetryAt.delete(index);
     status.textContent = text.ready;
@@ -1755,6 +1791,37 @@ async function loadFiveMuseumsRoom(index) {
   })().finally(() => museumRoomLoads.delete(index));
   museumRoomLoads.set(index, task);
   return task;
+}
+
+async function loadMuseumArchitecturalModel(room, index, centerZ) {
+  if (!allowDecorative3DModels || !room.model) return null;
+  const position = index === 0 ? [-3.8, 0.02, centerZ - 2.1] : [0, 0.02, centerZ];
+  const baseGroup = new THREE.Group();
+  baseGroup.position.set(position[0], 0, position[2]);
+  const dark = new THREE.Color(room.colors[0]).offsetHSL(0, 0.06, 0.08);
+  const accent = new THREE.Color(room.colors[1]);
+  const tiers = [
+    { radiusTop: 1.56, radiusBottom: 1.68, height: 0.16, y: 0.08, color: dark },
+    { radiusTop: 1.42, radiusBottom: 1.5, height: 0.22, y: 0.27, color: accent },
+    { radiusTop: 1.28, radiusBottom: 1.36, height: 0.13, y: 0.445, color: dark }
+  ];
+  tiers.forEach((tier) => {
+    const mesh = new THREE.Mesh(new THREE.CylinderGeometry(tier.radiusTop, tier.radiusBottom, tier.height, 48), new THREE.MeshStandardMaterial({ color: tier.color, roughness: 0.48, metalness: 0.2 }));
+    mesh.position.y = tier.y; mesh.receiveShadow = true; baseGroup.add(mesh);
+  });
+  [0.17, 0.39].forEach((y, ringIndex) => {
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(ringIndex ? 1.34 : 1.53, 0.035, 10, 64), new THREE.MeshStandardMaterial({ color: ringIndex ? accent : 0xf1d99a, metalness: 0.65, roughness: 0.25 }));
+    ring.rotation.x = Math.PI / 2; ring.position.y = y; baseGroup.add(ring);
+  });
+  const motifGeometry = index % 2 ? new THREE.OctahedronGeometry(0.075, 0) : new THREE.BoxGeometry(0.1, 0.1, 0.045);
+  for (let motif = 0; motif < 12; motif += 1) {
+    const angle = motif / 12 * Math.PI * 2;
+    const ornament = new THREE.Mesh(motifGeometry, new THREE.MeshStandardMaterial({ color: 0xf4dfaa, metalness: 0.55, roughness: 0.3 }));
+    ornament.position.set(Math.sin(angle) * 1.48, 0.29, Math.cos(angle) * 1.48);
+    ornament.rotation.y = angle; baseGroup.add(ornament);
+  }
+  scene.add(baseGroup);
+  return addFurnitureModel({ src: room.model, name: `museum-architecture-${room.id}`, position: [position[0], 0.51, position[2]], rotationY: Math.PI, maxSize: 2.35 });
 }
 
 function loadMuseumPanelOnce(key, loader) {
@@ -2806,6 +2873,7 @@ async function loadConnectedMuseumRoom(roomIndex) {
     const centerZ = roomIndex * 16;
     status.textContent = lang === "fr" ? `Chargement de ${room.name}…` : `Loading ${room.name}…`;
     await addArtistEntrancePortrait(id, room, centerZ);
+    if (id === "da-vinci" || id === "monet") await addEightMasterpiecesPanel(id, centerZ);
     for (let workIndex = 0; workIndex < room.works.length; workIndex += 1) {
       const manifestSlug = CONNECTED_AUDIO_WORKS[`${id}:${workIndex}`];
       await addConnectedMuseumArtwork(room, room.works[workIndex], centerZ, workIndex, connectedManifestMap.get(manifestSlug));
@@ -2814,6 +2882,33 @@ async function loadConnectedMuseumRoom(roomIndex) {
   })().finally(() => connectedRoomLoads.delete(roomIndex));
   connectedRoomLoads.set(roomIndex, load);
   return load;
+}
+
+async function addEightMasterpiecesPanel(roomId, centerZ) {
+  if (eightMasterpiecesPanelsLoaded.has(roomId)) return;
+  eightMasterpiecesPanelsLoaded.add(roomId);
+  try {
+    if (roomId === "da-vinci") {
+      await addMuseumInformationPanel(EIGHT_MASTERPIECES_IMAGES[lang], 1.45, centerZ - 7.87, 0, "", {
+        maxWidth: 4.45,
+        maxHeight: 3.05,
+        positionY: 2.2,
+        hideLabel: true,
+        highDetail: true
+      });
+    } else {
+      await addMuseumInformationPanel(EIGHT_MASTERPIECES_IMAGES[lang], 0, centerZ + 7.87, Math.PI, "", {
+        maxWidth: 4.8,
+        maxHeight: 3.2,
+        positionY: 2.05,
+        hideLabel: true,
+        highDetail: true
+      });
+    }
+  } catch (error) {
+    eightMasterpiecesPanelsLoaded.delete(roomId);
+    console.warn(`Eight-masterpieces panel unavailable in ${roomId}.`, error);
+  }
 }
 
 async function addArtistEntrancePortrait(id, room, centerZ) {
@@ -2852,11 +2947,11 @@ async function addMonetFinalWallLogo() {
     texture.encoding = THREE.sRGBEncoding;
     texture.minFilter = THREE.LinearFilter;
     const logo = new THREE.Mesh(
-      new THREE.PlaneGeometry(2.25, 2.25),
+      new THREE.PlaneGeometry(0.68, 0.68),
       new THREE.MeshBasicMaterial({ map: texture, transparent: true, side: THREE.DoubleSide })
     );
     logo.name = "monet-final-wall-artdaci-logo";
-    logo.position.set(0, 2.45, 55.88);
+    logo.position.set(0, 4.02, 55.88);
     logo.rotation.y = Math.PI;
     scene.add(logo);
   } catch (error) {
@@ -3468,8 +3563,8 @@ function addNavigationSigns() {
 function addReimaginedPainterRoomSigns() {
   const roomNames = [
     { id: "da-vinci", centerZ: 0, name: lang === "fr" ? "LÉONARD DE VINCI — RÉIMAGINÉ" : "LEONARDO DA VINCI — REIMAGINED" },
-    { id: "van-gogh", centerZ: 10, name: lang === "fr" ? "VAN GOGH — RÉIMAGINÉ" : "VAN GOGH — REIMAGINED" },
-    { id: "vermeer", centerZ: 22, name: lang === "fr" ? "VERMEER — RÉIMAGINÉ" : "VERMEER — REIMAGINED" },
+    { id: "vermeer", centerZ: 10, name: lang === "fr" ? "VERMEER — RÉIMAGINÉ" : "VERMEER — REIMAGINED" },
+    { id: "van-gogh", centerZ: 22, name: lang === "fr" ? "VAN GOGH — RÉIMAGINÉ" : "VAN GOGH — REIMAGINED" },
     { id: "monet", centerZ: 34, name: lang === "fr" ? "MONET — RÉIMAGINÉ" : "MONET — REIMAGINED" }
   ];
   roomNames.forEach((room) => {
@@ -3599,9 +3694,9 @@ function navigationMenuPalette(position, options) {
   let painterId = ARTIST_ROOMS[artistRoomId] ? artistRoomId : null;
   const z = position[2] || 0;
   if (activeRoom === "reimagined") {
-    painterId = z < 5 ? "da-vinci" : z < 16 ? "van-gogh" : z < 29 ? "vermeer" : "monet";
+    painterId = z < 5 ? "da-vinci" : z < 16 ? "vermeer" : z < 29 ? "van-gogh" : "monet";
   } else if (activeRoom === "paintings" && isConnectedMuseum) {
-    painterId = z < 8 ? "da-vinci" : z < 24 ? "van-gogh" : z < 40 ? "vermeer" : "monet";
+    painterId = z < 8 ? "da-vinci" : z < 24 ? "vermeer" : z < 40 ? "van-gogh" : "monet";
   }
   if (painterId) return painterPalettes[painterId];
 
@@ -3614,8 +3709,17 @@ function navigationMenuPalette(position, options) {
   return roomPalettes[activeRoom] || { background: "#142c3c", border: "#d2aa62", text: "#fff2df", icon: "#e5bb70" };
 }
 
+function formatMenuText(message, options = {}) {
+  if (lang === "ar" || !message) return message;
+  if (options.mainCategory) return message.toLocaleUpperCase(lang === "fr" ? "fr" : "en");
+  if (lang === "fr") {
+    return message.replace(/^(\s*)(\p{L})/u, (_, spacing, letter) => `${spacing}${letter.toLocaleUpperCase("fr")}`);
+  }
+  return message.replace(/(^|[\s—–/])([a-z])/g, (_, prefix, letter) => `${prefix}${letter.toLocaleUpperCase("en")}`);
+}
+
 function createWallSign(message, position, rotationY, options = {}) {
-  message = lang === "ar" ? message : message.toLocaleUpperCase(lang === "fr" ? "fr" : "en");
+  message = formatMenuText(message, options);
   const canvas = document.createElement("canvas");
   const signResolution = options.highDetail ? 1600 : isFiveMuseumsWing && isLowPowerDevice ? 1280 : isLowPowerDevice ? 960 : 1600;
   canvas.width = signResolution;
@@ -3926,7 +4030,7 @@ async function addPainting(painting, placement) {
 }
 
 async function buildReimaginedExhibition() {
-  const roomCenters = { "da-vinci": 0, "van-gogh": 10, vermeer: 22, monet: 34 };
+  const roomCenters = { "da-vinci": 0, vermeer: 10, "van-gogh": 22, monet: 34 };
   const roomSlots = new Map();
   const placementFor = (painter) => {
     const centerZ = roomCenters[painter];
@@ -3984,7 +4088,7 @@ async function buildReimaginedExhibition() {
 }
 
 function buildPainterPresentationVideos() {
-  const roomCenters = { "da-vinci": 0, "van-gogh": 10, vermeer: 22, monet: 34 };
+  const roomCenters = { "da-vinci": 0, vermeer: 10, "van-gogh": 22, monet: 34 };
   PAINTER_PRESENTATION_VIDEOS.forEach((item) => {
     const centerZ = roomCenters[item.painter];
     const video = document.createElement("video");
@@ -4002,17 +4106,19 @@ function buildPainterPresentationVideos() {
 
     const display = new THREE.Group();
     display.name = `${item.painter}-presentation-video`;
-    display.position.set(0, 2.15, centerZ + 4.82);
+    // Keep the central doorway clear: the presentation screen belongs to the
+    // left-hand section of each room's exit wall.
+    display.position.set(-3.72, 2.32, centerZ + 4.82);
     display.rotation.y = Math.PI;
 
     const frame = new THREE.Mesh(
-      new THREE.BoxGeometry(3.46, 2.14, 0.14),
+      new THREE.BoxGeometry(2.86, 1.82, 0.14),
       new THREE.MeshStandardMaterial({ color: 0xb78b43, roughness: 0.4, metalness: 0.32 })
     );
     display.add(frame);
 
     const screen = new THREE.Mesh(
-      new THREE.PlaneGeometry(3.2, 1.8),
+      new THREE.PlaneGeometry(2.62, 1.48),
       new THREE.MeshBasicMaterial({ map: texture, color: 0xffffff, side: THREE.DoubleSide })
     );
     screen.position.z = 0.081;
@@ -4021,8 +4127,8 @@ function buildPainterPresentationVideos() {
     const localizedTitle = item.title[lang] || item.title.en;
     const instruction = lang === "ar" ? "اختر للتشغيل أو الإيقاف" : lang === "fr" ? "Sélectionner pour lire ou mettre en pause" : "Select to play or pause";
     const label = makeLabel(`${localizedTitle}\n${instruction}`);
-    label.position.set(0, -1.35, 0.09);
-    label.scale.set(3.35, 0.65, 1);
+    label.position.set(0, -1.12, 0.09);
+    label.scale.set(2.82, 0.56, 1);
     display.add(label);
     scene.add(display);
 
@@ -5335,7 +5441,7 @@ function localizedTitle(painting) {
 }
 
 function makeLabel(message, options = {}) {
-  message = lang === "ar" ? message : message.toLocaleUpperCase(lang === "fr" ? "fr" : "en");
+  message = formatMenuText(message, options);
   const canvas = document.createElement("canvas");
   const logicalWidth = 1600;
   const logicalHeight = 400;

@@ -1,0 +1,8 @@
+{
+  "slug": "van-gogh-museum", "title": "Van Gogh Museum",
+  "media": { "image": "assets/environments/gallery/images/Van-Gogh-s-Museum/vangogh-s-museum_building_plan/VanGogh_museum.png", "model": "assets/environments/gallery/models/museums/Vangogh_museum_c3.glb" },
+  "print": { "imageTargetSource": "assets/environments/gallery/images/Van-Gogh-s-Museum/vangogh-s-museum_building_plan/VanGogh_museum.png", "compiledMindTarget": "assets/targets/Vangogh_museum.mind" },
+  "ar": { "compiledTarget": "assets/targets/Vangogh_museum.mind", "primaryModel": "assets/environments/gallery/models/museums/Vangogh_museum_c3.glb", "viewer": { "initialScale": 0.32, "initialRise": 0.05 } },
+  "texts": { "artisticAnalysis": "Opened in Amsterdam in 1973, the museum holds the world's largest Van Gogh collection, including paintings, drawings and letters transmitted through Theo and the family." },
+  "localizations": { "fr": { "title": "Musée Van Gogh", "texts": { "artisticAnalysis": "Ouvert à Amsterdam en 1973, le musée conserve la plus grande collection Van Gogh au monde : peintures, dessins et lettres transmis grâce à Theo et à la famille." } }, "ar": { "title": "متحف فان غوخ" } }
+}

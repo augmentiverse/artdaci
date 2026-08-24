@@ -1,0 +1,27 @@
+{
+  "id": "leonardo-lady-with-an-ermine-1489-1491",
+  "slug": "lady-with-an-ermine",
+  "bookOrder": 2,
+  "title": "The Lady with an Ermine",
+  "artist": { "name": "Leonardo da Vinci", "birthYear": 1452, "deathYear": 1519 },
+  "date": "c. 1489–1491",
+  "medium": "Oil on walnut panel",
+  "dimensions": { "heightCm": 54.8, "widthCm": 40.3 },
+  "currentLocation": { "museum": "Princes Czartoryski Museum", "city": "Kraków", "country": "Poland" },
+  "print": { "chapter": "Renaissance", "imageTargetSource": "assets/artists/leonardo-da-vinci/collection/the-lady-with-an-ermine-davinci.webp" },
+  "media": { "image": "assets/artists/leonardo-da-vinci/collection/the-lady-with-an-ermine-davinci.webp" },
+  "texts": {
+    "historicalContext": "Leonardo painted this portrait at the Milanese court around 1489–1491. The sitter is Cecilia Gallerani, celebrated for her intelligence and poetry and closely connected to Ludovico Sforza.",
+    "artistBiography": "Leonardo united painting, anatomy, optics and the study of movement. His Milan years transformed court portraiture into a field of psychological and scientific observation.",
+    "artisticAnalysis": "Cecilia turns as if someone has just entered the room. The ermine twists with her, making the portrait feel like a captured instant rather than a fixed pose. Her long hand, the animal's alert body and the directed light organize the movement.",
+    "composition": "The two turning bodies create linked diagonals. The dark background concentrates attention on face, hand and animal, while the cropped bust increases the immediacy of the encounter.",
+    "palette": "Restrained darks, warm flesh, red-brown fabric and cool blue details support Leonardo's gradual modelling of light and volume.",
+    "perspectiveTechnique": "Soft transitions and carefully observed anatomy give the figure and animal convincing volume. Technical studies reveal revisions that confirm Leonardo's experimental working process.",
+    "culturalSignificance": "The ermine may evoke purity, moderation, Cecilia's name and Ludovico Sforza's emblems. The portrait is now one of the defining treasures of the Princes Czartoryski collection in Kraków.",
+    "influence": "Its dynamic pose and psychological immediacy helped redefine Renaissance portraiture."
+  },
+  "localizations": {
+    "fr": { "title": "La Dame à l’hermine" },
+    "ar": { "title": "السيدة ذات القاقم" }
+  }
+}

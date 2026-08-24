@@ -1,0 +1,8 @@
+{
+  "slug": "mauritshuis", "title": "Mauritshuis",
+  "media": { "image": "assets/environments/gallery/images/Mauritshuis/Mauritshuis_building_plan/Mauritshuis_museum.png", "model": "assets/environments/gallery/models/museums/Mauritshuis_museum_c3.glb" },
+  "print": { "imageTargetSource": "assets/environments/gallery/images/Mauritshuis/Mauritshuis_building_plan/Mauritshuis_museum.png", "compiledMindTarget": "assets/targets/Mauritshuis_museum.mind" },
+  "ar": { "compiledTarget": "assets/targets/Mauritshuis_museum.mind", "primaryModel": "assets/environments/gallery/models/museums/Mauritshuis_museum_c3.glb", "viewer": { "initialScale": 0.34, "initialRise": 0.05 } },
+  "texts": { "artisticAnalysis": "An intimate seventeenth-century palace in The Hague, the Mauritshuis houses Girl with a Pearl Earring and View of Delft and supports major technical research." },
+  "localizations": { "fr": { "texts": { "artisticAnalysis": "Palais intime du XVIIe siècle à La Haye, le Mauritshuis conserve La Jeune Fille à la perle et Vue de Delft, et mène d’importantes recherches techniques." } } }
+}

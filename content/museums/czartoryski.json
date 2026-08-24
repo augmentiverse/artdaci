@@ -1,0 +1,8 @@
+{
+  "slug": "czartoryski", "title": "Princes Czartoryski Museum",
+  "media": { "image": "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_museum.png", "model": "assets/environments/gallery/models/museums/MNK-Czartoryski_museum_c3.glb" },
+  "print": { "imageTargetSource": "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_museum.png", "compiledMindTarget": "assets/targets/MNK-Czartoryski_museum.mind" },
+  "ar": { "compiledTarget": "assets/targets/MNK-Czartoryski_museum.mind", "primaryModel": "assets/environments/gallery/models/museums/MNK-Czartoryski_museum_c3.glb", "viewer": { "initialScale": 0.34, "initialRise": 0.05 } },
+  "texts": { "artisticAnalysis": "Founded from Izabela Czartoryska's vision of Polish cultural memory and now part of the National Museum in Kraków, the museum houses Leonardo's Lady with an Ermine." },
+  "localizations": { "fr": { "title": "Musée des Princes Czartoryski", "texts": { "artisticAnalysis": "Né de la vision d’Izabela Czartoryska pour la mémoire culturelle polonaise et intégré au Musée national de Cracovie, le musée conserve La Dame à l’hermine de Léonard." } } }
+}

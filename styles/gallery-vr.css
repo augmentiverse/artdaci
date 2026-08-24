@@ -645,12 +645,19 @@ body .gallery-button.primary {
   box-shadow: inset 0 0 0 3px rgba(255,255,255,.2), 0 5px 12px rgba(0,0,0,.3);
 }
 
-/* Screen-menu typography: supporting actions stay quiet while the principal
-   destinations remain unmistakable. VR wall signs keep their own casing. */
+/* Language-aware menu typography. Principal destinations stay uppercase;
+   supporting English labels use title capitalization and French keeps its
+   authored sentence casing. */
 body .gallery-toolbar,
 body .gallery-guide,
 body .virtual-guide {
-  text-transform: lowercase;
+  text-transform: none;
+}
+
+html[lang="en"] body .gallery-toolbar,
+html[lang="en"] body .gallery-guide,
+html[lang="en"] body .virtual-guide {
+  text-transform: capitalize;
 }
 
 body :is(

@@ -30,6 +30,14 @@ const PAINTINGS = {
   "vermeer-girl-with-a-pearl-earring": "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=3"
 };
 
+const MUSEUMS = {
+  "louvre": "content/museums/louvre.json",
+  "mauritshuis": "content/museums/mauritshuis.json",
+  "czartoryski": "content/museums/czartoryski.json",
+  "orsay": "content/museums/orsay.json",
+  "van-gogh-museum": "content/museums/van-gogh-museum.json"
+};
+
 const UI_TEXT = {
   en: {
     ready: "Ready. Tap Start Camera and allow camera access.",
@@ -442,10 +450,13 @@ async function init() {
 
 function selectPainting() {
   const params = new URLSearchParams(window.location.search);
-  const slug = params.get("painting") || "mona-lisa";
-  CONFIG.slug = PAINTINGS[slug] ? slug : "mona-lisa";
+  const museum = params.get("museum");
+  const slug = museum || params.get("painting") || "mona-lisa";
+  const catalogue = museum ? MUSEUMS : PAINTINGS;
+  CONFIG.slug = catalogue[slug] ? slug : "mona-lisa";
   CONFIG.lang = ["en", "fr", "ar"].includes(params.get("lang")) ? params.get("lang") : "en";
-  CONFIG.manifest = PAINTINGS[CONFIG.slug];
+  CONFIG.manifest = catalogue[CONFIG.slug] || PAINTINGS["mona-lisa"];
+  CONFIG.resourceType = museum && MUSEUMS[museum] ? "museum" : "painting";
 }
 
 function t(key) {
@@ -467,7 +478,7 @@ function applyStaticLanguage() {
   document.getElementById("toggle-spin").textContent = t("rotate");
   document.getElementById("reset-view").textContent = t("reset");
   document.getElementById("space-link").textContent = t("space");
-  document.getElementById("space-link").href = `space.html?painting=${CONFIG.slug}&lang=${CONFIG.lang}&v=14`;
+  document.getElementById("space-link").href = `space.html?${CONFIG.resourceType}=${CONFIG.slug}&lang=${CONFIG.lang}&v=14`;
   document.getElementById("panel-kicker").textContent = t("catalogue");
 }
 
