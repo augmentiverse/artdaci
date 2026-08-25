@@ -171,7 +171,7 @@ const MUSEUM_ROOMS = [
     name: { en: "Mauritshuis", fr: "Mauritshuis", ar: "متحف موريتشهاوس" },
     plan: "assets/environments/gallery/images/Mauritshuis/Mauritshuis_building_plan/Mauritshuis_building_plan_{lang}.png",
     timeline: "assets/environments/gallery/images/Mauritshuis/Mauritshuis_timeline/Mauritshuis_timeline_{lang}.png",
-    facade: "assets/environments/gallery/images/Mauritshuis/Mauritshuis_building_plan/Mauritshuis_façade.png", model: "assets/environments/gallery/models/museums/Mauritshuis_museum_c3.glb",
+    facade: "assets/environments/gallery/images/Mauritshuis/Mauritshuis_building_plan/Mauritshuis_façade.png", model: "assets/environments/gallery/models/museums/Mauritshuis_museum_c3.glb", displaySize: 5.8,
     colors: [0x3d352b, 0xd3b471]
   },
   {
@@ -179,7 +179,7 @@ const MUSEUM_ROOMS = [
     name: { en: "Czartoryski Museum", fr: "Musée Czartoryski", ar: "متحف تشارتوريسكي" },
     plan: "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_building_plan_{lang}.png",
     timeline: "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_timeline/MNK-Czartoryski_timeline_{lang}.png",
-    facade: "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_façade.png", model: "assets/environments/gallery/models/museums/MNK-Czartoryski_museum_c3.glb",
+    facade: "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_façade.png", model: "assets/environments/gallery/models/museums/MNK-Czartoryski_museum_c3.glb", displaySize: 5.8,
     colors: [0x3a2131, 0xd0a36a]
   },
   {
@@ -187,7 +187,7 @@ const MUSEUM_ROOMS = [
     name: { en: "Musée d’Orsay", fr: "Musée d’Orsay", ar: "متحف أورسيه" },
     plan: "assets/environments/gallery/images/Orsay/orsay_building_plan/orsay_building_plan_{lang}.png",
     timeline: "assets/environments/gallery/images/Orsay/orsay_timeline/orsay_timeline_{lang}.png",
-    facade: "assets/environments/gallery/images/Orsay/orsay_building_plan/orsay_façade.png", model: "assets/environments/gallery/models/museums/Orsay_museum_c3.glb",
+    facade: "assets/environments/gallery/images/Orsay/orsay_building_plan/orsay_façade.png", model: "assets/environments/gallery/models/museums/Orsay_museum_c3.glb", displaySize: 6.2,
     colors: [0x183c40, 0xc9ad72]
   },
   {
@@ -195,7 +195,7 @@ const MUSEUM_ROOMS = [
     name: { en: "Van Gogh Museum", fr: "Musée Van Gogh", ar: "متحف فان غوخ" },
     plan: "assets/environments/gallery/images/Van-Gogh-s-Museum/vangogh-s-museum_building_plan/vangogh-s-museum_building_plan_{lang}.png",
     timeline: "assets/environments/gallery/images/Van-Gogh-s-Museum/vangogh-s-museum_timeline/vangogh-s-museum_timeline_{lang}.png",
-    facade: "assets/environments/gallery/images/Van-Gogh-s-Museum/vangogh-s-museum_building_plan/vangogh-s-museum.png", model: "assets/environments/gallery/models/museums/Vangogh_museum_c3.glb",
+    facade: "assets/environments/gallery/images/Van-Gogh-s-Museum/vangogh-s-museum_building_plan/vangogh-s-museum.png", model: "assets/environments/gallery/models/museums/Vangogh_museum_c3.glb", displaySize: 5.6,
     colors: [0x28415b, 0xe0b84f]
   }
 ];
@@ -1657,8 +1657,8 @@ function addFiveMuseumsMovementNetwork(roomCenters, roomLabels) {
       const previous = lang === "ar" ? `← ${roomLabels[index - 1]}` : lang === "fr" ? "← SALLE PRÉCÉDENTE" : "← PREVIOUS ROOM";
       const returningThroughLouvreDoor = index === 1;
       addMovementHotspot(
-        returningThroughLouvreDoor ? [4.8, 11] : [-1.15, centerZ],
-        returningThroughLouvreDoor ? [4.8, 5] : [0, roomCenters[index - 1]],
+        returningThroughLouvreDoor ? [4.8, 11] : [-4.8, centerZ],
+        returningThroughLouvreDoor ? [4.8, 5] : [-4.8, roomCenters[index - 1]],
         previous,
         Math.PI,
         Math.PI,
@@ -1669,8 +1669,8 @@ function addFiveMuseumsMovementNetwork(roomCenters, roomLabels) {
       const next = lang === "ar" ? `${roomLabels[index + 1]} →` : lang === "fr" ? "SALLE SUIVANTE →" : "NEXT ROOM →";
       const leavingLouvre = index === 0;
       addMovementHotspot(
-        leavingLouvre ? [4.8, 5] : [1.15, centerZ],
-        leavingLouvre ? [4.8, 11] : [0, roomCenters[index + 1]],
+        leavingLouvre ? [4.8, 5] : [4.8, centerZ],
+        leavingLouvre ? [4.8, 11] : [4.8, roomCenters[index + 1]],
         next,
         0,
         Math.PI,
@@ -1805,33 +1805,13 @@ async function loadMuseumArchitecturalModel(room, index, centerZ) {
     });
     return model;
   }
-  const position = [0, 0.02, centerZ];
-  const baseGroup = new THREE.Group();
-  baseGroup.position.set(position[0], 0, position[2]);
-  const dark = new THREE.Color(room.colors[0]).offsetHSL(0, 0.06, 0.08);
-  const accent = new THREE.Color(room.colors[1]);
-  const tiers = [
-    { radiusTop: 1.56, radiusBottom: 1.68, height: 0.16, y: 0.08, color: dark },
-    { radiusTop: 1.42, radiusBottom: 1.5, height: 0.22, y: 0.27, color: accent },
-    { radiusTop: 1.28, radiusBottom: 1.36, height: 0.13, y: 0.445, color: dark }
-  ];
-  tiers.forEach((tier) => {
-    const mesh = new THREE.Mesh(new THREE.CylinderGeometry(tier.radiusTop, tier.radiusBottom, tier.height, 48), new THREE.MeshStandardMaterial({ color: tier.color, roughness: 0.48, metalness: 0.2 }));
-    mesh.position.y = tier.y; mesh.receiveShadow = true; baseGroup.add(mesh);
+  return addFurnitureModel({
+    src: room.model,
+    name: `museum-architecture-${room.id}`,
+    position: [0, 0.02, centerZ],
+    rotationY: Math.PI,
+    maxSize: room.displaySize || 5.8
   });
-  [0.17, 0.39].forEach((y, ringIndex) => {
-    const ring = new THREE.Mesh(new THREE.TorusGeometry(ringIndex ? 1.34 : 1.53, 0.035, 10, 64), new THREE.MeshStandardMaterial({ color: ringIndex ? accent : 0xf1d99a, metalness: 0.65, roughness: 0.25 }));
-    ring.rotation.x = Math.PI / 2; ring.position.y = y; baseGroup.add(ring);
-  });
-  const motifGeometry = index % 2 ? new THREE.OctahedronGeometry(0.075, 0) : new THREE.BoxGeometry(0.1, 0.1, 0.045);
-  for (let motif = 0; motif < 12; motif += 1) {
-    const angle = motif / 12 * Math.PI * 2;
-    const ornament = new THREE.Mesh(motifGeometry, new THREE.MeshStandardMaterial({ color: 0xf4dfaa, metalness: 0.55, roughness: 0.3 }));
-    ornament.position.set(Math.sin(angle) * 1.48, 0.29, Math.cos(angle) * 1.48);
-    ornament.rotation.y = angle; baseGroup.add(ornament);
-  }
-  scene.add(baseGroup);
-  return addFurnitureModel({ src: room.model, name: `museum-architecture-${room.id}`, position: [position[0], 0.51, position[2]], rotationY: Math.PI, maxSize: 2.35 });
 }
 
 function loadMuseumPanelOnce(key, loader) {
