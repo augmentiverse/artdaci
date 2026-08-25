@@ -1,6 +1,10 @@
 import * as THREE from "../vendor/three.module.js";
 import { GLTFLoader } from "../vendor/GLTFLoader.module.js";
+import { DRACOLoader } from "../vendor/DRACOLoader.module.js";
 import { MindARThree } from "../vendor/mindar-image-three.prod.js";
+
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath("vendor/draco/");
 
 const CONFIG = {
   slug: "mona-lisa",
@@ -974,7 +978,9 @@ async function startAR() {
     state.contentGroup.matrixAutoUpdate = false;
     state.contentGroup.visible = false;
     scene.add(state.contentGroup);
-    addTrackingPreview(state.contentGroup).catch(() => {});
+    // Museum targets reveal their architectural GLB directly. The printed
+    // museum image is used only as a last-resort fallback if that model fails.
+    if (CONFIG.resourceType !== "museum") addTrackingPreview(state.contentGroup).catch(() => {});
 
     state.anchor.onTargetFound = () => {
       state.targetFoundOnce = true;
@@ -1131,6 +1137,7 @@ async function loadModel(group) {
   const label = state.manifest?.title || "artwork";
   document.getElementById("panel-body").textContent = t("modelLoading").replace("{title}", label);
   const loader = new GLTFLoader();
+  loader.setDRACOLoader(dracoLoader);
   state.modelLoading = true;
   updateModelVariantControls();
 
