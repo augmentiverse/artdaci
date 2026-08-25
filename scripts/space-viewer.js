@@ -5,7 +5,7 @@ const PAINTINGS = {
   "vermeer-girl-with-a-pearl-earring": "content/paintings/vermeer-girl-with-a-pearl-earring.json"
 };
 const MUSEUMS = {
-  "louvre": "content/museums/louvre.json",
+  "louvre": "content/museums/louvre.json?v=2",
   "mauritshuis": "content/museums/mauritshuis.json",
   "czartoryski": "content/museums/czartoryski.json",
   "orsay": "content/museums/orsay.json",

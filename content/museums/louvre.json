@@ -1,8 +1,8 @@
 {
   "slug": "louvre", "title": "Louvre Museum",
-  "media": { "image": "assets/environments/gallery/images/Louvre/louvre_building_plan/Louvre_museum.png", "model": "assets/environments/gallery/models/museums/Louvre_museum_c3.glb" },
+  "media": { "image": "assets/environments/gallery/images/Louvre/louvre_building_plan/Louvre_museum.png", "model": "assets/environments/gallery/models/museums/Louvre-full-joint_c.glb" },
   "print": { "imageTargetSource": "assets/environments/gallery/images/Louvre/louvre_building_plan/Louvre_museum.png", "compiledMindTarget": "assets/targets/louvre_museum.mind" },
-  "ar": { "compiledTarget": "assets/targets/louvre_museum.mind", "primaryModel": "assets/environments/gallery/models/museums/Louvre_museum_c3.glb", "viewer": { "initialScale": 0.32, "initialRise": 0.05 } },
+  "ar": { "compiledTarget": "assets/targets/louvre_museum.mind", "primaryModel": "assets/environments/gallery/models/museums/Louvre-full-joint_c.glb", "viewer": { "initialScale": 0.32, "initialRise": 0.05 } },
   "texts": { "artisticAnalysis": "A former royal palace transformed into a public museum, the Louvre brings a universal collection together with conservation, research, restoration and digital interpretation." },
   "localizations": { "fr": { "title": "Musée du Louvre", "texts": { "artisticAnalysis": "Ancien palais royal devenu musée public, le Louvre réunit une collection universelle et des missions de conservation, de recherche, de restauration et de médiation numérique." } }, "ar": { "title": "متحف اللوفر" } }
 }

@@ -163,7 +163,7 @@ const MUSEUM_ROOMS = [
       face: "assets/environments/gallery/images/Louvre/louvre_building/louvre_face.png",
       right: "assets/environments/gallery/images/Louvre/louvre_building/louvre_droit.png",
       left: "assets/environments/gallery/images/Louvre/louvre_building/louvre_gauche.png"
-    }, model: "assets/environments/gallery/models/museums/Louvre_museum_c3.glb",
+    }, model: "assets/environments/gallery/models/museums/Louvre-full-joint_c.glb",
     colors: [0x132b46, 0xc7a25b]
   },
   {
@@ -1641,12 +1641,12 @@ function buildFiveMuseumsWing() {
   MUSEUM_ROOMS.forEach((room, index) => addFiveMuseumsRoomShell(room, roomCenters[index], index));
   addFiveMuseumsPartitions();
   addFiveMuseumsMovementNetwork(roomCenters, MUSEUM_ROOMS.map(localizedMuseumName));
-  addLivingBookTable([0.65, 0, 1.35], 0);
+  addLivingBookTable([1.85, 0, -6.05], Math.PI);
   if (allowDecorative3DModels) void addFurnitureModel({
     src: ACCENT_SOFA_MODEL,
     name: "five-museums-louvre-living-book-sofa",
-    position: [-2.35, 0, 1.35],
-    rotationY: Math.PI / 2,
+    position: [-3.15, 0, -6.05],
+    rotationY: 0,
     maxSize: 2.35
   });
 }
@@ -1768,8 +1768,8 @@ async function loadFiveMuseumsRoom(index) {
           ["louvre-face", room.views.face, 0, centerZ - 7.91, 0, "", { maxWidth: 8.8, maxHeight: 3.55, positionY: 2.05, hideLabel: true, highDetail: true, volumetric: true }],
           ["louvre-right", room.views.right, 6.91, centerZ, -Math.PI / 2, "", { maxWidth: 11.2, maxHeight: 3.5, positionY: 2.15, hideLabel: true, highDetail: true, volumetric: true }],
           ["louvre-left", room.views.left, -6.91, centerZ, Math.PI / 2, "", { maxWidth: 11.2, maxHeight: 3.5, positionY: 2.15, hideLabel: true, highDetail: true, volumetric: true }],
-          ["louvre-plan", room.plan, 0, centerZ + 7.91, Math.PI, lang === "fr" ? "PLAN DU BÂTIMENT" : lang === "ar" ? "مخطط المبنى" : "BUILDING PLAN", { maxWidth: 3.95, maxHeight: 2.35, positionY: 2.05, labelScale: 0.34, highDetail: true }],
-          ["louvre-timeline", room.timeline, -4.35, centerZ + 7.91, Math.PI, lang === "fr" ? "CHRONOLOGIE" : lang === "ar" ? "الخط الزمني" : "TIMELINE", { maxWidth: 4.4, maxHeight: 3.05, positionY: 2.25, labelScale: 0.34, highDetail: true }]
+          ["louvre-plan", room.plan, -5.45, centerZ + 7.91, Math.PI, lang === "fr" ? "PLAN DU BÂTIMENT" : lang === "ar" ? "مخطط المبنى" : "BUILDING PLAN", { maxWidth: 2.4, maxHeight: 1.75, positionY: 2.05, labelScale: 0.28, highDetail: true }],
+          ["louvre-timeline", room.timeline, -0.5, centerZ + 7.91, Math.PI, lang === "fr" ? "CHRONOLOGIE" : lang === "ar" ? "الخط الزمني" : "TIMELINE", { maxWidth: 6.8, maxHeight: 3, positionY: 2.12, labelScale: 0.34, labelAbove: true, highDetail: true }]
         ]
       : [
           ["plan", room.plan, -6.91, centerZ - 3.5, Math.PI / 2, lang === "fr" ? "PLAN DU BÂTIMENT" : lang === "ar" ? "مخطط المبنى" : "BUILDING PLAN", { maxWidth: 4.3, maxHeight: 2.35, positionY: 2.25, highDetail: true }],
@@ -1795,7 +1795,17 @@ async function loadFiveMuseumsRoom(index) {
 
 async function loadMuseumArchitecturalModel(room, index, centerZ) {
   if (!allowDecorative3DModels || !room.model) return null;
-  const position = index === 0 ? [-3.8, 0.02, centerZ - 2.1] : [0, 0.02, centerZ];
+  if (index === 0) {
+    const model = await addFurnitureModel({
+      src: room.model,
+      name: "museum-architecture-louvre",
+      position: [0, 0.02, centerZ],
+      rotationY: 0,
+      maxSize: 6.96
+    });
+    return model;
+  }
+  const position = [0, 0.02, centerZ];
   const baseGroup = new THREE.Group();
   baseGroup.position.set(position[0], 0, position[2]);
   const dark = new THREE.Color(room.colors[0]).offsetHSL(0, 0.06, 0.08);
