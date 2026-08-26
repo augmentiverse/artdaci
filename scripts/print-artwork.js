@@ -3,6 +3,7 @@ const SOURCES = {
   "view-of-delft": "content/paintings/view-of-delft.json",
   "pont-d-argenteuil": "content/paintings/pont-d-argenteuil.json"
 };
+const SUPPLEMENTAL_SOURCE = "content/paintings/additional-16.json";
 const MUSEUMS = {
   "lady-with-an-ermine": ["czartoryski", "content/museums/czartoryski.json"],
   "view-of-delft": ["mauritshuis", "content/museums/mauritshuis.json"],
@@ -21,11 +22,23 @@ const TEXTS = {
   }
 };
 const params = new URLSearchParams(location.search);
-const slug = SOURCES[params.get("painting")] ? params.get("painting") : "lady-with-an-ermine";
+const requestedSlug = params.get("painting") || "lady-with-an-ermine";
+const slug = requestedSlug;
 const lang = ["en", "fr", "ar"].includes(params.get("lang")) ? params.get("lang") : "en";
 document.documentElement.lang = lang; document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
 const esc = (v = "") => String(v).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
-const [manifest, museum] = await Promise.all([fetch(SOURCES[slug]).then(r => r.json()), fetch(MUSEUMS[slug][1]).then(r => r.json())]);
+const paintingPayload = await fetch(SOURCES[slug] || SUPPLEMENTAL_SOURCE).then(r => r.json());
+const manifest = Array.isArray(paintingPayload) ? paintingPayload.find((item) => item.slug === slug) : paintingPayload;
+if (!manifest) throw new Error(`Unknown painting: ${slug}`);
+const artistMuseum = manifest.artist?.name === "Leonardo da Vinci"
+  ? ["louvre", "content/museums/louvre.json"]
+  : manifest.artist?.name === "Johannes Vermeer"
+    ? ["mauritshuis", "content/museums/mauritshuis.json"]
+    : manifest.artist?.name === "Vincent van Gogh"
+      ? ["van-gogh-museum", "content/museums/van-gogh-museum.json"]
+      : ["orsay", "content/museums/orsay.json"];
+const museumConfig = MUSEUMS[slug] || artistMuseum;
+const museum = await fetch(museumConfig[1]).then(r => r.json());
 const copy = COPY[lang]; const localized = manifest.localizations?.[lang] || {}; const museumLocalized = museum.localizations?.[lang] || {};
 const title = localized.title || manifest.title; const locationName = museumLocalized.title || museum.title;
 const base = manifest.texts; const selected = TEXTS[lang]?.[slug] || [base.historicalContext, base.artisticAnalysis, `${base.palette || ""} ${base.perspectiveTechnique || ""}`, `${base.culturalSignificance || ""} ${base.influence || ""}`];
@@ -33,7 +46,7 @@ document.title = `${title} — ARTDACI`; const indexUrl = lang === "fr" ? "index
 document.getElementById("dynamic-artwork-spread").innerHTML = `
   <section class="catalogue-plate"><p class="eyebrow">ARTDACI · ${String(manifest.bookOrder).padStart(3,"0")}</p><figure class="target-art"><img src="${esc(manifest.media.image)}" alt="${esc(title)}"/><figcaption><strong>${esc(title)}</strong><span>${esc(manifest.artist.name)} · ${esc(manifest.date)} · ${esc(locationName)}</span></figcaption></figure></section>
   <section class="catalogue-text"><header><p class="eyebrow">${copy.entry}</p><h1>${esc(title)}</h1><p class="artist">${esc(manifest.artist.name)}</p></header>
-  <dl class="catalogue-meta"><div><dt>${copy.date}</dt><dd>${esc(manifest.date)}</dd></div><div><dt>${copy.medium}</dt><dd>${esc(manifest.medium)}</dd></div><div><dt>${copy.dimensions}</dt><dd>${manifest.dimensions.heightCm} × ${manifest.dimensions.widthCm} cm</dd></div><div><dt>${copy.location}</dt><dd>${esc(locationName)}</dd></div></dl>
+  <dl class="catalogue-meta"><div><dt>${copy.date}</dt><dd>${esc(manifest.date)}</dd></div><div><dt>${copy.medium}</dt><dd>${esc(manifest.medium)}</dd></div><div><dt>${copy.dimensions}</dt><dd>${manifest.dimensions?.heightCm || "—"} × ${manifest.dimensions?.widthCm || "—"} cm</dd></div><div><dt>${copy.location}</dt><dd>${esc(manifest.currentLocation?.museum || locationName)}</dd></div></dl>
   <div class="catalogue-grid"><section><h2>${copy.context}</h2><p>${esc(selected[0])}</p></section><section><h2>${copy.analysis}</h2><p>${esc(selected[1])}</p></section><section><h2>${copy.technique}</h2><p>${esc(selected[2])}</p></section><section><h2>${copy.legacy}</h2><p>${esc(selected[3])}</p></section></div>
-  <section class="painting-museum-section"><img src="${esc(museum.media.image)}" alt="${esc(locationName)}"/><div><p class="eyebrow">${copy.museum}</p><h2>${esc(locationName)}</h2><p><strong>${copy.museumIntro} ${esc(locationName)}.</strong> ${esc(museumLocalized.texts?.artisticAnalysis || museum.texts.artisticAnalysis)}</p><p>${copy.museumNote}</p><div class="card-actions"><a class="button primary" href="gallery-vr.html?lang=${lang}&amp;room=museums&amp;museum=${museum.slug}">${copy.vr}</a><a class="button" href="ar.html?museum=${museum.slug}&amp;lang=${lang}">${copy.ar}</a><a class="button" href="space.html?museum=${museum.slug}&amp;lang=${lang}">${copy.space}</a></div></div></section>
+  <section class="painting-museum-section"><img src="${esc(museum.media.image)}" alt="${esc(locationName)}"/><div><p class="eyebrow">${copy.museum}</p><h2>${esc(manifest.currentLocation?.museum || locationName)}</h2><p><strong>${copy.museumIntro} ${esc(manifest.currentLocation?.museum || locationName)}.</strong> ${esc(museumLocalized.texts?.artisticAnalysis || museum.texts.artisticAnalysis)}</p><p>${copy.museumNote}</p><div class="card-actions"><a class="button primary" href="gallery-vr.html?lang=${lang}&amp;room=museums&amp;museum=${museum.slug}">${copy.vr}</a><a class="button" href="ar.html?museum=${museum.slug}&amp;lang=${lang}">${copy.ar}</a><a class="button" href="space.html?museum=${museum.slug}&amp;lang=${lang}">${copy.space}</a></div></div></section>
   <aside class="ar-note"><a class="button primary" href="book-3d.html?lang=${lang}">${copy.living}</a><a class="button" href="${indexUrl}">${copy.back}</a></aside></section>`;

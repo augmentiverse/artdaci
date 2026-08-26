@@ -148,7 +148,7 @@ async function initCatalogue(root) {
     ]);
     root.dataset.ready = "true";
     document.querySelector(".static-index")?.setAttribute("hidden", "");
-    renderCatalogue(root, manifests.sort((a, b) => a.bookOrder - b.bookOrder), museums, lang, text);
+    renderCatalogue(root, manifests.flat().sort((a, b) => a.bookOrder - b.bookOrder), museums, lang, text);
   } catch (error) {
     root.innerHTML = `<p class="catalogue-error">${escapeHtml(error.message)}</p>`;
   }
@@ -278,7 +278,7 @@ function renderCard(manifest, lang, text) {
   const title = getTitle(manifest, lang);
   const image = manifest.media?.image || manifest.print?.imageTargetSource;
   const movement = (manifest.movement || []).join(", ");
-  const printUrl = PRINT_PAGES[lang]?.[slug] || PRINT_PAGES.en[slug] || "index.html";
+  const printUrl = PRINT_PAGES[lang]?.[slug] || PRINT_PAGES.en[slug] || `print-artwork.html?painting=${encodeURIComponent(slug)}&lang=${lang}`;
   const audioOverview = getLocalizedAudioOverview(manifest, lang);
   const location = [manifest.currentLocation?.museum, manifest.currentLocation?.city].filter(Boolean).join(", ");
   const summary = lang === "ar"

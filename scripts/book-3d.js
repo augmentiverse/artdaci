@@ -6,7 +6,8 @@ const MANIFEST_URLS = [
   "content/paintings/van-gogh.json?v=2",
   "content/paintings/van-gogh-bedroom.json?v=2",
   "content/paintings/monet-impression-sunrise.json?v=3",
-  "content/paintings/pont-d-argenteuil.json?v=1"
+  "content/paintings/pont-d-argenteuil.json?v=1",
+  "content/paintings/additional-16.json?v=1"
 ];
 const MUSEUM_MANIFEST_URLS = ["louvre", "mauritshuis", "czartoryski", "orsay", "van-gogh-museum"]
   .map((slug) => `content/museums/${slug}.json?v=1`);
@@ -292,7 +293,8 @@ async function init() {
   const responses = await Promise.all([...MANIFEST_URLS, ...MUSEUM_MANIFEST_URLS].map((url) => fetch(url)));
   if (responses.some((response) => !response.ok)) throw new Error("Book content is unavailable.");
   const allManifests = await Promise.all(responses.map((response) => response.json()));
-  pageDefinitions = buildPageDefinitions(allManifests.slice(0, MANIFEST_URLS.length), allManifests.slice(MANIFEST_URLS.length));
+  const paintings = allManifests.slice(0, MANIFEST_URLS.length).flat().sort((a, b) => a.bookOrder - b.bookOrder);
+  pageDefinitions = buildPageDefinitions(paintings, allManifests.slice(MANIFEST_URLS.length));
   await buildBook(pageDefinitions);
   bindControls();
   updateBook();
@@ -377,6 +379,11 @@ function buildPageDefinitions(manifests, museums = []) {
             { label: "VR", x: 83, y: 38, type: "gallery" }
           ]
     });
+    // The sixteen collection additions are complete catalogue pages rather
+    // than four-page multimedia chapters. Keeping one illustrated page per
+    // work makes all 24 paintings reachable on phones without allocating
+    // more than one hundred large canvas textures at once.
+    if (manifest.bookOrder > 8) return;
     pages.push({
       kind: "analysis",
       eyebrow: sectionCopy.looking,

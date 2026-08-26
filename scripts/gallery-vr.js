@@ -20,15 +20,32 @@ const PRINTED_MANIFESTS = [
 ];
 const CONNECTED_AUDIO_WORKS = {
   "da-vinci:0": "mona-lisa",
-  "van-gogh:2": "van-gogh",
+  "van-gogh:0": "van-gogh",
   "van-gogh:3": "van-gogh-bedroom",
   "vermeer:0": "vermeer-girl-with-a-pearl-earring",
   "monet:0": "monet-impression-sunrise"
 };
-const EIGHT_MASTERPIECES_IMAGES = {
-  en: "assets/environments/gallery/images/8-masterpieces/8-masterpieces_en.png",
-  fr: "assets/environments/gallery/images/8-masterpieces/8-masterpieces_fr.png",
-  ar: "assets/environments/gallery/images/8-masterpieces/8-masterpieces_ar.png"
+const SIX_MASTERPIECES_IMAGES = {
+  "da-vinci": {
+    en: "assets/artists/paintings_images/davinci/6_masterpices/davinci_8_masterpieces_en.png",
+    fr: "assets/artists/paintings_images/davinci/6_masterpices/davinci_6_masterpieces_fr.png",
+    ar: "assets/artists/paintings_images/davinci/6_masterpices/davinci_6_masterpieces_ar.png"
+  },
+  vermeer: {
+    en: "assets/artists/paintings_images/vermeer/6_masterpices/vermeer_6_masterpieces_en.png",
+    fr: "assets/artists/paintings_images/vermeer/6_masterpices/vermeer_6_masterpieces_fr.png",
+    ar: "assets/artists/paintings_images/vermeer/6_masterpices/vermeer_6_masterpieces_ar.png"
+  },
+  "van-gogh": {
+    en: "assets/artists/paintings_images/vangogh/6_masterpieces/vangogh_6_masterpieces_en.png",
+    fr: "assets/artists/paintings_images/vangogh/6_masterpieces/vangogh_6_masterpieces_fr.png",
+    ar: "assets/artists/paintings_images/vangogh/6_masterpieces/vangogh_6_masterpieces_ar.png"
+  },
+  monet: {
+    en: "assets/artists/paintings_images/monet/6_masterpieces/monet_6_masterpieces_en.png",
+    fr: "assets/artists/paintings_images/monet/6_masterpieces/monet_8_masterpieces_fr.png",
+    ar: "assets/artists/paintings_images/monet/6_masterpieces/monet_6_masterpieces_ar.png"
+  }
 };
 
 const GALLERY_IMAGES = {
@@ -91,9 +108,9 @@ const ACCENT_SOFA_MODEL = "assets/environments/gallery/models/sofa1.glb";
 const CINEMA_GATEWAY_MODEL = "assets/environments/gallery/models/Gateway_Egypt_c.glb";
 const LOUVRE_SIDE_OPENING_WIDTH = 9.04;
 const LOUVRE_PHOTO_EXHIBITS = [
-  { src: "assets/environments/gallery/images/louvre/Louvre-gauche.png", position: [-7.16, 2.45, 0], rotationY: Math.PI / 2, maxWidth: 20, maxHeight: 4.9, portal: true },
-  { src: "assets/environments/gallery/images/louvre/Louvre-droite.png", position: [7.16, 2.45, 0], rotationY: -Math.PI / 2, maxWidth: 20, maxHeight: 4.9, portal: true },
-  { src: "assets/environments/gallery/images/louvre/Louvre-arrière.png", position: [0, 2.15, 9.66], rotationY: Math.PI, maxWidth: 12.6, maxHeight: 3.85 }
+  { src: "assets/environments/gallery/images/Louvre/louvre_building/louvre_gauche.png", position: [-7.16, 2.45, 0], rotationY: Math.PI / 2, maxWidth: LOUVRE_SIDE_OPENING_WIDTH - 0.18, maxHeight: 4.9, portal: true },
+  { src: "assets/environments/gallery/images/Louvre/louvre_building/louvre_droit.png", position: [7.16, 2.45, 0], rotationY: -Math.PI / 2, maxWidth: LOUVRE_SIDE_OPENING_WIDTH - 0.18, maxHeight: 4.9, portal: true },
+  { src: "assets/environments/gallery/images/Louvre/louvre_building/louvre_face.png", position: [0, 2.45, -9.94], rotationY: 0, maxWidth: 13.7, maxHeight: 4.9 }
 ];
 const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae";
 const LEONARDO_STUDIO_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/862ab5f6-8608-469c-a840-8cb10f3859ae";
@@ -401,9 +418,9 @@ const ARTIST_ROOMS = {
     portrait: "assets/artists/vincent-van-gogh/profile/portrait.png",
     accent: 0xd2a62e,
     works: [
+      ["Self-Portrait", "assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp"],
       ["The Starry Night", "assets/artists/vincent-van-gogh/collection/the-starry-night-vangogh.webp"],
       ["Sunflowers", "assets/artists/vincent-van-gogh/collection/tournesols-vangogh.webp"],
-      ["Self-Portrait", "assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp"],
       ["The Bedroom", "assets/artists/vincent-van-gogh/collection/the-bedroom-vangogh.webp"],
       ["Café Terrace at Night", "assets/artists/vincent-van-gogh/collection/café-terrasse-at-night-vangogh.webp"],
       ["The Night Café", "assets/artists/vincent-van-gogh/collection/the-night-café-vangogh.webp"]
@@ -1624,7 +1641,11 @@ function localizedMuseumName(room) {
 }
 
 function museumImagePath(template) {
-  return template.replace("{lang}", lang);
+  const localizedPath = template.replace("{lang}", lang);
+  if (localizedPath.endsWith("/Louvre/louvre_building_plan/louvre_building_plan_fr.png")) {
+    return localizedPath.replace("louvre_building_plan_fr.png", "louvre_building_plan_ffr.png");
+  }
+  return localizedPath;
 }
 
 function buildFiveMuseumsWing() {
@@ -1765,9 +1786,9 @@ async function loadFiveMuseumsRoom(index) {
     const centerZ = index * 16;
     const panels = index === 0
       ? [
-          ["louvre-face", room.views.face, 0, centerZ - 7.91, 0, "", { maxWidth: 8.8, maxHeight: 3.55, positionY: 2.05, hideLabel: true, highDetail: true, volumetric: true }],
-          ["louvre-right", room.views.right, 6.91, centerZ, -Math.PI / 2, "", { maxWidth: 11.2, maxHeight: 3.5, positionY: 2.15, hideLabel: true, highDetail: true, volumetric: true }],
-          ["louvre-left", room.views.left, -6.91, centerZ, Math.PI / 2, "", { maxWidth: 11.2, maxHeight: 3.5, positionY: 2.15, hideLabel: true, highDetail: true, volumetric: true }],
+          ["louvre-face", room.views.face, 0, centerZ - 7.91, 0, "", { maxWidth: 6.2, maxHeight: 4.12, positionY: 2.2, hideLabel: true, highDetail: true }],
+          ["louvre-right", room.views.right, 6.91, centerZ - 3.2, -Math.PI / 2, "", { panoramaWidth: 7.84, panoramaHeight: 4.22, positionY: 2.2, hideLabel: true, highDetail: true }],
+          ["louvre-left", room.views.left, -6.91, centerZ - 3.2, Math.PI / 2, "", { panoramaWidth: 7.84, panoramaHeight: 4.22, positionY: 2.2, hideLabel: true, highDetail: true }],
           ["louvre-plan", room.plan, -5.45, centerZ + 7.91, Math.PI, lang === "fr" ? "PLAN DU BÂTIMENT" : lang === "ar" ? "مخطط المبنى" : "BUILDING PLAN", { maxWidth: 2.4, maxHeight: 1.75, positionY: 2.05, labelScale: 0.28, highDetail: true }],
           ["louvre-timeline", room.timeline, -0.5, centerZ + 7.91, Math.PI, lang === "fr" ? "CHRONOLOGIE" : lang === "ar" ? "الخط الزمني" : "TIMELINE", { maxWidth: 6.8, maxHeight: 3, positionY: 2.12, labelScale: 0.34, labelAbove: true, highDetail: true }]
         ]
@@ -1777,13 +1798,16 @@ async function loadFiveMuseumsRoom(index) {
           ["facade", room.facade, 6.91, centerZ - 0.15, -Math.PI / 2, lang === "fr" ? "FAÇADE DU MUSÉE" : lang === "ar" ? "واجهة المتحف" : "MUSEUM FACADE", { maxWidth: 6.8, maxHeight: 3.45, positionY: 2.25, labelScale: 0.34, labelAbove: true, highDetail: true, volumetric: true }]
         ];
     const results = await Promise.allSettled(panels.map(([panelId, ...args]) => loadMuseumPanelOnce(`${room.id}:${panelId}`, () => addMuseumInformationPanel(...args))));
+    const modelResult = await Promise.allSettled([loadMuseumArchitecturalModel(room, index, centerZ)]);
     const failures = results.filter((result) => result.status === "rejected");
     if (failures.length) {
       failures.forEach((failure) => console.warn(`Museum panel unavailable in ${room.id}.`, failure.reason));
       museumRoomRetryAt.set(index, performance.now() + 2500);
       return false;
     }
-    await loadMuseumArchitecturalModel(room, index, centerZ);
+    if (modelResult[0].status === "rejected") {
+      console.warn(`Museum model unavailable in ${room.id}.`, modelResult[0].reason);
+    }
     museumRoomsLoaded.add(index);
     museumRoomRetryAt.delete(index);
     status.textContent = text.ready;
@@ -1835,12 +1859,24 @@ async function addMuseumInformationPanel(template, x, z, rotationY, labelText, o
   const aspect = texture.image.width / texture.image.height;
   const maxWidth = options.maxWidth || 5.2;
   const maxHeight = options.maxHeight || 3.15;
-  const height = Math.min(maxHeight, maxWidth / aspect);
-  const width = height * aspect;
+  const isPanorama = Boolean(options.panoramaWidth && options.panoramaHeight);
+  const height = isPanorama ? options.panoramaHeight : Math.min(maxHeight, maxWidth / aspect);
+  const width = isPanorama ? options.panoramaWidth : height * aspect;
+  if (isPanorama) {
+    const targetAspect = width / height;
+    if (aspect > targetAspect) {
+      texture.repeat.x = targetAspect / aspect;
+      texture.offset.x = (1 - texture.repeat.x) / 2;
+    } else {
+      texture.repeat.y = aspect / targetAspect;
+      texture.offset.y = (1 - texture.repeat.y) / 2;
+    }
+    texture.needsUpdate = true;
+  }
   const group = new THREE.Group();
   group.position.set(x, options.positionY || 2.18, z);
   group.rotation.y = rotationY;
-  const frameDepth = options.volumetric ? 0.24 : 0.08;
+  const frameDepth = isPanorama ? 0 : options.volumetric ? 0.24 : 0.08;
   const frame = new THREE.Mesh(
     new THREE.BoxGeometry(width + (options.volumetric ? 0.24 : 0.16), height + (options.volumetric ? 0.24 : 0.16), frameDepth),
     new THREE.MeshStandardMaterial({ color: options.volumetric ? 0x4b3a25 : 0xc9a860, roughness: 0.42, metalness: options.volumetric ? 0.24 : 0.15 })
@@ -1860,7 +1896,8 @@ async function addMuseumInformationPanel(template, x, z, rotationY, labelText, o
     inset.position.z = frameDepth / 2 + 0.004;
     group.add(inset);
   }
-  group.add(frame, image);
+  if (!isPanorama) group.add(frame);
+  group.add(image);
   if (!options.hideLabel) {
     const label = makeLabel(labelText, { highDetail: options.highDetail });
     label.position.set(0, options.labelAbove ? height / 2 + 0.2 : -height / 2 - 0.28, frameDepth / 2 + (options.volumetric ? 0.075 : 0.025));
@@ -2863,7 +2900,7 @@ async function loadConnectedMuseumRoom(roomIndex) {
     const centerZ = roomIndex * 16;
     status.textContent = lang === "fr" ? `Chargement de ${room.name}…` : `Loading ${room.name}…`;
     await addArtistEntrancePortrait(id, room, centerZ);
-    if (id === "da-vinci" || id === "monet") await addEightMasterpiecesPanel(id, centerZ);
+    await addSixMasterpiecesPanel(id, centerZ);
     for (let workIndex = 0; workIndex < room.works.length; workIndex += 1) {
       const manifestSlug = CONNECTED_AUDIO_WORKS[`${id}:${workIndex}`];
       await addConnectedMuseumArtwork(room, room.works[workIndex], centerZ, workIndex, connectedManifestMap.get(manifestSlug));
@@ -2874,22 +2911,30 @@ async function loadConnectedMuseumRoom(roomIndex) {
   return load;
 }
 
-async function addEightMasterpiecesPanel(roomId, centerZ) {
+async function addSixMasterpiecesPanel(roomId, centerZ) {
   if (eightMasterpiecesPanelsLoaded.has(roomId)) return;
   eightMasterpiecesPanelsLoaded.add(roomId);
   try {
     if (roomId === "da-vinci") {
-      await addMuseumInformationPanel(EIGHT_MASTERPIECES_IMAGES[lang], 1.45, centerZ - 7.87, 0, "", {
+      await addMuseumInformationPanel(SIX_MASTERPIECES_IMAGES[roomId][lang], 0, centerZ - 7.87, 0, "", {
         maxWidth: 4.45,
         maxHeight: 3.05,
-        positionY: 2.2,
+        positionY: 1.92,
+        hideLabel: true,
+        highDetail: true
+      });
+    } else if (roomId === "monet") {
+      await addMuseumInformationPanel(SIX_MASTERPIECES_IMAGES[roomId][lang], 0, centerZ + 7.87, Math.PI, "", {
+        maxWidth: 4.8,
+        maxHeight: 2.45,
+        positionY: 2.15,
         hideLabel: true,
         highDetail: true
       });
     } else {
-      await addMuseumInformationPanel(EIGHT_MASTERPIECES_IMAGES[lang], 0, centerZ + 7.87, Math.PI, "", {
-        maxWidth: 4.8,
-        maxHeight: 3.2,
+      await addMuseumInformationPanel(SIX_MASTERPIECES_IMAGES[roomId][lang], 4.5, centerZ - 7.87, 0, "", {
+        maxWidth: 4.45,
+        maxHeight: 2.35,
         positionY: 2.05,
         hideLabel: true,
         highDetail: true
@@ -2897,7 +2942,7 @@ async function addEightMasterpiecesPanel(roomId, centerZ) {
     }
   } catch (error) {
     eightMasterpiecesPanelsLoaded.delete(roomId);
-    console.warn(`Eight-masterpieces panel unavailable in ${roomId}.`, error);
+    console.warn(`Six-masterpieces panel unavailable in ${roomId}.`, error);
   }
 }
 
