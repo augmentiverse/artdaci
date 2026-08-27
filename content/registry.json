@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "baseExperiencePath": "/x",
+  "items": {
+    "ldv-ml": {
+      "type": "painting",
+      "manifest": "content/paintings/mona-lisa.json",
+      "artist": "leonardo-da-vinci",
+      "slug": "mona-lisa",
+      "title": {
+        "fr": "La Joconde",
+        "en": "Mona Lisa",
+        "ar": "الموناليزا"
+      },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg"
+    }
+  }
+}
