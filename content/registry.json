@@ -1,5 +1,6 @@
 {
   "version": 1,
+  "referenceModel": "experience-hub-v1",
   "baseExperiencePath": "/x",
   "items": {
     "ldv-ml": {
@@ -8,19 +9,121 @@
       "artist": "leonardo-da-vinci",
       "slug": "mona-lisa",
       "museumId": "mus-louvre",
+      "artistTitle": {
+        "fr": "Léonard de Vinci",
+        "en": "Leonardo da Vinci",
+        "ar": "ليوناردو دا فينشي"
+      },
       "title": {
         "fr": "La Joconde",
         "en": "Mona Lisa",
         "ar": "الموناليزا"
       },
+      "printPage": {
+        "fr": "/print-target-fr.html",
+        "en": "/print-target.html",
+        "ar": "/print-ar.html?painting=mona-lisa"
+      },
       "languages": ["fr", "en", "ar"],
       "image": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg"
+    },
+    "ldv-ls": {
+      "type": "painting",
+      "manifest": "content/paintings/last-supper.json",
+      "artist": "leonardo-da-vinci",
+      "slug": "last-supper",
+      "artistTitle": {
+        "fr": "Léonard de Vinci",
+        "en": "Leonardo da Vinci",
+        "ar": "ليوناردو دا فينشي"
+      },
+      "title": {
+        "fr": "La Cène",
+        "en": "The Last Supper",
+        "ar": "العشاء الأخير"
+      },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/leonardo-da-vinci/collection/the-last-supper-davinci.webp"
+    },
+    "ldv-le": {
+      "type": "painting",
+      "manifest": "content/paintings/lady-with-an-ermine.json",
+      "artist": "leonardo-da-vinci",
+      "slug": "lady-with-an-ermine",
+      "museumId": "mus-czartoryski",
+      "artistTitle": {
+        "fr": "Léonard de Vinci",
+        "en": "Leonardo da Vinci",
+        "ar": "ليوناردو دا فينشي"
+      },
+      "title": {
+        "fr": "La Dame à l’hermine",
+        "en": "The Lady with an Ermine",
+        "ar": "السيدة ذات القاقم"
+      },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/leonardo-da-vinci/collection/the-lady-with-an-ermine-davinci.webp"
+    },
+    "ldv-an": {
+      "type": "painting",
+      "manifest": "content/paintings/annunciation.json",
+      "artist": "leonardo-da-vinci",
+      "slug": "annunciation",
+      "artistTitle": {
+        "fr": "Léonard de Vinci",
+        "en": "Leonardo da Vinci",
+        "ar": "ليوناردو دا فينشي"
+      },
+      "title": {
+        "fr": "L’Annonciation",
+        "en": "The Annunciation",
+        "ar": "البشارة"
+      },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/leonardo-da-vinci/collection/the-annunciation-davinci.webp"
+    },
+    "ldv-gb": {
+      "type": "painting",
+      "manifest": "content/paintings/ginevra-de-benci.json",
+      "artist": "leonardo-da-vinci",
+      "slug": "ginevra-de-benci",
+      "artistTitle": {
+        "fr": "Léonard de Vinci",
+        "en": "Leonardo da Vinci",
+        "ar": "ليوناردو دا فينشي"
+      },
+      "title": {
+        "fr": "Ginevra de’ Benci",
+        "en": "Ginevra de’ Benci",
+        "ar": "جينيفرا دي بنتشي"
+      },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/leonardo-da-vinci/collection/ginevra-de-benci.webp"
+    },
+    "ldv-bf": {
+      "type": "painting",
+      "manifest": "content/paintings/belle-ferronniere.json",
+      "artist": "leonardo-da-vinci",
+      "slug": "belle-ferronniere",
+      "museumId": "mus-louvre",
+      "artistTitle": {
+        "fr": "Léonard de Vinci",
+        "en": "Leonardo da Vinci",
+        "ar": "ليوناردو دا فينشي"
+      },
+      "title": {
+        "fr": "La Belle Ferronnière",
+        "en": "La Belle Ferronnière",
+        "ar": "لا بيل فيرونيير"
+      },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/leonardo-da-vinci/collection/la-belle-ferronnière-davinci.webp"
     },
     "mus-louvre": {
       "type": "museum",
       "manifest": "content/museums/louvre.json",
       "slug": "louvre",
-      "relatedPaintingId": "ldv-ml",
+      "relatedPaintingIds": ["ldv-ml", "ldv-bf"],
       "title": {
         "fr": "Musée du Louvre",
         "en": "Louvre Museum",
@@ -33,6 +136,24 @@
       },
       "languages": ["fr", "en", "ar"],
       "image": "assets/environments/gallery/images/Louvre/louvre_building_plan/Louvre_museum.png"
+    },
+    "mus-czartoryski": {
+      "type": "museum",
+      "manifest": "content/museums/czartoryski.json",
+      "slug": "czartoryski",
+      "relatedPaintingIds": ["ldv-le"],
+      "title": {
+        "fr": "Musée des Princes Czartoryski",
+        "en": "Princes Czartoryski Museum",
+        "ar": "متحف الأمراء تشارتوريسكي"
+      },
+      "location": {
+        "fr": "Cracovie, Pologne",
+        "en": "Kraków, Poland",
+        "ar": "كراكوف، بولندا"
+      },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_museum.png"
     }
   }
 }
