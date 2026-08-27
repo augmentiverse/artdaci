@@ -7,6 +7,7 @@
       "manifest": "content/paintings/mona-lisa.json",
       "artist": "leonardo-da-vinci",
       "slug": "mona-lisa",
+      "museumId": "mus-louvre",
       "title": {
         "fr": "La Joconde",
         "en": "Mona Lisa",
@@ -14,6 +15,24 @@
       },
       "languages": ["fr", "en", "ar"],
       "image": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg"
+    },
+    "mus-louvre": {
+      "type": "museum",
+      "manifest": "content/museums/louvre.json",
+      "slug": "louvre",
+      "relatedPaintingId": "ldv-ml",
+      "title": {
+        "fr": "Musée du Louvre",
+        "en": "Louvre Museum",
+        "ar": "متحف اللوفر"
+      },
+      "location": {
+        "fr": "Paris, France",
+        "en": "Paris, France",
+        "ar": "باريس، فرنسا"
+      },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/environments/gallery/images/Louvre/louvre_building_plan/Louvre_museum.png"
     }
   }
 }
