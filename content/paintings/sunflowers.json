@@ -1,0 +1,26 @@
+{
+  "id": "vincent-van-gogh-sunflowers-1888",
+  "slug": "sunflowers",
+  "bookOrder": 18,
+  "title": "Sunflowers",
+  "artist": { "name": "Vincent van Gogh" },
+  "date": "1888",
+  "medium": "Oil on canvas",
+  "dimensions": {},
+  "currentLocation": { "museum": "National Gallery", "city": "London" },
+  "movement": ["Post-Impressionism"],
+  "media": { "image": "assets/artists/paintings_images/vangogh/vangogh_sunflower.png" },
+  "print": { "chapter": "Post-Impressionism" },
+  "texts": {
+    "historicalContext": "Van Gogh made his Arles sunflower paintings to decorate the Yellow House and welcome Paul Gauguin.",
+    "artisticAnalysis": "Flowers at different stages of bloom and decay turn a simple vase into a study of vitality and time.",
+    "composition": "The bouquet expands above a compact vase against broad fields of colour.",
+    "palette": "A daring range of yellows is varied through green, ochre, orange and brown.",
+    "perspectiveTechnique": "Thick paint and strong contours give petals and seed heads a sculptural presence.",
+    "culturalSignificance": "Sunflowers became Van Gogh's personal emblem of friendship, gratitude and artistic identity."
+  },
+  "localizations": {
+    "fr": { "title": "Les Tournesols" },
+    "ar": { "title": "عباد الشمس" }
+  }
+}
