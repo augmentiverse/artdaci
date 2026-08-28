@@ -1,17 +1,39 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 
 const ROOT = process.cwd();
 const registry = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/registry.json'), 'utf8'));
 const MEDIA_EXTENSIONS = new Set(['.jpg','.jpeg','.png','.webp','.gif','.mp3','.m4a','.wav','.ogg','.mp4','.webm','.glb','.gltf','.usdz','.mind']);
 const HEAVY_BYTES = 2 * 1024 * 1024;
 
+function gitBlobSizes() {
+  const output = execFileSync('git', ['ls-tree', '-r', '-l', '-z', 'HEAD'], {
+    cwd: ROOT,
+    encoding: 'utf8',
+    maxBuffer: 64 * 1024 * 1024
+  });
+  const sizes = new Map();
+  for (const record of output.split('\0')) {
+    if (!record) continue;
+    const tab = record.indexOf('\t');
+    if (tab < 0) continue;
+    const meta = record.slice(0, tab).trim().split(/\s+/);
+    const file = record.slice(tab + 1).replace(/\\/g, '/');
+    const size = Number(meta[3]);
+    if (Number.isFinite(size)) sizes.set(file, size);
+  }
+  return sizes;
+}
+
+const fileSizes = gitBlobSizes();
+
 function normalizeLocal(value) {
   if (typeof value !== 'string' || /^(?:https?:|data:)/i.test(value)) return null;
   let clean = value.split('#')[0].split('?')[0].replace(/^\/+/, '');
   if (!MEDIA_EXTENSIONS.has(path.extname(clean).toLowerCase())) return null;
   try { clean = decodeURIComponent(clean); } catch {}
-  return clean;
+  return clean.replace(/\\/g, '/');
 }
 
 function collect(value, bag) {
@@ -37,6 +59,7 @@ function mb(bytes) { return (bytes / 1024 / 1024).toFixed(2); }
 
 const rows = [];
 const unique = new Map();
+const missingSize = [];
 for (const [publicId, entry] of Object.entries(registry.items || {})) {
   if (!entry.manifest) continue;
   const fullManifest = path.join(ROOT, entry.manifest);
@@ -47,14 +70,14 @@ for (const [publicId, entry] of Object.entries(registry.items || {})) {
   collect(entry.image, refs);
 
   for (const file of refs) {
-    const full = path.join(ROOT, file);
-    if (!fs.existsSync(full)) continue;
-    const stats = fs.statSync(full);
-    if (!stats.isFile()) continue;
-    const item = { publicId, file, bytes: stats.size, category: category(file) };
+    const bytes = fileSizes.get(file);
+    if (!Number.isFinite(bytes)) {
+      missingSize.push({ publicId, file });
+      continue;
+    }
+    const item = { publicId, file, bytes, category: category(file) };
     rows.push(item);
-    const previous = unique.get(file);
-    if (!previous || previous.bytes < item.bytes) unique.set(file, item);
+    if (!unique.has(file)) unique.set(file, item);
   }
 }
 
@@ -84,6 +107,14 @@ for (const row of heavy.slice(0, 80)) {
   const owners = [...new Set(rows.filter((candidate) => candidate.file === row.file).map((candidate) => candidate.publicId))].join(', ');
   console.log(`| ${mb(row.bytes)} MB | ${row.category} | ${owners} | \`${row.file}\` |`);
 }
+
+if (missingSize.length) {
+  console.log('');
+  console.log('## References without Git blob-size metadata');
+  console.log('');
+  for (const item of missingSize.slice(0, 40)) console.log(`- ${item.publicId}: \`${item.file}\``);
+}
+
 console.log('');
 console.log('## Migration policy');
 console.log('');
