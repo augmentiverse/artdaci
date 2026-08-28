@@ -1,0 +1,26 @@
+{
+  "id": "johannes-vermeer-astronomer-1668",
+  "slug": "vermeer-astronomer",
+  "bookOrder": 15,
+  "title": "The Astronomer",
+  "artist": { "name": "Johannes Vermeer" },
+  "date": "1668",
+  "medium": "Oil on canvas",
+  "dimensions": {},
+  "currentLocation": { "museum": "Musée du Louvre", "city": "Paris" },
+  "movement": ["Dutch Golden Age"],
+  "media": { "image": "assets/artists/paintings_images/vermeer/vermeer_astronomer.png" },
+  "print": { "chapter": "Dutch Golden Age" },
+  "texts": {
+    "historicalContext": "The painting reflects the seventeenth-century Dutch fascination with science, navigation and ordered knowledge.",
+    "artisticAnalysis": "The scholar reaches toward a celestial globe as window light turns thought into visible action.",
+    "composition": "The extended arm links globe, open book and concentrated face.",
+    "palette": "Deep blue fabric, warm wood and golden daylight create an intimate scholarly atmosphere.",
+    "perspectiveTechnique": "Overlapping objects and carefully directed illumination articulate the compact room.",
+    "culturalSignificance": "The work presents inquiry itself as a quiet, disciplined form of discovery."
+  },
+  "localizations": {
+    "fr": { "title": "L’Astronome" },
+    "ar": { "title": "عالم الفلك" }
+  }
+}
