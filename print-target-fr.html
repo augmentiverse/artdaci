@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="styles/site.css" />
   </head>
   <body class="target-body">
-    <main class="catalogue-spread stacked-spread">
+    <main
+      class="catalogue-spread stacked-spread"
+      data-artwork-media-manifest="https://media.artdaci.com/artworks/ld01/manifest.json">
       <section class="catalogue-plate">
         <p class="eyebrow">Double page 001 - Haute Renaissance</p>
         <figure class="target-art">
-          <img src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg" alt="Mona Lisa de Léonard de Vinci" />
+          <img data-artwork-media="images.main" src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg" alt="Mona Lisa de Léonard de Vinci" />
           <figcaption>
             <strong>Mona Lisa</strong>
             <span>Léonard de Vinci, vers 1503-1519 - Huile sur panneau de peuplier - 77 x 53 cm - Musée du Louvre, Paris</span>
@@ -77,7 +79,7 @@
         <section class="close-look" aria-labelledby="mona-close-title">
           <div class="close-look-header"><h2 id="mona-close-title">Regarder de près</h2><p>Lisez le portrait comme une suite de découvertes. Les repères relient les choix optiques de Léonard à l'effet psychologique de l'ensemble.</p></div>
           <figure class="close-look-stage">
-            <img src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg" alt="Vue annotée de la Joconde" />
+            <img data-artwork-media="images.main" src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg" alt="Vue annotée de la Joconde" />
             <span class="close-look-marker" style="--x: 50%; --y: 47%;">1</span><span class="close-look-marker" style="--x: 50%; --y: 36%;">2</span><span class="close-look-marker" style="--x: 52%; --y: 74%;">3</span><span class="close-look-marker" style="--x: 78%; --y: 43%;">4</span><span class="close-look-marker" style="--x: 39%; --y: 39%;">5</span>
           </figure>
           <ol class="close-look-list">
@@ -129,6 +131,7 @@
         </aside>
       </section>
     </main>
+    <script type="module" src="scripts/artwork-media-manifest.js?v=1"></script>
     <script type="module" src="scripts/painting-museum.js?v=1"></script>
   </body>
 </html>
