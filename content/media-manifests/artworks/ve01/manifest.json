@@ -1,0 +1,136 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "ve01",
+  "slug": "girl-with-a-pearl-earring",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "ve",
+    "name": {
+      "fr": "Johannes Vermeer",
+      "en": "Johannes Vermeer",
+      "ar": "يوهانس فيرمير"
+    }
+  },
+  "artwork": {
+    "title": {
+      "fr": "La Jeune Fille à la perle",
+      "en": "Girl with a Pearl Earring",
+      "ar": "الفتاة ذات القرط اللؤلؤي"
+    },
+    "date": "vers 1665",
+    "museum": "Mauritshuis",
+    "location": {
+      "city": "La Haye",
+      "country": "Pays-Bas"
+    }
+  },
+  "pageUrl": "https://artdaci.com/a/ve01",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/ve01/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {
+      "main": {
+        "scope": "artwork",
+        "path": "images/main.jpg",
+        "mimeType": "image/jpeg",
+        "available": false,
+        "migrationStatus": "planned"
+      },
+      "figure-standing": {
+        "scope": "artwork",
+        "path": "images/figure-standing.jpg",
+        "mimeType": "image/jpeg",
+        "available": false,
+        "migrationStatus": "planned"
+      },
+      "figure-transparent": {
+        "scope": "artwork",
+        "path": "images/figure-transparent.png",
+        "mimeType": "image/png",
+        "available": false,
+        "migrationStatus": "planned"
+      },
+      "room": {
+        "scope": "artwork",
+        "path": "images/room.png",
+        "mimeType": "image/png",
+        "available": false,
+        "migrationStatus": "planned"
+      },
+      "gallery-figure": {
+        "scope": "shared",
+        "path": "images/environments/reimagined-gallery/ve01/figure-sitting.png",
+        "mimeType": "image/png",
+        "available": false,
+        "migrationStatus": "quarantined-duplicate"
+      }
+    },
+    "audio": {
+      "guide": {
+        "en": {
+          "scope": "artwork",
+          "path": "audio/en/guide.mp3",
+          "mimeType": "audio/mpeg",
+          "available": false,
+          "migrationStatus": "planned",
+          "language": "en"
+        },
+        "fr": {
+          "scope": "artwork",
+          "path": "audio/fr/guide.m4a",
+          "mimeType": "audio/mp4",
+          "available": false,
+          "migrationStatus": "planned",
+          "language": "fr"
+        }
+      },
+      "overview": {
+        "fr": {
+          "scope": "artwork",
+          "path": "audio/fr/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": false,
+          "migrationStatus": "planned",
+          "language": "fr"
+        }
+      }
+    },
+    "videos": {
+      "animation": {
+        "scope": "artwork",
+        "path": "videos/animation.mp4",
+        "mimeType": "video/mp4",
+        "available": false,
+        "migrationStatus": "planned"
+      }
+    },
+    "models": {
+      "portrait": {
+        "scope": "artwork",
+        "path": "models/portrait.glb",
+        "mimeType": "model/gltf-binary",
+        "available": false,
+        "migrationStatus": "planned"
+      },
+      "sitting": {
+        "scope": "artwork",
+        "path": "models/sitting.glb",
+        "mimeType": "model/gltf-binary",
+        "available": false,
+        "migrationStatus": "planned"
+      }
+    },
+    "ar": {
+      "target": {
+        "scope": "artwork",
+        "path": "ar/target.mind",
+        "mimeType": "application/octet-stream",
+        "available": false,
+        "migrationStatus": "planned"
+      }
+    }
+  },
+  "updatedAt": "2026-08-28"
+}

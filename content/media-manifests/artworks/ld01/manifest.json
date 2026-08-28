@@ -1,0 +1,97 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "ld01",
+  "slug": "mona-lisa",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "ld",
+    "name": {
+      "fr": "Léonard de Vinci",
+      "en": "Leonardo da Vinci",
+      "ar": "ليوناردو دا فينشي"
+    }
+  },
+  "artwork": {
+    "title": {
+      "fr": "La Joconde",
+      "en": "Mona Lisa",
+      "ar": "الموناليزا"
+    },
+    "date": "vers 1503–1519",
+    "museum": "Musée du Louvre",
+    "location": {
+      "city": "Paris",
+      "country": "France"
+    }
+  },
+  "pageUrl": "https://artdaci.com/a/ld01",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/ld01/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {
+      "main": {
+        "scope": "artwork",
+        "path": "images/main.png",
+        "mimeType": "image/png",
+        "available": true,
+        "migrationStatus": "published"
+      }
+    },
+    "audio": {
+      "fr": {
+        "scope": "artwork",
+        "path": "audio/fr.mp3",
+        "mimeType": "audio/mpeg",
+        "available": false,
+        "migrationStatus": "planned",
+        "language": "fr"
+      },
+      "en": {
+        "scope": "artwork",
+        "path": "audio/en.mp3",
+        "mimeType": "audio/mpeg",
+        "available": false,
+        "migrationStatus": "planned",
+        "language": "en"
+      },
+      "ar": {
+        "scope": "artwork",
+        "path": "audio/ar.mp3",
+        "mimeType": "audio/mpeg",
+        "available": false,
+        "migrationStatus": "planned",
+        "language": "ar"
+      }
+    },
+    "videos": {
+      "main": {
+        "scope": "artwork",
+        "path": "videos/main.mp4",
+        "mimeType": "video/mp4",
+        "available": false,
+        "migrationStatus": "planned"
+      }
+    },
+    "models": {
+      "main": {
+        "scope": "artwork",
+        "path": "models/main.glb",
+        "mimeType": "model/gltf-binary",
+        "available": false,
+        "migrationStatus": "planned"
+      }
+    },
+    "ar": {
+      "target": {
+        "scope": "artwork",
+        "path": "ar/target.mind",
+        "mimeType": "application/octet-stream",
+        "available": false,
+        "migrationStatus": "planned"
+      }
+    }
+  },
+  "updatedAt": "2026-08-28"
+}
