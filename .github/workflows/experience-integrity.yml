@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout metadata and lightweight project files
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 1
           filter: blob:none
@@ -42,9 +42,9 @@ jobs:
             /.github/workflows/experience-integrity.yml
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Validate permanent IDs, manifests and referenced paths
         run: node tools/validate-experience-registry.mjs
