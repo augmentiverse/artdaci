@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 
 const ROOT = process.cwd();
 const REGISTRY_PATH = 'content/registry.json';
@@ -16,16 +17,26 @@ const FILE_EXTENSIONS = new Set([
   '.glb', '.gltf', '.usdz', '.mind', '.vtt', '.srt'
 ]);
 
+const trackedFiles = new Set(
+  execFileSync('git', ['ls-files', '-z'], { cwd: ROOT, encoding: 'utf8' })
+    .split('\0')
+    .filter(Boolean)
+    .map((file) => file.replace(/\\/g, '/'))
+);
 const errors = [];
 const warnings = [];
 const checkedAssets = new Set();
 
 function fail(message) { errors.push(message); }
 function warn(message) { warnings.push(message); }
+function trackedOrPresent(relativePath) {
+  const normalized = relativePath.replace(/\\/g, '/');
+  return trackedFiles.has(normalized) || fs.existsSync(path.join(ROOT, normalized));
+}
 function readJson(relativePath) {
   const full = path.join(ROOT, relativePath);
   if (!fs.existsSync(full)) {
-    fail(`Missing JSON file: ${relativePath}`);
+    fail(`JSON not materialized in checkout: ${relativePath}`);
     return null;
   }
   try {
@@ -46,14 +57,14 @@ function localFileFromReference(value) {
   if (!FILE_EXTENSIONS.has(ext)) return null;
   let clean = withoutFragment.replace(/^\/+/, '');
   try { clean = decodeURIComponent(clean); } catch {}
-  return clean;
+  return clean.replace(/\\/g, '/');
 }
 
 function checkLocalReference(value, context) {
   const local = localFileFromReference(value);
   if (!local) return;
   checkedAssets.add(local);
-  if (!fs.existsSync(path.join(ROOT, local))) fail(`Missing local resource (${context}): ${local}`);
+  if (!trackedOrPresent(local)) fail(`Missing local resource (${context}): ${local}`);
 }
 
 function scanObject(value, context = '') {
