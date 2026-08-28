@@ -39,8 +39,6 @@ Printed QR codes must never point directly to `.mp3`, `.m4a`, `.mp4`, `.glb`, `.
 | `ldv-gb` | Ginevra de’ Benci | `ginevra-de-benci` |
 | `ldv-bf` | La Belle Ferronnière | `belle-ferronniere` |
 
-These IDs are reserved permanently for ARTDACI.
-
 ## Vermeer permanent IDs
 
 | Permanent ID | Work | Slug |
@@ -52,7 +50,29 @@ These IDs are reserved permanently for ARTDACI.
 | `ver-as` | The Astronomer / L’Astronome | `vermeer-astronomer` |
 | `ver-wb` | Woman Holding a Balance / La Femme à la balance | `woman-holding-balance` |
 
-These IDs are reserved permanently for ARTDACI.
+## Van Gogh permanent IDs
+
+| Permanent ID | Work | Slug |
+|---|---|---|
+| `vg-sp` | Self-Portrait / Autoportrait | `van-gogh` |
+| `vg-sn` | The Starry Night / La Nuit étoilée | `starry-night` |
+| `vg-sf` | Sunflowers / Les Tournesols | `sunflowers` |
+| `vg-br` | The Bedroom / La Chambre | `van-gogh-bedroom` |
+| `vg-ct` | Café Terrace at Night / Terrasse du café le soir | `cafe-terrace` |
+| `vg-nc` | The Night Café / Le Café de nuit | `night-cafe` |
+
+## Monet permanent IDs
+
+| Permanent ID | Work | Slug |
+|---|---|---|
+| `mon-is` | Impression, Sunrise / Impression, soleil levant | `monet-impression-sunrise` |
+| `mon-wl` | Water Lilies / Les Nymphéas | `water-lilies` |
+| `mon-jb` | The Japanese Bridge / Le Pont japonais | `japanese-bridge` |
+| `mon-po` | Poppies / Les Coquelicots | `poppies` |
+| `mon-wp` | Woman with a Parasol / La Femme à l’ombrelle | `woman-with-parasol` |
+| `mon-pa` | The Bridge at Argenteuil / Le Pont d’Argenteuil | `pont-d-argenteuil` |
+
+All 24 artwork IDs above are reserved permanently for ARTDACI.
 
 ## Museum permanent IDs currently in use
 
@@ -61,6 +81,8 @@ These IDs are reserved permanently for ARTDACI.
 | `mus-louvre` | Musée du Louvre |
 | `mus-czartoryski` | Princes Czartoryski Museum |
 | `mus-mauritshuis` | Mauritshuis |
+| `mus-vangogh` | Van Gogh Museum |
+| `mus-orsay` | Musée d’Orsay |
 
 ## Extension rule
 
