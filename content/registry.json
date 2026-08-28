@@ -9,21 +9,9 @@
       "artist": "leonardo-da-vinci",
       "slug": "mona-lisa",
       "museumId": "mus-louvre",
-      "artistTitle": {
-        "fr": "Léonard de Vinci",
-        "en": "Leonardo da Vinci",
-        "ar": "ليوناردو دا فينشي"
-      },
-      "title": {
-        "fr": "La Joconde",
-        "en": "Mona Lisa",
-        "ar": "الموناليزا"
-      },
-      "printPage": {
-        "fr": "/print-target-fr.html",
-        "en": "/print-target.html",
-        "ar": "/print-ar.html?painting=mona-lisa"
-      },
+      "artistTitle": { "fr": "Léonard de Vinci", "en": "Leonardo da Vinci", "ar": "ليوناردو دا فينشي" },
+      "title": { "fr": "La Joconde", "en": "Mona Lisa", "ar": "الموناليزا" },
+      "printPage": { "fr": "/print-target-fr.html", "en": "/print-target.html", "ar": "/print-ar.html?painting=mona-lisa" },
       "languages": ["fr", "en", "ar"],
       "image": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg"
     },
@@ -32,16 +20,8 @@
       "manifest": "content/paintings/last-supper.json",
       "artist": "leonardo-da-vinci",
       "slug": "last-supper",
-      "artistTitle": {
-        "fr": "Léonard de Vinci",
-        "en": "Leonardo da Vinci",
-        "ar": "ليوناردو دا فينشي"
-      },
-      "title": {
-        "fr": "La Cène",
-        "en": "The Last Supper",
-        "ar": "العشاء الأخير"
-      },
+      "artistTitle": { "fr": "Léonard de Vinci", "en": "Leonardo da Vinci", "ar": "ليوناردو دا فينشي" },
+      "title": { "fr": "La Cène", "en": "The Last Supper", "ar": "العشاء الأخير" },
       "languages": ["fr", "en", "ar"],
       "image": "assets/artists/leonardo-da-vinci/collection/the-last-supper-davinci.webp"
     },
@@ -51,16 +31,8 @@
       "artist": "leonardo-da-vinci",
       "slug": "lady-with-an-ermine",
       "museumId": "mus-czartoryski",
-      "artistTitle": {
-        "fr": "Léonard de Vinci",
-        "en": "Leonardo da Vinci",
-        "ar": "ليوناردو دا فينشي"
-      },
-      "title": {
-        "fr": "La Dame à l’hermine",
-        "en": "The Lady with an Ermine",
-        "ar": "السيدة ذات القاقم"
-      },
+      "artistTitle": { "fr": "Léonard de Vinci", "en": "Leonardo da Vinci", "ar": "ليوناردو دا فينشي" },
+      "title": { "fr": "La Dame à l’hermine", "en": "The Lady with an Ermine", "ar": "السيدة ذات القاقم" },
       "languages": ["fr", "en", "ar"],
       "image": "assets/artists/leonardo-da-vinci/collection/the-lady-with-an-ermine-davinci.webp"
     },
@@ -69,16 +41,8 @@
       "manifest": "content/paintings/annunciation.json",
       "artist": "leonardo-da-vinci",
       "slug": "annunciation",
-      "artistTitle": {
-        "fr": "Léonard de Vinci",
-        "en": "Leonardo da Vinci",
-        "ar": "ليوناردو دا فينشي"
-      },
-      "title": {
-        "fr": "L’Annonciation",
-        "en": "The Annunciation",
-        "ar": "البشارة"
-      },
+      "artistTitle": { "fr": "Léonard de Vinci", "en": "Leonardo da Vinci", "ar": "ليوناردو دا فينشي" },
+      "title": { "fr": "L’Annonciation", "en": "The Annunciation", "ar": "البشارة" },
       "languages": ["fr", "en", "ar"],
       "image": "assets/artists/leonardo-da-vinci/collection/the-annunciation-davinci.webp"
     },
@@ -87,16 +51,8 @@
       "manifest": "content/paintings/ginevra-de-benci.json",
       "artist": "leonardo-da-vinci",
       "slug": "ginevra-de-benci",
-      "artistTitle": {
-        "fr": "Léonard de Vinci",
-        "en": "Leonardo da Vinci",
-        "ar": "ليوناردو دا فينشي"
-      },
-      "title": {
-        "fr": "Ginevra de’ Benci",
-        "en": "Ginevra de’ Benci",
-        "ar": "جينيفرا دي بنتشي"
-      },
+      "artistTitle": { "fr": "Léonard de Vinci", "en": "Leonardo da Vinci", "ar": "ليوناردو دا فينشي" },
+      "title": { "fr": "Ginevra de’ Benci", "en": "Ginevra de’ Benci", "ar": "جينيفرا دي بنتشي" },
       "languages": ["fr", "en", "ar"],
       "image": "assets/artists/leonardo-da-vinci/collection/ginevra-de-benci.webp"
     },
@@ -106,34 +62,88 @@
       "artist": "leonardo-da-vinci",
       "slug": "belle-ferronniere",
       "museumId": "mus-louvre",
-      "artistTitle": {
-        "fr": "Léonard de Vinci",
-        "en": "Leonardo da Vinci",
-        "ar": "ليوناردو دا فينشي"
-      },
-      "title": {
-        "fr": "La Belle Ferronnière",
-        "en": "La Belle Ferronnière",
-        "ar": "لا بيل فيرونيير"
-      },
+      "artistTitle": { "fr": "Léonard de Vinci", "en": "Leonardo da Vinci", "ar": "ليوناردو دا فينشي" },
+      "title": { "fr": "La Belle Ferronnière", "en": "La Belle Ferronnière", "ar": "لا بيل فيرونيير" },
       "languages": ["fr", "en", "ar"],
       "image": "assets/artists/leonardo-da-vinci/collection/la-belle-ferronnière-davinci.webp"
     },
+
+    "ver-gpe": {
+      "type": "painting",
+      "manifest": "content/paintings/vermeer-girl-with-a-pearl-earring.json",
+      "artist": "johannes-vermeer",
+      "slug": "vermeer-girl-with-a-pearl-earring",
+      "museumId": "mus-mauritshuis",
+      "artistTitle": { "fr": "Johannes Vermeer", "en": "Johannes Vermeer", "ar": "يوهانس فيرمير" },
+      "title": { "fr": "La Jeune Fille à la perle", "en": "Girl with a Pearl Earring", "ar": "الفتاة ذات القرط اللؤلؤي" },
+      "printPage": {
+        "fr": "/print-vermeer-girl-with-a-pearl-earring-fr.html",
+        "en": "/print-vermeer-girl-with-a-pearl-earring.html",
+        "ar": "/print-ar.html?painting=vermeer-girl-with-a-pearl-earring"
+      },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg"
+    },
+    "ver-mm": {
+      "type": "painting",
+      "manifest": "content/paintings/vermeer-milkmaid.json",
+      "artist": "johannes-vermeer",
+      "slug": "vermeer-milkmaid",
+      "artistTitle": { "fr": "Johannes Vermeer", "en": "Johannes Vermeer", "ar": "يوهانس فيرمير" },
+      "title": { "fr": "La Laitière", "en": "The Milkmaid", "ar": "خادمة الحليب" },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/paintings_images/vermeer/vermeer_milkmaid.png"
+    },
+    "ver-vd": {
+      "type": "painting",
+      "manifest": "content/paintings/view-of-delft.json",
+      "artist": "johannes-vermeer",
+      "slug": "view-of-delft",
+      "museumId": "mus-mauritshuis",
+      "artistTitle": { "fr": "Johannes Vermeer", "en": "Johannes Vermeer", "ar": "يوهانس فيرمير" },
+      "title": { "fr": "Vue de Delft", "en": "View of Delft", "ar": "منظر دلفت" },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/johannes-vermeer/collection/view-of-delft-vermeer.webp"
+    },
+    "ver-ap": {
+      "type": "painting",
+      "manifest": "content/paintings/art-of-painting.json",
+      "artist": "johannes-vermeer",
+      "slug": "art-of-painting",
+      "artistTitle": { "fr": "Johannes Vermeer", "en": "Johannes Vermeer", "ar": "يوهانس فيرمير" },
+      "title": { "fr": "L’Art de la peinture", "en": "The Art of Painting", "ar": "فن الرسم" },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/paintings_images/vermeer/vermeer_art-painting.png"
+    },
+    "ver-as": {
+      "type": "painting",
+      "manifest": "content/paintings/vermeer-astronomer.json",
+      "artist": "johannes-vermeer",
+      "slug": "vermeer-astronomer",
+      "museumId": "mus-louvre",
+      "artistTitle": { "fr": "Johannes Vermeer", "en": "Johannes Vermeer", "ar": "يوهانس فيرمير" },
+      "title": { "fr": "L’Astronome", "en": "The Astronomer", "ar": "عالم الفلك" },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/paintings_images/vermeer/vermeer_astronomer.png"
+    },
+    "ver-wb": {
+      "type": "painting",
+      "manifest": "content/paintings/woman-holding-balance.json",
+      "artist": "johannes-vermeer",
+      "slug": "woman-holding-balance",
+      "artistTitle": { "fr": "Johannes Vermeer", "en": "Johannes Vermeer", "ar": "يوهانس فيرمير" },
+      "title": { "fr": "La Femme à la balance", "en": "Woman Holding a Balance", "ar": "امرأة تحمل ميزاناً" },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/paintings_images/vermeer/vermeer_woman-holding-balance.png"
+    },
+
     "mus-louvre": {
       "type": "museum",
       "manifest": "content/museums/louvre.json",
       "slug": "louvre",
-      "relatedPaintingIds": ["ldv-ml", "ldv-bf"],
-      "title": {
-        "fr": "Musée du Louvre",
-        "en": "Louvre Museum",
-        "ar": "متحف اللوفر"
-      },
-      "location": {
-        "fr": "Paris, France",
-        "en": "Paris, France",
-        "ar": "باريس، فرنسا"
-      },
+      "relatedPaintingIds": ["ldv-ml", "ldv-bf", "ver-as"],
+      "title": { "fr": "Musée du Louvre", "en": "Louvre Museum", "ar": "متحف اللوفر" },
+      "location": { "fr": "Paris, France", "en": "Paris, France", "ar": "باريس، فرنسا" },
       "languages": ["fr", "en", "ar"],
       "image": "assets/environments/gallery/images/Louvre/louvre_building_plan/Louvre_museum.png"
     },
@@ -142,18 +152,20 @@
       "manifest": "content/museums/czartoryski.json",
       "slug": "czartoryski",
       "relatedPaintingIds": ["ldv-le"],
-      "title": {
-        "fr": "Musée des Princes Czartoryski",
-        "en": "Princes Czartoryski Museum",
-        "ar": "متحف الأمراء تشارتوريسكي"
-      },
-      "location": {
-        "fr": "Cracovie, Pologne",
-        "en": "Kraków, Poland",
-        "ar": "كراكوف، بولندا"
-      },
+      "title": { "fr": "Musée des Princes Czartoryski", "en": "Princes Czartoryski Museum", "ar": "متحف الأمراء تشارتوريسكي" },
+      "location": { "fr": "Cracovie, Pologne", "en": "Kraków, Poland", "ar": "كراكوف، بولندا" },
       "languages": ["fr", "en", "ar"],
       "image": "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_museum.png"
+    },
+    "mus-mauritshuis": {
+      "type": "museum",
+      "manifest": "content/museums/mauritshuis.json",
+      "slug": "mauritshuis",
+      "relatedPaintingIds": ["ver-gpe", "ver-vd"],
+      "title": { "fr": "Mauritshuis", "en": "Mauritshuis", "ar": "Mauritshuis" },
+      "location": { "fr": "La Haye, Pays-Bas", "en": "The Hague, Netherlands", "ar": "لاهاي، هولندا" },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/environments/gallery/images/Mauritshuis/Mauritshuis_building_plan/Mauritshuis_museum.png"
     }
   }
 }
