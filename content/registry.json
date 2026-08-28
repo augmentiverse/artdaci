@@ -76,11 +76,7 @@
       "museumId": "mus-mauritshuis",
       "artistTitle": { "fr": "Johannes Vermeer", "en": "Johannes Vermeer", "ar": "يوهانس فيرمير" },
       "title": { "fr": "La Jeune Fille à la perle", "en": "Girl with a Pearl Earring", "ar": "الفتاة ذات القرط اللؤلؤي" },
-      "printPage": {
-        "fr": "/print-vermeer-girl-with-a-pearl-earring-fr.html",
-        "en": "/print-vermeer-girl-with-a-pearl-earring.html",
-        "ar": "/print-ar.html?painting=vermeer-girl-with-a-pearl-earring"
-      },
+      "printPage": { "fr": "/print-vermeer-girl-with-a-pearl-earring-fr.html", "en": "/print-vermeer-girl-with-a-pearl-earring.html", "ar": "/print-ar.html?painting=vermeer-girl-with-a-pearl-earring" },
       "languages": ["fr", "en", "ar"],
       "image": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg"
     },
@@ -137,6 +133,134 @@
       "image": "assets/artists/paintings_images/vermeer/vermeer_woman-holding-balance.png"
     },
 
+    "vg-sp": {
+      "type": "painting",
+      "manifest": "content/paintings/van-gogh.json",
+      "artist": "vincent-van-gogh",
+      "slug": "van-gogh",
+      "artistTitle": { "fr": "Vincent van Gogh", "en": "Vincent van Gogh", "ar": "فنسنت فان غوخ" },
+      "title": { "fr": "Autoportrait", "en": "Self-Portrait", "ar": "بورتريه ذاتي" },
+      "printPage": { "fr": "/print-van-gogh-fr.html", "en": "/print-van-gogh.html", "ar": "/print-ar.html?painting=van-gogh" },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait.jpg"
+    },
+    "vg-sn": {
+      "type": "painting",
+      "manifest": "content/paintings/starry-night.json",
+      "artist": "vincent-van-gogh",
+      "slug": "starry-night",
+      "artistTitle": { "fr": "Vincent van Gogh", "en": "Vincent van Gogh", "ar": "فنسنت فان غوخ" },
+      "title": { "fr": "La Nuit étoilée", "en": "The Starry Night", "ar": "ليلة النجوم" },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/paintings_images/vangogh/vangogh_starry-night.png"
+    },
+    "vg-sf": {
+      "type": "painting",
+      "manifest": "content/paintings/sunflowers.json",
+      "artist": "vincent-van-gogh",
+      "slug": "sunflowers",
+      "artistTitle": { "fr": "Vincent van Gogh", "en": "Vincent van Gogh", "ar": "فنسنت فان غوخ" },
+      "title": { "fr": "Les Tournesols", "en": "Sunflowers", "ar": "عباد الشمس" },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/paintings_images/vangogh/vangogh_sunflower.png"
+    },
+    "vg-br": {
+      "type": "painting",
+      "manifest": "content/paintings/van-gogh-bedroom.json",
+      "artist": "vincent-van-gogh",
+      "slug": "van-gogh-bedroom",
+      "museumId": "mus-vangogh",
+      "artistTitle": { "fr": "Vincent van Gogh", "en": "Vincent van Gogh", "ar": "فنسنت فان غوخ" },
+      "title": { "fr": "La Chambre", "en": "The Bedroom", "ar": "غرفة النوم" },
+      "printPage": { "fr": "/print-van-gogh-bedroom-fr.html", "en": "/print-van-gogh-bedroom.html", "ar": "/print-ar.html?painting=van-gogh-bedroom" },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/vincent-van-gogh/artworks/the-bedroom/images/bed-van-gogh.jpeg"
+    },
+    "vg-ct": {
+      "type": "painting",
+      "manifest": "content/paintings/cafe-terrace.json",
+      "artist": "vincent-van-gogh",
+      "slug": "cafe-terrace",
+      "artistTitle": { "fr": "Vincent van Gogh", "en": "Vincent van Gogh", "ar": "فنسنت فان غوخ" },
+      "title": { "fr": "Terrasse du café le soir", "en": "Café Terrace at Night", "ar": "شرفة المقهى ليلاً" },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/paintings_images/vangogh/vangogh_café-terrace.png"
+    },
+    "vg-nc": {
+      "type": "painting",
+      "manifest": "content/paintings/night-cafe.json",
+      "artist": "vincent-van-gogh",
+      "slug": "night-cafe",
+      "artistTitle": { "fr": "Vincent van Gogh", "en": "Vincent van Gogh", "ar": "فنسنت فان غوخ" },
+      "title": { "fr": "Le Café de nuit", "en": "The Night Café", "ar": "المقهى الليلي" },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/paintings_images/vangogh/vangogh_night-café.png"
+    },
+
+    "mon-is": {
+      "type": "painting",
+      "manifest": "content/paintings/monet-impression-sunrise.json",
+      "artist": "claude-monet",
+      "slug": "monet-impression-sunrise",
+      "artistTitle": { "fr": "Claude Monet", "en": "Claude Monet", "ar": "كلود مونيه" },
+      "title": { "fr": "Impression, soleil levant", "en": "Impression, Sunrise", "ar": "انطباع، شروق الشمس" },
+      "printPage": { "fr": "/print-monet-impression-sunrise-fr.html", "en": "/print-monet-impression-sunrise.html", "ar": "/print-ar.html?painting=monet-impression-sunrise" },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/claude-monet/collection/impression-sunrise-monet.webp"
+    },
+    "mon-wl": {
+      "type": "painting",
+      "manifest": "content/paintings/water-lilies.json",
+      "artist": "claude-monet",
+      "slug": "water-lilies",
+      "artistTitle": { "fr": "Claude Monet", "en": "Claude Monet", "ar": "كلود مونيه" },
+      "title": { "fr": "Les Nymphéas", "en": "Water Lilies", "ar": "زنابق الماء" },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/paintings_images/monet/monet_water_lilies.png"
+    },
+    "mon-jb": {
+      "type": "painting",
+      "manifest": "content/paintings/japanese-bridge.json",
+      "artist": "claude-monet",
+      "slug": "japanese-bridge",
+      "artistTitle": { "fr": "Claude Monet", "en": "Claude Monet", "ar": "كلود مونيه" },
+      "title": { "fr": "Le Pont japonais", "en": "The Japanese Bridge", "ar": "الجسر الياباني" },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/paintings_images/monet/monet_japanese-bridge.png"
+    },
+    "mon-po": {
+      "type": "painting",
+      "manifest": "content/paintings/poppies.json",
+      "artist": "claude-monet",
+      "slug": "poppies",
+      "museumId": "mus-orsay",
+      "artistTitle": { "fr": "Claude Monet", "en": "Claude Monet", "ar": "كلود مونيه" },
+      "title": { "fr": "Les Coquelicots", "en": "Poppies", "ar": "شقائق النعمان" },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/paintings_images/monet/monet_poppy.png"
+    },
+    "mon-wp": {
+      "type": "painting",
+      "manifest": "content/paintings/woman-with-parasol.json",
+      "artist": "claude-monet",
+      "slug": "woman-with-parasol",
+      "artistTitle": { "fr": "Claude Monet", "en": "Claude Monet", "ar": "كلود مونيه" },
+      "title": { "fr": "La Femme à l’ombrelle", "en": "Woman with a Parasol", "ar": "امرأة تحمل مظلة" },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/paintings_images/monet/monet_woman-parasol.png"
+    },
+    "mon-pa": {
+      "type": "painting",
+      "manifest": "content/paintings/pont-d-argenteuil.json",
+      "artist": "claude-monet",
+      "slug": "pont-d-argenteuil",
+      "museumId": "mus-orsay",
+      "artistTitle": { "fr": "Claude Monet", "en": "Claude Monet", "ar": "كلود مونيه" },
+      "title": { "fr": "Le Pont d’Argenteuil", "en": "The Bridge at Argenteuil", "ar": "جسر أرجنتوي" },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/artists/claude-monet/collection/le-pont-d-argenteuil-monet.webp"
+    },
+
     "mus-louvre": {
       "type": "museum",
       "manifest": "content/museums/louvre.json",
@@ -166,6 +290,26 @@
       "location": { "fr": "La Haye, Pays-Bas", "en": "The Hague, Netherlands", "ar": "لاهاي، هولندا" },
       "languages": ["fr", "en", "ar"],
       "image": "assets/environments/gallery/images/Mauritshuis/Mauritshuis_building_plan/Mauritshuis_museum.png"
+    },
+    "mus-vangogh": {
+      "type": "museum",
+      "manifest": "content/museums/van-gogh-museum.json",
+      "slug": "van-gogh-museum",
+      "relatedPaintingIds": ["vg-br"],
+      "title": { "fr": "Musée Van Gogh", "en": "Van Gogh Museum", "ar": "متحف فان غوخ" },
+      "location": { "fr": "Amsterdam, Pays-Bas", "en": "Amsterdam, Netherlands", "ar": "أمستردام، هولندا" },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/environments/gallery/images/Van-Gogh-s-Museum/vangogh-s-museum_building_plan/VanGogh_museum.png"
+    },
+    "mus-orsay": {
+      "type": "museum",
+      "manifest": "content/museums/orsay.json",
+      "slug": "orsay",
+      "relatedPaintingIds": ["mon-po", "mon-pa"],
+      "title": { "fr": "Musée d’Orsay", "en": "Musée d’Orsay", "ar": "متحف أورسيه" },
+      "location": { "fr": "Paris, France", "en": "Paris, France", "ar": "باريس، فرنسا" },
+      "languages": ["fr", "en", "ar"],
+      "image": "assets/environments/gallery/images/Orsay/orsay_building_plan/Orsay_museum.png"
     }
   }
 }
