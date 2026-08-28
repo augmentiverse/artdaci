@@ -39,7 +39,28 @@ Printed QR codes must never point directly to `.mp3`, `.m4a`, `.mp4`, `.glb`, `.
 | `ldv-gb` | Ginevra de’ Benci | `ginevra-de-benci` |
 | `ldv-bf` | La Belle Ferronnière | `belle-ferronniere` |
 
-These IDs are now reserved permanently for ARTDACI.
+These IDs are reserved permanently for ARTDACI.
+
+## Vermeer permanent IDs
+
+| Permanent ID | Work | Slug |
+|---|---|---|
+| `ver-gpe` | Girl with a Pearl Earring / La Jeune Fille à la perle | `vermeer-girl-with-a-pearl-earring` |
+| `ver-mm` | The Milkmaid / La Laitière | `vermeer-milkmaid` |
+| `ver-vd` | View of Delft / Vue de Delft | `view-of-delft` |
+| `ver-ap` | The Art of Painting / L’Art de la peinture | `art-of-painting` |
+| `ver-as` | The Astronomer / L’Astronome | `vermeer-astronomer` |
+| `ver-wb` | Woman Holding a Balance / La Femme à la balance | `woman-holding-balance` |
+
+These IDs are reserved permanently for ARTDACI.
+
+## Museum permanent IDs currently in use
+
+| Permanent ID | Museum |
+|---|---|
+| `mus-louvre` | Musée du Louvre |
+| `mus-czartoryski` | Princes Czartoryski Museum |
+| `mus-mauritshuis` | Mauritshuis |
 
 ## Extension rule
 
