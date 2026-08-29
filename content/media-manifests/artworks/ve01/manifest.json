@@ -35,29 +35,37 @@
         "scope": "artwork",
         "path": "images/main.jpg",
         "mimeType": "image/jpeg",
-        "available": false,
-        "migrationStatus": "planned"
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 33883,
+        "sha256": "c3dd393b2ff8282b44e8efa909e26141c84ac8fde2c8b99f8d07f11015f86a6a"
       },
       "figure-standing": {
         "scope": "artwork",
         "path": "images/figure-standing.jpg",
         "mimeType": "image/jpeg",
-        "available": false,
-        "migrationStatus": "planned"
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 90332,
+        "sha256": "a064a43ea4b40c967c0f6388ab6245376b5fccb7729c4e830ce18cf8bae00d52"
       },
       "figure-transparent": {
         "scope": "artwork",
         "path": "images/figure-transparent.png",
         "mimeType": "image/png",
-        "available": false,
-        "migrationStatus": "planned"
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 622065,
+        "sha256": "81a5ef12db0b052b9af5f4eab80c33e495138b301ace3e314b6d943453ecdad2"
       },
       "room": {
         "scope": "artwork",
         "path": "images/room.png",
         "mimeType": "image/png",
-        "available": false,
-        "migrationStatus": "planned"
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 8109987,
+        "sha256": "4d517103adc96ca245f8dd8d4f5aafb7d00cf9e6c20a75b3b4506c8a5618fcf5"
       },
       "gallery-figure": {
         "scope": "shared",
@@ -73,16 +81,20 @@
           "scope": "artwork",
           "path": "audio/en/guide.mp3",
           "mimeType": "audio/mpeg",
-          "available": false,
-          "migrationStatus": "planned",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 23462901,
+          "sha256": "abe69f886f00e1a64b679982a9285190724961c23c9bf05bd1a49cb7b464a8c8",
           "language": "en"
         },
         "fr": {
           "scope": "artwork",
           "path": "audio/fr/guide.m4a",
           "mimeType": "audio/mp4",
-          "available": false,
-          "migrationStatus": "planned",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 3678339,
+          "sha256": "fcd0b0519715b31fcf527f236b8759ae291447dcc6e2ce90138dcf37eec22cb2",
           "language": "fr"
         }
       },
@@ -91,8 +103,10 @@
           "scope": "artwork",
           "path": "audio/fr/overview.mp3",
           "mimeType": "audio/mpeg",
-          "available": false,
-          "migrationStatus": "planned",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 28015333,
+          "sha256": "aeaf02906110ba521775425bd3233e360b7c7988a8cd41b8821bfaf58f882ee9",
           "language": "fr"
         }
       }
@@ -102,8 +116,10 @@
         "scope": "artwork",
         "path": "videos/animation.mp4",
         "mimeType": "video/mp4",
-        "available": false,
-        "migrationStatus": "planned"
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 2278927,
+        "sha256": "361cf305f0119ce688f6cd6d10c8e6c4af89ad5a414957621fdf545bcb2457e2"
       }
     },
     "models": {
@@ -111,15 +127,19 @@
         "scope": "artwork",
         "path": "models/portrait.glb",
         "mimeType": "model/gltf-binary",
-        "available": false,
-        "migrationStatus": "planned"
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 2320252,
+        "sha256": "a8a1553de82644a8a21cfb19a2dd2f9e04f6316d216fdbe6c346c4c3710af878"
       },
       "sitting": {
         "scope": "artwork",
         "path": "models/sitting.glb",
         "mimeType": "model/gltf-binary",
-        "available": false,
-        "migrationStatus": "planned"
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 8916276,
+        "sha256": "e3171f1557f83d5ae940d5d6a5bf11786f40fd30acb19bdfda3e9c1b4b1b0cf9"
       }
     },
     "ar": {
@@ -127,10 +147,12 @@
         "scope": "artwork",
         "path": "ar/target.mind",
         "mimeType": "application/octet-stream",
-        "available": false,
-        "migrationStatus": "planned"
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 212425,
+        "sha256": "6a6223b022f185c02cc31658f876d44b5ad0a70522d24b93b2ea7e675cce560f"
       }
     }
   },
-  "updatedAt": "2026-08-28"
+  "updatedAt": "2026-08-29"
 }
