@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="styles/site.css" />
   </head>
   <body class="target-body">
-    <main class="catalogue-spread stacked-spread">
+    <main
+      class="catalogue-spread stacked-spread"
+      data-artwork-media-manifest="https://media.artdaci.com/artworks/ve01/manifest.json">
       <section class="catalogue-plate">
         <figure class="target-art">
-          <img src="assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg" alt="Girl with a Pearl Earring by Johannes Vermeer" />
+          <img data-artwork-media="images.main" src="assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg" alt="Girl with a Pearl Earring by Johannes Vermeer" />
           <figcaption>
             <strong>Girl with a Pearl Earring</strong>
             <span>Johannes Vermeer, c. 1665 - Oil on canvas - Mauritshuis, The Hague</span>
@@ -45,7 +47,7 @@
         <section class="close-look" aria-labelledby="vermeer-close-title">
           <div class="close-look-header"><h2 id="vermeer-close-title">Look Closely</h2><p>Vermeer builds the encounter from a handful of precise optical events. Move from gaze to pearl, then notice what time has changed.</p></div>
           <figure class="close-look-stage">
-            <img src="assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg" alt="Annotated view of Girl with a Pearl Earring" />
+            <img data-artwork-media="images.main" src="assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg" alt="Annotated view of Girl with a Pearl Earring" />
             <span class="close-look-marker" style="--x: 42%; --y: 37%;">1</span><span class="close-look-marker" style="--x: 58%; --y: 57%;">2</span><span class="close-look-marker" style="--x: 48%; --y: 20%;">3</span><span class="close-look-marker" style="--x: 40%; --y: 48%;">4</span><span class="close-look-marker" style="--x: 16%; --y: 30%;">5</span>
           </figure>
           <ol class="close-look-list">
@@ -81,13 +83,14 @@
           </div>
           <a class="button primary" href="ar.html?painting=vermeer-girl-with-a-pearl-earring&amp;lang=en">Launch AR</a>
           <a class="button" href="space.html?painting=vermeer-girl-with-a-pearl-earring&amp;lang=en">Place in My Space</a>
-          <a class="button" href="assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/media/vermeer-girl-with-a-pearl-earring-en.mp3">Audio Overview</a>
+          <a class="button" data-artwork-media="audio.guide.en" href="assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/media/vermeer-girl-with-a-pearl-earring-en.mp3">Audio Overview</a>
           <a class="button" href="index.html">Back to Index</a>
           <a class="button" href="print-vermeer-girl-with-a-pearl-earring-fr.html" lang="fr">Version française</a>
           <a class="button" href="print-ar.html?painting=vermeer-girl-with-a-pearl-earring" lang="ar" dir="rtl">العربية</a>
         </aside>
       </section>
     </main>
+    <script type="module" src="scripts/artwork-media-manifest.js?v=1"></script>
     <script type="module" src="scripts/painting-museum.js?v=1"></script>
   </body>
 </html>
