@@ -1,5 +1,8 @@
 import * as THREE from "../vendor/three.module.js";
 import { GLTFLoader } from "../vendor/GLTFLoader.module.js";
+import { DRACOLoader } from "../vendor/DRACOLoader.module.js";
+import { fetchArtworkManifest } from "./artwork-media-manifest.js";
+import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
 
 const PAINTINGS = {
   "mona-lisa": "content/paintings/mona-lisa.json",
@@ -99,7 +102,11 @@ scene.add(new THREE.GridHelper(12, 24, 0x806c48, 0x40382e));
 const modelRoot = new THREE.Group();
 scene.add(modelRoot);
 
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath("vendor/draco/");
 const loader = new GLTFLoader();
+loader.setDRACOLoader(dracoLoader);
+const modelCache = new Map();
 const controllers = [renderer.xr.getController(0), renderer.xr.getController(1)];
 const grabbing = new Set();
 const raycaster = new THREE.Raycaster();
@@ -113,6 +120,7 @@ let modelObject = null;
 let variants = [];
 let twoHandState = null;
 let currentSession = null;
+let currentVariantIndex = -1;
 
 init();
 
@@ -127,7 +135,7 @@ async function init() {
     const response = await fetch(PAINTINGS[slug], { cache: "reload" });
     if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
     const manifest = await response.json();
-    variants = getModelVariants(manifest);
+    variants = await configureModelVariants(getModelVariants(manifest));
     document.getElementById("vr-title").textContent = lang === "ar"
       ? ARABIC_TITLES[slug] || manifest.title || "ARTDACI VR"
       : manifest.title || "ARTDACI VR";
@@ -158,9 +166,67 @@ function applyCopy() {
 
 function getModelVariants(manifest) {
   const list = manifest.media?.modelVariants || manifest.ar?.modelVariants || [];
-  if (Array.isArray(list) && list.length) return list.filter((variant) => variant?.src);
+  if (Array.isArray(list) && list.length) {
+    return list.filter((variant) => variant?.src).map((variant) => ({
+      ...variant,
+      localSrc: variant.src,
+      remoteSrc: "",
+      loadedSrc: ""
+    }));
+  }
   const src = manifest.media?.model || manifest.ar?.primaryModel;
-  return src ? [{ id: "model-1", label: { en: "Model 1", fr: "Modèle 1" }, src }] : [];
+  return src ? [{
+    id: "model-1",
+    label: { en: "Model 1", fr: "Modèle 1" },
+    src,
+    localSrc: src,
+    remoteSrc: "",
+    loadedSrc: ""
+  }] : [];
+}
+
+async function configureModelVariants(localVariants) {
+  const config = getArtworkMediaConfig();
+  if (!config) return localVariants;
+
+  try {
+    const mediaManifest = await fetchArtworkManifest(config.manifestUrl);
+    if (mediaManifest?.id !== config.artworkId) return localVariants;
+
+    localVariants.forEach((variant) => {
+      const mediaKey = config.modelKeys[variant.id];
+      if (!mediaKey) return;
+
+      try {
+        variant.remoteSrc = resolveManifestMedia(mediaManifest, mediaKey, lang) || "";
+      } catch (error) {
+        console.warn(`Remote model unavailable for ${variant.id}; keeping the local model.`, error);
+      }
+    });
+  } catch (error) {
+    console.warn("Artwork media manifest unavailable; keeping the local VR models.", error);
+  }
+
+  return localVariants;
+}
+
+function getArtworkMediaConfig() {
+  const element = [...document.querySelectorAll("[data-artwork-media-manifest-url]")]
+    .find((candidate) => candidate.dataset.artworkMediaFor === slug);
+  if (!element?.dataset.artworkMediaId || !element.dataset.artworkMediaManifestUrl) return null;
+
+  try {
+    const modelKeys = JSON.parse(element.dataset.artworkMediaModelKeys || "{}");
+    if (!modelKeys || typeof modelKeys !== "object" || Array.isArray(modelKeys)) return null;
+    return {
+      artworkId: element.dataset.artworkMediaId,
+      manifestUrl: element.dataset.artworkMediaManifestUrl,
+      modelKeys
+    };
+  } catch (error) {
+    console.warn("Invalid declarative artwork media configuration; keeping the local VR models.", error);
+    return null;
+  }
 }
 
 function getVariantLabel(variant, index) {
@@ -182,18 +248,64 @@ function renderVariantOptions() {
 async function loadVariant(index) {
   const variant = variants[index];
   if (!variant) return;
+  if (index === currentVariantIndex && modelObject) {
+    resetModel();
+    status.textContent = text.ready;
+    return;
+  }
+
+  const previousIndex = currentVariantIndex;
   status.textContent = text.loading;
   modelChoice.disabled = true;
-  disposeCurrentModel();
-  resetModel();
 
-  const gltf = await loader.loadAsync(variant.src);
-  modelObject = gltf.scene;
-  modelRoot.add(modelObject);
-  normalizeModel(modelObject);
-  resetModel();
-  modelChoice.disabled = false;
-  status.textContent = text.ready;
+  try {
+    const nextModel = await loadVariantModel(variant);
+    if (modelObject) modelRoot.remove(modelObject);
+    modelObject = nextModel;
+    modelRoot.add(modelObject);
+    currentVariantIndex = index;
+    modelChoice.value = String(index);
+    resetModel();
+    status.textContent = text.ready;
+  } catch (error) {
+    if (previousIndex >= 0) modelChoice.value = String(previousIndex);
+    throw error;
+  } finally {
+    modelChoice.disabled = false;
+  }
+}
+
+async function loadVariantModel(variant) {
+  const preferredSrc = variant.loadedSrc || variant.remoteSrc || variant.localSrc;
+
+  try {
+    const model = await loadModel(preferredSrc);
+    variant.loadedSrc = preferredSrc;
+    return model;
+  } catch (error) {
+    if (preferredSrc === variant.localSrc) throw error;
+    console.warn(`Remote GLB unavailable for ${variant.id}; loading the local model.`, error);
+    const model = await loadModel(variant.localSrc);
+    variant.loadedSrc = variant.localSrc;
+    return model;
+  }
+}
+
+function loadModel(src) {
+  if (!modelCache.has(src)) {
+    const request = loader.loadAsync(src)
+      .then((gltf) => {
+        normalizeModel(gltf.scene);
+        return gltf.scene;
+      })
+      .catch((error) => {
+        modelCache.delete(src);
+        throw error;
+      });
+    modelCache.set(src, request);
+  }
+
+  return modelCache.get(src);
 }
 
 function normalizeModel(object) {
@@ -208,25 +320,6 @@ function normalizeModel(object) {
   object.updateMatrixWorld(true);
   const normalizedBox = new THREE.Box3().setFromObject(object);
   object.position.y -= normalizedBox.min.y;
-}
-
-function disposeCurrentModel() {
-  if (!modelObject) return;
-  modelRoot.remove(modelObject);
-  modelObject.traverse((node) => {
-    node.geometry?.dispose();
-    if (Array.isArray(node.material)) node.material.forEach(disposeMaterial);
-    else disposeMaterial(node.material);
-  });
-  modelObject = null;
-}
-
-function disposeMaterial(material) {
-  if (!material) return;
-  Object.values(material).forEach((value) => {
-    if (value?.isTexture) value.dispose();
-  });
-  material.dispose?.();
 }
 
 function bindUI() {
