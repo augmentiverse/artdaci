@@ -10,7 +10,15 @@
     <script type="module" src="vendor/model-viewer.min.js?v=3.5.0"></script>
   </head>
   <body>
-    <main class="space-shell">
+    <main
+      class="space-shell"
+      data-artwork-media-for="vermeer-girl-with-a-pearl-earring"
+      data-artwork-media-id="ve01"
+      data-artwork-media-manifest-url="https://media.artdaci.com/artworks/ve01/manifest.json"
+      data-artwork-media-poster-key="images.main"
+      data-artwork-media-model-keys='{"portrait":"models.portrait","sitting":"models.sitting"}'
+      data-artwork-media-audio-keys='{"en":"audio.guide.en","fr":"audio.guide.fr","ar":"audio.guide.fr"}'
+    >
       <header class="space-header">
         <a id="back-link" class="button" href="index.html">Back</a>
         <div>
@@ -46,7 +54,7 @@
       </section>
     </main>
 
-    <script type="module" src="scripts/space-viewer.js?v=28"></script>
+    <script type="module" src="scripts/space-viewer.js?v=30"></script>
     <script type="module" src="scripts/visitor-guide.js?v=1"></script>
   </body>
 </html>

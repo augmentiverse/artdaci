@@ -1,3 +1,6 @@
+import { fetchArtworkManifest } from "./artwork-media-manifest.js";
+import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
+
 const PAINTINGS = {
   "mona-lisa": "content/paintings/mona-lisa.json",
   "van-gogh": "content/paintings/van-gogh.json",
@@ -128,7 +131,8 @@ async function init() {
     const response = await fetch(catalogue[slug] || PAINTINGS["mona-lisa"], { cache: "reload" });
     if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
     const manifest = await response.json();
-    configureViewer(manifest);
+    const mediaContext = await getArtworkMediaContext();
+    configureViewer(manifest, mediaContext);
   } catch (error) {
     document.getElementById("space-status").textContent = `${COPY[lang].unsupported} ${error.message}`;
   }
@@ -150,7 +154,7 @@ function applyStaticCopy() {
   document.getElementById("ios-note").textContent = text.iosNote;
 }
 
-function configureViewer(manifest) {
+function configureViewer(manifest, mediaContext) {
   const model = document.getElementById("space-model");
   const defaultTitle = manifest.title || "Artwork";
   const arTitles = {
@@ -161,8 +165,9 @@ function configureViewer(manifest) {
   };
   const title = lang === "ar" ? arTitles[slug] || defaultTitle : lang === "fr" ? FR_TITLES[slug] || defaultTitle : defaultTitle;
   const modelVariants = getModelVariants(manifest);
-  const src = modelVariants[0]?.src || manifest.ar?.primaryModel || manifest.media?.model;
-  const poster = manifest.media?.image || manifest.print?.imageTargetSource;
+  const initialVariant = modelVariants[0];
+  const src = initialVariant?.localSrc || manifest.ar?.primaryModel || manifest.media?.model;
+  const localPoster = manifest.media?.image || manifest.print?.imageTargetSource;
   const usdz = manifest.media?.usdz || manifest.media?.usdzModel;
   const audioOverview = getLocalizedAudioOverview(manifest);
 
@@ -171,16 +176,18 @@ function configureViewer(manifest) {
 
   if (!src) throw new Error("No 3D model is configured for this painting.");
   const status = document.getElementById("space-status");
-  model.addEventListener("load", () => {
-    status.textContent = usdz ? COPY[lang].readyWithUsdz : COPY[lang].readyWithoutUsdz;
-  }, { once: true });
-  model.addEventListener("error", (event) => {
-    console.error(`Room AR model failed to load: ${src}`, event);
-    status.textContent = `${COPY[lang].unsupported} (${src})`;
-  }, { once: true });
-  model.setAttribute("src", src);
+  if (initialVariant) prepareModelVariant(initialVariant, mediaContext);
+  loadModelVariant(model, initialVariant || createFallbackVariant(src), {
+    onLoad: () => {
+      status.textContent = usdz ? COPY[lang].readyWithUsdz : COPY[lang].readyWithoutUsdz;
+    },
+    onError: (event, failedSrc) => {
+      console.error(`Room AR model failed to load: ${failedSrc}`, event);
+      status.textContent = `${COPY[lang].unsupported} (${failedSrc})`;
+    }
+  });
   model.alt = `${title} 3D model`;
-  if (poster) model.poster = poster;
+  applyModelPoster(model, resolveConfiguredMedia(mediaContext, mediaContext?.config.posterKey), localPoster);
   if (usdz) {
     model.setAttribute("ios-src", usdz);
   } else {
@@ -190,8 +197,8 @@ function configureViewer(manifest) {
   document.getElementById("image-ar-link").href = `ar.html?${resourceType}=${slug}&lang=${lang}`;
   updateVrLink(0);
   document.getElementById("print-link").href = PRINT_PAGES[lang]?.[slug] || "index.html";
-  renderModelVariantControls(model, modelVariants, usdz);
-  renderExperienceActions(audioOverview);
+  renderModelVariantControls(model, modelVariants, usdz, mediaContext);
+  renderExperienceActions(audioOverview, mediaContext);
   renderExternalExperiences(manifest.externalExperiences);
   checkModelViewerAvailability(usdz, audioOverview);
   model.addEventListener("ar-status", (event) => {
@@ -205,12 +212,156 @@ function getModelVariants(manifest) {
   // Space AR can use a different set of models from image-tracked AR.
   const variants = manifest.media?.modelVariants || manifest.ar?.modelVariants || [];
   const list = Array.isArray(variants) ? variants : [];
-  if (list.length) return list.filter((variant) => variant?.src);
+  if (list.length) {
+    return list.filter((variant) => variant?.src).map((variant) => ({
+      ...variant,
+      localSrc: variant.src,
+      remoteSrc: "",
+      loadedSrc: "",
+      remoteResolved: false
+    }));
+  }
 
   const fallback = manifest.ar?.primaryModel || manifest.media?.model;
   return fallback
-    ? [{ id: "model-1", label: { en: "Model 1", fr: "Modèle 1" }, src: fallback }]
+    ? [{
+        id: "model-1",
+        label: { en: "Model 1", fr: "Modèle 1" },
+        src: fallback,
+        localSrc: fallback,
+        remoteSrc: "",
+        loadedSrc: "",
+        remoteResolved: false
+      }]
     : [];
+}
+
+async function getArtworkMediaContext() {
+  const config = getArtworkMediaConfig();
+  if (!config) return null;
+
+  try {
+    const manifest = await fetchArtworkManifest(config.manifestUrl);
+    if (manifest?.id !== config.artworkId) return null;
+    return { config, manifest, resolvedMedia: new Map() };
+  } catch (error) {
+    console.warn("Artwork media manifest unavailable; keeping the local spatial media.", error);
+    return null;
+  }
+}
+
+function getArtworkMediaConfig() {
+  const element = [...document.querySelectorAll("[data-artwork-media-manifest-url]")]
+    .find((candidate) => candidate.dataset.artworkMediaFor === slug);
+  if (!element?.dataset.artworkMediaId || !element.dataset.artworkMediaManifestUrl) return null;
+
+  try {
+    const modelKeys = parseMediaKeyMap(element.dataset.artworkMediaModelKeys);
+    const audioKeys = parseMediaKeyMap(element.dataset.artworkMediaAudioKeys);
+    if (!modelKeys || !audioKeys) return null;
+    return {
+      artworkId: element.dataset.artworkMediaId,
+      manifestUrl: element.dataset.artworkMediaManifestUrl,
+      posterKey: element.dataset.artworkMediaPosterKey || "",
+      modelKeys,
+      audioKeys
+    };
+  } catch (error) {
+    console.warn("Invalid declarative artwork media configuration; keeping the local spatial media.", error);
+    return null;
+  }
+}
+
+function parseMediaKeyMap(value) {
+  const parsed = JSON.parse(value || "{}");
+  return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : null;
+}
+
+function resolveConfiguredMedia(mediaContext, mediaKey) {
+  if (!mediaContext || typeof mediaKey !== "string" || !mediaKey) return "";
+  if (mediaContext.resolvedMedia.has(mediaKey)) return mediaContext.resolvedMedia.get(mediaKey);
+
+  try {
+    const mediaUrl = resolveManifestMedia(mediaContext.manifest, mediaKey, lang) || "";
+    mediaContext.resolvedMedia.set(mediaKey, mediaUrl);
+    return mediaUrl;
+  } catch (error) {
+    console.warn(`Remote media unavailable for ${mediaKey}; keeping the local media.`, error);
+    mediaContext.resolvedMedia.set(mediaKey, "");
+    return "";
+  }
+}
+
+function prepareModelVariant(variant, mediaContext) {
+  if (!variant || variant.remoteResolved) return;
+  variant.remoteResolved = true;
+  const mediaKey = mediaContext?.config.modelKeys[variant.id];
+  variant.remoteSrc = resolveConfiguredMedia(mediaContext, mediaKey);
+}
+
+function createFallbackVariant(src) {
+  return {
+    id: "model-1",
+    localSrc: src,
+    remoteSrc: "",
+    loadedSrc: "",
+    remoteResolved: true
+  };
+}
+
+const modelLoadRequests = new WeakMap();
+
+function loadModelVariant(model, variant, { onLoad, onError }) {
+  const localSrc = variant.localSrc;
+  let activeSrc = variant.loadedSrc || variant.remoteSrc || localSrc;
+  let usingLocalFallback = !variant.remoteSrc || activeSrc === localSrc;
+  const requestToken = Symbol("model-load");
+  modelLoadRequests.set(model, requestToken);
+
+  const cleanup = () => {
+    model.removeEventListener("load", handleLoad);
+    model.removeEventListener("error", handleError);
+  };
+  const handleLoad = () => {
+    if (modelLoadRequests.get(model) !== requestToken) return;
+    cleanup();
+    variant.loadedSrc = activeSrc;
+    onLoad?.(activeSrc);
+  };
+  const handleError = (event) => {
+    if (modelLoadRequests.get(model) !== requestToken) return;
+    if (!usingLocalFallback && localSrc) {
+      console.warn(`Remote spatial model unavailable for ${variant.id}; loading the local model.`);
+      usingLocalFallback = true;
+      activeSrc = localSrc;
+      model.setAttribute("src", activeSrc);
+      return;
+    }
+
+    cleanup();
+    onError?.(event, activeSrc);
+  };
+
+  model.addEventListener("load", handleLoad);
+  model.addEventListener("error", handleError);
+  model.setAttribute("src", activeSrc);
+}
+
+function applyModelPoster(model, remotePoster, localPoster) {
+  if (!remotePoster) {
+    if (localPoster) model.poster = localPoster;
+    return;
+  }
+
+  const posterProbe = new Image();
+  posterProbe.addEventListener("load", () => {
+    model.poster = remotePoster;
+  }, { once: true });
+  posterProbe.addEventListener("error", () => {
+    console.warn("Remote spatial poster unavailable; keeping the local poster.");
+    if (localPoster) model.poster = localPoster;
+  }, { once: true });
+  posterProbe.src = remotePoster;
 }
 
 function getModelVariantLabel(variant, index) {
@@ -219,7 +370,7 @@ function getModelVariantLabel(variant, index) {
   return variant.label?.[lang] || variant.label?.en || `Model ${index + 1}`;
 }
 
-function renderModelVariantControls(model, variants, defaultUsdz) {
+function renderModelVariantControls(model, variants, defaultUsdz, mediaContext) {
   if (variants.length < 2) return;
 
   const actions = document.querySelector(".space-panel .actions");
@@ -243,24 +394,25 @@ function renderModelVariantControls(model, variants, defaultUsdz) {
 
       arButton.disabled = true;
       document.getElementById("space-status").textContent = COPY[lang].loading;
-      model.setAttribute("src", variant.src);
+      prepareModelVariant(variant, mediaContext);
+      loadModelVariant(model, variant, {
+        onLoad: () => {
+          arButton.disabled = false;
+          document.getElementById("space-status").textContent = variantUsdz
+            ? COPY[lang].readyWithUsdz
+            : COPY[lang].readyWithoutUsdz;
+        },
+        onError: () => {
+          arButton.disabled = false;
+          document.getElementById("space-status").textContent = COPY[lang].unsupported;
+        }
+      });
       updateVrLink(index);
       if (variantUsdz) {
         model.setAttribute("ios-src", variantUsdz);
       } else {
         model.removeAttribute("ios-src");
       }
-
-      model.addEventListener("load", () => {
-        arButton.disabled = false;
-        document.getElementById("space-status").textContent = variantUsdz
-          ? COPY[lang].readyWithUsdz
-          : COPY[lang].readyWithoutUsdz;
-      }, { once: true });
-      model.addEventListener("error", () => {
-        arButton.disabled = false;
-        document.getElementById("space-status").textContent = COPY[lang].unsupported;
-      }, { once: true });
 
       group.querySelectorAll(".model-variant").forEach((item) => item.classList.remove("active"));
       button.classList.add("active");
@@ -284,17 +436,18 @@ function getLocalizedAudioOverview(manifest) {
   const overviews = manifest.media?.audioOverviews || manifest.media?.audioOverview || [];
   const list = Array.isArray(overviews) ? overviews : [overviews];
   const mediaLang = lang;
+  // Arabic intentionally preserves the historic French guide fallback.
   return list.find((item) => item.lang === mediaLang) || list.find((item) => item.lang === "fr") || list.find((item) => item.lang === "en") || list[0] || null;
 }
 
-function renderExperienceActions(audioOverview) {
+function renderExperienceActions(audioOverview, mediaContext) {
   const actions = document.querySelector(".space-panel .actions");
   if (!actions) return;
 
   actions.insertAdjacentHTML("beforeend", `
     <button id="audio-overview-button" class="button" type="button">${audioOverview ? COPY[lang].audioOverview : COPY[lang].audioOverviewMissing}</button>
   `);
-  bindAudioOverview(audioOverview);
+  bindAudioOverview(audioOverview, mediaContext);
 }
 
 function renderExternalExperiences(experiences) {
@@ -315,7 +468,7 @@ function renderExternalExperiences(experiences) {
   });
 }
 
-function bindAudioOverview(audioOverview) {
+function bindAudioOverview(audioOverview, mediaContext) {
   const button = document.getElementById("audio-overview-button");
   const panel = document.querySelector(".space-panel");
   if (!button || !panel) return;
@@ -329,15 +482,41 @@ function bindAudioOverview(audioOverview) {
   player.id = "audio-overview-player";
   player.className = "audio-overview-player";
   player.controls = true;
-  player.preload = "metadata";
-  player.src = audioOverview.src;
-  if (audioOverview.type) player.type = audioOverview.type;
+  player.preload = "none";
   player.hidden = true;
   panel.appendChild(player);
+
+  const localSrc = audioOverview.src;
+  let sourcePrepared = false;
+  let usingRemoteSource = false;
+  let fallbackAttempted = false;
+  let playRequested = false;
+
+  const prepareSource = () => {
+    if (sourcePrepared) return;
+    const mediaKey = mediaContext?.config.audioKeys[lang];
+    const remoteSrc = resolveConfiguredMedia(mediaContext, mediaKey);
+    player.src = remoteSrc || localSrc;
+    player.dataset.mediaType = audioOverview.type || "";
+    sourcePrepared = true;
+    usingRemoteSource = Boolean(remoteSrc);
+  };
+
+  player.addEventListener("error", () => {
+    if (!usingRemoteSource || fallbackAttempted || !localSrc) return;
+    console.warn("Remote spatial audio unavailable; loading the local guide.");
+    fallbackAttempted = true;
+    usingRemoteSource = false;
+    player.src = localSrc;
+    player.load();
+    if (playRequested) player.play().catch(() => player.focus());
+  });
 
   button.addEventListener("click", async () => {
     player.hidden = false;
     if (player.paused) {
+      playRequested = true;
+      prepareSource();
       try {
         await player.play();
         button.textContent = COPY[lang].audioOverviewPause;
@@ -345,6 +524,7 @@ function bindAudioOverview(audioOverview) {
         player.focus();
       }
     } else {
+      playRequested = false;
       player.pause();
       button.textContent = COPY[lang].audioOverview;
     }
