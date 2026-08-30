@@ -1,0 +1,216 @@
+{
+  "schemaVersion": "1.0",
+  "artworkId": "vg01",
+  "destinationRoot": "artdaci-r2:artdaci-media",
+  "resources": [
+    {
+      "key": "images.main",
+      "source": "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait.jpg",
+      "destination": "artworks/vg01/images/main.jpg",
+      "bytes": 476867,
+      "sha256": "a4891f2357d7c71e3e26c8ba1c4d1e78d7e99afa88fb19c577b7d2b557fabca0",
+      "mimeType": "image/jpeg",
+      "role": "Primary artwork image and image-tracking source",
+      "consumers": [
+        "content/paintings/van-gogh.json",
+        "compile-target.html",
+        "print-van-gogh.html",
+        "print-van-gogh-fr.html",
+        "scripts/book-3d.js",
+        "scripts/catalogue.js",
+        "scripts/print-ar.js",
+        "scripts/space-viewer.js"
+      ]
+    },
+    {
+      "key": "images.out-of-frame",
+      "source": "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-out-of-frame.png",
+      "destination": "artworks/vg01/images/out-of-frame.png",
+      "bytes": 1935587,
+      "sha256": "feaff76d9559aebd51712f8dc961b0b7b81f9c6b5812af96fabe92b73d161dde",
+      "mimeType": "image/png",
+      "role": "Out-of-frame figure illustration",
+      "consumers": [
+        "print-van-gogh.html",
+        "print-van-gogh-fr.html",
+        "scripts/book-3d.js",
+        "scripts/gallery-vr.js"
+      ]
+    },
+    {
+      "key": "images.portrait-gallery",
+      "source": "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait-p.png",
+      "destination": "artworks/vg01/images/portrait-gallery.png",
+      "bytes": 799714,
+      "sha256": "e6ebadf74e04d2ecec945b36d444118f17c58f581c37f4ea51c248d4412da47f",
+      "mimeType": "image/png",
+      "role": "Portrait image for the VR gallery exhibit",
+      "consumers": [
+        "scripts/gallery-vr.js"
+      ]
+    },
+    {
+      "key": "images.collection",
+      "source": "assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp",
+      "destination": "artworks/vg01/images/collection.webp",
+      "bytes": 358580,
+      "sha256": "07be648ab3f4b0176881f8cac6f5ccba4f73868a73486a44ac496958f24b514e",
+      "mimeType": "image/webp",
+      "role": "Collection thumbnail in the Van Gogh gallery",
+      "consumers": [
+        "scripts/gallery-vr.js"
+      ]
+    },
+    {
+      "key": "audio.guide.en",
+      "source": "assets/artists/vincent-van-gogh/artworks/self-portrait/media/van-gogh-self-portrait-en-c.m4a",
+      "destination": "artworks/vg01/audio/en/guide.m4a",
+      "bytes": 3614094,
+      "sha256": "6f0cc0b7a9a4b5108c12af80664d94d20364990a34403ac24c268f83b324efa4",
+      "mimeType": "audio/mp4",
+      "role": "Short English guide for the image-tracked AR experience",
+      "language": "en",
+      "consumers": [
+        "content/paintings/van-gogh.json",
+        "scripts/ar-viewer.js"
+      ]
+    },
+    {
+      "key": "audio.guide.fr",
+      "source": "assets/artists/vincent-van-gogh/artworks/self-portrait/media/van-gogh-self-portrait-fr-c.m4a",
+      "destination": "artworks/vg01/audio/fr/guide.m4a",
+      "bytes": 3401072,
+      "sha256": "d57974ed68376f5e0989dfcf7dd155aea1c12339b5b19234686d3a49527a16f6",
+      "mimeType": "audio/mp4",
+      "role": "Short French guide for the image-tracked AR experience",
+      "language": "fr",
+      "consumers": [
+        "content/paintings/van-gogh.json",
+        "scripts/ar-viewer.js"
+      ]
+    },
+    {
+      "key": "audio.overview.en",
+      "source": "assets/artists/vincent-van-gogh/artworks/self-portrait/media/van-gogh-self-portrait-en.mp3",
+      "destination": "artworks/vg01/audio/en/overview.mp3",
+      "bytes": 24665215,
+      "sha256": "4491e7002cea90dcefed48afb225c59bdd63ac55ee480abdbe2a06bc59b9a707",
+      "mimeType": "audio/mpeg",
+      "role": "Extended English artwork overview",
+      "language": "en",
+      "consumers": [
+        "content/paintings/van-gogh.json",
+        "index.html",
+        "print-van-gogh.html",
+        "scripts/book-3d.js",
+        "scripts/catalogue.js",
+        "scripts/gallery-vr.js",
+        "scripts/space-viewer.js"
+      ]
+    },
+    {
+      "key": "audio.overview.fr",
+      "source": "assets/artists/vincent-van-gogh/artworks/self-portrait/media/van-gogh-self-portrait-fr.mp3",
+      "destination": "artworks/vg01/audio/fr/overview.mp3",
+      "bytes": 20197113,
+      "sha256": "10baea3d68e382b7f78738c0e23beb70e86af9396733ad88cba9307f41c53921",
+      "mimeType": "audio/mpeg",
+      "role": "Extended French artwork overview and Arabic fallback",
+      "language": "fr",
+      "consumers": [
+        "content/paintings/van-gogh.json",
+        "index-fr.html",
+        "print-van-gogh-fr.html",
+        "scripts/book-3d.js",
+        "scripts/catalogue.js",
+        "scripts/gallery-vr.js",
+        "scripts/print-ar.js",
+        "scripts/space-viewer.js"
+      ]
+    },
+    {
+      "key": "videos.animation",
+      "source": "assets/animations/artdaci-Van_Gogh_animation.mp4",
+      "destination": "artworks/vg01/videos/animation.mp4",
+      "bytes": 2317628,
+      "sha256": "be179702f53190b4aac54a6cfb8346a98c293d6136d518e16385a6df1878917e",
+      "mimeType": "video/mp4",
+      "role": "Self-Portrait animation displayed by the image-tracked AR experience",
+      "consumers": [
+        "content/paintings/van-gogh.json",
+        "scripts/ar-viewer.js"
+      ]
+    },
+    {
+      "key": "models.portrait",
+      "source": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh-portrait.glb",
+      "destination": "artworks/vg01/models/portrait.glb",
+      "bytes": 25002780,
+      "sha256": "ce446a89039d4b724974ebc4b9ae729658d30430e1217b472ae4c440c88f2b05",
+      "mimeType": "model/gltf-binary",
+      "role": "Primary portrait model",
+      "consumers": [
+        "content/paintings/van-gogh.json",
+        "scripts/ar-viewer.js",
+        "scripts/gallery-vr.js",
+        "scripts/space-viewer.js",
+        "scripts/vr-viewer.js"
+      ]
+    },
+    {
+      "key": "models.standing",
+      "source": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh-standing.glb",
+      "destination": "artworks/vg01/models/standing.glb",
+      "bytes": 28263540,
+      "sha256": "9e9222b3281e974cbfb2046978e08a659a64f00659dd88703d49ec511efe6b85",
+      "mimeType": "model/gltf-binary",
+      "role": "Standing model variant for vg01 AR, spatial and VR experiences",
+      "consumers": [
+        "content/paintings/van-gogh.json",
+        "scripts/ar-viewer.js",
+        "scripts/space-viewer.js",
+        "scripts/vr-viewer.js"
+      ]
+    },
+    {
+      "key": "models.bedroom-standing",
+      "source": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh-in-bedroom-standing.glb",
+      "destination": "artworks/vg01/models/bedroom-standing.glb",
+      "bytes": 26338176,
+      "sha256": "7efa12316bf4d1d9f427ce081f4912d22c0858acd9e0808008071b26181153e3",
+      "mimeType": "model/gltf-binary",
+      "role": "Bedroom-standing model variant selected by the vg01 runtime",
+      "consumers": [
+        "content/paintings/van-gogh.json",
+        "scripts/ar-viewer.js",
+        "scripts/space-viewer.js",
+        "scripts/vr-viewer.js"
+      ]
+    },
+    {
+      "key": "models.gallery-standing",
+      "source": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/vangogh-istanding.glb",
+      "destination": "artworks/vg01/models/gallery-standing.glb",
+      "bytes": 26303316,
+      "sha256": "2ddc4e7903a02bb9e26db176921b1bfb2ed2413426451e83f03b50cd3da7f2ff",
+      "mimeType": "model/gltf-binary",
+      "role": "Dedicated standing model for the Van Gogh VR gallery exhibit",
+      "consumers": [
+        "scripts/gallery-vr.js"
+      ]
+    },
+    {
+      "key": "ar.target",
+      "source": "assets/targets/van-gogh.mind",
+      "destination": "artworks/vg01/ar/target.mind",
+      "bytes": 863682,
+      "sha256": "57961eaa6838540358c56efc76309c76b0d9a756d42760b2145312e1ee20a732",
+      "mimeType": "application/octet-stream",
+      "role": "Compiled MindAR image target owned by vg01",
+      "consumers": [
+        "content/paintings/van-gogh.json",
+        "scripts/ar-viewer.js"
+      ]
+    }
+  ]
+}

@@ -26,7 +26,7 @@
     { "id": "ve07", "artistId": "ve", "status": "reserved" },
     { "id": "ve08", "artistId": "ve", "status": "reserved" },
 
-    { "id": "vg01", "artistId": "vg", "status": "active", "slug": "self-portrait", "title": { "fr": "Autoportrait", "en": "Self-Portrait" }, "manifest": { "status": "planned" } },
+    { "id": "vg01", "artistId": "vg", "status": "active", "slug": "self-portrait", "title": { "fr": "Autoportrait", "en": "Self-Portrait" }, "manifest": { "status": "source-ready", "path": "artworks/vg01/manifest.json" } },
     { "id": "vg02", "artistId": "vg", "status": "active", "slug": "bedroom-in-arles", "title": { "fr": "La Chambre à Arles", "en": "The Bedroom in Arles" }, "manifest": { "status": "planned" } },
     { "id": "vg03", "artistId": "vg", "status": "active", "slug": "the-starry-night", "title": { "fr": "La Nuit étoilée", "en": "The Starry Night" }, "manifest": { "status": "planned" } },
     { "id": "vg04", "artistId": "vg", "status": "active", "slug": "sunflowers", "title": { "fr": "Les Tournesols", "en": "Sunflowers" }, "manifest": { "status": "planned" } },

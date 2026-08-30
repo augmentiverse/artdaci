@@ -1,0 +1,174 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "vg01",
+  "slug": "self-portrait",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "vg",
+    "name": {
+      "fr": "Vincent van Gogh",
+      "en": "Vincent van Gogh",
+      "ar": "فنسنت فان غوخ"
+    }
+  },
+  "artwork": {
+    "title": {
+      "fr": "Autoportrait",
+      "en": "Self-Portrait",
+      "ar": "بورتريه ذاتي"
+    },
+    "date": "1887"
+  },
+  "pageUrl": "https://artdaci.com/a/vg01",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/vg01/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {
+      "main": {
+        "scope": "artwork",
+        "path": "images/main.jpg",
+        "mimeType": "image/jpeg",
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 476867,
+        "sha256": "a4891f2357d7c71e3e26c8ba1c4d1e78d7e99afa88fb19c577b7d2b557fabca0"
+      },
+      "out-of-frame": {
+        "scope": "artwork",
+        "path": "images/out-of-frame.png",
+        "mimeType": "image/png",
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 1935587,
+        "sha256": "feaff76d9559aebd51712f8dc961b0b7b81f9c6b5812af96fabe92b73d161dde"
+      },
+      "portrait-gallery": {
+        "scope": "artwork",
+        "path": "images/portrait-gallery.png",
+        "mimeType": "image/png",
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 799714,
+        "sha256": "e6ebadf74e04d2ecec945b36d444118f17c58f581c37f4ea51c248d4412da47f"
+      },
+      "collection": {
+        "scope": "artwork",
+        "path": "images/collection.webp",
+        "mimeType": "image/webp",
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 358580,
+        "sha256": "07be648ab3f4b0176881f8cac6f5ccba4f73868a73486a44ac496958f24b514e"
+      }
+    },
+    "audio": {
+      "guide": {
+        "en": {
+          "scope": "artwork",
+          "path": "audio/en/guide.m4a",
+          "mimeType": "audio/mp4",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 3614094,
+          "sha256": "6f0cc0b7a9a4b5108c12af80664d94d20364990a34403ac24c268f83b324efa4",
+          "language": "en"
+        },
+        "fr": {
+          "scope": "artwork",
+          "path": "audio/fr/guide.m4a",
+          "mimeType": "audio/mp4",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 3401072,
+          "sha256": "d57974ed68376f5e0989dfcf7dd155aea1c12339b5b19234686d3a49527a16f6",
+          "language": "fr"
+        }
+      },
+      "overview": {
+        "en": {
+          "scope": "artwork",
+          "path": "audio/en/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 24665215,
+          "sha256": "4491e7002cea90dcefed48afb225c59bdd63ac55ee480abdbe2a06bc59b9a707",
+          "language": "en"
+        },
+        "fr": {
+          "scope": "artwork",
+          "path": "audio/fr/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 20197113,
+          "sha256": "10baea3d68e382b7f78738c0e23beb70e86af9396733ad88cba9307f41c53921",
+          "language": "fr"
+        }
+      }
+    },
+    "videos": {
+      "animation": {
+        "scope": "artwork",
+        "path": "videos/animation.mp4",
+        "mimeType": "video/mp4",
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 2317628,
+        "sha256": "be179702f53190b4aac54a6cfb8346a98c293d6136d518e16385a6df1878917e"
+      }
+    },
+    "models": {
+      "portrait": {
+        "scope": "artwork",
+        "path": "models/portrait.glb",
+        "mimeType": "model/gltf-binary",
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 25002780,
+        "sha256": "ce446a89039d4b724974ebc4b9ae729658d30430e1217b472ae4c440c88f2b05"
+      },
+      "standing": {
+        "scope": "artwork",
+        "path": "models/standing.glb",
+        "mimeType": "model/gltf-binary",
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 28263540,
+        "sha256": "9e9222b3281e974cbfb2046978e08a659a64f00659dd88703d49ec511efe6b85"
+      },
+      "bedroom-standing": {
+        "scope": "artwork",
+        "path": "models/bedroom-standing.glb",
+        "mimeType": "model/gltf-binary",
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 26338176,
+        "sha256": "7efa12316bf4d1d9f427ce081f4912d22c0858acd9e0808008071b26181153e3"
+      },
+      "gallery-standing": {
+        "scope": "artwork",
+        "path": "models/gallery-standing.glb",
+        "mimeType": "model/gltf-binary",
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 26303316,
+        "sha256": "2ddc4e7903a02bb9e26db176921b1bfb2ed2413426451e83f03b50cd3da7f2ff"
+      }
+    },
+    "ar": {
+      "target": {
+        "scope": "artwork",
+        "path": "ar/target.mind",
+        "mimeType": "application/octet-stream",
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 863682,
+        "sha256": "57961eaa6838540358c56efc76309c76b0d9a756d42760b2145312e1ee20a732"
+      }
+    }
+  },
+  "updatedAt": "2026-08-30"
+}
