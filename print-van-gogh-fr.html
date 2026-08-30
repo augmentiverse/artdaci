@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="styles/site.css" />
   </head>
   <body class="target-body">
-    <main class="catalogue-spread stacked-spread">
+    <main
+      class="catalogue-spread stacked-spread"
+      data-artwork-media-manifest="https://media.artdaci.com/artworks/vg01/manifest.json">
       <section class="catalogue-plate">
         <p class="eyebrow">Double page 002 - Post-impressionnisme</p>
         <figure class="target-art">
-          <img src="assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait.jpg" alt="Autoportrait de Vincent van Gogh" />
+          <img data-artwork-media="images.main" src="assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait.jpg" alt="Autoportrait de Vincent van Gogh" />
           <figcaption>
             <strong>Autoportrait</strong>
             <span>Vincent van Gogh, 1887 - Huile sur toile - Période parisienne - Post-impressionnisme</span>
@@ -77,7 +79,7 @@
         <section class="close-look" aria-labelledby="vangogh-close-title">
           <div class="close-look-header"><h2 id="vangogh-close-title">Regarder de près</h2><p>Suivez d'abord la direction des touches avant de lire le visage comme une ressemblance. Chaque marque décrit à la fois la forme et une tension intérieure.</p></div>
           <figure class="close-look-stage">
-            <img src="assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait.jpg" alt="Vue annotée de l'Autoportrait de Van Gogh" />
+            <img data-artwork-media="images.main" src="assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait.jpg" alt="Vue annotée de l'Autoportrait de Van Gogh" />
             <span class="close-look-marker" style="--x: 48%; --y: 34%;">1</span><span class="close-look-marker" style="--x: 47%; --y: 56%;">2</span><span class="close-look-marker" style="--x: 23%; --y: 23%;">3</span><span class="close-look-marker" style="--x: 61%; --y: 79%;">4</span><span class="close-look-marker" style="--x: 72%; --y: 34%;">5</span>
           </figure>
           <ol class="close-look-list">
@@ -156,13 +158,14 @@
           </div>
           <a class="button primary" href="ar.html?painting=van-gogh&amp;lang=fr">Lancer l'AR</a>
           <a class="button" href="space.html?painting=van-gogh&amp;lang=fr&amp;v=10">Placer dans l'espace</a>
-          <a class="button" href="assets/artists/vincent-van-gogh/artworks/self-portrait/media/van-gogh-self-portrait-fr.mp3">Aperçu audio</a>
+          <a class="button" data-artwork-media="audio.overview.fr" href="assets/artists/vincent-van-gogh/artworks/self-portrait/media/van-gogh-self-portrait-fr.mp3">Aperçu audio</a>
           <a class="button" href="index-fr.html">Retour à l'index</a>
           <a class="button" href="print-van-gogh.html" lang="en">English</a>
           <a class="button" href="print-ar.html?painting=van-gogh" lang="ar" dir="rtl">العربية</a>
         </aside>
       </section>
     </main>
+    <script type="module" src="scripts/artwork-media-manifest.js?v=1"></script>
     <script type="module" src="scripts/painting-museum.js?v=1"></script>
   </body>
 </html>
