@@ -2,6 +2,8 @@ import * as THREE from "../vendor/three.module.js";
 import { GLTFLoader } from "../vendor/GLTFLoader.module.js";
 import { DRACOLoader } from "../vendor/DRACOLoader.module.js";
 import { MindARThree } from "../vendor/mindar-image-three.prod.js";
+import { fetchArtworkManifest } from "./artwork-media-manifest.js";
+import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
 
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath("vendor/draco/");
@@ -10,10 +12,19 @@ const CONFIG = {
   slug: "mona-lisa",
   lang: "en",
   target: "",
+  localTarget: "",
+  remoteTarget: "",
   model: "",
   modelVariants: [],
   video: "",
+  localVideo: "",
+  remoteVideo: "",
   audio: "",
+  localAudio: "",
+  remoteAudio: "",
+  fallbackImage: "",
+  localFallbackImage: "",
+  remoteFallbackImage: "",
   musicIntro: "",
   audioSequence: false,
   manifest: "",
@@ -430,6 +441,7 @@ const state = {
   modelLoading: false,
   clock: null,
   manifest: null,
+  mediaContext: null,
   started: false
 };
 
@@ -730,9 +742,11 @@ function resetVideoTransform() {
 async function loadManifest() {
   try {
     const response = await fetch(CONFIG.manifest);
+    if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
     state.manifest = localizeManifest(await response.json());
+    state.mediaContext = await getArtworkMediaContext();
     hotspotFallback.intro.body = state.manifest.texts.artisticAnalysis;
-    configureFromManifest(state.manifest);
+    configureFromManifest(state.manifest, state.mediaContext);
     updateInterfaceFromManifest(state.manifest);
     renderHotspotButtons(state.manifest);
   } catch (error) {
@@ -766,15 +780,34 @@ function renderHotspotButtons(manifest) {
   });
 }
 
-function configureFromManifest(manifest) {
+function configureFromManifest(manifest, mediaContext) {
   const audioGuide = getLocalizedAudioGuide(manifest);
   const musicIntro = getLocalizedMedia(manifest.media?.musicIntros || []);
   CONFIG.modelVariants = getModelVariants(manifest);
   state.selectedModelIndex = 0;
-  CONFIG.target = manifest.ar?.compiledTarget || manifest.print?.compiledMindTarget || CONFIG.target;
-  CONFIG.model = CONFIG.modelVariants[0]?.src || manifest.ar?.primaryModel || manifest.media?.model || CONFIG.model;
-  CONFIG.video = manifest.media?.videos?.[0]?.src || "";
-  CONFIG.audio = audioGuide?.src ? withAssetVersion(audioGuide.src) : "";
+  CONFIG.localTarget = manifest.ar?.compiledTarget || manifest.print?.compiledMindTarget || CONFIG.target;
+  CONFIG.remoteTarget = resolveConfiguredMedia(mediaContext, mediaContext?.config.targetKey);
+  CONFIG.target = CONFIG.remoteTarget || CONFIG.localTarget;
+  CONFIG.localFallbackImage = manifest.ar?.fallbackImage || manifest.media?.image || "";
+  CONFIG.remoteFallbackImage = resolveConfiguredMedia(mediaContext, mediaContext?.config.imageKey);
+  CONFIG.fallbackImage = CONFIG.remoteFallbackImage || CONFIG.localFallbackImage;
+
+  CONFIG.modelVariants.forEach((variant) => {
+    const mediaKey = mediaContext?.config.modelKeys[variant.id];
+    variant.remoteSrc = resolveConfiguredMedia(mediaContext, mediaKey);
+  });
+  CONFIG.model = getPreferredModelSource(CONFIG.modelVariants[0])
+    || manifest.ar?.primaryModel
+    || manifest.media?.model
+    || CONFIG.model;
+
+  CONFIG.localVideo = manifest.media?.videos?.[0]?.src || "";
+  CONFIG.remoteVideo = resolveConfiguredMedia(mediaContext, mediaContext?.config.videoKey);
+  CONFIG.video = CONFIG.remoteVideo || CONFIG.localVideo;
+
+  CONFIG.localAudio = audioGuide?.src ? withAssetVersion(audioGuide.src) : "";
+  CONFIG.remoteAudio = resolveConfiguredMedia(mediaContext, getConfiguredAudioKey(mediaContext?.config.audioKeys));
+  CONFIG.audio = CONFIG.remoteAudio || CONFIG.localAudio;
   CONFIG.musicIntro = musicIntro?.src ? withAssetVersion(musicIntro.src) : "";
   CONFIG.audioSequence = Boolean(manifest.ar?.audioSequence && CONFIG.musicIntro && CONFIG.audio);
   CONFIG.initialScale = manifest.ar?.viewer?.initialScale ?? CONFIG.initialScale;
@@ -807,17 +840,96 @@ function getLocalizedMedia(items) {
     || null;
 }
 
+async function getArtworkMediaContext() {
+  const config = getArtworkMediaConfig();
+  if (!config) return null;
+
+  try {
+    const manifest = await fetchArtworkManifest(config.manifestUrl);
+    if (manifest?.id !== config.artworkId) return null;
+    return { config, manifest, resolvedMedia: new Map() };
+  } catch (error) {
+    console.warn("Artwork media manifest unavailable; keeping the local AR media.", error);
+    return null;
+  }
+}
+
+function getArtworkMediaConfig() {
+  const element = [...document.querySelectorAll("[data-artwork-media-manifest-url]")]
+    .find((candidate) => candidate.dataset.artworkMediaFor === CONFIG.slug);
+  if (!element?.dataset.artworkMediaId || !element.dataset.artworkMediaManifestUrl) return null;
+
+  try {
+    const modelKeys = parseMediaKeyMap(element.dataset.artworkMediaModelKeys);
+    const audioKeys = parseMediaKeyMap(element.dataset.artworkMediaAudioKeys);
+    if (!modelKeys || !audioKeys) return null;
+    return {
+      artworkId: element.dataset.artworkMediaId,
+      manifestUrl: element.dataset.artworkMediaManifestUrl,
+      targetKey: element.dataset.artworkMediaTargetKey || "",
+      imageKey: element.dataset.artworkMediaImageKey || "",
+      videoKey: element.dataset.artworkMediaVideoKey || "",
+      modelKeys,
+      audioKeys
+    };
+  } catch (error) {
+    console.warn("Invalid declarative artwork media configuration; keeping the local AR media.", error);
+    return null;
+  }
+}
+
+function parseMediaKeyMap(value) {
+  const parsed = JSON.parse(value || "{}");
+  return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : null;
+}
+
+function resolveConfiguredMedia(mediaContext, mediaKey) {
+  if (!mediaContext || typeof mediaKey !== "string" || !mediaKey) return "";
+  if (mediaContext.resolvedMedia.has(mediaKey)) return mediaContext.resolvedMedia.get(mediaKey);
+
+  try {
+    const mediaUrl = resolveManifestMedia(mediaContext.manifest, mediaKey, CONFIG.lang) || "";
+    mediaContext.resolvedMedia.set(mediaKey, mediaUrl);
+    return mediaUrl;
+  } catch (error) {
+    console.warn(`Remote AR media unavailable for ${mediaKey}; keeping the local media.`, error);
+    mediaContext.resolvedMedia.set(mediaKey, "");
+    return "";
+  }
+}
+
+function getConfiguredAudioKey(audioKeys) {
+  if (!audioKeys) return "";
+  if (audioKeys[CONFIG.lang]) return audioKeys[CONFIG.lang];
+  if (CONFIG.lang !== "en") return audioKeys.fr || audioKeys.en || "";
+  return "";
+}
+
 function getModelVariants(manifest) {
   const variants = manifest.ar?.modelVariants || manifest.media?.modelVariants || [];
   const list = Array.isArray(variants) ? variants : [];
   if (list.length) {
-    return list.filter((variant) => variant?.src);
+    return list.filter((variant) => variant?.src).map((variant) => ({
+      ...variant,
+      localSrc: variant.src,
+      remoteSrc: ""
+    }));
   }
 
   const fallback = manifest.ar?.primaryModel || manifest.media?.model || CONFIG.model;
   return fallback
-    ? [{ id: "model-1", label: { en: "Model 1", fr: "Modèle 1" }, src: fallback }]
+    ? [{
+        id: "model-1",
+        label: { en: "Model 1", fr: "Modèle 1" },
+        src: fallback,
+        localSrc: fallback,
+        remoteSrc: ""
+      }]
     : [];
+}
+
+function getPreferredModelSource(variant) {
+  return variant?.remoteSrc || variant?.localSrc || variant?.src || "";
 }
 
 function getModelVariantLabel(variant, index) {
@@ -865,7 +977,7 @@ async function switchModelVariant(index) {
   if (!CONFIG.modelVariants[index] || index === state.selectedModelIndex || state.modelLoading) return;
 
   state.selectedModelIndex = index;
-  CONFIG.model = CONFIG.modelVariants[index].src;
+  CONFIG.model = getPreferredModelSource(CONFIG.modelVariants[index]);
   updateModelVariantControls();
 
   if (!state.contentGroup || !state.started) return;
@@ -938,7 +1050,7 @@ async function startAR() {
 
   try {
     setStartupMessage(t("engineLoading"));
-    await verifyRequiredAsset(CONFIG.target, t("targetErrorBody"));
+    await prepareTargetAsset();
     state.clock = new THREE.Clock();
     const root = document.getElementById("ar-root");
 
@@ -1033,6 +1145,22 @@ async function verifyRequiredAsset(src, message) {
   }
 }
 
+async function prepareTargetAsset() {
+  if (CONFIG.remoteTarget) {
+    try {
+      const response = await fetch(CONFIG.remoteTarget, { credentials: "omit" });
+      if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+      CONFIG.target = CONFIG.remoteTarget;
+      return;
+    } catch (error) {
+      console.warn("Remote AR target unavailable; loading the local target.", error);
+      CONFIG.target = CONFIG.localTarget;
+    }
+  }
+
+  await verifyRequiredAsset(CONFIG.target, t("targetErrorBody"));
+}
+
 function addVideoLayer(group) {
   const button = document.getElementById("video-guide");
   button.disabled = false;
@@ -1046,6 +1174,16 @@ function addVideoLayer(group) {
   video.muted = true;
   video.playsInline = true;
   video.preload = "auto";
+  let usingRemoteVideo = Boolean(CONFIG.remoteVideo && CONFIG.video === CONFIG.remoteVideo);
+  video.addEventListener("error", () => {
+    if (usingRemoteVideo && CONFIG.localVideo) {
+      usingRemoteVideo = false;
+      console.warn("Remote AR video unavailable; loading the local video.");
+      video.src = CONFIG.localVideo;
+      video.load();
+      if (state.videoVisible) video.play().catch(() => {});
+    }
+  });
 
   const texture = new THREE.VideoTexture(video);
   texture.encoding = THREE.sRGBEncoding;
@@ -1141,48 +1279,65 @@ async function loadModel(group) {
   state.modelLoading = true;
   updateModelVariantControls();
 
+  const variant = CONFIG.modelVariants[state.selectedModelIndex];
+  const localSrc = variant?.localSrc || variant?.src || CONFIG.model;
+  const preferredSrc = getPreferredModelSource(variant) || CONFIG.model;
+  let gltf;
+
+  try {
+    gltf = await loadGltf(loader, preferredSrc);
+  } catch (error) {
+    if (!variant?.remoteSrc || preferredSrc === localSrc || !localSrc) {
+      state.modelLoading = false;
+      updateModelVariantControls();
+      throw error;
+    }
+    console.warn(`Remote AR model unavailable for ${variant.id}; loading the local model.`, error);
+    CONFIG.model = localSrc;
+    try {
+      gltf = await loadGltf(loader, localSrc);
+    } catch (fallbackError) {
+      state.modelLoading = false;
+      updateModelVariantControls();
+      throw fallbackError;
+    }
+  }
+
+  if (state.fallbackObject) {
+    group.remove(state.fallbackObject);
+    state.fallbackObject.geometry?.dispose?.();
+    state.fallbackObject.material?.map?.dispose?.();
+    state.fallbackObject.material?.dispose?.();
+    state.fallbackObject = null;
+  }
+  state.model = gltf.scene;
+  state.model.name = "mona-lisa-model";
+  state.model.scale.setScalar(CONFIG.initialScale);
+  state.model.position.set(0, 0, 0);
+  applyModelRotation();
+
+  state.model.traverse((child) => {
+    if (!child.isMesh) return;
+    child.castShadow = false;
+    child.receiveShadow = false;
+    if (child.material) {
+      child.material.side = THREE.DoubleSide;
+      child.material.needsUpdate = true;
+    }
+  });
+
+  group.add(state.model);
+  state.modelLoaded = true;
+  state.modelLoading = false;
+  updateModelVariantControls();
+  showHotspot("intro");
+  if (!CONFIG.audioSequence) playNativeAudioGuide(true);
+  return;
+}
+
+function loadGltf(loader, src) {
   return new Promise((resolve, reject) => {
-    loader.load(
-      CONFIG.model,
-      (gltf) => {
-        if (state.fallbackObject) {
-          group.remove(state.fallbackObject);
-          state.fallbackObject.geometry?.dispose?.();
-          state.fallbackObject.material?.map?.dispose?.();
-          state.fallbackObject.material?.dispose?.();
-          state.fallbackObject = null;
-        }
-        state.model = gltf.scene;
-        state.model.name = "mona-lisa-model";
-        state.model.scale.setScalar(CONFIG.initialScale);
-        state.model.position.set(0, 0, 0);
-        applyModelRotation();
-
-        state.model.traverse((child) => {
-          if (!child.isMesh) return;
-          child.castShadow = false;
-          child.receiveShadow = false;
-          if (child.material) {
-            child.material.side = THREE.DoubleSide;
-            child.material.needsUpdate = true;
-          }
-        });
-
-        group.add(state.model);
-        state.modelLoaded = true;
-        state.modelLoading = false;
-        updateModelVariantControls();
-        showHotspot("intro");
-        if (!CONFIG.audioSequence) playNativeAudioGuide(true);
-        resolve();
-      },
-      undefined,
-      (error) => {
-        state.modelLoading = false;
-        updateModelVariantControls();
-        reject(error);
-      }
-    );
+    loader.load(src, resolve, undefined, reject);
   });
 }
 
@@ -1204,9 +1359,16 @@ async function addFallbackImage(group) {
 }
 
 async function addTrackingPreview(group) {
-  const src = state.manifest?.ar?.fallbackImage || state.manifest?.media?.image;
+  const src = CONFIG.fallbackImage || state.manifest?.ar?.fallbackImage || state.manifest?.media?.image;
   if (!src) throw new Error("No fallback image is configured.");
-  const texture = await new THREE.TextureLoader().loadAsync(src);
+  let texture;
+  try {
+    texture = await new THREE.TextureLoader().loadAsync(src);
+  } catch (error) {
+    if (!CONFIG.remoteFallbackImage || src !== CONFIG.remoteFallbackImage || !CONFIG.localFallbackImage) throw error;
+    console.warn("Remote AR preview unavailable; loading the local image.", error);
+    texture = await new THREE.TextureLoader().loadAsync(CONFIG.localFallbackImage);
+  }
   texture.encoding = THREE.sRGBEncoding;
   const aspect = texture.image.width / texture.image.height;
   const height = 0.75;
@@ -1350,7 +1512,29 @@ function ensureNativeAudioGuide() {
   const audio = new Audio(CONFIG.audio);
   audio.preload = "auto";
   audio.playsInline = true;
+  let playbackRequested = false;
+  const nativePlay = audio.play.bind(audio);
+  const nativePause = audio.pause.bind(audio);
+  audio.play = (...args) => {
+    playbackRequested = true;
+    return nativePlay(...args);
+  };
+  audio.pause = (...args) => {
+    playbackRequested = false;
+    return nativePause(...args);
+  };
+  let usingRemoteAudio = Boolean(CONFIG.remoteAudio && CONFIG.audio === CONFIG.remoteAudio);
   audio.addEventListener("error", () => {
+    if (usingRemoteAudio && CONFIG.localAudio) {
+      const shouldResumePlayback = playbackRequested;
+      usingRemoteAudio = false;
+      console.warn("Remote AR audio unavailable; loading the local audio.");
+      audio.src = CONFIG.localAudio;
+      audio.load();
+      if (shouldResumePlayback) playNativeAudioGuide(true);
+      return;
+    }
+    playbackRequested = false;
     state.speaking = false;
     const button = document.getElementById("audio-guide");
     button.classList.remove("active");
@@ -1360,6 +1544,7 @@ function ensureNativeAudioGuide() {
     document.getElementById("info-panel").classList.remove("collapsed");
   });
   audio.addEventListener("ended", () => {
+    playbackRequested = false;
     state.speaking = false;
     const button = document.getElementById("audio-guide");
     button.classList.remove("active");

@@ -17,6 +17,17 @@
     </script>
   </head>
   <body>
+    <div
+      hidden
+      data-artwork-media-for="van-gogh"
+      data-artwork-media-id="vg01"
+      data-artwork-media-manifest-url="https://media.artdaci.com/artworks/vg01/manifest.json"
+      data-artwork-media-target-key="ar.target"
+      data-artwork-media-image-key="images.main"
+      data-artwork-media-model-keys='{"portrait":"models.portrait","standing":"models.standing","bedroom-standing":"models.bedroom-standing"}'
+      data-artwork-media-audio-keys='{"en":"audio.guide.en","fr":"audio.guide.fr"}'
+      data-artwork-media-video-key="videos.animation"
+    ></div>
     <div id="ar-root" aria-label="WebAR camera view"></div>
 
     <header class="hud top-hud">
@@ -66,7 +77,7 @@
       </div>
     </div>
 
-    <script type="module" src="scripts/ar-viewer.js?v=46"></script>
+    <script type="module" src="scripts/ar-viewer.js?v=47"></script>
     <script type="module" src="scripts/visitor-guide.js?v=1"></script>
   </body>
 </html>
