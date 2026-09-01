@@ -19,6 +19,14 @@
     </script>
   </head>
   <body data-experience="gallery">
+    <div
+      hidden
+      data-gallery-artwork-media
+      data-gallery-artwork-for="van-gogh"
+      data-gallery-artwork-id="vg01"
+      data-gallery-artwork-manifest-url="https://media.artdaci.com/artworks/vg01/manifest.json"
+      data-gallery-artwork-source-keys='{"assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp":"images.collection","assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-out-of-frame.png":"images.out-of-frame","assets/artists/vincent-van-gogh/artworks/self-portrait/models/vangogh-istanding.glb":"models.gallery-standing","assets/artists/vincent-van-gogh/artworks/self-portrait/media/van-gogh-self-portrait-en.mp3":"audio.overview.en","assets/artists/vincent-van-gogh/artworks/self-portrait/media/van-gogh-self-portrait-fr.mp3":"audio.overview.fr"}'
+    ></div>
     <main class="gallery-shell">
       <button id="gallery-ui-toggle" class="gallery-ui-toggle" type="button" aria-expanded="true" aria-controls="gallery-toolbar gallery-guide">Hide menu</button>
       <header id="gallery-toolbar" class="gallery-toolbar">
@@ -128,7 +136,7 @@
       </details>
     </main>
 
-  <script type="module" src="scripts/gallery-vr.js?v=144"></script>
+  <script type="module" src="scripts/gallery-vr.js?v=145"></script>
   <script src="scripts/pwa.js?v=1" defer></script>
   </body>
 </html>

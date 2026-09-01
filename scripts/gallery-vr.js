@@ -1,6 +1,8 @@
 import * as THREE from "../vendor/three.module.js";
 import { GLTFLoader } from "../vendor/GLTFLoader.module.js";
 import { DRACOLoader } from "../vendor/DRACOLoader.module.js";
+import { fetchArtworkManifest } from "./artwork-media-manifest.js";
+import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
 
 const MANIFESTS = [
   "content/paintings/mona-lisa.json?v=4",
@@ -766,6 +768,8 @@ dracoLoader.setDecoderPath("vendor/draco/");
 const modelLoader = new GLTFLoader(modelLoadingManager);
 modelLoader.setDRACOLoader(dracoLoader);
 const furnitureSourceCache = new Map();
+const galleryMediaConfigs = readGalleryMediaConfigs();
+const galleryMediaContextPromises = new Map();
 const controllers = [renderer.xr.getController(0), renderer.xr.getController(1)];
 const hands = [renderer.xr.getHand(0), renderer.xr.getHand(1)];
 const handJointGeometry = new THREE.SphereGeometry(0.008, 12, 8);
@@ -3013,7 +3017,7 @@ function maybeLoadConnectedMuseumRoom() {
 
 async function addConnectedMuseumArtwork(room, work, centerZ, index, manifest) {
   const [title, source] = work;
-  const texture = await textureLoader.loadAsync(source);
+  const texture = await loadGalleryTexture(source);
   optimizeTextureForMobile(texture);
   texture.encoding = THREE.sRGBEncoding;
   texture.minFilter = THREE.LinearFilter;
@@ -4080,7 +4084,7 @@ async function buildReimaginedExhibition() {
   };
 
   await Promise.all(REIMAGINED_ARTWORKS.map(async (item) => {
-    const texture = await textureLoader.loadAsync(item.src);
+    const texture = await loadGalleryTexture(item.src);
     texture.encoding = THREE.sRGBEncoding;
     const aspect = texture.image.width / texture.image.height;
     const height = Math.min(1.2, 1.9 / aspect);
@@ -5198,7 +5202,7 @@ async function addLifeSizeBedroom(exhibit, model) {
   });
   display.add(model);
   if (!isQuestBrowser) {
-    const standingGltf = await modelLoader.loadAsync(STANDING_VAN_GOGH_MODEL);
+    const standingGltf = await loadGalleryModel(STANDING_VAN_GOGH_MODEL);
     addLifeSizeStandingVanGogh(display, standingGltf.scene);
   }
   scene.add(display);
@@ -5416,7 +5420,7 @@ async function loadAudioGuide(exhibit) {
     || list[0];
   if (!guide?.src) return;
 
-  const buffer = await audioLoader.loadAsync(guide.src);
+  const buffer = await loadGalleryAudio(guide.src);
   // Use a clean non-HRTF signal and calculate distance volume ourselves.
   // This avoids the artefacts some Quest devices produce with long HRTF narration.
   const audio = new THREE.Audio(audioListener);
@@ -5427,6 +5431,81 @@ async function loadAudioGuide(exhibit) {
   scene.add(audio);
   exhibit.audio = audio;
   exhibit.audioReady = true;
+}
+
+function readGalleryMediaConfigs() {
+  return [...document.querySelectorAll("[data-gallery-artwork-media]")].flatMap((element) => {
+    const runtimeId = element.dataset.galleryArtworkFor;
+    const artworkId = element.dataset.galleryArtworkId;
+    const manifestUrl = element.dataset.galleryArtworkManifestUrl;
+    if (!runtimeId || !artworkId || !manifestUrl) return [];
+
+    try {
+      const sourceKeys = JSON.parse(element.dataset.galleryArtworkSourceKeys || "{}");
+      if (!sourceKeys || typeof sourceKeys !== "object" || Array.isArray(sourceKeys)) return [];
+      return [{ runtimeId, artworkId, manifestUrl, sourceKeys }];
+    } catch (error) {
+      console.warn("Invalid declarative gallery media configuration; keeping the local media.", error);
+      return [];
+    }
+  });
+}
+
+function getGalleryMediaConfig(localSource) {
+  return galleryMediaConfigs.find((config) => Object.hasOwn(config.sourceKeys, localSource)) || null;
+}
+
+function getGalleryMediaContext(config) {
+  if (!galleryMediaContextPromises.has(config.artworkId)) {
+    const contextPromise = fetchArtworkManifest(config.manifestUrl)
+      .then((manifest) => {
+        if (manifest?.id !== config.artworkId) throw new Error("Artwork media manifest ID mismatch.");
+        return { config, manifest };
+      })
+      .catch((error) => {
+        console.warn(`Gallery media manifest unavailable for ${config.artworkId}; keeping the local media.`, error);
+        return null;
+      });
+    galleryMediaContextPromises.set(config.artworkId, contextPromise);
+  }
+  return galleryMediaContextPromises.get(config.artworkId);
+}
+
+async function resolveGalleryMediaSource(localSource) {
+  const config = getGalleryMediaConfig(localSource);
+  if (!config) return localSource;
+  const context = await getGalleryMediaContext(config);
+  if (!context) return localSource;
+
+  try {
+    return resolveManifestMedia(context.manifest, config.sourceKeys[localSource], lang) || localSource;
+  } catch (error) {
+    console.warn(`Gallery media unavailable for ${config.sourceKeys[localSource]}; keeping the local media.`, error);
+    return localSource;
+  }
+}
+
+async function loadGalleryMedia(localSource, load, mediaLabel) {
+  const preferredSource = await resolveGalleryMediaSource(localSource);
+  try {
+    return await load(preferredSource);
+  } catch (error) {
+    if (preferredSource === localSource) throw error;
+    console.warn(`Remote gallery ${mediaLabel} unavailable; loading the local media.`, error);
+    return load(localSource);
+  }
+}
+
+function loadGalleryTexture(localSource) {
+  return loadGalleryMedia(localSource, (source) => textureLoader.loadAsync(source), "image");
+}
+
+function loadGalleryModel(localSource) {
+  return loadGalleryMedia(localSource, (source) => modelLoader.loadAsync(source), "model");
+}
+
+function loadGalleryAudio(localSource) {
+  return loadGalleryMedia(localSource, (source) => audioLoader.loadAsync(source), "audio");
 }
 
 function createVoiceCleanupFilters() {
