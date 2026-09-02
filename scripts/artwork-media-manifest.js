@@ -59,6 +59,26 @@ export function applyArtworkMedia(root, manifest) {
       if (!mediaUrl) return;
 
       const attribute = element.dataset.artworkMediaAttribute || defaultMediaAttribute(element);
+      const localImageUrl = element.tagName === "IMG" && attribute === "src"
+        ? element.getAttribute(attribute)
+        : null;
+      const localImageFailed = Boolean(localImageUrl) && element.complete && element.naturalWidth === 0;
+
+      if (localImageUrl && localImageUrl !== mediaUrl) {
+        const restoreLocalImage = () => {
+          element.removeEventListener("load", keepRemoteImage);
+          if (!localImageFailed && element.getAttribute(attribute) === mediaUrl) {
+            element.setAttribute(attribute, localImageUrl);
+          }
+        };
+        const keepRemoteImage = () => {
+          element.removeEventListener("error", restoreLocalImage);
+        };
+
+        element.addEventListener("error", restoreLocalImage, { once: true });
+        element.addEventListener("load", keepRemoteImage, { once: true });
+      }
+
       element.setAttribute(attribute, mediaUrl);
 
       if (asset.mimeType && element.tagName === "SOURCE") {
