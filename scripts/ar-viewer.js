@@ -507,9 +507,10 @@ async function showUnavailableRoute() {
   const isKnown = routeKind === "unsupported";
   const title = t(isKnown ? "routeUnavailableTitle" : "routeUnknownTitle");
   const message = t(isKnown ? "routeUnavailable" : "routeUnknown");
+  const loadingScreen = document.getElementById("loading-screen");
 
   document.title = `DACIART - ${title}`;
-  document.querySelector("#loading-screen h1").textContent = title;
+  loadingScreen.querySelector("h1").textContent = title;
   setStartupMessage(message);
   document.getElementById("artwork-title").textContent = title;
   document.getElementById("panel-title").textContent = title;
@@ -522,6 +523,8 @@ async function showUnavailableRoute() {
   document.querySelector(".hotspot-bar").style.display = "none";
   document.querySelector(".mini-dock").style.display = "none";
   document.querySelectorAll("#loading-screen a").forEach((link) => { link.style.display = "none"; });
+  loadingScreen.style.pointerEvents = "none";
+  document.querySelector(".top-hud").style.zIndex = "11";
 }
 
 function t(key) {

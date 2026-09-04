@@ -89,3 +89,12 @@ test("viewer guards precede painting content fetches and contain no explicit-rou
     assert.doesNotMatch(source, /location\.(?:assign|replace)\s*\(/);
   }
 });
+
+test("AR unavailable routes leave the localized Back link above a non-interactive terminal overlay", async () => {
+  const source = await readFile(new URL("../scripts/ar-viewer.js", import.meta.url), "utf8");
+  const unavailableRoute = source.match(/async function showUnavailableRoute\(\) \{[\s\S]*?\n\}/)?.[0] || "";
+
+  assert.match(unavailableRoute, /loadingScreen\.style\.pointerEvents = "none";/);
+  assert.match(unavailableRoute, /document\.querySelector\("\.top-hud"\)\.style\.zIndex = "11";/);
+  assert.doesNotMatch(unavailableRoute, /location\.(?:assign|replace)\s*\(/);
+});
