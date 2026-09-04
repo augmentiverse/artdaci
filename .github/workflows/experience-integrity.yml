@@ -1,0 +1,50 @@
+name: Experience Hub integrity
+
+on:
+  pull_request:
+    paths:
+      - 'content/**'
+      - 'tools/validate-experience-registry.mjs'
+      - 'experience.html'
+      - 'scripts/experience.js'
+      - 'vercel.json'
+      - '.github/workflows/experience-integrity.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'content/**'
+      - 'tools/validate-experience-registry.mjs'
+      - 'experience.html'
+      - 'scripts/experience.js'
+      - 'vercel.json'
+      - '.github/workflows/experience-integrity.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout metadata and lightweight project files
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /content/
+            /tools/validate-experience-registry.mjs
+            /*.html
+            /scripts/experience.js
+            /vercel.json
+            /.github/workflows/experience-integrity.yml
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      - name: Validate permanent IDs, manifests and referenced paths
+        run: node tools/validate-experience-registry.mjs

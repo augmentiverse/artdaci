@@ -1,0 +1,25 @@
+{
+  "slug": "ginevra-de-benci",
+  "bookOrder": 11,
+  "title": "Ginevra de’ Benci",
+  "artist": { "name": "Leonardo da Vinci" },
+  "date": "c. 1474–1478",
+  "medium": "Oil and tempera on panel",
+  "dimensions": {},
+  "currentLocation": { "museum": "National Gallery of Art", "city": "Washington" },
+  "movement": ["Renaissance"],
+  "media": { "image": "assets/artists/leonardo-da-vinci/collection/ginevra-de-benci.webp" },
+  "print": { "chapter": "Renaissance", "imageTargetSource": "assets/artists/leonardo-da-vinci/collection/ginevra-de-benci.webp" },
+  "texts": {
+    "historicalContext": "Leonardo portrayed the young Florentine Ginevra de’ Benci against a dense juniper bush.",
+    "artisticAnalysis": "Her direct presence and reserved expression replace conventional profile portraiture with psychological immediacy.",
+    "composition": "The pale face is framed by dark foliage, with water and landscape opening beyond.",
+    "palette": "Cool flesh, deep green and muted atmospheric blues create a quiet, concentrated mood.",
+    "perspectiveTechnique": "Soft modelling and aerial perspective connect the sitter to the distant world.",
+    "culturalSignificance": "The portrait helped establish a more intimate and observant Renaissance portrait tradition."
+  },
+  "localizations": {
+    "fr": { "title": "Ginevra de’ Benci" },
+    "ar": { "title": "جينيفرا دي بنتشي" }
+  }
+}
