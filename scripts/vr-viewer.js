@@ -3,6 +3,7 @@ import { GLTFLoader } from "../vendor/GLTFLoader.module.js";
 import { DRACOLoader } from "../vendor/DRACOLoader.module.js";
 import { fetchArtworkManifest } from "./artwork-media-manifest.js";
 import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
+import { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./catalogue.js";
 
 const PAINTINGS = {
   "mona-lisa": "content/paintings/mona-lisa.json",
@@ -21,6 +22,10 @@ const COPY = {
     reset: "Reset model",
     loading: "Loading 3D model…",
     ready: "Ready. Put on your headset and select Enter VR.",
+    routeUnavailableTitle: "Experience unavailable",
+    routeUnavailable: "This artwork is known, but individual VR is not available for it yet.",
+    routeUnknownTitle: "Artwork not found",
+    routeUnknown: "The requested artwork was not recognized. Return to the catalogue to choose an available experience.",
     unsupported: "Immersive VR is not available in this browser. Open this page in Meta Quest Browser or another WebXR headset.",
     failed: "The VR experience could not start.",
     instructions: "Trigger: grab, move and rotate. Use both triggers to resize and rotate."
@@ -34,6 +39,10 @@ const COPY = {
     reset: "Réinitialiser",
     loading: "Chargement du modèle 3D…",
     ready: "Prêt. Mettez votre casque puis sélectionnez Entrer en VR.",
+    routeUnavailableTitle: "Expérience indisponible",
+    routeUnavailable: "Cette œuvre est connue, mais la VR individuelle n'est pas encore disponible.",
+    routeUnknownTitle: "Œuvre introuvable",
+    routeUnknown: "L'œuvre demandée n'a pas été reconnue. Revenez au catalogue pour choisir une expérience disponible.",
     unsupported: "La VR immersive n’est pas disponible dans ce navigateur. Ouvrez cette page dans Meta Quest Browser ou un autre casque WebXR.",
     failed: "L’expérience VR n’a pas pu démarrer.",
     instructions: "Gâchette : saisir, déplacer et orienter. Utilisez les deux gâchettes pour redimensionner et faire pivoter."
@@ -47,6 +56,10 @@ const COPY = {
     reset: "إعادة ضبط النموذج",
     loading: "جارٍ تحميل النموذج ثلاثي الأبعاد...",
     ready: "جاهز. ضع الجهاز ثم اختر دخول الواقع الافتراضي.",
+    routeUnavailableTitle: "التجربة غير متاحة",
+    routeUnavailable: "هذه اللوحة معروفة، لكن تجربة الواقع الافتراضي الفردية غير متاحة بعد.",
+    routeUnknownTitle: "اللوحة غير موجودة",
+    routeUnknown: "لم يتم التعرف على اللوحة المطلوبة. ارجع إلى الفهرس لاختيار تجربة متاحة.",
     unsupported: "الواقع الافتراضي غير متاح في هذا المتصفح. افتح الصفحة في متصفح Meta Quest أو جهاز WebXR.",
     failed: "تعذر بدء تجربة الواقع الافتراضي.",
     instructions: "الزناد: إمساك وتحريك وتدوير. استخدم الزنادين معاً لتغيير الحجم والتدوير."
@@ -54,7 +67,10 @@ const COPY = {
 };
 
 const params = new URLSearchParams(location.search);
-const slug = PAINTINGS[params.get("painting")] ? params.get("painting") : "mona-lisa";
+const requestedPainting = params.get("painting");
+const paintingRoute = resolveImmersiveArtworkRoute(requestedPainting, "vr");
+const slug = paintingRoute?.runtimeSlug
+  || (requestedPainting !== null && PAINTINGS[requestedPainting] ? requestedPainting : null);
 const lang = ["en", "fr", "ar"].includes(params.get("lang")) ? params.get("lang") : "en";
 const requestedModel = Number.parseInt(params.get("model") || "0", 10);
 const text = COPY[lang];
@@ -128,6 +144,11 @@ async function init() {
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
   applyCopy();
+
+  if (!slug) {
+    await showUnavailableRoute();
+    return;
+  }
   addControllers();
   bindUI();
 
@@ -152,9 +173,29 @@ async function init() {
   renderer.setAnimationLoop(render);
 }
 
+async function showUnavailableRoute() {
+  const routeKind = await classifyUnresolvedArtworkRoute(requestedPainting);
+  const isKnown = routeKind === "unsupported";
+  const title = text[isKnown ? "routeUnavailableTitle" : "routeUnknownTitle"];
+  const message = text[isKnown ? "routeUnavailable" : "routeUnknown"];
+
+  document.title = `DACIART - ${title}`;
+  document.getElementById("vr-title").textContent = title;
+  status.textContent = message;
+  status.setAttribute("role", "alert");
+  enterButton.style.display = "none";
+  resetButton.style.display = "none";
+  modelChoice.style.display = "none";
+  document.getElementById("vr-model-label").style.display = "none";
+  stage.style.display = "none";
+  stage.setAttribute("aria-hidden", "true");
+}
+
 function applyCopy() {
   document.getElementById("vr-back").textContent = text.back;
-  document.getElementById("vr-back").href = `space.html?painting=${encodeURIComponent(slug)}&lang=${lang}`;
+  document.getElementById("vr-back").href = slug
+    ? `space.html?painting=${encodeURIComponent(slug)}&lang=${lang}`
+    : (lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html");
   document.getElementById("gallery-link").textContent = lang === "ar" ? "معرض الواقع الافتراضي" : lang === "fr" ? "Galerie VR" : "VR Gallery";
   document.getElementById("gallery-link").href = `gallery-vr.html?lang=${lang}`;
   document.getElementById("vr-kicker").textContent = text.kicker;

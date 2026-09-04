@@ -4,6 +4,7 @@ import { DRACOLoader } from "../vendor/DRACOLoader.module.js";
 import { MindARThree } from "../vendor/mindar-image-three.prod.js";
 import { fetchArtworkManifest } from "./artwork-media-manifest.js";
 import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
+import { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./catalogue.js";
 
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath("vendor/draco/");
@@ -28,6 +29,7 @@ const CONFIG = {
   musicIntro: "",
   audioSequence: false,
   manifest: "",
+  requestedSlug: null,
   initialScale: 0.42,
   initialRise: 0.18,
   modelRotation: {
@@ -92,6 +94,10 @@ const UI_TEXT = {
     arStartErrorTitle: "Camera AR could not start",
     tryAgain: "Try Again",
     audioGuideNotReady: "Audio guide is not ready yet.",
+    routeUnavailableTitle: "Experience unavailable",
+    routeUnavailable: "This artwork is known, but Image AR is not available for it yet.",
+    routeUnknownTitle: "Artwork not found",
+    routeUnknown: "The requested artwork was not recognized. Return to the catalogue to choose an available experience.",
     hotspot: "Hotspot",
     futureLayer: "This interpretive layer is ready for future content.",
     permissionBlocked: "Camera permission was blocked. Tap the site controls in the address bar, allow Camera, then try again.",
@@ -140,6 +146,10 @@ const UI_TEXT = {
     arStartErrorTitle: "L'AR caméra ne peut pas démarrer",
     tryAgain: "Réessayer",
     audioGuideNotReady: "Le guide audio n'est pas encore prêt.",
+    routeUnavailableTitle: "Expérience indisponible",
+    routeUnavailable: "Cette œuvre est connue, mais l'AR sur image n'est pas encore disponible.",
+    routeUnknownTitle: "Œuvre introuvable",
+    routeUnknown: "L'œuvre demandée n'a pas été reconnue. Revenez au catalogue pour choisir une expérience disponible.",
     hotspot: "Point d'intérêt",
     futureLayer: "Cette couche d'interprétation est prête pour un contenu futur.",
     permissionBlocked: "L'autorisation caméra a été bloquée. Ouvrez les contrôles du site dans la barre d'adresse, autorisez la caméra, puis réessayez.",
@@ -179,6 +189,10 @@ UI_TEXT.ar = {
   cameraRequest: "طلب إذن الكاميرا...",
   audioUnavailableTitle: "الصوت غير متاح",
   audioGuideNotReady: "الدليل الصوتي غير جاهز بعد.",
+  routeUnavailableTitle: "التجربة غير متاحة",
+  routeUnavailable: "هذه اللوحة معروفة، لكن الواقع المعزز بالصورة غير متاح بعد.",
+  routeUnknownTitle: "اللوحة غير موجودة",
+  routeUnknown: "لم يتم التعرف على اللوحة المطلوبة. ارجع إلى الفهرس لاختيار تجربة متاحة.",
   catalogue: "الكتالوج",
   intro: "مقدمة",
   tryAgain: "حاول مجدداً",
@@ -459,6 +473,10 @@ async function init() {
   applyStaticLanguage();
   const startButton = document.getElementById("start-ar");
   startButton.disabled = true;
+  if (!CONFIG.manifest) {
+    await showUnavailableRoute();
+    return;
+  }
   await loadManifest();
   setStartupMessage(t("ready"));
   startButton.disabled = false;
@@ -467,12 +485,43 @@ async function init() {
 function selectPainting() {
   const params = new URLSearchParams(window.location.search);
   const museum = params.get("museum");
-  const slug = museum || params.get("painting") || "mona-lisa";
-  const catalogue = museum ? MUSEUMS : PAINTINGS;
-  CONFIG.slug = catalogue[slug] ? slug : "mona-lisa";
+  const requestedPainting = params.get("painting");
+  const resourceType = museum !== null ? "museum" : "painting";
+  const requestedSlug = resourceType === "museum" ? museum : requestedPainting;
+  const paintingRoute = resourceType === "painting" ? resolveImmersiveArtworkRoute(requestedPainting, "ar") : null;
+  const resolvedSlug = resourceType === "museum"
+    ? (MUSEUMS[museum] ? museum : null)
+    : (paintingRoute?.runtimeSlug || (requestedPainting !== null && PAINTINGS[requestedPainting] ? requestedPainting : null));
+
+  CONFIG.slug = resolvedSlug || "";
   CONFIG.lang = ["en", "fr", "ar"].includes(params.get("lang")) ? params.get("lang") : "en";
-  CONFIG.manifest = catalogue[CONFIG.slug] || PAINTINGS["mona-lisa"];
-  CONFIG.resourceType = museum && MUSEUMS[museum] ? "museum" : "painting";
+  CONFIG.manifest = resolvedSlug ? (resourceType === "museum" ? MUSEUMS[resolvedSlug] : PAINTINGS[resolvedSlug]) : "";
+  CONFIG.resourceType = resourceType;
+  CONFIG.requestedSlug = requestedSlug;
+}
+
+async function showUnavailableRoute() {
+  const routeKind = CONFIG.resourceType === "painting"
+    ? await classifyUnresolvedArtworkRoute(CONFIG.requestedSlug)
+    : "unknown";
+  const isKnown = routeKind === "unsupported";
+  const title = t(isKnown ? "routeUnavailableTitle" : "routeUnknownTitle");
+  const message = t(isKnown ? "routeUnavailable" : "routeUnknown");
+
+  document.title = `DACIART - ${title}`;
+  document.querySelector("#loading-screen h1").textContent = title;
+  setStartupMessage(message);
+  document.getElementById("artwork-title").textContent = title;
+  document.getElementById("panel-title").textContent = title;
+  document.getElementById("panel-body").textContent = message;
+  document.getElementById("startup-message").setAttribute("role", "alert");
+  document.getElementById("start-ar").style.display = "none";
+  document.getElementById("tracking-status").style.display = "none";
+  document.getElementById("spread-label").style.display = "none";
+  document.querySelector(".info-panel").style.display = "none";
+  document.querySelector(".hotspot-bar").style.display = "none";
+  document.querySelector(".mini-dock").style.display = "none";
+  document.querySelectorAll("#loading-screen a").forEach((link) => { link.style.display = "none"; });
 }
 
 function t(key) {
@@ -494,7 +543,9 @@ function applyStaticLanguage() {
   document.getElementById("toggle-spin").textContent = t("rotate");
   document.getElementById("reset-view").textContent = t("reset");
   document.getElementById("space-link").textContent = t("space");
-  document.getElementById("space-link").href = `space.html?${CONFIG.resourceType}=${CONFIG.slug}&lang=${CONFIG.lang}&v=14`;
+  if (CONFIG.slug) {
+    document.getElementById("space-link").href = `space.html?${CONFIG.resourceType}=${CONFIG.slug}&lang=${CONFIG.lang}&v=14`;
+  }
   document.getElementById("panel-kicker").textContent = t("catalogue");
 }
 

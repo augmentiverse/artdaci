@@ -1,3 +1,53 @@
+const IMMERSIVE_ARTWORKS = Object.freeze([
+  Object.freeze({ id: "ld01", slug: "mona-lisa", runtimeSlug: "mona-lisa", aliases: [], ar: true, space: true, vr: true }),
+  Object.freeze({ id: "ve01", slug: "girl-with-a-pearl-earring", runtimeSlug: "vermeer-girl-with-a-pearl-earring", aliases: ["vermeer-girl-with-a-pearl-earring"], ar: true, space: true, vr: true }),
+  Object.freeze({ id: "vg01", slug: "self-portrait", runtimeSlug: "van-gogh", aliases: ["van-gogh"], ar: true, space: true, vr: true }),
+  Object.freeze({ id: "vg02", slug: "bedroom-in-arles", runtimeSlug: "van-gogh-bedroom", aliases: ["van-gogh-bedroom"], ar: true, space: true, vr: true })
+]);
+
+export function resolveImmersiveArtworkRoute(requestedSlug, experience) {
+  if (!["ar", "space", "vr"].includes(experience)) return null;
+
+  const requested = requestedSlug === null ? "mona-lisa" : String(requestedSlug).trim();
+  if (!requested) return null;
+
+  const artwork = IMMERSIVE_ARTWORKS.find((candidate) =>
+    candidate.id === requested
+    || candidate.slug === requested
+    || candidate.aliases.includes(requested)
+  );
+  if (!artwork || !artwork[experience]) return null;
+
+  return {
+    artworkId: artwork.id,
+    canonicalSlug: artwork.slug,
+    runtimeSlug: artwork.runtimeSlug,
+    kind: requestedSlug === null
+      ? "default"
+      : artwork.aliases.includes(requested) ? "alias" : "canonical"
+  };
+}
+
+export async function classifyUnresolvedArtworkRoute(requestedSlug, fetchImpl = fetch) {
+  const requested = String(requestedSlug || "").trim();
+  if (!requested) return "unknown";
+
+  try {
+    const response = await fetchImpl("content/media-manifests/catalog.json", {
+      cache: "no-store",
+      credentials: "same-origin"
+    });
+    if (!response.ok) return "unknown";
+    const catalog = await response.json();
+    const known = (catalog.artworks || []).some((artwork) =>
+      artwork.status === "active" && (artwork.id === requested || artwork.slug === requested)
+    );
+    return known ? "unsupported" : "unknown";
+  } catch {
+    return "unknown";
+  }
+}
+
 const PRINT_PAGES = {
   en: {
     "mona-lisa": "print-target.html",
@@ -131,7 +181,7 @@ const AR_METADATA = {
   "vermeer-girl-with-a-pearl-earring": { artist: "يوهانس فيرمير", date: "نحو 1665", location: "موريتشهاوس، لاهاي" }
 };
 
-const app = document.getElementById("catalogue-app");
+const app = typeof document === "undefined" ? null : document.getElementById("catalogue-app");
 
 if (app) initCatalogue(app);
 
@@ -288,10 +338,9 @@ function renderCard(manifest, lang, text) {
   const artist = lang === "ar" ? arMeta.artist || manifest.artist?.name || "" : manifest.artist?.name || "";
   const date = lang === "ar" ? arMeta.date || manifest.date || "" : manifest.date || "";
   const displayLocation = lang === "ar" ? arMeta.location || location : location;
-  const immersiveActions = slug === "monet-impression-sunrise"
-    ? `<a class="button" href="gallery-vr.html?lang=${lang}&amp;artist=monet">${lang === "fr" ? "Salle Monet" : "Monet Room"}</a>`
-    : `<a class="button" href="ar.html?painting=${slug}&amp;lang=${lang}">${text.ar}</a>
-       <a class="button" href="space.html?painting=${slug}&amp;lang=${lang}">${text.space}</a>`;
+  const immersiveActions = getArtworkImmersiveActions(slug, lang, text)
+    .map((action) => `<a class="button" href="${action.href}">${action.label}</a>`)
+    .join("\n");
 
   return `
     <article class="artwork-card">
@@ -318,6 +367,24 @@ function renderCard(manifest, lang, text) {
       </div>
     </article>
   `;
+}
+
+export function getArtworkImmersiveActions(slug, lang, text = UI[lang] || UI.en) {
+  if (slug === "monet-impression-sunrise") {
+    return [{
+      experience: "gallery",
+      href: `gallery-vr.html?lang=${lang}&amp;artist=monet`,
+      label: lang === "fr" ? "Salle Monet" : "Monet Room"
+    }];
+  }
+
+  const artwork = IMMERSIVE_ARTWORKS.find((candidate) => candidate.runtimeSlug === slug);
+  if (!artwork) return [];
+
+  return [
+    artwork.ar && { experience: "ar", href: `ar.html?painting=${slug}&amp;lang=${lang}`, label: text.ar },
+    artwork.space && { experience: "space", href: `space.html?painting=${slug}&amp;lang=${lang}`, label: text.space }
+  ].filter(Boolean);
 }
 
 function getLocalizedAudioOverview(manifest, lang) {

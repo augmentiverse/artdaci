@@ -1,5 +1,6 @@
 import { fetchArtworkManifest } from "./artwork-media-manifest.js";
 import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
+import { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./catalogue.js";
 
 const PAINTINGS = {
   "mona-lisa": "content/paintings/mona-lisa.json",
@@ -35,6 +36,10 @@ const COPY = {
     imageAr: "Image AR",
     printedPage: "Printed Page",
     modelChoice: "Model choice",
+    routeUnavailableTitle: "Experience unavailable",
+    routeUnavailable: "This artwork is known, but room placement is not available for it yet.",
+    routeUnknownTitle: "Artwork not found",
+    routeUnknown: "The requested artwork was not recognized. Return to the catalogue to choose an available experience.",
     unsupported: "This browser can preview the 3D model, but may not support room-scale AR placement.",
     iosNote: "Spatial AR is available when the model has a compatible AR file for this device.",
     intro: "Place the 3D model in your space, then move, rotate, and scale it with your device's AR controls."
@@ -58,6 +63,10 @@ const COPY = {
     imageAr: "AR sur image",
     printedPage: "Page imprimée",
     modelChoice: "Choix du modèle",
+    routeUnavailableTitle: "Expérience indisponible",
+    routeUnavailable: "Cette œuvre est connue, mais le placement dans l'espace n'est pas encore disponible.",
+    routeUnknownTitle: "Œuvre introuvable",
+    routeUnknown: "L'œuvre demandée n'a pas été reconnue. Revenez au catalogue pour choisir une expérience disponible.",
     unsupported: "Ce navigateur peut afficher le modèle 3D, mais il peut ne pas prendre en charge le placement AR dans l'espace.",
     iosNote: "L'AR spatiale est disponible lorsque le modèle possède un fichier AR compatible avec cet appareil.",
     intro: "Placez le modèle 3D dans votre espace, puis déplacez-le, tournez-le et redimensionnez-le avec les contrôles AR de votre appareil."
@@ -81,6 +90,10 @@ const COPY = {
     imageAr: "واقع معزز على الصورة",
     printedPage: "الصفحة المطبوعة",
     modelChoice: "اختيار النموذج",
+    routeUnavailableTitle: "التجربة غير متاحة",
+    routeUnavailable: "هذه اللوحة معروفة، لكن وضعها في المساحة غير متاح بعد.",
+    routeUnknownTitle: "اللوحة غير موجودة",
+    routeUnknown: "لم يتم التعرف على اللوحة المطلوبة. ارجع إلى الفهرس لاختيار تجربة متاحة.",
     unsupported: "يمكن لهذا المتصفح عرض النموذج، لكنه قد لا يدعم وضعه في الغرفة.",
     iosNote: "يتوفر الواقع المعزز المكاني عندما يوجد ملف متوافق مع جهازك.",
     intro: "ضع النموذج ثلاثي الأبعاد في مساحتك، ثم حرّكه وأدره وغيّر حجمه باستخدام أدوات الواقع المعزز."
@@ -115,9 +128,14 @@ const FR_TITLES = {
 
 const params = new URLSearchParams(window.location.search);
 const requestedMuseum = params.get("museum");
-const resourceType = requestedMuseum && MUSEUMS[requestedMuseum] ? "museum" : "painting";
+const requestedPainting = params.get("painting");
+const resourceType = requestedMuseum !== null ? "museum" : "painting";
 const catalogue = resourceType === "museum" ? MUSEUMS : PAINTINGS;
-const slug = catalogue[requestedMuseum || params.get("painting")] ? (requestedMuseum || params.get("painting")) : "mona-lisa";
+const paintingRoute = resourceType === "painting" ? resolveImmersiveArtworkRoute(requestedPainting, "space") : null;
+const requestedSlug = resourceType === "museum" ? requestedMuseum : requestedPainting;
+const slug = resourceType === "museum"
+  ? (MUSEUMS[requestedMuseum] ? requestedMuseum : null)
+  : (paintingRoute?.runtimeSlug || (requestedPainting !== null && PAINTINGS[requestedPainting] ? requestedPainting : null));
 const lang = ["en", "fr", "ar"].includes(params.get("lang")) ? params.get("lang") : "en";
 
 init();
@@ -127,8 +145,13 @@ async function init() {
   document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
   applyStaticCopy();
 
+  if (!slug) {
+    await showUnavailableRoute();
+    return;
+  }
+
   try {
-    const response = await fetch(catalogue[slug] || PAINTINGS["mona-lisa"], { cache: "reload" });
+    const response = await fetch(catalogue[slug], { cache: "reload" });
     if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
     const manifest = await response.json();
     const mediaContext = await getArtworkMediaContext();
@@ -136,6 +159,25 @@ async function init() {
   } catch (error) {
     document.getElementById("space-status").textContent = `${COPY[lang].unsupported} ${error.message}`;
   }
+}
+
+async function showUnavailableRoute() {
+  const routeKind = resourceType === "painting"
+    ? await classifyUnresolvedArtworkRoute(requestedSlug)
+    : "unknown";
+  const isKnown = routeKind === "unsupported";
+  const title = COPY[lang][isKnown ? "routeUnavailableTitle" : "routeUnknownTitle"];
+  const message = COPY[lang][isKnown ? "routeUnavailable" : "routeUnknown"];
+  const status = document.getElementById("space-status");
+
+  document.title = `DACIART - ${title}`;
+  document.getElementById("space-title").textContent = title;
+  document.getElementById("space-copy").textContent = message;
+  status.textContent = message;
+  status.setAttribute("role", "alert");
+  document.getElementById("space-model").style.display = "none";
+  document.querySelector(".space-panel .actions").style.display = "none";
+  document.getElementById("ios-note").hidden = true;
 }
 
 function applyStaticCopy() {
