@@ -27,7 +27,6 @@
     "galleryUrl": "https://www.vangoghmuseum.nl/en/collection/s0047V1962"
   },
   "print": {
-    "spreadNumber": 3,
     "chapter": "Impressionism and Post-Impressionism",
     "imageTargetId": "target-003-van-gogh-bedroom",
     "imageTargetSource": "assets/artists/vincent-van-gogh/artworks/the-bedroom/images/bed-van-gogh.jpeg",

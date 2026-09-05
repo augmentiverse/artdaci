@@ -4,7 +4,8 @@ import { DRACOLoader } from "../vendor/DRACOLoader.module.js";
 import { MindARThree } from "../vendor/mindar-image-three.prod.js";
 import { fetchArtworkManifest } from "./artwork-media-manifest.js";
 import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
-import { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./catalogue.js";
+import { formatArtworkNumber } from "./artwork-numbering.js?v=1";
+import { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./immersive-routing.js?v=1";
 
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath("vendor/draco/");
@@ -534,6 +535,8 @@ function t(key) {
 function applyStaticLanguage() {
   document.documentElement.lang = CONFIG.lang;
   document.documentElement.dir = CONFIG.lang === "ar" ? "rtl" : "ltr";
+  document.getElementById("spread-label").textContent = "";
+  document.getElementById("spread-label").style.display = "none";
   document.querySelector(".icon-link").textContent = t("back");
   document.querySelector(".icon-link").href = CONFIG.lang === "ar" ? "index-ar.html" : CONFIG.lang === "fr" ? "index-fr.html" : "index.html";
   document.getElementById("tracking-status").textContent = t("searching");
@@ -1077,9 +1080,11 @@ function withAssetVersion(src) {
 function updateInterfaceFromManifest(manifest) {
   const title = manifest.title || "Artwork";
   const artist = manifest.artist?.name || "";
-  const spread = manifest.print?.spreadNumber ? `Spread ${String(manifest.print.spreadNumber).padStart(3, "0")}` : "Spread";
+  const artworkNumber = document.getElementById("spread-label");
+  const hasBookOrder = Number.isInteger(manifest.bookOrder);
   document.title = `DACIART WebAR Viewer - ${title}`;
-  document.getElementById("spread-label").textContent = spread;
+  artworkNumber.textContent = hasBookOrder ? formatArtworkNumber(manifest.bookOrder, CONFIG.lang) : "";
+  artworkNumber.style.display = hasBookOrder ? "" : "none";
   document.getElementById("artwork-title").textContent = title;
   document.getElementById("panel-title").textContent = title;
   document.getElementById("panel-body").textContent = t("scanTarget")

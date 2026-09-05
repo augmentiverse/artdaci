@@ -27,7 +27,6 @@
     "galleryUrl": ""
   },
   "print": {
-    "spreadNumber": 2,
     "chapter": "Impressionism and Post-Impressionism",
     "imageTargetId": "target-002-van-gogh",
     "imageTargetSource": "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait.jpg",

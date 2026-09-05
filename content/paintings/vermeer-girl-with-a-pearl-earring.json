@@ -24,7 +24,6 @@
     "galleryUrl": "https://www.mauritshuis.nl/en/our-collection/artworks/670-girl-with-a-pearl-earring/"
   },
   "print": {
-    "spreadNumber": 4,
     "chapter": "The Dutch Golden Age",
     "imageTargetId": "target-004-vermeer-girl-pearl",
     "imageTargetSource": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg",

@@ -51,7 +51,6 @@
     ]
   },
   "print": {
-    "spreadNumber": 5,
     "imageTargetSource": "assets/artists/claude-monet/collection/impression-sunrise-monet.png"
   },
   "education": { "vocabulary": ["Impressionism", "complementary colour", "atmosphere", "plein air"] },

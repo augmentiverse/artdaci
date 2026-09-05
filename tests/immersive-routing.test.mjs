@@ -2,11 +2,9 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
-const {
-  classifyUnresolvedArtworkRoute,
-  getArtworkImmersiveActions,
-  resolveImmersiveArtworkRoute,
-} = await import("../scripts/catalogue.js?immersive-routing-test");
+const { formatArtworkNumber } = await import("../scripts/artwork-numbering.js?immersive-routing-test");
+const { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } = await import("../scripts/immersive-routing.js?immersive-routing-test");
+const { getArtworkImmersiveActions } = await import("../scripts/catalogue.js?immersive-routing-test");
 
 const experiences = ["ar", "space", "vr"];
 const supported = [
@@ -97,4 +95,43 @@ test("AR unavailable routes leave the localized Back link above a non-interactiv
   assert.match(unavailableRoute, /loadingScreen\.style\.pointerEvents = "none";/);
   assert.match(unavailableRoute, /document\.querySelector\("\.top-hud"\)\.style\.zIndex = "11";/);
   assert.doesNotMatch(unavailableRoute, /location\.(?:assign|replace)\s*\(/);
+});
+
+test("AR artwork numbers use canonical bookOrder with localized three-digit labels", () => {
+  const bookOrders = { ld01: 1, ve01: 9, vg01: 13, vg02: 15 };
+  for (const [artworkId, bookOrder] of Object.entries(bookOrders)) {
+    assert.equal(formatArtworkNumber(bookOrder, "en"), `Artwork ${String(bookOrder).padStart(3, "0")}`, artworkId);
+    assert.equal(formatArtworkNumber(bookOrder, "fr"), `Œuvre ${String(bookOrder).padStart(3, "0")}`, artworkId);
+  }
+  assert.equal(formatArtworkNumber(bookOrders.ld01, "ar"), "العمل ٠٠١");
+  assert.equal(formatArtworkNumber(bookOrders.ve01, "ar"), "العمل ٠٠٩");
+  assert.equal(formatArtworkNumber(bookOrders.vg01, "ar"), "العمل ٠١٣");
+  assert.equal(formatArtworkNumber(bookOrders.vg02, "ar"), "العمل ٠١٥");
+});
+
+test("AR interface derives artwork numbering only from bookOrder", async () => {
+  const source = await readFile(new URL("../scripts/ar-viewer.js", import.meta.url), "utf8");
+  const applyLanguage = source.match(/function applyStaticLanguage\(\) \{[\s\S]*?\n\}/)?.[0] || "";
+  const updateInterface = source.match(/function updateInterfaceFromManifest\(manifest\) \{[\s\S]*?\n\}/)?.[0] || "";
+
+  assert.match(source, /import \{ formatArtworkNumber \} from "\.\/artwork-numbering\.js\?v=1";/);
+  assert.doesNotMatch(source, /from "\.\/catalogue\.js/);
+  assert.match(applyLanguage, /getElementById\("spread-label"\)\.textContent = "";/);
+  assert.match(applyLanguage, /getElementById\("spread-label"\)\.style\.display = "none";/);
+  assert.match(updateInterface, /Number\.isInteger\(manifest\.bookOrder\)/);
+  assert.match(updateInterface, /formatArtworkNumber\(manifest\.bookOrder, CONFIG\.lang\)/);
+  assert.match(updateInterface, /style\.display = hasBookOrder \? "" : "none";/);
+  assert.doesNotMatch(updateInterface, /spreadNumber|\bSpread\b|Double page/);
+});
+
+test("AR people and museum resources remain unnumbered", async () => {
+  const person = JSON.parse(await readFile(new URL("../content/people/van-gogh-jo.json", import.meta.url), "utf8"));
+  const museumFiles = ["louvre.json", "mauritshuis.json", "czartoryski.json", "orsay.json", "van-gogh-museum.json"];
+  const museums = await Promise.all(museumFiles.map(async (file) => (
+    JSON.parse(await readFile(new URL(`../content/museums/${file}`, import.meta.url), "utf8"))
+  )));
+
+  assert.equal(person.bookOrder, undefined);
+  assert.equal(person.print.spreadNumber, "2A");
+  assert.ok(museums.every(({ bookOrder }) => bookOrder === undefined));
 });

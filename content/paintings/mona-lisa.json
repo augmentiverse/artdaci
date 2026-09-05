@@ -29,7 +29,6 @@
     "galleryUrl": "https://www.louvre.fr/en/explore/the-palace/mona-lisa"
   },
   "print": {
-    "spreadNumber": 1,
     "chapter": "Renaissance",
     "imageTargetId": "target-001-mona-lisa",
     "imageTargetSource": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg",
