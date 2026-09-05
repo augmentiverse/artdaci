@@ -81,7 +81,7 @@
     "slug": "japanese-bridge", "bookOrder": 20, "title": "The Water-Lily Pond, Green Harmony", "artist": { "name": "Claude Monet" }, "date": "1899", "medium": "Oil on canvas", "dimensions": {}, "currentLocation": { "museum": "Musée d’Orsay", "city": "Paris", "country": "France" }, "movement": ["Impressionism"],
     "media": { "image": "assets/artists/paintings_images/monet/monet_japanese-bridge.png" }, "print": { "chapter": "Impressionism" },
     "texts": { "historicalContext": "Monet designed the bridge and pond at Giverny, drawing inspiration from Japanese prints and gardens.", "artisticAnalysis": "The arch provides a calm structure amid dense foliage, reflections and floating lilies.", "composition": "The bridge spans the upper field while paths of water and vegetation lead beneath it.", "palette": "Greens are varied with blue, violet, pink and warm highlights rather than treated as one local colour.", "perspectiveTechnique": "Broken brushwork dissolves solid forms into changing light and atmosphere.", "culturalSignificance": "The motif joined garden design, collecting and painting in Monet's sustained experiment with perception." },
-    "localizations": { "fr": { "title": "Le Bassin aux nymphéas, harmonie verte" }, "ar": { "title": "الجسر الياباني" } }
+    "localizations": { "fr": { "title": "Le Bassin aux nymphéas, harmonie verte" }, "ar": { "title": "بركة زنابق الماء، تناغم أخضر" } }
   },
   {
     "slug": "poppies", "bookOrder": 23, "title": "Poppies", "artist": { "name": "Claude Monet" }, "date": "1873", "medium": "Oil on canvas", "dimensions": {}, "currentLocation": { "museum": "Musée d’Orsay", "city": "Paris" }, "movement": ["Impressionism"],

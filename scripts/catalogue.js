@@ -181,12 +181,109 @@ const AR_METADATA = {
   "vermeer-girl-with-a-pearl-earring": { artist: "يوهانس فيرمير", date: "نحو 1665", location: "موريتشهاوس، لاهاي" }
 };
 
+const LOCALIZABLE_TEXT_FIELDS = Object.freeze([
+  "historicalContext",
+  "artisticAnalysis",
+  "palette",
+  "perspectiveTechnique"
+]);
+
+export function normalizeCatalogueLanguage(value) {
+  const language = String(value || "").trim().toLowerCase().split(/[-_]/)[0];
+  return ["en", "fr", "ar"].includes(language) ? language : "en";
+}
+
+function asLocalization(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+}
+
+function firstPresentText(...values) {
+  return values.find((value) => typeof value === "string" && value.trim()) || "";
+}
+
+function localizedArtistName(localization) {
+  if (typeof localization.artist === "string") return localization.artist;
+  return asLocalization(localization.artist).name;
+}
+
+function localizedLocationValue(localization, field) {
+  return asLocalization(localization.currentLocation)[field] || localization[field];
+}
+
+function getLegacyLocalization(manifest, language) {
+  const slug = manifest.slug;
+  if (language === "fr") return { title: FR_TITLES[slug] };
+  if (language !== "ar") return {};
+
+  const metadata = AR_METADATA[slug] || {};
+  return {
+    title: AR_TITLES[slug],
+    artist: metadata.artist,
+    date: metadata.date,
+    location: metadata.location,
+    artisticAnalysis: AR_SUMMARIES[slug]
+  };
+}
+
+export function localizeCatalogueEntry(source, requestedLanguage) {
+  const manifest = asLocalization(source);
+  const language = normalizeCatalogueLanguage(requestedLanguage);
+  const localizations = asLocalization(manifest.localizations);
+  const requested = asLocalization(localizations[language]);
+  const english = asLocalization(localizations.en);
+  const legacy = getLegacyLocalization(manifest, language);
+  const result = { ...manifest };
+
+  result.title = firstPresentText(requested.title, legacy.title, english.title, manifest.title);
+  result.date = firstPresentText(requested.date, legacy.date, english.date, manifest.date);
+  result.medium = firstPresentText(requested.medium, english.medium, manifest.medium);
+
+  const artistName = firstPresentText(
+    localizedArtistName(requested),
+    legacy.artist,
+    localizedArtistName(english),
+    manifest.artist?.name
+  );
+  if (manifest.artist || artistName) result.artist = { ...asLocalization(manifest.artist), name: artistName };
+
+  if (manifest.currentLocation || requested.currentLocation || english.currentLocation || legacy.location) {
+    result.currentLocation = { ...asLocalization(manifest.currentLocation) };
+    if (legacy.location) {
+      result.currentLocation = { ...result.currentLocation, museum: legacy.location, city: "", country: "" };
+    } else {
+      for (const field of ["museum", "city", "country"]) {
+        result.currentLocation[field] = firstPresentText(
+          localizedLocationValue(requested, field),
+          localizedLocationValue(english, field),
+          manifest.currentLocation?.[field]
+        );
+      }
+    }
+  }
+
+  const requestedTexts = asLocalization(requested.texts);
+  const englishTexts = asLocalization(english.texts);
+  if (manifest.texts || requested.texts || english.texts || legacy.artisticAnalysis) {
+    result.texts = { ...asLocalization(manifest.texts) };
+    for (const field of LOCALIZABLE_TEXT_FIELDS) {
+      result.texts[field] = firstPresentText(
+        requestedTexts[field],
+        field === "artisticAnalysis" ? legacy.artisticAnalysis : "",
+        englishTexts[field],
+        manifest.texts?.[field]
+      );
+    }
+  }
+
+  return result;
+}
+
 const app = typeof document === "undefined" ? null : document.getElementById("catalogue-app");
 
 if (app) initCatalogue(app);
 
 async function initCatalogue(root) {
-  const lang = ["en", "fr", "ar"].includes(root.dataset.lang) ? root.dataset.lang : "en";
+  const lang = normalizeCatalogueLanguage(root.dataset.lang);
   const text = UI[lang];
   const manifestPaths = root.dataset.manifests.split(",").map((item) => item.trim()).filter(Boolean);
 
@@ -198,7 +295,11 @@ async function initCatalogue(root) {
     ]);
     root.dataset.ready = "true";
     document.querySelector(".static-index")?.setAttribute("hidden", "");
-    renderCatalogue(root, manifests.flat().sort((a, b) => a.bookOrder - b.bookOrder), museums, lang, text);
+    const localizedManifests = manifests
+      .flat()
+      .map((manifest) => localizeCatalogueEntry(manifest, lang))
+      .sort((a, b) => a.bookOrder - b.bookOrder);
+    renderCatalogue(root, localizedManifests, museums, lang, text);
   } catch (error) {
     root.innerHTML = `<p class="catalogue-error">${escapeHtml(error.message)}</p>`;
   }
@@ -265,7 +366,7 @@ function renderCatalogue(root, manifests, museums, lang, text) {
   });
 
   function update() {
-    const filtered = manifests.filter((manifest) => matches(manifest, state));
+    const filtered = manifests.filter((manifest) => matchesCatalogueEntry(manifest, state));
     root.querySelector(".collection-stats").innerHTML = renderStats(manifests, filtered, text);
     root.querySelector(".artwork-grid").innerHTML = filtered.length
       ? filtered.map((manifest) => renderCard(manifest, lang, text)).join("")
@@ -292,7 +393,8 @@ function renderMuseumCard(museum, lang, text) {
   </article>`;
 }
 
-function matches(manifest, state) {
+export function matchesCatalogueEntry(manifest, state) {
+  const query = String(state.query || "").trim().toLowerCase();
   const haystack = [
     manifest.title,
     manifest.artist?.name,
@@ -306,7 +408,7 @@ function matches(manifest, state) {
     ...(manifest.education?.vocabulary || [])
   ].filter(Boolean).join(" ").toLowerCase();
 
-  return (!state.query || haystack.includes(state.query))
+  return (!query || haystack.includes(query))
     && (!state.movement || (manifest.movement || []).includes(state.movement));
 }
 
@@ -325,19 +427,16 @@ function renderStats(all, filtered, text) {
 
 function renderCard(manifest, lang, text) {
   const slug = manifest.slug;
-  const title = getTitle(manifest, lang);
+  const title = manifest.title;
   const image = manifest.media?.image || manifest.print?.imageTargetSource;
   const movement = (manifest.movement || []).join(", ");
   const printUrl = PRINT_PAGES[lang]?.[slug] || PRINT_PAGES.en[slug] || `print-artwork.html?painting=${encodeURIComponent(slug)}&lang=${lang}`;
   const audioOverview = getLocalizedAudioOverview(manifest, lang);
   const location = [manifest.currentLocation?.museum, manifest.currentLocation?.city].filter(Boolean).join(", ");
-  const summary = lang === "ar"
-    ? AR_SUMMARIES[slug] || ""
-    : manifest.texts?.artisticAnalysis || manifest.texts?.historicalContext || "";
-  const arMeta = AR_METADATA[slug] || {};
-  const artist = lang === "ar" ? arMeta.artist || manifest.artist?.name || "" : manifest.artist?.name || "";
-  const date = lang === "ar" ? arMeta.date || manifest.date || "" : manifest.date || "";
-  const displayLocation = lang === "ar" ? arMeta.location || location : location;
+  const summary = manifest.texts?.artisticAnalysis || manifest.texts?.historicalContext || "";
+  const artist = manifest.artist?.name || "";
+  const date = manifest.date || "";
+  const displayLocation = location;
   const immersiveActions = getArtworkImmersiveActions(slug, lang, text)
     .map((action) => `<a class="button" href="${action.href}">${action.label}</a>`)
     .join("\n");
@@ -392,11 +491,6 @@ function getLocalizedAudioOverview(manifest, lang) {
   const list = Array.isArray(overviews) ? overviews : [overviews];
   const mediaLang = lang;
   return list.find((item) => item.lang === mediaLang) || list.find((item) => item.lang === "fr") || list.find((item) => item.lang === "en") || list[0] || null;
-}
-
-function getTitle(manifest, lang) {
-  if (lang === "ar") return AR_TITLES[manifest.slug] || manifest.title;
-  return lang === "fr" ? FR_TITLES[manifest.slug] || manifest.title : manifest.title;
 }
 
 function extractYear(value = "") {
