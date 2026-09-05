@@ -38,7 +38,7 @@
     { "id": "mo01", "artistId": "mo", "status": "active", "slug": "impression-sunrise", "title": { "fr": "Impression, soleil levant", "en": "Impression, Sunrise" }, "manifest": { "status": "planned" } },
     { "id": "mo02", "artistId": "mo", "status": "active", "slug": "the-bridge-at-argenteuil", "title": { "fr": "Le Pont d’Argenteuil", "en": "The Bridge at Argenteuil" }, "manifest": { "status": "planned" } },
     { "id": "mo03", "artistId": "mo", "status": "active", "slug": "water-lilies", "title": { "fr": "Les Nymphéas", "en": "Water Lilies" }, "manifest": { "status": "planned" } },
-    { "id": "mo04", "artistId": "mo", "status": "active", "slug": "the-japanese-footbridge", "title": { "fr": "Le Pont japonais", "en": "The Japanese Footbridge" }, "manifest": { "status": "planned" } },
+    { "id": "mo04", "artistId": "mo", "status": "active", "slug": "the-japanese-footbridge", "title": { "fr": "Le Bassin aux nymphéas, harmonie verte", "en": "The Water-Lily Pond, Green Harmony" }, "manifest": { "status": "planned" } },
     { "id": "mo05", "artistId": "mo", "status": "active", "slug": "poppies", "title": { "fr": "Les Coquelicots", "en": "Poppies" }, "manifest": { "status": "planned" } },
     { "id": "mo06", "artistId": "mo", "status": "active", "slug": "woman-with-a-parasol", "title": { "fr": "La Femme à l’ombrelle", "en": "Woman with a Parasol" }, "manifest": { "status": "planned" } },
     { "id": "mo07", "artistId": "mo", "status": "reserved" },
