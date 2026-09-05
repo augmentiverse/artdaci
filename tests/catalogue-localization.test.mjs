@@ -139,6 +139,37 @@ test("localized titles and base artist names are searchable after localization",
   }
 });
 
+test("dynamic print labels are action-oriented without changing print routes", async () => {
+  const source = await readFile(new URL("../scripts/catalogue.js", import.meta.url), "utf8");
+  const ui = source.match(/const UI = \{[\s\S]*?\n\};/)?.[0] || "";
+  const printPages = source.match(/const PRINT_PAGES = \{[\s\S]*?\n\};/)?.[0] || "";
+
+  for (const label of [
+    "Open printable artwork page",
+    "printable artwork pages",
+    "Ouvrir la page imprimable",
+    "pages d’œuvres imprimables",
+    "فتح صفحة العمل القابلة للطباعة",
+    "صفحات أعمال قابلة للطباعة",
+  ]) {
+    assert.ok(ui.includes(label), label);
+  }
+  for (const legacyLabel of [
+    'print: "Printed Spread"',
+    'printFirst: "print-first spreads"',
+    'print: "Double page"',
+    'printFirst: "doubles pages papier"',
+    'print: "الصفحة المطبوعة"',
+    'printFirst: "صفحات مطبوعة"',
+  ]) {
+    assert.ok(!ui.includes(legacyLabel), legacyLabel);
+  }
+
+  assert.equal([...printPages.matchAll(/^\s+"[^"]+":/gm)].length, 24);
+  assert.match(source, /PRINT_PAGES\[lang\]\?\.\[slug\] \|\| PRINT_PAGES\.en\[slug\]/);
+  assert.match(source, /print-artwork\.html\?painting=\$\{encodeURIComponent\(slug\)\}&lang=\$\{lang\}/);
+});
+
 test("canonical catalogue data never references the Orsay 1889 preparation branch", () => {
   assert.doesNotMatch(
     JSON.stringify({ sourceDocuments, mediaCatalog }),
