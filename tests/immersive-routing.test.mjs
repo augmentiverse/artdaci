@@ -110,10 +110,15 @@ test("AR artwork numbers use canonical bookOrder with localized three-digit labe
 });
 
 test("AR interface derives artwork numbering only from bookOrder", async () => {
-  const source = await readFile(new URL("../scripts/ar-viewer.js", import.meta.url), "utf8");
+  const [source, html] = await Promise.all([
+    readFile(new URL("../scripts/ar-viewer.js", import.meta.url), "utf8"),
+    readFile(new URL("../ar.html", import.meta.url), "utf8"),
+  ]);
   const applyLanguage = source.match(/function applyStaticLanguage\(\) \{[\s\S]*?\n\}/)?.[0] || "";
   const updateInterface = source.match(/function updateInterfaceFromManifest\(manifest\) \{[\s\S]*?\n\}/)?.[0] || "";
 
+  assert.match(html, /<span id="spread-label"><\/span>/);
+  assert.doesNotMatch(html, /Spread 001/);
   assert.match(source, /import \{ formatArtworkNumber \} from "\.\/artwork-numbering\.js\?v=1";/);
   assert.doesNotMatch(source, /from "\.\/catalogue\.js/);
   assert.match(applyLanguage, /getElementById\("spread-label"\)\.textContent = "";/);
@@ -132,6 +137,6 @@ test("AR people and museum resources remain unnumbered", async () => {
   )));
 
   assert.equal(person.bookOrder, undefined);
-  assert.equal(person.print.spreadNumber, "2A");
+  assert.equal(Object.hasOwn(person.print, "spreadNumber"), false);
   assert.ok(museums.every(({ bookOrder }) => bookOrder === undefined));
 });
