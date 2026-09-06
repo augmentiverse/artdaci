@@ -1,0 +1,73 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "mo01",
+  "slug": "impression-sunrise",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "mo",
+    "name": {
+      "fr": "Claude Monet",
+      "en": "Claude Monet",
+      "ar": "كلود مونيه"
+    }
+  },
+  "artwork": {
+    "title": {
+      "fr": "Impression, soleil levant",
+      "en": "Impression, Sunrise",
+      "ar": "انطباع، شروق الشمس"
+    },
+    "date": "1872",
+    "museum": "Musée Marmottan Monet",
+    "location": {
+      "city": "Paris",
+      "country": "France"
+    }
+  },
+  "pageUrl": "https://artdaci.com/a/mo01",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/mo01/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {},
+    "audio": {
+      "overview": {
+        "en": {
+          "scope": "artwork",
+          "path": "audio/en/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 2389037,
+          "sha256": "859d6f54f816eb975e040c72d9046abc91f3cd8089f3c10d0e7fc69c578b4283",
+          "language": "en"
+        },
+        "fr": {
+          "scope": "artwork",
+          "path": "audio/fr/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1664800,
+          "sha256": "1c34fb7fba02d34b325f8ae8dd213101b0c074f2857f87a0afd29256c4083b42",
+          "language": "fr"
+        },
+        "ar": {
+          "scope": "artwork",
+          "path": "audio/ar/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 2214884,
+          "sha256": "6b9d3ad7f749cb3e2297e31c60d45df3cc3933bacb2d40a8d283ac36bc4d9199",
+          "language": "ar"
+        }
+      }
+    },
+    "videos": {},
+    "models": {},
+    "ar": {}
+  },
+  "updatedAt": "2026-09-06"
+}

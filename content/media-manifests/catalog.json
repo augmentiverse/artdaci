@@ -35,7 +35,7 @@
     { "id": "vg07", "artistId": "vg", "status": "reserved" },
     { "id": "vg08", "artistId": "vg", "status": "reserved" },
 
-    { "id": "mo01", "artistId": "mo", "status": "active", "slug": "impression-sunrise", "title": { "fr": "Impression, soleil levant", "en": "Impression, Sunrise" }, "manifest": { "status": "planned" } },
+    { "id": "mo01", "artistId": "mo", "status": "active", "slug": "impression-sunrise", "title": { "fr": "Impression, soleil levant", "en": "Impression, Sunrise" }, "manifest": { "status": "source-ready", "path": "artworks/mo01/manifest.json" } },
     { "id": "mo02", "artistId": "mo", "status": "active", "slug": "the-bridge-at-argenteuil", "title": { "fr": "Le Pont d’Argenteuil", "en": "The Bridge at Argenteuil" }, "manifest": { "status": "planned" } },
     { "id": "mo03", "artistId": "mo", "status": "active", "slug": "water-lilies", "title": { "fr": "Les Nymphéas", "en": "Water Lilies" }, "manifest": { "status": "planned" } },
     { "id": "mo04", "artistId": "mo", "status": "active", "slug": "the-japanese-footbridge", "title": { "fr": "Le Bassin aux nymphéas, harmonie verte", "en": "The Water-Lily Pond, Green Harmony" }, "manifest": { "status": "planned" } },

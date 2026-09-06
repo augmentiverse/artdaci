@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0",
+  "artworkId": "mo01",
+  "status": "planned",
+  "destinationRoot": "artdaci-r2:artdaci-media",
+  "resources": [
+    {
+      "key": "audio.overview.en",
+      "source": "assets/artists/claude-monet/artworks/impression-sunrise/media/monet-s-optical-illusion-that-birthed-impressionism.mp3",
+      "destination": "artworks/mo01/audio/en/overview.mp3",
+      "bytes": 2389037,
+      "sha256": "859d6f54f816eb975e040c72d9046abc91f3cd8089f3c10d0e7fc69c578b4283",
+      "mimeType": "audio/mpeg",
+      "role": "English artwork audio overview",
+      "language": "en"
+    },
+    {
+      "key": "audio.overview.fr",
+      "source": "assets/artists/claude-monet/artworks/impression-sunrise/media/le-hack-neurologique-du-soleil-de-monet.mp3",
+      "destination": "artworks/mo01/audio/fr/overview.mp3",
+      "bytes": 1664800,
+      "sha256": "1c34fb7fba02d34b325f8ae8dd213101b0c074f2857f87a0afd29256c4083b42",
+      "mimeType": "audio/mpeg",
+      "role": "French artwork audio overview",
+      "language": "fr"
+    },
+    {
+      "key": "audio.overview.ar",
+      "source": "assets/artists/claude-monet/artworks/impression-sunrise/media/خدعة-الشمس-النابضة-وسر-تسمية-الانطباعية.mp3",
+      "destination": "artworks/mo01/audio/ar/overview.mp3",
+      "bytes": 2214884,
+      "sha256": "6b9d3ad7f749cb3e2297e31c60d45df3cc3933bacb2d40a8d283ac36bc4d9199",
+      "mimeType": "audio/mpeg",
+      "role": "Arabic artwork audio overview",
+      "language": "ar"
+    }
+  ]
+}
