@@ -189,14 +189,29 @@ test("an explicitly missing language resolves to null instead of another languag
   assert.equal(resolveManifestMedia(fixture, "audio.overview.ar", "ar"), null);
 });
 
-test("historical mo01 pages keep local click-only links and do not preload MP3 files", async () => {
+test("historical mo01 pages resolve three manifest keys while keeping click-only local fallbacks", async () => {
   for (const page of ["print-monet-impression-sunrise.html", "print-monet-impression-sunrise-fr.html"]) {
     const html = await readFile(resolve(repositoryRoot, page), "utf8");
     for (const item of Object.values(expected)) assert.match(html, new RegExp(item.source.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+    assert.match(html, /data-artwork-media-manifest="https:\/\/media\.artdaci\.com\/artworks\/mo01\/manifest\.json"/);
+    for (const language of Object.keys(expected)) {
+      assert.match(html, new RegExp(`data-artwork-media="audio\\.overview\\.${language}"`));
+    }
+    assert.match(html, /scripts\/artwork-media-manifest\.js\?v=3/);
     assert.doesNotMatch(html, /<audio\b/i);
     assert.doesNotMatch(html, /preload\s*=\s*["'](?:auto|metadata)["']/i);
     assert.doesNotMatch(html, /media\.artdaci\.com\/artworks\/mo01\/audio\//);
   }
+
+  const [arabicHtml, arabicScript] = await Promise.all([
+    readFile(resolve(repositoryRoot, "print-ar.html"), "utf8"),
+    readFile(resolve(repositoryRoot, "scripts/print-ar.js"), "utf8"),
+  ]);
+  assert.match(arabicHtml, /scripts\/print-ar\.js\?v=4/);
+  assert.match(arabicHtml, /scripts\/artwork-media-manifest\.js\?v=3/);
+  assert.match(arabicScript, /mediaManifest: "https:\/\/media\.artdaci\.com\/artworks\/mo01\/manifest\.json"/);
+  assert.match(arabicScript, /audioMediaKey: "audio\.overview\.ar"/);
+  assert.doesNotMatch(arabicScript, /media\.artdaci\.com\/artworks\/mo01\/audio\//);
 });
 
 test("VG01 Chicago 1887 release and migration card remain byte-identical", async () => {

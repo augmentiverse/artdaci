@@ -121,7 +121,9 @@ const PAINTINGS_AR = {
       ["أثر بحجم متواضع", "رغم أن أبعادها لا تتجاوز نحو 48 × 63 سم، غيّرت اللوحة فكرة العمل المكتمل: صار نقل الانطباع الذي يولده العالم في لحظة معينة هدفاً فنياً قائماً بذاته."]
     ],
     details: ["اتبع الانعكاس البرتقالي العمودي فوق ضربات الماء الأفقية.", "قارن القوارب الواضحة بالخلفية الصناعية الذائبة.", "اقترب لرؤية العلامات المنفصلة ثم ابتعد لترى الميناء يتكون.", "لاحظ كيف يصنع البرتقالي والأزرق الرمادي إحساساً بضوء نابض."],
-    audio: "assets/artists/claude-monet/artworks/impression-sunrise/media/خدعة-الشمس-النابضة-وسر-تسمية-الانطباعية.mp3"
+    audio: "assets/artists/claude-monet/artworks/impression-sunrise/media/خدعة-الشمس-النابضة-وسر-تسمية-الانطباعية.mp3",
+    mediaManifest: "https://media.artdaci.com/artworks/mo01/manifest.json",
+    audioMediaKey: "audio.overview.ar"
   }
 };
 
@@ -137,6 +139,8 @@ const PRINT_PAGE_LINKS = {
 };
 const languagePages = PRINT_PAGE_LINKS[paintingSlug];
 const root = document.getElementById("arabic-print");
+if (painting.mediaManifest) root.dataset.artworkMediaManifest = painting.mediaManifest;
+const audioMediaAttribute = painting.audioMediaKey ? ` data-artwork-media="${painting.audioMediaKey}"` : "";
 document.title = `${painting.title} — الصفحة المطبوعة`;
 
 root.innerHTML = `
@@ -169,7 +173,7 @@ root.innerHTML = `
       <div class="mode-strip" aria-label="التجارب المتاحة"><span>واقع معزز</span><span>صوت</span><span>ثلاثي الأبعاد</span><span>واقع افتراضي</span></div>
       <a class="button primary" href="ar.html?painting=${paintingSlug}&amp;lang=ar">فتح الواقع المعزز</a>
       <a class="button" href="space.html?painting=${paintingSlug}&amp;lang=ar">وضع النموذج في المساحة</a>
-      <a class="button" href="${painting.audio}">تشغيل الدليل الصوتي</a>
+      <a class="button"${audioMediaAttribute} href="${painting.audio}">تشغيل الدليل الصوتي</a>
       <a class="button" href="index-ar.html">العودة إلى الفهرس العربي</a>
       <a class="button" href="${languagePages.en}" lang="en" dir="ltr">English</a>
       <a class="button" href="${languagePages.fr}" lang="fr" dir="ltr">Français</a>
