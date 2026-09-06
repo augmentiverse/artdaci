@@ -89,12 +89,25 @@ test("viewer guards precede painting content fetches and contain no explicit-rou
 });
 
 test("AR unavailable routes leave the localized Back link above a non-interactive terminal overlay", async () => {
-  const source = await readFile(new URL("../scripts/ar-viewer.js", import.meta.url), "utf8");
+  const [source, html, css] = await Promise.all([
+    readFile(new URL("../scripts/ar-viewer.js", import.meta.url), "utf8"),
+    readFile(new URL("../ar.html", import.meta.url), "utf8"),
+    readFile(new URL("../styles/ar.css", import.meta.url), "utf8"),
+  ]);
   const unavailableRoute = source.match(/async function showUnavailableRoute\(\) \{[\s\S]*?\n\}/)?.[0] || "";
+  const topHud = css.match(/\.top-hud\s*\{([\s\S]*?)\}/)?.[1] || "";
+  const iconLink = css.match(/\.icon-link\s*\{([\s\S]*?)\}/)?.[1] || "";
+  const loadingScreen = css.match(/\.loading-screen\s*\{([\s\S]*?)\}/)?.[1] || "";
 
   assert.match(unavailableRoute, /loadingScreen\.style\.pointerEvents = "none";/);
   assert.match(unavailableRoute, /document\.querySelector\("\.top-hud"\)\.style\.zIndex = "11";/);
   assert.doesNotMatch(unavailableRoute, /location\.(?:assign|replace)\s*\(/);
+  assert.match(topHud, /z-index:\s*11;/);
+  assert.match(topHud, /pointer-events:\s*none;/);
+  assert.match(iconLink, /pointer-events:\s*auto;/);
+  assert.doesNotMatch(loadingScreen, /pointer-events:\s*none;/);
+  assert.match(html, /<button id="start-ar"(?![^>]*\bdisabled\b)/);
+  assert.match(html, /<script type="module" src="scripts\/ar-viewer\.js\?v=50"><\/script>/);
 });
 
 test("AR artwork numbers use canonical bookOrder with localized three-digit labels", () => {
