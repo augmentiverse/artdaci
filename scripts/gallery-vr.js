@@ -336,7 +336,7 @@ const REIMAGINED_ARTWORKS = [
   { src: "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring-sitting.png", title: "Girl with a Pearl Earring — Reimagined" },
   { src: "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring-room.png", title: "Girl with a Pearl Earring — In the room" },
   { src: "assets/artists/claude-monet/reimagined/images/monet-paul-durand-ruel.png", title: "Monet and Paul Durand-Ruel" },
-  { src: "assets/artists/claude-monet/artworks/impression-sunrise/images/woman-with-a-parasol-claude-monet.png", title: "Monet — Woman with a Parasol" }
+  { src: "assets/artists/claude-monet/artworks/the-woman-with-a-parasol/images/woman-with-a-parasol.webp", title: "Monet — Woman with a Parasol" }
 ];
 
 const PEOPLE_BEHIND_PAINTERS = [
