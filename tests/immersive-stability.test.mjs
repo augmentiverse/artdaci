@@ -67,6 +67,32 @@ test("Living Book retains only the visible page window and cancels stale work", 
   assert.match(bookSource, /canvas\.toBlob/);
 });
 
+test("Living Book generates only the eight curated artworks in canonical book order", () => {
+  const selection = bookSource.match(/const LIVING_BOOK_ARTWORKS = Object\.freeze\((\[[\s\S]*?\])\);/);
+  assert.ok(selection, "Living Book selection must remain declarative");
+  const selectedArtworks = JSON.parse(selection[1]);
+  assert.deepEqual(selectedArtworks, [
+    { canonicalId: "ld01", slug: "mona-lisa", bookOrder: 1 },
+    { canonicalId: "ld02", slug: "lady-with-an-ermine", bookOrder: 4 },
+    { canonicalId: "ve05", slug: "vermeer-astronomer", bookOrder: 7 },
+    { canonicalId: "ve01", slug: "vermeer-girl-with-a-pearl-earring", bookOrder: 9 },
+    { canonicalId: "vg01", slug: "van-gogh", bookOrder: 13 },
+    { canonicalId: "vg02", slug: "van-gogh-bedroom", bookOrder: 15 },
+    { canonicalId: "mo02", slug: "pont-d-argenteuil", bookOrder: 22 },
+    { canonicalId: "mo01", slug: "monet-impression-sunrise", bookOrder: 24 }
+  ]);
+  const expectedPageCount = 5
+    + selectedArtworks.reduce((total, artwork) => total + (artwork.bookOrder <= 8 ? 4 : 1), 0)
+    + 5
+    + 1;
+  assert.equal(expectedPageCount, 28);
+  const manifestList = bookSource.match(/const MANIFEST_URLS = \[([\s\S]*?)\];/);
+  assert.ok(manifestList);
+  assert.doesNotMatch(manifestList[1], /view-of-delft/);
+  assert.match(bookSource, /const paintings = LIVING_BOOK_ARTWORKS\.map/);
+  assert.ok(bookSource.indexOf("const paintings = LIVING_BOOK_ARTWORKS.map") < bookSource.indexOf("buildPageDefinitions(paintings"));
+});
+
 test("Living Book audio and video remain interaction-driven and are released on exit", () => {
   assert.match(bookSource, /button\.addEventListener\("click", \(event\) => \{[\s\S]*?openExperience\(definition, hotspot\)/);
   assert.match(bookSource, /function closeExperience\(\) \{\s*experienceBody\.innerHTML = ""/);

@@ -4,13 +4,22 @@ const MANIFEST_URLS = [
   "content/paintings/mona-lisa.json?v=2",
   "content/paintings/lady-with-an-ermine.json?v=1",
   "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=2",
-  "content/paintings/view-of-delft.json?v=1",
   "content/paintings/van-gogh.json?v=2",
   "content/paintings/van-gogh-bedroom.json?v=2",
   "content/paintings/monet-impression-sunrise.json?v=3",
   "content/paintings/pont-d-argenteuil.json?v=1",
   "content/paintings/additional-16.json?v=1"
 ];
+const LIVING_BOOK_ARTWORKS = Object.freeze([
+  { "canonicalId": "ld01", "slug": "mona-lisa", "bookOrder": 1 },
+  { "canonicalId": "ld02", "slug": "lady-with-an-ermine", "bookOrder": 4 },
+  { "canonicalId": "ve05", "slug": "vermeer-astronomer", "bookOrder": 7 },
+  { "canonicalId": "ve01", "slug": "vermeer-girl-with-a-pearl-earring", "bookOrder": 9 },
+  { "canonicalId": "vg01", "slug": "van-gogh", "bookOrder": 13 },
+  { "canonicalId": "vg02", "slug": "van-gogh-bedroom", "bookOrder": 15 },
+  { "canonicalId": "mo02", "slug": "pont-d-argenteuil", "bookOrder": 22 },
+  { "canonicalId": "mo01", "slug": "monet-impression-sunrise", "bookOrder": 24 }
+]);
 const MUSEUM_MANIFEST_URLS = ["louvre", "mauritshuis", "czartoryski", "orsay", "van-gogh-museum"]
   .map((slug) => `content/museums/${slug}.json?v=1`);
 
@@ -312,7 +321,11 @@ async function init() {
   const responses = await Promise.all([...MANIFEST_URLS, ...MUSEUM_MANIFEST_URLS].map((url) => fetch(url)));
   if (responses.some((response) => !response.ok)) throw new Error("Book content is unavailable.");
   const allManifests = await Promise.all(responses.map((response) => response.json()));
-  const paintings = allManifests.slice(0, MANIFEST_URLS.length).flat().sort((a, b) => a.bookOrder - b.bookOrder);
+  const availablePaintings = allManifests.slice(0, MANIFEST_URLS.length).flat();
+  const paintings = LIVING_BOOK_ARTWORKS.map((selection) => availablePaintings.find((painting) => (
+    painting.slug === selection.slug && painting.bookOrder === selection.bookOrder
+  )));
+  if (paintings.some((painting) => !painting)) throw new Error("Living Book artwork selection is incomplete.");
   pageDefinitions = buildPageDefinitions(paintings, allManifests.slice(MANIFEST_URLS.length));
   await buildBook(pageDefinitions);
   bindControls();
@@ -398,10 +411,8 @@ function buildPageDefinitions(manifests, museums = []) {
             { label: "VR", x: 83, y: 38, type: "gallery" }
           ]
     });
-    // The sixteen collection additions are complete catalogue pages rather
-    // than four-page multimedia chapters. Keeping one illustrated page per
-    // work makes all 24 paintings reachable on phones without allocating
-    // more than one hundred large canvas textures at once.
+    // Later book entries are concise catalogue pages rather than four-page
+    // multimedia chapters, keeping the curated book stable on small devices.
     if (manifest.bookOrder > 8) return;
     pages.push({
       kind: "analysis",
