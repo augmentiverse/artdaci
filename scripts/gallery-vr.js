@@ -3,6 +3,7 @@ import { GLTFLoader } from "../vendor/GLTFLoader.module.js";
 import { DRACOLoader } from "../vendor/DRACOLoader.module.js";
 import { fetchArtworkManifest } from "./artwork-media-manifest.js";
 import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
+import { detectRuntimeProfile } from "./runtime-profile.js?v=1";
 
 const MANIFESTS = [
   "content/paintings/mona-lisa.json?v=4",
@@ -467,10 +468,11 @@ const isHandheldMobile = !isQuestBrowser && (
   || /Android|Mobile|IEMobile|Opera Mini/i.test(navigator.userAgent)
   || (matchMedia("(pointer: coarse)").matches && Math.min(screen.width, screen.height) < 900)
 );
-const isLowPowerDevice = isQuestBrowser || isHandheldMobile;
+let runtimeProfile = detectRuntimeProfile(globalThis);
+let isLowPowerDevice = isQuestBrowser || runtimeProfile.constrained;
 // Phones and tablets get the painted collection without optional GLB props.
 // These models are decorative and can exhaust the browser's memory on mobile.
-const allowDecorative3DModels = !isHandheldMobile;
+let allowDecorative3DModels = !isHandheldMobile && !isLowPowerDevice;
 const previewRoom = params.get("room");
 const artistRoomId = params.get("artist");
 const artistRoom = ARTIST_ROOMS[artistRoomId] || null;
@@ -732,6 +734,29 @@ const musicNextButton = document.getElementById("gallery-music-next");
 const musicBackButton = document.getElementById("gallery-music-back");
 const musicForwardButton = document.getElementById("gallery-music-forward");
 const uiToggleButton = document.getElementById("gallery-ui-toggle");
+function canCreateWebGLContext() {
+  try {
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("webgl2", { failIfMajorPerformanceCaveat: true })
+      || canvas.getContext("webgl", { failIfMajorPerformanceCaveat: true });
+    if (!context) return false;
+    context.getExtension("WEBGL_lose_context")?.loseContext();
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+if (!canCreateWebGLContext()) {
+  document.body.dataset.webglFallback = "true";
+  status.textContent = lang === "ar"
+    ? "العرض ثلاثي الأبعاد غير متاح على هذا الجهاز. استخدم روابط القائمة لمتابعة الاستكشاف."
+    : lang === "fr"
+      ? "L’affichage 3D n’est pas disponible sur cet appareil. Utilisez les liens du menu pour poursuivre l’exploration."
+      : "The 3D view is unavailable on this device. Use the menu links to continue exploring.";
+  await new Promise(() => {});
+}
+
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x191714);
 scene.fog = new THREE.Fog(0x191714, 16, 44);
@@ -749,9 +774,15 @@ scene.add(visitor);
 
 const renderer = new THREE.WebGLRenderer({
   antialias: !isLowPowerDevice && !isIOSDevice,
-  powerPreference: isIOSDevice ? "default" : "high-performance"
+  powerPreference: isLowPowerDevice || isIOSDevice ? "default" : "high-performance"
 });
-renderer.setPixelRatio(isLowPowerDevice || isIOSDevice ? 1 : Math.min(devicePixelRatio, 2));
+runtimeProfile = detectRuntimeProfile(globalThis, renderer.capabilities);
+if (runtimeProfile.constrained) {
+  isLowPowerDevice = true;
+  allowDecorative3DModels = false;
+}
+document.body.dataset.runtimeProfile = isLowPowerDevice ? "constrained" : "normal";
+renderer.setPixelRatio(Math.min(devicePixelRatio, runtimeProfile.maxPixelRatio));
 renderer.setSize(innerWidth, innerHeight);
 renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.shadowMap.enabled = !isLowPowerDevice && !isIOSDevice;
@@ -835,10 +866,10 @@ const ROOM_AMBIENCE_OFFSETS = {
 };
 let roomAmbienceTrackIndex = 0;
 let roomAmbienceSourceRoom = null;
-narrationPlayer.preload = "metadata";
-musicPlayer.preload = "metadata";
+narrationPlayer.preload = "none";
+musicPlayer.preload = "none";
 musicPlayer.volume = 0.82;
-roomAmbiencePlayer.preload = "auto";
+roomAmbiencePlayer.preload = "none";
 roomAmbiencePlayer.volume = 0.34;
 roomAmbiencePlayer.addEventListener("ended", () => {
   const roomId = ambientNodes?.roomId;
@@ -881,6 +912,102 @@ const museumPanelLoads = new Map();
 const museumRoomRetryAt = new Map();
 let fiveMuseumsPreloadPromise = null;
 const eightMasterpiecesPanelsLoaded = new Set();
+const reimaginedPaintersLoaded = new Set();
+const reimaginedPainterLoads = new Map();
+const reimaginedPainterRetryAt = new Map();
+const reimaginedPresentationVideosLoaded = new Set();
+const REIMAGINED_ROOM_CENTERS = { "da-vinci": 0, vermeer: 10, "van-gogh": 22, monet: 34 };
+let renderLoopActive = false;
+let webglContextLost = false;
+let webglContextLossCount = 0;
+let webglRestoreTimer = null;
+
+function startRenderLoop() {
+  if (renderLoopActive || webglContextLost || webglContextLossCount > 1 || document.hidden) return;
+  renderer.setAnimationLoop(render);
+  renderLoopActive = true;
+}
+
+function stopRenderLoop() {
+  if (!renderLoopActive) return;
+  renderer.setAnimationLoop(null);
+  renderLoopActive = false;
+}
+
+function showWebGLFallback() {
+  stopRenderLoop();
+  renderer.domElement.hidden = true;
+  document.body.dataset.webglFallback = "true";
+  status.textContent = lang === "ar"
+    ? "تعذر الحفاظ على العرض ثلاثي الأبعاد. استخدم روابط القائمة لمتابعة الاستكشاف."
+    : lang === "fr"
+      ? "L’affichage 3D n’est plus disponible. Utilisez les liens du menu pour poursuivre l’exploration."
+      : "The 3D view is unavailable. Use the menu links to continue exploring.";
+}
+
+renderer.domElement.addEventListener("webglcontextlost", (event) => {
+  event.preventDefault();
+  webglContextLost = true;
+  webglContextLossCount += 1;
+  stopRenderLoop();
+  stopAllAudioGuides(false);
+  status.textContent = lang === "ar"
+    ? "توقف العرض ثلاثي الأبعاد مؤقتاً. جارٍ محاولة الاستعادة…"
+    : lang === "fr"
+      ? "Affichage 3D interrompu. Tentative de restauration…"
+      : "3D display interrupted. Attempting recovery…";
+  if (webglContextLossCount > 1) {
+    showWebGLFallback();
+    return;
+  }
+  webglRestoreTimer = setTimeout(() => {
+    renderer.forceContextRestore?.();
+    webglRestoreTimer = setTimeout(() => {
+      if (webglContextLost) showWebGLFallback();
+    }, 4000);
+  }, 600);
+});
+
+renderer.domElement.addEventListener("webglcontextrestored", () => {
+  clearTimeout(webglRestoreTimer);
+  webglRestoreTimer = null;
+  if (webglContextLossCount > 1) {
+    showWebGLFallback();
+    return;
+  }
+  webglContextLost = false;
+  isLowPowerDevice = true;
+  allowDecorative3DModels = false;
+  document.body.dataset.runtimeProfile = "constrained";
+  renderer.setPixelRatio(1);
+  renderer.shadowMap.enabled = false;
+  renderer.domElement.hidden = false;
+  status.textContent = text.ready;
+  startRenderLoop();
+});
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) stopRenderLoop();
+  else startRenderLoop();
+});
+
+addEventListener("pagehide", (event) => {
+  stopRenderLoop();
+  stopAllAudioGuides(false);
+  stopRoomAmbience();
+  narrationPlayer.pause();
+  musicPlayer.pause();
+  roomAmbiencePlayer.pause();
+  galleryVideoExhibits.forEach((exhibit) => {
+    exhibit.video?.pause();
+    exhibit.sound?.pause();
+  });
+  if (!event.persisted) disposeGalleryResources();
+});
+
+addEventListener("pageshow", (event) => {
+  if (event.persisted) startRenderLoop();
+});
 
 init();
 
@@ -910,14 +1037,14 @@ async function init() {
     addCinemaNavigationSigns();
     addVirtualGuideStation([19.88, 1.08, 29.65], -Math.PI / 2, "the ARTDACI virtual cinema and its reimagined artist films");
     buildReimaginedVideoExhibits();
-    renderer.setAnimationLoop(render);
+    startRenderLoop();
     status.textContent = text.ready;
     return;
   }
 
   if (isModelMuseum) {
     buildModelMuseumArchitecture();
-    renderer.setAnimationLoop(render);
+    startRenderLoop();
     if (allowDecorative3DModels) {
       void loadModelMuseumRoom(Math.max(0, ARTIST_ROOM_ORDER.indexOf(modelArtistId)));
     }
@@ -928,7 +1055,7 @@ async function init() {
   if (activeRoom === "groups") {
     buildGroupGalleryRoom();
     decorateGalleryRoom("groups", true);
-    renderer.setAnimationLoop(render);
+    startRenderLoop();
     try {
       await buildGroupExhibit();
       await detectVR();
@@ -944,7 +1071,7 @@ async function init() {
     buildLouvreMuseumRoom();
     decorateGalleryRoom("louvre", true);
     addLouvreGalleryFurniture();
-    renderer.setAnimationLoop(render);
+    startRenderLoop();
     try {
       await buildLouvreMuseumExhibits();
       await detectVR();
@@ -958,9 +1085,9 @@ async function init() {
 
   if (isFiveMuseumsWing) {
     buildFiveMuseumsWing();
-    renderer.setAnimationLoop(render);
+    startRenderLoop();
     await Promise.all([...new Set([0, requestedMuseumIndex])].map(loadFiveMuseumsRoom));
-    void preloadFiveMuseumsWing();
+    if (!isLowPowerDevice) void preloadFiveMuseumsWing();
     await detectVR();
     status.textContent = text.ready;
     return;
@@ -968,7 +1095,7 @@ async function init() {
 
   if (activeRoom === "people") {
     buildPeopleBehindPaintersRoom();
-    renderer.setAnimationLoop(render);
+    startRenderLoop();
     try {
       await buildPeopleBehindPaintersExhibits();
       await buildPeopleRoomVideoExhibits();
@@ -989,7 +1116,7 @@ async function init() {
       ? "Déplacez-vous entre les salles. Avec les mains : pointez et pincez. Sans manette : fixez une cible jusqu’au changement de couleur du viseur."
       : "Move between rooms. With hands: point and pinch. Without controllers: hold your gaze on a target until the reticle changes colour.";
     buildConnectedMuseumArchitecture();
-    renderer.setAnimationLoop(render);
+    startRenderLoop();
     try {
       const manifestResponses = await Promise.all(PRINTED_MANIFESTS.map((url) => fetch(url)));
       if (manifestResponses.some((response) => !response.ok)) throw new Error("Printed artwork manifest unavailable");
@@ -1005,7 +1132,7 @@ async function init() {
   }
 
   buildRoom();
-  renderer.setAnimationLoop(render);
+  startRenderLoop();
   try {
     const responses = await Promise.all(MANIFESTS.map((url) => fetch(url)));
     if (responses.some((response) => !response.ok)) throw new Error("Manifest unavailable");
@@ -3053,9 +3180,6 @@ async function addConnectedMuseumArtwork(room, work, centerZ, index, manifest) {
     hotspot.userData.exhibit = exhibit;
     exhibits.push(exhibit);
     exhibitsBySlug.set(manifest.slug, exhibit);
-    loadAudioGuide(exhibit).catch((error) => {
-      console.warn(`Audio guide unavailable for ${manifest.slug}.`, error);
-    });
   }
 }
 
@@ -4063,33 +4187,46 @@ async function addPainting(painting, placement) {
   exhibits.push(exhibit);
   exhibitsBySlug.set(painting.slug, exhibit);
   hotspot.userData.exhibit = exhibit;
-  loadAudioGuide(exhibit).catch((error) => {
-    console.warn(`Audio guide unavailable for ${painting.slug}.`, error);
-  });
 }
 
 async function buildReimaginedExhibition() {
-  const roomCenters = { "da-vinci": 0, vermeer: 10, "van-gogh": 22, monet: 34 };
-  const roomSlots = new Map();
-  const placementFor = (painter) => {
-    const centerZ = roomCenters[painter];
-    const index = roomSlots.get(painter) || 0;
-    roomSlots.set(painter, index + 1);
-    const side = index % 2 === 0 ? -1 : 1;
-    const row = Math.floor(index / 2);
-    const z = centerZ - 2.45 + row * 2.45;
-    return side < 0
-      ? { position: [-5.92, 1.95, z], rotationY: Math.PI / 2, hotspot: [-3.45, z], visitorYaw: Math.PI / 2 }
-      : { position: [5.92, 1.95, z], rotationY: -Math.PI / 2, hotspot: [3.45, z], visitorYaw: -Math.PI / 2 };
-  };
+  const painters = Object.keys(REIMAGINED_ROOM_CENTERS);
+  if (isLowPowerDevice) {
+    await loadReimaginedPainter(nearestReimaginedPainter());
+  } else {
+    await Promise.all(painters.map(loadReimaginedPainter));
+  }
 
-  await Promise.all(REIMAGINED_ARTWORKS.map(async (item) => {
+  if (!REIMAGINED_ARTWORKS.some((item) => getReimaginedPainter(item) === "monet")) {
+    createWallSign(lang === "fr" ? "NOUVELLES ŒUVRES À VENIR" : "MORE REIMAGINED WORKS COMING SOON", [0, 2.15, 38.88], Math.PI, {
+      width: 4.8, height: 0.64, accent: true, compact: true
+    });
+  }
+}
+
+function reimaginedPlacement(painter, index) {
+  const centerZ = REIMAGINED_ROOM_CENTERS[painter];
+  const side = index % 2 === 0 ? -1 : 1;
+  const row = Math.floor(index / 2);
+  const z = centerZ - 2.45 + row * 2.45;
+  return side < 0
+    ? { position: [-5.92, 1.95, z], rotationY: Math.PI / 2, hotspot: [-3.45, z], visitorYaw: Math.PI / 2 }
+    : { position: [5.92, 1.95, z], rotationY: -Math.PI / 2, hotspot: [3.45, z], visitorYaw: -Math.PI / 2 };
+}
+
+function loadReimaginedPainter(painter) {
+  if (reimaginedPaintersLoaded.has(painter)) return Promise.resolve();
+  if (reimaginedPainterLoads.has(painter)) return reimaginedPainterLoads.get(painter);
+  if ((reimaginedPainterRetryAt.get(painter) || 0) > performance.now()) return Promise.resolve();
+  const items = REIMAGINED_ARTWORKS.filter((item) => getReimaginedPainter(item) === painter);
+  const task = Promise.all(items.map(async (item, index) => {
     const texture = await loadGalleryTexture(item.src);
+    optimizeTextureForMobile(texture);
     texture.encoding = THREE.sRGBEncoding;
     const aspect = texture.image.width / texture.image.height;
     const height = Math.min(1.2, 1.9 / aspect);
     const width = height * aspect;
-    const placement = placementFor(getReimaginedPainter(item));
+    const placement = reimaginedPlacement(painter, index);
 
     const artwork = new THREE.Group();
     artwork.position.set(...placement.position);
@@ -4115,21 +4252,34 @@ async function buildReimaginedExhibition() {
     artwork.add(title);
     scene.add(artwork);
     scene.add(createReimaginedHotspot(itemTitle, placement, artwork));
-  }));
-
-  buildPainterPresentationVideos();
-
-  if (!REIMAGINED_ARTWORKS.some((item) => getReimaginedPainter(item) === "monet")) {
-    createWallSign(lang === "fr" ? "NOUVELLES ŒUVRES À VENIR" : "MORE REIMAGINED WORKS COMING SOON", [0, 2.15, 38.88], Math.PI, {
-      width: 4.8, height: 0.64, accent: true, compact: true
-    });
-  }
+  })).then(() => {
+    reimaginedPaintersLoaded.add(painter);
+    reimaginedPainterRetryAt.delete(painter);
+    buildPainterPresentationVideos(painter);
+  }).catch((error) => {
+    reimaginedPainterRetryAt.set(painter, performance.now() + 3000);
+    console.warn(`Reimagined room unavailable for ${painter}.`, error);
+  }).finally(() => reimaginedPainterLoads.delete(painter));
+  reimaginedPainterLoads.set(painter, task);
+  return task;
 }
 
-function buildPainterPresentationVideos() {
-  const roomCenters = { "da-vinci": 0, vermeer: 10, "van-gogh": 22, monet: 34 };
-  PAINTER_PRESENTATION_VIDEOS.forEach((item) => {
-    const centerZ = roomCenters[item.painter];
+function nearestReimaginedPainter() {
+  return Object.entries(REIMAGINED_ROOM_CENTERS).reduce((nearest, entry) => (
+    Math.abs(visitor.position.z - entry[1]) < Math.abs(visitor.position.z - nearest[1]) ? entry : nearest
+  ))[0];
+}
+
+function maybeLoadReimaginedPainter() {
+  if (!isLowPowerDevice || activeRoom !== "reimagined") return;
+  void loadReimaginedPainter(nearestReimaginedPainter());
+}
+
+function buildPainterPresentationVideos(painter = null) {
+  PAINTER_PRESENTATION_VIDEOS.filter((item) => !painter || item.painter === painter).forEach((item) => {
+    if (reimaginedPresentationVideosLoaded.has(item.painter)) return;
+    reimaginedPresentationVideosLoaded.add(item.painter);
+    const centerZ = REIMAGINED_ROOM_CENTERS[item.painter];
     const video = document.createElement("video");
     video.crossOrigin = "anonymous";
     video.preload = "metadata";
@@ -5410,17 +5560,14 @@ function createTeleportHotspot(title, placement, artwork) {
   return group;
 }
 
-async function loadAudioGuide(exhibit) {
+async function loadAudioGuide(exhibit, generation) {
   const guides = exhibit.painting.media?.audioOverviews || exhibit.painting.media?.audioOverview || [];
   const list = Array.isArray(guides) ? guides : [guides];
-  const mediaLang = lang;
-  const guide = list.find((item) => item?.lang === mediaLang)
-    || list.find((item) => item?.lang === "fr")
-    || list.find((item) => item?.lang === "en")
-    || list[0];
+  const guide = list.find((item) => item?.lang === lang);
   if (!guide?.src) return;
 
   const buffer = await loadGalleryAudio(guide.src);
+  if (exhibit.audioLoadGeneration !== generation) return;
   // Use a clean non-HRTF signal and calculate distance volume ourselves.
   // This avoids the artefacts some Quest devices produce with long HRTF narration.
   const audio = new THREE.Audio(audioListener);
@@ -5431,6 +5578,39 @@ async function loadAudioGuide(exhibit) {
   scene.add(audio);
   exhibit.audio = audio;
   exhibit.audioReady = true;
+}
+
+function ensureAudioGuide(exhibit) {
+  if (!exhibit || exhibit.audioReady) return Promise.resolve(Boolean(exhibit?.audioReady));
+  if (exhibit.audioLoadPromise) return exhibit.audioLoadPromise;
+  const generation = (exhibit.audioLoadGeneration || 0) + 1;
+  exhibit.audioLoadGeneration = generation;
+  const task = loadAudioGuide(exhibit, generation)
+    .then(() => exhibit.audioLoadGeneration === generation && exhibit.audioReady)
+    .catch((error) => {
+      console.warn(`Audio guide unavailable for ${exhibit.painting.slug}.`, error);
+      return false;
+    })
+    .finally(() => {
+      if (exhibit.audioLoadPromise === task) exhibit.audioLoadPromise = null;
+    });
+  exhibit.audioLoadPromise = task;
+  return task;
+}
+
+function releaseAudioGuide(exhibit) {
+  if (!exhibit) return;
+  exhibit.audioLoadGeneration = (exhibit.audioLoadGeneration || 0) + 1;
+  exhibit.audioLoadPromise = null;
+  if (exhibit.audio?.isPlaying) exhibit.audio.stop();
+  if (exhibit.audio) {
+    scene.remove(exhibit.audio);
+    exhibit.audio.disconnect?.();
+    exhibit.audio.setBuffer(null);
+  }
+  exhibit.audio = null;
+  exhibit.audioReady = false;
+  exhibit.started = false;
 }
 
 function readGalleryMediaConfigs() {
@@ -5837,6 +6017,12 @@ function activateInteractionHit(hit) {
   visitor.position.z += hotspot.userData.destination.z - head.z;
   visitor.position.y = hotspot.userData.visitorHeightOffset || 0;
   selectNearestAudioGuide(true);
+  const requestedExhibit = activeExhibit;
+  if (requestedExhibit) {
+    void ensureAudioGuide(requestedExhibit).then((ready) => {
+      if (ready && activeExhibit === requestedExhibit) startAudioGuide(requestedExhibit);
+    });
+  }
 }
 
 async function exitGallery(url) {
@@ -6147,8 +6333,7 @@ function selectNearestAudioGuide(force = false) {
     return;
   }
 
-  if (activeExhibit?.audio?.isPlaying) activeExhibit.audio.stop();
-  if (activeExhibit) activeExhibit.started = false;
+  if (activeExhibit && activeExhibit !== next) releaseAudioGuide(activeExhibit);
   activeExhibit = next;
 
   if (activeExhibit) {
@@ -6165,28 +6350,28 @@ function startAudioGuide(exhibit) {
   updateAudioButtons();
 }
 
-function stopAllAudioGuides() {
-  exhibits.forEach((exhibit) => {
-    if (exhibit.audio?.isPlaying) exhibit.audio.stop();
-    exhibit.started = false;
-  });
+function stopAllAudioGuides(resumeAmbience = true) {
+  exhibits.forEach(releaseAudioGuide);
   activeExhibit = null;
   updateAudioButtons();
-  updateRoomAmbience(true);
+  if (resumeAmbience) updateRoomAmbience(true);
 }
 
 async function toggleAudioGuide() {
   await audioListener.context.resume();
   if (!activeExhibit) selectNearestAudioGuide(true);
-  if (!activeExhibit?.audioReady) return;
+  const requestedExhibit = activeExhibit;
+  if (!requestedExhibit) return;
+  if (!requestedExhibit.audioReady && !await ensureAudioGuide(requestedExhibit)) return;
+  if (activeExhibit !== requestedExhibit) return;
 
-  if (activeExhibit.audio.isPlaying) {
-    activeExhibit.audio.pause();
+  if (requestedExhibit.audio.isPlaying) {
+    requestedExhibit.audio.pause();
     updateRoomAmbience(true);
   } else {
     stopRoomAmbience();
-    activeExhibit.audio.play();
-    activeExhibit.started = true;
+    requestedExhibit.audio.play();
+    requestedExhibit.started = true;
   }
   updateAudioButtons();
 }
@@ -6194,10 +6379,13 @@ async function toggleAudioGuide() {
 async function restartAudioGuide() {
   await audioListener.context.resume();
   if (!activeExhibit) selectNearestAudioGuide(true);
-  if (!activeExhibit?.audioReady) return;
-  if (activeExhibit.audio.isPlaying) activeExhibit.audio.stop();
-  activeExhibit.started = false;
-  startAudioGuide(activeExhibit);
+  const requestedExhibit = activeExhibit;
+  if (!requestedExhibit) return;
+  if (!requestedExhibit.audioReady && !await ensureAudioGuide(requestedExhibit)) return;
+  if (activeExhibit !== requestedExhibit) return;
+  if (requestedExhibit.audio.isPlaying) requestedExhibit.audio.stop();
+  requestedExhibit.started = false;
+  startAudioGuide(requestedExhibit);
 }
 
 function toggleAudioMute() {
@@ -6386,12 +6574,13 @@ function resize() {
 }
 
 function render(now = performance.now()) {
-  if (isHandheldMobile && !currentSession && now - lastMobileRenderAt < 33) return;
+  if (isLowPowerDevice && !currentSession && now - lastMobileRenderAt < 1000 / 30) return;
   lastMobileRenderAt = now;
   maybeLoadCinemaAudience();
   maybeLoadConnectedMuseumRoom();
   maybeLoadFiveMuseumsRoom();
   maybeLoadModelMuseumRoom();
+  maybeLoadReimaginedPainter();
   maybeLoadLivingBookAssets();
   updateHandVisuals();
   updateGazeNavigation(now);
@@ -6408,4 +6597,29 @@ function render(now = performance.now()) {
   }
   updateControllerAudioCommands();
   renderer.render(scene, camera);
+}
+
+function disposeGalleryResources() {
+  clearTimeout(webglRestoreTimer);
+  const disposedTextures = new Set();
+  const disposeMaterial = (material) => {
+    if (!material) return;
+    for (const value of Object.values(material)) {
+      if (!value?.isTexture || disposedTextures.has(value)) continue;
+      disposedTextures.add(value);
+      value.dispose();
+    }
+    material.dispose?.();
+  };
+  scene.traverse((node) => {
+    node.geometry?.dispose?.();
+    if (Array.isArray(node.material)) node.material.forEach(disposeMaterial);
+    else disposeMaterial(node.material);
+  });
+  [narrationPlayer, musicPlayer, roomAmbiencePlayer].forEach((player) => {
+    player.removeAttribute("src");
+    player.load();
+  });
+  dracoLoader.dispose?.();
+  renderer.dispose();
 }

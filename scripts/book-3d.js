@@ -1,3 +1,5 @@
+import { detectRuntimeProfile } from "./runtime-profile.js?v=1";
+
 const MANIFEST_URLS = [
   "content/paintings/mona-lisa.json?v=2",
   "content/paintings/lady-with-an-ermine.json?v=1",
@@ -276,17 +278,34 @@ const experienceKicker = document.getElementById("experience-kicker");
 const experienceBody = document.getElementById("experience-body");
 const closeExperienceButton = document.getElementById("experience-close");
 const zoomButton = document.getElementById("book-zoom");
+const runtimeProfile = detectRuntimeProfile(globalThis);
+const PAGE_WIDTH = 1600;
+const PAGE_HEIGHT = 2200;
+const pageTextureScale = runtimeProfile.bookTextureScale;
+document.body.dataset.runtimeProfile = runtimeProfile.name;
 
 let currentLeaf = 0;
 let sheets = [];
 let pageDefinitions = [];
+const pageElements = new Map();
+const pageTextureUrls = new Map();
+const pageTextureLoads = new Map();
+let desiredPageIndexes = new Set();
 let dragStartX = null;
 const activePointers = new Map();
 let pinchStartDistance = null;
 let pinchHandled = false;
 let suppressPageClick = false;
 
-init();
+init().catch((error) => {
+  console.error(error);
+  progress.textContent = lang === "ar" ? "الكتاب غير متاح" : lang === "fr" ? "Livre indisponible" : "Book unavailable";
+  document.querySelector(".book-hint").textContent = lang === "ar"
+    ? "تعذر تحميل الكتاب التفاعلي. يمكنك العودة إلى المجموعة."
+    : lang === "fr"
+      ? "Le livre interactif n’a pas pu être chargé. Vous pouvez revenir à la collection."
+      : "The interactive book could not be loaded. You can return to the collection.";
+});
 
 async function init() {
   applyLanguage();
@@ -483,27 +502,27 @@ function buildPageDefinitions(manifests, museums = []) {
 }
 
 async function buildBook(pages) {
-  const textures = await Promise.all(pages.map(createPageTexture));
   for (let index = 0; index < pages.length; index += 2) {
     const sheet = document.createElement("article");
     sheet.className = "sheet";
     sheet.style.zIndex = String(pages.length - index);
 
-    const front = createPageSurface(pages[index], textures[index], "front");
-    const back = createPageSurface(pages[index + 1], textures[index + 1], "back");
+    const front = createPageSurface(pages[index], "front", index);
+    const back = createPageSurface(pages[index + 1], "back", index + 1);
     sheet.append(front, back);
     sheetsRoot.appendChild(sheet);
     sheets.push(sheet);
   }
 }
 
-function createPageSurface(definition, texture, side) {
+function createPageSurface(definition, side, pageIndex) {
   const page = document.createElement("section");
   page.className = `page page-${side}`;
   page.dataset.kind = definition.kind || "";
   if (definition.manifest?.slug) page.dataset.painting = definition.manifest.slug;
   page.setAttribute("aria-label", definition.title || definition.eyebrow || "Book page");
-  page.style.backgroundImage = `url("${texture}")`;
+  page.dataset.pageIndex = String(pageIndex);
+  pageElements.set(pageIndex, page);
   (definition.hotspots || []).forEach((hotspot) => {
     const button = document.createElement("button");
     button.type = "button";
@@ -532,18 +551,21 @@ function createPageSurface(definition, texture, side) {
   return page;
 }
 
-async function createPageTexture(definition) {
+async function createPageTexture(definition, signal) {
   const canvas = document.createElement("canvas");
-  canvas.width = 1600;
-  canvas.height = 2200;
+  canvas.width = Math.round(PAGE_WIDTH * pageTextureScale);
+  canvas.height = Math.round(PAGE_HEIGHT * pageTextureScale);
   const context = canvas.getContext("2d");
+  context.scale(pageTextureScale, pageTextureScale);
   drawPaper(context, canvas, definition.kind);
 
   if (definition.kind === "analysis" && definition.galleryImages?.length) {
-    const galleryImages = await Promise.all(definition.galleryImages.slice(0, 3).map(loadImage));
+    const galleryImages = await Promise.all(definition.galleryImages.slice(0, 3).map((src) => loadImage(src, signal)));
+    if (signal.aborted) throw new DOMException("Page texture cancelled", "AbortError");
     drawImageGallery(context, galleryImages, 130, 350, 1340, 620);
   } else if (definition.image) {
-    const image = await loadImage(definition.image);
+    const image = await loadImage(definition.image, signal);
+    if (signal.aborted) throw new DOMException("Page texture cancelled", "AbortError");
     if (definition.kind === "artwork") {
       drawCoverImage(context, image, 120, 420, 1360, 760);
     } else {
@@ -552,7 +574,19 @@ async function createPageTexture(definition) {
   }
 
   drawPageCopy(context, canvas, definition);
-  return canvas.toDataURL("image/jpeg", 0.94);
+  return new Promise((resolve, reject) => {
+    if (signal.aborted) {
+      reject(new DOMException("Page texture cancelled", "AbortError"));
+      return;
+    }
+    canvas.toBlob((blob) => {
+      if (!blob || signal.aborted) {
+        reject(new DOMException("Page texture cancelled", "AbortError"));
+        return;
+      }
+      resolve(URL.createObjectURL(blob));
+    }, "image/jpeg", 0.9);
+  });
 }
 
 function drawImageGallery(context, images, x, y, width, height) {
@@ -564,7 +598,7 @@ function drawImageGallery(context, images, x, y, width, height) {
 }
 
 function drawPaper(context, canvas, kind) {
-  const gradient = context.createLinearGradient(0, 0, canvas.width, canvas.height);
+  const gradient = context.createLinearGradient(0, 0, PAGE_WIDTH, PAGE_HEIGHT);
   if (kind === "cover" || kind === "back") {
     gradient.addColorStop(0, "#762f35");
     gradient.addColorStop(1, "#2a1617");
@@ -573,10 +607,10 @@ function drawPaper(context, canvas, kind) {
     gradient.addColorStop(1, "#e4d4bb");
   }
   context.fillStyle = gradient;
-  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.fillRect(0, 0, PAGE_WIDTH, PAGE_HEIGHT);
   context.strokeStyle = kind === "cover" || kind === "back" ? "#d4ac66" : "#9b7448";
   context.lineWidth = 10;
-  context.strokeRect(55, 55, canvas.width - 110, canvas.height - 110);
+  context.strokeRect(55, 55, PAGE_WIDTH - 110, PAGE_HEIGHT - 110);
 }
 
 function drawPageCopy(context, canvas, definition) {
@@ -625,7 +659,7 @@ function drawPageCopy(context, canvas, definition) {
 
   context.fillStyle = dark ? "#d6bd92" : "#765f4a";
   context.font = "30px Arial";
-  context.fillText("ARTDACI · MASTERPIECES ALIVE", 120, canvas.height - 100);
+  context.fillText("ARTDACI · MASTERPIECES ALIVE", 120, PAGE_HEIGHT - 100);
 }
 
 function drawTextInBox(context, message, x, y, width, height, options = {}) {
@@ -709,11 +743,27 @@ function drawWrappedText(context, message, x, y, maxWidth, lineHeight, maxLines)
   if (lineNumber < maxLines) context.fillText(line, x, y + lineNumber * lineHeight);
 }
 
-function loadImage(src) {
+function loadImage(src, signal) {
   return new Promise((resolve, reject) => {
     const image = new Image();
-    image.onload = () => resolve(image);
+    const cleanup = () => signal?.removeEventListener("abort", abort);
+    const abort = () => {
+      image.onload = null;
+      image.onerror = null;
+      image.src = "";
+      reject(new DOMException("Book image load cancelled", "AbortError"));
+    };
+    if (signal?.aborted) {
+      abort();
+      return;
+    }
+    signal?.addEventListener("abort", abort, { once: true });
+    image.onload = () => {
+      cleanup();
+      resolve(image);
+    };
     image.onerror = () => {
+      cleanup();
       console.warn(`Book image unavailable: ${src}`);
       const fallback = document.createElement("canvas");
       fallback.width = 1200;
@@ -898,6 +948,59 @@ function previousPage() {
   updateBook();
 }
 
+function getDesiredPageIndexes() {
+  const visible = [currentLeaf * 2 - 1, currentLeaf * 2]
+    .filter((index) => index >= 0 && index < pageDefinitions.length);
+  if (!visible.length) return new Set();
+  const first = Math.min(...visible);
+  const last = Math.max(...visible);
+  return new Set([first - 1, ...visible, last + 1].filter((index) => index >= 0 && index < pageDefinitions.length));
+}
+
+function updatePageTextureWindow() {
+  desiredPageIndexes = getDesiredPageIndexes();
+  for (const [index, load] of pageTextureLoads) {
+    if (!desiredPageIndexes.has(index)) load.controller.abort();
+  }
+  for (const [index, url] of pageTextureUrls) {
+    if (desiredPageIndexes.has(index)) continue;
+    pageElements.get(index)?.style.removeProperty("background-image");
+    URL.revokeObjectURL(url);
+    pageTextureUrls.delete(index);
+  }
+  desiredPageIndexes.forEach(loadPageTexture);
+  updateTextureDiagnostics();
+}
+
+function loadPageTexture(index) {
+  if (pageTextureUrls.has(index) || pageTextureLoads.has(index) || !pageDefinitions[index]) return;
+  const controller = new AbortController();
+  const load = { controller, promise: null };
+  load.promise = createPageTexture(pageDefinitions[index], controller.signal)
+    .then((url) => {
+      if (!desiredPageIndexes.has(index) || controller.signal.aborted) {
+        URL.revokeObjectURL(url);
+        return;
+      }
+      pageTextureUrls.set(index, url);
+      const page = pageElements.get(index);
+      if (page) page.style.backgroundImage = `url("${url}")`;
+    })
+    .catch((error) => {
+      if (error?.name !== "AbortError") console.warn(`Book page ${index + 1} could not be rendered.`, error);
+    })
+    .finally(() => {
+      if (pageTextureLoads.get(index) === load) pageTextureLoads.delete(index);
+      updateTextureDiagnostics();
+    });
+  pageTextureLoads.set(index, load);
+}
+
+function updateTextureDiagnostics() {
+  book.dataset.loadedPageTextures = String(pageTextureUrls.size);
+  book.dataset.pendingPageTextures = String(pageTextureLoads.size);
+}
+
 function updateBook() {
   sheets.forEach((sheet, index) => {
     const turned = index < currentLeaf;
@@ -929,6 +1032,7 @@ function updateBook() {
   progress.textContent = currentLeaf === 0
     ? (lang === "ar" ? "الغلاف" : lang === "fr" ? "Couverture" : "Cover")
     : `${lang === "ar" ? "الصفحات" : "Pages"} ${visiblePage}–${Math.min(visiblePage + 1, pageDefinitions.length)}`;
+  updatePageTextureWindow();
 }
 
 function openExperience(definition, hotspot) {
@@ -1097,3 +1201,32 @@ function closeExperience() {
   experienceBody.innerHTML = "";
   dialog.close();
 }
+
+function releaseBookTextures() {
+  pageTextureLoads.forEach((load) => load.controller.abort());
+  pageTextureLoads.clear();
+  pageTextureUrls.forEach((url, index) => {
+    pageElements.get(index)?.style.removeProperty("background-image");
+    URL.revokeObjectURL(url);
+  });
+  pageTextureUrls.clear();
+  updateTextureDiagnostics();
+}
+
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) return;
+  experienceBody.querySelectorAll("audio, video").forEach((media) => media.pause());
+});
+
+addEventListener("pagehide", () => {
+  experienceBody.querySelectorAll("audio, video").forEach((media) => {
+    media.pause();
+    media.removeAttribute("src");
+    media.load();
+  });
+  releaseBookTextures();
+});
+
+addEventListener("pageshow", () => {
+  if (pageDefinitions.length) updatePageTextureWindow();
+});
