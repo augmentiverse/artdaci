@@ -87,8 +87,8 @@ test("static catalogue fallbacks expose the same four featured artworks in all l
     });
 
     assert.doesNotMatch(fallback, /(?:Spread|Double page) 00[234]/);
-    assert.equal((source.match(/scripts\/catalogue\.js\?v=14/g) || []).length, 1, expected.file);
-    assert.doesNotMatch(source, /scripts\/catalogue\.js\?v=13/);
+    assert.equal((source.match(/scripts\/catalogue\.js\?v=15/g) || []).length, 1, expected.file);
+    assert.doesNotMatch(source, /scripts\/catalogue\.js\?v=14/);
   }
 });
 
