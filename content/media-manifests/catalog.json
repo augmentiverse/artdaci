@@ -9,7 +9,7 @@
   ],
   "artworks": [
     { "id": "ld01", "artistId": "ld", "status": "active", "slug": "mona-lisa", "title": { "fr": "La Joconde", "en": "Mona Lisa" }, "manifest": { "status": "source-ready", "path": "artworks/ld01/manifest.json" } },
-    { "id": "ld02", "artistId": "ld", "status": "active", "slug": "lady-with-an-ermine", "title": { "fr": "La Dame à l’hermine", "en": "Lady with an Ermine" }, "manifest": { "status": "planned" } },
+    { "id": "ld02", "artistId": "ld", "status": "active", "slug": "lady-with-an-ermine", "title": { "fr": "La Dame à l’hermine", "en": "Lady with an Ermine" }, "manifest": { "status": "source-ready", "path": "artworks/ld02/manifest.json" } },
     { "id": "ld03", "artistId": "ld", "status": "active", "slug": "the-last-supper", "title": { "fr": "La Cène", "en": "The Last Supper" }, "manifest": { "status": "planned" } },
     { "id": "ld04", "artistId": "ld", "status": "active", "slug": "annunciation", "title": { "fr": "L’Annonciation", "en": "Annunciation" }, "manifest": { "status": "planned" } },
     { "id": "ld05", "artistId": "ld", "status": "active", "slug": "ginevra-de-benci", "title": { "fr": "Ginevra de’ Benci", "en": "Ginevra de’ Benci" }, "manifest": { "status": "planned" } },
@@ -21,13 +21,13 @@
     { "id": "ve02", "artistId": "ve", "status": "active", "slug": "view-of-delft", "title": { "fr": "Vue de Delft", "en": "View of Delft" }, "manifest": { "status": "planned" } },
     { "id": "ve03", "artistId": "ve", "status": "active", "slug": "the-milkmaid", "title": { "fr": "La Laitière", "en": "The Milkmaid" }, "manifest": { "status": "planned" } },
     { "id": "ve04", "artistId": "ve", "status": "active", "slug": "the-art-of-painting", "title": { "fr": "L’Art de la peinture", "en": "The Art of Painting" }, "manifest": { "status": "planned" } },
-    { "id": "ve05", "artistId": "ve", "status": "active", "slug": "the-astronomer", "title": { "fr": "L’Astronome", "en": "The Astronomer" }, "manifest": { "status": "planned" } },
+    { "id": "ve05", "artistId": "ve", "status": "active", "slug": "the-astronomer", "title": { "fr": "L’Astronome", "en": "The Astronomer" }, "manifest": { "status": "source-ready", "path": "artworks/ve05/manifest.json" } },
     { "id": "ve06", "artistId": "ve", "status": "active", "slug": "woman-holding-a-balance", "title": { "fr": "La Femme à la balance", "en": "Woman Holding a Balance" }, "manifest": { "status": "planned" } },
     { "id": "ve07", "artistId": "ve", "status": "reserved" },
     { "id": "ve08", "artistId": "ve", "status": "reserved" },
 
     { "id": "vg01", "artistId": "vg", "status": "active", "slug": "self-portrait", "title": { "fr": "Autoportrait", "en": "Self-Portrait" }, "manifest": { "status": "source-ready", "path": "artworks/vg01/manifest.json" } },
-    { "id": "vg02", "artistId": "vg", "status": "active", "slug": "bedroom-in-arles", "title": { "fr": "La Chambre à Arles", "en": "The Bedroom in Arles" }, "manifest": { "status": "planned" } },
+    { "id": "vg02", "artistId": "vg", "status": "active", "slug": "bedroom-in-arles", "title": { "fr": "La Chambre à Arles", "en": "The Bedroom in Arles" }, "manifest": { "status": "source-ready", "path": "artworks/vg02/manifest.json" } },
     { "id": "vg03", "artistId": "vg", "status": "active", "slug": "the-starry-night", "title": { "fr": "La Nuit étoilée", "en": "The Starry Night" }, "manifest": { "status": "planned" } },
     { "id": "vg04", "artistId": "vg", "status": "active", "slug": "sunflowers", "title": { "fr": "Les Tournesols", "en": "Sunflowers" }, "manifest": { "status": "planned" } },
     { "id": "vg05", "artistId": "vg", "status": "active", "slug": "cafe-terrace-at-night", "title": { "fr": "Terrasse du café le soir", "en": "Café Terrace at Night" }, "manifest": { "status": "planned" } },
@@ -36,7 +36,7 @@
     { "id": "vg08", "artistId": "vg", "status": "reserved" },
 
     { "id": "mo01", "artistId": "mo", "status": "active", "slug": "impression-sunrise", "title": { "fr": "Impression, soleil levant", "en": "Impression, Sunrise" }, "manifest": { "status": "source-ready", "path": "artworks/mo01/manifest.json" } },
-    { "id": "mo02", "artistId": "mo", "status": "active", "slug": "the-bridge-at-argenteuil", "title": { "fr": "Le Pont d’Argenteuil", "en": "The Bridge at Argenteuil" }, "manifest": { "status": "planned" } },
+    { "id": "mo02", "artistId": "mo", "status": "active", "slug": "the-bridge-at-argenteuil", "title": { "fr": "Le Pont d’Argenteuil", "en": "The Bridge at Argenteuil" }, "manifest": { "status": "source-ready", "path": "artworks/mo02/manifest.json" } },
     { "id": "mo03", "artistId": "mo", "status": "active", "slug": "water-lilies", "title": { "fr": "Les Nymphéas", "en": "Water Lilies" }, "manifest": { "status": "planned" } },
     { "id": "mo04", "artistId": "mo", "status": "active", "slug": "the-japanese-footbridge", "title": { "fr": "Le Bassin aux nymphéas, harmonie verte", "en": "The Water-Lily Pond, Green Harmony" }, "manifest": { "status": "planned" } },
     { "id": "mo05", "artistId": "mo", "status": "active", "slug": "poppies", "title": { "fr": "Les Coquelicots", "en": "Poppies" }, "manifest": { "status": "planned" } },

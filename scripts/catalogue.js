@@ -1,4 +1,5 @@
 import { formatArtworkNumber } from "./artwork-numbering.js?v=1";
+import { resolveArtworkAudioOverview } from "./artwork-media-manifest.js?v=4";
 import { IMMERSIVE_ARTWORKS, classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./immersive-routing.js?v=1";
 
 export { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute };
@@ -36,6 +37,16 @@ const PRINT_PAGES = {
     "pont-d-argenteuil": "print-artwork.html?painting=pont-d-argenteuil&lang=ar"
   }
 };
+const AUDIO_ARTWORK_IDS = Object.freeze({
+  "mona-lisa": "ld01",
+  "lady-with-an-ermine": "ld02",
+  "vermeer-astronomer": "ve05",
+  "vermeer-girl-with-a-pearl-earring": "ve01",
+  "van-gogh": "vg01",
+  "van-gogh-bedroom": "vg02",
+  "pont-d-argenteuil": "mo02",
+  "monet-impression-sunrise": "mo01",
+});
 
 const UI = {
   en: {
@@ -254,7 +265,14 @@ async function initCatalogue(root) {
       .flat()
       .map((manifest) => localizeCatalogueEntry(manifest, lang))
       .sort((a, b) => a.bookOrder - b.bookOrder);
-    renderCatalogue(root, localizedManifests, museums, lang, text);
+    const manifestsWithAudio = await Promise.all(localizedManifests.map(async (manifest) => ({
+      ...manifest,
+      audioOverviewUrl: await resolveArtworkAudioOverview({
+        artworkId: AUDIO_ARTWORK_IDS[manifest.slug],
+        language: lang,
+      }),
+    })));
+    renderCatalogue(root, manifestsWithAudio, museums, lang, text);
   } catch (error) {
     root.innerHTML = `<p class="catalogue-error">${escapeHtml(error.message)}</p>`;
   }
@@ -386,7 +404,7 @@ function renderCard(manifest, lang, text) {
   const image = manifest.media?.image || manifest.print?.imageTargetSource;
   const movement = (manifest.movement || []).join(", ");
   const printUrl = PRINT_PAGES[lang]?.[slug] || PRINT_PAGES.en[slug] || `print-artwork.html?painting=${encodeURIComponent(slug)}&lang=${lang}`;
-  const audioOverview = getLocalizedAudioOverview(manifest, lang);
+  const audioOverviewUrl = manifest.audioOverviewUrl;
   const location = [manifest.currentLocation?.museum, manifest.currentLocation?.city].filter(Boolean).join(", ");
   const summary = manifest.texts?.artisticAnalysis || manifest.texts?.historicalContext || "";
   const artist = manifest.artist?.name || "";
@@ -416,7 +434,7 @@ function renderCard(manifest, lang, text) {
         <div class="card-actions">
           <a class="button primary" href="${printUrl}">${text.print}</a>
           ${immersiveActions}
-          ${audioOverview ? `<a class="button" href="${escapeHtml(audioOverview.src)}">${text.audioOverview}</a>` : ""}
+          ${audioOverviewUrl ? `<a class="button" href="${escapeHtml(audioOverviewUrl)}">${text.audioOverview}</a>` : ""}
         </div>
       </div>
     </article>
@@ -439,13 +457,6 @@ export function getArtworkImmersiveActions(slug, lang, text = UI[lang] || UI.en)
     artwork.ar && { experience: "ar", href: `ar.html?painting=${slug}&amp;lang=${lang}`, label: text.ar },
     artwork.space && { experience: "space", href: `space.html?painting=${slug}&amp;lang=${lang}`, label: text.space }
   ].filter(Boolean);
-}
-
-function getLocalizedAudioOverview(manifest, lang) {
-  const overviews = manifest.media?.audioOverviews || manifest.media?.audioOverview || [];
-  const list = Array.isArray(overviews) ? overviews : [overviews];
-  const mediaLang = lang;
-  return list.find((item) => item.lang === mediaLang) || list.find((item) => item.lang === "fr") || list.find((item) => item.lang === "en") || list[0] || null;
 }
 
 function extractYear(value = "") {

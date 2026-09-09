@@ -1,15 +1,19 @@
 import {
   normalizeLanguage,
   resolveMediaAsset,
+  resolveManifestMedia,
   selectMediaAsset,
 } from "./artwork-media-manifest-core.mjs";
 
+const ARTWORK_MANIFEST_BASE_URL = "https://media.artdaci.com/artworks/";
 const manifestRequests = new Map();
 const audioLinkStates = new WeakMap();
 
-document.querySelectorAll("[data-artwork-media-manifest]").forEach((root) => {
-  loadArtworkMedia(root);
-});
+if (typeof document !== "undefined") {
+  document.querySelectorAll("[data-artwork-media-manifest]").forEach((root) => {
+    loadArtworkMedia(root);
+  });
+}
 
 export async function loadArtworkMedia(root) {
   const manifestUrl = root.dataset.artworkMediaManifest;
@@ -42,6 +46,33 @@ export function fetchArtworkManifest(manifestUrl) {
   }
 
   return manifestRequests.get(manifestUrl);
+}
+
+export async function resolveArtworkAudioOverview({
+  artworkId,
+  language,
+  fetchManifest = fetchArtworkManifest,
+} = {}) {
+  const normalizedLanguage = normalizeLanguage(language).split("-")[0];
+  if (!/^[a-z]{2}\d{2}$/.test(artworkId || "") || !normalizedLanguage) return null;
+
+  const manifestUrl = new URL(`${artworkId}/manifest.json`, ARTWORK_MANIFEST_BASE_URL).href;
+
+  try {
+    const manifest = await fetchManifest(manifestUrl);
+    if (manifest?.id !== artworkId) return null;
+
+    const mediaKey = `audio.overview.${normalizedLanguage}`;
+    const asset = selectMediaAsset(manifest, mediaKey, normalizedLanguage);
+    if (
+      asset?.language !== normalizedLanguage ||
+      asset?.mimeType !== "audio/mpeg"
+    ) return null;
+
+    return resolveManifestMedia(manifest, mediaKey, normalizedLanguage);
+  } catch {
+    return null;
+  }
 }
 
 export function applyArtworkMedia(root, manifest) {

@@ -99,6 +99,16 @@
         }
       },
       "overview": {
+        "en": {
+          "scope": "artwork",
+          "path": "audio/en/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": false,
+          "migrationStatus": "planned",
+          "bytes": 23462901,
+          "sha256": "abe69f886f00e1a64b679982a9285190724961c23c9bf05bd1a49cb7b464a8c8",
+          "language": "en"
+        },
         "fr": {
           "scope": "artwork",
           "path": "audio/fr/overview.mp3",
@@ -154,5 +164,5 @@
       }
     }
   },
-  "updatedAt": "2026-08-29"
+  "updatedAt": "2026-09-08"
 }

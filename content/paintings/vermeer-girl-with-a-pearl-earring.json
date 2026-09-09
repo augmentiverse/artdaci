@@ -101,7 +101,7 @@
     "subtitles": [], "signLanguage": [], "imageCredits": [],
     "audioOverviews": [
       { "id": "vermeer-pearl-overview-en", "lang": "en", "title": "Girl with a Pearl Earring audio overview", "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/media/vermeer-girl-with-a-pearl-earring-en.mp3", "type": "audio/mpeg", "description": "English audio overview." },
-      { "id": "vermeer-pearl-overview-fr", "lang": "fr", "title": "Aperçu audio de La Jeune Fille à la perle", "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/media/vermeer-girl-with-a-pearl-earring-1m54-fr.m4a", "type": "audio/mp4", "description": "Présentation audio en français." }
+      { "id": "vermeer-pearl-overview-fr", "lang": "fr", "title": "Aperçu audio de La Jeune Fille à la perle", "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/media/vermeer-girl-with-a-pearl-earring-fr.mp3", "type": "audio/mpeg", "description": "Présentation audio en français." }
     ]
   },
   "education": {

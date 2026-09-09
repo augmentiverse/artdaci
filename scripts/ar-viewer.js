@@ -2,7 +2,7 @@ import * as THREE from "../vendor/three.module.js";
 import { GLTFLoader } from "../vendor/GLTFLoader.module.js";
 import { DRACOLoader } from "../vendor/DRACOLoader.module.js";
 import { MindARThree } from "../vendor/mindar-image-three.prod.js";
-import { fetchArtworkManifest } from "./artwork-media-manifest.js";
+import { fetchArtworkManifest } from "./artwork-media-manifest.js?v=4";
 import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
 import { formatArtworkNumber } from "./artwork-numbering.js?v=1";
 import { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./immersive-routing.js?v=1";
@@ -866,7 +866,7 @@ function configureFromManifest(manifest, mediaContext) {
   CONFIG.remoteAudio = resolveConfiguredMedia(mediaContext, getConfiguredAudioKey(mediaContext?.config.audioKeys));
   CONFIG.audio = CONFIG.remoteAudio || CONFIG.localAudio;
   CONFIG.musicIntro = musicIntro?.src ? withAssetVersion(musicIntro.src) : "";
-  CONFIG.audioSequence = Boolean(manifest.ar?.audioSequence && CONFIG.musicIntro && CONFIG.audio);
+  CONFIG.audioSequence = false;
   CONFIG.initialScale = manifest.ar?.viewer?.initialScale ?? CONFIG.initialScale;
   CONFIG.initialRise = manifest.ar?.viewer?.initialRise ?? CONFIG.initialRise;
   CONFIG.modelRotation = manifest.ar?.viewer?.modelRotation || CONFIG.modelRotation;
@@ -1390,7 +1390,6 @@ async function loadModel(group) {
   state.modelLoading = false;
   updateModelVariantControls();
   showHotspot("intro");
-  if (!CONFIG.audioSequence) playNativeAudioGuide(true);
   return;
 }
 
@@ -1569,7 +1568,7 @@ function ensureNativeAudioGuide() {
   if (state.audio) return state.audio;
 
   const audio = new Audio(CONFIG.audio);
-  audio.preload = "auto";
+  audio.preload = "none";
   audio.playsInline = true;
   let playbackRequested = false;
   const nativePlay = audio.play.bind(audio);

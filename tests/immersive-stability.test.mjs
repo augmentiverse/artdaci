@@ -37,7 +37,8 @@ test("Smart TV and limited WebGL capabilities independently select the constrain
 
 test("gallery audio guides are lazy, exact-language and released when inactive", () => {
   assert.doesNotMatch(gallerySource, /exhibitsBySlug\.set\([^\n]+\);\s*loadAudioGuide\(/);
-  assert.match(gallerySource, /const guide = list\.find\(\(item\) => item\?\.lang === lang\);/);
+  assert.match(gallerySource, /resolveArtworkAudioOverview\(\{ artworkId: audioWork\.artworkId, language: lang \}\)/);
+  assert.doesNotMatch(gallerySource, /painting\.media\?\.audioOverviews|painting\.media\?\.audioOverview/);
   assert.match(gallerySource, /await ensureAudioGuide\(requestedExhibit\)/);
   assert.match(gallerySource, /function releaseAudioGuide\(exhibit\)/);
   assert.match(gallerySource, /narrationPlayer\.preload = "none"/);
@@ -95,6 +96,6 @@ test("Living Book generates only the eight curated artworks in canonical book or
 
 test("Living Book audio and video remain interaction-driven and are released on exit", () => {
   assert.match(bookSource, /button\.addEventListener\("click", \(event\) => \{[\s\S]*?openExperience\(definition, hotspot\)/);
-  assert.match(bookSource, /function closeExperience\(\) \{\s*experienceBody\.innerHTML = ""/);
+  assert.match(bookSource, /function closeExperience\(\) \{[\s\S]*?media\.pause\(\);[\s\S]*?media\.removeAttribute\("src"\);[\s\S]*?experienceBody\.innerHTML = ""/);
   assert.match(bookSource, /addEventListener\("pagehide"/);
 });

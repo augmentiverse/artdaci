@@ -1,7 +1,10 @@
 import * as THREE from "../vendor/three.module.js";
 import { GLTFLoader } from "../vendor/GLTFLoader.module.js";
 import { DRACOLoader } from "../vendor/DRACOLoader.module.js";
-import { fetchArtworkManifest } from "./artwork-media-manifest.js";
+import {
+  fetchArtworkManifest,
+  resolveArtworkAudioOverview,
+} from "./artwork-media-manifest.js?v=4";
 import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
 import { detectRuntimeProfile } from "./runtime-profile.js?v=1";
 
@@ -15,18 +18,21 @@ const PRINTED_MANIFESTS = [
   "content/paintings/mona-lisa.json?v=4",
   "content/paintings/lady-with-an-ermine.json?v=1",
   "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=3",
-  "content/paintings/view-of-delft.json?v=1",
+  "content/paintings/additional-16.json?v=1",
   "content/paintings/van-gogh.json?v=3",
   "content/paintings/van-gogh-bedroom.json?v=2",
   "content/paintings/monet-impression-sunrise.json?v=3",
   "content/paintings/pont-d-argenteuil.json?v=1"
 ];
 const CONNECTED_AUDIO_WORKS = {
-  "da-vinci:0": "mona-lisa",
-  "van-gogh:0": "van-gogh",
-  "van-gogh:3": "van-gogh-bedroom",
-  "vermeer:0": "vermeer-girl-with-a-pearl-earring",
-  "monet:0": "monet-impression-sunrise"
+  "da-vinci:0": { artworkId: "ld01", slug: "mona-lisa" },
+  "da-vinci:2": { artworkId: "ld02", slug: "lady-with-an-ermine" },
+  "van-gogh:0": { artworkId: "vg01", slug: "van-gogh" },
+  "van-gogh:3": { artworkId: "vg02", slug: "van-gogh-bedroom" },
+  "vermeer:0": { artworkId: "ve01", slug: "vermeer-girl-with-a-pearl-earring" },
+  "vermeer:4": { artworkId: "ve05", slug: "vermeer-astronomer" },
+  "monet:0": { artworkId: "mo01", slug: "monet-impression-sunrise" },
+  "monet:5": { artworkId: "mo02", slug: "pont-d-argenteuil" }
 };
 const SIX_MASTERPIECES_IMAGES = {
   "da-vinci": {
@@ -1120,7 +1126,7 @@ async function init() {
     try {
       const manifestResponses = await Promise.all(PRINTED_MANIFESTS.map((url) => fetch(url)));
       if (manifestResponses.some((response) => !response.ok)) throw new Error("Printed artwork manifest unavailable");
-      const printedManifests = await Promise.all(manifestResponses.map((response) => response.json()));
+      const printedManifests = (await Promise.all(manifestResponses.map((response) => response.json()))).flat();
       await buildConnectedMuseumExhibitions(printedManifests);
       await detectVR();
       status.textContent = text.ready;
@@ -3033,8 +3039,12 @@ async function loadConnectedMuseumRoom(roomIndex) {
     await addArtistEntrancePortrait(id, room, centerZ);
     await addSixMasterpiecesPanel(id, centerZ);
     for (let workIndex = 0; workIndex < room.works.length; workIndex += 1) {
-      const manifestSlug = CONNECTED_AUDIO_WORKS[`${id}:${workIndex}`];
-      await addConnectedMuseumArtwork(room, room.works[workIndex], centerZ, workIndex, connectedManifestMap.get(manifestSlug));
+      const audioWork = CONNECTED_AUDIO_WORKS[`${id}:${workIndex}`];
+      const manifest = audioWork ? connectedManifestMap.get(audioWork.slug) : null;
+      const audioOverviewUrl = manifest
+        ? await resolveArtworkAudioOverview({ artworkId: audioWork.artworkId, language: lang })
+        : null;
+      await addConnectedMuseumArtwork(room, room.works[workIndex], centerZ, workIndex, manifest, audioOverviewUrl);
       await new Promise((resolve) => setTimeout(resolve, isQuestBrowser ? 110 : 20));
     }
   })().finally(() => connectedRoomLoads.delete(roomIndex));
@@ -3142,7 +3152,7 @@ function maybeLoadConnectedMuseumRoom() {
   }
 }
 
-async function addConnectedMuseumArtwork(room, work, centerZ, index, manifest) {
+async function addConnectedMuseumArtwork(room, work, centerZ, index, manifest, audioOverviewUrl) {
   const [title, source] = work;
   const texture = await loadGalleryTexture(source);
   optimizeTextureForMobile(texture);
@@ -3167,9 +3177,10 @@ async function addConnectedMuseumArtwork(room, work, centerZ, index, manifest) {
     visitorYaw: rotationY
   }, artwork);
   scene.add(hotspot);
-  if (manifest) {
+  if (manifest && audioOverviewUrl) {
     const exhibit = {
       painting: manifest,
+      audioOverviewUrl,
       artwork,
       hotspot,
       audio: null,
@@ -5561,12 +5572,9 @@ function createTeleportHotspot(title, placement, artwork) {
 }
 
 async function loadAudioGuide(exhibit, generation) {
-  const guides = exhibit.painting.media?.audioOverviews || exhibit.painting.media?.audioOverview || [];
-  const list = Array.isArray(guides) ? guides : [guides];
-  const guide = list.find((item) => item?.lang === lang);
-  if (!guide?.src) return;
+  if (!exhibit.audioOverviewUrl) return;
 
-  const buffer = await loadGalleryAudio(guide.src);
+  const buffer = await loadGalleryAudio(exhibit.audioOverviewUrl);
   if (exhibit.audioLoadGeneration !== generation) return;
   // Use a clean non-HRTF signal and calculate distance volume ourselves.
   // This avoids the artefacts some Quest devices produce with long HRTF narration.

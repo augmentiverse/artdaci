@@ -1,0 +1,35 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "ve05",
+  "slug": "the-astronomer",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "ve",
+    "name": { "fr": "Johannes Vermeer", "en": "Johannes Vermeer", "ar": "يوهانس فيرمير" }
+  },
+  "artwork": {
+    "title": { "fr": "L’Astronome", "en": "The Astronomer", "ar": "عالم الفلك" },
+    "date": "1668",
+    "museum": "Musée du Louvre",
+    "location": { "city": "Paris", "country": "France" }
+  },
+  "pageUrl": "https://artdaci.com/a/ve05",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/ve05/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {},
+    "audio": {
+      "overview": {
+        "en": { "scope": "artwork", "path": "audio/en/overview.mp3", "mimeType": "audio/mpeg", "available": false, "migrationStatus": "planned", "bytes": 1790255, "sha256": "156c4b8902c4a70464071162b965d91000d17d767e26af03742b81eff7a6266c", "language": "en" },
+        "fr": { "scope": "artwork", "path": "audio/fr/overview.mp3", "mimeType": "audio/mpeg", "available": false, "migrationStatus": "planned", "bytes": 1511894, "sha256": "ed4f4e5ded644e9e636b141a085162ccd7da89ae61049dd2c8cfef3315c38c4c", "language": "fr" },
+        "ar": { "scope": "artwork", "path": "audio/ar/overview.mp3", "mimeType": "audio/mpeg", "available": false, "migrationStatus": "planned", "bytes": 1980426, "sha256": "2295bb90fe56d45a47e382baa381b78f62bc7a074ec9c4afd9d1501baddb7ce2", "language": "ar" }
+      }
+    },
+    "videos": {},
+    "models": {},
+    "ar": {}
+  },
+  "updatedAt": "2026-09-08"
+}

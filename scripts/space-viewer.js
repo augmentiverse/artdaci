@@ -1,4 +1,4 @@
-import { fetchArtworkManifest } from "./artwork-media-manifest.js";
+import { fetchArtworkManifest, resolveArtworkAudioOverview } from "./artwork-media-manifest.js?v=4";
 import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
 import { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./catalogue.js";
 
@@ -7,6 +7,12 @@ const PAINTINGS = {
   "van-gogh": "content/paintings/van-gogh.json",
   "van-gogh-bedroom": "content/paintings/van-gogh-bedroom.json",
   "vermeer-girl-with-a-pearl-earring": "content/paintings/vermeer-girl-with-a-pearl-earring.json"
+};
+const AUDIO_ARTWORK_IDS = {
+  "mona-lisa": "ld01",
+  "van-gogh": "vg01",
+  "van-gogh-bedroom": "vg02",
+  "vermeer-girl-with-a-pearl-earring": "ve01"
 };
 const MUSEUMS = {
   "louvre": "content/museums/louvre.json?v=2",
@@ -155,7 +161,7 @@ async function init() {
     if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
     const manifest = await response.json();
     const mediaContext = await getArtworkMediaContext();
-    configureViewer(manifest, mediaContext);
+    await configureViewer(manifest, mediaContext);
   } catch (error) {
     document.getElementById("space-status").textContent = `${COPY[lang].unsupported} ${error.message}`;
   }
@@ -196,7 +202,7 @@ function applyStaticCopy() {
   document.getElementById("ios-note").textContent = text.iosNote;
 }
 
-function configureViewer(manifest, mediaContext) {
+async function configureViewer(manifest, mediaContext) {
   const model = document.getElementById("space-model");
   const defaultTitle = manifest.title || "Artwork";
   const arTitles = {
@@ -211,7 +217,7 @@ function configureViewer(manifest, mediaContext) {
   const src = initialVariant?.localSrc || manifest.ar?.primaryModel || manifest.media?.model;
   const localPoster = manifest.media?.image || manifest.print?.imageTargetSource;
   const usdz = manifest.media?.usdz || manifest.media?.usdzModel;
-  const audioOverview = getLocalizedAudioOverview(manifest);
+  const audioOverviewUrl = await resolveSpatialAudioOverview(mediaContext);
 
   document.title = `DACIART - ${title} - ${COPY[lang].kicker}`;
   document.getElementById("space-title").textContent = title;
@@ -240,9 +246,9 @@ function configureViewer(manifest, mediaContext) {
   updateVrLink(0);
   document.getElementById("print-link").href = PRINT_PAGES[lang]?.[slug] || "index.html";
   renderModelVariantControls(model, modelVariants, usdz, mediaContext);
-  renderExperienceActions(audioOverview, mediaContext);
+  renderExperienceActions(audioOverviewUrl);
   renderExternalExperiences(manifest.externalExperiences);
-  checkModelViewerAvailability(usdz, audioOverview);
+  checkModelViewerAvailability(usdz, audioOverviewUrl);
   model.addEventListener("ar-status", (event) => {
     if (event.detail.status === "failed") {
       document.getElementById("space-status").textContent = COPY[lang].unsupported;
@@ -474,22 +480,24 @@ function updateVrLink(modelIndex) {
     : `vr.html?painting=${encodeURIComponent(slug)}&lang=${lang}&model=${modelIndex}`;
 }
 
-function getLocalizedAudioOverview(manifest) {
-  const overviews = manifest.media?.audioOverviews || manifest.media?.audioOverview || [];
-  const list = Array.isArray(overviews) ? overviews : [overviews];
-  const mediaLang = lang;
-  // Arabic intentionally preserves the historic French guide fallback.
-  return list.find((item) => item.lang === mediaLang) || list.find((item) => item.lang === "fr") || list.find((item) => item.lang === "en") || list[0] || null;
+async function resolveSpatialAudioOverview(mediaContext) {
+  const artworkId = AUDIO_ARTWORK_IDS[slug];
+  if (!artworkId) return null;
+
+  const fetchManifest = mediaContext?.manifest?.id === artworkId
+    ? async () => mediaContext.manifest
+    : fetchArtworkManifest;
+  return resolveArtworkAudioOverview({ artworkId, language: lang, fetchManifest });
 }
 
-function renderExperienceActions(audioOverview, mediaContext) {
+function renderExperienceActions(audioOverviewUrl) {
   const actions = document.querySelector(".space-panel .actions");
-  if (!actions) return;
+  if (!actions || !audioOverviewUrl) return;
 
   actions.insertAdjacentHTML("beforeend", `
-    <button id="audio-overview-button" class="button" type="button">${audioOverview ? COPY[lang].audioOverview : COPY[lang].audioOverviewMissing}</button>
+    <button id="audio-overview-button" class="button" type="button">${COPY[lang].audioOverview}</button>
   `);
-  bindAudioOverview(audioOverview, mediaContext);
+  bindAudioOverview(audioOverviewUrl);
 }
 
 function renderExternalExperiences(experiences) {
@@ -510,15 +518,10 @@ function renderExternalExperiences(experiences) {
   });
 }
 
-function bindAudioOverview(audioOverview, mediaContext) {
+function bindAudioOverview(audioOverviewUrl) {
   const button = document.getElementById("audio-overview-button");
   const panel = document.querySelector(".space-panel");
-  if (!button || !panel) return;
-
-  if (!audioOverview?.src) {
-    button.disabled = true;
-    return;
-  }
+  if (!button || !panel || !audioOverviewUrl) return;
 
   const player = document.createElement("audio");
   player.id = "audio-overview-player";
@@ -528,36 +531,24 @@ function bindAudioOverview(audioOverview, mediaContext) {
   player.hidden = true;
   panel.appendChild(player);
 
-  const localSrc = audioOverview.src;
   let sourcePrepared = false;
-  let usingRemoteSource = false;
-  let fallbackAttempted = false;
-  let playRequested = false;
 
   const prepareSource = () => {
     if (sourcePrepared) return;
-    const mediaKey = mediaContext?.config.audioKeys[lang];
-    const remoteSrc = resolveConfiguredMedia(mediaContext, mediaKey);
-    player.src = remoteSrc || localSrc;
-    player.dataset.mediaType = audioOverview.type || "";
+    player.src = audioOverviewUrl;
+    player.dataset.mediaType = "audio/mpeg";
     sourcePrepared = true;
-    usingRemoteSource = Boolean(remoteSrc);
   };
 
   player.addEventListener("error", () => {
-    if (!usingRemoteSource || fallbackAttempted || !localSrc) return;
-    console.warn("Remote spatial audio unavailable; loading the local guide.");
-    fallbackAttempted = true;
-    usingRemoteSource = false;
-    player.src = localSrc;
-    player.load();
-    if (playRequested) player.play().catch(() => player.focus());
+    button.disabled = true;
+    button.textContent = COPY[lang].audioOverviewMissing;
+    player.hidden = true;
   });
 
   button.addEventListener("click", async () => {
     player.hidden = false;
     if (player.paused) {
-      playRequested = true;
       prepareSource();
       try {
         await player.play();
@@ -566,7 +557,6 @@ function bindAudioOverview(audioOverview, mediaContext) {
         player.focus();
       }
     } else {
-      playRequested = false;
       player.pause();
       button.textContent = COPY[lang].audioOverview;
     }
@@ -580,7 +570,7 @@ function bindAudioOverview(audioOverview, mediaContext) {
   });
 }
 
-function checkModelViewerAvailability(usdz, audioOverview) {
+function checkModelViewerAvailability(usdz, audioOverviewUrl) {
   window.setTimeout(() => {
     if (customElements.get("model-viewer")) return;
 
@@ -591,7 +581,7 @@ function checkModelViewerAvailability(usdz, audioOverview) {
         <strong>${COPY[lang].fallbackTitle}</strong>
         <span>${COPY[lang].fallbackBody}</span>
         <div class="actions">
-          ${audioOverview?.src ? `<a class="button primary" href="${audioOverview.src}">${COPY[lang].audioOverview}</a>` : ""}
+          ${audioOverviewUrl ? `<a class="button primary" href="${audioOverviewUrl}">${COPY[lang].audioOverview}</a>` : ""}
         </div>
       </div>
     `;

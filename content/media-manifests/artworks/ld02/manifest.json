@@ -1,0 +1,35 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "ld02",
+  "slug": "lady-with-an-ermine",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "ld",
+    "name": { "fr": "Léonard de Vinci", "en": "Leonardo da Vinci", "ar": "ليوناردو دا فينشي" }
+  },
+  "artwork": {
+    "title": { "fr": "La Dame à l’hermine", "en": "Lady with an Ermine", "ar": "السيدة ذات القاقم" },
+    "date": "c. 1489–1491",
+    "museum": "Muzeum Książąt Czartoryskich",
+    "location": { "city": "Kraków", "country": "Poland" }
+  },
+  "pageUrl": "https://artdaci.com/a/ld02",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/ld02/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {},
+    "audio": {
+      "overview": {
+        "en": { "scope": "artwork", "path": "audio/en/overview.mp3", "mimeType": "audio/mpeg", "available": false, "migrationStatus": "planned", "bytes": 1666539, "sha256": "6b8608dafee7026dff597cfd5594f98e5f0c04b8c0dab61a09136ca92d225072", "language": "en" },
+        "fr": { "scope": "artwork", "path": "audio/fr/overview.mp3", "mimeType": "audio/mpeg", "available": false, "migrationStatus": "planned", "bytes": 1416599, "sha256": "9f1f63d684177fd196603b014bb61a778a041bcfd75d2516e07550aa86f230ba", "language": "fr" },
+        "ar": { "scope": "artwork", "path": "audio/ar/overview.mp3", "mimeType": "audio/mpeg", "available": false, "migrationStatus": "planned", "bytes": 2233291, "sha256": "2182cd2bb668a5179715633d0ac92a3c40ba5c15bc5415878188df332213bc9d", "language": "ar" }
+      }
+    },
+    "videos": {},
+    "models": {},
+    "ar": {}
+  },
+  "updatedAt": "2026-09-08"
+}

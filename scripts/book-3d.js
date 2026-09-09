@@ -1,4 +1,5 @@
 import { detectRuntimeProfile } from "./runtime-profile.js?v=1";
+import { resolveArtworkAudioOverview } from "./artwork-media-manifest.js?v=4";
 
 const MANIFEST_URLS = [
   "content/paintings/mona-lisa.json?v=2",
@@ -326,7 +327,14 @@ async function init() {
     painting.slug === selection.slug && painting.bookOrder === selection.bookOrder
   )));
   if (paintings.some((painting) => !painting)) throw new Error("Living Book artwork selection is incomplete.");
-  pageDefinitions = buildPageDefinitions(paintings, allManifests.slice(MANIFEST_URLS.length));
+  const paintingsWithAudio = await Promise.all(paintings.map(async (painting, index) => ({
+    ...painting,
+    audioOverviewUrl: await resolveArtworkAudioOverview({
+      artworkId: LIVING_BOOK_ARTWORKS[index].canonicalId,
+      language: lang,
+    }),
+  })));
+  pageDefinitions = buildPageDefinitions(paintingsWithAudio, allManifests.slice(MANIFEST_URLS.length));
   await buildBook(pageDefinitions);
   bindControls();
   updateBook();
@@ -402,12 +410,12 @@ function buildPageDefinitions(manifests, museums = []) {
       hotspots: hasImmersiveAssets
         ? [
             { label: "3D", x: 83, y: 23, type: "space" },
-            { label: "♪", x: 83, y: 35, type: "audio", audio },
+            ...(audio ? [{ label: "♪", x: 83, y: 35, type: "audio", audio }] : []),
             { label: "AR", x: 83, y: 47, type: "ar" },
             ...(videos[0] ? [{ label: "▶", x: 83, y: 59, type: "video", video: videos[0] }] : [])
           ]
         : [
-            { label: "\u266a", x: 83, y: 23, type: "audio", audio },
+            ...(audio ? [{ label: "\u266a", x: 83, y: 23, type: "audio", audio }] : []),
             { label: "VR", x: 83, y: 38, type: "gallery" }
           ]
     });
@@ -455,10 +463,10 @@ function buildPageDefinitions(manifests, museums = []) {
       manifest,
       hotspots: hasImmersiveAssets ? [
         { label: "3D", x: 82, y: 24, type: "space" },
-        { label: "♪", x: 82, y: 38, type: "audio", audio },
+        ...(audio ? [{ label: "♪", x: 82, y: 38, type: "audio", audio }] : []),
         ...(videos[1] ? [{ label: "▶", x: 82, y: 52, type: "video", video: videos[1] }] : [])
       ] : [
-        { label: "\u266a", x: 82, y: 24, type: "audio", audio },
+        ...(audio ? [{ label: "\u266a", x: 82, y: 24, type: "audio", audio }] : []),
         { label: "VR", x: 82, y: 39, type: "gallery" }
       ]
     });
@@ -813,9 +821,9 @@ function localizedTitle(manifest) {
 }
 
 function getAudio(manifest) {
-  const list = manifest.media?.audioOverviews || [];
-  const mediaLang = lang;
-  return list.find((item) => item.lang === mediaLang) || list.find((item) => item.lang === "fr") || list.find((item) => item.lang === "en") || list[0];
+  return manifest.audioOverviewUrl
+    ? { lang, src: manifest.audioOverviewUrl, type: "audio/mpeg" }
+    : null;
 }
 
 const ADDED_BOOK_TEXTS = {
@@ -1050,7 +1058,7 @@ function openExperience(definition, hotspot) {
   const manifest = definition.manifest;
   experienceTitle.textContent = definition.title;
   experienceKicker.textContent = {
-    audio: lang === "ar" ? "سرد صوتي" : lang === "fr" ? "Narration audio" : "Audio narration",
+    audio: lang === "ar" ? "الاستماع إلى تقديم العمل الفني" : lang === "fr" ? "Écouter la présentation de l’œuvre" : "Listen to the artwork overview",
     video: lang === "ar" ? "مشهد متحرك معاد تخيله" : lang === "fr" ? "Scène réimaginée en mouvement" : "Reimagined scene in motion",
     space: lang === "ar" ? "نموذج ثلاثي الأبعاد تفاعلي" : lang === "fr" ? "Objet 3D interactif" : "Interactive 3D object",
     ar: lang === "ar" ? "واقع معزز" : lang === "fr" ? "Réalité augmentée" : "Augmented reality",
@@ -1062,7 +1070,7 @@ function openExperience(definition, hotspot) {
   }[hotspot.type] || "Immersive layer";
 
   if (hotspot.type === "audio" && hotspot.audio?.src) {
-    experienceBody.innerHTML = `<div class="experience-audio"><audio controls autoplay src="${hotspot.audio.src}"></audio></div>`;
+    experienceBody.innerHTML = `<div class="experience-audio"><audio controls preload="none" src="${hotspot.audio.src}"></audio></div>`;
   } else if (hotspot.type === "video" && hotspot.video?.src) {
     const companionAudioSrc = lang === "ar" && hotspot.video.audioSrcAr
       ? hotspot.video.audioSrcAr
@@ -1209,6 +1217,11 @@ function getExperienceUrl(manifest, type) {
 }
 
 function closeExperience() {
+  experienceBody.querySelectorAll("audio, video").forEach((media) => {
+    media.pause();
+    media.removeAttribute("src");
+    media.load();
+  });
   experienceBody.innerHTML = "";
   dialog.close();
 }

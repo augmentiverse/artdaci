@@ -1,0 +1,34 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "vg02",
+  "slug": "bedroom-in-arles",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "vg",
+    "name": { "fr": "Vincent van Gogh", "en": "Vincent van Gogh", "ar": "فنسنت فان غوخ" }
+  },
+  "artwork": {
+    "title": { "fr": "La Chambre à Arles", "en": "The Bedroom in Arles", "ar": "غرفة النوم في آرل" },
+    "date": "October 1888",
+    "museum": "Van Gogh Museum",
+    "location": { "city": "Amsterdam", "country": "Netherlands" }
+  },
+  "pageUrl": "https://artdaci.com/a/vg02",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/vg02/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {},
+    "audio": {
+      "overview": {
+        "en": { "scope": "artwork", "path": "audio/en/overview.mp3", "mimeType": "audio/mpeg", "available": false, "migrationStatus": "planned", "bytes": 20210343, "sha256": "f160735a5bd5d349a5b2fbd33ff306520c1bf1af466188a32b27078456700ecb", "language": "en" },
+        "fr": { "scope": "artwork", "path": "audio/fr/overview.mp3", "mimeType": "audio/mpeg", "available": false, "migrationStatus": "planned", "bytes": 12813719, "sha256": "f46386c258e77ed04a198038bc717391bd282385f21cb2f16d2b660e865ff7b7", "language": "fr" }
+      }
+    },
+    "videos": {},
+    "models": {},
+    "ar": {}
+  },
+  "updatedAt": "2026-09-08"
+}
