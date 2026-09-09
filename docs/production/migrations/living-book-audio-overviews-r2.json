@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
-  "status": "planned",
-  "description": "Unpublished exact-language MP3 overviews for the eight curated Living Book artworks.",
+  "status": "published",
+  "description": "Published exact-language MP3 overviews for the eight curated Living Book artworks.",
   "resources": [
     { "artworkId": "ld01", "key": "audio.overview.en", "language": "en", "source": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/mona-lisa-en.mp3", "destination": "artworks/ld01/audio/en/overview.mp3", "bytes": 21228074, "sha256": "9ae21c4ebb8481a3604ef154db93794a5b167bc8e7f9c1ab477d79da3fb59918", "mimeType": "audio/mpeg", "role": "overview" },
     { "artworkId": "ld01", "key": "audio.overview.fr", "language": "fr", "source": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/mona-lisa-fr.mp3", "destination": "artworks/ld01/audio/fr/overview.mp3", "bytes": 17915747, "sha256": "e68a4ef57ceb37b01ce214fc6c18c4b47cc52c014953ace0ea1823b8f404bb46", "mimeType": "audio/mpeg", "role": "overview" },

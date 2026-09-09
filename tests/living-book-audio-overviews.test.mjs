@@ -108,10 +108,15 @@ test("planned, missing, invalid and failed manifests never expose audio", async 
   assert.equal(await resolveArtworkAudioOverview({ language: "en" }), null);
 });
 
-test("the six published overviews resolve and the other fifteen stay planned", async () => {
+test("all twenty-one exact-language overviews resolve after publication", async () => {
   const published = [
-    ["ve01", "fr"],
+    ["ld01", "en"], ["ld01", "fr"], ["ld01", "ar"],
+    ["ld02", "en"], ["ld02", "fr"], ["ld02", "ar"],
+    ["ve05", "en"], ["ve05", "fr"], ["ve05", "ar"],
+    ["ve01", "en"], ["ve01", "fr"],
     ["vg01", "en"], ["vg01", "fr"],
+    ["vg02", "en"], ["vg02", "fr"],
+    ["mo02", "en"], ["mo02", "fr"], ["mo02", "ar"],
     ["mo01", "en"], ["mo01", "fr"], ["mo01", "ar"],
   ];
 
@@ -124,7 +129,7 @@ test("the six published overviews resolve and the other fifteen stay planned", a
     assert.equal(result, `https://media.artdaci.com/artworks/${id}/audio/${language}/overview.mp3`);
   }
 
-  assert.equal(migration.status, "planned");
+  assert.equal(migration.status, "published");
   assert.equal(migration.resources.length, 15);
   assert.equal(new Set(migration.resources.map(({ destination }) => destination)).size, 15);
   for (const resource of migration.resources) {
@@ -133,8 +138,8 @@ test("the six published overviews resolve and the other fifteen stay planned", a
     assert.equal(resource.mimeType, "audio/mpeg");
     const manifest = manifests.get(resource.artworkId);
     const asset = manifest.media.audio.overview[resource.language];
-    assert.equal(asset.available, false);
-    assert.equal(asset.migrationStatus, "planned");
+    assert.equal(asset.available, true);
+    assert.equal(asset.migrationStatus, "published");
     assert.equal(asset.path, `audio/${resource.language}/overview.mp3`);
   }
 });

@@ -69,8 +69,8 @@
           "scope": "artwork",
           "path": "audio/en/overview.mp3",
           "mimeType": "audio/mpeg",
-          "available": false,
-          "migrationStatus": "planned",
+          "available": true,
+          "migrationStatus": "published",
           "bytes": 21228074,
           "sha256": "9ae21c4ebb8481a3604ef154db93794a5b167bc8e7f9c1ab477d79da3fb59918",
           "language": "en"
@@ -79,8 +79,8 @@
           "scope": "artwork",
           "path": "audio/fr/overview.mp3",
           "mimeType": "audio/mpeg",
-          "available": false,
-          "migrationStatus": "planned",
+          "available": true,
+          "migrationStatus": "published",
           "bytes": 17915747,
           "sha256": "e68a4ef57ceb37b01ce214fc6c18c4b47cc52c014953ace0ea1823b8f404bb46",
           "language": "fr"
@@ -89,8 +89,8 @@
           "scope": "artwork",
           "path": "audio/ar/overview.mp3",
           "mimeType": "audio/mpeg",
-          "available": false,
-          "migrationStatus": "planned",
+          "available": true,
+          "migrationStatus": "published",
           "bytes": 24294374,
           "sha256": "4a3d27326cfc51fd45fad02397f6b7ed60a3ae3c673ce8f13a03a6d24990ab28",
           "language": "ar"

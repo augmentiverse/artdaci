@@ -103,8 +103,8 @@
           "scope": "artwork",
           "path": "audio/en/overview.mp3",
           "mimeType": "audio/mpeg",
-          "available": false,
-          "migrationStatus": "planned",
+          "available": true,
+          "migrationStatus": "published",
           "bytes": 23462901,
           "sha256": "abe69f886f00e1a64b679982a9285190724961c23c9bf05bd1a49cb7b464a8c8",
           "language": "en"
