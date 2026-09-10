@@ -3,7 +3,7 @@ import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
 import { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./catalogue.js";
 
 const PAINTINGS = {
-  "mona-lisa": "content/paintings/mona-lisa.json",
+  "mona-lisa": "content/paintings/mona-lisa.json?v=5",
   "van-gogh": "content/paintings/van-gogh.json",
   "van-gogh-bedroom": "content/paintings/van-gogh-bedroom.json",
   "vermeer-girl-with-a-pearl-earring": "content/paintings/vermeer-girl-with-a-pearl-earring.json"

@@ -265,10 +265,14 @@
       "trackingImageMediaKey": "images.ar-target-v2",
       "targetMediaKey": "ar.target-v2",
       "targetIndex": 0,
-      "hardwareValidationStatus": "pending",
+      "hardwareValidationStatus": "validated",
+      "hardwareValidation": {
+        "device": "iPhone",
+        "result": "target-detected-and-tracking-stable"
+      },
       "modelTransform": {
         "scale": 0.42,
-        "rotation": [0, 0, 0],
+        "rotation": [0, -60, 0],
         "position": [0, 0, 0.18]
       }
     },

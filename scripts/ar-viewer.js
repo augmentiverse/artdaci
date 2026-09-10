@@ -31,6 +31,7 @@ const CONFIG = {
   audioSequence: false,
   manifest: "",
   requestedSlug: null,
+  targetIndex: 0,
   initialScale: 0.42,
   initialRise: 0.18,
   modelRotation: {
@@ -41,7 +42,7 @@ const CONFIG = {
 };
 
 const PAINTINGS = {
-  "mona-lisa": "content/paintings/mona-lisa.json?v=4",
+  "mona-lisa": "content/paintings/mona-lisa.json?v=5",
   "van-gogh": "content/paintings/van-gogh.json?v=3",
   "van-gogh-jo": "content/people/van-gogh-jo.json?v=1",
   "van-gogh-bedroom": "content/paintings/van-gogh-bedroom.json",
@@ -867,9 +868,20 @@ function configureFromManifest(manifest, mediaContext) {
   CONFIG.audio = CONFIG.remoteAudio || CONFIG.localAudio;
   CONFIG.musicIntro = musicIntro?.src ? withAssetVersion(musicIntro.src) : "";
   CONFIG.audioSequence = false;
-  CONFIG.initialScale = manifest.ar?.viewer?.initialScale ?? CONFIG.initialScale;
-  CONFIG.initialRise = manifest.ar?.viewer?.initialRise ?? CONFIG.initialRise;
-  CONFIG.modelRotation = manifest.ar?.viewer?.modelRotation || CONFIG.modelRotation;
+  const v2 = manifest.ar?.v2;
+  const v2Transform = v2?.modelTransform;
+  const v2Rotation = Array.isArray(v2Transform?.rotation) ? v2Transform.rotation : null;
+  const v2Position = Array.isArray(v2Transform?.position) ? v2Transform.position : null;
+  CONFIG.targetIndex = Number.isInteger(v2?.targetIndex) ? v2.targetIndex : 0;
+  CONFIG.initialScale = v2Transform?.scale ?? manifest.ar?.viewer?.initialScale ?? CONFIG.initialScale;
+  CONFIG.initialRise = v2Position?.[2] ?? manifest.ar?.viewer?.initialRise ?? CONFIG.initialRise;
+  CONFIG.modelRotation = v2Rotation
+    ? {
+        x: THREE.MathUtils.degToRad(v2Rotation[0] || 0),
+        y: THREE.MathUtils.degToRad(v2Rotation[1] || 0),
+        z: THREE.MathUtils.degToRad(v2Rotation[2] || 0)
+      }
+    : manifest.ar?.viewer?.modelRotation || CONFIG.modelRotation;
   state.audio?.pause();
   state.audio = null;
   state.musicIntro?.pause();
@@ -1138,7 +1150,7 @@ async function startAR() {
     fill.position.set(-1.4, 0.8, 1.2);
     scene.add(fill);
 
-    state.anchor = state.mindarThree.addAnchor(0);
+    state.anchor = state.mindarThree.addAnchor(CONFIG.targetIndex);
     state.anchor.group.visible = false;
 
     // MindAR owns the anchor visibility and hides it whenever image tracking is

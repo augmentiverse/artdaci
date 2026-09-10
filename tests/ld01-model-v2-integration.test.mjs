@@ -37,33 +37,38 @@ test("the five active Mona Lisa model references use the V2 fallback", () => {
   assert.doesNotMatch(JSON.stringify(painting), new RegExp(oldModel.replaceAll("/", "\\/")));
 });
 
-test("canonical manifest keeps every V2 resource planned and unavailable", () => {
+test("canonical manifest publishes only the three verified V2 resources", () => {
   const entries = [manifest.media.models["main-v2"], manifest.media.images["ar-target-v2"], manifest.media.ar["target-v2"]];
-  assert.equal(entries.every((entry) => entry.scope === "artwork" && entry.available === false && entry.migrationStatus === "planned"), true);
+  assert.equal(entries.every((entry) => entry.scope === "artwork" && entry.available === true && entry.migrationStatus === "published"), true);
   assert.deepEqual(manifest.media.models["main-v2"], {
     scope: "artwork",
     path: "models/main-v2.glb",
     mimeType: "model/gltf-binary",
-    available: false,
-    migrationStatus: "planned",
+    available: true,
+    migrationStatus: "published",
     bytes: 2_637_936,
     sha256: "138e618385c471fe51bc71f1d4e2faed32ea1bad8a0db18245bddd27ca253733",
   });
 });
 
-test("resolver blocks unavailable V2 and resolves a simulated published model", () => {
-  assert.equal(resolveManifestMedia(manifest, "models.main-v2", "en"), null);
-  const published = structuredClone(manifest);
-  published.media.models["main-v2"].available = true;
-  published.media.models["main-v2"].migrationStatus = "published";
-  assert.equal(resolveManifestMedia(published, "models.main-v2", "en"), "https://media.artdaci.com/artworks/ld01/models/main-v2.glb");
+test("resolver exposes all three published V2 resources", () => {
+  assert.equal(resolveManifestMedia(manifest, "models.main-v2", "en"), "https://media.artdaci.com/artworks/ld01/models/main-v2.glb");
+  assert.equal(resolveManifestMedia(manifest, "images.ar-target-v2", "en"), "https://media.artdaci.com/artworks/ld01/images/ar-target-v2.jpg");
+  assert.equal(resolveManifestMedia(manifest, "ar.target-v2", "en"), "https://media.artdaci.com/artworks/ld01/ar/target-v2.mind");
 });
 
-test("AR Image declares the V2 couple but retains pending hardware validation", () => {
+test("AR Image uses the hardware-validated V2 couple and calibration", () => {
   assert.match(arHtml, /data-artwork-media-for="mona-lisa"[\s\S]*?data-artwork-media-target-key="ar\.target-v2"[\s\S]*?data-artwork-media-image-key="images\.ar-target-v2"[\s\S]*?models\.main-v2/);
-  assert.deepEqual(painting.ar.v2.modelTransform, { scale: 0.42, rotation: [0, 0, 0], position: [0, 0, 0.18] });
+  assert.deepEqual(painting.ar.v2.modelTransform, { scale: 0.42, rotation: [0, -60, 0], position: [0, 0, 0.18] });
   assert.equal(painting.ar.v2.targetIndex, 0);
-  assert.equal(painting.ar.v2.hardwareValidationStatus, "pending");
+  assert.equal(painting.ar.v2.hardwareValidationStatus, "validated");
+  assert.deepEqual(painting.ar.v2.hardwareValidation, {
+    device: "iPhone",
+    result: "target-detected-and-tracking-stable",
+  });
+  assert.match(arSource, /CONFIG\.targetIndex = Number\.isInteger\(v2\?\.targetIndex\)/);
+  assert.match(arSource, /THREE\.MathUtils\.degToRad\(v2Rotation\[1\] \|\| 0\)/);
+  assert.match(arSource, /addAnchor\(CONFIG\.targetIndex\)/);
   assert.ok(arSource.indexOf("async function startAR()") < arSource.indexOf("async function loadModel(group)"));
 });
 
@@ -73,6 +78,11 @@ test("Spatial and VR defer the Mona Lisa GLB until interaction", () => {
   assert.match(vrHtml, /data-artwork-media-for="mona-lisa"[\s\S]*?models\.main-v2[\s\S]*?data-artwork-media-defer-model="true"/);
   assert.match(vrSource, /if \(deferInitialModel\)[\s\S]*?stage\.addEventListener\("pointerdown", \(\) => ensureInitialModel/);
   assert.match(vrSource, /if \(!initialModelLoadPromise\)/);
+  assert.match(spaceSource, /"mona-lisa": "content\/paintings\/mona-lisa\.json\?v=5"/);
+  assert.match(vrSource, /"mona-lisa": "content\/paintings\/mona-lisa\.json\?v=5"/);
+  assert.match(spaceHtml, /scripts\/space-viewer\.js\?v=33/);
+  assert.match(vrHtml, /scripts\/vr-viewer\.js\?v=7/);
+  assert.match(arHtml, /scripts\/ar-viewer\.js\?v=52/);
 });
 
 test("failed remote loads retain one controlled local fallback", () => {
