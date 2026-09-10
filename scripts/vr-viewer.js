@@ -137,6 +137,9 @@ let variants = [];
 let twoHandState = null;
 let currentSession = null;
 let currentVariantIndex = -1;
+let initialVariantIndex = 0;
+let initialModelLoadPromise = null;
+let deferInitialModel = false;
 
 init();
 
@@ -161,9 +164,15 @@ async function init() {
       ? ARABIC_TITLES[slug] || manifest.title || "ARTDACI VR"
       : manifest.title || "ARTDACI VR";
     renderVariantOptions();
-    const index = THREE.MathUtils.clamp(Number.isFinite(requestedModel) ? requestedModel : 0, 0, variants.length - 1);
-    modelChoice.value = String(index);
-    await loadVariant(index);
+    initialVariantIndex = THREE.MathUtils.clamp(Number.isFinite(requestedModel) ? requestedModel : 0, 0, variants.length - 1);
+    modelChoice.value = String(initialVariantIndex);
+    if (deferInitialModel) {
+      stage.dataset.modelLoadState = "deferred";
+      status.textContent = text.ready;
+      stage.addEventListener("pointerdown", () => ensureInitialModel().catch(showError), { once: true });
+    } else {
+      await ensureInitialModel();
+    }
     await detectVR();
   } catch (error) {
     console.error(error);
@@ -229,6 +238,7 @@ function getModelVariants(manifest) {
 async function configureModelVariants(localVariants) {
   const config = getArtworkMediaConfig();
   if (!config) return localVariants;
+  deferInitialModel = config.deferModel;
 
   try {
     const mediaManifest = await fetchArtworkManifest(config.manifestUrl);
@@ -262,6 +272,7 @@ function getArtworkMediaConfig() {
     return {
       artworkId: element.dataset.artworkMediaId,
       manifestUrl: element.dataset.artworkMediaManifestUrl,
+      deferModel: element.dataset.artworkMediaDeferModel === "true",
       modelKeys
     };
   } catch (error) {
@@ -349,6 +360,24 @@ function loadModel(src) {
   return modelCache.get(src);
 }
 
+function ensureInitialModel() {
+  if (modelObject) return Promise.resolve(modelObject);
+  if (!initialModelLoadPromise) {
+    stage.dataset.modelLoadState = "loading";
+    initialModelLoadPromise = loadVariant(initialVariantIndex)
+      .then(() => {
+        stage.dataset.modelLoadState = "loaded";
+        return modelObject;
+      })
+      .catch((error) => {
+        stage.dataset.modelLoadState = "error";
+        initialModelLoadPromise = null;
+        throw error;
+      });
+  }
+  return initialModelLoadPromise;
+}
+
 function normalizeModel(object) {
   object.updateMatrixWorld(true);
   const box = new THREE.Box3().setFromObject(object);
@@ -365,7 +394,10 @@ function normalizeModel(object) {
 
 function bindUI() {
   enterButton.addEventListener("click", toggleVR);
-  resetButton.addEventListener("click", resetModel);
+  resetButton.addEventListener("click", () => {
+    if (modelObject) resetModel();
+    else ensureInitialModel().catch(showError);
+  });
   modelChoice.addEventListener("change", () => loadVariant(Number(modelChoice.value)).catch(showError));
   addEventListener("resize", resize);
 }
@@ -386,6 +418,7 @@ async function toggleVR() {
       await currentSession.end();
       return;
     }
+    void ensureInitialModel().catch(showError);
     currentSession = await navigator.xr.requestSession("immersive-vr", {
       optionalFeatures: ["local-floor", "bounded-floor", "hand-tracking"]
     });

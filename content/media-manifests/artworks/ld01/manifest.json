@@ -37,6 +37,15 @@
         "mimeType": "image/png",
         "available": true,
         "migrationStatus": "published"
+      },
+      "ar-target-v2": {
+        "scope": "artwork",
+        "path": "images/ar-target-v2.jpg",
+        "mimeType": "image/jpeg",
+        "available": false,
+        "migrationStatus": "planned",
+        "bytes": 2762651,
+        "sha256": "473d649a195c65f3e7dd57f5fa6bfab33132464d303cac4efefa51a8dd41002e"
       }
     },
     "audio": {
@@ -113,6 +122,15 @@
         "mimeType": "model/gltf-binary",
         "available": false,
         "migrationStatus": "planned"
+      },
+      "main-v2": {
+        "scope": "artwork",
+        "path": "models/main-v2.glb",
+        "mimeType": "model/gltf-binary",
+        "available": false,
+        "migrationStatus": "planned",
+        "bytes": 2637936,
+        "sha256": "138e618385c471fe51bc71f1d4e2faed32ea1bad8a0db18245bddd27ca253733"
       }
     },
     "ar": {
@@ -122,8 +140,17 @@
         "mimeType": "application/octet-stream",
         "available": false,
         "migrationStatus": "planned"
+      },
+      "target-v2": {
+        "scope": "artwork",
+        "path": "ar/target-v2.mind",
+        "mimeType": "application/octet-stream",
+        "available": false,
+        "migrationStatus": "planned",
+        "bytes": 659604,
+        "sha256": "94d83b659a6561a970fd89b0126ab301711f1971a5bedaccf41ee652081e1f32"
       }
     }
   },
-  "updatedAt": "2026-09-08"
+  "updatedAt": "2026-09-10"
 }

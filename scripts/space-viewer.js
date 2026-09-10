@@ -27,6 +27,7 @@ const COPY = {
     back: "Back",
     kicker: "Room Placement",
     loading: "Loading model...",
+    loadOnInteraction: "Tap the preview or Place in My Space to load the 3D model.",
     ready: "Model ready. Tap Place in My Space to position it in your room.",
     readyWithUsdz: "Model ready. Tap Place in My Space. iPhone/iPad will use USDZ; Android will use Scene Viewer.",
     readyWithoutUsdz: "Model ready. Tap Place in My Space to generate the AR view from the selected model.",
@@ -54,6 +55,7 @@ const COPY = {
     back: "Retour",
     kicker: "Placement dans l'espace",
     loading: "Chargement du modèle...",
+    loadOnInteraction: "Touchez l’aperçu ou Placer dans mon espace pour charger le modèle 3D.",
     ready: "Modèle prêt. Touchez Placer dans mon espace pour le positionner dans votre pièce.",
     readyWithUsdz: "Modèle prêt. Touchez Placer dans mon espace. iPhone/iPad utilisera USDZ; Android utilisera Scene Viewer.",
     readyWithoutUsdz: "Modèle prêt. Touchez Placer dans mon espace pour générer la vue AR à partir du modèle sélectionné.",
@@ -81,6 +83,7 @@ const COPY = {
     back: "رجوع",
     kicker: "وضع النموذج في المساحة",
     loading: "جارٍ تحميل النموذج...",
+    loadOnInteraction: "اضغط على المعاينة أو «ضعه في مساحتي» لتحميل النموذج ثلاثي الأبعاد.",
     ready: "النموذج جاهز. اضغط «ضعه في مساحتي» لتثبيته في غرفتك.",
     readyWithUsdz: "النموذج جاهز. يستخدم iPhone وiPad ملف USDZ، ويستخدم Android عارض المشاهد.",
     readyWithoutUsdz: "النموذج جاهز. اضغط «ضعه في مساحتي» لفتح الواقع المعزز.",
@@ -224,16 +227,34 @@ async function configureViewer(manifest, mediaContext) {
 
   if (!src) throw new Error("No 3D model is configured for this painting.");
   const status = document.getElementById("space-status");
-  if (initialVariant) prepareModelVariant(initialVariant, mediaContext);
-  loadModelVariant(model, initialVariant || createFallbackVariant(src), {
-    onLoad: () => {
-      status.textContent = usdz ? COPY[lang].readyWithUsdz : COPY[lang].readyWithoutUsdz;
-    },
-    onError: (event, failedSrc) => {
-      console.error(`Room AR model failed to load: ${failedSrc}`, event);
-      status.textContent = `${COPY[lang].unsupported} (${failedSrc})`;
-    }
-  });
+  const initialModelVariant = initialVariant || createFallbackVariant(src);
+  let initialModelLoadStarted = false;
+  const loadInitialModel = () => {
+    if (initialModelLoadStarted || initialModelVariant.loadedSrc) return;
+    initialModelLoadStarted = true;
+    status.textContent = COPY[lang].loading;
+    if (initialVariant) prepareModelVariant(initialVariant, mediaContext);
+    loadModelVariant(model, initialModelVariant, {
+      onLoad: () => {
+        model.dataset.modelLoadState = "loaded";
+        status.textContent = usdz ? COPY[lang].readyWithUsdz : COPY[lang].readyWithoutUsdz;
+      },
+      onError: (event, failedSrc) => {
+        initialModelLoadStarted = false;
+        model.dataset.modelLoadState = "error";
+        console.error(`Room AR model failed to load: ${failedSrc}`, event);
+        status.textContent = `${COPY[lang].unsupported} (${failedSrc})`;
+      }
+    });
+  };
+  if (mediaContext?.config.deferModel) {
+    model.dataset.modelLoadState = "deferred";
+    status.textContent = COPY[lang].loadOnInteraction;
+    model.addEventListener("pointerdown", loadInitialModel, { once: true });
+    document.getElementById("ar-button").addEventListener("click", loadInitialModel, { once: true, capture: true });
+  } else {
+    loadInitialModel();
+  }
   model.alt = `${title} 3D model`;
   applyModelPoster(model, resolveConfiguredMedia(mediaContext, mediaContext?.config.posterKey), localPoster);
   if (usdz) {
@@ -290,11 +311,14 @@ async function getArtworkMediaContext() {
 
   try {
     const manifest = await fetchArtworkManifest(config.manifestUrl);
-    if (manifest?.id !== config.artworkId) return null;
+    if (manifest?.id !== config.artworkId) {
+      console.warn("Artwork media manifest ID mismatch; keeping the local spatial media.");
+      return { config, manifest: null, resolvedMedia: new Map() };
+    }
     return { config, manifest, resolvedMedia: new Map() };
   } catch (error) {
     console.warn("Artwork media manifest unavailable; keeping the local spatial media.", error);
-    return null;
+    return { config, manifest: null, resolvedMedia: new Map() };
   }
 }
 
@@ -311,6 +335,7 @@ function getArtworkMediaConfig() {
       artworkId: element.dataset.artworkMediaId,
       manifestUrl: element.dataset.artworkMediaManifestUrl,
       posterKey: element.dataset.artworkMediaPosterKey || "",
+      deferModel: element.dataset.artworkMediaDeferModel === "true",
       modelKeys,
       audioKeys
     };

@@ -251,10 +251,31 @@
   ],
   "ar": {
     "startMode": "painting-emergence",
+    "viewer": {
+      "initialScale": 0.42,
+      "initialRise": 0.18,
+      "modelRotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "v2": {
+      "modelMediaKey": "models.main-v2",
+      "trackingImageMediaKey": "images.ar-target-v2",
+      "targetMediaKey": "ar.target-v2",
+      "targetIndex": 0,
+      "hardwareValidationStatus": "pending",
+      "modelTransform": {
+        "scale": 0.42,
+        "rotation": [0, 0, 0],
+        "position": [0, 0, 0.18]
+      }
+    },
     "imageTarget": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg",
     "compiledTarget": "assets/targets/mona-lisa.mind",
-    "primaryModel": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa.glb",
-    "frameModel": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa.glb",
+    "primaryModel": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa-main-v2.glb",
+    "frameModel": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa-main-v2.glb",
     "modelVariants": [
       {
         "id": "model-1",
@@ -262,7 +283,7 @@
           "en": "Model 1",
           "fr": "Modèle 1"
         },
-        "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa.glb"
+        "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa-main-v2.glb"
       },
       {
         "id": "model-2",
@@ -344,7 +365,13 @@
   },
   "media": {
     "image": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg",
-    "model": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa.glb",
+    "model": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa-main-v2.glb",
+    "spatialViewer": {
+      "scale": [1, 1, 1],
+      "rotation": [0, 0, 0],
+      "position": [0, 0, 0],
+      "floor": 0
+    },
     "modelVariants": [
       {
         "id": "model-1",
@@ -352,7 +379,7 @@
           "en": "Model 1",
           "fr": "Modèle 1"
         },
-        "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa.glb"
+        "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa-main-v2.glb"
       },
       {
         "id": "model-2",
