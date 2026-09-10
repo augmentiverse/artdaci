@@ -46,6 +46,9 @@ async function readJson(url) {
   return JSON.parse(await readFile(url, "utf8"));
 }
 
+const normalizeTextLineEndings = (content) =>
+  Buffer.from(content.toString("utf8").replace(/\r\n/g, "\n"), "utf8");
+
 const sourceDocuments = await Promise.all(
   paintingSources.map((file) => readJson(new URL(`../content/paintings/${file}`, import.meta.url))),
 );
@@ -122,8 +125,10 @@ test("existing print route inputs remain available without an Orsay 1889 draft r
   assert.doesNotMatch(canonicalData, /vg01-orsay-1889|orsay-1889|manifest-draft/i);
 });
 
-test("the active vg01 media manifest remains byte-for-byte the Chicago 1887 release", async () => {
-  const manifest = await readFile(new URL("../content/media-manifests/artworks/vg01/manifest.json", import.meta.url));
+test("the active vg01 media manifest remains Chicago 1887 after LF/CRLF normalization", async () => {
+  const manifest = normalizeTextLineEndings(
+    await readFile(new URL("../content/media-manifests/artworks/vg01/manifest.json", import.meta.url)),
+  );
   assert.equal(manifest.byteLength, 5437);
   assert.equal(
     createHash("sha256").update(manifest).digest("hex"),

@@ -41,6 +41,9 @@ const expected = Object.freeze({
   }),
 });
 
+const normalizeTextLineEndings = (content) =>
+  Buffer.from(content.toString("utf8").replace(/\r\n/g, "\n"), "utf8");
+
 function collectMediaAssets(node, path = "media") {
   if (node && typeof node === "object" && "available" in node) return [[path, node]];
   return Object.entries(node || {}).flatMap(([key, value]) => collectMediaAssets(value, `${path}.${key}`));
@@ -214,14 +217,14 @@ test("historical mo01 pages resolve three manifest keys while keeping click-only
   assert.doesNotMatch(arabicScript, /media\.artdaci\.com\/artworks\/mo01\/audio\//);
 });
 
-test("VG01 Chicago 1887 release and migration card remain byte-identical", async () => {
+test("VG01 Chicago 1887 text assets remain content-identical after LF/CRLF normalization", async () => {
   const files = [
     ["content/media-manifests/artworks/vg01/manifest.json", "b6ea17a1dfa70c060d99cab43d573c5bd9ea7fd0a3dd3e5e8ff20e0316794abb"],
     ["docs/production/migrations/vg01-r2.json", "e972bbfa3584dd1906790e6afba0bfa8028974fceecfff945412b46462bf9343"],
   ];
 
   for (const [path, sha256] of files) {
-    const content = await readFile(resolve(repositoryRoot, path));
+    const content = normalizeTextLineEndings(await readFile(resolve(repositoryRoot, path)));
     assert.equal(createHash("sha256").update(content).digest("hex"), sha256);
     assert.equal(content.includes(Buffer.from("vg02")), false);
   }
