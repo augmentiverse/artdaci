@@ -10,10 +10,10 @@
   "artworks": [
     { "id": "ld01", "artistId": "ld", "status": "active", "slug": "mona-lisa", "title": { "fr": "La Joconde", "en": "Mona Lisa" }, "manifest": { "status": "source-ready", "path": "artworks/ld01/manifest.json" } },
     { "id": "ld02", "artistId": "ld", "status": "active", "slug": "lady-with-an-ermine", "title": { "fr": "La Dame à l’hermine", "en": "Lady with an Ermine" }, "manifest": { "status": "source-ready", "path": "artworks/ld02/manifest.json" } },
-    { "id": "ld03", "artistId": "ld", "status": "active", "slug": "the-last-supper", "title": { "fr": "La Cène", "en": "The Last Supper" }, "manifest": { "status": "planned" } },
+    { "id": "ld03", "artistId": "ld", "status": "active", "slug": "the-last-supper", "title": { "fr": "La Cène", "en": "The Last Supper" }, "manifest": { "status": "source-ready", "path": "artworks/ld03/manifest.json" } },
     { "id": "ld04", "artistId": "ld", "status": "active", "slug": "annunciation", "title": { "fr": "L’Annonciation", "en": "Annunciation" }, "manifest": { "status": "planned" } },
     { "id": "ld05", "artistId": "ld", "status": "active", "slug": "ginevra-de-benci", "title": { "fr": "Ginevra de’ Benci", "en": "Ginevra de’ Benci" }, "manifest": { "status": "planned" } },
-    { "id": "ld06", "artistId": "ld", "status": "active", "slug": "la-belle-ferronniere", "title": { "fr": "La Belle Ferronnière", "en": "La Belle Ferronnière" }, "manifest": { "status": "planned" } },
+    { "id": "ld06", "artistId": "ld", "status": "active", "slug": "la-belle-ferronniere", "title": { "fr": "La Belle Ferronnière", "en": "La Belle Ferronnière" }, "manifest": { "status": "source-ready", "path": "artworks/ld06/manifest.json" } },
     { "id": "ld07", "artistId": "ld", "status": "reserved" },
     { "id": "ld08", "artistId": "ld", "status": "reserved" },
 

@@ -1,0 +1,35 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "ld03",
+  "slug": "the-last-supper",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "ld",
+    "name": { "fr": "Léonard de Vinci", "en": "Leonardo da Vinci", "ar": "ليوناردو دا فينشي" }
+  },
+  "artwork": {
+    "title": { "fr": "La Cène", "en": "The Last Supper", "ar": "العشاء الأخير" },
+    "date": "c. 1495–1498",
+    "museum": "Santa Maria delle Grazie",
+    "location": { "city": "Milan", "country": "Italy" }
+  },
+  "pageUrl": "https://artdaci.com/a/ld03",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/ld03/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {},
+    "audio": {
+      "overview": {
+        "en": { "scope": "artwork", "path": "audio/en/overview.mp3", "mimeType": "audio/mpeg", "available": true, "migrationStatus": "published", "bytes": 1562049, "sha256": "d8aecaa18aa4e9d0044b3850d46d1276466d0172f0f9288d9b4c0d76afa29a47", "language": "en" },
+        "fr": { "scope": "artwork", "path": "audio/fr/overview.mp3", "mimeType": "audio/mpeg", "available": true, "migrationStatus": "published", "bytes": 1516909, "sha256": "20e46834e5d7f9b0fb9e400e5cf289bc07c39ea5c30c5e701f1c181fd08491d9", "language": "fr" },
+        "ar": { "scope": "artwork", "path": "audio/ar/overview.mp3", "mimeType": "audio/mpeg", "available": true, "migrationStatus": "published", "bytes": 2068616, "sha256": "7af9655343434b2122d96d0926005ab13ba6f3b6de90778f755fc260527840c1", "language": "ar" }
+      }
+    },
+    "videos": {},
+    "models": {},
+    "ar": {}
+  },
+  "updatedAt": "2026-09-14"
+}

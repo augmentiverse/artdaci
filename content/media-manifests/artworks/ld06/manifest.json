@@ -1,0 +1,35 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "ld06",
+  "slug": "la-belle-ferronniere",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "ld",
+    "name": { "fr": "Léonard de Vinci", "en": "Leonardo da Vinci", "ar": "ليوناردو دا فينشي" }
+  },
+  "artwork": {
+    "title": { "fr": "La Belle Ferronnière", "en": "La Belle Ferronnière", "ar": "لا بيل فيرونيير" },
+    "date": "c. 1490–1497",
+    "museum": "Musée du Louvre",
+    "location": { "city": "Paris", "country": "France" }
+  },
+  "pageUrl": "https://artdaci.com/a/ld06",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/ld06/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {},
+    "audio": {
+      "overview": {
+        "en": { "scope": "artwork", "path": "audio/en/overview.mp3", "mimeType": "audio/mpeg", "available": true, "migrationStatus": "published", "bytes": 1649820, "sha256": "edea15919e9e4f5423aa3357c356f2c68c020a0fd1dbdb536b14429c55e3b645", "language": "en" },
+        "fr": { "scope": "artwork", "path": "audio/fr/overview.mp3", "mimeType": "audio/mpeg", "available": true, "migrationStatus": "published", "bytes": 1615548, "sha256": "5cfaffe79a589a1c00259da89d92d0bab1a1d06c471a239a31c5cb049ea9d9af", "language": "fr" },
+        "ar": { "scope": "artwork", "path": "audio/ar/overview.mp3", "mimeType": "audio/mpeg", "available": true, "migrationStatus": "published", "bytes": 1858800, "sha256": "15d9b6223b989702671972d47916f6f1177fb9143b222de5e1eca07950dbee67", "language": "ar" }
+      }
+    },
+    "videos": {},
+    "models": {},
+    "ar": {}
+  },
+  "updatedAt": "2026-09-14"
+}
