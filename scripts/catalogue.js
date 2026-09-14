@@ -40,6 +40,8 @@ const PRINT_PAGES = {
 const AUDIO_ARTWORK_IDS = Object.freeze({
   "mona-lisa": "ld01",
   "lady-with-an-ermine": "ld02",
+  "last-supper": "ld03",
+  "belle-ferronniere": "ld06",
   "vermeer-astronomer": "ve05",
   "vermeer-girl-with-a-pearl-earring": "ve01",
   "van-gogh": "vg01",

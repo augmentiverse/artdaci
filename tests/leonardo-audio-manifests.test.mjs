@@ -5,7 +5,11 @@ import test from "node:test";
 import { resolveArtworkAudioOverview } from "../scripts/artwork-media-manifest.js?leonardo-audio-test";
 
 const root = new URL("../", import.meta.url);
-const catalog = JSON.parse(await readFile(new URL("content/media-manifests/catalog.json", root), "utf8"));
+const [catalog, catalogueScript, printScript] = await Promise.all([
+  readFile(new URL("content/media-manifests/catalog.json", root), "utf8").then(JSON.parse),
+  readFile(new URL("scripts/catalogue.js", root), "utf8"),
+  readFile(new URL("scripts/print-artwork.js", root), "utf8"),
+]);
 const expected = {
   ld03: {
     slug: "the-last-supper",
@@ -84,5 +88,13 @@ test("the catalog exposes only the canonical ld03 and ld06 manifest paths", () =
       status: "source-ready",
       path: `artworks/${id}/manifest.json`,
     });
+  }
+});
+
+test("catalogue and generic print map both Leonardo slugs to their canonical IDs", () => {
+  for (const [slug, id] of [["last-supper", "ld03"], ["belle-ferronniere", "ld06"]]) {
+    const mapping = new RegExp(`"${slug}": "${id}"`);
+    assert.match(catalogueScript, mapping);
+    assert.match(printScript, mapping);
   }
 });

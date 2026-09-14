@@ -14,6 +14,8 @@ const MUSEUMS = {
 };
 const AUDIO_ARTWORK_IDS = Object.freeze({
   "lady-with-an-ermine": "ld02",
+  "last-supper": "ld03",
+  "belle-ferronniere": "ld06",
   "vermeer-astronomer": "ve05",
   "pont-d-argenteuil": "mo02",
 });
