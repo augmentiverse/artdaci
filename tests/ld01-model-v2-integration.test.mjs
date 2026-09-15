@@ -80,9 +80,9 @@ test("Spatial and VR defer the Mona Lisa GLB until interaction", () => {
   assert.match(vrSource, /if \(!initialModelLoadPromise\)/);
   assert.match(spaceSource, /"mona-lisa": "content\/paintings\/mona-lisa\.json\?v=5"/);
   assert.match(vrSource, /"mona-lisa": "content\/paintings\/mona-lisa\.json\?v=5"/);
-  assert.match(spaceHtml, /scripts\/space-viewer\.js\?v=33/);
+  assert.match(spaceHtml, /scripts\/space-viewer\.js\?v=34/);
   assert.match(vrHtml, /scripts\/vr-viewer\.js\?v=7/);
-  assert.match(arHtml, /scripts\/ar-viewer\.js\?v=52/);
+  assert.match(arHtml, /scripts\/ar-viewer\.js\?v=53/);
 });
 
 test("failed remote loads retain one controlled local fallback", () => {

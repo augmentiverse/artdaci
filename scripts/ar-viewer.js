@@ -50,7 +50,7 @@ const PAINTINGS = {
 };
 
 const MUSEUMS = {
-  "louvre": "content/museums/louvre.json?v=2",
+  "louvre": "content/museums/louvre.json?v=3",
   "mauritshuis": "content/museums/mauritshuis.json",
   "czartoryski": "content/museums/czartoryski.json",
   "orsay": "content/museums/orsay.json",

@@ -45,7 +45,7 @@ const paintingPayload = await fetch(SOURCES[slug] || SUPPLEMENTAL_SOURCE).then(r
 const manifest = Array.isArray(paintingPayload) ? paintingPayload.find((item) => item.slug === slug) : paintingPayload;
 if (!manifest) throw new Error(`Unknown painting: ${slug}`);
 const artistMuseum = manifest.artist?.name === "Leonardo da Vinci"
-  ? ["louvre", "content/museums/louvre.json"]
+  ? ["louvre", "content/museums/louvre.json?v=3"]
   : manifest.artist?.name === "Johannes Vermeer"
     ? ["mauritshuis", "content/museums/mauritshuis.json"]
     : manifest.artist?.name === "Vincent van Gogh"

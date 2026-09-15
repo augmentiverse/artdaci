@@ -1,5 +1,5 @@
 const PAGE_MUSEUMS = {
-  "print-target.html": ["louvre", "content/museums/louvre.json"], "print-target-fr.html": ["louvre", "content/museums/louvre.json"],
+  "print-target.html": ["louvre", "content/museums/louvre.json?v=3"], "print-target-fr.html": ["louvre", "content/museums/louvre.json?v=3"],
   "print-vermeer-girl-with-a-pearl-earring.html": ["mauritshuis", "content/museums/mauritshuis.json"], "print-vermeer-girl-with-a-pearl-earring-fr.html": ["mauritshuis", "content/museums/mauritshuis.json"],
   "print-van-gogh.html": ["van-gogh-museum", "content/museums/van-gogh-museum.json"], "print-van-gogh-fr.html": ["van-gogh-museum", "content/museums/van-gogh-museum.json"],
   "print-van-gogh-bedroom.html": ["van-gogh-museum", "content/museums/van-gogh-museum.json"], "print-van-gogh-bedroom-fr.html": ["van-gogh-museum", "content/museums/van-gogh-museum.json"]
@@ -13,7 +13,7 @@ const C = {
   ar: { eyebrow: "المتحف", intro: "تُحفظ هذه اللوحة في", note: "صورة المتحف المطبوعة في الكتاب هي هدف للواقع المعزز. استكشف عمارته عبر التجارب الثلاث.", vr: "واقع افتراضي", ar: "واقع معزز بالصورة", space: "واقع معزز مكاني" }
 }[lang];
 const target = document.querySelector(".catalogue-text");
-const arabicMuseum = filename === "print-ar.html" ? ({ "mona-lisa": ["louvre", "content/museums/louvre.json"], "vermeer-girl-with-a-pearl-earring": ["mauritshuis", "content/museums/mauritshuis.json"], "van-gogh": ["van-gogh-museum", "content/museums/van-gogh-museum.json"], "van-gogh-bedroom": ["van-gogh-museum", "content/museums/van-gogh-museum.json"] }[new URLSearchParams(location.search).get("painting")]) : null;
+const arabicMuseum = filename === "print-ar.html" ? ({ "mona-lisa": ["louvre", "content/museums/louvre.json?v=3"], "vermeer-girl-with-a-pearl-earring": ["mauritshuis", "content/museums/mauritshuis.json"], "van-gogh": ["van-gogh-museum", "content/museums/van-gogh-museum.json"], "van-gogh-bedroom": ["van-gogh-museum", "content/museums/van-gogh-museum.json"] }[new URLSearchParams(location.search).get("painting")]) : null;
 const selectedMuseum = PAGE_MUSEUMS[filename] || arabicMuseum;
 if (target && selectedMuseum) {
   const [slug, url] = selectedMuseum;

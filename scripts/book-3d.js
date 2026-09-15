@@ -22,7 +22,7 @@ const LIVING_BOOK_ARTWORKS = Object.freeze([
   { "canonicalId": "mo01", "slug": "monet-impression-sunrise", "bookOrder": 24 }
 ]);
 const MUSEUM_MANIFEST_URLS = ["louvre", "mauritshuis", "czartoryski", "orsay", "van-gogh-museum"]
-  .map((slug) => `content/museums/${slug}.json?v=1`);
+  .map((slug) => `content/museums/${slug}.json?v=2`);
 
 const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae";
 const LEONARDO_STUDIO_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/862ab5f6-8608-469c-a840-8cb10f3859ae";

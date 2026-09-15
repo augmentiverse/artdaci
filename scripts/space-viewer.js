@@ -15,7 +15,7 @@ const AUDIO_ARTWORK_IDS = {
   "vermeer-girl-with-a-pearl-earring": "ve01"
 };
 const MUSEUMS = {
-  "louvre": "content/museums/louvre.json?v=2",
+  "louvre": "content/museums/louvre.json?v=3",
   "mauritshuis": "content/museums/mauritshuis.json",
   "czartoryski": "content/museums/czartoryski.json",
   "orsay": "content/museums/orsay.json",
