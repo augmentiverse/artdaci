@@ -8,7 +8,7 @@ const SOURCES = {
 };
 const SUPPLEMENTAL_SOURCE = "content/paintings/additional-16.json";
 const MUSEUMS = {
-  "lady-with-an-ermine": ["czartoryski", "content/museums/czartoryski.json"],
+  "lady-with-an-ermine": ["czartoryski", "content/museums/czartoryski.json?v=2"],
   "view-of-delft": ["mauritshuis", "content/museums/mauritshuis.json"],
   "pont-d-argenteuil": ["orsay", "content/museums/orsay.json"]
 };

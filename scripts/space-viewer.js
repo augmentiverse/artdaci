@@ -17,7 +17,7 @@ const AUDIO_ARTWORK_IDS = {
 const MUSEUMS = {
   "louvre": "content/museums/louvre.json?v=3",
   "mauritshuis": "content/museums/mauritshuis.json",
-  "czartoryski": "content/museums/czartoryski.json",
+  "czartoryski": "content/museums/czartoryski.json?v=2",
   "orsay": "content/museums/orsay.json",
   "van-gogh-museum": "content/museums/van-gogh-museum.json"
 };

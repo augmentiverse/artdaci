@@ -203,9 +203,10 @@ const MUSEUM_ROOMS = [
   {
     id: "czartoryski",
     name: { en: "Czartoryski Museum", fr: "Musée Czartoryski", ar: "متحف تشارتوريسكي" },
-    plan: "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_building_plan_{lang}.png",
+    plan: "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_museum_legende.webp",
+    planLabel: { en: "MUSEUM OVERVIEW", fr: "PRÉSENTATION DU MUSÉE", ar: "نظرة عامة على المتحف" },
     timeline: "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_timeline/MNK-Czartoryski_timeline_{lang}.png",
-    facade: "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_façade.png", model: "assets/environments/gallery/models/museums/MNK-Czartoryski_museum_c3.glb", displaySize: 5.8,
+    facade: "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_façade.webp", model: "assets/environments/gallery/models/museums/MNK-Czartoryski_museum_c3.glb", displaySize: 5.8,
     colors: [0x3a2131, 0xd0a36a]
   },
   {
@@ -1092,7 +1093,7 @@ async function init() {
   if (isFiveMuseumsWing) {
     buildFiveMuseumsWing();
     startRenderLoop();
-    await Promise.all([...new Set([0, requestedMuseumIndex])].map(loadFiveMuseumsRoom));
+    await loadFiveMuseumsRoom(requestedMuseumIndex);
     if (!isLowPowerDevice) void preloadFiveMuseumsWing();
     await detectVR();
     status.textContent = text.ready;
@@ -1930,7 +1931,7 @@ async function loadFiveMuseumsRoom(index) {
           ["louvre-timeline", room.timeline, -0.5, centerZ + 7.91, Math.PI, lang === "fr" ? "CHRONOLOGIE" : lang === "ar" ? "الخط الزمني" : "TIMELINE", { maxWidth: 6.8, maxHeight: 3, positionY: 2.12, labelScale: 0.34, labelAbove: true, highDetail: true }]
         ]
       : [
-          ["plan", room.plan, -6.91, centerZ - 3.5, Math.PI / 2, lang === "fr" ? "PLAN DU BÂTIMENT" : lang === "ar" ? "مخطط المبنى" : "BUILDING PLAN", { maxWidth: 4.3, maxHeight: 2.35, positionY: 2.25, highDetail: true }],
+          ["plan", room.plan, -6.91, centerZ - 3.5, Math.PI / 2, room.planLabel?.[lang] || (lang === "fr" ? "PLAN DU BÂTIMENT" : lang === "ar" ? "مخطط المبنى" : "BUILDING PLAN"), { maxWidth: 4.3, maxHeight: 2.35, positionY: 2.25, highDetail: true }],
           ["timeline", room.timeline, -6.91, centerZ + 3, Math.PI / 2, lang === "fr" ? "CHRONOLOGIE" : lang === "ar" ? "الخط الزمني" : "TIMELINE", { maxWidth: 6.2, maxHeight: 3.45, positionY: 2.25, labelScale: 0.34, labelAbove: true, highDetail: true }],
           ["facade", room.facade, 6.91, centerZ - 0.15, -Math.PI / 2, lang === "fr" ? "FAÇADE DU MUSÉE" : lang === "ar" ? "واجهة المتحف" : "MUSEUM FACADE", { maxWidth: 6.8, maxHeight: 3.45, positionY: 2.25, labelScale: 0.34, labelAbove: true, highDetail: true, volumetric: true }]
         ];
@@ -1955,14 +1956,15 @@ async function loadFiveMuseumsRoom(index) {
 }
 
 async function loadMuseumArchitecturalModel(room, index, centerZ) {
-  if (!allowDecorative3DModels || !room.model) return null;
+  if (!room.model || webglContextLost) return null;
   if (index === 0) {
     const model = await addFurnitureModel({
       src: room.model,
       name: "museum-architecture-louvre",
       position: [0, 0.02, centerZ],
       rotationY: 0,
-      maxSize: 6.96
+      maxSize: 6.96,
+      essential: true
     });
     return model;
   }
@@ -1971,7 +1973,8 @@ async function loadMuseumArchitecturalModel(room, index, centerZ) {
     name: `museum-architecture-${room.id}`,
     position: [0, 0.02, centerZ],
     rotationY: Math.PI,
-    maxSize: room.displaySize || 5.8
+    maxSize: room.displaySize || 5.8,
+    essential: true
   });
 }
 
@@ -4102,8 +4105,8 @@ async function addPaintingsGalleryFurniture() {
   }
 }
 
-async function addFurnitureModel({ src, name, position, rotationY = 0, maxSize = 1.6, parent = scene }) {
-  if (!allowDecorative3DModels) return null;
+async function addFurnitureModel({ src, name, position, rotationY = 0, maxSize = 1.6, parent = scene, essential = false }) {
+  if (!essential && !allowDecorative3DModels) return null;
   try {
     if (!furnitureSourceCache.has(src)) {
       furnitureSourceCache.set(src, modelLoader.loadAsync(src).then((gltf) => gltf.scene));

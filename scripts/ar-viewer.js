@@ -52,7 +52,7 @@ const PAINTINGS = {
 const MUSEUMS = {
   "louvre": "content/museums/louvre.json?v=3",
   "mauritshuis": "content/museums/mauritshuis.json",
-  "czartoryski": "content/museums/czartoryski.json",
+  "czartoryski": "content/museums/czartoryski.json?v=2",
   "orsay": "content/museums/orsay.json",
   "van-gogh-museum": "content/museums/van-gogh-museum.json"
 };
@@ -1102,6 +1102,9 @@ function updateInterfaceFromManifest(manifest) {
   document.getElementById("panel-body").textContent = t("scanTarget")
     .replace("{artist}", artist ? `${artist} ` : "")
     .replace("{title}", title);
+  if (CONFIG.resourceType === "museum" && manifest.print?.imageTargetSource) {
+    document.getElementById("target-image-link").href = manifest.print.imageTargetSource;
+  }
 }
 
 async function startAR() {
