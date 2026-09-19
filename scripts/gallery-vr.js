@@ -203,10 +203,9 @@ const MUSEUM_ROOMS = [
   {
     id: "czartoryski",
     name: { en: "Czartoryski Museum", fr: "Musée Czartoryski", ar: "متحف تشارتوريسكي" },
-    plan: "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_museum_legende.webp",
-    planLabel: { en: "MUSEUM OVERVIEW", fr: "PRÉSENTATION DU MUSÉE", ar: "نظرة عامة على المتحف" },
-    timeline: "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_timeline/MNK-Czartoryski_timeline_{lang}.png",
-    facade: "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_façade.webp", model: "assets/environments/gallery/models/museums/MNK-Czartoryski_museum_c3.glb", displaySize: 5.8,
+    plan: "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_building_plan_{lang}.webp",
+    timeline: "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_timeline/MNK-Czartoryski_timeline_{lang}.webp",
+    facade: "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_façade.webp?v=2", model: "assets/environments/gallery/models/museums/MNK-Czartoryski_museum_c3.glb", displaySize: 5.8,
     colors: [0x3a2131, 0xd0a36a]
   },
   {

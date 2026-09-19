@@ -32,8 +32,13 @@ test("approved museum binaries and WebP files retain their exact identities", as
     ["assets/environments/gallery/models/museums/MNK-Czartoryski_museum_c3.glb", [22248884, "2DAF5196A050FAFFC5215067D584C5BFD3C5E76E0CD554755C60F3A42BF2545E"]],
     ["assets/targets/MNK-Czartoryski_museum.mind", [895695, "016E2CC4ED6B0C923EE133626B0DFA33FDA0FA57F9541FC66420A43A459804A0"]],
     ["assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_museum.webp", [303508, "9DA7D7E7B417CCA4C68B8387A73D5FCE28B58AF8DCCA9F39CD965390910BC3EA"]],
-    ["assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_museum_legende.webp", [316746, "20C800CD287B2EF71EE372E554C57FBB384DD63A9D9EC21668EC91E5B752740B"]],
-    ["assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_façade.webp", [339484, "F5C82FB4B714F03961F4412E9E6EF954ADB62FE01154019E751FEBE991DB37CF"]]
+    ["assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_building_plan_en.webp", [284860, "DDDA80E4648E5B30953F5A72E7631F1DEB2A730681984B0AC7905134754A91BA"]],
+    ["assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_building_plan_fr.webp", [341816, "DF27ADB3B1249D4FBA1800CDEEE3FD56FF83498CDBB68C058898125EAF71EFD4"]],
+    ["assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_building_plan_ar.webp", [309108, "8394635A75EFA679D409C9ABDEF0A05C3BA317E1BB5AEC606E92FF6526558496"]],
+    ["assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_timeline/MNK-Czartoryski_timeline_en.webp", [385566, "E6C68457EC58191D1F4E101D8821619FF8D17738EA5B69FF34BE1CB6445B52F0"]],
+    ["assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_timeline/MNK-Czartoryski_timeline_fr.webp", [384452, "CF11453F3400114DA617DDF8FA230A1A662D69A66D852745185C7223A59C10BA"]],
+    ["assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_timeline/MNK-Czartoryski_timeline_ar.webp", [354294, "863658CEFA677E7D3DB863ACDFC94EA4A7765D5FEB602C2C743A4530999F9AB7"]],
+    ["assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_façade.webp", [459698, "1A9A3AF773F712C6337495D597E691443F313B95B11E09A40B07E42F0006DE77"]]
   ]);
 
   for (const [path, [size, hash]] of expected) {
@@ -58,9 +63,10 @@ test("the Five Museums Wing loads each architectural model as essential room con
   assert.match(source, /name: "museum-architecture-louvre"[\s\S]*?rotationY: Math\.PI/);
   assert.match(source, /essential = false/);
   assert.match(source, /if \(!essential && !allowDecorative3DModels\) return null;/);
-  assert.match(source, /MNK-Czartoryski_museum_legende\.webp/);
-  assert.match(source, /MNK-Czartoryski_façade\.webp/);
-  assert.match(source, /planLabel: \{ en: "MUSEUM OVERVIEW", fr: "PRÉSENTATION DU MUSÉE", ar: "نظرة عامة على المتحف" \}/);
+  assert.match(source, /MNK-Czartoryski_building_plan_\{lang\}\.webp/);
+  assert.match(source, /MNK-Czartoryski_timeline_\{lang\}\.webp/);
+  assert.match(source, /MNK-Czartoryski_façade\.webp\?v=2/);
+  assert.doesNotMatch(source, /MNK-Czartoryski_museum_legende\.webp/);
 });
 
 test("museum configuration and viewer cache-busters activate the new media", async () => {
@@ -87,8 +93,8 @@ test("museum configuration and viewer cache-busters activate the new media", asy
   assert.match(arSource, /CONFIG\.resourceType === "museum" && manifest\.print\?\.imageTargetSource/);
   assert.match(arSource, /document\.getElementById\("target-image-link"\)\.href = manifest\.print\.imageTargetSource/);
   assert.match(spaceHtml, /space-viewer\.js\?v=35/);
-  assert.match(galleryHtml, /gallery-vr\.js\?v=151/);
-  assert.match(cinemaHtml, /gallery-vr\.js\?v=125/);
+  assert.match(galleryHtml, /gallery-vr\.js\?v=152/);
+  assert.match(cinemaHtml, /gallery-vr\.js\?v=126/);
   assert.match(bookHtml, /book-3d\.js\?v=35/);
   assert.match(printHtml, /print-artwork\.js\?v=7/);
   for (const source of indexes) assert.match(source, /content\/museums\/czartoryski\.json\?v=2/);
