@@ -81,6 +81,7 @@ const LOUVRE_BENCH_MODEL = "assets/environments/gallery/models/banc-louvre_c.glb
 const LIVING_BOOK_TABLE_MODEL = "assets/environments/gallery/models/table-w.glb";
 const LIVING_BOOK_MODEL = "assets/environments/gallery/models/book-artdaci_en.glb";
 const LIVING_BOOK_MODEL_LOW_POWER = "assets/environments/gallery/models/book-artdaci_en.glb";
+const LOUVRE_ARTDACI_BOOK_MODEL = "assets/environments/gallery/models/artdaci_book3d_v2.glb";
 const GROUP_EXHIBIT = {
   model: "assets/shared/groups/dvvm_selfy.glb",
   image: "assets/shared/groups/DVVM_Louvre.png"
@@ -2642,13 +2643,7 @@ function addLouvreGalleryFurniture() {
       maxSize: 1.25
     }));
   }
-  void addFurnitureModel({
-    src: "assets/environments/gallery/models/table-vitrine-w.glb",
-    name: "louvre-central-vitrine",
-    position: [0, 0, 3.9],
-    rotationY: 0,
-    maxSize: 1.55
-  });
+  void addLouvreArtdaciBookDisplay();
   void addFurnitureModel({
     src: "assets/environments/gallery/models/brochure_stand.glb",
     name: "louvre-information-stand",
@@ -2663,6 +2658,64 @@ function addLouvreGalleryFurniture() {
     rotationY: 0,
     maxSize: 2.9
   });
+}
+
+async function addLouvreArtdaciBookDisplay() {
+  const position = [0, 0, 3.9];
+  const table = await addFurnitureModel({
+    src: LIVING_BOOK_TABLE_MODEL,
+    name: "louvre-artdaci-book-table",
+    position,
+    rotationY: 0,
+    maxSize: 1.9,
+    essential: true,
+    collidable: true
+  });
+  if (!table) return null;
+
+  try {
+    table.updateMatrixWorld(true);
+    const tableBox = new THREE.Box3().setFromObject(table);
+    const tableCenter = tableBox.getCenter(new THREE.Vector3());
+
+    const gltf = await modelLoader.loadAsync(LOUVRE_ARTDACI_BOOK_MODEL);
+    const book = gltf.scene;
+    book.name = "louvre-artdaci-book3d-v2";
+    book.rotation.y = Math.PI;
+    book.updateMatrixWorld(true);
+
+    let bookBox = new THREE.Box3().setFromObject(book);
+    const bookSize = bookBox.getSize(new THREE.Vector3());
+    book.scale.setScalar(0.92 / Math.max(bookSize.x, bookSize.z, 0.001));
+    book.updateMatrixWorld(true);
+    bookBox = new THREE.Box3().setFromObject(book);
+    const bookCenter = bookBox.getCenter(new THREE.Vector3());
+
+    book.position.set(
+      tableCenter.x - bookCenter.x,
+      tableBox.max.y - bookBox.min.y + 0.012,
+      tableCenter.z - bookCenter.z
+    );
+    book.traverse((node) => {
+      if (!node.isMesh) return;
+      node.castShadow = !isQuestBrowser;
+      node.receiveShadow = true;
+      if (node.material?.map) {
+        node.material.map.anisotropy = isLowPowerDevice ? 2 : renderer.capabilities.getMaxAnisotropy();
+        node.material.map.needsUpdate = true;
+      }
+    });
+    scene.add(book);
+
+    const label = makeLabel(lang === "ar" ? "كتاب ARTDACI ثلاثي الأبعاد" : lang === "fr" ? "LIVRE ARTDACI 3D" : "ARTDACI 3D BOOK", { highDetail: true });
+    label.position.set(tableCenter.x, tableBox.max.y + 0.52, tableCenter.z - 0.72);
+    label.scale.set(1.65, 0.42, 1);
+    scene.add(label);
+    return book;
+  } catch (error) {
+    console.warn("The Louvre ARTDACI v2 book model could not be loaded.", error);
+    return null;
+  }
 }
 
 async function buildGroupExhibit() {
@@ -3941,7 +3994,7 @@ function createWallSign(message, position, rotationY, options = {}) {
   let wallFontSize = (options.compact
     ? (message.length > 28 ? 60 : message.length > 18 ? 68 : 76)
     : (message.length > 28 ? 88 : message.length > 18 ? 104 : 126)) * canvasScale;
-  const fontFamily = hasMenuEffect ? 'Georgia, "Times New Roman", serif' : '"Segoe UI Variable", "Segoe UI", Arial, sans-serif';
+  const fontFamily = lang === "ar" ? '"Segoe UI", Tahoma, Arial, sans-serif' : 'Georgia, "Times New Roman", serif';
   context.font = `${hasMenuEffect ? 600 : 700} ${wallFontSize}px ${fontFamily}`;
   const iconSpace = options.icon ? 250 * canvasScale : 0;
   while (context.measureText(message).width > canvas.width - (110 * canvasScale) - iconSpace) {
@@ -4662,7 +4715,8 @@ function buildReimaginedVideoExhibits() {
     position: [-5.92, 0, 34],
     rotationY: Math.PI * 1.5,
     maxSize: 3.05,
-    parent: cinema
+    parent: cinema,
+    essential: true
   });
   scene.add(cinema);
   setCinemaVideo(exhibit, 0, false);
@@ -4872,7 +4926,7 @@ async function addCinemaAudienceModels(cinema) {
 }
 
 function maybeLoadCinemaAudience() {
-  if (!allowDecorative3DModels || isIOSDevice) return;
+  if (!allowExhibit3DModels || isIOSDevice) return;
   if (!cinemaAudienceRoot || cinemaAudienceLoadPromise || performance.now() < cinemaAudienceReadyAt) return;
   const dx = visitor.position.x - CINEMA_ROOM_X;
   const dz = visitor.position.z - 34;
@@ -5769,33 +5823,46 @@ function makeLabel(message, options = {}) {
   const canvas = document.createElement("canvas");
   const logicalWidth = 1600;
   const logicalHeight = 400;
-  const labelScale = options.highDetail ? 1 : isLowPowerDevice ? 0.6 : 1;
+  const labelScale = options.highDetail ? 1 : isLowPowerDevice ? 0.65 : 1;
   canvas.width = logicalWidth * labelScale;
   canvas.height = logicalHeight * labelScale;
   const context = canvas.getContext("2d");
   context.scale(labelScale, labelScale);
-  context.fillStyle = "#101923";
+
+  const background = context.createLinearGradient(0, 0, logicalWidth, logicalHeight);
+  background.addColorStop(0, "#102c30");
+  background.addColorStop(1, "#08191d");
+  context.fillStyle = background;
   context.fillRect(0, 0, logicalWidth, logicalHeight);
-  context.strokeStyle = "#d3ae61";
+  context.strokeStyle = "#d5ad62";
   context.lineWidth = 10;
-  context.strokeRect(6, 6, logicalWidth - 12, logicalHeight - 12);
-  context.fillStyle = "#f8fbff";
-  context.textAlign = "center";
+  context.strokeRect(7, 7, logicalWidth - 14, logicalHeight - 14);
+  context.strokeStyle = "rgba(255, 235, 190, .35)";
+  context.lineWidth = 3;
+  context.strokeRect(24, 24, logicalWidth - 48, logicalHeight - 48);
+
   const lines = message.split("\n");
-  let titleSize = 84;
-  context.font = `650 ${titleSize}px "Segoe UI Variable", "Segoe UI", Arial, sans-serif`;
-  while (context.measureText(lines[0]).width > logicalWidth - 100 && titleSize > 54) {
-    titleSize -= 4;
-    context.font = `650 ${titleSize}px "Segoe UI Variable", "Segoe UI", Arial, sans-serif`;
+  const family = lang === "ar" ? '"Segoe UI", Tahoma, Arial, sans-serif' : 'Georgia, "Times New Roman", serif';
+  const displayTitle = lang === "ar" ? lines[0] : lines[0].toLocaleUpperCase(lang === "fr" ? "fr" : "en");
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  context.fillStyle = "#fff8e9";
+  let titleSize = 78;
+  context.font = `700 ${titleSize}px ${family}`;
+  while (context.measureText(displayTitle).width > logicalWidth - 150 && titleSize > 44) {
+    titleSize -= 3;
+    context.font = `700 ${titleSize}px ${family}`;
   }
-  context.fillText(lines[0], logicalWidth / 2, lines[1] ? 158 : 220);
-  context.font = '550 54px "Segoe UI Variable", "Segoe UI", Arial, sans-serif';
-  context.fillStyle = "#c8d5df";
-  context.fillText(lines[1] || "", logicalWidth / 2, 278);
+  context.fillText(displayTitle, logicalWidth / 2, lines[1] ? 145 : 205);
+  if (lines[1]) {
+    context.fillStyle = "#e5c47f";
+    context.font = `600 46px ${lang === "ar" ? family : 'Inter, "Segoe UI", Arial, sans-serif'}`;
+    context.fillText(lines[1], logicalWidth / 2, 285);
+  }
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.encoding = THREE.sRGBEncoding;
-  texture.anisotropy = isLowPowerDevice ? 1 : renderer.capabilities.getMaxAnisotropy();
+  texture.anisotropy = isLowPowerDevice ? 2 : renderer.capabilities.getMaxAnisotropy();
   return new THREE.Mesh(
     new THREE.PlaneGeometry(1.28, 0.32),
     new THREE.MeshBasicMaterial({ map: texture })
@@ -5857,33 +5924,52 @@ function makePeopleVideoCaption(title, width = 3.15) {
 function makeInformationPanel(painting, title) {
   const canvas = document.createElement("canvas");
   const logicalWidth = 1800;
-  const logicalHeight = 780;
-  const panelScale = isLowPowerDevice ? 0.4 : 1;
+  const logicalHeight = 820;
+  const panelScale = isQuestBrowser ? 0.65 : isLowPowerDevice ? 0.52 : 1;
   canvas.width = logicalWidth * panelScale;
   canvas.height = logicalHeight * panelScale;
   const context = canvas.getContext("2d");
   context.scale(panelScale, panelScale);
-  context.fillStyle = "#0f1822";
+
+  const background = context.createLinearGradient(0, 0, logicalWidth, logicalHeight);
+  background.addColorStop(0, "#102c30");
+  background.addColorStop(1, "#08191d");
+  context.fillStyle = background;
   context.fillRect(0, 0, logicalWidth, logicalHeight);
-  context.strokeStyle = "#d3ae61";
+  context.strokeStyle = "#d5ad62";
   context.lineWidth = 10;
   context.strokeRect(7, 7, logicalWidth - 14, logicalHeight - 14);
+  context.strokeStyle = "rgba(255, 235, 190, .35)";
+  context.lineWidth = 3;
+  context.strokeRect(24, 24, logicalWidth - 48, logicalHeight - 48);
 
+  const titleFamily = lang === "ar" ? '"Segoe UI", Tahoma, Arial, sans-serif' : 'Georgia, "Times New Roman", serif';
+  const displayTitle = lang === "ar" ? title : title.toLocaleUpperCase(lang === "fr" ? "fr" : "en");
   context.textAlign = "left";
-  context.fillStyle = "#e4bd6b";
-  context.font = '650 62px "Segoe UI Variable", "Segoe UI", Arial, sans-serif';
-  context.fillText(`${painting.artist?.name || ""} · ${painting.date || ""}`, 80, 122);
+  context.textBaseline = "middle";
+  context.fillStyle = "#fff8e9";
+  let titleSize = 72;
+  context.font = `700 ${titleSize}px ${titleFamily}`;
+  while (context.measureText(displayTitle).width > logicalWidth - 160 && titleSize > 44) {
+    titleSize -= 3;
+    context.font = `700 ${titleSize}px ${titleFamily}`;
+  }
+  context.fillText(displayTitle, 80, 105);
 
-  context.fillStyle = "#f4f7fa";
-  context.font = '500 54px "Segoe UI Variable", "Segoe UI", Arial, sans-serif';
+  context.fillStyle = "#e5c47f";
+  context.font = `600 42px ${lang === "ar" ? titleFamily : 'Inter, "Segoe UI", Arial, sans-serif'}`;
+  context.fillText(`${painting.artist?.name || ""} · ${painting.date || ""}`, 80, 190);
+
+  context.fillStyle = "#f8fbff";
+  context.font = `600 52px ${lang === "ar" ? titleFamily : 'Inter, "Segoe UI", Arial, sans-serif'}`;
   const body = PAINTING_INFO[lang]?.[painting.slug] || painting.texts?.curatorInsight || "";
-  drawWrappedText(context, body, 80, 245, logicalWidth - 160, 72, 7);
+  drawWrappedText(context, body, 80, 285, logicalWidth - 160, 68, 7);
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.encoding = THREE.sRGBEncoding;
-  texture.anisotropy = isLowPowerDevice ? 1 : renderer.capabilities.getMaxAnisotropy();
+  texture.anisotropy = isLowPowerDevice ? 2 : renderer.capabilities.getMaxAnisotropy();
   return new THREE.Mesh(
-    new THREE.PlaneGeometry(1, 0.433),
+    new THREE.PlaneGeometry(1, 0.456),
     new THREE.MeshBasicMaterial({ map: texture })
   );
 }

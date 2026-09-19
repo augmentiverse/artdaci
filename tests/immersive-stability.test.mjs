@@ -96,6 +96,22 @@ test("Quest locomotion supports free walking, floor teleport and collision-aware
   assert.match(gallerySource, /moveVisitorBy\(motion\.x, motion\.z\)/);
 });
 
+test("gallery text reuses the high-contrast People room typography on Quest", () => {
+  assert.match(gallerySource, /function makeLabel[\s\S]*?background\.addColorStop\(0, "#102c30"\)/);
+  assert.match(gallerySource, /function makeLabel[\s\S]*?Georgia, "Times New Roman", serif/);
+  assert.match(gallerySource, /function makeInformationPanel[\s\S]*?isQuestBrowser \? 0\.65/);
+  assert.match(gallerySource, /function makeInformationPanel[\s\S]*?texture\.anisotropy = isLowPowerDevice \? 2/);
+});
+
+test("Louvre and cinema restore their requested 3D presentation models", () => {
+  assert.match(gallerySource, /LOUVRE_ARTDACI_BOOK_MODEL = "assets\/environments\/gallery\/models\/artdaci_book3d_v2\.glb"/);
+  assert.match(gallerySource, /function addLouvreArtdaciBookDisplay\(\)/);
+  assert.match(gallerySource, /name: "louvre-artdaci-book-table"/);
+  assert.match(gallerySource, /name = "louvre-artdaci-book3d-v2"/);
+  assert.match(gallerySource, /name: "cinema-egypt-gateway"[\s\S]*?essential: true/);
+  assert.match(gallerySource, /function maybeLoadCinemaAudience\(\) \{\s*if \(!allowExhibit3DModels \|\| isIOSDevice\) return;/);
+});
+
 test("Living Book retains only the visible page window and cancels stale work", () => {
   assert.doesNotMatch(bookSource, /Promise\.all\(pages\.map\(createPageTexture\)\)/);
   assert.match(bookSource, /function getDesiredPageIndexes\(\)/);
