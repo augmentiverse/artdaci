@@ -93,8 +93,8 @@ test("museum configuration and viewer cache-busters activate the new media", asy
   assert.match(arSource, /CONFIG\.resourceType === "museum" && manifest\.print\?\.imageTargetSource/);
   assert.match(arSource, /document\.getElementById\("target-image-link"\)\.href = manifest\.print\.imageTargetSource/);
   assert.match(spaceHtml, /space-viewer\.js\?v=35/);
-  assert.match(galleryHtml, /gallery-vr\.js\?v=157/);
-  assert.match(cinemaHtml, /gallery-vr\.js\?v=131/);
+  assert.match(galleryHtml, /gallery-vr\.js\?v=158/);
+  assert.match(cinemaHtml, /gallery-vr\.js\?v=132/);
   assert.match(cinemaHtml, /<body class="screen-ui-collapsed" data-experience="cinema">/);
   assert.match(cinemaHtml, /id="gallery-ui-toggle"[\s\S]*?aria-expanded="false"[\s\S]*?>Menu<\/button>/);
   assert.match(cinemaHtml, /id="gallery-toolbar"/);

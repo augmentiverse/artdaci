@@ -134,6 +134,7 @@ test("cinema and gallery signage use the People Behind the Painters high-contras
   assert.match(gallerySource, /function paintCinemaPlaque[\s\S]*?background\.addColorStop\(0, "#102c30"\)/);
   assert.match(gallerySource, /buttonScale = isQuestBrowser \? 0\.75/);
   assert.match(gallerySource, /createWallSign\(destination\.label, \[19\.88,[\s\S]*?31\.15\]/);
+  assert.match(gallerySource, /addVirtualGuideStation\(\[19\.88, 1\.08, 31\.15\], -Math\.PI \/ 2/);
 });
 
 test("Living Book retains only the visible page window and cancels stale work", () => {

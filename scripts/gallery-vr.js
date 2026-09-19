@@ -1056,7 +1056,7 @@ async function init() {
     scene.add(new THREE.HemisphereLight(0xffecd2, 0x17202a, 1.1));
     addCinemaRoomArchitecture();
     addCinemaNavigationSigns();
-    addVirtualGuideStation([19.88, 1.08, 29.65], -Math.PI / 2, "the ARTDACI virtual cinema and its reimagined artist films");
+    addVirtualGuideStation([19.88, 1.08, 31.15], -Math.PI / 2, "the ARTDACI virtual cinema and its reimagined artist films");
     buildReimaginedVideoExhibits();
     startRenderLoop();
     status.textContent = text.ready;
