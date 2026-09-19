@@ -157,26 +157,35 @@ test("Louvre Living Book can be moved, rotated and placed on its side without le
   assert.match(gallerySource, /SHIFT \+ DRAG : TOURNER/);
 });
 
-test("Louvre paint studio provides drawable canvas, palette and Quest/screen painting controls", () => {
+test("Louvre paint studio provides advanced multi-tool painting on Quest, hands and screen", () => {
   assert.match(gallerySource, /function addLouvrePaintStudio\(\)/);
-  assert.match(gallerySource, /const background = "#f7f4ec"/);
+  assert.match(gallerySource, /canvas\.width = isLowPowerDevice \? 1024 : 1536/);
   assert.match(gallerySource, /new THREE\.CanvasTexture\(canvas\)/);
   assert.match(gallerySource, /board\.name = "louvre-paint-canvas"/);
   assert.match(gallerySource, /palette\.name = "louvre-paint-palette"/);
-  assert.match(gallerySource, /new THREE\.CircleGeometry\(1, 48\)/);
-  assert.doesNotMatch(gallerySource, /paletteShape\.absellipse/);
-  assert.match(gallerySource, /addLouvrePaintStudio\(\);[\s\S]*?await ensureLouvreMonaLisaWallModel\(\);/);
-  assert.match(gallerySource, /const brushSizes = \[8, 18, 32\]/);
-  assert.match(gallerySource, /type: "eraser"/);
+  assert.match(gallerySource, /const brushSizes = \[6, 12, 22, 36, 56\]/);
+  assert.match(gallerySource, /type: "tool", value: "brush"/);
+  assert.match(gallerySource, /type: "tool", value: "marker"/);
+  assert.match(gallerySource, /type: "tool", value: "eraser"/);
+  assert.match(gallerySource, /type: "undo"/);
+  assert.match(gallerySource, /type: "redo"/);
   assert.match(gallerySource, /type: "clear"/);
-  assert.match(gallerySource, /function paintLouvreCanvasAtUv\(uv\)/);
+  assert.match(gallerySource, /type: "save"/);
+  assert.match(gallerySource, /type: "background"/);
+  assert.match(gallerySource, /function undoLouvrePaintAction\(\)/);
+  assert.match(gallerySource, /function redoLouvrePaintAction\(\)/);
+  assert.match(gallerySource, /context\.quadraticCurveTo/);
+  assert.match(gallerySource, /toDataURL\("image\/png"\)/);
+  assert.match(gallerySource, /function updateLouvrePaintPointerPreview\(\)/);
+  assert.match(gallerySource, /function tryStartLouvrePaintingFromHand\(hand\)/);
+  assert.match(gallerySource, /hand\.addEventListener\("pinchend"/);
   assert.match(gallerySource, /function tryStartLouvrePainting\(controller\)/);
   assert.match(gallerySource, /controller\.addEventListener\("selectend", \(\) => stopLouvrePainting\(controller\)\)/);
   assert.match(gallerySource, /function tryBeginScreenPaint\(event\)/);
   assert.match(gallerySource, /function updateScreenPaint\(event\)/);
   assert.match(gallerySource, /function finishScreenPaint\(event\)/);
-  assert.match(gallerySource, /updateLouvrePaintingFromController\(\)/);
   assert.match(gallerySource, /louvre-paint-brush-/);
+  assert.match(gallerySource, /addLouvrePaintStudio\(\);[\s\S]*?\/\/ await ensureLouvreMonaLisaWallModel\(\);/);
 });
 
 test("Louvre Mona Lisa tableau uses the same free move and rotation controls as the Living Book", () => {
