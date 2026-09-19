@@ -117,6 +117,21 @@ test("Louvre and cinema restore their requested 3D presentation models", () => {
   assert.match(gallerySource, /function maybeLoadCinemaAudience\(\) \{\s*if \(!allowExhibit3DModels \|\| isIOSDevice\) return;/);
 });
 
+test("Louvre Living Book can be grabbed in Quest and dragged on screens without leaving the table", () => {
+  assert.match(gallerySource, /let louvreBookInteraction = null/);
+  assert.match(gallerySource, /assembly\.name = "louvre-artdaci-book-assembly"/);
+  assert.match(gallerySource, /function clampLouvreBookToTable\(\)/);
+  assert.match(gallerySource, /controller\.addEventListener\("squeezestart", \(\) => tryGrabLouvreBook\(controller\)\)/);
+  assert.match(gallerySource, /controller\.addEventListener\("squeezeend", \(\) => releaseLouvreBook\(controller\)\)/);
+  assert.match(gallerySource, /controller\.attach\(louvreBookInteraction\.assembly\)/);
+  assert.match(gallerySource, /scene\.attach\(louvreBookInteraction\.assembly\)/);
+  assert.match(gallerySource, /function tryBeginScreenBookDrag\(event\)/);
+  assert.match(gallerySource, /function updateScreenBookDrag\(event\)/);
+  assert.match(gallerySource, /function finishScreenBookDrag\(event\)/);
+  assert.match(gallerySource, /CLICK: OPEN · DRAG: MOVE/);
+  assert.match(gallerySource, /TRIGGER: OPEN · GRIP: MOVE/);
+});
+
 test("Quest navigation fully releases WebXR before changing gallery pages", () => {
   assert.match(gallerySource, /let pendingNavigationUrl = null/);
   assert.match(gallerySource, /document\.body\.dataset\.xrNavigation = "ending"/);
