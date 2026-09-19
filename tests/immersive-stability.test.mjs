@@ -78,6 +78,17 @@ test("constrained gallery streams non-visible rooms instead of preloading them a
   assert.match(gallerySource, /maybeLoadReimaginedPainter\(\);/);
 });
 
+test("Quest locomotion supports free walking, floor teleport and collision-aware movement", () => {
+  assert.match(gallerySource, /function moveVisitorBy\(deltaX, deltaZ\)/);
+  assert.match(gallerySource, /function isNavigablePosition\(x, z\)/);
+  assert.match(gallerySource, /function teleportToWalkableFloor\(raycaster\)/);
+  assert.match(gallerySource, /teleportRaycaster\.intersectObjects\(getWalkableFloorMeshes\(\), false\)/);
+  assert.match(gallerySource, /smoothTurnEnabled/);
+  assert.match(gallerySource, /registerCollisionRect\(x, z, width, 0\.12/);
+  assert.match(gallerySource, /collidable: true/);
+  assert.match(gallerySource, /moveVisitorBy\(motion\.x, motion\.z\)/);
+});
+
 test("Living Book retains only the visible page window and cancels stale work", () => {
   assert.doesNotMatch(bookSource, /Promise\.all\(pages\.map\(createPageTexture\)\)/);
   assert.match(bookSource, /function getDesiredPageIndexes\(\)/);

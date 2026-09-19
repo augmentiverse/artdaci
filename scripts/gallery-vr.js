@@ -465,6 +465,7 @@ const ARTIST_ROOMS = {
 
 const params = new URLSearchParams(location.search);
 const lang = ["en", "fr", "ar"].includes(params.get("lang")) ? params.get("lang") : "en";
+const smoothTurnEnabled = params.get("turn") === "smooth";
 const isCinemaOnly = document.body.dataset.experience === "cinema";
 const isQuestBrowser = /OculusBrowser|Meta Quest|Quest/i.test(navigator.userAgent);
 const isIOSDevice = /iP(hone|ad|od)/i.test(navigator.userAgent)
@@ -792,6 +793,7 @@ if (runtimeProfile.constrained) {
 }
 document.body.dataset.runtimeProfile = isLowPowerDevice ? "constrained" : "normal";
 document.body.dataset.exhibit3dModels = allowExhibit3DModels ? "enabled" : "disabled";
+document.body.dataset.turnMode = smoothTurnEnabled ? "smooth" : "snap";
 renderer.setPixelRatio(Math.min(devicePixelRatio, runtimeProfile.maxPixelRatio));
 renderer.setSize(innerWidth, innerHeight);
 renderer.outputEncoding = THREE.sRGBEncoding;
@@ -832,6 +834,8 @@ gazeReticle.renderOrder = 1000;
 gazeReticle.visible = false;
 camera.add(gazeReticle);
 const teleportTargets = [];
+const collisionRects = [];
+const WALKER_RADIUS = 0.34;
 const exhibits = [];
 const exhibitsBySlug = new Map();
 const galleryVideoExhibits = [];
@@ -1907,6 +1911,7 @@ function addFiveMuseumsPartitions() {
       const panel = new THREE.Mesh(new THREE.PlaneGeometry(width, 4.4), material);
       panel.position.set(x, 2.2, z);
       scene.add(panel);
+      registerCollisionRect(x, z, width, 0.12, 0.08, `museum-wall-${index}`);
     });
     if (hasDoor) {
       const lintel = new THREE.Mesh(new THREE.BoxGeometry(4, 1.05, 0.18), material);
@@ -1969,7 +1974,8 @@ async function loadMuseumArchitecturalModel(room, index, centerZ) {
       position: [0, 0.02, centerZ],
       rotationY: Math.PI,
       maxSize: 6.96,
-      essential: true
+      essential: true,
+      collidable: true
     });
     return model;
   }
@@ -1979,7 +1985,8 @@ async function loadMuseumArchitecturalModel(room, index, centerZ) {
     position: [0, 0.02, centerZ],
     rotationY: Math.PI,
     maxSize: room.displaySize || 5.8,
-    essential: true
+    essential: true,
+    collidable: true
   });
 }
 
@@ -2689,6 +2696,7 @@ async function buildGroupExhibit() {
     node.receiveShadow = true;
   });
   scene.add(model);
+  registerCollisionObject(model, 0.18, "group-exhibit");
   const light = new THREE.SpotLight(0xffe5bb, 1.2, 9, Math.PI / 4, 0.45);
   light.position.set(0, 4.1, 2.3);
   light.target = model;
@@ -2780,6 +2788,7 @@ async function addDedicatedArtistModel(item, centerZ, index, count) {
   label.scale.set(1.85, 0.56, 1);
   display.add(label);
   scene.add(display);
+  registerCollisionObject(display, 0.18, `artist-model-${item.src}`);
   const light = new THREE.SpotLight(0xffe6bd, 0.9, 7, Math.PI / 4.5, 0.5);
   light.position.set(x, 3.8, centerZ - 1.2);
   light.target = display;
@@ -2860,6 +2869,7 @@ function addConnectedMuseumPartitions() {
       const wall = new THREE.Mesh(new THREE.PlaneGeometry(width, 4.4), neutral);
       wall.position.set(x, 2.2, z);
       scene.add(wall);
+      registerCollisionRect(x, z, width, 0.12, 0.08, `connected-wall-${index}`);
     });
     if (hasDoor) {
       const lintel = new THREE.Mesh(new THREE.BoxGeometry(4, 1.05, 0.18), neutral);
@@ -2925,6 +2935,7 @@ async function ensureLouvreWallModel({ src, name, z, faceIntoRoom, warning }) {
       node.receiveShadow = true;
     });
     scene.add(model);
+    registerCollisionObject(model, 0.16, name);
     return model;
   })().catch((error) => {
     console.warn(warning, error);
@@ -4110,7 +4121,7 @@ async function addPaintingsGalleryFurniture() {
   }
 }
 
-async function addFurnitureModel({ src, name, position, rotationY = 0, maxSize = 1.6, parent = scene, essential = false }) {
+async function addFurnitureModel({ src, name, position, rotationY = 0, maxSize = 1.6, parent = scene, essential = false, collidable = false }) {
   if (!essential && !allowDecorative3DModels) return null;
   try {
     if (!furnitureSourceCache.has(src)) {
@@ -4134,6 +4145,7 @@ async function addFurnitureModel({ src, name, position, rotationY = 0, maxSize =
       node.receiveShadow = true;
     });
     parent.add(model);
+    if (collidable) registerCollisionObject(model, 0.22, name);
     return model;
   } catch (error) {
     console.warn(`Furniture unavailable: ${name}`, error);
@@ -5325,6 +5337,7 @@ async function addGalleryModel(exhibit, modelSrc) {
   scene.add(light);
 
   scene.add(display);
+  registerCollisionObject(display, 0.16, `artwork-model-${exhibit.painting.slug}`);
   exhibit.modelDisplay = display;
   const hotspot = createModelTeleportHotspot(exhibit, display);
   scene.add(hotspot);
@@ -5892,6 +5905,98 @@ function drawWrappedText(context, message, x, y, maxWidth, lineHeight, maxLines)
   if (lineNumber < maxLines) context.fillText(line, x, y + lineNumber * lineHeight);
 }
 
+function getLocomotionBounds() {
+  if (isFiveMuseumsWing) return { minX: -6.3, maxX: 6.3, minZ: -7.3, maxZ: 71.3 };
+  if (isConnectedMuseum) return { minX: -6.3, maxX: 6.3, minZ: -7.3, maxZ: 55.3 };
+  if (isModelMuseum) return { minX: -6.3, maxX: 6.3, minZ: -7.3, maxZ: 7.3 };
+  if (activeRoom === "people") return { minX: -6.45, maxX: 6.45, minZ: -8.35, maxZ: 8.35 };
+  if (activeRoom === "groups") return { minX: -6.3, maxX: 6.3, minZ: -7.3, maxZ: 7.3 };
+  if (activeRoom === "louvre") return { minX: -6.3, maxX: 6.3, minZ: -9.3, maxZ: 9.3 };
+  return { minX: -5.3, maxX: 19.3, minZ: -4.3, maxZ: 38.3 };
+}
+
+function registerCollisionRect(centerX, centerZ, width, depth, padding = 0.12, name = "") {
+  collisionRects.push({
+    minX: centerX - width / 2 - padding,
+    maxX: centerX + width / 2 + padding,
+    minZ: centerZ - depth / 2 - padding,
+    maxZ: centerZ + depth / 2 + padding,
+    name
+  });
+}
+
+function registerCollisionObject(object, padding = 0.22, name = object?.name || "") {
+  if (!object) return;
+  object.updateMatrixWorld(true);
+  const box = new THREE.Box3().setFromObject(object);
+  if (box.isEmpty()) return;
+  registerCollisionRect(
+    (box.min.x + box.max.x) / 2,
+    (box.min.z + box.max.z) / 2,
+    Math.max(box.max.x - box.min.x, 0.05),
+    Math.max(box.max.z - box.min.z, 0.05),
+    padding,
+    name
+  );
+}
+
+function isNavigablePosition(x, z) {
+  const bounds = getLocomotionBounds();
+  if (x < bounds.minX || x > bounds.maxX || z < bounds.minZ || z > bounds.maxZ) return false;
+  return !collisionRects.some((rect) => (
+    x + WALKER_RADIUS > rect.minX
+    && x - WALKER_RADIUS < rect.maxX
+    && z + WALKER_RADIUS > rect.minZ
+    && z - WALKER_RADIUS < rect.maxZ
+  ));
+}
+
+function moveVisitorBy(deltaX, deltaZ) {
+  const bounds = getLocomotionBounds();
+  const nextX = THREE.MathUtils.clamp(visitor.position.x + deltaX, bounds.minX, bounds.maxX);
+  if (isNavigablePosition(nextX, visitor.position.z)) visitor.position.x = nextX;
+  const nextZ = THREE.MathUtils.clamp(visitor.position.z + deltaZ, bounds.minZ, bounds.maxZ);
+  if (isNavigablePosition(visitor.position.x, nextZ)) visitor.position.z = nextZ;
+}
+
+function getWalkableFloorMeshes() {
+  const floors = [];
+  const normal = new THREE.Vector3();
+  const worldPosition = new THREE.Vector3();
+  const worldQuaternion = new THREE.Quaternion();
+  scene.traverse((node) => {
+    if (!node.isMesh || node.geometry?.type !== "PlaneGeometry") return;
+    const { width = 0, height = 0 } = node.geometry.parameters || {};
+    if (width < 10 || height < 8) return;
+    node.getWorldPosition(worldPosition);
+    if (Math.abs(worldPosition.y) > 0.12) return;
+    node.getWorldQuaternion(worldQuaternion);
+    normal.set(0, 0, 1).applyQuaternion(worldQuaternion);
+    if (Math.abs(normal.y) < 0.9) return;
+    floors.push(node);
+  });
+  return floors;
+}
+
+function teleportVisitorToPoint(point) {
+  if (!point || !isNavigablePosition(point.x, point.z)) return false;
+  visitor.updateMatrixWorld(true);
+  const head = renderer.xr.getCamera(camera).getWorldPosition(new THREE.Vector3());
+  const targetX = visitor.position.x + point.x - head.x;
+  const targetZ = visitor.position.z + point.z - head.z;
+  if (!isNavigablePosition(targetX, targetZ)) return false;
+  visitor.position.x = targetX;
+  visitor.position.z = targetZ;
+  visitor.position.y = 0;
+  selectNearestAudioGuide(true);
+  return true;
+}
+
+function teleportToWalkableFloor(raycaster) {
+  const hit = raycaster.intersectObjects(getWalkableFloorMeshes(), false)[0];
+  return Boolean(hit && teleportVisitorToPoint(hit.point));
+}
+
 function addControllers() {
   controllers.forEach((controller) => {
     const geometry = new THREE.BufferGeometry().setFromPoints([
@@ -5991,7 +6096,11 @@ function teleportFrom(controller) {
   teleportRaycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
   teleportRaycaster.ray.direction.set(0, 0, -1).applyMatrix4(rayRotation).normalize();
   const hit = teleportRaycaster.intersectObjects(teleportTargets, false)[0];
-  activateInteractionHit(hit);
+  if (hit) {
+    activateInteractionHit(hit);
+    return;
+  }
+  teleportToWalkableFloor(teleportRaycaster);
 }
 
 function interactFromHand(hand) {
@@ -6005,7 +6114,11 @@ function interactFromHand(hand) {
     .normalize();
   teleportRaycaster.set(origin, direction);
   const hit = teleportRaycaster.intersectObjects(teleportTargets, false)[0];
-  activateInteractionHit(hit);
+  if (hit) {
+    activateInteractionHit(hit);
+    return;
+  }
+  teleportToWalkableFloor(teleportRaycaster);
 }
 
 function activateInteractionHit(hit) {
@@ -6563,17 +6676,18 @@ function updateLocomotion(delta) {
     const y = gamepad.axes[gamepad.axes.length - 1] || 0;
 
     if (source.handedness === "left") {
-      visitor.position.addScaledVector(right, x * delta * 1.8);
-      visitor.position.addScaledVector(forward, -y * delta * 1.8);
-      const museumWing = isConnectedMuseum || isFiveMuseumsWing;
-      const peopleRoom = activeRoom === "people";
-      const modelRoom = isModelMuseum;
-      visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, museumWing ? -6.3 : modelRoom ? -6.3 : peopleRoom ? -6.45 : -5.3, museumWing ? 6.3 : modelRoom ? 6.3 : peopleRoom ? 6.45 : 19.3);
-      visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, museumWing ? -7.3 : modelRoom ? -7.3 : peopleRoom ? -8.35 : -4.3, isFiveMuseumsWing ? 71.3 : museumWing ? 55.3 : modelRoom ? 7.3 : peopleRoom ? 8.35 : 38.3);
+      const moveX = Math.abs(x) > 0.12 ? x : 0;
+      const moveY = Math.abs(y) > 0.12 ? y : 0;
+      const motion = new THREE.Vector3()
+        .addScaledVector(right, moveX * delta * 1.8)
+        .addScaledVector(forward, -moveY * delta * 1.8);
+      moveVisitorBy(motion.x, motion.z);
     }
 
     if (source.handedness === "right") {
-      if (Math.abs(x) > 0.72 && snapTurnReady) {
+      if (smoothTurnEnabled) {
+        if (Math.abs(x) > 0.16) visitor.rotation.y -= x * delta * 1.35;
+      } else if (Math.abs(x) > 0.72 && snapTurnReady) {
         visitor.rotation.y -= Math.sign(x) * Math.PI / 6;
         snapTurnReady = false;
       } else if (Math.abs(x) < 0.3) {
