@@ -3049,15 +3049,16 @@ async function ensureLouvreMonaLisaWallModel() {
       size = box.getSize(new THREE.Vector3());
     }
 
-    // Turn the painted face toward the room from the empty right rear wall.
-    model.rotation.y += -Math.PI / 2;
+    // Turn the painted face toward the room from the left wall, directly
+    // below the "Explore the Louvre in VR" sign.
+    model.rotation.y += Math.PI / 2;
     model.updateMatrixWorld(true);
     box = new THREE.Box3().setFromObject(model);
     size = box.getSize(new THREE.Vector3());
 
     const scale = Math.min(
-      1.65 / Math.max(size.x, size.z, 0.001),
-      2.05 / Math.max(size.y, 0.001)
+      1.55 / Math.max(size.x, size.z, 0.001),
+      1.75 / Math.max(size.y, 0.001)
     );
     model.scale.setScalar(scale);
     model.updateMatrixWorld(true);
@@ -3073,9 +3074,9 @@ async function ensureLouvreMonaLisaWallModel() {
 
     const assembly = new THREE.Group();
     assembly.name = "louvre-mona-lisa-tableau-assembly";
-    // The side wall is at x=7. Keep the tableau slightly inside the room,
-    // centered on the empty rear wall section instead of overlapping imagery.
-    assembly.position.set(6.72, 2.48, 7.22);
+    // The left wall is at x=-7. Mount the tableau slightly inside the room,
+    // centered directly below the Explore Louvre VR sign at z=7.15.
+    assembly.position.set(-6.72, 1.86, 7.15);
     scene.add(assembly);
     assembly.add(model);
     assembly.updateMatrixWorld(true);
@@ -3111,7 +3112,7 @@ async function ensureLouvreMonaLisaWallModel() {
     updateLouvreMonaLisaHintTransform();
 
     const light = new THREE.SpotLight(0xffe6bd, isQuestBrowser ? 0.72 : 0.95, 6, Math.PI / 5.5, 0.45);
-    light.position.set(4.75, 3.75, 7.22);
+    light.position.set(-4.75, 3.35, 7.15);
     light.target = model;
     scene.add(light, light.target);
 
