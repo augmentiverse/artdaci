@@ -155,6 +155,25 @@ test("Louvre Living Book can be moved, rotated and placed on its side without le
   assert.match(gallerySource, /SHIFT \+ DRAG : TOURNER/);
 });
 
+test("Louvre paint studio provides drawable canvas, palette and Quest/screen painting controls", () => {
+  assert.match(gallerySource, /function addLouvrePaintStudio\(\)/);
+  assert.match(gallerySource, /const background = "#f7f4ec"/);
+  assert.match(gallerySource, /new THREE\.CanvasTexture\(canvas\)/);
+  assert.match(gallerySource, /board\.name = "louvre-paint-canvas"/);
+  assert.match(gallerySource, /palette\.name = "louvre-paint-palette"/);
+  assert.match(gallerySource, /const brushSizes = \[8, 18, 32\]/);
+  assert.match(gallerySource, /type: "eraser"/);
+  assert.match(gallerySource, /type: "clear"/);
+  assert.match(gallerySource, /function paintLouvreCanvasAtUv\(uv\)/);
+  assert.match(gallerySource, /function tryStartLouvrePainting\(controller\)/);
+  assert.match(gallerySource, /controller\.addEventListener\("selectend", \(\) => stopLouvrePainting\(controller\)\)/);
+  assert.match(gallerySource, /function tryBeginScreenPaint\(event\)/);
+  assert.match(gallerySource, /function updateScreenPaint\(event\)/);
+  assert.match(gallerySource, /function finishScreenPaint\(event\)/);
+  assert.match(gallerySource, /updateLouvrePaintingFromController\(\)/);
+  assert.match(gallerySource, /louvre-paint-brush-/);
+});
+
 test("Louvre Mona Lisa tableau uses the same free move and rotation controls as the Living Book", () => {
   assert.match(gallerySource, /let louvreMonaLisaInteraction = null/);
   assert.match(gallerySource, /function tryGrabLouvreMonaLisa\(controller\)/);

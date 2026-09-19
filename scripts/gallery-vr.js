@@ -871,6 +871,9 @@ let louvreMonaLisaInteraction = null;
 let louvreMonaLisaGrab = null;
 let screenMonaLisaDrag = null;
 let louvreMonaLisaScreenHovered = false;
+let louvrePaintStudio = null;
+let louvrePaintController = null;
+let screenPaint = null;
 const narrationPlayer = new Audio();
 const musicPlayer = new Audio();
 const roomAmbiencePlayer = new Audio();
@@ -2352,6 +2355,7 @@ async function buildLouvreMuseumExhibits() {
     }
   );
   await ensureLouvreMonaLisaWallModel();
+  addLouvrePaintStudio();
 }
 
 function buildPeopleBehindPaintersRoom() {
@@ -2796,6 +2800,318 @@ async function addLouvreArtdaciBookDisplay() {
     console.warn("The Louvre ARTDACI v2 book model could not be loaded.", error);
     return null;
   }
+}
+
+function addLouvrePaintStudio() {
+  if (louvrePaintStudio || activeRoom !== "louvre") return louvrePaintStudio;
+
+  const canvas = document.createElement("canvas");
+  canvas.width = isLowPowerDevice ? 768 : 1024;
+  canvas.height = isLowPowerDevice ? 576 : 768;
+  const context = canvas.getContext("2d");
+  const background = "#f7f4ec";
+  context.fillStyle = background;
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.lineCap = "round";
+  context.lineJoin = "round";
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.encoding = THREE.sRGBEncoding;
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  texture.generateMipmaps = false;
+
+  // Empty right rear wall, opposite the movable Mona Lisa tableau.
+  const board = new THREE.Mesh(
+    new THREE.PlaneGeometry(3.2, 2.4),
+    new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide })
+  );
+  board.name = "louvre-paint-canvas";
+  board.position.set(6.76, 2.65, 7.15);
+  board.rotation.y = -Math.PI / 2;
+  board.userData.paintBoard = true;
+
+  const frame = new THREE.Mesh(
+    new THREE.BoxGeometry(0.12, 2.68, 3.48),
+    new THREE.MeshStandardMaterial({ color: 0x231912, roughness: 0.72, metalness: 0.06 })
+  );
+  frame.name = "louvre-paint-canvas-frame";
+  frame.position.set(6.88, 2.65, 7.15);
+
+  scene.add(frame, board);
+
+  createWallSign(
+    lang === "ar" ? "مرسم ARTDACI" : lang === "fr" ? "ATELIER DE PEINTURE ARTDACI" : "ARTDACI PAINT STUDIO",
+    [6.86, 4.18, 7.15],
+    -Math.PI / 2,
+    { width: 3.15, height: 0.42, accent: true, compact: true }
+  );
+
+  const paletteShape = new THREE.Shape();
+  paletteShape.absellipse(0, 0, 1.7, 0.43, 0, Math.PI * 2, false, 0);
+  const palette = new THREE.Mesh(
+    new THREE.ShapeGeometry(paletteShape, 32),
+    new THREE.MeshStandardMaterial({ color: 0x8b5f38, roughness: 0.76, metalness: 0.02, side: THREE.DoubleSide })
+  );
+  palette.name = "louvre-paint-palette";
+  palette.position.set(6.79, 1.05, 7.15);
+  palette.rotation.y = -Math.PI / 2;
+  scene.add(palette);
+
+  const controls = [];
+  const colors = [
+    { value: "#111111", three: 0x111111 },
+    { value: "#c62828", three: 0xc62828 },
+    { value: "#ef6c00", three: 0xef6c00 },
+    { value: "#f9a825", three: 0xf9a825 },
+    { value: "#2e7d32", three: 0x2e7d32 },
+    { value: "#1565c0", three: 0x1565c0 },
+    { value: "#6a1b9a", three: 0x6a1b9a },
+    { value: "#6d4c41", three: 0x6d4c41 }
+  ];
+  colors.forEach((color, index) => {
+    const swatch = new THREE.Mesh(
+      new THREE.CircleGeometry(0.115, 28),
+      new THREE.MeshBasicMaterial({ color: color.three, side: THREE.DoubleSide })
+    );
+    swatch.name = `louvre-paint-color-${index + 1}`;
+    swatch.position.set(6.735, 1.17, 5.92 + index * 0.35);
+    swatch.rotation.y = -Math.PI / 2;
+    swatch.userData.paintControl = { type: "color", value: color.value };
+    controls.push(swatch);
+    scene.add(swatch);
+  });
+
+  const brushSizes = [8, 18, 32];
+  brushSizes.forEach((value, index) => {
+    const radius = [0.055, 0.085, 0.12][index];
+    const sizeControl = new THREE.Mesh(
+      new THREE.CircleGeometry(radius, 24),
+      new THREE.MeshBasicMaterial({ color: 0xf5ead7, side: THREE.DoubleSide })
+    );
+    sizeControl.name = `louvre-paint-size-${value}`;
+    sizeControl.position.set(6.73, 0.76, 6.2 + index * 0.42);
+    sizeControl.rotation.y = -Math.PI / 2;
+    sizeControl.userData.paintControl = { type: "size", value };
+    controls.push(sizeControl);
+    scene.add(sizeControl);
+  });
+
+  const eraser = makeLabel(lang === "ar" ? "ممحاة" : lang === "fr" ? "GOMME" : "ERASER");
+  eraser.name = "louvre-paint-eraser";
+  eraser.position.set(6.72, 0.75, 7.65);
+  eraser.rotation.y = -Math.PI / 2;
+  eraser.scale.set(0.72, 0.38, 1);
+  eraser.userData.paintControl = { type: "eraser" };
+  controls.push(eraser);
+  scene.add(eraser);
+
+  const clear = makeLabel(lang === "ar" ? "مسح الكل" : lang === "fr" ? "EFFACER" : "CLEAR");
+  clear.name = "louvre-paint-clear";
+  clear.position.set(6.72, 0.75, 8.35);
+  clear.rotation.y = -Math.PI / 2;
+  clear.scale.set(0.72, 0.38, 1);
+  clear.userData.paintControl = { type: "clear" };
+  controls.push(clear);
+  scene.add(clear);
+
+  // Lightweight 3D brushes beside the palette.
+  [-0.34, 0, 0.34].forEach((offset, index) => {
+    const handle = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.022, 0.028, 0.62, 12),
+      new THREE.MeshStandardMaterial({ color: index === 1 ? 0x3b2a20 : 0x6b4328, roughness: 0.72 })
+    );
+    handle.name = `louvre-paint-brush-${index + 1}`;
+    handle.position.set(6.70, 0.46, 8.7 + offset);
+    handle.rotation.x = 0.3 + index * 0.16;
+    const tip = new THREE.Mesh(
+      new THREE.ConeGeometry(0.045, 0.16, 12),
+      new THREE.MeshStandardMaterial({ color: 0x2a201a, roughness: 0.9 })
+    );
+    tip.position.y = 0.38;
+    handle.add(tip);
+    scene.add(handle);
+  });
+
+  louvrePaintStudio = {
+    canvas,
+    context,
+    texture,
+    board,
+    controls,
+    interactionTargets: [...controls, board],
+    brushColor: "#111111",
+    brushSize: 18,
+    eraser: false,
+    background,
+    lastPoint: null,
+    colorControls: colors.map((color, index) => ({
+      value: color.value,
+      mesh: controls[index]
+    })),
+    sizeControls: brushSizes.map((value, index) => ({
+      value,
+      mesh: controls[colors.length + index]
+    }))
+  };
+  updateLouvrePaintControlVisuals();
+  return louvrePaintStudio;
+}
+
+function updateLouvrePaintControlVisuals() {
+  if (!louvrePaintStudio) return;
+  louvrePaintStudio.colorControls.forEach(({ value, mesh }) => {
+    const active = !louvrePaintStudio.eraser && value === louvrePaintStudio.brushColor;
+    mesh.scale.setScalar(active ? 1.32 : 1);
+  });
+  louvrePaintStudio.sizeControls.forEach(({ value, mesh }) => {
+    mesh.scale.setScalar(value === louvrePaintStudio.brushSize ? 1.35 : 1);
+  });
+}
+
+function setLouvrePaintStatus(label) {
+  if (!label) return;
+  status.textContent = label;
+}
+
+function applyLouvrePaintControl(control) {
+  if (!louvrePaintStudio || !control) return false;
+  if (control.type === "color") {
+    louvrePaintStudio.brushColor = control.value;
+    louvrePaintStudio.eraser = false;
+    setLouvrePaintStatus(lang === "ar" ? "تم اختيار لون الرسم." : lang === "fr" ? "Couleur sélectionnée." : "Paint colour selected.");
+  } else if (control.type === "size") {
+    louvrePaintStudio.brushSize = control.value;
+    setLouvrePaintStatus(lang === "ar" ? "تم تغيير حجم الفرشاة." : lang === "fr" ? "Taille du pinceau modifiée." : "Brush size changed.");
+  } else if (control.type === "eraser") {
+    louvrePaintStudio.eraser = true;
+    setLouvrePaintStatus(lang === "ar" ? "الممحاة مفعلة." : lang === "fr" ? "Gomme activée." : "Eraser active.");
+  } else if (control.type === "clear") {
+    louvrePaintStudio.context.fillStyle = louvrePaintStudio.background;
+    louvrePaintStudio.context.fillRect(0, 0, louvrePaintStudio.canvas.width, louvrePaintStudio.canvas.height);
+    louvrePaintStudio.lastPoint = null;
+    louvrePaintStudio.texture.needsUpdate = true;
+    setLouvrePaintStatus(lang === "ar" ? "تم مسح اللوحة." : lang === "fr" ? "Tableau effacé." : "Canvas cleared.");
+  } else {
+    return false;
+  }
+  updateLouvrePaintControlVisuals();
+  return true;
+}
+
+function paintLouvreCanvasAtUv(uv) {
+  if (!louvrePaintStudio || !uv) return false;
+  const { canvas, context } = louvrePaintStudio;
+  const point = {
+    x: THREE.MathUtils.clamp(uv.x, 0, 1) * canvas.width,
+    y: (1 - THREE.MathUtils.clamp(uv.y, 0, 1)) * canvas.height
+  };
+  const color = louvrePaintStudio.eraser ? louvrePaintStudio.background : louvrePaintStudio.brushColor;
+  context.strokeStyle = color;
+  context.fillStyle = color;
+  context.lineWidth = louvrePaintStudio.brushSize;
+  context.lineCap = "round";
+  context.lineJoin = "round";
+
+  if (louvrePaintStudio.lastPoint) {
+    context.beginPath();
+    context.moveTo(louvrePaintStudio.lastPoint.x, louvrePaintStudio.lastPoint.y);
+    context.lineTo(point.x, point.y);
+    context.stroke();
+  } else {
+    context.beginPath();
+    context.arc(point.x, point.y, Math.max(1, louvrePaintStudio.brushSize / 2), 0, Math.PI * 2);
+    context.fill();
+  }
+  louvrePaintStudio.lastPoint = point;
+  louvrePaintStudio.texture.needsUpdate = true;
+  return true;
+}
+
+function getLouvrePaintHit(raycaster, includeControls = true) {
+  if (!louvrePaintStudio) return null;
+  const targets = includeControls ? louvrePaintStudio.interactionTargets : [louvrePaintStudio.board];
+  return raycaster.intersectObjects(targets, false)[0] || null;
+}
+
+function tryStartLouvrePainting(controller) {
+  if (!louvrePaintStudio || louvrePaintController) return false;
+  setControllerRay(controller);
+  const hit = getLouvrePaintHit(teleportRaycaster, true);
+  if (!hit) return false;
+  const control = hit.object.userData.paintControl;
+  if (control) {
+    applyLouvrePaintControl(control);
+    return true;
+  }
+  if (hit.object !== louvrePaintStudio.board) return false;
+  louvrePaintController = controller;
+  louvrePaintStudio.lastPoint = null;
+  paintLouvreCanvasAtUv(hit.uv);
+  return true;
+}
+
+function updateLouvrePaintingFromController() {
+  if (!louvrePaintController || !louvrePaintStudio) return;
+  setControllerRay(louvrePaintController);
+  const hit = getLouvrePaintHit(teleportRaycaster, false);
+  if (!hit || hit.object !== louvrePaintStudio.board) {
+    louvrePaintStudio.lastPoint = null;
+    return;
+  }
+  paintLouvreCanvasAtUv(hit.uv);
+}
+
+function stopLouvrePainting(controller) {
+  if (!louvrePaintController || louvrePaintController !== controller) return false;
+  louvrePaintController = null;
+  if (louvrePaintStudio) louvrePaintStudio.lastPoint = null;
+  return true;
+}
+
+function tryBeginScreenPaint(event) {
+  if (currentSession || !louvrePaintStudio) return false;
+  screenPointerRay(event);
+  const hit = getLouvrePaintHit(teleportRaycaster, true);
+  if (!hit) return false;
+  const control = hit.object.userData.paintControl;
+  screenPaint = {
+    pointerId: event.pointerId,
+    controlOnly: Boolean(control)
+  };
+  renderer.domElement.setPointerCapture?.(event.pointerId);
+  if (control) {
+    applyLouvrePaintControl(control);
+    return true;
+  }
+  if (hit.object !== louvrePaintStudio.board) {
+    screenPaint = null;
+    return false;
+  }
+  louvrePaintStudio.lastPoint = null;
+  paintLouvreCanvasAtUv(hit.uv);
+  return true;
+}
+
+function updateScreenPaint(event) {
+  if (!screenPaint || event.pointerId !== screenPaint.pointerId || !louvrePaintStudio) return false;
+  if (screenPaint.controlOnly) return true;
+  screenPointerRay(event);
+  const hit = getLouvrePaintHit(teleportRaycaster, false);
+  if (!hit || hit.object !== louvrePaintStudio.board) {
+    louvrePaintStudio.lastPoint = null;
+    return true;
+  }
+  paintLouvreCanvasAtUv(hit.uv);
+  return true;
+}
+
+function finishScreenPaint(event) {
+  if (!screenPaint || event.pointerId !== screenPaint.pointerId) return false;
+  screenPaint = null;
+  if (louvrePaintStudio) louvrePaintStudio.lastPoint = null;
+  renderer.domElement.releasePointerCapture?.(event.pointerId);
+  return true;
 }
 
 async function buildGroupExhibit() {
@@ -6612,8 +6928,10 @@ function addControllers() {
     controller.add(line);
     controller.addEventListener("selectstart", () => {
       if (louvreBookGrab?.controller === controller || louvreMonaLisaGrab?.controller === controller) return;
+      if (tryStartLouvrePainting(controller)) return;
       teleportFrom(controller);
     });
+    controller.addEventListener("selectend", () => stopLouvrePainting(controller));
     controller.addEventListener("squeezestart", () => {
       if (tryGrabLouvreBook(controller)) return;
       tryGrabLouvreMonaLisa(controller);
@@ -6857,11 +7175,12 @@ function bindUI() {
     setLouvreMonaLisaHintVisible(false);
   });
   renderer.domElement.addEventListener("contextmenu", (event) => {
-    if (!louvreBookInteraction && !louvreMonaLisaInteraction) return;
+    if (!louvreBookInteraction && !louvreMonaLisaInteraction && !louvrePaintStudio) return;
     screenPointerRay(event);
     const onBook = Boolean(louvreBookInteraction && teleportRaycaster.intersectObject(louvreBookInteraction.hitTarget, false)[0]);
     const onMonaLisa = Boolean(louvreMonaLisaInteraction && teleportRaycaster.intersectObject(louvreMonaLisaInteraction.hitTarget, false)[0]);
-    if (onBook || onMonaLisa) event.preventDefault();
+    const onPaintStudio = Boolean(louvrePaintStudio && getLouvrePaintHit(teleportRaycaster, true));
+    if (onBook || onMonaLisa || onPaintStudio) event.preventDefault();
   });
   document.querySelectorAll("[data-move]").forEach((button) => {
     const direction = button.dataset.move;
@@ -6995,6 +7314,7 @@ function updateLibraryAudioButtons() {
 function beginScreenLook(event) {
   if (currentSession || event.target !== renderer.domElement) return;
   audioListener.context.resume().catch(() => {});
+  if (tryBeginScreenPaint(event)) return;
   if (tryBeginScreenBookDrag(event)) return;
   if (tryBeginScreenMonaLisaDrag(event)) return;
   screenLookPointer = event.pointerId;
@@ -7006,6 +7326,7 @@ function beginScreenLook(event) {
 
 function updateScreenLook(event) {
   if (currentSession) return;
+  if (updateScreenPaint(event)) return;
   if (updateScreenBookDrag(event)) return;
   if (updateScreenMonaLisaDrag(event)) return;
   updateLouvreBookScreenHover(event);
@@ -7022,6 +7343,7 @@ function updateScreenLook(event) {
 }
 
 function endScreenLook(event) {
+  if (finishScreenPaint(event)) return;
   if (finishScreenBookDrag(event)) return;
   if (finishScreenMonaLisaDrag(event)) return;
   if (event.pointerId !== screenLookPointer) return;
@@ -7463,6 +7785,7 @@ function render(now = performance.now()) {
   updateGazeNavigation(now);
   updateLouvreBookPointerHint();
   updateLouvreMonaLisaPointerHint();
+  updateLouvrePaintingFromController();
   const delta = Math.min(clock.getDelta(), 0.05);
   updateLocomotion(delta);
   updateScreenLocomotion(delta);
