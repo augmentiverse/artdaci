@@ -874,7 +874,10 @@ let louvreMonaLisaScreenHovered = false;
 let louvrePaintStudio = null;
 let louvrePaintController = null;
 let louvrePaintHand = null;
+let louvrePaintBrushGrab = null;
 let screenPaint = null;
+const louvrePaintTipWorld = new THREE.Vector3();
+const louvrePaintTipLocal = new THREE.Vector3();
 const narrationPlayer = new Audio();
 const musicPlayer = new Audio();
 const roomAmbiencePlayer = new Audio();
@@ -2805,6 +2808,111 @@ async function addLouvreArtdaciBookDisplay() {
   }
 }
 
+function createLouvrePaintBrushTool(spec, index) {
+  const brush = new THREE.Group();
+  brush.name = `louvre-paint-brush-${spec.id}`;
+
+  const handleMaterial = new THREE.MeshStandardMaterial({
+    color: spec.handleColor,
+    roughness: 0.46,
+    metalness: 0.03
+  });
+  const ferruleMaterial = new THREE.MeshStandardMaterial({
+    color: 0xc7c4bd,
+    roughness: 0.26,
+    metalness: 0.72
+  });
+  const bristleMaterial = new THREE.MeshStandardMaterial({
+    color: spec.bristleColor,
+    roughness: 0.93,
+    metalness: 0
+  });
+
+  const handle = new THREE.Mesh(
+    new THREE.CylinderGeometry(spec.handleRadius * 0.84, spec.handleRadius, 0.48, 24, 1, false),
+    handleMaterial
+  );
+  handle.name = `${brush.name}-handle`;
+  handle.rotation.x = Math.PI / 2;
+  handle.position.z = -0.13;
+  handle.castShadow = !isQuestBrowser;
+  brush.add(handle);
+
+  const endCap = new THREE.Mesh(
+    new THREE.SphereGeometry(spec.handleRadius * 0.88, 18, 12),
+    handleMaterial
+  );
+  endCap.position.z = 0.11;
+  brush.add(endCap);
+
+  const ferrule = new THREE.Mesh(
+    new THREE.CylinderGeometry(spec.ferruleRadius, spec.ferruleRadius * 0.94, 0.135, 24, 1, false),
+    ferruleMaterial
+  );
+  ferrule.rotation.x = Math.PI / 2;
+  ferrule.position.z = -0.435;
+  brush.add(ferrule);
+
+  [-0.372, -0.498].forEach((z) => {
+    const ring = new THREE.Mesh(
+      new THREE.TorusGeometry(spec.ferruleRadius * 0.98, 0.0045, 8, 24),
+      ferruleMaterial
+    );
+    ring.position.z = z;
+    brush.add(ring);
+  });
+
+  let bristles;
+  if (spec.shape === "flat") {
+    bristles = new THREE.Mesh(
+      new THREE.BoxGeometry(spec.bristleWidth, 0.022, 0.16),
+      bristleMaterial
+    );
+    bristles.position.z = -0.565;
+  } else {
+    bristles = new THREE.Mesh(
+      new THREE.ConeGeometry(spec.bristleWidth * 0.5, 0.17, 24, 1, false),
+      bristleMaterial
+    );
+    bristles.rotation.x = -Math.PI / 2;
+    bristles.position.z = -0.57;
+  }
+  bristles.name = `${brush.name}-bristles`;
+  brush.add(bristles);
+
+  const tip = new THREE.Object3D();
+  tip.name = `${brush.name}-tip`;
+  tip.position.set(0, 0, -0.655);
+  brush.add(tip);
+
+  const hitTarget = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.06, 0.07, 0.62, 12),
+    new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false })
+  );
+  hitTarget.name = `${brush.name}-grab-target`;
+  hitTarget.rotation.x = Math.PI / 2;
+  hitTarget.position.z = -0.18;
+  brush.add(hitTarget);
+
+  brush.position.set(6.59, 0.72 + (index % 2) * 0.08, 8.88 + index * 0.32);
+  brush.rotation.set(0.08 * (index - 1), -Math.PI / 2, index % 2 ? 0.08 : -0.08);
+  scene.add(brush);
+
+  const tool = {
+    id: spec.id,
+    group: brush,
+    tip,
+    hitTarget,
+    bristleMaterial,
+    baseBristleColor: spec.bristleColor,
+    brushSize: spec.brushSize,
+    homePosition: brush.position.clone(),
+    homeQuaternion: brush.quaternion.clone()
+  };
+  hitTarget.userData.paintBrush = tool;
+  return tool;
+}
+
 function makeLouvrePaintButton(label, z, control, scale = 0.5) {
   const button = makeLabel(label, { highDetail: true });
   button.position.set(6.72, 0.42, z);
@@ -2861,7 +2969,7 @@ function addLouvrePaintStudio() {
 
   const instruction = makeTransparentInteractionHint(
     currentSession || isQuestBrowser
-      ? (lang === "ar" ? "TRIGGER للرسم · اختر اللون والأداة · تراجع / إعادة" : lang === "fr" ? "TRIGGER : PEINDRE · COULEUR / OUTIL · ANNULER / RÉTABLIR" : "TRIGGER: PAINT · COLOR / TOOL · UNDO / REDO")
+      ? (lang === "ar" ? "GRIP: أمسك الفرشاة · TRIGGER + رأس الفرشاة للرسم" : lang === "fr" ? "GRIP : PRENDRE UN PINCEAU · TRIGGER + POINTE : PEINDRE" : "GRIP: PICK UP A BRUSH · TRIGGER + TIP: PAINT")
       : (lang === "ar" ? "اسحب للرسم · اختر اللون والأداة · تراجع / إعادة" : lang === "fr" ? "GLISSER : PEINDRE · COULEUR / OUTIL · ANNULER / RÉTABLIR" : "DRAG: PAINT · COLOR / TOOL · UNDO / REDO")
   );
   instruction.name = "louvre-paint-instructions";
@@ -2965,30 +3073,21 @@ function addLouvrePaintStudio() {
     scene.add(button);
   });
 
-  // Three visible 3D brushes complete the painter's workbench.
-  [-0.32, 0, 0.32].forEach((offset, index) => {
-    const brush = new THREE.Group();
-    brush.name = `louvre-paint-brush-${index + 1}`;
-    brush.position.set(6.66, 0.54, 9.35 + offset);
-    brush.rotation.x = 0.22 + index * 0.18;
+  // Museum-quality physical brushes: grab with GRIP and paint with the real 3D tip.
+  const brushRack = new THREE.Mesh(
+    new THREE.BoxGeometry(0.16, 0.16, 1.32),
+    new THREE.MeshStandardMaterial({ color: 0x5b3824, roughness: 0.58, metalness: 0.02 })
+  );
+  brushRack.name = "louvre-paint-brush-rack";
+  brushRack.position.set(6.72, 0.48, 9.34);
+  scene.add(brushRack);
 
-    const handle = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.02, 0.027, 0.58, 12),
-      new THREE.MeshStandardMaterial({ color: index === 1 ? 0x3d291e : 0x74482b, roughness: 0.72 })
-    );
-    const ferrule = new THREE.Mesh(
-      new THREE.CylinderGeometry(0.031, 0.031, 0.12, 12),
-      new THREE.MeshStandardMaterial({ color: 0x9f9b91, roughness: 0.4, metalness: 0.5 })
-    );
-    ferrule.position.y = 0.34;
-    const tip = new THREE.Mesh(
-      new THREE.ConeGeometry(0.04, 0.15, 12),
-      new THREE.MeshStandardMaterial({ color: 0x2a201a, roughness: 0.9 })
-    );
-    tip.position.y = 0.47;
-    brush.add(handle, ferrule, tip);
-    scene.add(brush);
-  });
+  const brushSpecs = [
+    { id: "detail", shape: "round", brushSize: 12, handleRadius: 0.027, ferruleRadius: 0.031, bristleWidth: 0.052, handleColor: 0x704329, bristleColor: 0x2b211a },
+    { id: "round", shape: "round", brushSize: 22, handleRadius: 0.031, ferruleRadius: 0.036, bristleWidth: 0.068, handleColor: 0x3d291e, bristleColor: 0x2a201a },
+    { id: "flat", shape: "flat", brushSize: 36, handleRadius: 0.034, ferruleRadius: 0.041, bristleWidth: 0.092, handleColor: 0x825032, bristleColor: 0x33251d }
+  ];
+  const brushes = brushSpecs.map(createLouvrePaintBrushTool);
 
   const preview = new THREE.Mesh(
     new THREE.CircleGeometry(1, 32),
@@ -3014,6 +3113,8 @@ function addLouvrePaintStudio() {
     board,
     controls,
     interactionTargets: [...controls, board],
+    brushes,
+    brushHitTargets: brushes.map((brush) => brush.hitTarget),
     brushColor: "#111111",
     brushSize: 22,
     tool: "brush",
@@ -3209,6 +3310,7 @@ function updateLouvrePaintControlVisuals() {
     : louvrePaintStudio.brushColor;
   louvrePaintStudio.preview.material.color.set(previewColor);
   louvrePaintStudio.preview.material.opacity = louvrePaintStudio.tool === "marker" ? 0.26 : 0.42;
+  updateLouvrePaintBrushVisuals();
 }
 
 function setLouvrePaintStatus(label) {
@@ -3261,6 +3363,88 @@ function applyLouvrePaintControl(control) {
   return true;
 }
 
+function updateLouvrePaintBrushVisuals() {
+  if (!louvrePaintStudio?.brushes) return;
+  louvrePaintStudio.brushes.forEach((brush) => {
+    const held = louvrePaintBrushGrab?.brush === brush;
+    brush.bristleMaterial.color.set(held ? louvrePaintStudio.brushColor : brush.baseBristleColor);
+    brush.group.scale.setScalar(held ? 1.04 : 1);
+  });
+}
+
+function tryGrabLouvrePaintBrush(controller) {
+  if (!louvrePaintStudio?.brushHitTargets?.length || louvrePaintBrushGrab) return false;
+  setControllerRay(controller);
+  const hit = teleportRaycaster.intersectObjects(louvrePaintStudio.brushHitTargets, false)[0];
+  const brush = hit?.object?.userData?.paintBrush;
+  if (!brush) return false;
+
+  controller.add(brush.group);
+  brush.group.position.set(0.025, -0.018, -0.08);
+  brush.group.rotation.set(-0.06, 0.04, 0);
+  brush.group.scale.setScalar(1.04);
+  controller.userData.artdaciRayLine && (controller.userData.artdaciRayLine.visible = false);
+  louvrePaintBrushGrab = { controller, brush };
+  louvrePaintStudio.tool = "brush";
+  louvrePaintStudio.brushSize = brush.brushSize;
+  finishLouvrePaintStroke();
+  updateLouvrePaintControlVisuals();
+  setLouvrePaintStatus(
+    lang === "ar"
+      ? "تم إمساك الفرشاة. المس اللوحة برأس الفرشاة واضغط TRIGGER للرسم."
+      : lang === "fr"
+        ? "Pinceau en main. Touchez la toile avec sa pointe et maintenez TRIGGER pour peindre."
+        : "Brush in hand. Touch the canvas with its tip and hold TRIGGER to paint."
+  );
+  return true;
+}
+
+function releaseLouvrePaintBrush(controller) {
+  if (!louvrePaintBrushGrab || louvrePaintBrushGrab.controller !== controller) return false;
+  stopLouvrePainting(controller);
+  const { brush } = louvrePaintBrushGrab;
+  louvrePaintBrushGrab = null;
+  scene.add(brush.group);
+  brush.group.position.copy(brush.homePosition);
+  brush.group.quaternion.copy(brush.homeQuaternion);
+  brush.group.scale.setScalar(1);
+  controller.userData.artdaciRayLine && (controller.userData.artdaciRayLine.visible = true);
+  updateLouvrePaintBrushVisuals();
+  setLouvrePaintStatus(
+    lang === "ar" ? "تمت إعادة الفرشاة إلى الحامل." : lang === "fr" ? "Pinceau replacé sur son support." : "Brush returned to its rack."
+  );
+  return true;
+}
+
+function getLouvrePaintBrushTipHit(maxDistance = 0.055) {
+  if (!louvrePaintStudio || !louvrePaintBrushGrab?.brush?.tip) return null;
+  const { board } = louvrePaintStudio;
+  louvrePaintBrushGrab.brush.tip.getWorldPosition(louvrePaintTipWorld);
+  louvrePaintTipLocal.copy(louvrePaintTipWorld);
+  board.worldToLocal(louvrePaintTipLocal);
+
+  const halfWidth = 3.45 / 2;
+  const halfHeight = 2.58 / 2;
+  if (Math.abs(louvrePaintTipLocal.z) > maxDistance) return null;
+  if (Math.abs(louvrePaintTipLocal.x) > halfWidth || Math.abs(louvrePaintTipLocal.y) > halfHeight) return null;
+
+  if (!louvrePaintStudio.tipHit) {
+    louvrePaintStudio.tipHit = {
+      object: board,
+      point: new THREE.Vector3(),
+      uv: new THREE.Vector2()
+    };
+  }
+  const hit = louvrePaintStudio.tipHit;
+  hit.uv.set(
+    louvrePaintTipLocal.x / 3.45 + 0.5,
+    louvrePaintTipLocal.y / 2.58 + 0.5
+  );
+  hit.point.set(louvrePaintTipLocal.x, louvrePaintTipLocal.y, 0);
+  board.localToWorld(hit.point);
+  return hit;
+}
+
 function paintLouvreCanvasAtUv(uv) {
   if (!louvrePaintStudio || !uv) return false;
   if (!louvrePaintStudio.activeStroke) return beginLouvrePaintStroke(uv);
@@ -3295,6 +3479,10 @@ function setLouvrePaintPreviewFromHit(hit) {
 
 function updateLouvrePaintPointerPreview() {
   if (!louvrePaintStudio || !currentSession) return;
+  if (louvrePaintBrushGrab) {
+    setLouvrePaintPreviewFromHit(getLouvrePaintBrushTipHit(0.12));
+    return;
+  }
   let hit = null;
   if (louvrePaintController) {
     setControllerRay(louvrePaintController);
@@ -3320,6 +3508,20 @@ function updateLouvrePaintScreenPreview(event) {
 
 function tryStartLouvrePainting(controller) {
   if (!louvrePaintStudio || louvrePaintController || louvrePaintHand) return false;
+
+  // When a physical brush is held, TRIGGER arms painting but the actual
+  // coordinates always come from the brush tip touching the canvas.
+  if (louvrePaintBrushGrab?.controller === controller) {
+    louvrePaintController = controller;
+    louvrePaintStudio.activeStroke = null;
+    const tipHit = getLouvrePaintBrushTipHit();
+    if (tipHit) {
+      paintLouvreCanvasAtUv(tipHit.uv);
+      setLouvrePaintPreviewFromHit(tipHit);
+    }
+    return true;
+  }
+
   setControllerRay(controller);
   const hit = getLouvrePaintHit(teleportRaycaster, true);
   if (!hit) return false;
@@ -3338,6 +3540,19 @@ function tryStartLouvrePainting(controller) {
 
 function updateLouvrePaintingFromController() {
   if (!louvrePaintController || !louvrePaintStudio) return;
+
+  if (louvrePaintBrushGrab?.controller === louvrePaintController) {
+    const tipHit = getLouvrePaintBrushTipHit();
+    if (!tipHit) {
+      finishLouvrePaintStroke();
+      setLouvrePaintPreviewFromHit(null);
+      return;
+    }
+    paintLouvreCanvasAtUv(tipHit.uv);
+    setLouvrePaintPreviewFromHit(tipHit);
+    return;
+  }
+
   setControllerRay(louvrePaintController);
   const hit = getLouvrePaintHit(teleportRaycaster, false);
   if (!hit || hit.object !== louvrePaintStudio.board) {
@@ -7288,6 +7503,8 @@ function addControllers() {
     ]);
     const line = new THREE.Line(geometry, new THREE.LineBasicMaterial({ color: 0xc7a45d }));
     line.scale.z = 8;
+    line.name = "artdaci-controller-ray";
+    controller.userData.artdaciRayLine = line;
     controller.add(line);
     controller.addEventListener("selectstart", () => {
       if (louvreBookGrab?.controller === controller || louvreMonaLisaGrab?.controller === controller) return;
@@ -7296,10 +7513,12 @@ function addControllers() {
     });
     controller.addEventListener("selectend", () => stopLouvrePainting(controller));
     controller.addEventListener("squeezestart", () => {
+      if (tryGrabLouvrePaintBrush(controller)) return;
       if (tryGrabLouvreBook(controller)) return;
       tryGrabLouvreMonaLisa(controller);
     });
     controller.addEventListener("squeezeend", () => {
+      if (releaseLouvrePaintBrush(controller)) return;
       if (releaseLouvreBook(controller)) return;
       releaseLouvreMonaLisa(controller);
     });
