@@ -846,6 +846,8 @@ const teleportRaycaster = new THREE.Raycaster();
 const rayRotation = new THREE.Matrix4();
 const clock = new THREE.Clock();
 let currentSession = null;
+let pendingNavigationUrl = null;
+let xrNavigationTimer = null;
 let snapTurnReady = true;
 let activeExhibit = null;
 let activeGalleryVideo = null;
@@ -3429,7 +3431,7 @@ function addCinemaNavigationSigns() {
   ];
   // Keep navigation in one compact vertical column, away from the music menu.
   destinations.forEach((destination, index) => {
-    createWallSign(destination.label, [19.88, 3.35 - index * 0.57, 29.65], -Math.PI / 2, {
+    createWallSign(destination.label, [19.35, 3.35 - index * 0.57, 29.65], -Math.PI / 2, {
       width: 2.35,
       height: 0.43,
       exitUrl: destination.url,
@@ -3968,7 +3970,7 @@ function formatMenuText(message, options = {}) {
 function createWallSign(message, position, rotationY, options = {}) {
   message = formatMenuText(message, options);
   const canvas = document.createElement("canvas");
-  const signResolution = options.highDetail ? 1600 : isFiveMuseumsWing && isLowPowerDevice ? 1280 : isLowPowerDevice ? 960 : 1600;
+  const signResolution = options.highDetail ? 1600 : isLowPowerDevice ? 1280 : 1600;
   canvas.width = signResolution;
   canvas.height = Math.round(signResolution * 0.3);
   const canvasScale = canvas.width / 1600;
@@ -3976,19 +3978,18 @@ function createWallSign(message, position, rotationY, options = {}) {
   const isExit = Boolean(options.exitUrl);
   const isTravel = Boolean(options.destination);
   const hasMenuEffect = options.peopleMenu || isExit || isTravel;
-  const menuPalette = navigationMenuPalette(position, options);
-  context.fillStyle = hasMenuEffect
-    ? menuPalette.background
-    : isExit ? "#712832" : isTravel ? "#0b5064" : options.accent ? "#1b354a" : "#0f1b26";
+  const background = context.createLinearGradient(0, 0, canvas.width, canvas.height);
+  background.addColorStop(0, "#102c30");
+  background.addColorStop(1, "#08191d");
+  context.fillStyle = background;
   context.fillRect(0, 0, canvas.width, canvas.height);
-  context.strokeStyle = hasMenuEffect ? menuPalette.border : "#e0bd73";
-  context.lineWidth = (hasMenuEffect ? 8 : 14) * canvasScale;
+  context.strokeStyle = "#d5ad62";
+  context.lineWidth = 10 * canvasScale;
   context.strokeRect(7 * canvasScale, 7 * canvasScale, canvas.width - 14 * canvasScale, canvas.height - 14 * canvasScale);
-  if (hasMenuEffect) {
-    context.lineWidth = 3 * canvasScale;
-    context.strokeRect(24 * canvasScale, 24 * canvasScale, canvas.width - 48 * canvasScale, canvas.height - 48 * canvasScale);
-  }
-  context.fillStyle = hasMenuEffect ? menuPalette.text : "#ffffff";
+  context.strokeStyle = "rgba(255, 235, 190, .35)";
+  context.lineWidth = 3 * canvasScale;
+  context.strokeRect(24 * canvasScale, 24 * canvasScale, canvas.width - 48 * canvasScale, canvas.height - 48 * canvasScale);
+  context.fillStyle = "#fff8e9";
   context.textAlign = "center";
   context.textBaseline = "middle";
   let wallFontSize = (options.compact
@@ -4011,9 +4012,10 @@ function createWallSign(message, position, rotationY, options = {}) {
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.encoding = THREE.sRGBEncoding;
-  texture.anisotropy = options.highDetail
-    ? Math.min(renderer.capabilities.getMaxAnisotropy(), isQuestBrowser ? 4 : 8)
-    : isLowPowerDevice ? 1 : renderer.capabilities.getMaxAnisotropy();
+  texture.anisotropy = Math.min(
+    renderer.capabilities.getMaxAnisotropy(),
+    isQuestBrowser ? 4 : isLowPowerDevice ? 2 : 8
+  );
   const signMaterial = new THREE.MeshBasicMaterial({
     map: texture,
     transparent: Boolean(options.subtle),
@@ -4729,35 +4731,20 @@ function localizedCinemaTitle(item) {
 
 function paintCinemaPlaque(context, width, height, label, heading = false) {
   label = lang === "ar" ? label : label.toLocaleUpperCase(lang === "fr" ? "fr" : "en");
-  const brass = context.createLinearGradient(0, 0, width, height);
-  brass.addColorStop(0, "#d6a24d");
-  brass.addColorStop(0.45, "#b87825");
-  brass.addColorStop(1, "#7b4313");
-  context.fillStyle = brass;
+  const background = context.createLinearGradient(0, 0, width, height);
+  background.addColorStop(0, "#102c30");
+  background.addColorStop(1, "#08191d");
+  context.fillStyle = background;
   context.fillRect(0, 0, width, height);
 
-  context.strokeStyle = "#4c280b";
-  context.lineWidth = 12;
+  context.strokeStyle = "#d5ad62";
+  context.lineWidth = 10;
   context.strokeRect(7, 7, width - 14, height - 14);
-  context.strokeStyle = "#e3b760";
-  context.lineWidth = 5;
-  context.strokeRect(19, 19, width - 38, height - 38);
-  context.strokeStyle = "rgba(62, 28, 4, .55)";
+  context.strokeStyle = "rgba(255, 235, 190, .35)";
   context.lineWidth = 3;
-  context.strokeRect(29, 29, width - 58, height - 58);
+  context.strokeRect(24, 24, width - 48, height - 48);
 
-  [[38, 38], [width - 38, 38], [38, height - 38], [width - 38, height - 38]].forEach(([x, y]) => {
-    const stud = context.createRadialGradient(x - 4, y - 4, 2, x, y, 14);
-    stud.addColorStop(0, "#f1ca77");
-    stud.addColorStop(0.45, "#a6651f");
-    stud.addColorStop(1, "#3a1c06");
-    context.fillStyle = stud;
-    context.beginPath();
-    context.arc(x, y, 14, 0, Math.PI * 2);
-    context.fill();
-  });
-
-  context.fillStyle = "#211307";
+  context.fillStyle = "#fff8e9";
   context.textAlign = "center";
   context.textBaseline = "middle";
   let size = heading ? 82 : label.length > 30 ? 34 : label.length > 18 ? 40 : 48;
@@ -4772,7 +4759,7 @@ function paintCinemaPlaque(context, width, height, label, heading = false) {
 
 function makeCinemaPlaqueLabel(message) {
   const canvas = document.createElement("canvas");
-  const scale = isLowPowerDevice ? 0.5 : 1;
+  const scale = isQuestBrowser ? 0.75 : isLowPowerDevice ? 0.65 : 1;
   canvas.width = 1200 * scale;
   canvas.height = 260 * scale;
   const context = canvas.getContext("2d");
@@ -4780,6 +4767,7 @@ function makeCinemaPlaqueLabel(message) {
   paintCinemaPlaque(context, 1200, 260, message, true);
   const texture = new THREE.CanvasTexture(canvas);
   texture.encoding = THREE.sRGBEncoding;
+  texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), isQuestBrowser ? 4 : 8);
   return new THREE.Mesh(
     new THREE.PlaneGeometry(1.28, 0.32),
     new THREE.MeshBasicMaterial({ map: texture })
@@ -4790,7 +4778,7 @@ function createCinemaButton(label, options) {
   const canvas = document.createElement("canvas");
   const logicalWidth = 900;
   const logicalHeight = 220;
-  const buttonScale = isLowPowerDevice ? 0.5 : 1;
+  const buttonScale = isQuestBrowser ? 0.75 : isLowPowerDevice ? 0.65 : 1;
   canvas.width = logicalWidth * buttonScale;
   canvas.height = logicalHeight * buttonScale;
   const context = canvas.getContext("2d");
@@ -4798,6 +4786,7 @@ function createCinemaButton(label, options) {
   paintCinemaPlaque(context, logicalWidth, logicalHeight, label);
   const texture = new THREE.CanvasTexture(canvas);
   texture.encoding = THREE.sRGBEncoding;
+  texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), isQuestBrowser ? 4 : 8);
   const faceMaterial = new THREE.MeshBasicMaterial({ map: texture });
   const button = new THREE.Mesh(
     new THREE.BoxGeometry(options.width, options.height, 0.08),
@@ -6242,11 +6231,44 @@ function activateInteractionHit(hit) {
 }
 
 async function exitGallery(url) {
+  if (!url || pendingNavigationUrl) return;
   stopAllAudioGuides();
   stopRoomAmbience();
-  galleryVideoExhibits.forEach((exhibit) => exhibit.video.pause());
-  if (currentSession) await currentSession.end();
-  location.href = url;
+  narrationPlayer.pause();
+  musicPlayer.pause();
+  roomAmbiencePlayer.pause();
+  galleryVideoExhibits.forEach((exhibit) => {
+    exhibit.video.pause();
+    exhibit.sound?.pause();
+  });
+
+  if (!currentSession) {
+    location.assign(url);
+    return;
+  }
+
+  pendingNavigationUrl = url;
+  document.body.dataset.xrNavigation = "ending";
+  enterButton.disabled = true;
+  status.textContent = lang === "ar"
+    ? "جارٍ الخروج من الواقع الافتراضي…"
+    : lang === "fr"
+      ? "Sortie du mode VR…"
+      : "Leaving VR…";
+
+  const session = currentSession;
+  try {
+    await session.end();
+  } catch (error) {
+    console.warn("WebXR session could not end cleanly before navigation.", error);
+    if (currentSession === session) currentSession = null;
+    const target = pendingNavigationUrl;
+    pendingNavigationUrl = null;
+    enterButton.disabled = false;
+    document.body.dataset.xrNavigation = "fallback";
+    clearTimeout(xrNavigationTimer);
+    xrNavigationTimer = setTimeout(() => location.assign(target), isQuestBrowser ? 500 : 0);
+  }
 }
 
 function bindUI() {
@@ -6507,7 +6529,19 @@ async function toggleVR() {
     currentSession.addEventListener("end", () => {
       currentSession = null;
       enterButton.textContent = text.enter;
+      enterButton.disabled = false;
       stopAllAudioGuides();
+      if (pendingNavigationUrl) {
+        const target = pendingNavigationUrl;
+        pendingNavigationUrl = null;
+        document.body.dataset.xrNavigation = "navigating";
+        clearTimeout(xrNavigationTimer);
+        xrNavigationTimer = setTimeout(() => {
+          location.assign(target);
+        }, isQuestBrowser ? 320 : 0);
+        return;
+      }
+      document.body.dataset.xrNavigation = "idle";
       visitor.position.set(isConnectedMuseum ? connectedStartX : previewPositionX, 0, isConnectedMuseum ? connectedStartZ : previewPositionZ);
       visitor.rotation.set(0, isConnectedMuseum ? connectedStartYaw : previewRotationY, 0);
     }, { once: true });
@@ -6845,6 +6879,7 @@ function render(now = performance.now()) {
 
 function disposeGalleryResources() {
   clearTimeout(webglRestoreTimer);
+  clearTimeout(xrNavigationTimer);
   const disposedTextures = new Set();
   const disposeMaterial = (material) => {
     if (!material) return;
