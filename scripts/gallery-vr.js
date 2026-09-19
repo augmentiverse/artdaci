@@ -79,6 +79,7 @@ const GALLERY_FURNITURE = [
 ];
 const LOUVRE_BENCH_MODEL = "assets/environments/gallery/models/banc-louvre_c.glb";
 const LIVING_BOOK_TABLE_MODEL = "assets/environments/gallery/models/table-w.glb";
+const LOUVRE_VITRINE_TABLE_MODEL = "assets/environments/gallery/models/table-vitrine-w.glb";
 const LIVING_BOOK_MODEL = "assets/environments/gallery/models/book-artdaci_en.glb";
 const LIVING_BOOK_MODEL_LOW_POWER = "assets/environments/gallery/models/book-artdaci_en.glb";
 const LOUVRE_ARTDACI_BOOK_MODEL = "assets/environments/gallery/models/artdaci_book3d_v2.glb";
@@ -2673,7 +2674,8 @@ function addLouvreGalleryFurniture() {
     name: "louvre-information-stand",
     position: [5.45, 0, -1.5],
     rotationY: -Math.PI / 2,
-    maxSize: 1.2
+    maxSize: 1.2,
+    essential: true
   });
   void addFurnitureModel({
     src: LOUVRE_BENCH_MODEL,
@@ -2685,21 +2687,34 @@ function addLouvreGalleryFurniture() {
 }
 
 async function addLouvreArtdaciBookDisplay() {
-  const position = [0, 0, 3.9];
-  const table = await addFurnitureModel({
+  const rearTablePosition = [0, 0, 3.9];
+  const vitrinePosition = [0, 0, 2.25];
+
+  const rearTable = await addFurnitureModel({
     src: LIVING_BOOK_TABLE_MODEL,
     name: "louvre-artdaci-book-table",
-    position,
+    position: rearTablePosition,
     rotationY: 0,
     maxSize: 1.9,
     essential: true,
     collidable: true
   });
-  if (!table) return null;
+
+  const vitrineTable = await addFurnitureModel({
+    src: LOUVRE_VITRINE_TABLE_MODEL,
+    name: "louvre-artdaci-book-vitrine",
+    position: vitrinePosition,
+    rotationY: 0,
+    maxSize: 1.8,
+    essential: true,
+    collidable: true
+  });
+
+  if (!rearTable || !vitrineTable) return null;
 
   try {
-    table.updateMatrixWorld(true);
-    const tableBox = new THREE.Box3().setFromObject(table);
+    vitrineTable.updateMatrixWorld(true);
+    const tableBox = new THREE.Box3().setFromObject(vitrineTable);
     const tableCenter = tableBox.getCenter(new THREE.Vector3());
 
     const gltf = await modelLoader.loadAsync(LOUVRE_ARTDACI_BOOK_MODEL);

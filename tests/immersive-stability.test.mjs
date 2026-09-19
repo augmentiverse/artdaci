@@ -109,6 +109,11 @@ test("Louvre and cinema restore their requested 3D presentation models", () => {
   assert.match(gallerySource, /LOUVRE_BUILDING_PLAN = "assets\/environments\/gallery\/images\/Louvre\/louvre_building_plan\/louvre_building_plan_\{lang\}\.png"/);
   assert.match(gallerySource, /function addLouvreArtdaciBookDisplay\(\)/);
   assert.match(gallerySource, /name: "louvre-artdaci-book-table"/);
+  assert.match(gallerySource, /LOUVRE_VITRINE_TABLE_MODEL = "assets\/environments\/gallery\/models\/table-vitrine-w\.glb"/);
+  assert.match(gallerySource, /name: "louvre-artdaci-book-vitrine"/);
+  assert.match(gallerySource, /vitrinePosition = \[0, 0, 2\.25\]/);
+  assert.match(gallerySource, /const tableBox = new THREE\.Box3\(\)\.setFromObject\(vitrineTable\)/);
+  assert.match(gallerySource, /name: "louvre-information-stand"[\s\S]*?essential: true/);
   assert.match(gallerySource, /name = "louvre-artdaci-book3d-v2"/);
   assert.match(gallerySource, /previewRoom === "louvre"[\s\S]*?\? 8\.4/);
   assert.match(gallerySource, /visitor\.position\.set\(0, 0, 8\.4\)/);
