@@ -863,6 +863,7 @@ let cinemaMusicIndex = 0;
 let louvreBookInteraction = null;
 let louvreBookGrab = null;
 let screenBookDrag = null;
+let louvreBookScreenHovered = false;
 const narrationPlayer = new Audio();
 const musicPlayer = new Audio();
 const roomAmbiencePlayer = new Audio();
@@ -2760,17 +2761,16 @@ async function addLouvreArtdaciBookDisplay() {
     };
 
     const interactionHint = isQuestBrowser
-      ? (lang === "ar" ? "اضغط للفتح · أمسك للتحريك" : lang === "fr" ? "TRIGGER : OUVRIR · GRIP : DÉPLACER" : "TRIGGER: OPEN · GRIP: MOVE")
+      ? (lang === "ar" ? "TRIGGER للفتح · GRIP للتحريك والتدوير" : lang === "fr" ? "TRIGGER : OUVRIR · GRIP : DÉPLACER / TOURNER" : "TRIGGER: OPEN · GRIP: MOVE / ROTATE")
       : (lang === "ar" ? "انقر للفتح · اسحب للتحريك" : lang === "fr" ? "CLIC : OUVRIR · GLISSER : DÉPLACER" : "CLICK: OPEN · DRAG: MOVE");
-    const label = makeLabel(
-      `${lang === "ar" ? "الكتاب الحي ARTDACI" : lang === "fr" ? "LIVING BOOK ARTDACI" : "ARTDACI LIVING BOOK"}\n${interactionHint}`,
-      { highDetail: true }
-    );
-    label.position.set(tableCenter.x, tableBox.max.y + 0.52, tableCenter.z - 0.72);
-    label.scale.set(1.85, 0.5, 1);
-    label.userData.exitUrl = `book-3d.html?lang=${lang}`;
-    teleportTargets.push(label);
-    scene.add(label);
+    const hint = makeLabel(interactionHint, { highDetail: true });
+    hint.name = "louvre-artdaci-book-hint";
+    hint.scale.set(1.18, 0.3, 1);
+    hint.visible = false;
+    hint.renderOrder = 1200;
+    scene.add(hint);
+    louvreBookInteraction.hint = hint;
+    updateLouvreBookHintTransform();
     return book;
   } catch (error) {
     console.warn("The Louvre ARTDACI v2 book model could not be loaded.", error);
@@ -6133,22 +6133,87 @@ function teleportToWalkableFloor(raycaster) {
 
 function clampLouvreBookToTable() {
   if (!louvreBookInteraction) return;
-  const { assembly, tableBounds, tableTopY, halfHeight, footprintRadius } = louvreBookInteraction;
+  const { assembly, book, tableBounds, tableTopY } = louvreBookInteraction;
   const margin = 0.06;
-  assembly.rotation.x = 0;
-  assembly.rotation.z = 0;
-  assembly.position.x = THREE.MathUtils.clamp(
-    assembly.position.x,
-    tableBounds.min.x + footprintRadius + margin,
-    tableBounds.max.x - footprintRadius - margin
-  );
-  assembly.position.z = THREE.MathUtils.clamp(
-    assembly.position.z,
-    tableBounds.min.z + footprintRadius + margin,
-    tableBounds.max.z - footprintRadius - margin
-  );
-  assembly.position.y = tableTopY + halfHeight;
+
   assembly.updateMatrixWorld(true);
+  let box = new THREE.Box3().setFromObject(book);
+  // Preserve the visitor's full rotation, including a book resting on its side.
+  assembly.position.y += tableTopY - box.min.y;
+  assembly.updateMatrixWorld(true);
+  box = new THREE.Box3().setFromObject(book);
+
+  const minOffsetX = box.min.x - assembly.position.x;
+  const maxOffsetX = box.max.x - assembly.position.x;
+  const minOffsetZ = box.min.z - assembly.position.z;
+  const maxOffsetZ = box.max.z - assembly.position.z;
+  const allowedMinX = tableBounds.min.x + margin - minOffsetX;
+  const allowedMaxX = tableBounds.max.x - margin - maxOffsetX;
+  const allowedMinZ = tableBounds.min.z + margin - minOffsetZ;
+  const allowedMaxZ = tableBounds.max.z - margin - maxOffsetZ;
+
+  assembly.position.x = allowedMinX <= allowedMaxX
+    ? THREE.MathUtils.clamp(assembly.position.x, allowedMinX, allowedMaxX)
+    : (tableBounds.min.x + tableBounds.max.x) / 2;
+  assembly.position.z = allowedMinZ <= allowedMaxZ
+    ? THREE.MathUtils.clamp(assembly.position.z, allowedMinZ, allowedMaxZ)
+    : (tableBounds.min.z + tableBounds.max.z) / 2;
+
+  assembly.updateMatrixWorld(true);
+  box = new THREE.Box3().setFromObject(book);
+  assembly.position.y += tableTopY - box.min.y;
+  assembly.updateMatrixWorld(true);
+  updateLouvreBookHintTransform();
+}
+
+function setLouvreBookHintVisible(visible) {
+  if (!louvreBookInteraction?.hint) return;
+  louvreBookInteraction.hint.visible = Boolean(visible && !louvreBookGrab);
+}
+
+function updateLouvreBookHintTransform() {
+  if (!louvreBookInteraction?.hint || !louvreBookInteraction?.book) return;
+  const box = new THREE.Box3().setFromObject(louvreBookInteraction.book);
+  if (box.isEmpty()) return;
+  const center = box.getCenter(new THREE.Vector3());
+  const hint = louvreBookInteraction.hint;
+  hint.position.set(center.x, box.max.y + 0.16, center.z);
+  const activeCamera = currentSession ? renderer.xr.getCamera(camera) : camera;
+  hint.quaternion.copy(activeCamera.getWorldQuaternion(new THREE.Quaternion()));
+}
+
+function updateLouvreBookPointerHint() {
+  if (!louvreBookInteraction || louvreBookGrab) {
+    setLouvreBookHintVisible(false);
+    return;
+  }
+
+  if (!currentSession) {
+    setLouvreBookHintVisible(louvreBookScreenHovered);
+    updateLouvreBookHintTransform();
+    return;
+  }
+
+  let pointed = false;
+  for (const controller of controllers) {
+    setControllerRay(controller);
+    if (teleportRaycaster.intersectObject(louvreBookInteraction.hitTarget, false)[0]) {
+      pointed = true;
+      break;
+    }
+  }
+  setLouvreBookHintVisible(pointed || gazeTarget === louvreBookInteraction.hitTarget);
+  updateLouvreBookHintTransform();
+}
+
+function updateLouvreBookScreenHover(event) {
+  if (currentSession || !louvreBookInteraction || screenBookDrag) return;
+  screenPointerRay(event);
+  louvreBookScreenHovered = Boolean(
+    teleportRaycaster.intersectObject(louvreBookInteraction.hitTarget, false)[0]
+  );
+  setLouvreBookHintVisible(louvreBookScreenHovered);
+  updateLouvreBookHintTransform();
 }
 
 function setLouvreBookInteractionStatus(messageKey) {
@@ -6174,6 +6239,7 @@ function tryGrabLouvreBook(controller) {
 
   controller.attach(louvreBookInteraction.assembly);
   louvreBookGrab = { controller };
+  setLouvreBookHintVisible(false);
   louvreBookInteraction.hitTarget.userData.exitUrl = null;
   louvreBookInteraction.assembly.scale.setScalar(1.03);
   setLouvreBookInteractionStatus("grabbed");
@@ -6186,7 +6252,9 @@ function releaseLouvreBook(controller) {
   louvreBookInteraction.assembly.scale.setScalar(1);
   louvreBookInteraction.hitTarget.userData.exitUrl = `book-3d.html?lang=${lang}`;
   louvreBookGrab = null;
+  louvreBookScreenHovered = false;
   clampLouvreBookToTable();
+  setLouvreBookHintVisible(false);
   setLouvreBookInteractionStatus("placed");
   return true;
 }
@@ -6206,15 +6274,17 @@ function tryBeginScreenBookDrag(event) {
   const hit = teleportRaycaster.intersectObject(louvreBookInteraction.hitTarget, false)[0];
   if (!hit) return false;
 
-  const { assembly, tableTopY, halfHeight } = louvreBookInteraction;
+  const { assembly } = louvreBookInteraction;
   screenBookDrag = {
     pointerId: event.pointerId,
     startX: event.clientX,
     startY: event.clientY,
     moved: false,
+    rotateMode: event.shiftKey || event.altKey || event.button === 2,
+    startRotation: assembly.rotation.clone(),
     offsetX: assembly.position.x - hit.point.x,
     offsetZ: assembly.position.z - hit.point.z,
-    plane: new THREE.Plane(new THREE.Vector3(0, 1, 0), -(tableTopY + halfHeight))
+    plane: new THREE.Plane(new THREE.Vector3(0, 1, 0), -assembly.position.y)
   };
   renderer.domElement.setPointerCapture?.(event.pointerId);
   return true;
@@ -6226,10 +6296,22 @@ function updateScreenBookDrag(event) {
   if (distance > 6) screenBookDrag.moved = true;
   if (!screenBookDrag.moved) return true;
 
+  const { assembly } = louvreBookInteraction;
+  if (screenBookDrag.rotateMode) {
+    const dx = event.clientX - screenBookDrag.startX;
+    const dy = event.clientY - screenBookDrag.startY;
+    assembly.rotation.set(
+      screenBookDrag.startRotation.x + dy * 0.012,
+      screenBookDrag.startRotation.y + dx * 0.012,
+      screenBookDrag.startRotation.z + dx * 0.004
+    );
+    clampLouvreBookToTable();
+    return true;
+  }
+
   screenPointerRay(event);
   const point = new THREE.Vector3();
   if (!teleportRaycaster.ray.intersectPlane(screenBookDrag.plane, point)) return true;
-  const { assembly } = louvreBookInteraction;
   assembly.position.x = point.x + screenBookDrag.offsetX;
   assembly.position.z = point.z + screenBookDrag.offsetZ;
   clampLouvreBookToTable();
@@ -6240,6 +6322,8 @@ function finishScreenBookDrag(event) {
   if (!screenBookDrag || event.pointerId !== screenBookDrag.pointerId || !louvreBookInteraction) return false;
   const moved = screenBookDrag.moved;
   screenBookDrag = null;
+  louvreBookScreenHovered = false;
+  setLouvreBookHintVisible(false);
   renderer.domElement.releasePointerCapture?.(event.pointerId);
   clampLouvreBookToTable();
   if (moved) {
@@ -6492,6 +6576,15 @@ function bindUI() {
   renderer.domElement.addEventListener("pointermove", updateScreenLook);
   renderer.domElement.addEventListener("pointerup", endScreenLook);
   renderer.domElement.addEventListener("pointercancel", endScreenLook);
+  renderer.domElement.addEventListener("pointerleave", () => {
+    louvreBookScreenHovered = false;
+    setLouvreBookHintVisible(false);
+  });
+  renderer.domElement.addEventListener("contextmenu", (event) => {
+    if (!louvreBookInteraction) return;
+    screenPointerRay(event);
+    if (teleportRaycaster.intersectObject(louvreBookInteraction.hitTarget, false)[0]) event.preventDefault();
+  });
   document.querySelectorAll("[data-move]").forEach((button) => {
     const direction = button.dataset.move;
     const start = (event) => { event.preventDefault(); screenMove.add(direction); };
@@ -6635,6 +6728,7 @@ function beginScreenLook(event) {
 function updateScreenLook(event) {
   if (currentSession) return;
   if (updateScreenBookDrag(event)) return;
+  updateLouvreBookScreenHover(event);
   if (event.pointerId !== screenLookPointer) return;
   const dx = event.clientX - screenLookX;
   const dy = event.clientY - screenLookY;
@@ -7073,6 +7167,7 @@ function render(now = performance.now()) {
   maybeLoadLivingBookAssets();
   updateHandVisuals();
   updateGazeNavigation(now);
+  updateLouvreBookPointerHint();
   const delta = Math.min(clock.getDelta(), 0.05);
   updateLocomotion(delta);
   updateScreenLocomotion(delta);
