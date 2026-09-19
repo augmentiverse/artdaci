@@ -2784,11 +2784,10 @@ async function addLouvreArtdaciBookDisplay() {
     const interactionHint = isQuestBrowser
       ? (lang === "ar" ? "TRIGGER للفتح · GRIP للتحريك والتدوير" : lang === "fr" ? "TRIGGER : OUVRIR · GRIP : DÉPLACER / TOURNER" : "TRIGGER: OPEN · GRIP: MOVE / ROTATE")
       : (lang === "ar" ? "انقر للفتح · اسحب للتحريك · SHIFT + DRAG للتدوير" : lang === "fr" ? "CLIC : OUVRIR · GLISSER : DÉPLACER · SHIFT + DRAG : TOURNER" : "CLICK: OPEN · DRAG: MOVE · SHIFT + DRAG: ROTATE");
-    const hint = makeLabel(interactionHint, { highDetail: true });
+    const hint = makeTransparentInteractionHint(interactionHint);
     hint.name = "louvre-artdaci-book-hint";
-    hint.scale.set(1.18, 0.3, 1);
+    hint.scale.set(1, 1, 1);
     hint.visible = false;
-    hint.renderOrder = 1200;
     scene.add(hint);
     louvreBookInteraction.hint = hint;
     updateLouvreBookHintTransform();
@@ -5983,6 +5982,56 @@ function makeLabel(message, options = {}) {
   );
 }
 
+function makeTransparentInteractionHint(message) {
+  const canvas = document.createElement("canvas");
+  const logicalWidth = 1900;
+  const logicalHeight = 260;
+  const scale = isLowPowerDevice ? 0.72 : 1;
+  canvas.width = logicalWidth * scale;
+  canvas.height = logicalHeight * scale;
+  const context = canvas.getContext("2d");
+  context.scale(scale, scale);
+  context.clearRect(0, 0, logicalWidth, logicalHeight);
+
+  const family = lang === "ar"
+    ? '"Segoe UI", Tahoma, Arial, sans-serif'
+    : 'Inter, "Segoe UI", Arial, sans-serif';
+  const display = lang === "ar" ? message : message.toLocaleUpperCase(lang === "fr" ? "fr" : "en");
+  let fontSize = 62;
+  context.font = `700 ${fontSize}px ${family}`;
+  while (context.measureText(display).width > logicalWidth - 120 && fontSize > 38) {
+    fontSize -= 2;
+    context.font = `700 ${fontSize}px ${family}`;
+  }
+
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  context.lineJoin = "round";
+  context.strokeStyle = "rgba(0, 0, 0, .95)";
+  context.lineWidth = 14;
+  context.shadowColor = "rgba(0, 0, 0, .82)";
+  context.shadowBlur = 18;
+  context.strokeText(display, logicalWidth / 2, logicalHeight / 2);
+  context.fillStyle = "#ffe6a3";
+  context.fillText(display, logicalWidth / 2, logicalHeight / 2);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.encoding = THREE.sRGBEncoding;
+  texture.anisotropy = isLowPowerDevice ? 2 : renderer.capabilities.getMaxAnisotropy();
+  const mesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(1.9, 0.26),
+    new THREE.MeshBasicMaterial({
+      map: texture,
+      transparent: true,
+      depthTest: false,
+      depthWrite: false,
+      side: THREE.DoubleSide
+    })
+  );
+  mesh.renderOrder = 1200;
+  return mesh;
+}
+
 function makePeopleVideoCaption(title, width = 3.15) {
   const canvas = document.createElement("canvas");
   const logicalWidth = 1600;
@@ -6244,9 +6293,13 @@ function updateLouvreBookHintTransform() {
   if (box.isEmpty()) return;
   const center = box.getCenter(new THREE.Vector3());
   const hint = louvreBookInteraction.hint;
-  hint.position.set(center.x, box.max.y + 0.16, center.z);
+  hint.position.set(center.x, box.max.y + 0.22, center.z);
+
   const activeCamera = currentSession ? renderer.xr.getCamera(camera) : camera;
-  hint.quaternion.copy(activeCamera.getWorldQuaternion(new THREE.Quaternion()));
+  const cameraPosition = activeCamera.getWorldPosition(new THREE.Vector3());
+  const dx = cameraPosition.x - hint.position.x;
+  const dz = cameraPosition.z - hint.position.z;
+  hint.rotation.set(0, Math.atan2(dx, dz), 0);
 }
 
 function updateLouvreBookPointerHint() {

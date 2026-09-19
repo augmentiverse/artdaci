@@ -167,9 +167,16 @@ test("Louvre Mona Lisa tableau uses the same free move and rotation controls as 
   assert.match(gallerySource, /SHIFT \+ DRAG : TOURNER/);
 });
 
-test("Louvre Living Book interaction hint stays hidden until the book is pointed at", () => {
+test("Louvre Living Book interaction hint stays transparent, upright and hidden until pointed at", () => {
+  assert.match(gallerySource, /function makeTransparentInteractionHint\(message\)/);
+  assert.match(gallerySource, /transparent: true/);
+  assert.match(gallerySource, /depthTest: false/);
+  assert.match(gallerySource, /fillStyle = "#ffe6a3"/);
+  assert.match(gallerySource, /strokeStyle = "rgba\(0, 0, 0, \.95\)"/);
   assert.match(gallerySource, /hint\.name = "louvre-artdaci-book-hint"/);
   assert.match(gallerySource, /hint\.visible = false/);
+  assert.match(gallerySource, /makeTransparentInteractionHint\(interactionHint\)/);
+  assert.match(gallerySource, /hint\.rotation\.set\(0, Math\.atan2\(dx, dz\), 0\)/);
   assert.match(gallerySource, /function setLouvreBookHintVisible\(visible\)/);
   assert.match(gallerySource, /function updateLouvreBookPointerHint\(\)/);
   assert.match(gallerySource, /function updateLouvreBookScreenHover\(event\)/);
