@@ -2762,7 +2762,7 @@ async function addLouvreArtdaciBookDisplay() {
 
     const interactionHint = isQuestBrowser
       ? (lang === "ar" ? "TRIGGER للفتح · GRIP للتحريك والتدوير" : lang === "fr" ? "TRIGGER : OUVRIR · GRIP : DÉPLACER / TOURNER" : "TRIGGER: OPEN · GRIP: MOVE / ROTATE")
-      : (lang === "ar" ? "انقر للفتح · اسحب للتحريك" : lang === "fr" ? "CLIC : OUVRIR · GLISSER : DÉPLACER" : "CLICK: OPEN · DRAG: MOVE");
+      : (lang === "ar" ? "انقر للفتح · اسحب للتحريك · SHIFT + DRAG للتدوير" : lang === "fr" ? "CLIC : OUVRIR · GLISSER : DÉPLACER · SHIFT + DRAG : TOURNER" : "CLICK: OPEN · DRAG: MOVE · SHIFT + DRAG: ROTATE");
     const hint = makeLabel(interactionHint, { highDetail: true });
     hint.name = "louvre-artdaci-book-hint";
     hint.scale.set(1.18, 0.3, 1);

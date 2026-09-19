@@ -131,6 +131,7 @@ test("Louvre Living Book can be moved, rotated and placed on its side without le
   assert.match(gallerySource, /rotateMode: event\.shiftKey \|\| event\.altKey \|\| event\.button === 2/);
   assert.match(gallerySource, /assembly\.rotation\.set\(/);
   assert.match(gallerySource, /GRIP : DÉPLACER \/ TOURNER/);
+  assert.match(gallerySource, /SHIFT \+ DRAG : TOURNER/);
 });
 
 test("Louvre Living Book interaction hint stays hidden until the book is pointed at", () => {
