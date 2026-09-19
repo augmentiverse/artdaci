@@ -53,10 +53,17 @@ test("Meta Quest stays constrained while essential 3D exhibits remain enabled", 
   assert.match(gallerySource, /if \(!essential && !allowDecorative3DModels\) return null;/);
 });
 
-test("gallery audio guides are lazy, exact-language and released when inactive", () => {
+test("gallery audio guides stay lazy and auto-start only on hotspot proximity", () => {
   assert.doesNotMatch(gallerySource, /exhibitsBySlug\.set\([^\n]+\);\s*loadAudioGuide\(/);
   assert.match(gallerySource, /resolveArtworkAudioOverview\(\{ artworkId: audioWork\.artworkId, language: lang \}\)/);
   assert.doesNotMatch(gallerySource, /painting\.media\?\.audioOverviews|painting\.media\?\.audioOverview/);
+  assert.match(gallerySource, /const AUTO_AUDIO_HOTSPOT_RADIUS = 0\.9/);
+  assert.match(gallerySource, /function maybeAutoStartHotspotAudio\(exhibit\)/);
+  assert.match(gallerySource, /horizontalDistanceToHotspot\(exhibit\) > AUTO_AUDIO_HOTSPOT_RADIUS/);
+  assert.match(gallerySource, /if \(exhibit\.audioLoadPromise\) return;/);
+  assert.match(gallerySource, /void ensureAudioGuide\(requestedExhibit\)\.then/);
+  assert.match(gallerySource, /maybeAutoStartHotspotAudio\(next\)/);
+  assert.match(gallerySource, /maybeAutoStartHotspotAudio\(activeExhibit\)/);
   assert.match(gallerySource, /await ensureAudioGuide\(requestedExhibit\)/);
   assert.match(gallerySource, /function releaseAudioGuide\(exhibit\)/);
   assert.match(gallerySource, /narrationPlayer\.preload = "none"/);

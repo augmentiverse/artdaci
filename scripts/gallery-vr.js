@@ -914,6 +914,7 @@ let gazeTarget = null;
 let gazeTargetStartedAt = 0;
 let gazeBlockedTarget = null;
 const GAZE_DWELL_MS = 1650;
+const AUTO_AUDIO_HOTSPOT_RADIUS = 0.9;
 const connectedRoomsLoaded = new Set();
 const connectedPortraitsLoaded = new Set();
 const connectedRoomLoads = new Map();
@@ -6437,6 +6438,33 @@ async function toggleVR() {
   }
 }
 
+function horizontalDistanceToHotspot(exhibit, listenerPosition = getListenerPosition()) {
+  if (!exhibit?.hotspot) return Infinity;
+  const hotspotPosition = exhibit.hotspot.getWorldPosition(new THREE.Vector3());
+  return Math.hypot(
+    hotspotPosition.x - listenerPosition.x,
+    hotspotPosition.z - listenerPosition.z
+  );
+}
+
+function maybeAutoStartHotspotAudio(exhibit) {
+  if (!exhibit || audioListener.context.state !== "running") return;
+  if (horizontalDistanceToHotspot(exhibit) > AUTO_AUDIO_HOTSPOT_RADIUS) return;
+  if (exhibit.audioReady) {
+    startAudioGuide(exhibit);
+    return;
+  }
+  if (exhibit.audioLoadPromise) return;
+
+  const requestedExhibit = exhibit;
+  void ensureAudioGuide(requestedExhibit).then((ready) => {
+    if (!ready || activeExhibit !== requestedExhibit || audioListener.context.state !== "running") return;
+    if (horizontalDistanceToHotspot(requestedExhibit) <= AUTO_AUDIO_HOTSPOT_RADIUS) {
+      startAudioGuide(requestedExhibit);
+    }
+  });
+}
+
 function selectNearestAudioGuide(force = false) {
   if (!exhibits.length || (!force && audioListener.context.state !== "running")) return;
   const head = getListenerPosition();
@@ -6458,7 +6486,7 @@ function selectNearestAudioGuide(force = false) {
 
   const next = force || nearestDistance <= 3.25 ? nearest : null;
   if (!force && next === activeExhibit) {
-    if (next?.audioReady && !next.started) startAudioGuide(next);
+    maybeAutoStartHotspotAudio(next);
     return;
   }
 
@@ -6466,7 +6494,7 @@ function selectNearestAudioGuide(force = false) {
   activeExhibit = next;
 
   if (activeExhibit) {
-    startAudioGuide(activeExhibit);
+    maybeAutoStartHotspotAudio(activeExhibit);
     status.textContent = `${localizedTitle(activeExhibit.painting)} — ${lang === "fr" ? "guide audio spatial" : "spatial audio guide"}`;
   }
 }
