@@ -866,6 +866,10 @@ let louvreBookInteraction = null;
 let louvreBookGrab = null;
 let screenBookDrag = null;
 let louvreBookScreenHovered = false;
+let louvreMonaLisaInteraction = null;
+let louvreMonaLisaGrab = null;
+let screenMonaLisaDrag = null;
+let louvreMonaLisaScreenHovered = false;
 const narrationPlayer = new Audio();
 const musicPlayer = new Audio();
 const roomAmbiencePlayer = new Audio();
@@ -3064,6 +3068,47 @@ async function ensureLouvreMonaLisaWallModel() {
     });
 
     scene.add(model);
+    model.updateMatrixWorld(true);
+
+    const placedBox = new THREE.Box3().setFromObject(model);
+    const placedSize = placedBox.getSize(new THREE.Vector3());
+    const placedCenter = placedBox.getCenter(new THREE.Vector3());
+
+    const assembly = new THREE.Group();
+    assembly.name = "louvre-mona-lisa-tableau-assembly";
+    assembly.position.copy(placedCenter);
+    scene.add(assembly);
+    assembly.attach(model);
+
+    const hitTarget = new THREE.Mesh(
+      new THREE.BoxGeometry(
+        Math.max(placedSize.x * 1.08, 0.35),
+        Math.max(placedSize.y * 1.08, 0.45),
+        Math.max(placedSize.z * 1.35, 0.16)
+      ),
+      new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false })
+    );
+    hitTarget.name = "louvre-mona-lisa-tableau-handle";
+    hitTarget.userData.louvreMonaLisaHandle = true;
+    assembly.add(hitTarget);
+
+    const interactionHint = isQuestBrowser
+      ? (lang === "ar" ? "GRIP للتحريك والتدوير" : lang === "fr" ? "GRIP : DÉPLACER / TOURNER" : "GRIP: MOVE / ROTATE")
+      : (lang === "ar" ? "اسحب للتحريك · SHIFT + DRAG للتدوير" : lang === "fr" ? "GLISSER : DÉPLACER · SHIFT + DRAG : TOURNER" : "DRAG: MOVE · SHIFT + DRAG: ROTATE");
+    const hint = makeLabel(interactionHint, { highDetail: true });
+    hint.name = "louvre-mona-lisa-tableau-hint";
+    hint.scale.set(1.16, 0.3, 1);
+    hint.visible = false;
+    hint.renderOrder = 1200;
+    scene.add(hint);
+
+    louvreMonaLisaInteraction = {
+      assembly,
+      model,
+      hitTarget,
+      hint
+    };
+    updateLouvreMonaLisaHintTransform();
 
     const light = new THREE.SpotLight(0xffe6bd, isQuestBrowser ? 0.72 : 0.95, 6, Math.PI / 5.5, 0.45);
     light.position.set(4.8, 3.8, 7.15);
@@ -6246,6 +6291,152 @@ function setLouvreBookInteractionStatus(messageKey) {
   status.textContent = messages[messageKey] || text.ready;
 }
 
+function setLouvreMonaLisaHintVisible(visible) {
+  if (!louvreMonaLisaInteraction?.hint) return;
+  louvreMonaLisaInteraction.hint.visible = Boolean(visible && !louvreMonaLisaGrab);
+}
+
+function updateLouvreMonaLisaHintTransform() {
+  if (!louvreMonaLisaInteraction?.hint || !louvreMonaLisaInteraction?.model) return;
+  const box = new THREE.Box3().setFromObject(louvreMonaLisaInteraction.model);
+  if (box.isEmpty()) return;
+  const center = box.getCenter(new THREE.Vector3());
+  const hint = louvreMonaLisaInteraction.hint;
+  hint.position.set(center.x, box.max.y + 0.2, center.z);
+  const activeCamera = currentSession ? renderer.xr.getCamera(camera) : camera;
+  hint.quaternion.copy(activeCamera.getWorldQuaternion(new THREE.Quaternion()));
+}
+
+function updateLouvreMonaLisaPointerHint() {
+  if (!louvreMonaLisaInteraction || louvreMonaLisaGrab) {
+    setLouvreMonaLisaHintVisible(false);
+    return;
+  }
+
+  if (!currentSession) {
+    setLouvreMonaLisaHintVisible(louvreMonaLisaScreenHovered);
+    updateLouvreMonaLisaHintTransform();
+    return;
+  }
+
+  let pointed = false;
+  for (const controller of controllers) {
+    setControllerRay(controller);
+    if (teleportRaycaster.intersectObject(louvreMonaLisaInteraction.hitTarget, false)[0]) {
+      pointed = true;
+      break;
+    }
+  }
+  setLouvreMonaLisaHintVisible(pointed);
+  updateLouvreMonaLisaHintTransform();
+}
+
+function updateLouvreMonaLisaScreenHover(event) {
+  if (currentSession || !louvreMonaLisaInteraction || screenMonaLisaDrag) return;
+  screenPointerRay(event);
+  louvreMonaLisaScreenHovered = Boolean(
+    teleportRaycaster.intersectObject(louvreMonaLisaInteraction.hitTarget, false)[0]
+  );
+  setLouvreMonaLisaHintVisible(louvreMonaLisaScreenHovered);
+  updateLouvreMonaLisaHintTransform();
+}
+
+function setLouvreMonaLisaInteractionStatus(messageKey) {
+  const messages = {
+    grabbed: lang === "ar" ? "تم إمساك لوحة الموناليزا. حرّكها أو أدرها ثم أفلت المقبض." : lang === "fr" ? "Tableau de la Mona Lisa saisi. Déplacez-le ou tournez-le puis relâchez le grip." : "Mona Lisa tableau grabbed. Move or rotate it, then release the grip.",
+    placed: lang === "ar" ? "تم وضع لوحة الموناليزا في موضعها الجديد." : lang === "fr" ? "Tableau de la Mona Lisa placé à sa nouvelle position." : "Mona Lisa tableau placed in its new position."
+  };
+  status.textContent = messages[messageKey] || text.ready;
+}
+
+function tryGrabLouvreMonaLisa(controller) {
+  if (!louvreMonaLisaInteraction || louvreMonaLisaGrab || louvreBookGrab) return false;
+  setControllerRay(controller);
+  const hit = teleportRaycaster.intersectObject(louvreMonaLisaInteraction.hitTarget, false)[0];
+  if (!hit) return false;
+
+  controller.attach(louvreMonaLisaInteraction.assembly);
+  louvreMonaLisaGrab = { controller };
+  louvreMonaLisaInteraction.assembly.scale.setScalar(1.03);
+  setLouvreMonaLisaHintVisible(false);
+  setLouvreMonaLisaInteractionStatus("grabbed");
+  return true;
+}
+
+function releaseLouvreMonaLisa(controller) {
+  if (!louvreMonaLisaGrab || louvreMonaLisaGrab.controller !== controller || !louvreMonaLisaInteraction) return false;
+  scene.attach(louvreMonaLisaInteraction.assembly);
+  louvreMonaLisaInteraction.assembly.scale.setScalar(1);
+  louvreMonaLisaGrab = null;
+  louvreMonaLisaScreenHovered = false;
+  setLouvreMonaLisaHintVisible(false);
+  updateLouvreMonaLisaHintTransform();
+  setLouvreMonaLisaInteractionStatus("placed");
+  return true;
+}
+
+function tryBeginScreenMonaLisaDrag(event) {
+  if (currentSession || !louvreMonaLisaInteraction) return false;
+  screenPointerRay(event);
+  const hit = teleportRaycaster.intersectObject(louvreMonaLisaInteraction.hitTarget, false)[0];
+  if (!hit) return false;
+
+  const { assembly } = louvreMonaLisaInteraction;
+  const normal = camera.getWorldDirection(new THREE.Vector3()).normalize();
+  screenMonaLisaDrag = {
+    pointerId: event.pointerId,
+    startX: event.clientX,
+    startY: event.clientY,
+    moved: false,
+    rotateMode: event.shiftKey || event.altKey || event.button === 2,
+    startRotation: assembly.rotation.clone(),
+    offset: assembly.position.clone().sub(hit.point),
+    plane: new THREE.Plane().setFromNormalAndCoplanarPoint(normal, assembly.position)
+  };
+  renderer.domElement.setPointerCapture?.(event.pointerId);
+  setLouvreMonaLisaHintVisible(false);
+  return true;
+}
+
+function updateScreenMonaLisaDrag(event) {
+  if (!screenMonaLisaDrag || event.pointerId !== screenMonaLisaDrag.pointerId || !louvreMonaLisaInteraction) return false;
+  const distance = Math.hypot(event.clientX - screenMonaLisaDrag.startX, event.clientY - screenMonaLisaDrag.startY);
+  if (distance > 6) screenMonaLisaDrag.moved = true;
+  if (!screenMonaLisaDrag.moved) return true;
+
+  const { assembly } = louvreMonaLisaInteraction;
+  if (screenMonaLisaDrag.rotateMode) {
+    const dx = event.clientX - screenMonaLisaDrag.startX;
+    const dy = event.clientY - screenMonaLisaDrag.startY;
+    assembly.rotation.set(
+      screenMonaLisaDrag.startRotation.x + dy * 0.012,
+      screenMonaLisaDrag.startRotation.y + dx * 0.012,
+      screenMonaLisaDrag.startRotation.z + dx * 0.004
+    );
+    updateLouvreMonaLisaHintTransform();
+    return true;
+  }
+
+  screenPointerRay(event);
+  const point = new THREE.Vector3();
+  if (!teleportRaycaster.ray.intersectPlane(screenMonaLisaDrag.plane, point)) return true;
+  assembly.position.copy(point.add(screenMonaLisaDrag.offset));
+  assembly.updateMatrixWorld(true);
+  updateLouvreMonaLisaHintTransform();
+  return true;
+}
+
+function finishScreenMonaLisaDrag(event) {
+  if (!screenMonaLisaDrag || event.pointerId !== screenMonaLisaDrag.pointerId || !louvreMonaLisaInteraction) return false;
+  const moved = screenMonaLisaDrag.moved;
+  screenMonaLisaDrag = null;
+  louvreMonaLisaScreenHovered = false;
+  setLouvreMonaLisaHintVisible(false);
+  renderer.domElement.releasePointerCapture?.(event.pointerId);
+  if (moved) setLouvreMonaLisaInteractionStatus("placed");
+  return true;
+}
+
 function setControllerRay(controller) {
   rayRotation.identity().extractRotation(controller.matrixWorld);
   teleportRaycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
@@ -6365,11 +6556,17 @@ function addControllers() {
     line.scale.z = 8;
     controller.add(line);
     controller.addEventListener("selectstart", () => {
-      if (louvreBookGrab?.controller === controller) return;
+      if (louvreBookGrab?.controller === controller || louvreMonaLisaGrab?.controller === controller) return;
       teleportFrom(controller);
     });
-    controller.addEventListener("squeezestart", () => tryGrabLouvreBook(controller));
-    controller.addEventListener("squeezeend", () => releaseLouvreBook(controller));
+    controller.addEventListener("squeezestart", () => {
+      if (tryGrabLouvreBook(controller)) return;
+      tryGrabLouvreMonaLisa(controller);
+    });
+    controller.addEventListener("squeezeend", () => {
+      if (releaseLouvreBook(controller)) return;
+      releaseLouvreMonaLisa(controller);
+    });
     visitor.add(controller);
   });
 }
@@ -6600,12 +6797,16 @@ function bindUI() {
   renderer.domElement.addEventListener("pointercancel", endScreenLook);
   renderer.domElement.addEventListener("pointerleave", () => {
     louvreBookScreenHovered = false;
+    louvreMonaLisaScreenHovered = false;
     setLouvreBookHintVisible(false);
+    setLouvreMonaLisaHintVisible(false);
   });
   renderer.domElement.addEventListener("contextmenu", (event) => {
-    if (!louvreBookInteraction) return;
+    if (!louvreBookInteraction && !louvreMonaLisaInteraction) return;
     screenPointerRay(event);
-    if (teleportRaycaster.intersectObject(louvreBookInteraction.hitTarget, false)[0]) event.preventDefault();
+    const onBook = Boolean(louvreBookInteraction && teleportRaycaster.intersectObject(louvreBookInteraction.hitTarget, false)[0]);
+    const onMonaLisa = Boolean(louvreMonaLisaInteraction && teleportRaycaster.intersectObject(louvreMonaLisaInteraction.hitTarget, false)[0]);
+    if (onBook || onMonaLisa) event.preventDefault();
   });
   document.querySelectorAll("[data-move]").forEach((button) => {
     const direction = button.dataset.move;
@@ -6740,6 +6941,7 @@ function beginScreenLook(event) {
   if (currentSession || event.target !== renderer.domElement) return;
   audioListener.context.resume().catch(() => {});
   if (tryBeginScreenBookDrag(event)) return;
+  if (tryBeginScreenMonaLisaDrag(event)) return;
   screenLookPointer = event.pointerId;
   screenLookX = event.clientX;
   screenLookY = event.clientY;
@@ -6750,7 +6952,9 @@ function beginScreenLook(event) {
 function updateScreenLook(event) {
   if (currentSession) return;
   if (updateScreenBookDrag(event)) return;
+  if (updateScreenMonaLisaDrag(event)) return;
   updateLouvreBookScreenHover(event);
+  updateLouvreMonaLisaScreenHover(event);
   if (event.pointerId !== screenLookPointer) return;
   const dx = event.clientX - screenLookX;
   const dy = event.clientY - screenLookY;
@@ -6764,6 +6968,7 @@ function updateScreenLook(event) {
 
 function endScreenLook(event) {
   if (finishScreenBookDrag(event)) return;
+  if (finishScreenMonaLisaDrag(event)) return;
   if (event.pointerId !== screenLookPointer) return;
   screenLookPointer = null;
   if (!screenLookMoved) activateScreenInteraction(event);
@@ -7202,6 +7407,7 @@ function render(now = performance.now()) {
   updateHandVisuals();
   updateGazeNavigation(now);
   updateLouvreBookPointerHint();
+  updateLouvreMonaLisaPointerHint();
   const delta = Math.min(clock.getDelta(), 0.05);
   updateLocomotion(delta);
   updateScreenLocomotion(delta);

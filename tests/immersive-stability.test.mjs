@@ -121,6 +121,8 @@ test("Louvre and cinema restore their requested 3D presentation models", () => {
   assert.match(gallerySource, /await addMuseumInformationPanel\([\s\S]*?LOUVRE_BUILDING_PLAN[\s\S]*?9\.82[\s\S]*?Math\.PI/);
   assert.match(gallerySource, /async function ensureLouvreMonaLisaWallModel\(\)/);
   assert.match(gallerySource, /name = "louvre-mona-lisa-tableau"/);
+  assert.match(gallerySource, /assembly\.name = "louvre-mona-lisa-tableau-assembly"/);
+  assert.match(gallerySource, /hitTarget\.name = "louvre-mona-lisa-tableau-handle"/);
   assert.match(gallerySource, /6\.82 - box\.max\.x[\s\S]*?7\.15 - center\.z/);
   assert.doesNotMatch(gallerySource, /LOUVRE_FACADE_MODEL/);
   assert.doesNotMatch(gallerySource, /ensureLouvreFacade\(/);
@@ -141,6 +143,20 @@ test("Louvre Living Book can be moved, rotated and placed on its side without le
   assert.match(gallerySource, /scene\.attach\(louvreBookInteraction\.assembly\)/);
   assert.match(gallerySource, /rotateMode: event\.shiftKey \|\| event\.altKey \|\| event\.button === 2/);
   assert.match(gallerySource, /assembly\.rotation\.set\(/);
+  assert.match(gallerySource, /GRIP : DÉPLACER \/ TOURNER/);
+  assert.match(gallerySource, /SHIFT \+ DRAG : TOURNER/);
+});
+
+test("Louvre Mona Lisa tableau uses the same free move and rotation controls as the Living Book", () => {
+  assert.match(gallerySource, /let louvreMonaLisaInteraction = null/);
+  assert.match(gallerySource, /function tryGrabLouvreMonaLisa\(controller\)/);
+  assert.match(gallerySource, /controller\.attach\(louvreMonaLisaInteraction\.assembly\)/);
+  assert.match(gallerySource, /function releaseLouvreMonaLisa\(controller\)/);
+  assert.match(gallerySource, /scene\.attach\(louvreMonaLisaInteraction\.assembly\)/);
+  assert.match(gallerySource, /function tryBeginScreenMonaLisaDrag\(event\)/);
+  assert.match(gallerySource, /rotateMode: event\.shiftKey \|\| event\.altKey \|\| event\.button === 2/);
+  assert.match(gallerySource, /function updateScreenMonaLisaDrag\(event\)[\s\S]*?assembly\.rotation\.set\(/);
+  assert.match(gallerySource, /function updateScreenMonaLisaDrag\(event\)[\s\S]*?assembly\.position\.copy/);
   assert.match(gallerySource, /GRIP : DÉPLACER \/ TOURNER/);
   assert.match(gallerySource, /SHIFT \+ DRAG : TOURNER/);
 });
