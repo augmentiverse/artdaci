@@ -195,6 +195,18 @@ test("Quest navigation fully releases WebXR and browser focus before changing pa
   assert.doesNotMatch(gallerySource, /if \(currentSession\) await currentSession\.end\(\);\s*location\.href = url/);
 });
 
+test("cinema video titles stay concise and descriptive in all three languages", () => {
+  assert.match(gallerySource, /Four Painters — Intro/);
+  assert.match(gallerySource, /Quatre peintres — Présentation/);
+  assert.match(gallerySource, /الرسامون الأربعة — تقديم/);
+  assert.match(gallerySource, /Leonardo & Mona Lisa — Paris/);
+  assert.match(gallerySource, /Peindre La Joconde/);
+  assert.match(gallerySource, /Joconde réimaginée/);
+  assert.match(gallerySource, /Vision de Léonard II/);
+  assert.match(gallerySource, /Joconde en mouvement/);
+  assert.doesNotMatch(gallerySource, /The Four Painters Introduce Themselves/);
+});
+
 test("cinema and gallery signage use the People Behind the Painters high-contrast style", () => {
   assert.match(gallerySource, /function createWallSign[\s\S]*?background\.addColorStop\(0, "#102c30"\)/);
   assert.match(gallerySource, /function createWallSign[\s\S]*?isLowPowerDevice \? 1280 : 1600/);

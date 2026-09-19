@@ -131,38 +131,38 @@ const LOUVRE_GALLERY_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/5327a46
 const CINEMA_ROOM_X = 14;
 const CINEMA_VIDEO_LIBRARY = [
   {
-    title: { en: "The Four Painters Introduce Themselves", fr: "Les quatre peintres se présentent", ar: "الرسامون الأربعة يقدمون أنفسهم" },
+    title: { en: "Four Painters — Intro", fr: "Quatre peintres — Présentation", ar: "الرسامون الأربعة — تقديم" },
     src: "assets/shared/four-painters/introduction.mp4"
   },
   {
-    title: { en: "The Four Painters — New Selfie", fr: "Les quatre peintres — nouveau selfie", ar: "الرسامون الأربعة — صورة ذاتية جديدة" },
+    title: { en: "Four Painters — Selfie II", fr: "Quatre peintres — Selfie II", ar: "الرسامون الأربعة — سيلفي II" },
     src: "assets/shared/groups/audio-video/dvvm-n-selfy.mp4"
   },
   {
-    title: { en: "The Four Painters — Selfie", fr: "Les quatre peintres — selfie", ar: "الرسامون الأربعة — صورة ذاتية" },
+    title: { en: "Four Painters — Selfie", fr: "Quatre peintres — Selfie", ar: "الرسامون الأربعة — سيلفي" },
     src: "assets/shared/groups/audio-video/dvvm-selfy.mp4"
   },
   {
-    title: { en: "Leonardo and Mona Lisa in Paris", fr: "Léonard et La Joconde à Paris", ar: "ليوناردو والموناليزا في باريس" },
+    title: { en: "Leonardo & Mona Lisa — Paris", fr: "Léonard & La Joconde — Paris", ar: "ليوناردو والموناليزا — باريس" },
     src: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/davinci-monalisa-paris.mp4"
   },
   {
-    title: { en: "Leonardo Painting the Mona Lisa", fr: "Léonard peignant La Joconde", ar: "ليوناردو يرسم الموناليزا" },
+    title: { en: "Painting Mona Lisa", fr: "Peindre La Joconde", ar: "رسم الموناليزا" },
     src: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/davinci-painting-monalisa.mp4"
   },
   {
-    title: { en: "Mona Lisa Reimagined", fr: "La Joconde réimaginée", ar: "الموناليزا معاد تخيلها" },
+    title: { en: "Mona Lisa Reimagined", fr: "Joconde réimaginée", ar: "الموناليزا المتخيلة" },
     src: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/mona-lisa-video.mp4",
     audioSrc: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/centuries-behind-glass.mp3",
     audioSrcFr: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/la-joconde-s-évade.mp3",
     audioSrcAr: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/رقصة-خلف-الإطار.mp3"
   },
   {
-    title: { en: "Leonardo’s Vision II", fr: "La vision de Léonard II", ar: "رؤية ليوناردو الثانية" },
+    title: { en: "Leonardo’s Vision II", fr: "Vision de Léonard II", ar: "رؤية ليوناردو II" },
     src: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/dv2.mp4"
   },
   {
-    title: { en: "Mona Lisa in Motion", fr: "La Joconde en mouvement", ar: "الموناليزا في حركة" },
+    title: { en: "Mona Lisa in Motion", fr: "Joconde en mouvement", ar: "الموناليزا تتحرك" },
     src: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/m2vmg.mp4"
   }
 ];
