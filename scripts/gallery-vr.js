@@ -111,7 +111,7 @@ const MODEL_ARTIST_EXHIBITS = {
 
 const STANDING_VAN_GOGH_MODEL = "assets/artists/vincent-van-gogh/artworks/self-portrait/models/vangogh-istanding.glb";
 const PAINTINGS_MODELS_GATEWAY = null;
-const LOUVRE_FACADE_MODEL = "assets/environments/gallery/models/Louvre_facade_c.glb";
+const LOUVRE_MONA_LISA_TABLEAU_MODEL = "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/monalisa-tableau-c.glb";
 const CINEMA_SOFA_MODEL = "assets/environments/gallery/models/sofa_c.glb";
 const ORNATE_PILL_MODEL = "assets/environments/gallery/models/Ornate_Turquoise_Pill_c.glb";
 const ACCENT_SOFA_MODEL = "assets/environments/gallery/models/sofa1.glb";
@@ -2346,7 +2346,7 @@ async function buildLouvreMuseumExhibits() {
       highDetail: true
     }
   );
-  await ensureLouvreFacade();
+  await ensureLouvreMonaLisaWallModel();
 }
 
 function buildPeopleBehindPaintersRoom() {
@@ -3010,53 +3010,72 @@ function addConnectedMuseumPartitions() {
   });
 }
 
-async function ensureLouvreFacade() {
-  return ensureLouvreWallModel({
-    src: LOUVRE_FACADE_MODEL,
-    name: "louvre-vr-exhibit",
-    z: -7.95,
-    faceIntoRoom: Math.PI,
-    warning: "Louvre facade unavailable."
-  });
-}
+async function ensureLouvreMonaLisaWallModel() {
+  const existing = scene.getObjectByName("louvre-mona-lisa-tableau");
+  if (existing) return existing;
 
-async function ensureLouvreWallModel({ src, name, z, faceIntoRoom, warning }) {
-  if (!src) return null;
-  if (scene.getObjectByName(name)) return scene.getObjectByName(name);
-  return (async () => {
-    const gltf = await modelLoader.loadAsync(src);
+  try {
+    const gltf = await modelLoader.loadAsync(LOUVRE_MONA_LISA_TABLEAU_MODEL);
     const model = gltf.scene;
-    model.name = name;
+    model.name = "louvre-mona-lisa-tableau";
+
     model.updateMatrixWorld(true);
     let box = new THREE.Box3().setFromObject(model);
     let size = box.getSize(new THREE.Vector3());
+
+    // Normalize the painting so its broad face reads as a wall-mounted tableau.
     if (size.z > size.x) {
       model.rotation.y = Math.PI / 2;
       model.updateMatrixWorld(true);
       box = new THREE.Box3().setFromObject(model);
       size = box.getSize(new THREE.Vector3());
     }
-    model.rotation.y += faceIntoRoom;
+
+    // Right rear wall: empty counterpart to the "Explore the Louvre in VR" sign.
+    model.rotation.y += -Math.PI / 2;
     model.updateMatrixWorld(true);
     box = new THREE.Box3().setFromObject(model);
     size = box.getSize(new THREE.Vector3());
-    model.scale.setScalar(Math.min(10.5 / Math.max(size.x, 0.001), 3.25 / Math.max(size.y, 0.001)));
+
+    const scale = Math.min(
+      1.75 / Math.max(size.x, size.z, 0.001),
+      2.15 / Math.max(size.y, 0.001)
+    );
+    model.scale.setScalar(scale);
     model.updateMatrixWorld(true);
+
     box = new THREE.Box3().setFromObject(model);
     const center = box.getCenter(new THREE.Vector3());
-    model.position.set(-center.x, -box.min.y, z - center.z);
+    model.position.set(
+      6.82 - box.max.x,
+      2.45 - center.y,
+      7.15 - center.z
+    );
+    model.updateMatrixWorld(true);
+
     model.traverse((node) => {
       if (!node.isMesh) return;
-      node.castShadow = false;
+      node.castShadow = !isQuestBrowser;
       node.receiveShadow = true;
+      if (node.material?.map) {
+        node.material.map.anisotropy = isLowPowerDevice ? 2 : renderer.capabilities.getMaxAnisotropy();
+        node.material.map.needsUpdate = true;
+      }
     });
+
     scene.add(model);
-    registerCollisionObject(model, 0.16, name);
+
+    const light = new THREE.SpotLight(0xffe6bd, isQuestBrowser ? 0.72 : 0.95, 6, Math.PI / 5.5, 0.45);
+    light.position.set(4.8, 3.8, 7.15);
+    light.target = model;
+    scene.add(light, light.target);
+
+    revealLoadedDisplay(model);
     return model;
-  })().catch((error) => {
-    console.warn(warning, error);
+  } catch (error) {
+    console.warn("Mona Lisa tableau model unavailable in the Louvre gallery.", error);
     return null;
-  });
+  }
 }
 
 function addConnectedRoomNavigation(currentId, centerZ) {

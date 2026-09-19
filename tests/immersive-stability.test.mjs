@@ -105,6 +105,7 @@ test("gallery text reuses the high-contrast People room typography on Quest", ()
 
 test("Louvre and cinema restore their requested 3D presentation models", () => {
   assert.match(gallerySource, /LOUVRE_ARTDACI_BOOK_MODEL = "assets\/environments\/gallery\/models\/artdaci_book3d_v2\.glb"/);
+  assert.match(gallerySource, /LOUVRE_MONA_LISA_TABLEAU_MODEL = "assets\/artists\/leonardo-da-vinci\/artworks\/mona-lisa\/models\/monalisa-tableau-c\.glb"/);
   assert.match(gallerySource, /LOUVRE_BUILDING_PLAN = "assets\/environments\/gallery\/images\/Louvre\/louvre_building_plan\/louvre_building_plan_\{lang\}\.png"/);
   assert.match(gallerySource, /function addLouvreArtdaciBookDisplay\(\)/);
   assert.match(gallerySource, /name: "louvre-artdaci-book-table"/);
@@ -118,6 +119,11 @@ test("Louvre and cinema restore their requested 3D presentation models", () => {
   assert.match(gallerySource, /name = "louvre-artdaci-book-link"/);
   assert.match(gallerySource, /bookHitTarget\.userData\.exitUrl = `book-3d\.html\?lang=\$\{lang\}`/);
   assert.match(gallerySource, /await addMuseumInformationPanel\([\s\S]*?LOUVRE_BUILDING_PLAN[\s\S]*?9\.82[\s\S]*?Math\.PI/);
+  assert.match(gallerySource, /async function ensureLouvreMonaLisaWallModel\(\)/);
+  assert.match(gallerySource, /name = "louvre-mona-lisa-tableau"/);
+  assert.match(gallerySource, /6\.82 - box\.max\.x[\s\S]*?7\.15 - center\.z/);
+  assert.doesNotMatch(gallerySource, /LOUVRE_FACADE_MODEL/);
+  assert.doesNotMatch(gallerySource, /ensureLouvreFacade\(/);
   assert.match(gallerySource, /name: "cinema-egypt-gateway"[\s\S]*?essential: true/);
   assert.match(gallerySource, /function maybeLoadCinemaAudience\(\) \{\s*if \(!allowExhibit3DModels \|\| isIOSDevice\) return;/);
 });
