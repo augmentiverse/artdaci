@@ -480,6 +480,8 @@ let isLowPowerDevice = isQuestBrowser || runtimeProfile.constrained;
 // Phones and tablets get the painted collection without optional GLB props.
 // These models are decorative and can exhaust the browser's memory on mobile.
 let allowDecorative3DModels = !isHandheldMobile && !isLowPowerDevice;
+// Meta Quest remains performance-constrained, but primary 3D exhibits are essential content.
+let allowExhibit3DModels = isQuestBrowser || (!isHandheldMobile && !isLowPowerDevice);
 const previewRoom = params.get("room");
 const artistRoomId = params.get("artist");
 const artistRoom = ARTIST_ROOMS[artistRoomId] || null;
@@ -787,8 +789,10 @@ runtimeProfile = detectRuntimeProfile(globalThis, renderer.capabilities);
 if (runtimeProfile.constrained) {
   isLowPowerDevice = true;
   allowDecorative3DModels = false;
+  allowExhibit3DModels = isQuestBrowser;
 }
 document.body.dataset.runtimeProfile = isLowPowerDevice ? "constrained" : "normal";
+document.body.dataset.exhibit3dModels = allowExhibit3DModels ? "enabled" : "disabled";
 renderer.setPixelRatio(Math.min(devicePixelRatio, runtimeProfile.maxPixelRatio));
 renderer.setSize(innerWidth, innerHeight);
 renderer.outputEncoding = THREE.sRGBEncoding;
@@ -985,7 +989,9 @@ renderer.domElement.addEventListener("webglcontextrestored", () => {
   webglContextLost = false;
   isLowPowerDevice = true;
   allowDecorative3DModels = false;
+  allowExhibit3DModels = isQuestBrowser;
   document.body.dataset.runtimeProfile = "constrained";
+  document.body.dataset.exhibit3dModels = allowExhibit3DModels ? "enabled" : "disabled";
   renderer.setPixelRatio(1);
   renderer.shadowMap.enabled = false;
   renderer.domElement.hidden = false;
@@ -1052,7 +1058,7 @@ async function init() {
   if (isModelMuseum) {
     buildModelMuseumArchitecture();
     startRenderLoop();
-    if (allowDecorative3DModels) {
+    if (allowExhibit3DModels) {
       void loadModelMuseumRoom(Math.max(0, ARTIST_ROOM_ORDER.indexOf(modelArtistId)));
     }
     status.textContent = text.ready;
@@ -2665,7 +2671,7 @@ async function buildGroupExhibit() {
   image.position.set(0, 2.35, -7.78);
   scene.add(image);
 
-  if (!allowDecorative3DModels) return;
+  if (!allowExhibit3DModels) return;
 
   const gltf = await modelLoader.loadAsync(GROUP_EXHIBIT.model);
   const model = gltf.scene;
@@ -2746,7 +2752,7 @@ async function loadModelMuseumRoom(roomIndex) {
 }
 
 async function addDedicatedArtistModel(item, centerZ, index, count) {
-  if (!allowDecorative3DModels) return;
+  if (!allowExhibit3DModels) return;
   const gltf = await modelLoader.loadAsync(item.src);
   const display = new THREE.Group();
   const x = count === 1 ? 0 : (index - (count - 1) / 2) * 2.55;
@@ -5171,7 +5177,7 @@ function toggleVideoFromPointer(event) {
 }
 
 async function buildModelExhibits(paintings) {
-  if (!allowDecorative3DModels) return;
+  if (!allowExhibit3DModels) return;
   status.textContent = text.loadingModels;
   let loaded = 0;
   for (const painting of paintings) {

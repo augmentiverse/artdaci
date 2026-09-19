@@ -35,6 +35,24 @@ test("Smart TV and limited WebGL capabilities independently select the constrain
   assert.equal(detectRuntimeProfile(environment(), { maxTextureSize: 2048, maxTextures: 16 }).constrained, true);
 });
 
+test("Meta Quest stays constrained while essential 3D exhibits remain enabled", () => {
+  const questProfile = detectRuntimeProfile(environment({
+    width: 1832,
+    height: 1920,
+    coarse: true,
+    memory: 4,
+    userAgent: "Mozilla/5.0 OculusBrowser Meta Quest 3S"
+  }));
+  assert.equal(questProfile.constrained, true);
+  assert.equal(questProfile.maxPixelRatio, 1);
+  assert.match(gallerySource, /let allowExhibit3DModels = isQuestBrowser \|\| \(!isHandheldMobile && !isLowPowerDevice\);/);
+  assert.match(gallerySource, /if \(runtimeProfile\.constrained\) \{[\s\S]*?allowExhibit3DModels = isQuestBrowser;/);
+  assert.match(gallerySource, /async function addDedicatedArtistModel[\s\S]*?if \(!allowExhibit3DModels\) return;/);
+  assert.match(gallerySource, /async function buildModelExhibits[\s\S]*?if \(!allowExhibit3DModels\) return;/);
+  assert.match(gallerySource, /async function buildGroupExhibit[\s\S]*?if \(!allowExhibit3DModels\) return;/);
+  assert.match(gallerySource, /if \(!essential && !allowDecorative3DModels\) return null;/);
+});
+
 test("gallery audio guides are lazy, exact-language and released when inactive", () => {
   assert.doesNotMatch(gallerySource, /exhibitsBySlug\.set\([^\n]+\);\s*loadAudioGuide\(/);
   assert.match(gallerySource, /resolveArtworkAudioOverview\(\{ artworkId: audioWork\.artworkId, language: lang \}\)/);
