@@ -2829,12 +2829,12 @@ function createLouvrePaintBrushTool(spec, index) {
   });
 
   const handle = new THREE.Mesh(
-    new THREE.CylinderGeometry(spec.handleRadius * 0.84, spec.handleRadius, 0.48, 24, 1, false),
+    new THREE.CylinderGeometry(spec.handleRadius * 0.84, spec.handleRadius, 0.3, 24, 1, false),
     handleMaterial
   );
   handle.name = `${brush.name}-handle`;
   handle.rotation.x = Math.PI / 2;
-  handle.position.z = -0.13;
+  handle.position.z = -0.06;
   handle.castShadow = !isQuestBrowser;
   brush.add(handle);
 
@@ -2842,18 +2842,18 @@ function createLouvrePaintBrushTool(spec, index) {
     new THREE.SphereGeometry(spec.handleRadius * 0.88, 18, 12),
     handleMaterial
   );
-  endCap.position.z = 0.11;
+  endCap.position.z = 0.09;
   brush.add(endCap);
 
   const ferrule = new THREE.Mesh(
-    new THREE.CylinderGeometry(spec.ferruleRadius, spec.ferruleRadius * 0.94, 0.135, 24, 1, false),
+    new THREE.CylinderGeometry(spec.ferruleRadius, spec.ferruleRadius * 0.94, 0.085, 24, 1, false),
     ferruleMaterial
   );
   ferrule.rotation.x = Math.PI / 2;
-  ferrule.position.z = -0.435;
+  ferrule.position.z = -0.26;
   brush.add(ferrule);
 
-  [-0.372, -0.498].forEach((z) => {
+  [-0.22, -0.302].forEach((z) => {
     const ring = new THREE.Mesh(
       new THREE.TorusGeometry(spec.ferruleRadius * 0.98, 0.0045, 8, 24),
       ferruleMaterial
@@ -2865,37 +2865,37 @@ function createLouvrePaintBrushTool(spec, index) {
   let bristles;
   if (spec.shape === "flat") {
     bristles = new THREE.Mesh(
-      new THREE.BoxGeometry(spec.bristleWidth, 0.022, 0.16),
+      new THREE.BoxGeometry(spec.bristleWidth, 0.016, 0.11),
       bristleMaterial
     );
-    bristles.position.z = -0.565;
+    bristles.position.z = -0.355;
   } else {
     bristles = new THREE.Mesh(
-      new THREE.ConeGeometry(spec.bristleWidth * 0.5, 0.17, 24, 1, false),
+      new THREE.ConeGeometry(spec.bristleWidth * 0.5, 0.11, 24, 1, false),
       bristleMaterial
     );
     bristles.rotation.x = -Math.PI / 2;
-    bristles.position.z = -0.57;
+    bristles.position.z = -0.355;
   }
   bristles.name = `${brush.name}-bristles`;
   brush.add(bristles);
 
   const tip = new THREE.Object3D();
   tip.name = `${brush.name}-tip`;
-  tip.position.set(0, 0, -0.655);
+  tip.position.set(0, 0, -0.412);
   brush.add(tip);
 
   const hitTarget = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.06, 0.07, 0.62, 12),
+    new THREE.CylinderGeometry(0.045, 0.052, 0.38, 12),
     new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false })
   );
   hitTarget.name = `${brush.name}-grab-target`;
   hitTarget.rotation.x = Math.PI / 2;
-  hitTarget.position.z = -0.18;
+  hitTarget.position.z = -0.08;
   brush.add(hitTarget);
 
-  brush.position.set(6.59, 0.72 + (index % 2) * 0.08, 8.88 + index * 0.32);
-  brush.rotation.set(0.08 * (index - 1), -Math.PI / 2, index % 2 ? 0.08 : -0.08);
+  brush.position.set(6.58, 0.72 + (index % 2) * 0.08, 8.88 + index * 0.32);
+  brush.rotation.set(0.08 * (index - 1), Math.PI / 2, index % 2 ? 0.08 : -0.08);
   scene.add(brush);
 
   const tool = {
@@ -3083,9 +3083,10 @@ function addLouvrePaintStudio() {
   scene.add(brushRack);
 
   const brushSpecs = [
-    { id: "detail", shape: "round", brushSize: 12, handleRadius: 0.027, ferruleRadius: 0.031, bristleWidth: 0.052, handleColor: 0x704329, bristleColor: 0x2b211a },
-    { id: "round", shape: "round", brushSize: 22, handleRadius: 0.031, ferruleRadius: 0.036, bristleWidth: 0.068, handleColor: 0x3d291e, bristleColor: 0x2a201a },
-    { id: "flat", shape: "flat", brushSize: 36, handleRadius: 0.034, ferruleRadius: 0.041, bristleWidth: 0.092, handleColor: 0x825032, bristleColor: 0x33251d }
+    { id: "detail", shape: "round", brushSize: 12, handleRadius: 0.017, ferruleRadius: 0.021, bristleWidth: 0.032, handleColor: 0x704329, bristleColor: 0x2b211a },
+    { id: "round", shape: "round", brushSize: 22, handleRadius: 0.019, ferruleRadius: 0.024, bristleWidth: 0.042, handleColor: 0x3d291e, bristleColor: 0x2a201a },
+    { id: "flat", shape: "flat", brushSize: 36, handleRadius: 0.021, ferruleRadius: 0.026, bristleWidth: 0.052, handleColor: 0x825032, bristleColor: 0x33251d },
+    { id: "broad", shape: "flat", brushSize: 56, handleRadius: 0.022, ferruleRadius: 0.029, bristleWidth: 0.065, handleColor: 0x5d3522, bristleColor: 0x30231c }
   ];
   const brushes = brushSpecs.map(createLouvrePaintBrushTool);
 
@@ -3380,7 +3381,7 @@ function tryGrabLouvrePaintBrush(controller) {
   if (!brush) return false;
 
   controller.add(brush.group);
-  brush.group.position.set(0.025, -0.018, -0.08);
+  brush.group.position.set(0.018, -0.012, -0.035);
   brush.group.rotation.set(-0.06, 0.04, 0);
   brush.group.scale.setScalar(1.04);
   controller.userData.artdaciRayLine && (controller.userData.artdaciRayLine.visible = false);
@@ -8032,6 +8033,7 @@ async function toggleVR() {
     await renderer.xr.setSession(session);
 
     session.addEventListener("end", async () => {
+      if (louvrePaintBrushGrab) releaseLouvrePaintBrush(louvrePaintBrushGrab.controller);
       if (currentSession === session) currentSession = null;
       enterButton.textContent = text.enter;
       enterButton.disabled = false;
