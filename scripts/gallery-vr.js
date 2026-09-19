@@ -2354,8 +2354,8 @@ async function buildLouvreMuseumExhibits() {
       highDetail: true
     }
   );
-  await ensureLouvreMonaLisaWallModel();
   addLouvrePaintStudio();
+  await ensureLouvreMonaLisaWallModel();
 }
 
 function buildPeopleBehindPaintersRoom() {
@@ -2847,15 +2847,14 @@ function addLouvrePaintStudio() {
     { width: 3.15, height: 0.42, accent: true, compact: true }
   );
 
-  const paletteShape = new THREE.Shape();
-  paletteShape.absellipse(0, 0, 1.7, 0.43, 0, Math.PI * 2, false, 0);
   const palette = new THREE.Mesh(
-    new THREE.ShapeGeometry(paletteShape, 32),
+    new THREE.CircleGeometry(1, 48),
     new THREE.MeshStandardMaterial({ color: 0x8b5f38, roughness: 0.76, metalness: 0.02, side: THREE.DoubleSide })
   );
   palette.name = "louvre-paint-palette";
   palette.position.set(6.79, 1.05, 7.15);
   palette.rotation.y = -Math.PI / 2;
+  palette.scale.set(1.7, 0.43, 1);
   scene.add(palette);
 
   const controls = [];
@@ -3353,28 +3352,48 @@ async function ensureLouvreMonaLisaWallModel() {
     const model = gltf.scene;
     model.name = "louvre-mona-lisa-tableau";
 
-    model.updateMatrixWorld(true);
-    let box = new THREE.Box3().setFromObject(model);
-    let size = box.getSize(new THREE.Vector3());
+    const baseQuaternion = model.quaternion.clone();
+    const quarterTurn = Math.PI / 2;
+    let bestQuaternion = baseQuaternion.clone();
+    let bestSize = null;
+    let bestScore = Infinity;
 
-    // Normalize the tableau so its broad painted face is vertical.
-    if (size.z > size.x) {
-      model.rotation.y = Math.PI / 2;
-      model.updateMatrixWorld(true);
-      box = new THREE.Box3().setFromObject(model);
-      size = box.getSize(new THREE.Vector3());
+    // The source GLB's authored axes are not guaranteed. Test right-angle
+    // orientations and choose the one whose thinnest axis faces the wall (X)
+    // while the longest in-plane axis remains vertical (Y).
+    for (let rx = 0; rx < 4; rx += 1) {
+      for (let ry = 0; ry < 4; ry += 1) {
+        for (let rz = 0; rz < 4; rz += 1) {
+          const candidate = new THREE.Quaternion().setFromEuler(
+            new THREE.Euler(rx * quarterTurn, ry * quarterTurn, rz * quarterTurn)
+          );
+          model.quaternion.copy(baseQuaternion).multiply(candidate);
+          model.updateMatrixWorld(true);
+          const candidateBox = new THREE.Box3().setFromObject(model);
+          const candidateSize = candidateBox.getSize(new THREE.Vector3());
+          const inPlane = Math.max(candidateSize.y, candidateSize.z, 0.001);
+          const depthRatio = candidateSize.x / inPlane;
+          const portraitPenalty = candidateSize.y >= candidateSize.z
+            ? 0
+            : (candidateSize.z - candidateSize.y) / inPlane;
+          const score = depthRatio * 8 + portraitPenalty;
+          if (score < bestScore) {
+            bestScore = score;
+            bestQuaternion.copy(model.quaternion);
+            bestSize = candidateSize.clone();
+          }
+        }
+      }
     }
 
-    // Turn the painted face toward the room from the left wall, directly
-    // below the "Explore the Louvre in VR" sign.
-    model.rotation.y += Math.PI / 2;
+    model.quaternion.copy(bestQuaternion);
     model.updateMatrixWorld(true);
-    box = new THREE.Box3().setFromObject(model);
-    size = box.getSize(new THREE.Vector3());
+    let box = new THREE.Box3().setFromObject(model);
+    let size = bestSize || box.getSize(new THREE.Vector3());
 
     const scale = Math.min(
-      1.55 / Math.max(size.x, size.z, 0.001),
-      1.75 / Math.max(size.y, 0.001)
+      1.75 / Math.max(size.y, 0.001),
+      1.35 / Math.max(size.z, 0.001)
     );
     model.scale.setScalar(scale);
     model.updateMatrixWorld(true);
@@ -3388,11 +3407,17 @@ async function ensureLouvreMonaLisaWallModel() {
     const placedBox = new THREE.Box3().setFromObject(model);
     const placedSize = placedBox.getSize(new THREE.Vector3());
 
+    model.traverse((node) => {
+      if (!node.isMesh) return;
+      node.castShadow = !isQuestBrowser;
+      node.receiveShadow = true;
+      if (node.material) node.material.side = THREE.DoubleSide;
+    });
+
     const assembly = new THREE.Group();
     assembly.name = "louvre-mona-lisa-tableau-assembly";
-    // The left wall is at x=-7. Mount the tableau slightly inside the room,
-    // centered directly below the Explore Louvre VR sign at z=7.15.
-    assembly.position.set(-6.72, 1.86, 7.15);
+    // Left wall x=-7; the tableau is centered directly below the VR link.
+    assembly.position.set(-6.80, 1.92, 7.15);
     scene.add(assembly);
     assembly.add(model);
     assembly.updateMatrixWorld(true);
@@ -3428,7 +3453,7 @@ async function ensureLouvreMonaLisaWallModel() {
     updateLouvreMonaLisaHintTransform();
 
     const light = new THREE.SpotLight(0xffe6bd, isQuestBrowser ? 0.72 : 0.95, 6, Math.PI / 5.5, 0.45);
-    light.position.set(-4.75, 3.35, 7.15);
+    light.position.set(-4.65, 3.35, 7.15);
     light.target = model;
     scene.add(light, light.target);
 

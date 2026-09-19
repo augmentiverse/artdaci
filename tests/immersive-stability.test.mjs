@@ -130,8 +130,10 @@ test("Louvre and cinema restore their requested 3D presentation models", () => {
   assert.match(gallerySource, /hitTarget\.name = "louvre-mona-lisa-tableau-handle"/);
   assert.match(gallerySource, /model\.position\.sub\(normalizedCenter\)/);
   assert.match(gallerySource, /EXPLORE THE LOUVRE IN VR"[\s\S]*?\[-6\.86, 3\.45, 7\.15\]/);
-  assert.match(gallerySource, /assembly\.position\.set\(-6\.72, 1\.86, 7\.15\)/);
-  assert.match(gallerySource, /model\.rotation\.y \+= Math\.PI \/ 2/);
+  assert.match(gallerySource, /assembly\.position\.set\(-6\.80, 1\.92, 7\.15\)/);
+  assert.match(gallerySource, /const baseQuaternion = model\.quaternion\.clone\(\)/);
+  assert.match(gallerySource, /depthRatio \* 8 \+ portraitPenalty/);
+  assert.match(gallerySource, /node\.material\.side = THREE\.DoubleSide/);
   assert.doesNotMatch(gallerySource, /LOUVRE_FACADE_MODEL/);
   assert.doesNotMatch(gallerySource, /ensureLouvreFacade\(/);
   assert.match(gallerySource, /name: "cinema-egypt-gateway"[\s\S]*?essential: true/);
@@ -161,6 +163,9 @@ test("Louvre paint studio provides drawable canvas, palette and Quest/screen pai
   assert.match(gallerySource, /new THREE\.CanvasTexture\(canvas\)/);
   assert.match(gallerySource, /board\.name = "louvre-paint-canvas"/);
   assert.match(gallerySource, /palette\.name = "louvre-paint-palette"/);
+  assert.match(gallerySource, /new THREE\.CircleGeometry\(1, 48\)/);
+  assert.doesNotMatch(gallerySource, /paletteShape\.absellipse/);
+  assert.match(gallerySource, /addLouvrePaintStudio\(\);[\s\S]*?await ensureLouvreMonaLisaWallModel\(\);/);
   assert.match(gallerySource, /const brushSizes = \[8, 18, 32\]/);
   assert.match(gallerySource, /type: "eraser"/);
   assert.match(gallerySource, /type: "clear"/);
