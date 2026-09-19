@@ -55,6 +55,7 @@ test("the Five Museums Wing loads each architectural model as essential room con
   for (const model of models) assert.match(source, new RegExp(model.replace(".", "\\.")));
   assert.match(source, /await loadFiveMuseumsRoom\(requestedMuseumIndex\);/);
   assert.match(source, /async function loadMuseumArchitecturalModel[\s\S]*?essential: true/);
+  assert.match(source, /name: "museum-architecture-louvre"[\s\S]*?rotationY: Math\.PI/);
   assert.match(source, /essential = false/);
   assert.match(source, /if \(!essential && !allowDecorative3DModels\) return null;/);
   assert.match(source, /MNK-Czartoryski_museum_legende\.webp/);
@@ -86,8 +87,8 @@ test("museum configuration and viewer cache-busters activate the new media", asy
   assert.match(arSource, /CONFIG\.resourceType === "museum" && manifest\.print\?\.imageTargetSource/);
   assert.match(arSource, /document\.getElementById\("target-image-link"\)\.href = manifest\.print\.imageTargetSource/);
   assert.match(spaceHtml, /space-viewer\.js\?v=35/);
-  assert.match(galleryHtml, /gallery-vr\.js\?v=150/);
-  assert.match(cinemaHtml, /gallery-vr\.js\?v=124/);
+  assert.match(galleryHtml, /gallery-vr\.js\?v=151/);
+  assert.match(cinemaHtml, /gallery-vr\.js\?v=125/);
   assert.match(bookHtml, /book-3d\.js\?v=35/);
   assert.match(printHtml, /print-artwork\.js\?v=7/);
   for (const source of indexes) assert.match(source, /content\/museums\/czartoryski\.json\?v=2/);

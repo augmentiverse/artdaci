@@ -1968,7 +1968,7 @@ async function loadMuseumArchitecturalModel(room, index, centerZ) {
       src: room.model,
       name: "museum-architecture-louvre",
       position: [0, 0.02, centerZ],
-      rotationY: 0,
+      rotationY: Math.PI,
       maxSize: 6.96,
       essential: true
     });
