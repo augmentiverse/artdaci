@@ -515,7 +515,9 @@ const previewPositionZ = isCinemaOnly || previewRoom === "cinema"
     ? 17.4
     : previewRoom === "models"
       ? -5.2
-      : 4;
+      : previewRoom === "louvre"
+        ? 8.4
+        : 4;
 const previewRotationY = isCinemaOnly || ["models", "bedroom", "reimagined", "groups", "cinema"].includes(previewRoom) ? Math.PI : 0;
 const PAINTING_INFO = {
   en: {
@@ -1978,7 +1980,7 @@ async function loadMuseumArchitecturalModel(room, index, centerZ) {
       name: "museum-architecture-louvre",
       position: [0, 0.02, centerZ],
       rotationY: 0,
-      maxSize: 6.96,
+      maxSize: 3.48,
       essential: true,
       collidable: true
     });
@@ -2197,7 +2199,7 @@ function buildLouvreMuseumRoom() {
   document.getElementById("gallery-count").textContent = lang === "fr" ? "Trois photos · une façade 3D" : lang === "ar" ? "ثلاث صور · واجهة ثلاثية الأبعاد" : "Three photographs · one 3D facade";
   scene.background = new THREE.Color(0x6f412e);
   scene.fog = new THREE.Fog(0x6f412e, 24, 46);
-  visitor.position.set(0, 0, 7.1);
+  visitor.position.set(0, 0, 8.4);
   visitor.rotation.y = 0;
   scene.add(new THREE.HemisphereLight(0xfff3d3, 0x5d3524, isQuestBrowser ? 1.35 : 1.65));
 
@@ -2291,17 +2293,17 @@ function buildLouvreMuseumRoom() {
     scene.add(warm);
   });
   createWallSign(lang === "fr" ? "GALERIE DU LOUVRE" : lang === "ar" ? "معرض اللوفر" : "THE LOUVRE GALLERY", [0, 4.18, -9.7], 0, { width: 4.7, height: 0.5, accent: true, compact: true });
-  createWallSign(lang === "fr" ? "EXPLORER LE LOUVRE EN VR" : lang === "ar" ? "استكشاف اللوفر بالواقع الافتراضي" : "EXPLORE THE LOUVRE IN VR", [-6.86, 3.45, 5.45], Math.PI / 2, { width: 3.4, height: 0.46, exitUrl: LOUVRE_GALLERY_VR_WORLD_URL, compact: true, accent: true });
-  createWallSign(lang === "fr" ? "RETOUR À LA GALERIE VR" : lang === "ar" ? "العودة إلى معرض الواقع الافتراضي" : "BACK TO THE VR GALLERY", [-3.75, 4.45, 9.72], Math.PI, { width: 3.15, height: 0.4, exitUrl: `gallery-vr.html?lang=${lang}`, compact: true });
-  createWallSign(lang === "fr" ? "SORTIR VERS LA COLLECTION" : lang === "ar" ? "الخروج إلى المجموعة" : "EXIT TO COLLECTION", [0, 4.45, 9.72], Math.PI, {
+  createWallSign(lang === "fr" ? "EXPLORER LE LOUVRE EN VR" : lang === "ar" ? "استكشاف اللوفر بالواقع الافتراضي" : "EXPLORE THE LOUVRE IN VR", [-6.86, 3.45, 7.15], Math.PI / 2, { width: 3.4, height: 0.46, exitUrl: LOUVRE_GALLERY_VR_WORLD_URL, compact: true, accent: true });
+  createWallSign(lang === "fr" ? "RETOUR À LA GALERIE VR" : lang === "ar" ? "العودة إلى معرض الواقع الافتراضي" : "BACK TO THE VR GALLERY", [-3.75, 4.12, 9.72], Math.PI, { width: 3.15, height: 0.4, exitUrl: `gallery-vr.html?lang=${lang}`, compact: true });
+  createWallSign(lang === "fr" ? "SORTIR VERS LA COLLECTION" : lang === "ar" ? "الخروج إلى المجموعة" : "EXIT TO COLLECTION", [0, 4.12, 9.72], Math.PI, {
     width: 3.15,
     height: 0.4,
     exitUrl: lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html",
     compact: true
   });
-  addVirtualGuideStation([3.75, 4.45, 9.72], Math.PI, "the ARTDACI Louvre room, its photographs, and its 3D facade");
+  addVirtualGuideStation([3.75, 4.12, 9.72], Math.PI, "the ARTDACI Louvre room, its photographs, and its 3D facade");
   addLocalMovementHotspots([
-    { position: [0, 7.1], label: lang === "fr" ? "ENTRÉE" : lang === "ar" ? "المدخل" : "ENTRANCE", yaw: 0 },
+    { position: [0, 8.4], label: lang === "fr" ? "ENTRÉE" : lang === "ar" ? "المدخل" : "ENTRANCE", yaw: 0 },
     { position: [0, 1.8], label: lang === "fr" ? "CENTRE" : lang === "ar" ? "الوسط" : "CENTRE", yaw: 0 },
     { position: [0, -6.8], label: lang === "fr" ? "TABLEAUX" : lang === "ar" ? "اللوحات" : "PAINTINGS", yaw: 0 }
   ]);
@@ -2897,7 +2899,7 @@ async function addDedicatedArtistModel(item, centerZ, index, count) {
   const titleText = item.title[lang] || item.title.en;
   const label = makeLabel(titleText);
   label.position.set(0, 0.48, -1.03);
-  label.rotation.x = -Math.PI / 5;
+  label.rotation.x = -Math.PI / 2;
   label.rotation.y = Math.PI;
   label.scale.set(1.85, 0.56, 1);
   display.add(label);
@@ -5367,7 +5369,7 @@ function addFurnitureGalleryModel(item, model) {
   const label = makeLabel(`${lang === "ar" ? "نموذج ثلاثي الأبعاد" : lang === "fr" ? "Modèle 3D" : "3D model"}\n${localizedTitle}`);
   label.position.set(0, 0.5, -0.92);
   label.rotation.y = Math.PI;
-  label.rotation.x = -Math.PI / 5;
+  label.rotation.x = -Math.PI / 2;
   label.scale.set(1.72, 0.72, 1);
   display.add(label);
 
@@ -5429,7 +5431,7 @@ async function addGalleryModel(exhibit, modelSrc) {
   const label = makeLabel(`${lang === "ar" ? "عمل ثلاثي الأبعاد" : lang === "fr" ? "Œuvre 3D" : "3D exhibit"}\n${title}`);
   label.position.set(0, 0.43, -0.76);
   label.rotation.y = Math.PI;
-  label.rotation.x = -Math.PI / 5;
+  label.rotation.x = -Math.PI / 2;
   label.scale.set(1.55, 0.72, 1);
   display.add(label);
 
@@ -6513,6 +6515,7 @@ async function exitGallery(url) {
 
   pendingNavigationUrl = url;
   document.body.dataset.xrNavigation = "ending";
+  stopRenderLoop();
   enterButton.disabled = true;
   status.textContent = lang === "ar"
     ? "جارٍ الخروج من الواقع الافتراضي…"
@@ -6531,8 +6534,8 @@ async function exitGallery(url) {
     enterButton.disabled = false;
     document.body.dataset.xrNavigation = "fallback";
     clearTimeout(xrNavigationTimer);
-    await waitForRendererXrRelease();
-    xrNavigationTimer = setTimeout(() => location.assign(target), isQuestBrowser ? 750 : 0);
+    await prepareQuestPageNavigation();
+    xrNavigationTimer = setTimeout(() => location.assign(target), 0);
   }
 }
 
@@ -6797,8 +6800,8 @@ async function detectVR() {
 }
 
 async function waitForRendererXrRelease() {
-  for (let attempt = 0; attempt < 24; attempt += 1) {
-    if (!renderer.xr.getSession?.()) return true;
+  for (let attempt = 0; attempt < 30; attempt += 1) {
+    if (!renderer.xr.getSession?.()) break;
     await new Promise((resolve) => setTimeout(resolve, 50));
   }
   try {
@@ -6806,8 +6809,21 @@ async function waitForRendererXrRelease() {
   } catch (error) {
     console.warn("Three.js WebXR manager did not release immediately.", error);
   }
-  await new Promise((resolve) => setTimeout(resolve, isQuestBrowser ? 250 : 40));
   return !renderer.xr.getSession?.();
+}
+
+async function prepareQuestPageNavigation() {
+  stopRenderLoop();
+  await waitForRendererXrRelease();
+  renderer.xr.enabled = false;
+  await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  if (isQuestBrowser) {
+    const startedAt = performance.now();
+    while ((document.visibilityState !== "visible" || !document.hasFocus()) && performance.now() - startedAt < 2200) {
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+    await new Promise((resolve) => setTimeout(resolve, 900));
+  }
 }
 
 async function toggleVR() {
@@ -6837,12 +6853,11 @@ async function toggleVR() {
         pendingNavigationUrl = null;
         document.body.dataset.xrNavigation = "releasing";
         clearTimeout(xrNavigationTimer);
-        await waitForRendererXrRelease();
-        await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        await prepareQuestPageNavigation();
         document.body.dataset.xrNavigation = "navigating";
         xrNavigationTimer = setTimeout(() => {
           location.assign(target);
-        }, isQuestBrowser ? 650 : 0);
+        }, 0);
         return;
       }
 

@@ -109,6 +109,11 @@ test("Louvre and cinema restore their requested 3D presentation models", () => {
   assert.match(gallerySource, /function addLouvreArtdaciBookDisplay\(\)/);
   assert.match(gallerySource, /name: "louvre-artdaci-book-table"/);
   assert.match(gallerySource, /name = "louvre-artdaci-book3d-v2"/);
+  assert.match(gallerySource, /previewRoom === "louvre"[\s\S]*?\? 8\.4/);
+  assert.match(gallerySource, /visitor\.position\.set\(0, 0, 8\.4\)/);
+  assert.match(gallerySource, /EXPLORE THE LOUVRE IN VR"[\s\S]*?\[-6\.86, 3\.45, 7\.15\]/);
+  assert.match(gallerySource, /BACK TO THE VR GALLERY"[\s\S]*?\[-3\.75, 4\.12, 9\.72\]/);
+  assert.match(gallerySource, /maxSize: 3\.48/);
   assert.match(gallerySource, /book\.scale\.setScalar\(0\.736/);
   assert.match(gallerySource, /name = "louvre-artdaci-book-link"/);
   assert.match(gallerySource, /bookHitTarget\.userData\.exitUrl = `book-3d\.html\?lang=\$\{lang\}`/);
@@ -143,14 +148,15 @@ test("Louvre Living Book interaction hint stays hidden until the book is pointed
   assert.doesNotMatch(gallerySource, /label\.userData\.exitUrl = `book-3d\.html/);
 });
 
-test("Quest navigation fully releases WebXR before changing gallery pages", () => {
+test("Quest navigation fully releases WebXR and browser focus before changing pages", () => {
   assert.match(gallerySource, /let pendingNavigationUrl = null/);
   assert.match(gallerySource, /document\.body\.dataset\.xrNavigation = "ending"/);
   assert.match(gallerySource, /async function waitForRendererXrRelease\(\)/);
-  assert.match(gallerySource, /renderer\.xr\.getSession\?\.\(\)/);
+  assert.match(gallerySource, /async function prepareQuestPageNavigation\(\)/);
+  assert.match(gallerySource, /stopRenderLoop\(\);[\s\S]*?await waitForRendererXrRelease\(\);[\s\S]*?renderer\.xr\.enabled = false/);
+  assert.match(gallerySource, /document\.visibilityState !== "visible" \|\| !document\.hasFocus\(\)/);
+  assert.match(gallerySource, /setTimeout\(resolve, 900\)/);
   assert.match(gallerySource, /await renderer\.xr\.setSession\(session\);[\s\S]*?session\.addEventListener\("end"/);
-  assert.match(gallerySource, /await waitForRendererXrRelease\(\);[\s\S]*?requestAnimationFrame\(\(\) => requestAnimationFrame\(resolve\)\)/);
-  assert.match(gallerySource, /isQuestBrowser \? 650 : 0/);
   assert.doesNotMatch(gallerySource, /if \(currentSession\) await currentSession\.end\(\);\s*location\.href = url/);
 });
 
@@ -161,6 +167,11 @@ test("cinema and gallery signage use the People Behind the Painters high-contras
   assert.match(gallerySource, /buttonScale = isQuestBrowser \? 0\.75/);
   assert.match(gallerySource, /createWallSign\(destination\.label, \[19\.88,[\s\S]*?31\.15\]/);
   assert.match(gallerySource, /addVirtualGuideStation\(\[19\.88, 1\.08, 31\.15\], -Math\.PI \/ 2/);
+});
+
+test("3D model gallery plaques are laid back ninety degrees for visitor readability", () => {
+  assert.ok((gallerySource.match(/label\.rotation\.x = -Math\.PI \/ 2;/g) || []).length >= 3);
+  assert.doesNotMatch(gallerySource, /label\.rotation\.x = -Math\.PI \/ 5;/);
 });
 
 test("Living Book retains only the visible page window and cancels stale work", () => {
