@@ -117,6 +117,7 @@ const ORNATE_PILL_MODEL = "assets/environments/gallery/models/Ornate_Turquoise_P
 const ACCENT_SOFA_MODEL = "assets/environments/gallery/models/sofa1.glb";
 const CINEMA_GATEWAY_MODEL = "assets/environments/gallery/models/Gateway_Egypt_c.glb";
 const LOUVRE_SIDE_OPENING_WIDTH = 9.04;
+const LOUVRE_BUILDING_PLAN = "assets/environments/gallery/images/Louvre/louvre_building_plan/louvre_building_plan_{lang}.png";
 const LOUVRE_PHOTO_EXHIBITS = [
   { src: "assets/environments/gallery/images/Louvre/louvre_building/louvre_gauche.png", position: [-7.16, 2.45, 0], rotationY: Math.PI / 2, maxWidth: LOUVRE_SIDE_OPENING_WIDTH - 0.18, maxHeight: 4.9, portal: true },
   { src: "assets/environments/gallery/images/Louvre/louvre_building/louvre_droit.png", position: [7.16, 2.45, 0], rotationY: -Math.PI / 2, maxWidth: LOUVRE_SIDE_OPENING_WIDTH - 0.18, maxHeight: 4.9, portal: true },
@@ -1792,11 +1793,7 @@ function localizedMuseumName(room) {
 }
 
 function museumImagePath(template) {
-  const localizedPath = template.replace("{lang}", lang);
-  if (localizedPath.endsWith("/Louvre/louvre_building_plan/louvre_building_plan_fr.png")) {
-    return localizedPath.replace("louvre_building_plan_fr.png", "louvre_building_plan_ffr.png");
-  }
-  return localizedPath;
+  return template.replace("{lang}", lang);
 }
 
 function buildFiveMuseumsWing() {
@@ -1976,7 +1973,7 @@ async function loadMuseumArchitecturalModel(room, index, centerZ) {
       src: room.model,
       name: "museum-architecture-louvre",
       position: [0, 0.02, centerZ],
-      rotationY: Math.PI,
+      rotationY: 0,
       maxSize: 6.96,
       essential: true,
       collidable: true
@@ -2328,6 +2325,21 @@ async function buildLouvreMuseumExhibits() {
     display.add(image);
     scene.add(display);
   }
+
+  await addMuseumInformationPanel(
+    LOUVRE_BUILDING_PLAN,
+    0,
+    9.82,
+    Math.PI,
+    "",
+    {
+      maxWidth: 6.4,
+      maxHeight: 3.45,
+      positionY: 2.18,
+      hideLabel: true,
+      highDetail: true
+    }
+  );
   await ensureLouvreFacade();
 }
 
@@ -2688,7 +2700,7 @@ async function addLouvreArtdaciBookDisplay() {
 
     let bookBox = new THREE.Box3().setFromObject(book);
     const bookSize = bookBox.getSize(new THREE.Vector3());
-    book.scale.setScalar(0.92 / Math.max(bookSize.x, bookSize.z, 0.001));
+    book.scale.setScalar(0.736 / Math.max(bookSize.x, bookSize.z, 0.001));
     book.updateMatrixWorld(true);
     bookBox = new THREE.Box3().setFromObject(book);
     const bookCenter = bookBox.getCenter(new THREE.Vector3());
@@ -2708,10 +2720,33 @@ async function addLouvreArtdaciBookDisplay() {
       }
     });
     scene.add(book);
+    book.updateMatrixWorld(true);
 
-    const label = makeLabel(lang === "ar" ? "كتاب ARTDACI ثلاثي الأبعاد" : lang === "fr" ? "LIVRE ARTDACI 3D" : "ARTDACI 3D BOOK", { highDetail: true });
+    const placedBookBox = new THREE.Box3().setFromObject(book);
+    const placedBookSize = placedBookBox.getSize(new THREE.Vector3());
+    const placedBookCenter = placedBookBox.getCenter(new THREE.Vector3());
+    const bookHitTarget = new THREE.Mesh(
+      new THREE.BoxGeometry(
+        Math.max(placedBookSize.x * 1.12, 0.45),
+        Math.max(placedBookSize.y * 1.25, 0.18),
+        Math.max(placedBookSize.z * 1.12, 0.45)
+      ),
+      new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false })
+    );
+    bookHitTarget.name = "louvre-artdaci-book-link";
+    bookHitTarget.position.copy(placedBookCenter);
+    bookHitTarget.userData.exitUrl = `book-3d.html?lang=${lang}`;
+    teleportTargets.push(bookHitTarget);
+    scene.add(bookHitTarget);
+
+    const label = makeLabel(
+      lang === "ar" ? "افتح الكتاب الحي" : lang === "fr" ? "OUVRIR LE LIVING BOOK" : "OPEN THE LIVING BOOK",
+      { highDetail: true }
+    );
     label.position.set(tableCenter.x, tableBox.max.y + 0.52, tableCenter.z - 0.72);
     label.scale.set(1.65, 0.42, 1);
+    label.userData.exitUrl = `book-3d.html?lang=${lang}`;
+    teleportTargets.push(label);
     scene.add(label);
     return book;
   } catch (error) {
@@ -3431,7 +3466,7 @@ function addCinemaNavigationSigns() {
   ];
   // Keep navigation in one compact vertical column, away from the music menu.
   destinations.forEach((destination, index) => {
-    createWallSign(destination.label, [19.35, 3.35 - index * 0.57, 29.65], -Math.PI / 2, {
+    createWallSign(destination.label, [19.88, 3.35 - index * 0.57, 31.15], -Math.PI / 2, {
       width: 2.35,
       height: 0.43,
       exitUrl: destination.url,
@@ -6267,7 +6302,8 @@ async function exitGallery(url) {
     enterButton.disabled = false;
     document.body.dataset.xrNavigation = "fallback";
     clearTimeout(xrNavigationTimer);
-    xrNavigationTimer = setTimeout(() => location.assign(target), isQuestBrowser ? 500 : 0);
+    await waitForRendererXrRelease();
+    xrNavigationTimer = setTimeout(() => location.assign(target), isQuestBrowser ? 750 : 0);
   }
 }
 
@@ -6517,36 +6553,62 @@ async function detectVR() {
   }
 }
 
+async function waitForRendererXrRelease() {
+  for (let attempt = 0; attempt < 24; attempt += 1) {
+    if (!renderer.xr.getSession?.()) return true;
+    await new Promise((resolve) => setTimeout(resolve, 50));
+  }
+  try {
+    await renderer.xr.setSession(null);
+  } catch (error) {
+    console.warn("Three.js WebXR manager did not release immediately.", error);
+  }
+  await new Promise((resolve) => setTimeout(resolve, isQuestBrowser ? 250 : 40));
+  return !renderer.xr.getSession?.();
+}
+
 async function toggleVR() {
   try {
     if (currentSession) {
       await currentSession.end();
       return;
     }
-    currentSession = await navigator.xr.requestSession("immersive-vr", {
+
+    const session = await navigator.xr.requestSession("immersive-vr", {
       optionalFeatures: ["local-floor", "bounded-floor", "hand-tracking"]
     });
-    currentSession.addEventListener("end", () => {
-      currentSession = null;
+    currentSession = session;
+
+    // Let Three.js install its own end listener first. This prevents page
+    // navigation from racing WebXR teardown on Meta Quest.
+    await renderer.xr.setSession(session);
+
+    session.addEventListener("end", async () => {
+      if (currentSession === session) currentSession = null;
       enterButton.textContent = text.enter;
       enterButton.disabled = false;
       stopAllAudioGuides();
+
       if (pendingNavigationUrl) {
         const target = pendingNavigationUrl;
         pendingNavigationUrl = null;
-        document.body.dataset.xrNavigation = "navigating";
+        document.body.dataset.xrNavigation = "releasing";
         clearTimeout(xrNavigationTimer);
+        await waitForRendererXrRelease();
+        await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        document.body.dataset.xrNavigation = "navigating";
         xrNavigationTimer = setTimeout(() => {
           location.assign(target);
-        }, isQuestBrowser ? 320 : 0);
+        }, isQuestBrowser ? 650 : 0);
         return;
       }
+
       document.body.dataset.xrNavigation = "idle";
       visitor.position.set(isConnectedMuseum ? connectedStartX : previewPositionX, 0, isConnectedMuseum ? connectedStartZ : previewPositionZ);
       visitor.rotation.set(0, isConnectedMuseum ? connectedStartYaw : previewRotationY, 0);
     }, { once: true });
-    await renderer.xr.setSession(currentSession);
-    const xrLayer = currentSession.renderState?.baseLayer;
+
+    const xrLayer = session.renderState?.baseLayer;
     if (isQuestBrowser && xrLayer && "fixedFoveation" in xrLayer) xrLayer.fixedFoveation = 1;
     visitor.position.set(isConnectedMuseum ? connectedStartX : previewPositionX, 0, isConnectedMuseum ? connectedStartZ : previewPositionZ);
     visitor.rotation.set(0, isConnectedMuseum ? connectedStartYaw : previewRotationY, 0);

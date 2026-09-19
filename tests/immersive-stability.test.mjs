@@ -105,19 +105,27 @@ test("gallery text reuses the high-contrast People room typography on Quest", ()
 
 test("Louvre and cinema restore their requested 3D presentation models", () => {
   assert.match(gallerySource, /LOUVRE_ARTDACI_BOOK_MODEL = "assets\/environments\/gallery\/models\/artdaci_book3d_v2\.glb"/);
+  assert.match(gallerySource, /LOUVRE_BUILDING_PLAN = "assets\/environments\/gallery\/images\/Louvre\/louvre_building_plan\/louvre_building_plan_\{lang\}\.png"/);
   assert.match(gallerySource, /function addLouvreArtdaciBookDisplay\(\)/);
   assert.match(gallerySource, /name: "louvre-artdaci-book-table"/);
   assert.match(gallerySource, /name = "louvre-artdaci-book3d-v2"/);
+  assert.match(gallerySource, /book\.scale\.setScalar\(0\.736/);
+  assert.match(gallerySource, /name = "louvre-artdaci-book-link"/);
+  assert.match(gallerySource, /bookHitTarget\.userData\.exitUrl = `book-3d\.html\?lang=\$\{lang\}`/);
+  assert.match(gallerySource, /await addMuseumInformationPanel\([\s\S]*?LOUVRE_BUILDING_PLAN[\s\S]*?9\.82[\s\S]*?Math\.PI/);
   assert.match(gallerySource, /name: "cinema-egypt-gateway"[\s\S]*?essential: true/);
   assert.match(gallerySource, /function maybeLoadCinemaAudience\(\) \{\s*if \(!allowExhibit3DModels \|\| isIOSDevice\) return;/);
 });
 
-test("Quest navigation ends WebXR before changing gallery pages", () => {
+test("Quest navigation fully releases WebXR before changing gallery pages", () => {
   assert.match(gallerySource, /let pendingNavigationUrl = null/);
   assert.match(gallerySource, /document\.body\.dataset\.xrNavigation = "ending"/);
-  assert.match(gallerySource, /currentSession\.addEventListener\("end"[\s\S]*?location\.assign\(target\)/);
+  assert.match(gallerySource, /async function waitForRendererXrRelease\(\)/);
+  assert.match(gallerySource, /renderer\.xr\.getSession\?\.\(\)/);
+  assert.match(gallerySource, /await renderer\.xr\.setSession\(session\);[\s\S]*?session\.addEventListener\("end"/);
+  assert.match(gallerySource, /await waitForRendererXrRelease\(\);[\s\S]*?requestAnimationFrame\(\(\) => requestAnimationFrame\(resolve\)\)/);
+  assert.match(gallerySource, /isQuestBrowser \? 650 : 0/);
   assert.doesNotMatch(gallerySource, /if \(currentSession\) await currentSession\.end\(\);\s*location\.href = url/);
-  assert.match(gallerySource, /setTimeout\(\(\) => \{\s*location\.assign\(target\);\s*\}, isQuestBrowser \? 320 : 0\)/);
 });
 
 test("cinema and gallery signage use the People Behind the Painters high-contrast style", () => {
@@ -125,7 +133,7 @@ test("cinema and gallery signage use the People Behind the Painters high-contras
   assert.match(gallerySource, /function createWallSign[\s\S]*?isLowPowerDevice \? 1280 : 1600/);
   assert.match(gallerySource, /function paintCinemaPlaque[\s\S]*?background\.addColorStop\(0, "#102c30"\)/);
   assert.match(gallerySource, /buttonScale = isQuestBrowser \? 0\.75/);
-  assert.match(gallerySource, /createWallSign\(destination\.label, \[19\.35,/);
+  assert.match(gallerySource, /createWallSign\(destination\.label, \[19\.88,[\s\S]*?31\.15\]/);
 });
 
 test("Living Book retains only the visible page window and cancels stale work", () => {
