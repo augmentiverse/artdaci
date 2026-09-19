@@ -4005,7 +4005,7 @@ function createWallSign(message, position, rotationY, options = {}) {
   }
   context.fillText(message, canvas.width / 2 + (options.icon ? 70 * canvasScale : 0), canvas.height / 2);
   if (options.icon) {
-    context.fillStyle = menuPalette.icon;
+    context.fillStyle = "#e5c47f";
     context.font = `700 ${118 * canvasScale}px "Segoe UI Symbol", "Segoe UI", sans-serif`;
     context.fillText(options.icon, 155 * canvasScale, canvas.height / 2);
   }
