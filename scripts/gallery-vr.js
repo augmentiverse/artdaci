@@ -3042,7 +3042,7 @@ async function ensureLouvreMonaLisaWallModel() {
     let box = new THREE.Box3().setFromObject(model);
     let size = box.getSize(new THREE.Vector3());
 
-    // Normalize the painting so its broad face reads as a wall-mounted tableau.
+    // Normalize the tableau so its broad painted face is vertical.
     if (size.z > size.x) {
       model.rotation.y = Math.PI / 2;
       model.updateMatrixWorld(true);
@@ -3050,50 +3050,36 @@ async function ensureLouvreMonaLisaWallModel() {
       size = box.getSize(new THREE.Vector3());
     }
 
-    // Right rear wall: empty counterpart to the "Explore the Louvre in VR" sign.
+    // Turn the painted face toward the room from the empty right rear wall.
     model.rotation.y += -Math.PI / 2;
     model.updateMatrixWorld(true);
     box = new THREE.Box3().setFromObject(model);
     size = box.getSize(new THREE.Vector3());
 
     const scale = Math.min(
-      1.75 / Math.max(size.x, size.z, 0.001),
-      2.15 / Math.max(size.y, 0.001)
+      1.65 / Math.max(size.x, size.z, 0.001),
+      2.05 / Math.max(size.y, 0.001)
     );
     model.scale.setScalar(scale);
     model.updateMatrixWorld(true);
 
+    // Center the authored GLB around its own local origin before mounting it.
     box = new THREE.Box3().setFromObject(model);
-    const center = box.getCenter(new THREE.Vector3());
-    model.position.set(
-      6.82 - box.max.x,
-      2.45 - center.y,
-      7.15 - center.z
-    );
-    model.updateMatrixWorld(true);
-
-    model.traverse((node) => {
-      if (!node.isMesh) return;
-      node.castShadow = !isQuestBrowser;
-      node.receiveShadow = true;
-      if (node.material?.map) {
-        node.material.map.anisotropy = isLowPowerDevice ? 2 : renderer.capabilities.getMaxAnisotropy();
-        node.material.map.needsUpdate = true;
-      }
-    });
-
-    scene.add(model);
+    const normalizedCenter = box.getCenter(new THREE.Vector3());
+    model.position.sub(normalizedCenter);
     model.updateMatrixWorld(true);
 
     const placedBox = new THREE.Box3().setFromObject(model);
     const placedSize = placedBox.getSize(new THREE.Vector3());
-    const placedCenter = placedBox.getCenter(new THREE.Vector3());
 
     const assembly = new THREE.Group();
     assembly.name = "louvre-mona-lisa-tableau-assembly";
-    assembly.position.copy(placedCenter);
+    // The side wall is at x=7. Keep the tableau slightly inside the room,
+    // centered on the empty rear wall section instead of overlapping imagery.
+    assembly.position.set(6.72, 2.48, 7.22);
     scene.add(assembly);
-    assembly.attach(model);
+    assembly.add(model);
+    assembly.updateMatrixWorld(true);
 
     const hitTarget = new THREE.Mesh(
       new THREE.BoxGeometry(
@@ -3126,7 +3112,7 @@ async function ensureLouvreMonaLisaWallModel() {
     updateLouvreMonaLisaHintTransform();
 
     const light = new THREE.SpotLight(0xffe6bd, isQuestBrowser ? 0.72 : 0.95, 6, Math.PI / 5.5, 0.45);
-    light.position.set(4.8, 3.8, 7.15);
+    light.position.set(4.75, 3.75, 7.22);
     light.target = model;
     scene.add(light, light.target);
 

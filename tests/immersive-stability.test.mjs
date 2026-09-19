@@ -128,7 +128,8 @@ test("Louvre and cinema restore their requested 3D presentation models", () => {
   assert.match(gallerySource, /name = "louvre-mona-lisa-tableau"/);
   assert.match(gallerySource, /assembly\.name = "louvre-mona-lisa-tableau-assembly"/);
   assert.match(gallerySource, /hitTarget\.name = "louvre-mona-lisa-tableau-handle"/);
-  assert.match(gallerySource, /6\.82 - box\.max\.x[\s\S]*?7\.15 - center\.z/);
+  assert.match(gallerySource, /model\.position\.sub\(normalizedCenter\)/);
+  assert.match(gallerySource, /assembly\.position\.set\(6\.72, 2\.48, 7\.22\)/);
   assert.doesNotMatch(gallerySource, /LOUVRE_FACADE_MODEL/);
   assert.doesNotMatch(gallerySource, /ensureLouvreFacade\(/);
   assert.match(gallerySource, /name: "cinema-egypt-gateway"[\s\S]*?essential: true/);
