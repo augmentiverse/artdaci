@@ -14,9 +14,10 @@
       {"imports":{"three":"./vendor/three.module.js"}}
     </script>
   </head>
-  <body data-experience="cinema">
+  <body class="screen-ui-collapsed" data-experience="cinema">
     <main class="gallery-shell">
-      <header class="gallery-toolbar">
+      <button id="gallery-ui-toggle" class="gallery-ui-toggle" type="button" aria-expanded="false" aria-controls="gallery-toolbar gallery-guide">Menu</button>
+      <header id="gallery-toolbar" class="gallery-toolbar">
         <a id="gallery-back" class="gallery-button" href="gallery-vr.html?lang=en">Back to gallery</a>
         <div>
           <p id="gallery-kicker">Immersive cinema</p>
@@ -29,7 +30,7 @@
           <button id="enter-gallery-vr" class="gallery-button primary" type="button" disabled>Enter VR Cinema</button>
         </div>
       </header>
-      <aside class="gallery-guide">
+      <aside id="gallery-guide" class="gallery-guide">
         <strong id="gallery-count">Cinema room</strong>
         <span id="gallery-status" role="status">Preparing the cinema…</span>
         <section class="cinema-device-viewer" aria-labelledby="cinema-device-title">
