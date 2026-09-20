@@ -2904,7 +2904,8 @@ function createLouvrePaintBrushTool(spec, index) {
   hitTarget.position.z = -0.08;
   brush.add(hitTarget);
 
-  brush.position.set(6.58, 0.72 + (index % 2) * 0.08, 8.88 + index * 0.32);
+  // Keep the physical brushes clearly above the lower command row.
+  brush.position.set(6.58, 1.82 + (index % 2) * 0.08, 8.88 + index * 0.32);
   brush.rotation.set(0.08 * (index - 1), Math.PI / 2, index % 2 ? 0.08 : -0.08);
   scene.add(brush);
 
@@ -2925,11 +2926,137 @@ function createLouvrePaintBrushTool(spec, index) {
 
 function makeLouvrePaintButton(label, z, control, scale = 0.5) {
   const button = makeLabel(label, { highDetail: true });
-  button.position.set(6.72, 0.42, z);
+  // The command row sits fully below the palette and the physical brushes.
+  button.position.set(6.69, 0.28, z);
   button.rotation.y = -Math.PI / 2;
-  button.scale.set(scale, 0.52, 1);
+  button.scale.set(scale, 0.42, 1);
+  button.renderOrder = 1250;
   button.userData.paintControl = control;
   return button;
+}
+
+function drawLouvrePaintTemplate(context, templateId) {
+  if (!louvrePaintStudio || !context || !templateId || templateId === "blank") return;
+  const { canvas, background } = louvrePaintStudio;
+  const w = canvas.width;
+  const h = canvas.height;
+  const x = (value) => value * w;
+  const y = (value) => value * h;
+  const outline = background === "#111318" ? "#f2e8d8" : "#4b3b31";
+
+  context.save();
+  context.globalAlpha = 0.62;
+  context.strokeStyle = outline;
+  context.fillStyle = "transparent";
+  context.lineWidth = Math.max(2, w / 360);
+  context.lineCap = "round";
+  context.lineJoin = "round";
+
+  const ellipse = (cx, cy, rx, ry, rotation = 0) => {
+    context.beginPath();
+    context.ellipse(x(cx), y(cy), x(rx), y(ry), rotation, 0, Math.PI * 2);
+    context.stroke();
+  };
+
+  const curve = (...points) => {
+    context.beginPath();
+    context.moveTo(x(points[0]), y(points[1]));
+    context.bezierCurveTo(
+      x(points[2]), y(points[3]),
+      x(points[4]), y(points[5]),
+      x(points[6]), y(points[7])
+    );
+    context.stroke();
+  };
+
+  if (templateId === "portrait") {
+    ellipse(0.5, 0.39, 0.15, 0.22);
+    curve(0.34, 0.35, 0.34, 0.13, 0.66, 0.13, 0.67, 0.37);
+    curve(0.33, 0.37, 0.29, 0.48, 0.35, 0.59, 0.39, 0.63);
+    curve(0.67, 0.37, 0.71, 0.48, 0.65, 0.59, 0.61, 0.63);
+    curve(0.39, 0.68, 0.28, 0.71, 0.2, 0.82, 0.16, 0.96);
+    curve(0.61, 0.68, 0.72, 0.71, 0.8, 0.82, 0.84, 0.96);
+    curve(0.35, 0.96, 0.39, 0.79, 0.61, 0.79, 0.65, 0.96);
+    curve(0.41, 0.36, 0.44, 0.34, 0.46, 0.34, 0.48, 0.36);
+    curve(0.52, 0.36, 0.54, 0.34, 0.56, 0.34, 0.59, 0.36);
+    curve(0.5, 0.37, 0.49, 0.43, 0.48, 0.47, 0.51, 0.49);
+    curve(0.44, 0.53, 0.47, 0.55, 0.53, 0.55, 0.56, 0.53);
+    ellipse(0.5, 0.65, 0.07, 0.035);
+  } else if (templateId === "sunflower") {
+    context.beginPath();
+    context.moveTo(x(0.41), y(0.94));
+    context.lineTo(x(0.37), y(0.68));
+    context.lineTo(x(0.63), y(0.68));
+    context.lineTo(x(0.59), y(0.94));
+    context.closePath();
+    context.stroke();
+    ellipse(0.5, 0.34, 0.075, 0.075);
+    for (let index = 0; index < 16; index += 1) {
+      const angle = (index / 16) * Math.PI * 2;
+      const cx = 0.5 + Math.cos(angle) * 0.13;
+      const cy = 0.34 + Math.sin(angle) * 0.15;
+      context.beginPath();
+      context.ellipse(x(cx), y(cy), x(0.035), y(0.075), angle, 0, Math.PI * 2);
+      context.stroke();
+    }
+    curve(0.5, 0.42, 0.5, 0.53, 0.49, 0.61, 0.5, 0.69);
+    curve(0.49, 0.53, 0.39, 0.48, 0.35, 0.56, 0.42, 0.61);
+    curve(0.51, 0.58, 0.63, 0.52, 0.67, 0.62, 0.57, 0.66);
+  } else if (templateId === "water-lilies") {
+    curve(0.12, 0.33, 0.3, 0.21, 0.7, 0.21, 0.88, 0.33);
+    curve(0.12, 0.38, 0.3, 0.29, 0.7, 0.29, 0.88, 0.38);
+    [0.2, 0.8].forEach((px) => {
+      context.beginPath();
+      context.moveTo(x(px), y(0.34));
+      context.lineTo(x(px), y(0.56));
+      context.stroke();
+    });
+    [[0.22,0.68,0.1,0.035],[0.49,0.74,0.12,0.045],[0.76,0.64,0.095,0.035],[0.68,0.85,0.11,0.04],[0.32,0.88,0.1,0.035]].forEach(([cx,cy,rx,ry])=>ellipse(cx,cy,rx,ry,-0.08));
+    [[0.49,0.69],[0.75,0.59],[0.32,0.83]].forEach(([cx,cy])=>{
+      for(let index=0;index<6;index+=1){
+        const angle=(index/6)*Math.PI*2;
+        context.beginPath();
+        context.ellipse(
+          x(cx + Math.cos(angle)*0.028),
+          y(cy + Math.sin(angle)*0.025),
+          x(0.018), y(0.035), angle, 0, Math.PI*2
+        );
+        context.stroke();
+      }
+    });
+    curve(0.08,0.58,0.28,0.54,0.7,0.58,0.92,0.52);
+    curve(0.08,0.78,0.28,0.72,0.7,0.8,0.92,0.72);
+  } else if (templateId === "louvre") {
+    context.beginPath();
+    context.moveTo(x(0.5), y(0.18));
+    context.lineTo(x(0.27), y(0.72));
+    context.lineTo(x(0.73), y(0.72));
+    context.closePath();
+    context.stroke();
+    [0.38,0.5,0.62].forEach((px)=>{
+      context.beginPath();
+      context.moveTo(x(0.5), y(0.18));
+      context.lineTo(x(px), y(0.72));
+      context.stroke();
+    });
+    [0.34,0.46,0.58].forEach((py)=>{
+      context.beginPath();
+      context.moveTo(x(0.5 - (py-0.18)*0.42), y(py));
+      context.lineTo(x(0.5 + (py-0.18)*0.42), y(py));
+      context.stroke();
+    });
+    context.strokeRect(x(0.06), y(0.49), x(0.21), y(0.27));
+    context.strokeRect(x(0.73), y(0.49), x(0.21), y(0.27));
+    [0.09,0.15,0.21,0.76,0.82,0.88].forEach((px)=>context.strokeRect(x(px),y(0.57),x(0.035),y(0.11)));
+    curve(0.06,0.49,0.1,0.42,0.23,0.42,0.27,0.49);
+    curve(0.73,0.49,0.77,0.42,0.9,0.42,0.94,0.49);
+    context.beginPath();
+    context.moveTo(x(0.04),y(0.79));
+    context.lineTo(x(0.96),y(0.79));
+    context.stroke();
+  }
+
+  context.restore();
 }
 
 function addLouvrePaintStudio() {
@@ -3063,9 +3190,9 @@ function addLouvrePaintStudio() {
   });
 
   const toolControls = [
-    makeLouvrePaintButton(lang === "ar" ? "فرشاة" : lang === "fr" ? "PINCEAU" : "BRUSH", 5.62, { type: "tool", value: "brush" }, 0.46),
-    makeLouvrePaintButton(lang === "ar" ? "قلم" : lang === "fr" ? "MARQUEUR" : "MARKER", 6.28, { type: "tool", value: "marker" }, 0.46),
-    makeLouvrePaintButton(lang === "ar" ? "ممحاة" : lang === "fr" ? "GOMME" : "ERASER", 6.94, { type: "tool", value: "eraser" }, 0.46)
+    makeLouvrePaintButton(lang === "ar" ? "فرشاة" : lang === "fr" ? "PINCEAU" : "BRUSH", 5.28, { type: "tool", value: "brush" }, 0.40),
+    makeLouvrePaintButton(lang === "ar" ? "قلم" : lang === "fr" ? "MARQUEUR" : "MARKER", 5.90, { type: "tool", value: "marker" }, 0.40),
+    makeLouvrePaintButton(lang === "ar" ? "ممحاة" : lang === "fr" ? "GOMME" : "ERASER", 6.52, { type: "tool", value: "eraser" }, 0.40)
   ];
   toolControls.forEach((button) => {
     controls.push(button);
@@ -3073,10 +3200,11 @@ function addLouvrePaintStudio() {
   });
 
   const actionControls = [
-    makeLouvrePaintButton(lang === "ar" ? "تراجع" : lang === "fr" ? "ANNULER" : "UNDO", 7.56, { type: "undo" }, 0.42),
-    makeLouvrePaintButton(lang === "ar" ? "إعادة" : lang === "fr" ? "RÉTABLIR" : "REDO", 8.12, { type: "redo" }, 0.42),
-    makeLouvrePaintButton(lang === "ar" ? "مسح" : lang === "fr" ? "EFFACER" : "CLEAR", 8.68, { type: "clear" }, 0.42),
-    makeLouvrePaintButton(lang === "ar" ? "حفظ" : lang === "fr" ? "ENREG." : "SAVE", 9.24, { type: "save" }, 0.42)
+    makeLouvrePaintButton(lang === "ar" ? "تراجع" : lang === "fr" ? "ANNULER" : "UNDO", 7.16, { type: "undo" }, 0.38),
+    makeLouvrePaintButton(lang === "ar" ? "إعادة" : lang === "fr" ? "RÉTABLIR" : "REDO", 7.78, { type: "redo" }, 0.38),
+    makeLouvrePaintButton(lang === "ar" ? "مسح" : lang === "fr" ? "EFFACER" : "CLEAR", 8.40, { type: "clear" }, 0.38),
+    makeLouvrePaintButton(lang === "ar" ? "رسم" : lang === "fr" ? "DESSIN" : "DRAWING", 9.02, { type: "template" }, 0.38),
+    makeLouvrePaintButton(lang === "ar" ? "حفظ" : lang === "fr" ? "ENREG." : "SAVE", 9.64, { type: "save" }, 0.38)
   ];
   actionControls.forEach((button) => {
     controls.push(button);
@@ -3092,7 +3220,7 @@ function addLouvrePaintStudio() {
       new THREE.MeshStandardMaterial({ color: 0x5b3824, roughness: 0.58, metalness: 0.02 })
     );
     brushRack.name = "louvre-paint-brush-rack";
-    brushRack.position.set(6.72, 0.48, 9.34);
+    brushRack.position.set(6.72, 1.62, 9.34);
     scene.add(brushRack);
 
     const brushSpecs = [
@@ -3134,6 +3262,15 @@ function addLouvrePaintStudio() {
     brushSize: 22,
     tool: "brush",
     background,
+    templates: [
+      { id: "blank", name: { en: "Free canvas", fr: "Toile libre", ar: "لوحة حرة" } },
+      { id: "portrait", name: { en: "Renaissance portrait", fr: "Portrait Renaissance", ar: "بورتريه عصر النهضة" } },
+      { id: "sunflower", name: { en: "Sunflower", fr: "Tournesol", ar: "عباد الشمس" } },
+      { id: "water-lilies", name: { en: "Water lilies", fr: "Nymphéas", ar: "زنابق الماء" } },
+      { id: "louvre", name: { en: "Louvre", fr: "Louvre", ar: "اللوفر" } }
+    ],
+    templateIndex: 0,
+    template: "blank",
     actions: [],
     redoActions: [],
     activeStroke: null,
@@ -3203,6 +3340,9 @@ function redrawLouvrePaintCanvas() {
     }
     if (action.type === "stroke") renderLouvrePaintStroke(action);
   });
+  // Keep the selected guide above the paint so its contours remain readable
+  // while the visitor colours inside them.
+  drawLouvrePaintTemplate(context, louvrePaintStudio.template);
   louvrePaintStudio.texture.needsUpdate = true;
 }
 
@@ -3368,6 +3508,20 @@ function applyLouvrePaintControl(control) {
     louvrePaintStudio.redoActions.length = 0;
     redrawLouvrePaintCanvas();
     setLouvrePaintStatus(lang === "ar" ? "تم مسح اللوحة." : lang === "fr" ? "Tableau effacé. ANNULER permet de le restaurer." : "Canvas cleared. UNDO can restore it.");
+  } else if (control.type === "template") {
+    finishLouvrePaintStroke();
+    louvrePaintStudio.templateIndex = (louvrePaintStudio.templateIndex + 1) % louvrePaintStudio.templates.length;
+    const template = louvrePaintStudio.templates[louvrePaintStudio.templateIndex];
+    louvrePaintStudio.template = template.id;
+    redrawLouvrePaintCanvas();
+    const templateName = template.name[lang] || template.name.en;
+    setLouvrePaintStatus(
+      lang === "ar"
+        ? `نموذج الرسم: ${templateName}. استخدم مسح للبدء من جديد إذا لزم الأمر.`
+        : lang === "fr"
+          ? `Dessin-guide : ${templateName}. Utilisez EFFACER pour repartir sur une toile propre si nécessaire.`
+          : `Drawing guide: ${templateName}. Use CLEAR for a fresh canvas if needed.`
+    );
   } else if (control.type === "save") {
     return saveLouvrePainting();
   } else {
