@@ -478,8 +478,11 @@ const isHandheldMobile = !isQuestBrowser && (
   || /Android|Mobile|IEMobile|Opera Mini/i.test(navigator.userAgent)
   || (matchMedia("(pointer: coarse)").matches && Math.min(screen.width, screen.height) < 900)
 );
+// The standalone Louvre gallery must never load GLB assets on phones/tablets.
+// Mobile browsers can be killed by the OS when several decoded 3D assets coexist.
+const disableLouvre3DModelsOnHandheld = isHandheldMobile;
 let runtimeProfile = detectRuntimeProfile(globalThis);
-let isLowPowerDevice = isQuestBrowser || runtimeProfile.constrained;
+let isLowPowerDevice = isQuestBrowser || isHandheldMobile || runtimeProfile.constrained;
 // Phones and tablets get the painted collection without optional GLB props.
 // These models are decorative and can exhaust the browser's memory on mobile.
 let allowDecorative3DModels = !isHandheldMobile && !isLowPowerDevice;
@@ -799,7 +802,7 @@ if (runtimeProfile.constrained) {
 document.body.dataset.runtimeProfile = isLowPowerDevice ? "constrained" : "normal";
 document.body.dataset.exhibit3dModels = allowExhibit3DModels ? "enabled" : "disabled";
 document.body.dataset.turnMode = smoothTurnEnabled ? "smooth" : "snap";
-renderer.setPixelRatio(Math.min(devicePixelRatio, runtimeProfile.maxPixelRatio));
+renderer.setPixelRatio(Math.min(devicePixelRatio, isHandheldMobile ? 1 : runtimeProfile.maxPixelRatio));
 renderer.setSize(innerWidth, innerHeight);
 renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.shadowMap.enabled = !isLowPowerDevice && !isIOSDevice;
@@ -1108,8 +1111,11 @@ async function init() {
 
   if (activeRoom === "louvre") {
     buildLouvreMuseumRoom();
-    decorateGalleryRoom("louvre", true);
-    addLouvreGalleryFurniture();
+    document.body.dataset.louvre3dModels = disableLouvre3DModelsOnHandheld ? "disabled" : "enabled";
+    if (!disableLouvre3DModelsOnHandheld) {
+      decorateGalleryRoom("louvre", true);
+      addLouvreGalleryFurniture();
+    }
     startRenderLoop();
     try {
       await buildLouvreMuseumExhibits();
@@ -2208,7 +2214,9 @@ function buildGroupGalleryRoom() {
 
 function buildLouvreMuseumRoom() {
   document.getElementById("gallery-title").textContent = lang === "fr" ? "Musée du Louvre — galerie virtuelle" : lang === "ar" ? "متحف اللوفر — معرض افتراضي" : "Louvre Museum — Virtual Gallery";
-  document.getElementById("gallery-count").textContent = lang === "fr" ? "Trois photos · une façade 3D" : lang === "ar" ? "ثلاث صور · واجهة ثلاثية الأبعاد" : "Three photographs · one 3D facade";
+  document.getElementById("gallery-count").textContent = disableLouvre3DModelsOnHandheld
+    ? (lang === "fr" ? "Version mobile allégée · photos et atelier de peinture" : lang === "ar" ? "نسخة محمولة خفيفة · صور ومرسم" : "Light mobile mode · photographs and paint studio")
+    : (lang === "fr" ? "Trois photos · une façade 3D" : lang === "ar" ? "ثلاث صور · واجهة ثلاثية الأبعاد" : "Three photographs · one 3D facade");
   scene.background = new THREE.Color(0x6f412e);
   scene.fog = new THREE.Fog(0x6f412e, 24, 46);
   visitor.position.set(0, 0, 8.4);
@@ -2668,6 +2676,7 @@ function decorateGalleryRoom(roomName, includeSofa = false) {
 }
 
 function addLouvreGalleryFurniture() {
+  if (disableLouvre3DModelsOnHandheld) return;
   const armchairSrc = GALLERY_FURNITURE.find((item) => item.id === "armchair")?.src;
   if (armchairSrc) {
     [-4.65, 4.65].forEach((x, index) => void addFurnitureModel({
@@ -2697,6 +2706,7 @@ function addLouvreGalleryFurniture() {
 }
 
 async function addLouvreArtdaciBookDisplay() {
+  if (disableLouvre3DModelsOnHandheld) return null;
   const rearTablePosition = [0, 0, 3.9];
   const vitrinePosition = [0, 0, 2.25];
 
@@ -2926,8 +2936,8 @@ function addLouvrePaintStudio() {
   if (louvrePaintStudio || activeRoom !== "louvre") return louvrePaintStudio;
 
   const canvas = document.createElement("canvas");
-  canvas.width = isLowPowerDevice ? 1024 : 1536;
-  canvas.height = isLowPowerDevice ? 768 : 1152;
+  canvas.width = isHandheldMobile ? 768 : isLowPowerDevice ? 1024 : 1536;
+  canvas.height = isHandheldMobile ? 576 : isLowPowerDevice ? 768 : 1152;
   const context = canvas.getContext("2d", { alpha: false });
   const background = "#f7f4ec";
   context.fillStyle = background;
@@ -3073,22 +3083,26 @@ function addLouvrePaintStudio() {
     scene.add(button);
   });
 
-  // Museum-quality physical brushes: grab with GRIP and paint with the real 3D tip.
-  const brushRack = new THREE.Mesh(
-    new THREE.BoxGeometry(0.16, 0.16, 1.32),
-    new THREE.MeshStandardMaterial({ color: 0x5b3824, roughness: 0.58, metalness: 0.02 })
-  );
-  brushRack.name = "louvre-paint-brush-rack";
-  brushRack.position.set(6.72, 0.48, 9.34);
-  scene.add(brushRack);
+  // Keep the high-quality physical VR brushes for desktop/headsets, but do
+  // not construct their 3D geometry on phones/tablets. Touch painting remains.
+  let brushes = [];
+  if (!disableLouvre3DModelsOnHandheld) {
+    const brushRack = new THREE.Mesh(
+      new THREE.BoxGeometry(0.16, 0.16, 1.32),
+      new THREE.MeshStandardMaterial({ color: 0x5b3824, roughness: 0.58, metalness: 0.02 })
+    );
+    brushRack.name = "louvre-paint-brush-rack";
+    brushRack.position.set(6.72, 0.48, 9.34);
+    scene.add(brushRack);
 
-  const brushSpecs = [
-    { id: "detail", shape: "round", brushSize: 12, handleRadius: 0.017, ferruleRadius: 0.021, bristleWidth: 0.032, handleColor: 0x704329, bristleColor: 0x2b211a },
-    { id: "round", shape: "round", brushSize: 22, handleRadius: 0.019, ferruleRadius: 0.024, bristleWidth: 0.042, handleColor: 0x3d291e, bristleColor: 0x2a201a },
-    { id: "flat", shape: "flat", brushSize: 36, handleRadius: 0.021, ferruleRadius: 0.026, bristleWidth: 0.052, handleColor: 0x825032, bristleColor: 0x33251d },
-    { id: "broad", shape: "flat", brushSize: 56, handleRadius: 0.022, ferruleRadius: 0.029, bristleWidth: 0.065, handleColor: 0x5d3522, bristleColor: 0x30231c }
-  ];
-  const brushes = brushSpecs.map(createLouvrePaintBrushTool);
+    const brushSpecs = [
+      { id: "detail", shape: "round", brushSize: 12, handleRadius: 0.017, ferruleRadius: 0.021, bristleWidth: 0.032, handleColor: 0x704329, bristleColor: 0x2b211a },
+      { id: "round", shape: "round", brushSize: 22, handleRadius: 0.019, ferruleRadius: 0.024, bristleWidth: 0.042, handleColor: 0x3d291e, bristleColor: 0x2a201a },
+      { id: "flat", shape: "flat", brushSize: 36, handleRadius: 0.021, ferruleRadius: 0.026, bristleWidth: 0.052, handleColor: 0x825032, bristleColor: 0x33251d },
+      { id: "broad", shape: "flat", brushSize: 56, handleRadius: 0.022, ferruleRadius: 0.029, bristleWidth: 0.065, handleColor: 0x5d3522, bristleColor: 0x30231c }
+    ];
+    brushes = brushSpecs.map(createLouvrePaintBrushTool);
+  }
 
   const preview = new THREE.Mesh(
     new THREE.CircleGeometry(1, 32),
@@ -3898,6 +3912,7 @@ function addConnectedMuseumPartitions() {
 }
 
 async function ensureLouvreMonaLisaWallModel() {
+  if (disableLouvre3DModelsOnHandheld) return null;
   const existing = scene.getObjectByName("louvre-mona-lisa-tableau");
   if (existing) return existing;
 
@@ -5198,6 +5213,9 @@ async function addPaintingsGalleryFurniture() {
 }
 
 async function addFurnitureModel({ src, name, position, rotationY = 0, maxSize = 1.6, parent = scene, essential = false, collidable = false }) {
+  // In the standalone Louvre room, "essential" must never bypass the mobile
+  // memory guard. No imported GLB is allowed on phones or tablets.
+  if (activeRoom === "louvre" && disableLouvre3DModelsOnHandheld) return null;
   if (!essential && !allowDecorative3DModels) return null;
   try {
     if (!furnitureSourceCache.has(src)) {
