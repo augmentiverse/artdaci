@@ -2879,6 +2879,20 @@ function createLouvrePaintBrushTool(spec, index) {
       bristleMaterial
     );
     bristles.position.z = -0.355;
+    brush.add(bristles);
+  } else if (spec.shape === "fan") {
+    bristles = new THREE.Group();
+    for (let tuftIndex = -2; tuftIndex <= 2; tuftIndex += 1) {
+      const tuft = new THREE.Mesh(
+        new THREE.ConeGeometry(spec.bristleWidth * 0.11, 0.105, 12, 1, false),
+        bristleMaterial
+      );
+      tuft.rotation.x = -Math.PI / 2;
+      tuft.rotation.z = tuftIndex * 0.09;
+      tuft.position.set(tuftIndex * spec.bristleWidth * 0.19, 0, -0.355);
+      bristles.add(tuft);
+    }
+    brush.add(bristles);
   } else {
     bristles = new THREE.Mesh(
       new THREE.ConeGeometry(spec.bristleWidth * 0.5, 0.11, 24, 1, false),
@@ -2886,9 +2900,9 @@ function createLouvrePaintBrushTool(spec, index) {
     );
     bristles.rotation.x = -Math.PI / 2;
     bristles.position.z = -0.355;
+    brush.add(bristles);
   }
   bristles.name = `${brush.name}-bristles`;
-  brush.add(bristles);
 
   const tip = new THREE.Object3D();
   tip.name = `${brush.name}-tip`;
@@ -2904,9 +2918,11 @@ function createLouvrePaintBrushTool(spec, index) {
   hitTarget.position.z = -0.08;
   brush.add(hitTarget);
 
-  // Keep the physical brushes clearly above the lower command row.
-  brush.position.set(6.58, 1.82 + (index % 2) * 0.08, 8.88 + index * 0.32);
-  brush.rotation.set(0.08 * (index - 1), Math.PI / 2, index % 2 ? 0.08 : -0.08);
+  // Store the physical brushes on a dedicated rack to the right of the canvas.
+  const rackColumn = index % 2;
+  const rackRow = Math.floor(index / 2);
+  brush.position.set(6.58, 0.55 + rackRow * 0.58, 9.18 + rackColumn * 0.38);
+  brush.rotation.set(0.06 * (rackRow - 1), Math.PI / 2, rackColumn ? 0.08 : -0.08);
   scene.add(brush);
 
   const tool = {
@@ -2917,6 +2933,7 @@ function createLouvrePaintBrushTool(spec, index) {
     bristleMaterial,
     baseBristleColor: spec.bristleColor,
     brushSize: spec.brushSize,
+    brushStyle: spec.style || spec.id || "round",
     homePosition: brush.position.clone(),
     homeQuaternion: brush.quaternion.clone()
   };
@@ -2924,15 +2941,168 @@ function createLouvrePaintBrushTool(spec, index) {
   return tool;
 }
 
-function makeLouvrePaintButton(label, z, control, scale = 0.5) {
-  const button = makeLabel(label, { highDetail: true });
-  // The command row sits fully below the palette and the physical brushes.
-  button.position.set(6.69, 0.28, z);
+function makeLouvrePaintButton(label, z, control, scale = 0.5, y = 3.55) {
+  const button = makeLabel(label, { highDetail: !isHandheldMobile });
+  button.position.set(6.69, y, z);
   button.rotation.y = -Math.PI / 2;
-  button.scale.set(scale, 0.42, 1);
+  button.scale.set(scale, 0.36, 1);
   button.renderOrder = 1250;
   button.userData.paintControl = control;
   return button;
+}
+
+function drawLouvreEffectStar(context, point, radius, color) {
+  const rotation = Math.abs(Math.sin(point.x * 0.017 + point.y * 0.031)) * Math.PI;
+  context.save();
+  context.translate(point.x, point.y);
+  context.rotate(rotation);
+  context.beginPath();
+  for (let index = 0; index < 10; index += 1) {
+    const angle = -Math.PI / 2 + index * Math.PI / 5;
+    const r = index % 2 === 0 ? radius : radius * 0.43;
+    const px = Math.cos(angle) * r;
+    const py = Math.sin(angle) * r;
+    if (index === 0) context.moveTo(px, py);
+    else context.lineTo(px, py);
+  }
+  context.closePath();
+  context.fillStyle = color;
+  context.globalAlpha = 0.9;
+  context.fill();
+  context.strokeStyle = "rgba(255,255,255,.8)";
+  context.lineWidth = Math.max(1, radius * 0.08);
+  context.stroke();
+  context.restore();
+}
+
+function drawLouvreEffectSparkle(context, point, radius, color) {
+  context.save();
+  context.translate(point.x, point.y);
+  context.strokeStyle = color;
+  context.fillStyle = color;
+  context.globalAlpha = 0.88;
+  context.lineCap = "round";
+  context.lineWidth = Math.max(1.5, radius * 0.09);
+  [0, Math.PI / 4, Math.PI / 2, Math.PI * 3 / 4].forEach((angle, index) => {
+    const length = index % 2 ? radius * 0.58 : radius;
+    context.beginPath();
+    context.moveTo(-Math.cos(angle) * length, -Math.sin(angle) * length);
+    context.lineTo(Math.cos(angle) * length, Math.sin(angle) * length);
+    context.stroke();
+  });
+  context.globalAlpha = 1;
+  context.beginPath();
+  context.arc(0, 0, radius * 0.16, 0, Math.PI * 2);
+  context.fill();
+  const seed = Math.abs(Math.sin(point.x * 12.9898 + point.y * 78.233));
+  for (let index = 0; index < 3; index += 1) {
+    const angle = seed * Math.PI * 2 + index * Math.PI * 2 / 3;
+    const distance = radius * (0.72 + index * 0.17);
+    context.beginPath();
+    context.arc(Math.cos(angle) * distance, Math.sin(angle) * distance, radius * 0.08, 0, Math.PI * 2);
+    context.fill();
+  }
+  context.restore();
+}
+
+function drawLouvreEffectFire(context, point, radius) {
+  context.save();
+  context.translate(point.x, point.y);
+  context.globalAlpha = 0.92;
+  context.fillStyle = "#f04b23";
+  context.beginPath();
+  context.moveTo(0, radius);
+  context.bezierCurveTo(-radius * 0.78, radius * 0.38, -radius * 0.6, -radius * 0.25, -radius * 0.12, -radius);
+  context.bezierCurveTo(radius * 0.02, -radius * 0.45, radius * 0.7, -radius * 0.12, radius * 0.58, radius * 0.48);
+  context.bezierCurveTo(radius * 0.42, radius * 0.88, radius * 0.12, radius, 0, radius);
+  context.fill();
+  context.fillStyle = "#ffca42";
+  context.beginPath();
+  context.moveTo(0, radius * 0.67);
+  context.bezierCurveTo(-radius * 0.38, radius * 0.2, -radius * 0.18, -radius * 0.28, radius * 0.04, -radius * 0.62);
+  context.bezierCurveTo(radius * 0.12, -radius * 0.2, radius * 0.4, radius * 0.18, radius * 0.28, radius * 0.52);
+  context.bezierCurveTo(radius * 0.18, radius * 0.7, radius * 0.05, radius * 0.72, 0, radius * 0.67);
+  context.fill();
+  context.restore();
+}
+
+function renderLouvrePaintEffectStamp(context, effect, point, color, size) {
+  const radius = Math.max(8, size * 0.9);
+  if (effect === "star") drawLouvreEffectStar(context, point, radius, color);
+  else if (effect === "sparkle") drawLouvreEffectSparkle(context, point, radius, color);
+  else if (effect === "fire") drawLouvreEffectFire(context, point, radius);
+}
+
+function renderLouvrePaintEffect(action) {
+  if (!louvrePaintStudio || action?.type !== "effect" || !action.points?.length) return;
+  action.points.forEach((point) => {
+    renderLouvrePaintEffectStamp(
+      louvrePaintStudio.context,
+      action.effect,
+      point,
+      action.color,
+      action.size
+    );
+  });
+}
+
+function getLouvreStrokeConfig(stroke) {
+  const style = stroke.brushStyle || "round";
+  const isMarker = stroke.tool === "marker";
+  const isEraser = stroke.tool === "eraser";
+  let width = stroke.size * (isEraser ? 1.5 : isMarker ? 1.22 : 1);
+  let alpha = isMarker ? 0.34 : 1;
+  let lineCap = "round";
+  let lineJoin = "round";
+  let dash = [];
+
+  if (style === "detail") width *= 0.72;
+  else if (style === "flat") lineCap = "butt";
+  else if (style === "broad") width *= 1.28;
+  else if (style === "calligraphy") {
+    width *= 0.84;
+    lineCap = "butt";
+  } else if (style === "dry") {
+    width *= 0.92;
+    alpha *= 0.58;
+    dash = [Math.max(3, width * 0.45), Math.max(2, width * 0.17)];
+  }
+  return { style, isMarker, isEraser, width, alpha, lineCap, lineJoin, dash };
+}
+
+function drawLouvrePaintSegment(context, stroke, start, end) {
+  const config = getLouvreStrokeConfig(stroke);
+  const color = config.isEraser ? louvrePaintStudio.background : stroke.color;
+  const dx = end.x - start.x;
+  const dy = end.y - start.y;
+  const length = Math.max(0.001, Math.hypot(dx, dy));
+  const nx = -dy / length;
+  const ny = dx / length;
+
+  const drawOne = (offset, widthScale, alphaScale = 1) => {
+    context.save();
+    context.globalAlpha = config.alpha * alphaScale;
+    context.strokeStyle = color;
+    context.lineWidth = Math.max(1, config.width * widthScale);
+    context.lineCap = config.lineCap;
+    context.lineJoin = config.lineJoin;
+    context.setLineDash(config.dash);
+    context.beginPath();
+    context.moveTo(start.x + nx * offset, start.y + ny * offset);
+    context.lineTo(end.x + nx * offset, end.y + ny * offset);
+    context.stroke();
+    context.restore();
+  };
+
+  if (config.style === "fan") {
+    [-0.42, -0.21, 0, 0.21, 0.42].forEach((factor) => {
+      drawOne(config.width * factor, 0.16, 0.88);
+    });
+  } else if (config.style === "calligraphy") {
+    [-0.22, 0, 0.22].forEach((factor) => drawOne(config.width * factor, 0.34, 0.96));
+  } else {
+    drawOne(0, 1);
+  }
 }
 
 function drawLouvrePaintTemplate(context, templateId) {
@@ -3085,7 +3255,7 @@ function addLouvrePaintStudio() {
     new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide })
   );
   board.name = "louvre-paint-canvas";
-  board.position.set(6.75, 2.68, 7.15);
+  board.position.set(6.75, 1.78, 7.15);
   board.rotation.y = -Math.PI / 2;
   board.userData.paintBoard = true;
 
@@ -3094,36 +3264,35 @@ function addLouvrePaintStudio() {
     new THREE.MeshStandardMaterial({ color: 0x21160f, roughness: 0.68, metalness: 0.08 })
   );
   frame.name = "louvre-paint-canvas-frame";
-  frame.position.set(6.89, 2.68, 7.15);
+  frame.position.set(6.89, 1.78, 7.15);
   scene.add(frame, board);
 
   createWallSign(
     lang === "ar" ? "مرسم ARTDACI" : lang === "fr" ? "ATELIER DE PEINTURE ARTDACI" : "ARTDACI PAINT STUDIO",
-    [6.86, 4.3, 7.15],
+    [6.86, 4.62, 7.15],
     -Math.PI / 2,
     { width: 3.25, height: 0.42, accent: true, compact: true }
   );
 
   const instruction = makeTransparentInteractionHint(
     currentSession || isQuestBrowser
-      ? (lang === "ar" ? "GRIP: أمسك الفرشاة · TRIGGER + الرأس للرسم · رسم: نماذج" : lang === "fr" ? "GRIP : PINCEAU · TRIGGER + POINTE : PEINDRE · DESSINS : MODÈLES" : "GRIP: BRUSH · TRIGGER + TIP: PAINT · DRAWING: GUIDES")
-      : (lang === "ar" ? "اسحب للرسم · الألوان والأدوات · رسم: نماذج" : lang === "fr" ? "GLISSER : PEINDRE · COULEURS / OUTILS · DESSINS : MODÈLES" : "DRAG: PAINT · COLORS / TOOLS · DRAWING: GUIDES")
+      ? (lang === "ar" ? "GRIP: فرشاة · TRIGGER + الرأس · نجوم / شرر / نار" : lang === "fr" ? "GRIP : PINCEAU · TRIGGER + POINTE · ÉTOILES / ÉTINCELLES / FEU" : "GRIP: BRUSH · TRIGGER + TIP · STARS / SPARKLES / FIRE")
+      : (lang === "ar" ? "اسحب للرسم · نجوم / شرر / نار · نماذج" : lang === "fr" ? "GLISSER : PEINDRE · ÉTOILES / ÉTINCELLES / FEU · MODÈLES" : "DRAG: PAINT · STARS / SPARKLES / FIRE · GUIDES")
   );
   instruction.name = "louvre-paint-instructions";
-  instruction.position.set(6.70, 4.0, 7.15);
+  instruction.position.set(6.70, 4.36, 7.15);
   instruction.rotation.y = -Math.PI / 2;
   instruction.scale.set(1.12, 1, 1);
   scene.add(instruction);
 
-  // Physical palette backing.
+  // Unified toolbar above the canvas. It keeps the whole painting surface
+  // reachable at a comfortable height and prevents controls from covering it.
   const palette = new THREE.Mesh(
-    new THREE.CircleGeometry(1, 48),
-    new THREE.MeshStandardMaterial({ color: 0x8b5f38, roughness: 0.78, metalness: 0.02, side: THREE.DoubleSide })
+    new THREE.BoxGeometry(0.08, 1.02, 4.9),
+    new THREE.MeshStandardMaterial({ color: 0x5b3828, roughness: 0.74, metalness: 0.03 })
   );
-  palette.name = "louvre-paint-palette";
-  palette.position.set(6.80, 1.02, 7.1);
-  palette.rotation.y = -Math.PI / 2;
-  palette.scale.set(1.72, 0.47, 1);
+  palette.name = "louvre-paint-toolbar";
+  palette.position.set(6.86, 3.80, 7.15);
   scene.add(palette);
 
   const controls = [];
@@ -3150,7 +3319,7 @@ function addLouvrePaintStudio() {
       new THREE.MeshBasicMaterial({ color: color.three, side: THREE.DoubleSide })
     );
     swatch.name = `louvre-paint-color-${index + 1}`;
-    swatch.position.set(6.725, 1.18 - row * 0.28, 6.12 + column * 0.39);
+    swatch.position.set(6.715, 4.08 - row * 0.21, 5.36 + column * 0.36);
     swatch.rotation.y = -Math.PI / 2;
     swatch.userData.paintControl = { type: "color", value: color.value };
     controls.push(swatch);
@@ -3165,7 +3334,7 @@ function addLouvrePaintStudio() {
       new THREE.MeshBasicMaterial({ color: 0xf5ead7, side: THREE.DoubleSide })
     );
     sizeControl.name = `louvre-paint-size-${value}`;
-    sizeControl.position.set(6.72, 0.93 + index * 0.12, 8.92);
+    sizeControl.position.set(6.71, 4.08, 7.62 + index * 0.37);
     sizeControl.rotation.y = -Math.PI / 2;
     sizeControl.userData.paintControl = { type: "size", value };
     controls.push(sizeControl);
@@ -3173,8 +3342,8 @@ function addLouvrePaintStudio() {
   });
 
   const backgroundControls = [
-    { value: "#f7f4ec", three: 0xf7f4ec, y: 1.27 },
-    { value: "#111318", three: 0x111318, y: 0.72 }
+    { value: "#f7f4ec", three: 0xf7f4ec, y: 3.87, z: 8.44 },
+    { value: "#111318", three: 0x111318, y: 3.87, z: 8.92 }
   ];
   backgroundControls.forEach((item, index) => {
     const swatch = new THREE.Mesh(
@@ -3182,7 +3351,7 @@ function addLouvrePaintStudio() {
       new THREE.MeshBasicMaterial({ color: item.three, side: THREE.DoubleSide })
     );
     swatch.name = index ? "louvre-paint-background-black" : "louvre-paint-background-white";
-    swatch.position.set(6.72, item.y, 9.27);
+    swatch.position.set(6.71, item.y, item.z);
     swatch.rotation.y = -Math.PI / 2;
     swatch.userData.paintControl = { type: "background", value: item.value };
     controls.push(swatch);
@@ -3190,9 +3359,9 @@ function addLouvrePaintStudio() {
   });
 
   const toolControls = [
-    makeLouvrePaintButton(lang === "ar" ? "فرشاة" : lang === "fr" ? "PINCEAU" : "BRUSH", 5.28, { type: "tool", value: "brush" }, 0.40),
-    makeLouvrePaintButton(lang === "ar" ? "قلم" : lang === "fr" ? "MARQUEUR" : "MARKER", 5.90, { type: "tool", value: "marker" }, 0.40),
-    makeLouvrePaintButton(lang === "ar" ? "ممحاة" : lang === "fr" ? "GOMME" : "ERASER", 6.52, { type: "tool", value: "eraser" }, 0.40)
+    makeLouvrePaintButton(lang === "ar" ? "فرشاة" : lang === "fr" ? "PINCEAU" : "BRUSH", 5.08, { type: "tool", value: "brush" }, 0.33, 3.57),
+    makeLouvrePaintButton(lang === "ar" ? "قلم" : lang === "fr" ? "MARQUEUR" : "MARKER", 5.61, { type: "tool", value: "marker" }, 0.33, 3.57),
+    makeLouvrePaintButton(lang === "ar" ? "ممحاة" : lang === "fr" ? "GOMME" : "ERASER", 6.14, { type: "tool", value: "eraser" }, 0.33, 3.57)
   ];
   toolControls.forEach((button) => {
     controls.push(button);
@@ -3200,13 +3369,24 @@ function addLouvrePaintStudio() {
   });
 
   const actionControls = [
-    makeLouvrePaintButton(lang === "ar" ? "تراجع" : lang === "fr" ? "ANNULER" : "UNDO", 7.16, { type: "undo" }, 0.38),
-    makeLouvrePaintButton(lang === "ar" ? "إعادة" : lang === "fr" ? "RÉTABLIR" : "REDO", 7.78, { type: "redo" }, 0.38),
-    makeLouvrePaintButton(lang === "ar" ? "مسح" : lang === "fr" ? "EFFACER" : "CLEAR", 8.40, { type: "clear" }, 0.38),
-    makeLouvrePaintButton(lang === "ar" ? "نماذج" : lang === "fr" ? "DESSINS" : "GUIDES", 9.02, { type: "template" }, 0.38),
-    makeLouvrePaintButton(lang === "ar" ? "حفظ" : lang === "fr" ? "ENREG." : "SAVE", 9.64, { type: "save" }, 0.38)
+    makeLouvrePaintButton(lang === "ar" ? "تراجع" : lang === "fr" ? "ANNULER" : "UNDO", 6.78, { type: "undo" }, 0.31, 3.57),
+    makeLouvrePaintButton(lang === "ar" ? "إعادة" : lang === "fr" ? "RÉTABLIR" : "REDO", 7.30, { type: "redo" }, 0.31, 3.57),
+    makeLouvrePaintButton(lang === "ar" ? "مسح" : lang === "fr" ? "EFFACER" : "CLEAR", 7.82, { type: "clear" }, 0.31, 3.57),
+    makeLouvrePaintButton(lang === "ar" ? "نماذج" : lang === "fr" ? "DESSINS" : "GUIDES", 8.34, { type: "template" }, 0.31, 3.57),
+    makeLouvrePaintButton(lang === "ar" ? "حفظ" : lang === "fr" ? "ENREG." : "SAVE", 8.86, { type: "save" }, 0.31, 3.57)
   ];
   actionControls.forEach((button) => {
+    controls.push(button);
+    scene.add(button);
+  });
+
+  const effectControls = [
+    makeLouvrePaintButton(lang === "ar" ? "عادي" : lang === "fr" ? "NORMAL" : "NORMAL", 6.05, { type: "effect", value: "none" }, 0.31, 3.29),
+    makeLouvrePaintButton(lang === "ar" ? "نجوم" : lang === "fr" ? "ÉTOILES" : "STARS", 6.73, { type: "effect", value: "star" }, 0.31, 3.29),
+    makeLouvrePaintButton(lang === "ar" ? "شرر" : lang === "fr" ? "ÉTINC." : "SPARKLE", 7.41, { type: "effect", value: "sparkle" }, 0.31, 3.29),
+    makeLouvrePaintButton(lang === "ar" ? "نار" : lang === "fr" ? "FEU" : "FIRE", 8.09, { type: "effect", value: "fire" }, 0.31, 3.29)
+  ];
+  effectControls.forEach((button) => {
     controls.push(button);
     scene.add(button);
   });
@@ -3216,18 +3396,21 @@ function addLouvrePaintStudio() {
   let brushes = [];
   if (!disableLouvre3DModelsOnHandheld) {
     const brushRack = new THREE.Mesh(
-      new THREE.BoxGeometry(0.16, 0.16, 1.32),
+      new THREE.BoxGeometry(0.16, 2.22, 0.86),
       new THREE.MeshStandardMaterial({ color: 0x5b3824, roughness: 0.58, metalness: 0.02 })
     );
     brushRack.name = "louvre-paint-brush-rack";
-    brushRack.position.set(6.72, 1.62, 9.34);
+    brushRack.position.set(6.72, 1.43, 9.38);
     scene.add(brushRack);
 
     const brushSpecs = [
-      { id: "detail", shape: "round", brushSize: 12, handleRadius: 0.017, ferruleRadius: 0.021, bristleWidth: 0.032, handleColor: 0x704329, bristleColor: 0x2b211a },
-      { id: "round", shape: "round", brushSize: 22, handleRadius: 0.019, ferruleRadius: 0.024, bristleWidth: 0.042, handleColor: 0x3d291e, bristleColor: 0x2a201a },
-      { id: "flat", shape: "flat", brushSize: 36, handleRadius: 0.021, ferruleRadius: 0.026, bristleWidth: 0.052, handleColor: 0x825032, bristleColor: 0x33251d },
-      { id: "broad", shape: "flat", brushSize: 56, handleRadius: 0.022, ferruleRadius: 0.029, bristleWidth: 0.065, handleColor: 0x5d3522, bristleColor: 0x30231c }
+      { id: "detail", style: "detail", shape: "round", brushSize: 10, handleRadius: 0.016, ferruleRadius: 0.020, bristleWidth: 0.028, handleColor: 0x704329, bristleColor: 0x2b211a },
+      { id: "round", style: "round", shape: "round", brushSize: 22, handleRadius: 0.019, ferruleRadius: 0.024, bristleWidth: 0.042, handleColor: 0x3d291e, bristleColor: 0x2a201a },
+      { id: "flat", style: "flat", shape: "flat", brushSize: 32, handleRadius: 0.020, ferruleRadius: 0.025, bristleWidth: 0.050, handleColor: 0x825032, bristleColor: 0x33251d },
+      { id: "broad", style: "broad", shape: "flat", brushSize: 48, handleRadius: 0.022, ferruleRadius: 0.029, bristleWidth: 0.066, handleColor: 0x5d3522, bristleColor: 0x30231c },
+      { id: "fan", style: "fan", shape: "fan", brushSize: 40, handleRadius: 0.019, ferruleRadius: 0.025, bristleWidth: 0.082, handleColor: 0x6f432b, bristleColor: 0x342820 },
+      { id: "calligraphy", style: "calligraphy", shape: "flat", brushSize: 28, handleRadius: 0.018, ferruleRadius: 0.024, bristleWidth: 0.044, handleColor: 0x2f2723, bristleColor: 0x211a17 },
+      { id: "dry", style: "dry", shape: "fan", brushSize: 34, handleRadius: 0.020, ferruleRadius: 0.025, bristleWidth: 0.070, handleColor: 0x8a5a38, bristleColor: 0x49372a }
     ];
     brushes = brushSpecs.map(createLouvrePaintBrushTool);
   }
@@ -3260,7 +3443,9 @@ function addLouvrePaintStudio() {
     brushHitTargets: brushes.map((brush) => brush.hitTarget),
     brushColor: "#111111",
     brushSize: 22,
+    brushStyle: "round",
     tool: "brush",
+    effectMode: "none",
     background,
     templates: [
       { id: "blank", name: { en: "Free canvas", fr: "Toile libre", ar: "لوحة حرة" } },
@@ -3282,7 +3467,8 @@ function addLouvrePaintStudio() {
       value: item.value,
       mesh: controls[colors.length + brushSizes.length + index]
     })),
-    toolControls: toolControls.map((mesh) => ({ value: mesh.userData.paintControl.value, mesh }))
+    toolControls: toolControls.map((mesh) => ({ value: mesh.userData.paintControl.value, mesh })),
+    effectControls: effectControls.map((mesh) => ({ value: mesh.userData.paintControl.value, mesh }))
   };
 
   updateLouvrePaintControlVisuals();
@@ -3292,38 +3478,23 @@ function addLouvrePaintStudio() {
 function renderLouvrePaintStroke(stroke) {
   if (!louvrePaintStudio || !stroke?.points?.length) return;
   const { context } = louvrePaintStudio;
-  const points = stroke.points;
-  const isMarker = stroke.tool === "marker";
-  const isEraser = stroke.tool === "eraser";
-  context.save();
-  context.globalAlpha = isMarker ? 0.34 : 1;
-  context.strokeStyle = isEraser ? louvrePaintStudio.background : stroke.color;
-  context.fillStyle = isEraser ? louvrePaintStudio.background : stroke.color;
-  context.lineWidth = stroke.size * (isEraser ? 1.5 : isMarker ? 1.22 : 1);
-  context.lineCap = "round";
-  context.lineJoin = "round";
+  const config = getLouvreStrokeConfig(stroke);
+  const color = config.isEraser ? louvrePaintStudio.background : stroke.color;
 
-  if (points.length === 1) {
+  if (stroke.points.length === 1) {
+    context.save();
+    context.globalAlpha = config.alpha;
+    context.fillStyle = color;
     context.beginPath();
-    context.arc(points[0].x, points[0].y, Math.max(1, context.lineWidth / 2), 0, Math.PI * 2);
+    context.arc(stroke.points[0].x, stroke.points[0].y, Math.max(1, config.width / 2), 0, Math.PI * 2);
     context.fill();
     context.restore();
     return;
   }
 
-  context.beginPath();
-  context.moveTo(points[0].x, points[0].y);
-  for (let index = 1; index < points.length - 1; index += 1) {
-    const current = points[index];
-    const next = points[index + 1];
-    const midpointX = (current.x + next.x) / 2;
-    const midpointY = (current.y + next.y) / 2;
-    context.quadraticCurveTo(current.x, current.y, midpointX, midpointY);
+  for (let index = 1; index < stroke.points.length; index += 1) {
+    drawLouvrePaintSegment(context, stroke, stroke.points[index - 1], stroke.points[index]);
   }
-  const last = points[points.length - 1];
-  context.lineTo(last.x, last.y);
-  context.stroke();
-  context.restore();
 }
 
 function redrawLouvrePaintCanvas() {
@@ -3339,6 +3510,7 @@ function redrawLouvrePaintCanvas() {
       return;
     }
     if (action.type === "stroke") renderLouvrePaintStroke(action);
+    if (action.type === "effect") renderLouvrePaintEffect(action);
   });
   // Keep the selected guide above the paint so its contours remain readable
   // while the visitor colours inside them.
@@ -3358,20 +3530,32 @@ function beginLouvrePaintStroke(uv) {
   if (!louvrePaintStudio) return false;
   const point = louvrePaintPointFromUv(uv);
   if (!point) return false;
-  const stroke = {
-    type: "stroke",
-    tool: louvrePaintStudio.tool,
-    color: louvrePaintStudio.brushColor,
-    size: louvrePaintStudio.brushSize,
-    points: [point]
-  };
+
+  const stroke = louvrePaintStudio.effectMode !== "none"
+    ? {
+        type: "effect",
+        effect: louvrePaintStudio.effectMode,
+        color: louvrePaintStudio.brushColor,
+        size: louvrePaintStudio.brushSize,
+        points: [point]
+      }
+    : {
+        type: "stroke",
+        tool: louvrePaintStudio.tool,
+        brushStyle: louvrePaintStudio.brushStyle,
+        color: louvrePaintStudio.brushColor,
+        size: louvrePaintStudio.brushSize,
+        points: [point]
+      };
+
   louvrePaintStudio.actions.push(stroke);
   if (louvrePaintStudio.actions.length > louvrePaintStudio.maxHistory) {
     louvrePaintStudio.actions.splice(0, louvrePaintStudio.actions.length - louvrePaintStudio.maxHistory);
   }
   louvrePaintStudio.redoActions.length = 0;
   louvrePaintStudio.activeStroke = stroke;
-  renderLouvrePaintStroke(stroke);
+  if (stroke.type === "effect") renderLouvrePaintEffect(stroke);
+  else renderLouvrePaintStroke(stroke);
   louvrePaintStudio.texture.needsUpdate = true;
   return true;
 }
@@ -3382,24 +3566,22 @@ function appendLouvrePaintStroke(uv) {
   const point = louvrePaintPointFromUv(uv);
   if (!point) return false;
   const previous = stroke.points[stroke.points.length - 1];
-  if (previous && Math.hypot(point.x - previous.x, point.y - previous.y) < 1.4) return true;
+  const distance = previous ? Math.hypot(point.x - previous.x, point.y - previous.y) : Infinity;
+  const minimumDistance = stroke.type === "effect" ? Math.max(10, stroke.size * 0.72) : 1.4;
+  if (previous && distance < minimumDistance) return true;
   stroke.points.push(point);
 
-  // Incremental segment for responsive Quest drawing; final smoothing happens on release.
-  const { context } = louvrePaintStudio;
-  const isMarker = stroke.tool === "marker";
-  const isEraser = stroke.tool === "eraser";
-  context.save();
-  context.globalAlpha = isMarker ? 0.34 : 1;
-  context.strokeStyle = isEraser ? louvrePaintStudio.background : stroke.color;
-  context.lineWidth = stroke.size * (isEraser ? 1.5 : isMarker ? 1.22 : 1);
-  context.lineCap = "round";
-  context.lineJoin = "round";
-  context.beginPath();
-  context.moveTo(previous.x, previous.y);
-  context.lineTo(point.x, point.y);
-  context.stroke();
-  context.restore();
+  if (stroke.type === "effect") {
+    renderLouvrePaintEffectStamp(
+      louvrePaintStudio.context,
+      stroke.effect,
+      point,
+      stroke.color,
+      stroke.size
+    );
+  } else {
+    drawLouvrePaintSegment(louvrePaintStudio.context, stroke, previous, point);
+  }
   louvrePaintStudio.texture.needsUpdate = true;
   return true;
 }
@@ -3456,8 +3638,12 @@ function updateLouvrePaintControlVisuals() {
     mesh.scale.setScalar(value === louvrePaintStudio.background ? 1.34 : 1);
   });
   louvrePaintStudio.toolControls.forEach(({ value, mesh }) => {
-    const active = value === louvrePaintStudio.tool;
-    mesh.scale.set(active ? 0.52 : 0.46, active ? 0.58 : 0.52, 1);
+    const active = value === louvrePaintStudio.tool && louvrePaintStudio.effectMode === "none";
+    mesh.scale.set(active ? 0.38 : 0.33, active ? 0.42 : 0.36, 1);
+  });
+  louvrePaintStudio.effectControls?.forEach(({ value, mesh }) => {
+    const active = value === louvrePaintStudio.effectMode;
+    mesh.scale.set(active ? 0.36 : 0.31, active ? 0.42 : 0.36, 1);
   });
 
   const previewColor = louvrePaintStudio.tool === "eraser"
@@ -3485,12 +3671,29 @@ function applyLouvrePaintControl(control) {
     setLouvrePaintStatus(lang === "ar" ? "تم تغيير حجم الفرشاة." : lang === "fr" ? "Taille du pinceau modifiée." : "Brush size changed.");
   } else if (control.type === "tool") {
     louvrePaintStudio.tool = control.value;
+    louvrePaintStudio.effectMode = "none";
     setLouvrePaintStatus(
       control.value === "eraser"
         ? (lang === "ar" ? "الممحاة مفعلة." : lang === "fr" ? "Gomme activée." : "Eraser active.")
         : control.value === "marker"
           ? (lang === "ar" ? "القلم الشفاف مفعل." : lang === "fr" ? "Marqueur translucide activé." : "Translucent marker active.")
           : (lang === "ar" ? "الفرشاة مفعلة." : lang === "fr" ? "Pinceau activé." : "Brush active.")
+    );
+  } else if (control.type === "effect") {
+    finishLouvrePaintStroke();
+    louvrePaintStudio.effectMode = control.value;
+    if (control.value !== "none" && louvrePaintStudio.tool === "eraser") louvrePaintStudio.tool = "brush";
+    const effectLabel = control.value === "star"
+      ? (lang === "ar" ? "نجوم" : lang === "fr" ? "Étoiles" : "Stars")
+      : control.value === "sparkle"
+        ? (lang === "ar" ? "شرر" : lang === "fr" ? "Étincelles" : "Sparkles")
+        : control.value === "fire"
+          ? (lang === "ar" ? "نار" : lang === "fr" ? "Feu" : "Fire")
+          : (lang === "ar" ? "رسم عادي" : lang === "fr" ? "Peinture normale" : "Normal paint");
+    setLouvrePaintStatus(
+      lang === "ar" ? `التأثير: ${effectLabel}.`
+        : lang === "fr" ? `Effet actif : ${effectLabel}.`
+          : `Active effect: ${effectLabel}.`
     );
   } else if (control.type === "background") {
     louvrePaintStudio.background = control.value;
@@ -3555,7 +3758,9 @@ function tryGrabLouvrePaintBrush(controller) {
   controller.userData.artdaciRayLine && (controller.userData.artdaciRayLine.visible = false);
   louvrePaintBrushGrab = { controller, brush };
   louvrePaintStudio.tool = "brush";
+  louvrePaintStudio.effectMode = "none";
   louvrePaintStudio.brushSize = brush.brushSize;
+  louvrePaintStudio.brushStyle = brush.brushStyle;
   finishLouvrePaintStroke();
   updateLouvrePaintControlVisuals();
   setLouvrePaintStatus(
