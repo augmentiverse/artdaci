@@ -3106,8 +3106,8 @@ function addLouvrePaintStudio() {
 
   const instruction = makeTransparentInteractionHint(
     currentSession || isQuestBrowser
-      ? (lang === "ar" ? "GRIP: أمسك الفرشاة · TRIGGER + رأس الفرشاة للرسم" : lang === "fr" ? "GRIP : PRENDRE UN PINCEAU · TRIGGER + POINTE : PEINDRE" : "GRIP: PICK UP A BRUSH · TRIGGER + TIP: PAINT")
-      : (lang === "ar" ? "اسحب للرسم · اختر اللون والأداة · تراجع / إعادة" : lang === "fr" ? "GLISSER : PEINDRE · COULEUR / OUTIL · ANNULER / RÉTABLIR" : "DRAG: PAINT · COLOR / TOOL · UNDO / REDO")
+      ? (lang === "ar" ? "GRIP: أمسك الفرشاة · TRIGGER + الرأس للرسم · رسم: نماذج" : lang === "fr" ? "GRIP : PINCEAU · TRIGGER + POINTE : PEINDRE · DESSINS : MODÈLES" : "GRIP: BRUSH · TRIGGER + TIP: PAINT · DRAWING: GUIDES")
+      : (lang === "ar" ? "اسحب للرسم · الألوان والأدوات · رسم: نماذج" : lang === "fr" ? "GLISSER : PEINDRE · COULEURS / OUTILS · DESSINS : MODÈLES" : "DRAG: PAINT · COLORS / TOOLS · DRAWING: GUIDES")
   );
   instruction.name = "louvre-paint-instructions";
   instruction.position.set(6.70, 4.0, 7.15);
@@ -3203,7 +3203,7 @@ function addLouvrePaintStudio() {
     makeLouvrePaintButton(lang === "ar" ? "تراجع" : lang === "fr" ? "ANNULER" : "UNDO", 7.16, { type: "undo" }, 0.38),
     makeLouvrePaintButton(lang === "ar" ? "إعادة" : lang === "fr" ? "RÉTABLIR" : "REDO", 7.78, { type: "redo" }, 0.38),
     makeLouvrePaintButton(lang === "ar" ? "مسح" : lang === "fr" ? "EFFACER" : "CLEAR", 8.40, { type: "clear" }, 0.38),
-    makeLouvrePaintButton(lang === "ar" ? "رسم" : lang === "fr" ? "DESSIN" : "DRAWING", 9.02, { type: "template" }, 0.38),
+    makeLouvrePaintButton(lang === "ar" ? "نماذج" : lang === "fr" ? "DESSINS" : "GUIDES", 9.02, { type: "template" }, 0.38),
     makeLouvrePaintButton(lang === "ar" ? "حفظ" : lang === "fr" ? "ENREG." : "SAVE", 9.64, { type: "save" }, 0.38)
   ];
   actionControls.forEach((button) => {
