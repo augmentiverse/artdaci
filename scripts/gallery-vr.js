@@ -802,7 +802,7 @@ if (runtimeProfile.constrained) {
 document.body.dataset.runtimeProfile = isLowPowerDevice ? "constrained" : "normal";
 document.body.dataset.exhibit3dModels = allowExhibit3DModels ? "enabled" : "disabled";
 document.body.dataset.turnMode = smoothTurnEnabled ? "smooth" : "snap";
-renderer.setPixelRatio(Math.min(devicePixelRatio, runtimeProfile.maxPixelRatio));
+renderer.setPixelRatio(Math.min(devicePixelRatio, isHandheldMobile ? 1 : runtimeProfile.maxPixelRatio));
 renderer.setSize(innerWidth, innerHeight);
 renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.shadowMap.enabled = !isLowPowerDevice && !isIOSDevice;
