@@ -1,5 +1,5 @@
 import { formatArtworkNumber } from "./artwork-numbering.js?v=1";
-import { resolveArtworkAudioOverview } from "./artwork-media-manifest.js?v=4";
+import { resolveArtworkAudioOverview } from "./artwork-media-manifest.js?v=5";
 
 const SOURCES = {
   "lady-with-an-ermine": "content/paintings/lady-with-an-ermine.json",
@@ -15,8 +15,22 @@ const MUSEUMS = {
 const AUDIO_ARTWORK_IDS = Object.freeze({
   "lady-with-an-ermine": "ld02",
   "last-supper": "ld03",
+  "annunciation": "ld04",
+  "ginevra-de-benci": "ld05",
   "belle-ferronniere": "ld06",
+  "view-of-delft": "ve02",
+  "vermeer-milkmaid": "ve03",
+  "art-of-painting": "ve04",
   "vermeer-astronomer": "ve05",
+  "woman-holding-balance": "ve06",
+  "starry-night": "vg03",
+  "sunflowers": "vg04",
+  "cafe-terrace": "vg05",
+  "night-cafe": "vg06",
+  "water-lilies": "mo03",
+  "japanese-bridge": "mo04",
+  "poppies": "mo05",
+  "woman-with-parasol": "mo06",
   "pont-d-argenteuil": "mo02",
 });
 const COPY = {

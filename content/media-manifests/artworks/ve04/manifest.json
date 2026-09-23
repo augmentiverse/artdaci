@@ -1,0 +1,72 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "ve04",
+  "slug": "the-art-of-painting",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "ve",
+    "name": {
+      "fr": "Johannes Vermeer",
+      "en": "Johannes Vermeer",
+      "ar": "يوهانس فيرمير"
+    }
+  },
+  "artwork": {
+    "title": {
+      "fr": "L’Art de la peinture",
+      "en": "The Art of Painting",
+      "ar": "فن الرسم"
+    },
+    "date": "c. 1666–1668",
+    "museum": "Kunsthistorisches Museum",
+    "location": {
+      "city": "Vienna"
+    }
+  },
+  "pageUrl": "https://artdaci.com/a/ve04",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/ve04/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {},
+    "audio": {
+      "overview": {
+        "en": {
+          "scope": "artwork",
+          "path": "audio/en/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1619309,
+          "sha256": "e4119100829dd3158a002a593497fd01bbcf90a94744b70d17a9c6aa37925826",
+          "language": "en"
+        },
+        "fr": {
+          "scope": "artwork",
+          "path": "audio/fr/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1717948,
+          "sha256": "d098491d6af22a12d5a2c543287947cfcbdcde54cdfef78fba1920bda599c91d",
+          "language": "fr"
+        },
+        "ar": {
+          "scope": "artwork",
+          "path": "audio/ar/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 2128802,
+          "sha256": "d5eee060a0756e555ea7d09ea927d7e73a8ec09507677086ffe2a1ce2c4ff7c6",
+          "language": "ar"
+        }
+      }
+    },
+    "videos": {},
+    "models": {},
+    "ar": {}
+  },
+  "updatedAt": "2026-09-23"
+}

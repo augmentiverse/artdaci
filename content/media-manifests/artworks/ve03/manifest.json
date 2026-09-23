@@ -1,0 +1,72 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "ve03",
+  "slug": "the-milkmaid",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "ve",
+    "name": {
+      "fr": "Johannes Vermeer",
+      "en": "Johannes Vermeer",
+      "ar": "يوهانس فيرمير"
+    }
+  },
+  "artwork": {
+    "title": {
+      "fr": "La Laitière",
+      "en": "The Milkmaid",
+      "ar": "خادمة الحليب"
+    },
+    "date": "c. 1658–1660",
+    "museum": "Rijksmuseum",
+    "location": {
+      "city": "Amsterdam"
+    }
+  },
+  "pageUrl": "https://artdaci.com/a/ve03",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/ve03/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {},
+    "audio": {
+      "overview": {
+        "en": {
+          "scope": "artwork",
+          "path": "audio/en/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1725053,
+          "sha256": "79b9721d299fc8136f66563ba148471c7ebc92f0381dd026010772e4b1aff22e",
+          "language": "en"
+        },
+        "fr": {
+          "scope": "artwork",
+          "path": "audio/fr/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1437079,
+          "sha256": "db41471693e50188221f42ea15e682f45c44c11047c823debaf48f3027277df5",
+          "language": "fr"
+        },
+        "ar": {
+          "scope": "artwork",
+          "path": "audio/ar/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 2354082,
+          "sha256": "21b2f5d5bdc15750e197e5a82d077cbe2819a77bebd124e3aaa889b5b8f550b9",
+          "language": "ar"
+        }
+      }
+    },
+    "videos": {},
+    "models": {},
+    "ar": {}
+  },
+  "updatedAt": "2026-09-23"
+}

@@ -1,0 +1,72 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "vg03",
+  "slug": "the-starry-night",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "vg",
+    "name": {
+      "fr": "Vincent van Gogh",
+      "en": "Vincent van Gogh",
+      "ar": "فنسنت فان غوخ"
+    }
+  },
+  "artwork": {
+    "title": {
+      "fr": "La Nuit étoilée",
+      "en": "The Starry Night",
+      "ar": "ليلة النجوم"
+    },
+    "date": "1889",
+    "museum": "Museum of Modern Art",
+    "location": {
+      "city": "New York"
+    }
+  },
+  "pageUrl": "https://artdaci.com/a/vg03",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/vg03/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {},
+    "audio": {
+      "overview": {
+        "en": {
+          "scope": "artwork",
+          "path": "audio/en/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1698304,
+          "sha256": "198849fca19f89a498c9bc516b45b23610a8f9a7e60aaa1ce051a3b0d166972e",
+          "language": "en"
+        },
+        "fr": {
+          "scope": "artwork",
+          "path": "audio/fr/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1598411,
+          "sha256": "919d7a560ea66efa903294bb51c027c25dd4d2b271844a95d623fa8b00668e07",
+          "language": "fr"
+        },
+        "ar": {
+          "scope": "artwork",
+          "path": "audio/ar/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1751803,
+          "sha256": "ca96b189d3f495f1d9c6d6cd5a82fe0b1ac1f18a230ccf428a1b30d5c98f3a50",
+          "language": "ar"
+        }
+      }
+    },
+    "videos": {},
+    "models": {},
+    "ar": {}
+  },
+  "updatedAt": "2026-09-23"
+}

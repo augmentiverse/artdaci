@@ -47,7 +47,7 @@ test("the HTML activation contract pairs the printable-page fallback title with 
   const title = html.match(/<title>([^<]+)<\/title>/)?.[1];
   const version = html.match(/scripts\/print-artwork\.js\?v=(\d+)/)?.[1];
 
-  assert.equal(version, "7");
+  assert.equal(version, "8");
   assert.equal(title, "ARTDACI — Printable Artwork Page");
   assert.doesNotMatch(title, /Artwork Spread|Printed Spread|Double page/);
 });

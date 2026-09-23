@@ -1,0 +1,72 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "mo04",
+  "slug": "the-japanese-footbridge",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "mo",
+    "name": {
+      "fr": "Claude Monet",
+      "en": "Claude Monet",
+      "ar": "كلود مونيه"
+    }
+  },
+  "artwork": {
+    "title": {
+      "fr": "Le Bassin aux nymphéas, harmonie verte",
+      "en": "The Water-Lily Pond, Green Harmony",
+      "ar": "بركة زنابق الماء، تناغم أخضر"
+    },
+    "date": "1899",
+    "museum": "Musée d’Orsay",
+    "location": {
+      "city": "Paris"
+    }
+  },
+  "pageUrl": "https://artdaci.com/a/mo04",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/mo04/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {},
+    "audio": {
+      "overview": {
+        "en": {
+          "scope": "artwork",
+          "path": "audio/en/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1684511,
+          "sha256": "2c4b707b693a22ecc8eeff2d8d478aa50d672576a80b772ad2f37c4546e79c3d",
+          "language": "en"
+        },
+        "fr": {
+          "scope": "artwork",
+          "path": "audio/fr/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1335933,
+          "sha256": "6ad1a89ecf3d1f42b5afd47e01fb8c13091000b40d394cb651bebc1240e52b36",
+          "language": "fr"
+        },
+        "ar": {
+          "scope": "artwork",
+          "path": "audio/ar/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1961200,
+          "sha256": "78e9bc30db23200534cbf67eb2ecc2b98c83aa6e3bde295dcdd6f7462d5f47be",
+          "language": "ar"
+        }
+      }
+    },
+    "videos": {},
+    "models": {},
+    "ar": {}
+  },
+  "updatedAt": "2026-09-23"
+}

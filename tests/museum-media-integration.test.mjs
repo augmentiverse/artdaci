@@ -93,13 +93,13 @@ test("museum configuration and viewer cache-busters activate the new media", asy
   assert.match(arSource, /CONFIG\.resourceType === "museum" && manifest\.print\?\.imageTargetSource/);
   assert.match(arSource, /document\.getElementById\("target-image-link"\)\.href = manifest\.print\.imageTargetSource/);
   assert.match(spaceHtml, /space-viewer\.js\?v=35/);
-  assert.match(galleryHtml, /gallery-vr\.js\?v=172/);
-  assert.match(cinemaHtml, /gallery-vr\.js\?v=146/);
+  assert.match(galleryHtml, /gallery-vr\.js\?v=173/);
+  assert.match(cinemaHtml, /gallery-vr\.js\?v=147/);
   assert.match(cinemaHtml, /<body class="screen-ui-collapsed" data-experience="cinema">/);
   assert.match(cinemaHtml, /id="gallery-ui-toggle"[\s\S]*?aria-expanded="false"[\s\S]*?>Menu<\/button>/);
   assert.match(cinemaHtml, /id="gallery-toolbar"/);
   assert.match(cinemaHtml, /id="gallery-guide"/);
   assert.match(bookHtml, /book-3d\.js\?v=35/);
-  assert.match(printHtml, /print-artwork\.js\?v=7/);
+  assert.match(printHtml, /print-artwork\.js\?v=8/);
   for (const source of indexes) assert.match(source, /content\/museums\/czartoryski\.json\?v=2/);
 });

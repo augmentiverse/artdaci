@@ -1,0 +1,72 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "ve06",
+  "slug": "woman-holding-a-balance",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "ve",
+    "name": {
+      "fr": "Johannes Vermeer",
+      "en": "Johannes Vermeer",
+      "ar": "يوهانس فيرمير"
+    }
+  },
+  "artwork": {
+    "title": {
+      "fr": "La Femme à la balance",
+      "en": "Woman Holding a Balance",
+      "ar": "امرأة تحمل ميزاناً"
+    },
+    "date": "c. 1662–1664",
+    "museum": "National Gallery of Art",
+    "location": {
+      "city": "Washington"
+    }
+  },
+  "pageUrl": "https://artdaci.com/a/ve06",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/ve06/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {},
+    "audio": {
+      "overview": {
+        "en": {
+          "scope": "artwork",
+          "path": "audio/en/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1699976,
+          "sha256": "8315f5071012fa392baf3863349f26a84c142ed31f39ed37d7bc63380511ca05",
+          "language": "en"
+        },
+        "fr": {
+          "scope": "artwork",
+          "path": "audio/fr/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1576260,
+          "sha256": "80ab1a1587f1513a2f557447d5218d4b952f878dcb9b0518ffd270791f8a5313",
+          "language": "fr"
+        },
+        "ar": {
+          "scope": "artwork",
+          "path": "audio/ar/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1649820,
+          "sha256": "dca79832efee3d48d59a29e677b96cc2e84d4a4ef85023bc7baee3a3fc4da808",
+          "language": "ar"
+        }
+      }
+    },
+    "videos": {},
+    "models": {},
+    "ar": {}
+  },
+  "updatedAt": "2026-09-23"
+}

@@ -66,7 +66,7 @@ export async function resolveArtworkAudioOverview({
     const asset = selectMediaAsset(manifest, mediaKey, normalizedLanguage);
     if (
       asset?.language !== normalizedLanguage ||
-      asset?.mimeType !== "audio/mpeg"
+      !["audio/mpeg", "audio/mp4"].includes(asset?.mimeType)
     ) return null;
 
     return resolveManifestMedia(manifest, mediaKey, normalizedLanguage);

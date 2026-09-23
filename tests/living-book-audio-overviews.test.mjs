@@ -63,7 +63,7 @@ function audioManifest({ id = "aa01", language = "en", available = true, mimeTyp
   };
 }
 
-test("manifest-first overview resolution accepts only an available exact-language MP3", async () => {
+test("manifest-first overview resolution accepts available exact-language MP3 and M4A audio", async () => {
   const calls = [];
   const manifest = audioManifest({ id: "aa01", language: "fr" });
   const result = await resolveArtworkAudioOverview({
@@ -77,6 +77,14 @@ test("manifest-first overview resolution accepts only an available exact-languag
 
   assert.equal(result, "https://media.artdaci.com/artworks/aa01/audio/fr/overview.mp3");
   assert.deepEqual(calls, ["https://media.artdaci.com/artworks/aa01/manifest.json"]);
+
+  const m4aManifest = audioManifest({ id: "aa02", language: "en", mimeType: "audio/mp4" });
+  m4aManifest.media.audio.overview.en.path = "audio/en/overview.m4a";
+  assert.equal(await resolveArtworkAudioOverview({
+    artworkId: "aa02",
+    language: "en",
+    fetchManifest: async () => m4aManifest,
+  }), "https://media.artdaci.com/artworks/aa02/audio/en/overview.m4a");
 });
 
 test("planned, missing, invalid and failed manifests never expose audio", async () => {
@@ -98,7 +106,7 @@ test("planned, missing, invalid and failed manifests never expose audio", async 
   assert.equal(await resolveArtworkAudioOverview({
     artworkId: "aa05",
     language: "en",
-    fetchManifest: async () => audioManifest({ id: "aa05", mimeType: "audio/mp4" }),
+    fetchManifest: async () => audioManifest({ id: "aa05", mimeType: "audio/ogg" }),
   }), null);
   assert.equal(await resolveArtworkAudioOverview({
     artworkId: "aa06",

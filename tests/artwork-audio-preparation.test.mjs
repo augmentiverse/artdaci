@@ -217,9 +217,9 @@ test("historical mo01 pages resolve three manifest keys while keeping click-only
   assert.doesNotMatch(arabicScript, /media\.artdaci\.com\/artworks\/mo01\/audio\//);
 });
 
-test("VG01 Chicago 1887 text assets remain content-identical after LF/CRLF normalization", async () => {
+test("VG01 Chicago 1887 assets retain their approved identities after the Arabic overview addition", async () => {
   const files = [
-    ["content/media-manifests/artworks/vg01/manifest.json", "b6ea17a1dfa70c060d99cab43d573c5bd9ea7fd0a3dd3e5e8ff20e0316794abb"],
+    ["content/media-manifests/artworks/vg01/manifest.json", "ab662722bafe676cc342f5370d580a45168548425e16f73546a278bc7c554d23"],
     ["docs/production/migrations/vg01-r2.json", "e972bbfa3584dd1906790e6afba0bfa8028974fceecfff945412b46462bf9343"],
   ];
 

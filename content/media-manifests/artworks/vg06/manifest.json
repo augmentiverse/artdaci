@@ -1,0 +1,72 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "vg06",
+  "slug": "the-night-cafe",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "vg",
+    "name": {
+      "fr": "Vincent van Gogh",
+      "en": "Vincent van Gogh",
+      "ar": "فنسنت فان غوخ"
+    }
+  },
+  "artwork": {
+    "title": {
+      "fr": "Le Café de nuit",
+      "en": "The Night Café",
+      "ar": "المقهى الليلي"
+    },
+    "date": "1888",
+    "museum": "Yale University Art Gallery",
+    "location": {
+      "city": "New Haven"
+    }
+  },
+  "pageUrl": "https://artdaci.com/a/vg06",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/vg06/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {},
+    "audio": {
+      "overview": {
+        "en": {
+          "scope": "artwork",
+          "path": "audio/en/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1670300,
+          "sha256": "357f92d33fdd93b76371da082241dd6ee15b82020421b95ca8ad8ede1e56803c",
+          "language": "en"
+        },
+        "fr": {
+          "scope": "artwork",
+          "path": "audio/fr/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1708335,
+          "sha256": "8662b0d6e2df631a924332178b747e619345fd82286fdb8a0b2414411778d735",
+          "language": "fr"
+        },
+        "ar": {
+          "scope": "artwork",
+          "path": "audio/ar/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 2002160,
+          "sha256": "5cee9d77c36b18e8a5975fb978ecf3a182be123da06622a228e2b3397fbb3fa8",
+          "language": "ar"
+        }
+      }
+    },
+    "videos": {},
+    "models": {},
+    "ar": {}
+  },
+  "updatedAt": "2026-09-23"
+}

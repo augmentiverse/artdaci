@@ -1,0 +1,72 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "vg05",
+  "slug": "cafe-terrace-at-night",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "vg",
+    "name": {
+      "fr": "Vincent van Gogh",
+      "en": "Vincent van Gogh",
+      "ar": "فنسنت فان غوخ"
+    }
+  },
+  "artwork": {
+    "title": {
+      "fr": "Terrasse du café le soir",
+      "en": "Café Terrace at Night",
+      "ar": "شرفة المقهى ليلاً"
+    },
+    "date": "1888",
+    "museum": "Kröller-Müller Museum",
+    "location": {
+      "city": "Otterlo"
+    }
+  },
+  "pageUrl": "https://artdaci.com/a/vg05",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/vg05/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {},
+    "audio": {
+      "overview": {
+        "en": {
+          "scope": "artwork",
+          "path": "audio/en/overview.m4a",
+          "mimeType": "audio/mp4",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 3327862,
+          "sha256": "16b637fecacb542f6d4eb20129d76cf682265f247ddc5096d816e9e0d5890c1d",
+          "language": "en"
+        },
+        "fr": {
+          "scope": "artwork",
+          "path": "audio/fr/overview.m4a",
+          "mimeType": "audio/mp4",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 2981867,
+          "sha256": "46cf14cad71dc2db684ae597f1e4d6c858dd71188b3ef7643520f6e55e37f507",
+          "language": "fr"
+        },
+        "ar": {
+          "scope": "artwork",
+          "path": "audio/ar/overview.m4a",
+          "mimeType": "audio/mp4",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 3826253,
+          "sha256": "122f55ad1aff8695e6fe972237234c628a02e93d07191aebcadbba0ffeeb9c14",
+          "language": "ar"
+        }
+      }
+    },
+    "videos": {},
+    "models": {},
+    "ar": {}
+  },
+  "updatedAt": "2026-09-23"
+}

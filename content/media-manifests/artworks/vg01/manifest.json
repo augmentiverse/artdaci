@@ -106,6 +106,16 @@
           "bytes": 20197113,
           "sha256": "10baea3d68e382b7f78738c0e23beb70e86af9396733ad88cba9307f41c53921",
           "language": "fr"
+        },
+        "ar": {
+          "scope": "artwork",
+          "path": "audio/ar/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1913135,
+          "sha256": "eceebd36d33713244c84cce93812193d23e37adb541e4510d6009c159f7d1865",
+          "language": "ar"
         }
       }
     },

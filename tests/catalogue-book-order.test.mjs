@@ -125,13 +125,14 @@ test("existing print route inputs remain available without an Orsay 1889 draft r
   assert.doesNotMatch(canonicalData, /vg01-orsay-1889|orsay-1889|manifest-draft/i);
 });
 
-test("the active vg01 media manifest remains Chicago 1887 after LF/CRLF normalization", async () => {
+test("the active vg01 media manifest remains Chicago 1887 with its Arabic overview", async () => {
   const manifest = normalizeTextLineEndings(
     await readFile(new URL("../content/media-manifests/artworks/vg01/manifest.json", import.meta.url)),
   );
-  assert.equal(manifest.byteLength, 5437);
+  assert.equal(manifest.byteLength, 5787);
   assert.equal(
     createHash("sha256").update(manifest).digest("hex"),
-    "b6ea17a1dfa70c060d99cab43d573c5bd9ea7fd0a3dd3e5e8ff20e0316794abb",
+    "ab662722bafe676cc342f5370d580a45168548425e16f73546a278bc7c554d23",
   );
+  assert.match(manifest.toString("utf8"), /"path": "audio\/ar\/overview\.mp3"/);
 });

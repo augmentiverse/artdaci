@@ -1,0 +1,72 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "mo03",
+  "slug": "water-lilies",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "mo",
+    "name": {
+      "fr": "Claude Monet",
+      "en": "Claude Monet",
+      "ar": "كلود مونيه"
+    }
+  },
+  "artwork": {
+    "title": {
+      "fr": "Les Nymphéas",
+      "en": "Water Lilies",
+      "ar": "زنابق الماء"
+    },
+    "date": "c. 1916",
+    "museum": "National Museum of Western Art",
+    "location": {
+      "city": "Tokyo"
+    }
+  },
+  "pageUrl": "https://artdaci.com/a/mo03",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/mo03/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {},
+    "audio": {
+      "overview": {
+        "en": {
+          "scope": "artwork",
+          "path": "audio/en/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1879280,
+          "sha256": "16f6bcd15d74d82865ed654080c3dcc94ce9cd6d12413cf353b3f3133487d2b6",
+          "language": "en"
+        },
+        "fr": {
+          "scope": "artwork",
+          "path": "audio/fr/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1688691,
+          "sha256": "06f3198205df428300768b8fdf9ee4dd66f3fe2f75fc0d27d621332e7b1df742",
+          "language": "fr"
+        },
+        "ar": {
+          "scope": "artwork",
+          "path": "audio/ar/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1819094,
+          "sha256": "93ec4f14452c99e2a410900d0d28b90b06aa250ba7862d029da4bc8394cf87b5",
+          "language": "ar"
+        }
+      }
+    },
+    "videos": {},
+    "models": {},
+    "ar": {}
+  },
+  "updatedAt": "2026-09-23"
+}

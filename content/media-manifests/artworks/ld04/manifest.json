@@ -1,0 +1,72 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "ld04",
+  "slug": "annunciation",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "ld",
+    "name": {
+      "fr": "Léonard de Vinci",
+      "en": "Leonardo da Vinci",
+      "ar": "ليوناردو دا فينشي"
+    }
+  },
+  "artwork": {
+    "title": {
+      "fr": "L’Annonciation",
+      "en": "Annunciation",
+      "ar": "البشارة"
+    },
+    "date": "c. 1472–1476",
+    "museum": "Uffizi Galleries",
+    "location": {
+      "city": "Florence"
+    }
+  },
+  "pageUrl": "https://artdaci.com/a/ld04",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/ld04/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {},
+    "audio": {
+      "overview": {
+        "en": {
+          "scope": "artwork",
+          "path": "audio/en/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1744279,
+          "sha256": "81a81845d708d18fc8e046f9ff4f810b36dafa5b4d3b3eebb8d5b3a58f1c4e46",
+          "language": "en"
+        },
+        "fr": {
+          "scope": "artwork",
+          "path": "audio/fr/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1073037,
+          "sha256": "555662931055c62118854fec0dbb4f853251d8db23b9a38e9eb48b1c8a5b4072",
+          "language": "fr"
+        },
+        "ar": {
+          "scope": "artwork",
+          "path": "audio/ar/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1951587,
+          "sha256": "a67647e28ced30935f2487a7fc5e8e8714eedaee644f6766e506a4bb60f6e146",
+          "language": "ar"
+        }
+      }
+    },
+    "videos": {},
+    "models": {},
+    "ar": {}
+  },
+  "updatedAt": "2026-09-23"
+}

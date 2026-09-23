@@ -1,0 +1,72 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "mo06",
+  "slug": "woman-with-a-parasol",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "mo",
+    "name": {
+      "fr": "Claude Monet",
+      "en": "Claude Monet",
+      "ar": "كلود مونيه"
+    }
+  },
+  "artwork": {
+    "title": {
+      "fr": "La Femme à l’ombrelle",
+      "en": "Woman with a Parasol",
+      "ar": "امرأة تحمل مظلة"
+    },
+    "date": "1875",
+    "museum": "National Gallery of Art",
+    "location": {
+      "city": "Washington"
+    }
+  },
+  "pageUrl": "https://artdaci.com/a/mo06",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/mo06/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {},
+    "audio": {
+      "overview": {
+        "en": {
+          "scope": "artwork",
+          "path": "audio/en/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1715440,
+          "sha256": "c386ab039bb5955f08345f9c91b1b28490a84164dd825ebed36aa9aa996f9060",
+          "language": "en"
+        },
+        "fr": {
+          "scope": "artwork",
+          "path": "audio/fr/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1588798,
+          "sha256": "8cd14a1d1de2073beb8e67d7f2ccfbb92510d69fe26d458dcb0ec0e3403f9802",
+          "language": "fr"
+        },
+        "ar": {
+          "scope": "artwork",
+          "path": "audio/ar/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 2164328,
+          "sha256": "a511c366d2753af7f6c989ecbef0f6ff1b9f5366799435ba37432534b20a2d83",
+          "language": "ar"
+        }
+      }
+    },
+    "videos": {},
+    "models": {},
+    "ar": {}
+  },
+  "updatedAt": "2026-09-23"
+}

@@ -1,0 +1,72 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "mo05",
+  "slug": "poppies",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "mo",
+    "name": {
+      "fr": "Claude Monet",
+      "en": "Claude Monet",
+      "ar": "كلود مونيه"
+    }
+  },
+  "artwork": {
+    "title": {
+      "fr": "Les Coquelicots",
+      "en": "Poppies",
+      "ar": "شقائق النعمان"
+    },
+    "date": "1873",
+    "museum": "Musée d’Orsay",
+    "location": {
+      "city": "Paris"
+    }
+  },
+  "pageUrl": "https://artdaci.com/a/mo05",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/mo05/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {},
+    "audio": {
+      "overview": {
+        "en": {
+          "scope": "artwork",
+          "path": "audio/en/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1972067,
+          "sha256": "fae6a166b1be4181593f8d839672ada95e99b1cda29ad172768749415c9f6cbf",
+          "language": "en"
+        },
+        "fr": {
+          "scope": "artwork",
+          "path": "audio/fr/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1577931,
+          "sha256": "43d9fefa172b82c470b3cc612b83bc888c57dabcc192f32ee1edbcabbe13cd9a",
+          "language": "fr"
+        },
+        "ar": {
+          "scope": "artwork",
+          "path": "audio/ar/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1668629,
+          "sha256": "a23f8a9a4c2307ec473a7aebdc85026bf84a0a3ea71d7c0afd0876e07d28245a",
+          "language": "ar"
+        }
+      }
+    },
+    "videos": {},
+    "models": {},
+    "ar": {}
+  },
+  "updatedAt": "2026-09-23"
+}

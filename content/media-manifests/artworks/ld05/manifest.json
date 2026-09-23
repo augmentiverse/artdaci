@@ -1,0 +1,72 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "ld05",
+  "slug": "ginevra-de-benci",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "ld",
+    "name": {
+      "fr": "Léonard de Vinci",
+      "en": "Leonardo da Vinci",
+      "ar": "ليوناردو دا فينشي"
+    }
+  },
+  "artwork": {
+    "title": {
+      "fr": "Ginevra de’ Benci",
+      "en": "Ginevra de’ Benci",
+      "ar": "جينيفرا دي بنتشي"
+    },
+    "date": "c. 1474–1478",
+    "museum": "National Gallery of Art",
+    "location": {
+      "city": "Washington"
+    }
+  },
+  "pageUrl": "https://artdaci.com/a/ld05",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/ld05/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {},
+    "audio": {
+      "overview": {
+        "en": {
+          "scope": "artwork",
+          "path": "audio/en/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1827871,
+          "sha256": "216d3278ff73943a5c254b2f783d152e554b341cf1699bb2cd0eaf02670ecea1",
+          "language": "en"
+        },
+        "fr": {
+          "scope": "artwork",
+          "path": "audio/fr/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1575424,
+          "sha256": "8e11e5d55847513ed0bb69ea635c9973b3ce3a9f868e4dc4f16c8c84b42770c3",
+          "language": "fr"
+        },
+        "ar": {
+          "scope": "artwork",
+          "path": "audio/ar/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1832051,
+          "sha256": "71f1ddadce81e33ab58984830d1cf157d92583ae778ae126c1e7e7d3c1f8a069",
+          "language": "ar"
+        }
+      }
+    },
+    "videos": {},
+    "models": {},
+    "ar": {}
+  },
+  "updatedAt": "2026-09-23"
+}

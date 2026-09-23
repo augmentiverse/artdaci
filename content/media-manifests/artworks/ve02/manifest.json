@@ -1,0 +1,72 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "ve02",
+  "slug": "view-of-delft",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "ve",
+    "name": {
+      "fr": "Johannes Vermeer",
+      "en": "Johannes Vermeer",
+      "ar": "يوهانس فيرمير"
+    }
+  },
+  "artwork": {
+    "title": {
+      "fr": "Vue de Delft",
+      "en": "View of Delft",
+      "ar": "منظر دلفت"
+    },
+    "date": "c. 1660–1661",
+    "museum": "Mauritshuis",
+    "location": {
+      "city": "The Hague"
+    }
+  },
+  "pageUrl": "https://artdaci.com/a/ve02",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/ve02/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {},
+    "audio": {
+      "overview": {
+        "en": {
+          "scope": "artwork",
+          "path": "audio/en/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1665703,
+          "sha256": "b2e799907dba4f9d5c39120f37e8fec8767c91943ff4e047048d20a7db20f4c8",
+          "language": "en"
+        },
+        "fr": {
+          "scope": "artwork",
+          "path": "audio/fr/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1639371,
+          "sha256": "32d4eafd9cb73baa2e8c447bf04c167c8f672280db2d3300b5ecb2778fd9b149",
+          "language": "fr"
+        },
+        "ar": {
+          "scope": "artwork",
+          "path": "audio/ar/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1972903,
+          "sha256": "2d9e6b71c0e0d193abf0322e6c65c886d078ef225c6b06b90e58e436164c7f3b",
+          "language": "ar"
+        }
+      }
+    },
+    "videos": {},
+    "models": {},
+    "ar": {}
+  },
+  "updatedAt": "2026-09-23"
+}

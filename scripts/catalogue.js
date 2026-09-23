@@ -1,5 +1,5 @@
 import { formatArtworkNumber } from "./artwork-numbering.js?v=1";
-import { resolveArtworkAudioOverview } from "./artwork-media-manifest.js?v=4";
+import { resolveArtworkAudioOverview } from "./artwork-media-manifest.js?v=5";
 import { IMMERSIVE_ARTWORKS, classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./immersive-routing.js?v=1";
 
 export { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute };
@@ -41,13 +41,27 @@ const AUDIO_ARTWORK_IDS = Object.freeze({
   "mona-lisa": "ld01",
   "lady-with-an-ermine": "ld02",
   "last-supper": "ld03",
+  "annunciation": "ld04",
+  "ginevra-de-benci": "ld05",
   "belle-ferronniere": "ld06",
-  "vermeer-astronomer": "ve05",
   "vermeer-girl-with-a-pearl-earring": "ve01",
+  "view-of-delft": "ve02",
+  "vermeer-milkmaid": "ve03",
+  "art-of-painting": "ve04",
+  "vermeer-astronomer": "ve05",
+  "woman-holding-balance": "ve06",
   "van-gogh": "vg01",
   "van-gogh-bedroom": "vg02",
-  "pont-d-argenteuil": "mo02",
+  "starry-night": "vg03",
+  "sunflowers": "vg04",
+  "cafe-terrace": "vg05",
+  "night-cafe": "vg06",
   "monet-impression-sunrise": "mo01",
+  "pont-d-argenteuil": "mo02",
+  "water-lilies": "mo03",
+  "japanese-bridge": "mo04",
+  "poppies": "mo05",
+  "woman-with-parasol": "mo06",
 });
 
 const UI = {

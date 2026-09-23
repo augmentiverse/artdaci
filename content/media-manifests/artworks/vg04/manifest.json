@@ -1,0 +1,72 @@
+{
+  "$schema": "../../schema/artwork-media-manifest.schema.json",
+  "schemaVersion": "2.0",
+  "id": "vg04",
+  "slug": "sunflowers",
+  "defaultLanguage": "en",
+  "artist": {
+    "id": "vg",
+    "name": {
+      "fr": "Vincent van Gogh",
+      "en": "Vincent van Gogh",
+      "ar": "فنسنت فان غوخ"
+    }
+  },
+  "artwork": {
+    "title": {
+      "fr": "Les Tournesols",
+      "en": "Sunflowers",
+      "ar": "عباد الشمس"
+    },
+    "date": "1888",
+    "museum": "National Gallery",
+    "location": {
+      "city": "London"
+    }
+  },
+  "pageUrl": "https://artdaci.com/a/vg04",
+  "mediaBaseUrl": "https://media.artdaci.com/artworks/vg04/",
+  "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
+  "cachePolicy": "no-store",
+  "media": {
+    "images": {},
+    "audio": {
+      "overview": {
+        "en": {
+          "scope": "artwork",
+          "path": "audio/en/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1621399,
+          "sha256": "8db1c46675ee03a7e4553f2f15e30128e24aa530fdb6aa4d5eb48052a1d8524f",
+          "language": "en"
+        },
+        "fr": {
+          "scope": "artwork",
+          "path": "audio/fr/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 1402389,
+          "sha256": "38db648131654542183020fc5c3ba1fb736a1bed58ca415706daf4b1e173e8b9",
+          "language": "fr"
+        },
+        "ar": {
+          "scope": "artwork",
+          "path": "audio/ar/overview.mp3",
+          "mimeType": "audio/mpeg",
+          "available": true,
+          "migrationStatus": "published",
+          "bytes": 2454810,
+          "sha256": "cacf57b45dae66319d2a81d6fe69ae610c49ca282efea4a3b65e3c0c6eb44497",
+          "language": "ar"
+        }
+      }
+    },
+    "videos": {},
+    "models": {},
+    "ar": {}
+  },
+  "updatedAt": "2026-09-23"
+}

@@ -4,7 +4,7 @@ import { DRACOLoader } from "../vendor/DRACOLoader.module.js";
 import {
   fetchArtworkManifest,
   resolveArtworkAudioOverview,
-} from "./artwork-media-manifest.js?v=4";
+} from "./artwork-media-manifest.js?v=5";
 import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
 import { detectRuntimeProfile } from "./runtime-profile.js?v=1";
 
@@ -26,12 +26,28 @@ const PRINTED_MANIFESTS = [
 ];
 const CONNECTED_AUDIO_WORKS = {
   "da-vinci:0": { artworkId: "ld01", slug: "mona-lisa" },
+  "da-vinci:1": { artworkId: "ld03", slug: "last-supper" },
   "da-vinci:2": { artworkId: "ld02", slug: "lady-with-an-ermine" },
+  "da-vinci:3": { artworkId: "ld04", slug: "annunciation" },
+  "da-vinci:4": { artworkId: "ld05", slug: "ginevra-de-benci" },
+  "da-vinci:5": { artworkId: "ld06", slug: "belle-ferronniere" },
   "van-gogh:0": { artworkId: "vg01", slug: "van-gogh" },
+  "van-gogh:1": { artworkId: "vg03", slug: "starry-night" },
+  "van-gogh:2": { artworkId: "vg04", slug: "sunflowers" },
   "van-gogh:3": { artworkId: "vg02", slug: "van-gogh-bedroom" },
+  "van-gogh:4": { artworkId: "vg05", slug: "cafe-terrace" },
+  "van-gogh:5": { artworkId: "vg06", slug: "night-cafe" },
   "vermeer:0": { artworkId: "ve01", slug: "vermeer-girl-with-a-pearl-earring" },
+  "vermeer:1": { artworkId: "ve03", slug: "vermeer-milkmaid" },
+  "vermeer:2": { artworkId: "ve02", slug: "view-of-delft" },
+  "vermeer:3": { artworkId: "ve04", slug: "art-of-painting" },
   "vermeer:4": { artworkId: "ve05", slug: "vermeer-astronomer" },
+  "vermeer:5": { artworkId: "ve06", slug: "woman-holding-balance" },
   "monet:0": { artworkId: "mo01", slug: "monet-impression-sunrise" },
+  "monet:1": { artworkId: "mo03", slug: "water-lilies" },
+  "monet:2": { artworkId: "mo04", slug: "japanese-bridge" },
+  "monet:3": { artworkId: "mo05", slug: "poppies" },
+  "monet:4": { artworkId: "mo06", slug: "woman-with-parasol" },
   "monet:5": { artworkId: "mo02", slug: "pont-d-argenteuil" }
 };
 const SIX_MASTERPIECES_IMAGES = {
