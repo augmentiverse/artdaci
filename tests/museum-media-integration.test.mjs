@@ -88,18 +88,18 @@ test("museum configuration and viewer cache-busters activate the new media", asy
 
   for (const source of [arSource, spaceSource, printSource]) assert.match(source, /content\/museums\/czartoryski\.json\?v=2/);
   assert.match(bookSource, /content\/museums\/\$\{slug\}\.json\?v=3/);
-  assert.match(arHtml, /ar-viewer\.js\?v=54/);
+  assert.match(arHtml, /ar-viewer\.js\?v=55/);
   assert.match(arHtml, /id="target-image-link"/);
   assert.match(arSource, /CONFIG\.resourceType === "museum" && manifest\.print\?\.imageTargetSource/);
   assert.match(arSource, /document\.getElementById\("target-image-link"\)\.href = manifest\.print\.imageTargetSource/);
-  assert.match(spaceHtml, /space-viewer\.js\?v=35/);
-  assert.match(galleryHtml, /gallery-vr\.js\?v=173/);
-  assert.match(cinemaHtml, /gallery-vr\.js\?v=147/);
+  assert.match(spaceHtml, /space-viewer\.js\?v=36/);
+  assert.match(galleryHtml, /gallery-vr\.js\?v=174/);
+  assert.match(cinemaHtml, /gallery-vr\.js\?v=148/);
   assert.match(cinemaHtml, /<body class="screen-ui-collapsed" data-experience="cinema">/);
   assert.match(cinemaHtml, /id="gallery-ui-toggle"[\s\S]*?aria-expanded="false"[\s\S]*?>Menu<\/button>/);
   assert.match(cinemaHtml, /id="gallery-toolbar"/);
   assert.match(cinemaHtml, /id="gallery-guide"/);
-  assert.match(bookHtml, /book-3d\.js\?v=35/);
-  assert.match(printHtml, /print-artwork\.js\?v=8/);
+  assert.match(bookHtml, /book-3d\.js\?v=36/);
+  assert.match(printHtml, /print-artwork\.js\?v=9/);
   for (const source of indexes) assert.match(source, /content\/museums\/czartoryski\.json\?v=2/);
 });

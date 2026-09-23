@@ -10,7 +10,10 @@ const SUPPLEMENTAL_SOURCE = "content/paintings/additional-16.json";
 const MUSEUMS = {
   "lady-with-an-ermine": ["czartoryski", "content/museums/czartoryski.json?v=2"],
   "view-of-delft": ["mauritshuis", "content/museums/mauritshuis.json"],
-  "pont-d-argenteuil": ["orsay", "content/museums/orsay.json"]
+  "pont-d-argenteuil": ["orsay", "content/museums/orsay.json"],
+  "ginevra-de-benci": ["national-gallery-of-art-washington", "content/museums/national-gallery-of-art-washington.json?v=1"],
+  "woman-holding-balance": ["national-gallery-of-art-washington", "content/museums/national-gallery-of-art-washington.json?v=1"],
+  "woman-with-parasol": ["national-gallery-of-art-washington", "content/museums/national-gallery-of-art-washington.json?v=1"]
 };
 const AUDIO_ARTWORK_IDS = Object.freeze({
   "lady-with-an-ermine": "ld02",

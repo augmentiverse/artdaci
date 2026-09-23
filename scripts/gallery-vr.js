@@ -242,8 +242,23 @@ const MUSEUM_ROOMS = [
     timeline: "assets/environments/gallery/images/Van-Gogh-s-Museum/vangogh-s-museum_timeline/vangogh-s-museum_timeline_{lang}.png",
     facade: "assets/environments/gallery/images/Van-Gogh-s-Museum/vangogh-s-museum_building_plan/vangogh-s-museum.png", model: "assets/environments/gallery/models/museums/Vangogh_museum_c3.glb", displaySize: 5.6,
     colors: [0x28415b, 0xe0b84f]
+  },
+  {
+    id: "national-gallery-of-art-washington",
+    name: { en: "National Gallery of Art, Washington", fr: "National Gallery of Art de Washington", ar: "المعرض الوطني للفنون في واشنطن" },
+    plan: "assets/environments/gallery/images/National Gallery of Art Washington/National Gallery of Art Washington_building_plan/National Gallery of Art Washington_building_plan_{lang}.webp",
+    timeline: "assets/environments/gallery/images/National Gallery of Art Washington/National Gallery of Art Washington_timeline/National Gallery of Art Washington_timeline_{lang}.webp",
+    facade: "assets/environments/gallery/images/National Gallery of Art Washington/National Gallery of Art Washington_building_plan/National Gallery of Art Washington.webp",
+    model: "assets/environments/gallery/models/museums/National_Gallery_of_Art_Washington.glb",
+    displaySize: 6.1,
+    colors: [0x142847, 0xc6a35b]
   }
 ];
+
+const MUSEUM_WING_ROOM_DEPTH = 16;
+const MUSEUM_WING_FIRST_BOUNDARY_Z = -8;
+const MUSEUM_WING_LAST_BOUNDARY_Z = MUSEUM_WING_FIRST_BOUNDARY_Z + MUSEUM_ROOMS.length * MUSEUM_WING_ROOM_DEPTH;
+const MUSEUM_WING_MAX_VISITOR_Z = MUSEUM_WING_LAST_BOUNDARY_Z - 0.7;
 
 const PAINTER_PRESENTATION_VIDEOS = [
   {
@@ -917,6 +932,7 @@ const ROOM_AMBIENCE_OFFSETS = {
   "museum-czartoryski": 3,
   "museum-orsay": 5,
   "museum-van-gogh-museum": 7,
+  "museum-national-gallery-of-art-washington": 6,
   people: 0
 };
 let roomAmbienceTrackIndex = 0;
@@ -1416,7 +1432,7 @@ function applyCopy() {
     ["gallery-reimagined-link", text.reimaginedRoom, `gallery-vr.html?lang=${lang}&room=reimagined`],
     ["gallery-groups-link", lang === "fr" ? "Groupes de peintres en 3D" : lang === "ar" ? "مجموعات الرسامين ثلاثية الأبعاد" : "Painter Groups in 3D", `gallery-vr.html?lang=${lang}&room=groups`],
     ["gallery-louvre-link", lang === "fr" ? "Musée du Louvre" : lang === "ar" ? "متحف اللوفر" : "Louvre Museum", `gallery-vr.html?lang=${lang}&room=louvre`],
-    ["gallery-museums-link", lang === "fr" ? "Aile des cinq musées" : lang === "ar" ? "جناح المتاحف الخمسة" : "Five Museums Wing", `gallery-vr.html?lang=${lang}&room=museums`],
+    ["gallery-museums-link", lang === "fr" ? "Aile des six musées" : lang === "ar" ? "جناح المتاحف الستة" : "Six Museums Wing", `gallery-vr.html?lang=${lang}&room=museums`],
     ["gallery-people-link", lang === "fr" ? "Les personnes derrière les peintres" : lang === "ar" ? "الأشخاص وراء الرسامين" : "People Behind the Painters", `gallery-vr.html?lang=${lang}&room=people&artist=da-vinci`],
     ["gallery-book-link", text.livingBook, `book-3d.html?lang=${lang}`]
   ];
@@ -1837,15 +1853,15 @@ function museumImagePath(template) {
 }
 
 function buildFiveMuseumsWing() {
-  const roomCenters = MUSEUM_ROOMS.map((_, index) => index * 16);
-  visitor.position.set(0, 0, requestedMuseumIndex ? requestedMuseumIndex * 16 - 5.2 : -5.2);
+  const roomCenters = MUSEUM_ROOMS.map((_, index) => index * MUSEUM_WING_ROOM_DEPTH);
+  visitor.position.set(0, 0, requestedMuseumIndex ? requestedMuseumIndex * MUSEUM_WING_ROOM_DEPTH - 5.2 : -5.2);
   visitor.rotation.y = Math.PI;
   scene.background = new THREE.Color(0x10171b);
-  scene.fog = new THREE.Fog(0x10171b, 28, 88);
+  scene.fog = new THREE.Fog(0x10171b, 28, MUSEUM_WING_LAST_BOUNDARY_Z + MUSEUM_WING_ROOM_DEPTH);
   scene.add(new THREE.HemisphereLight(0xffefd6, 0x182129, isQuestBrowser ? 1.3 : 1.55));
-  document.getElementById("gallery-title").textContent = lang === "fr" ? "L’aile des cinq musées" : lang === "ar" ? "جناح المتاحف الخمسة" : "The Five Museums Wing";
-  document.getElementById("gallery-count").textContent = lang === "fr" ? "Cinq salles reliées · plans et chronologies" : lang === "ar" ? "خمس قاعات مترابطة · مخططات وخطوط زمنية" : "Five connected rooms · plans and timelines";
-  document.getElementById("gallery-instructions").textContent = lang === "fr" ? "Traversez les cinq salles. Les panneaux de la salle suivante se chargent à votre approche." : lang === "ar" ? "تنقّل بين القاعات الخمس. تُحمّل لوحات القاعة التالية عند اقترابك منها." : "Walk through all five rooms. The next room’s panels load as you approach.";
+  document.getElementById("gallery-title").textContent = lang === "fr" ? "L’aile des six musées" : lang === "ar" ? "جناح المتاحف الستة" : "The Six Museums Wing";
+  document.getElementById("gallery-count").textContent = lang === "fr" ? "Six salles reliées · plans et chronologies" : lang === "ar" ? "ست قاعات مترابطة · مخططات وخطوط زمنية" : "Six connected rooms · plans and timelines";
+  document.getElementById("gallery-instructions").textContent = lang === "fr" ? "Traversez les six salles. Les panneaux de la salle suivante se chargent à votre approche." : lang === "ar" ? "تنقّل بين القاعات الست. تُحمّل لوحات القاعة التالية عند اقترابك منها." : "Walk through all six rooms. The next room’s panels load as you approach.";
 
   MUSEUM_ROOMS.forEach((room, index) => addFiveMuseumsRoomShell(room, roomCenters[index], index));
   addFiveMuseumsPartitions();
@@ -1944,8 +1960,8 @@ function addFiveMuseumsRoomLinks(centerZ, roomIndex) {
 
 function addFiveMuseumsPartitions() {
   const material = new THREE.MeshStandardMaterial({ color: 0xd9d0c2, roughness: 0.96, side: THREE.DoubleSide });
-  [-8, 8, 24, 40, 56, 72].forEach((z, index) => {
-    const hasDoor = index > 0 && index < 5;
+  Array.from({ length: MUSEUM_ROOMS.length + 1 }, (_, index) => MUSEUM_WING_FIRST_BOUNDARY_Z + index * MUSEUM_WING_ROOM_DEPTH).forEach((z, index) => {
+    const hasDoor = index > 0 && index < MUSEUM_ROOMS.length;
     const isLouvreExit = index === 1;
     const segments = isLouvreExit ? [[-2, 10]] : hasDoor ? [[-4.5, 5], [4.5, 5]] : [[0, 14]];
     segments.forEach(([x, width]) => {
@@ -1963,7 +1979,7 @@ function addFiveMuseumsPartitions() {
       createWallSign(`↑ ${localizedMuseumName(MUSEUM_ROOMS[index - 1])}`, [doorX, 3.65, z + 0.11], 0, { width: 3.5, height: 0.4, accent: true, compact: true, highDetail: true });
     }
   });
-  createWallSign(lang === "fr" ? "RETOUR À ARTDACI" : lang === "ar" ? "العودة إلى ARTDACI" : "BACK TO ARTDACI", [0, 2.2, 71.88], 0, { width: 3.6, height: 0.48, exitUrl: `gallery-vr.html?lang=${lang}`, compact: true });
+  createWallSign(lang === "fr" ? "RETOUR À ARTDACI" : lang === "ar" ? "العودة إلى ARTDACI" : "BACK TO ARTDACI", [0, 2.2, MUSEUM_WING_LAST_BOUNDARY_Z - 0.12], 0, { width: 3.6, height: 0.48, exitUrl: `gallery-vr.html?lang=${lang}`, compact: true });
 }
 
 async function loadFiveMuseumsRoom(index) {
@@ -1972,7 +1988,7 @@ async function loadFiveMuseumsRoom(index) {
   const task = (async () => {
     const room = MUSEUM_ROOMS[index];
     status.textContent = lang === "fr" ? `Chargement de ${localizedMuseumName(room)}…` : lang === "ar" ? `جارٍ تحميل ${localizedMuseumName(room)}…` : `Loading ${localizedMuseumName(room)}…`;
-    const centerZ = index * 16;
+    const centerZ = index * MUSEUM_WING_ROOM_DEPTH;
     const panels = index === 0
       ? [
           ["louvre-face", room.views.face, 0, centerZ - 7.91, 0, "", { maxWidth: 6.2, maxHeight: 4.12, positionY: 2.2, hideLabel: true, highDetail: true }],
@@ -2138,10 +2154,10 @@ function prepareMuseumInformationTexture(texture, highDetail = false) {
 function maybeLoadFiveMuseumsRoom() {
   if (!isFiveMuseumsWing) return;
   const visitorZ = currentSession ? getListenerPosition().z : visitor.position.z;
-  const index = THREE.MathUtils.clamp(Math.floor((visitorZ + 8) / 16), 0, MUSEUM_ROOMS.length - 1);
+  const index = THREE.MathUtils.clamp(Math.floor((visitorZ - MUSEUM_WING_FIRST_BOUNDARY_Z) / MUSEUM_WING_ROOM_DEPTH), 0, MUSEUM_ROOMS.length - 1);
   if (!museumRoomsLoaded.has(index)) void loadFiveMuseumsRoom(index);
   const forward = THREE.MathUtils.clamp(index + 1, 0, MUSEUM_ROOMS.length - 1);
-  const nextBoundaryZ = 8 + index * 16;
+  const nextBoundaryZ = MUSEUM_WING_FIRST_BOUNDARY_Z + (index + 1) * MUSEUM_WING_ROOM_DEPTH;
   if (forward !== index && visitorZ >= nextBoundaryZ - 6) void loadFiveMuseumsRoom(forward);
 }
 
@@ -7445,7 +7461,7 @@ function drawWrappedText(context, message, x, y, maxWidth, lineHeight, maxLines)
 }
 
 function getLocomotionBounds() {
-  if (isFiveMuseumsWing) return { minX: -6.3, maxX: 6.3, minZ: -7.3, maxZ: 71.3 };
+  if (isFiveMuseumsWing) return { minX: -6.3, maxX: 6.3, minZ: -7.3, maxZ: MUSEUM_WING_MAX_VISITOR_Z };
   if (isConnectedMuseum) return { minX: -6.3, maxX: 6.3, minZ: -7.3, maxZ: 55.3 };
   if (isModelMuseum) return { minX: -6.3, maxX: 6.3, minZ: -7.3, maxZ: 7.3 };
   if (activeRoom === "people") return { minX: -6.45, maxX: 6.45, minZ: -8.35, maxZ: 8.35 };
@@ -8361,7 +8377,7 @@ function updateScreenLocomotion(delta) {
   const peopleRoom = activeRoom === "people";
   const modelRoom = isModelMuseum;
   visitor.position.x = THREE.MathUtils.clamp(visitor.position.x, museumWing ? -6.3 : modelRoom ? -6.3 : peopleRoom ? -6.45 : -5.3, museumWing ? 6.3 : modelRoom ? 6.3 : peopleRoom ? 6.45 : 19.3);
-  visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, museumWing ? -7.3 : modelRoom ? -7.3 : peopleRoom ? -8.35 : -4.3, isFiveMuseumsWing ? 71.3 : museumWing ? 55.3 : modelRoom ? 7.3 : peopleRoom ? 8.35 : 38.3);
+  visitor.position.z = THREE.MathUtils.clamp(visitor.position.z, museumWing ? -7.3 : modelRoom ? -7.3 : peopleRoom ? -8.35 : -4.3, isFiveMuseumsWing ? MUSEUM_WING_MAX_VISITOR_Z : museumWing ? 55.3 : modelRoom ? 7.3 : peopleRoom ? 8.35 : 38.3);
 }
 
 async function detectVR() {
@@ -8600,7 +8616,7 @@ function updateAudioVolume() {
 function roomAtVisitorPosition() {
   if (isCinemaOnly) return null;
   if (isFiveMuseumsWing) {
-    const index = THREE.MathUtils.clamp(Math.floor((visitor.position.z + 8) / 16), 0, MUSEUM_ROOMS.length - 1);
+    const index = THREE.MathUtils.clamp(Math.floor((visitor.position.z - MUSEUM_WING_FIRST_BOUNDARY_Z) / MUSEUM_WING_ROOM_DEPTH), 0, MUSEUM_ROOMS.length - 1);
     return `museum-${MUSEUM_ROOMS[index].id}`;
   }
   if (isConnectedMuseum) {

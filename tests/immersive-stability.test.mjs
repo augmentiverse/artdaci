@@ -278,11 +278,12 @@ test("Living Book generates only the eight curated artworks in canonical book or
     { canonicalId: "mo02", slug: "pont-d-argenteuil", bookOrder: 22 },
     { canonicalId: "mo01", slug: "monet-impression-sunrise", bookOrder: 24 }
   ]);
-  const expectedPageCount = 5
+  const pageCountBeforeEvenPadding = 5
     + selectedArtworks.reduce((total, artwork) => total + (artwork.bookOrder <= 8 ? 4 : 1), 0)
-    + 5
+    + 6
     + 1;
-  assert.equal(expectedPageCount, 28);
+  const expectedPageCount = pageCountBeforeEvenPadding + (pageCountBeforeEvenPadding % 2);
+  assert.equal(expectedPageCount, 30);
   const manifestList = bookSource.match(/const MANIFEST_URLS = \[([\s\S]*?)\];/);
   assert.ok(manifestList);
   assert.doesNotMatch(manifestList[1], /view-of-delft/);

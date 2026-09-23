@@ -1,0 +1,11 @@
+{
+  "slug": "national-gallery-of-art-washington", "title": "National Gallery of Art, Washington",
+  "media": { "image": "assets/environments/gallery/images/National Gallery of Art Washington/National Gallery of Art Washington_building_plan/National Gallery of Art Washington.webp", "model": "assets/environments/gallery/models/museums/National_Gallery_of_Art_Washington.glb" },
+  "print": { "imageTargetSource": "assets/environments/gallery/images/National Gallery of Art Washington/National Gallery of Art Washington_building_plan/National Gallery of Art Washington.webp", "compiledMindTarget": "assets/targets/National_Gallery_of_Art_Washington.mind" },
+  "ar": { "compiledTarget": "assets/targets/National_Gallery_of_Art_Washington.mind", "primaryModel": "assets/environments/gallery/models/museums/National_Gallery_of_Art_Washington.glb", "viewer": { "initialScale": 0.3, "initialRise": 0.05 } },
+  "texts": { "artisticAnalysis": "The National Gallery of Art in Washington, D.C. brings together European and American art from the Middle Ages to the present. In ARTDACI it connects Ginevra de’ Benci, Woman Holding a Balance and Woman with a Parasol to their museum context." },
+  "localizations": {
+    "fr": { "title": "National Gallery of Art de Washington", "texts": { "artisticAnalysis": "La National Gallery of Art de Washington réunit des œuvres européennes et américaines du Moyen Âge à nos jours. Dans ARTDACI, elle relie Ginevra de’ Benci, La Femme à la balance et La Femme à l’ombrelle à leur contexte muséal." } },
+    "ar": { "title": "المعرض الوطني للفنون في واشنطن", "texts": { "artisticAnalysis": "يجمع المعرض الوطني للفنون في واشنطن أعمالاً فنية أوروبية وأمريكية من العصور الوسطى إلى اليوم. وفي ARTDACI يربط جينيفرا دي بنشي والمرأة التي تحمل الميزان والمرأة ذات المظلة بسياقها المتحفي." } }
+  }
+}

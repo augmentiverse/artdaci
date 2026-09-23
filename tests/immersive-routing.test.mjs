@@ -107,7 +107,7 @@ test("AR unavailable routes leave the localized Back link above a non-interactiv
   assert.match(iconLink, /pointer-events:\s*auto;/);
   assert.doesNotMatch(loadingScreen, /pointer-events:\s*none;/);
   assert.match(html, /<button id="start-ar"(?![^>]*\bdisabled\b)/);
-  assert.match(html, /<script type="module" src="scripts\/ar-viewer\.js\?v=54"><\/script>/);
+  assert.match(html, /<script type="module" src="scripts\/ar-viewer\.js\?v=55"><\/script>/);
 });
 
 test("AR artwork numbers use canonical bookOrder with localized three-digit labels", () => {
@@ -144,7 +144,7 @@ test("AR interface derives artwork numbering only from bookOrder", async () => {
 
 test("AR people and museum resources remain unnumbered", async () => {
   const person = JSON.parse(await readFile(new URL("../content/people/van-gogh-jo.json", import.meta.url), "utf8"));
-  const museumFiles = ["louvre.json", "mauritshuis.json", "czartoryski.json", "orsay.json", "van-gogh-museum.json"];
+  const museumFiles = ["louvre.json", "mauritshuis.json", "czartoryski.json", "orsay.json", "van-gogh-museum.json", "national-gallery-of-art-washington.json"];
   const museums = await Promise.all(museumFiles.map(async (file) => (
     JSON.parse(await readFile(new URL(`../content/museums/${file}`, import.meta.url), "utf8"))
   )));

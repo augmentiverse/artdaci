@@ -21,7 +21,7 @@ const LIVING_BOOK_ARTWORKS = Object.freeze([
   { "canonicalId": "mo02", "slug": "pont-d-argenteuil", "bookOrder": 22 },
   { "canonicalId": "mo01", "slug": "monet-impression-sunrise", "bookOrder": 24 }
 ]);
-const MUSEUM_MANIFEST_URLS = ["louvre", "mauritshuis", "czartoryski", "orsay", "van-gogh-museum"]
+const MUSEUM_MANIFEST_URLS = ["louvre", "mauritshuis", "czartoryski", "orsay", "van-gogh-museum", "national-gallery-of-art-washington"]
   .map((slug) => `content/museums/${slug}.json?v=3`);
 
 const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-4873-a253-fa13ed516fae";
@@ -488,10 +488,10 @@ function buildPageDefinitions(manifests, museums = []) {
   });
 
   const museumCopy = lang === "fr"
-    ? { eyebrow: "LES CINQ MUSÉES", subtitle: "Image AR et modèle 3D disponibles", body: "Scannez l’image correspondante du livre pour faire apparaître le musée en AR, ou placez son modèle 3D dans votre espace." }
+    ? { eyebrow: "LES SIX MUSÉES", subtitle: "Image AR et modèle 3D disponibles", body: "Scannez l’image correspondante du livre pour faire apparaître le musée en AR, ou placez son modèle 3D dans votre espace." }
     : lang === "ar"
-      ? { eyebrow: "المتاحف الخمسة", subtitle: "صورة واقع معزز ونموذج ثلاثي الأبعاد", body: "امسح صورة المتحف في الكتاب لإظهاره بالواقع المعزز، أو ضع نموذجه الثلاثي الأبعاد في مساحتك." }
-      : { eyebrow: "THE FIVE MUSEUMS", subtitle: "Image AR and 3D model available", body: "Scan the matching museum image in the printed book to reveal it in AR, or place its 3D model in your space." };
+      ? { eyebrow: "المتاحف الستة", subtitle: "صورة واقع معزز ونموذج ثلاثي الأبعاد", body: "امسح صورة المتحف في الكتاب لإظهاره بالواقع المعزز، أو ضع نموذجه الثلاثي الأبعاد في مساحتك." }
+      : { eyebrow: "THE SIX MUSEUMS", subtitle: "Image AR and 3D model available", body: "Scan the matching museum image in the printed book to reveal it in AR, or place its 3D model in your space." };
   museums.forEach((museum) => {
     const localized = museum.localizations?.[lang] || {};
     pages.push({
