@@ -1,0 +1,26 @@
+{
+  "id": "claude-monet-water-lilies-c1916",
+  "slug": "water-lilies",
+  "bookOrder": 21,
+  "title": "Water Lilies",
+  "artist": { "name": "Claude Monet" },
+  "date": "c. 1916",
+  "medium": "Oil on canvas",
+  "dimensions": {},
+  "currentLocation": { "museum": "National Museum of Western Art", "city": "Tokyo" },
+  "movement": ["Impressionism"],
+  "media": { "image": "assets/artists/paintings_images/monet/monet_water_lilies.png" },
+  "print": { "chapter": "Impressionism" },
+  "texts": {
+    "historicalContext": "Monet returned repeatedly to the water garden he created at Giverny.",
+    "artisticAnalysis": "Sky, trees, flowers and water merge so that reflection becomes as substantial as landscape.",
+    "composition": "The horizon disappears and the pond fills the canvas from edge to edge.",
+    "palette": "Layered violet, blue, green and rose strokes make light appear to hover and shift.",
+    "perspectiveTechnique": "Overlapping lily pads and reflections replace conventional recession with an immersive surface.",
+    "culturalSignificance": "The late Water Lilies opened new paths toward abstraction and environmental painting."
+  },
+  "localizations": {
+    "fr": { "title": "Les Nymphéas" },
+    "ar": { "title": "زنابق الماء" }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "slug": "belle-ferronniere",
+  "bookOrder": 12,
+  "title": "La Belle Ferronnière",
+  "artist": { "name": "Leonardo da Vinci" },
+  "date": "c. 1490–1497",
+  "medium": "Oil on walnut panel",
+  "dimensions": {},
+  "currentLocation": { "museum": "Musée du Louvre", "city": "Paris" },
+  "movement": ["Renaissance"],
+  "media": { "image": "assets/artists/leonardo-da-vinci/collection/la-belle-ferronnière-davinci.webp" },
+  "print": { "chapter": "Renaissance", "imageTargetSource": "assets/artists/leonardo-da-vinci/collection/la-belle-ferronnière-davinci.webp" },
+  "texts": {
+    "historicalContext": "Painted during Leonardo's Milan years, the portrait depicts an unidentified woman at court.",
+    "artisticAnalysis": "The sitter's sideways glance, firm contour and subtle modelling create an alert, self-possessed presence.",
+    "composition": "A parapet separates viewer and sitter while the turning head introduces tension.",
+    "palette": "Rich red, dark hair and luminous flesh emerge from a nearly black field.",
+    "perspectiveTechnique": "Gradual tonal transitions give the face convincing volume without hard shadow.",
+    "culturalSignificance": "The work exemplifies Leonardo's renewal of court portraiture through psychology and light."
+  },
+  "localizations": {
+    "fr": { "title": "La Belle Ferronnière" },
+    "ar": { "title": "لا بيل فيرونيير" }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "johannes-vermeer-woman-holding-balance-c1662-1664",
+  "slug": "woman-holding-balance",
+  "bookOrder": 16,
+  "title": "Woman Holding a Balance",
+  "artist": { "name": "Johannes Vermeer" },
+  "date": "c. 1662–1664",
+  "medium": "Oil on canvas",
+  "dimensions": {},
+  "currentLocation": { "museum": "National Gallery of Art", "city": "Washington" },
+  "movement": ["Dutch Golden Age"],
+  "media": { "image": "assets/artists/paintings_images/vermeer/vermeer_woman-holding-balance.png" },
+  "print": { "chapter": "Dutch Golden Age" },
+  "texts": {
+    "historicalContext": "A woman pauses before jewellery and a Last Judgment painting in a prosperous Dutch interior.",
+    "artisticAnalysis": "The empty balance, poised hand and calm face turn material weighing into a meditation on judgment.",
+    "composition": "The balance occupies the visual centre between worldly objects and the sacred image behind.",
+    "palette": "Pearl-like highlights and muted blue-grey light temper the gold and dark interior.",
+    "perspectiveTechnique": "Light from the covered window shapes a shallow, carefully measured space.",
+    "culturalSignificance": "The painting sustains a deliberate ambiguity between abundance, restraint and spiritual equilibrium."
+  },
+  "localizations": {
+    "fr": { "title": "La Femme à la balance" },
+    "ar": { "title": "امرأة تحمل ميزاناً" }
+  }
+}

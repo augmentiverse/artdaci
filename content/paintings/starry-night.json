@@ -1,0 +1,26 @@
+{
+  "id": "vincent-van-gogh-starry-night-1889",
+  "slug": "starry-night",
+  "bookOrder": 17,
+  "title": "The Starry Night",
+  "artist": { "name": "Vincent van Gogh" },
+  "date": "1889",
+  "medium": "Oil on canvas",
+  "dimensions": {},
+  "currentLocation": { "museum": "Museum of Modern Art", "city": "New York" },
+  "movement": ["Post-Impressionism"],
+  "media": { "image": "assets/artists/paintings_images/vangogh/vangogh_starry-night.png" },
+  "print": { "chapter": "Post-Impressionism" },
+  "texts": {
+    "historicalContext": "Van Gogh painted the night view while staying at the asylum of Saint-Rémy.",
+    "artisticAnalysis": "Whirling stars and a rolling sky transform observed landscape into a powerful inner vision.",
+    "composition": "The dark cypress joins earth and sky while the village steadies the cosmic movement.",
+    "palette": "Intense blues are energized by yellow-white stars and rhythmic dark contours.",
+    "perspectiveTechnique": "Repeated directional strokes replace naturalistic depth with emotional motion.",
+    "culturalSignificance": "The painting has become an emblem of modern art's capacity to make feeling visible."
+  },
+  "localizations": {
+    "fr": { "title": "La Nuit étoilée" },
+    "ar": { "title": "ليلة النجوم" }
+  }
+}
