@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0",
+  "id": "louvre-paris",
+  "slug": "louvre",
+  "status": "prototype",
+  "name": {
+    "fr": "Musée du Louvre",
+    "en": "Louvre Museum",
+    "ar": "متحف اللوفر"
+  },
+  "city": {
+    "fr": "Paris, France",
+    "en": "Paris, France",
+    "ar": "باريس، فرنسا"
+  },
+  "geospatial": {
+    "latitude": null,
+    "longitude": null,
+    "altitudeMeters": null,
+    "altitudeReference": "to-be-determined",
+    "orientation": {
+      "headingDegrees": null,
+      "pitchDegrees": null,
+      "rollDegrees": null,
+      "status": "to-be-determined"
+    },
+    "anchor": {
+      "type": "to-be-determined",
+      "status": "to-be-determined"
+    },
+    "vps": {
+      "availability": "to-be-verified",
+      "checkedAt": null
+    },
+    "verification": {
+      "status": "to-be-verified-on-site",
+      "source": null,
+      "note": "No geographic value is published by this POC. Survey and VPS verification are required before native Geospatial integration."
+    }
+  },
+  "mediaResolver": {
+    "canonicalManifestUrl": "https://media.artdaci.com/artworks/ld01/manifest.json",
+    "canonicalManifestRepositoryPath": "content/media-manifests/artworks/ld01/manifest.json"
+  },
+  "remoteExperience": {
+    "defaultModelId": "mona-lisa-framed",
+    "models": [
+      {
+        "id": "mona-lisa-framed",
+        "kind": "artwork",
+        "label": {
+          "fr": "La Joconde en 3D",
+          "en": "Mona Lisa in 3D",
+          "ar": "الموناليزا ثلاثية الأبعاد"
+        },
+        "path": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/monalisa-tableau-c.glb"
+      },
+      {
+        "id": "louvre-building",
+        "kind": "place",
+        "label": {
+          "fr": "Le Louvre en 3D",
+          "en": "The Louvre in 3D",
+          "ar": "متحف اللوفر ثلاثي الأبعاد"
+        },
+        "path": "assets/environments/gallery/models/museums/Louvre-full-joint_c.glb"
+      }
+    ],
+    "routes": {
+      "artworkVr": "../vr.html?painting=mona-lisa&model=2",
+      "placeVr": "../gallery-vr.html?room=louvre"
+    }
+  },
+  "contents": [
+    {
+      "artworkId": "ld01",
+      "slug": "mona-lisa",
+      "artist": {
+        "fr": "Léonard de Vinci",
+        "en": "Leonardo da Vinci",
+        "ar": "ليوناردو دا فينشي"
+      },
+      "title": {
+        "fr": "La Joconde",
+        "en": "Mona Lisa",
+        "ar": "الموناليزا"
+      },
+      "geoPlacement": {
+        "status": "to-be-surveyed",
+        "localPositionMeters": null,
+        "orientation": null
+      },
+      "media": {
+        "image": {
+          "manifestKey": "images.main",
+          "localFallback": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg"
+        },
+        "audio": {
+          "fr": {
+            "manifestKey": "audio.overview.fr",
+            "localFallback": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/mona-lisa-fr.mp3"
+          },
+          "en": {
+            "manifestKey": "audio.overview.en",
+            "localFallback": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/mona-lisa-en.mp3"
+          },
+          "ar": {
+            "manifestKey": "audio.overview.ar",
+            "localFallback": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/الموناليزا-لغز-الابتسامة-والسرقة-والرموش-المفقودة.mp3"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="ARTDACI GEO — prototype d’expériences culturelles géolocalisées et distantes." />
+    <title>ARTDACI GEO</title>
+    <link rel="stylesheet" href="styles/geo.css?v=1" />
+  </head>
+  <body data-geo-page="index">
+    <main class="geo-shell">
+      <nav class="geo-topbar" aria-label="ARTDACI GEO">
+        <a class="geo-brand" href="../index-fr.html">ARTDACI</a>
+        <div class="language-nav" aria-label="Langues">
+          <a href="index.html?lang=fr" data-lang-link="fr" lang="fr">FR</a>
+          <a href="index.html?lang=en" data-lang-link="en" lang="en">EN</a>
+          <a href="index.html?lang=ar" data-lang-link="ar" lang="ar">AR</a>
+        </div>
+      </nav>
+
+      <section class="geo-panel geo-hero">
+        <div class="geo-hero-copy">
+          <p class="eyebrow" data-copy="prototype">Proof of Concept · Paris</p>
+          <h1>ARTDACI<br />GEO</h1>
+          <p class="geo-dek" data-copy="intro">Un même lieu culturel, deux façons de l’explorer.</p>
+          <div class="geo-actions">
+            <a class="geo-button primary" href="place.html?lang=fr" data-geo-link="place.html" data-copy="discover">Découvrir le lieu</a>
+          </div>
+          <p class="geo-note" data-copy="dataPending">Coordonnées, altitude, orientation, ancrage et VPS : à vérifier sur site.</p>
+        </div>
+        <div class="geo-visual" aria-hidden="true">
+          <div class="geo-mark"><div><span>GEO</span><small>Paris · POC 01</small></div></div>
+        </div>
+      </section>
+
+      <section class="geo-panel identity-strip" aria-label="Prototype sélectionné">
+        <div><small data-copy="placeLabel">Lieu pilote</small><strong data-place-name>Musée du Louvre</strong></div>
+        <div><small data-copy="artworkLabel">Œuvre pilote</small><strong data-artwork-title>La Joconde</strong></div>
+        <div><small>ARTDACI ID</small><strong data-artwork-id>ld01</strong></div>
+      </section>
+      <footer class="geo-footer"><span data-geo-status data-copy="mediaStatus">Médias liés au manifeste canonique ARTDACI ld01.</span></footer>
+    </main>
+    <script type="module" src="scripts/geo-page.js?v=1"></script>
+  </body>
+</html>

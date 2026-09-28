@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="ARTDACI GEO — Musée du Louvre et La Joconde, sur place ou à distance." />
+    <title>ARTDACI GEO — Musée du Louvre</title>
+    <link rel="stylesheet" href="styles/geo.css?v=1" />
+  </head>
+  <body data-geo-page="place">
+    <main class="geo-shell">
+      <nav class="geo-topbar" aria-label="ARTDACI GEO">
+        <a class="geo-brand" href="index.html?lang=fr" data-geo-link="index.html">ARTDACI GEO</a>
+        <div class="language-nav" aria-label="Langues">
+          <a href="place.html?lang=fr" data-lang-link="fr" lang="fr">FR</a>
+          <a href="place.html?lang=en" data-lang-link="en" lang="en">EN</a>
+          <a href="place.html?lang=ar" data-lang-link="ar" lang="ar">AR</a>
+        </div>
+      </nav>
+
+      <section class="geo-panel geo-hero">
+        <div class="geo-hero-copy">
+          <nav class="breadcrumb" aria-label="Fil d’Ariane">
+            <span><a href="index.html?lang=fr" data-geo-link="index.html">ARTDACI GEO</a></span>
+            <span data-place-name>Musée du Louvre</span>
+            <span data-artwork-title>La Joconde</span>
+          </nav>
+          <p class="eyebrow"><span data-place-city>Paris, France</span> · <span data-artwork-id>ld01</span></p>
+          <h1 class="place-title" data-place-name>Musée du Louvre</h1>
+          <p class="geo-dek"><span data-artwork-title>La Joconde</span><br /><span data-artist-name>Léonard de Vinci</span></p>
+          <p class="geo-note" data-copy="dataPending">Coordonnées, altitude, orientation, ancrage et VPS : à vérifier sur site.</p>
+        </div>
+        <div class="geo-visual">
+          <img data-artwork-image src="../assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg" alt="La Joconde — Léonard de Vinci" />
+        </div>
+      </section>
+
+      <section class="geo-panel modes-section">
+        <header class="modes-heading">
+          <h2 data-copy="modesTitle">Choisissez votre mode</h2>
+          <p data-copy="modesIntro">Le POC sépare volontairement l’expérience sur place de l’exploration distante.</p>
+        </header>
+        <div class="mode-grid">
+          <article class="mode-card onsite">
+            <span class="mode-number" aria-hidden="true">01</span>
+            <h3 data-copy="onsiteTitle">Explorer sur place</h3>
+            <p class="mode-tag" data-copy="onsiteTag">Geo-AR · Google Geospatial</p>
+            <p class="mode-body" data-copy="onsiteBody">Pour les visiteurs physiquement présents au Louvre. L’ancrage ARCore Geospatial et la vérification VPS nécessitent encore une intégration native et un relevé sur site.</p>
+            <span class="geo-button" aria-disabled="true" data-copy="unavailable">Prototype · non disponible</span>
+          </article>
+          <article class="mode-card remote">
+            <span class="mode-number" aria-hidden="true">02</span>
+            <h3 data-copy="remoteTitle">Explorer à distance</h3>
+            <p class="mode-tag" data-copy="remoteTag">3D · VR · POC Web</p>
+            <p class="mode-body" data-copy="remoteBody">Explorez le Louvre et La Joconde en 3D depuis un navigateur, puis passez à l’expérience WebXR sur un casque compatible.</p>
+            <a class="geo-button" href="remote.html?lang=fr" data-geo-link="remote.html" data-copy="openRemote">Ouvrir le POC distant</a>
+          </article>
+        </div>
+      </section>
+      <footer class="geo-footer"><span data-geo-status data-copy="mediaStatus">Médias liés au manifeste canonique ARTDACI ld01.</span></footer>
+    </main>
+    <script type="module" src="scripts/geo-page.js?v=1"></script>
+  </body>
+</html>

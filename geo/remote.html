@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="ARTDACI GEO — POC distant 3D et VR du Louvre et de La Joconde." />
+    <title>ARTDACI GEO — Exploration distante</title>
+    <link rel="stylesheet" href="styles/geo.css?v=1" />
+    <script type="module" src="../vendor/model-viewer.min.js?v=3.5.0"></script>
+  </head>
+  <body data-geo-page="remote">
+    <main class="geo-shell">
+      <nav class="geo-topbar" aria-label="ARTDACI GEO">
+        <a class="geo-brand" href="place.html?lang=fr" data-back-link>ARTDACI GEO</a>
+        <div class="language-nav" aria-label="Langues">
+          <a href="remote.html?lang=fr" data-lang-link="fr" lang="fr">FR</a>
+          <a href="remote.html?lang=en" data-lang-link="en" lang="en">EN</a>
+          <a href="remote.html?lang=ar" data-lang-link="ar" lang="ar">AR</a>
+        </div>
+      </nav>
+
+      <section class="geo-panel remote-layout">
+        <div class="viewer-column">
+          <div id="model-controls" class="model-controls" aria-label="Choix du modèle 3D"></div>
+          <model-viewer
+            id="geo-model-viewer"
+            camera-controls
+            touch-action="pan-y"
+            interaction-prompt="auto"
+            shadow-intensity="1"
+            exposure="1"
+            environment-image="neutral"
+            loading="eager"
+            alt="La Joconde en 3D"
+          ></model-viewer>
+          <p id="viewer-status" class="viewer-status" role="status" data-copy="loading">Chargement du modèle 3D…</p>
+        </div>
+        <div class="remote-copy">
+          <nav class="breadcrumb" aria-label="Fil d’Ariane">
+            <span>ARTDACI GEO</span>
+            <span data-place-name>Musée du Louvre</span>
+            <span data-artwork-title>La Joconde</span>
+          </nav>
+          <p class="eyebrow" data-copy="kicker">POC Web · exploration distante</p>
+          <h1 class="remote-title" data-copy="title">Le Louvre et La Joconde, où que vous soyez</h1>
+          <p class="geo-dek" data-copy="intro">Manipulez les modèles sur ordinateur ou mobile. Sur Meta Quest, ouvrez ensuite l’expérience WebXR existante.</p>
+
+          <section class="audio-panel">
+            <h2 data-copy="audioTitle">Écouter la présentation</h2>
+            <p data-copy="audioBody">La piste est résolue depuis le manifeste canonique ld01, avec repli local.</p>
+            <audio id="artwork-audio" controls preload="metadata"></audio>
+          </section>
+
+          <div class="geo-actions">
+            <a id="artwork-vr-link" class="geo-button primary" href="../vr.html?painting=mona-lisa&amp;model=2&amp;lang=fr" data-copy="openArtworkVr">Ouvrir La Joconde en WebXR</a>
+            <a id="place-vr-link" class="geo-button" href="../gallery-vr.html?room=louvre&amp;lang=fr" data-copy="openPlaceVr">Explorer l’aile Louvre en VR</a>
+            <a class="geo-button" href="place.html?lang=fr" data-back-link data-copy="back">Revenir aux deux modes</a>
+          </div>
+          <p class="prototype-note" data-copy="prototype">Prototype : la position réelle de l’œuvre dans le lieu n’est pas encore relevée.</p>
+        </div>
+      </section>
+      <footer class="geo-footer">ARTDACI GEO · POC 01 · Louvre / ld01</footer>
+    </main>
+    <script type="module" src="scripts/remote-viewer.js?v=2"></script>
+  </body>
+</html>
