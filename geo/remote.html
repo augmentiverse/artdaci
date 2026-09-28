@@ -3,13 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="ARTDACI GEO — POC distant 3D et VR du Louvre et de La Joconde." />
+    <meta name="description" content="ARTDACI GEO — exploration culturelle distante du Louvre, de La Joconde et de Léonard de Vinci." />
+    <meta name="theme-color" content="#171310" />
     <title>ARTDACI GEO — Exploration distante</title>
-    <link rel="stylesheet" href="styles/geo.css?v=1" />
+    <link rel="stylesheet" href="styles/geo.css?v=2" />
     <script type="module" src="../vendor/model-viewer.min.js?v=3.5.0"></script>
   </head>
   <body data-geo-page="remote">
-    <main class="geo-shell">
+    <main class="geo-shell remote-shell">
       <nav class="geo-topbar" aria-label="ARTDACI GEO">
         <a class="geo-brand" href="place.html?lang=fr" data-back-link>ARTDACI GEO</a>
         <div class="language-nav" aria-label="Langues">
@@ -19,9 +20,13 @@
         </div>
       </nav>
 
-      <section class="geo-panel remote-layout">
+      <section class="geo-panel remote-experience">
         <div class="viewer-column">
-          <div id="model-controls" class="model-controls" aria-label="Choix du modèle 3D"></div>
+          <div class="viewer-toolbar" aria-label="Navigation de la vue 3D">
+            <button id="overview-button" class="viewer-tool primary" type="button" data-copy="overview">Vue Louvre</button>
+            <button id="reset-view-button" class="viewer-tool" type="button" data-copy="recenter">Recentrer</button>
+            <span id="viewer-model-label" class="viewer-model-label"></span>
+          </div>
           <model-viewer
             id="geo-model-viewer"
             camera-controls
@@ -31,36 +36,86 @@
             exposure="1"
             environment-image="neutral"
             loading="eager"
-            alt="La Joconde en 3D"
+            camera-orbit="auto auto auto"
+            camera-target="auto auto auto"
+            field-of-view="35deg"
+            min-field-of-view="20deg"
+            max-field-of-view="50deg"
+            min-camera-orbit="auto auto 35%"
+            max-camera-orbit="auto auto 180%"
+            alt="Le Louvre en 3D"
           ></model-viewer>
           <p id="viewer-status" class="viewer-status" role="status" data-copy="loading">Chargement du modèle 3D…</p>
         </div>
-        <div class="remote-copy">
-          <nav class="breadcrumb" aria-label="Fil d’Ariane">
-            <span>ARTDACI GEO</span>
-            <span data-place-name>Musée du Louvre</span>
-            <span data-artwork-title>La Joconde</span>
-          </nav>
-          <p class="eyebrow" data-copy="kicker">POC Web · exploration distante</p>
-          <h1 class="remote-title" data-copy="title">Le Louvre et La Joconde, où que vous soyez</h1>
-          <p class="geo-dek" data-copy="intro">Manipulez les modèles sur ordinateur ou mobile. Sur Meta Quest, ouvrez ensuite l’expérience WebXR existante.</p>
 
-          <section class="audio-panel">
-            <h2 data-copy="audioTitle">Écouter la présentation</h2>
-            <p data-copy="audioBody">La piste est résolue depuis le manifeste canonique ld01, avec repli local.</p>
-            <audio id="artwork-audio" controls preload="metadata"></audio>
+        <div class="remote-guide">
+          <header class="remote-intro">
+            <nav class="breadcrumb" aria-label="Fil d’Ariane">
+              <span>ARTDACI GEO</span>
+              <span data-place-name>Musée du Louvre</span>
+              <span data-copy="remoteMode">Explorer à distance</span>
+            </nav>
+            <p class="eyebrow" data-copy="kicker">POC Web · parcours culturel interactif</p>
+            <h1 class="remote-title" data-copy="title">Explorez le Louvre à travers trois récits</h1>
+            <p class="geo-dek" data-copy="intro">Orientez la vue, choisissez un point d’intérêt et poursuivez dans les expériences WebXR existantes.</p>
+          </header>
+
+          <section class="poi-browser" aria-labelledby="poi-heading">
+            <div class="section-heading">
+              <p class="section-index">01</p>
+              <div>
+                <h2 id="poi-heading" data-copy="poiTitle">Points d’intérêt</h2>
+                <p data-copy="poiBody">Sélectionnez une étape pour afficher son récit et son modèle associé.</p>
+              </div>
+            </div>
+            <div id="poi-list" class="poi-list"></div>
           </section>
 
-          <div class="geo-actions">
-            <a id="artwork-vr-link" class="geo-button primary" href="../vr.html?painting=mona-lisa&amp;model=2&amp;lang=fr" data-copy="openArtworkVr">Ouvrir La Joconde en WebXR</a>
-            <a id="place-vr-link" class="geo-button" href="../gallery-vr.html?room=louvre&amp;lang=fr" data-copy="openPlaceVr">Explorer l’aile Louvre en VR</a>
-            <a class="geo-button" href="place.html?lang=fr" data-back-link data-copy="back">Revenir aux deux modes</a>
-          </div>
-          <p class="prototype-note" data-copy="prototype">Prototype : la position réelle de l’œuvre dans le lieu n’est pas encore relevée.</p>
+          <article id="poi-detail" class="poi-detail" aria-live="polite">
+            <div class="section-heading compact">
+              <p class="section-index">02</p>
+              <div>
+                <p id="poi-type" class="poi-type"></p>
+                <h2 id="poi-title">Musée du Louvre</h2>
+              </div>
+            </div>
+            <p id="poi-artist" class="poi-artist" hidden></p>
+            <p id="poi-description" class="poi-description"></p>
+            <p id="poi-calibration" class="calibration-note"></p>
+            <div id="poi-actions" class="poi-actions"></div>
+          </article>
+
+          <section class="audio-panel" aria-labelledby="audio-heading">
+            <div class="section-heading compact">
+              <p class="section-index">03</p>
+              <div>
+                <h2 id="audio-heading" data-copy="audioTitle">Audio</h2>
+                <p id="audio-description" data-copy="audioUnavailable">Aucun récit audio n’est associé à ce point pour le moment.</p>
+              </div>
+            </div>
+            <audio id="artwork-audio" controls preload="metadata" hidden></audio>
+          </section>
+
+          <section class="xr-panel" aria-labelledby="xr-heading">
+            <div class="section-heading compact">
+              <p class="section-index">04</p>
+              <div>
+                <h2 id="xr-heading" data-copy="xrTitle">Continuer en VR / WebXR</h2>
+                <p data-copy="xrBody">Ouvrez l’expérience immersive adaptée sur Meta Quest ou un navigateur WebXR compatible.</p>
+              </div>
+            </div>
+            <div class="geo-actions">
+              <a id="place-vr-link" class="geo-button primary" href="../gallery-vr.html?room=louvre&amp;lang=fr" data-copy="openPlaceVr">Explorer le Louvre en VR</a>
+              <a id="artwork-vr-link" class="geo-button" href="../vr.html?painting=mona-lisa&amp;model=2&amp;lang=fr" data-copy="openArtworkVr">Ouvrir La Joconde en WebXR</a>
+            </div>
+          </section>
+
+          <a class="geo-button remote-back" href="place.html?lang=fr" data-back-link data-copy="back">Revenir à ARTDACI GEO</a>
+          <p class="prototype-note" data-copy="prototype">Prototype : les positions locales des points d’intérêt ne sont pas encore calibrées.</p>
         </div>
       </section>
-      <footer class="geo-footer">ARTDACI GEO · POC 01 · Louvre / ld01</footer>
+      <footer class="geo-footer">ARTDACI GEO · POC 02 · Louvre / ld01</footer>
     </main>
-    <script type="module" src="scripts/remote-viewer.js?v=2"></script>
+    <script type="module" src="scripts/remote-viewer.js?v=3"></script>
   </body>
 </html>

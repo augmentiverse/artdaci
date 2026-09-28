@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "id": "louvre-paris",
   "slug": "louvre",
   "status": "prototype",
@@ -43,18 +43,9 @@
     "canonicalManifestRepositoryPath": "content/media-manifests/artworks/ld01/manifest.json"
   },
   "remoteExperience": {
-    "defaultModelId": "mona-lisa-framed",
+    "defaultModelId": "louvre-building",
+    "defaultPointOfInterestId": "louvre-intro",
     "models": [
-      {
-        "id": "mona-lisa-framed",
-        "kind": "artwork",
-        "label": {
-          "fr": "La Joconde en 3D",
-          "en": "Mona Lisa in 3D",
-          "ar": "الموناليزا ثلاثية الأبعاد"
-        },
-        "path": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/monalisa-tableau-c.glb"
-      },
       {
         "id": "louvre-building",
         "kind": "place",
@@ -63,14 +54,157 @@
           "en": "The Louvre in 3D",
           "ar": "متحف اللوفر ثلاثي الأبعاد"
         },
-        "path": "assets/environments/gallery/models/museums/Louvre-full-joint_c.glb"
+        "path": "assets/environments/gallery/models/museums/Louvre-full-joint_c.glb",
+        "loading": "initial"
+      },
+      {
+        "id": "mona-lisa-framed",
+        "kind": "artwork",
+        "label": {
+          "fr": "La Joconde encadrée en 3D",
+          "en": "The framed Mona Lisa in 3D",
+          "ar": "الموناليزا المؤطرة ثلاثية الأبعاد"
+        },
+        "path": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/monalisa-tableau-c.glb",
+        "loading": "on-demand"
+      },
+      {
+        "id": "leonardo-standing",
+        "kind": "character",
+        "label": {
+          "fr": "Léonard de Vinci en 3D",
+          "en": "Leonardo da Vinci in 3D",
+          "ar": "ليوناردو دا فينشي ثلاثي الأبعاد"
+        },
+        "path": "assets/artists/leonardo-da-vinci/reimagined/models/davinci-standing-c.glb",
+        "loading": "on-demand"
       }
     ],
     "routes": {
       "artworkVr": "../vr.html?painting=mona-lisa&model=2",
-      "placeVr": "../gallery-vr.html?room=louvre"
+      "placeVr": "../gallery-vr.html?room=louvre",
+      "leonardoProfile": "../print-leonardo-tribute.html"
     }
   },
+  "pointsOfInterest": [
+    {
+      "id": "louvre-intro",
+      "type": "place",
+      "modelId": "louvre-building",
+      "position": {
+        "coordinateSpace": "louvre-model-local",
+        "calibrationStatus": "not-calibrated",
+        "x": null,
+        "y": null,
+        "z": null
+      },
+      "content": {
+        "title": {
+          "fr": "Découvrir le Louvre",
+          "en": "Discover the Louvre",
+          "ar": "اكتشاف متحف اللوفر"
+        },
+        "description": {
+          "fr": "Une vue générale du musée ouvre le parcours. Orientez le modèle pour observer son architecture avant de rejoindre la galerie Louvre en réalité virtuelle.",
+          "en": "A general museum view opens the journey. Orbit the model to examine its architecture before continuing into the Louvre virtual-reality gallery.",
+          "ar": "تبدأ الرحلة بمنظر عام للمتحف. حرّك النموذج لمشاهدة عمارته قبل الانتقال إلى معرض اللوفر بالواقع الافتراضي."
+        },
+        "audio": null
+      },
+      "actions": [
+        {
+          "type": "route",
+          "routeId": "placeVr",
+          "label": {
+            "fr": "Explorer le Louvre en VR",
+            "en": "Explore the Louvre in VR",
+            "ar": "استكشاف اللوفر بالواقع الافتراضي"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ld01-mona-lisa",
+      "type": "artwork",
+      "artworkId": "ld01",
+      "modelId": "mona-lisa-framed",
+      "position": {
+        "coordinateSpace": "louvre-model-local",
+        "calibrationStatus": "not-calibrated",
+        "x": null,
+        "y": null,
+        "z": null
+      },
+      "content": {
+        "title": {
+          "fr": "La Joconde",
+          "en": "Mona Lisa",
+          "ar": "الموناليزا"
+        },
+        "artist": {
+          "fr": "Léonard de Vinci",
+          "en": "Leonardo da Vinci",
+          "ar": "ليوناردو دا فينشي"
+        },
+        "description": {
+          "fr": "Peinte au début du XVIe siècle sur un panneau de peuplier, La Joconde associe sfumato, profondeur psychologique et observation de la nature. Son audio ARTDACI est disponible en français, anglais et arabe.",
+          "en": "Painted in the early sixteenth century on a poplar panel, the Mona Lisa combines sfumato, psychological depth and close observation of nature. Its ARTDACI audio is available in French, English and Arabic.",
+          "ar": "رُسمت الموناليزا في أوائل القرن السادس عشر على لوح من خشب الحور، وتجمع بين تقنية السفوماتو والعمق النفسي وملاحظة الطبيعة. يتوفر دليلها الصوتي من ARTDACI بالفرنسية والإنجليزية والعربية."
+        },
+        "audio": {
+          "source": "linked-content",
+          "contentArtworkId": "ld01"
+        }
+      },
+      "actions": [
+        {
+          "type": "route",
+          "routeId": "artworkVr",
+          "label": {
+            "fr": "Ouvrir La Joconde en WebXR",
+            "en": "Open Mona Lisa in WebXR",
+            "ar": "فتح الموناليزا في WebXR"
+          }
+        }
+      ]
+    },
+    {
+      "id": "leonardo-guide",
+      "type": "character",
+      "modelId": "leonardo-standing",
+      "position": {
+        "coordinateSpace": "louvre-model-local",
+        "calibrationStatus": "not-calibrated",
+        "x": null,
+        "y": null,
+        "z": null
+      },
+      "content": {
+        "title": {
+          "fr": "Léonard, guide du parcours",
+          "en": "Leonardo, your guide",
+          "ar": "ليوناردو، دليل الرحلة"
+        },
+        "description": {
+          "fr": "Peintre, ingénieur, anatomiste et penseur de la Renaissance, Léonard relie ici l’œuvre, le lieu et l’esprit d’exploration d’ARTDACI. Son modèle existant est chargé uniquement lorsque ce point est sélectionné.",
+          "en": "A Renaissance painter, engineer, anatomist and thinker, Leonardo connects the artwork, the place and ARTDACI’s spirit of exploration. His existing model loads only when this point is selected.",
+          "ar": "يجمع ليوناردو، رسام عصر النهضة ومهندسه وعالم التشريح ومفكره، بين العمل الفني والمكان وروح الاستكشاف في ARTDACI. لا يُحمّل نموذجه الحالي إلا عند اختيار هذه النقطة."
+        },
+        "audio": null
+      },
+      "actions": [
+        {
+          "type": "route",
+          "routeId": "leonardoProfile",
+          "label": {
+            "fr": "Découvrir l’hommage à Léonard",
+            "en": "Discover the Leonardo tribute",
+            "ar": "اكتشاف تكريم ليوناردو"
+          }
+        }
+      ]
+    }
+  ],
   "contents": [
     {
       "artworkId": "ld01",

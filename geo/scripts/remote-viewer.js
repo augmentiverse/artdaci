@@ -9,52 +9,88 @@ import {
 
 const COPY = {
   fr: {
-    kicker: "POC Web · exploration distante",
-    title: "Le Louvre et La Joconde, où que vous soyez",
-    intro: "Manipulez les modèles sur ordinateur ou mobile. Sur Meta Quest, ouvrez ensuite l’expérience WebXR existante.",
-    artworkModel: "Œuvre",
-    placeModel: "Lieu",
+    remoteMode: "Explorer à distance",
+    kicker: "POC Web · parcours culturel interactif",
+    title: "Explorez le Louvre à travers trois récits",
+    intro: "Orientez la vue, choisissez un point d’intérêt et poursuivez dans les expériences WebXR existantes.",
+    overview: "Vue Louvre",
+    recenter: "Recentrer",
     loading: "Chargement du modèle 3D…",
-    ready: "Modèle prêt. Faites glisser pour tourner et pincez ou utilisez la molette pour zoomer.",
+    loadingProgress: "Chargement du modèle 3D · {percent} %",
+    ready: "Modèle prêt en {seconds} s. Faites glisser pour tourner et pincez ou utilisez la molette pour zoomer.",
     failed: "Le modèle 3D n’a pas pu être chargé.",
-    audioTitle: "Écouter la présentation",
-    audioBody: "La piste est résolue depuis le manifeste canonique ld01, avec repli local.",
+    poiTitle: "Points d’intérêt",
+    poiBody: "Sélectionnez une étape pour afficher son récit et son modèle associé.",
+    typePlace: "Lieu",
+    typeArtwork: "Œuvre",
+    typeCharacter: "Personnage-guide",
+    artistLabel: "Artiste",
+    uncalibrated: "Position locale 3D non calibrée · aucune coordonnée géographique n’est utilisée.",
+    audioTitle: "Audio",
+    audioAvailable: "Présentation ARTDACI disponible dans la langue active.",
+    audioUnavailable: "Aucun récit audio n’est associé à ce point pour le moment.",
+    xrTitle: "Continuer en VR / WebXR",
+    xrBody: "Ouvrez l’expérience immersive adaptée sur Meta Quest ou un navigateur WebXR compatible.",
     openArtworkVr: "Ouvrir La Joconde en WebXR",
-    openPlaceVr: "Explorer l’aile Louvre en VR",
-    back: "Revenir aux deux modes",
-    prototype: "Prototype : la position réelle de l’œuvre dans le lieu n’est pas encore relevée.",
+    openPlaceVr: "Explorer le Louvre en VR",
+    back: "Revenir à ARTDACI GEO",
+    prototype: "Prototype : les positions locales des points d’intérêt ne sont pas encore calibrées.",
   },
   en: {
-    kicker: "Web POC · remote exploration",
-    title: "The Louvre and Mona Lisa, wherever you are",
-    intro: "Manipulate the models on desktop or mobile. On Meta Quest, continue into the existing WebXR experience.",
-    artworkModel: "Artwork",
-    placeModel: "Place",
+    remoteMode: "Explore remotely",
+    kicker: "Web POC · interactive cultural journey",
+    title: "Explore the Louvre through three stories",
+    intro: "Orbit the view, choose a point of interest and continue into the existing WebXR experiences.",
+    overview: "Louvre view",
+    recenter: "Recenter",
     loading: "Loading 3D model…",
-    ready: "Model ready. Drag to rotate and pinch or use the wheel to zoom.",
+    loadingProgress: "Loading 3D model · {percent}%",
+    ready: "Model ready in {seconds}s. Drag to orbit and pinch or use the wheel to zoom.",
     failed: "The 3D model could not be loaded.",
-    audioTitle: "Listen to the overview",
-    audioBody: "The track is resolved through the canonical ld01 manifest, with a local fallback.",
+    poiTitle: "Points of interest",
+    poiBody: "Choose a stop to reveal its story and associated model.",
+    typePlace: "Place",
+    typeArtwork: "Artwork",
+    typeCharacter: "Character guide",
+    artistLabel: "Artist",
+    uncalibrated: "Local 3D position not calibrated · no geographic coordinate is being used.",
+    audioTitle: "Audio",
+    audioAvailable: "ARTDACI overview available in the active language.",
+    audioUnavailable: "No audio story is associated with this point yet.",
+    xrTitle: "Continue in VR / WebXR",
+    xrBody: "Open the appropriate immersive experience on Meta Quest or a compatible WebXR browser.",
     openArtworkVr: "Open Mona Lisa in WebXR",
-    openPlaceVr: "Explore the Louvre wing in VR",
-    back: "Back to the two modes",
-    prototype: "Prototype: the artwork’s real position inside the place has not been surveyed yet.",
+    openPlaceVr: "Explore the Louvre in VR",
+    back: "Back to ARTDACI GEO",
+    prototype: "Prototype: the local positions of the points of interest have not been calibrated yet.",
   },
   ar: {
-    kicker: "نموذج ويب · استكشاف عن بُعد",
-    title: "اللوفر والموناليزا أينما كنت",
-    intro: "حرّك النماذج على الحاسوب أو الهاتف. وعلى Meta Quest، انتقل إلى تجربة WebXR الحالية.",
-    artworkModel: "العمل الفني",
-    placeModel: "المكان",
+    remoteMode: "الاستكشاف عن بُعد",
+    kicker: "نموذج ويب · رحلة ثقافية تفاعلية",
+    title: "استكشف اللوفر من خلال ثلاث حكايات",
+    intro: "حرّك المشهد واختر نقطة اهتمام، ثم انتقل إلى تجارب WebXR الحالية.",
+    overview: "منظر اللوفر",
+    recenter: "إعادة توسيط العرض",
     loading: "جارٍ تحميل النموذج ثلاثي الأبعاد…",
-    ready: "النموذج جاهز. اسحب للتدوير واستخدم القرص أو العجلة للتقريب.",
+    loadingProgress: "جارٍ تحميل النموذج ثلاثي الأبعاد · {percent}٪",
+    ready: "النموذج جاهز خلال {seconds} ث. اسحب للتدوير واستخدم القرص أو العجلة للتقريب.",
     failed: "تعذر تحميل النموذج ثلاثي الأبعاد.",
-    audioTitle: "الاستماع إلى العرض",
-    audioBody: "يتم جلب المسار من بيان ld01 الرسمي مع بديل محلي.",
+    poiTitle: "نقاط الاهتمام",
+    poiBody: "اختر محطة لعرض حكايتها والنموذج المرتبط بها.",
+    typePlace: "مكان",
+    typeArtwork: "عمل فني",
+    typeCharacter: "شخصية مرشدة",
+    artistLabel: "الفنان",
+    uncalibrated: "الموقع المحلي ثلاثي الأبعاد غير معاير · لا تُستخدم أي إحداثيات جغرافية.",
+    audioTitle: "الصوت",
+    audioAvailable: "يتوفر عرض ARTDACI باللغة النشطة.",
+    audioUnavailable: "لا توجد حكاية صوتية مرتبطة بهذه النقطة حاليًا.",
+    xrTitle: "المتابعة في VR / WebXR",
+    xrBody: "افتح التجربة الغامرة المناسبة على Meta Quest أو متصفح متوافق مع WebXR.",
     openArtworkVr: "فتح الموناليزا في WebXR",
-    openPlaceVr: "استكشاف جناح اللوفر بالواقع الافتراضي",
-    back: "العودة إلى النمطين",
-    prototype: "نموذج أولي: لم يتم بعد مسح الموقع الحقيقي للعمل داخل المكان.",
+    openPlaceVr: "استكشاف اللوفر بالواقع الافتراضي",
+    back: "العودة إلى ARTDACI GEO",
+    prototype: "نموذج أولي: لم تُعاير بعد المواقع المحلية لنقاط الاهتمام.",
   },
 };
 
@@ -63,7 +99,14 @@ const copy = COPY[language];
 const dataUrl = new URL("../data/louvre.json", import.meta.url);
 const viewer = document.getElementById("geo-model-viewer");
 const status = document.getElementById("viewer-status");
+const audio = document.getElementById("artwork-audio");
+const audioDescription = document.getElementById("audio-description");
 let place;
+let activeModelId = "";
+let activeAudioFallback = "";
+let audioRequestId = 0;
+let modelLoadStartedAt = 0;
+let canonicalManifestPromise;
 
 init().catch((error) => {
   console.error(error);
@@ -84,8 +127,10 @@ async function init() {
 
   renderIdentity();
   configureRoutes();
-  configureModels();
-  configureAudio();
+  configureViewer();
+  renderPointsOfInterest();
+  bindControls();
+  selectPointOfInterest(place.remoteExperience.defaultPointOfInterestId);
 }
 
 function applyCopy() {
@@ -102,14 +147,10 @@ function applyCopy() {
 }
 
 function renderIdentity() {
-  const content = place.contents[0];
   document.querySelectorAll("[data-place-name]").forEach((element) => {
     element.textContent = localize(place.name, language);
   });
-  document.querySelectorAll("[data-artwork-title]").forEach((element) => {
-    element.textContent = localize(content.title, language);
-  });
-  document.title = `ARTDACI GEO — ${localize(place.name, language)} — ${localize(content.title, language)}`;
+  document.title = `ARTDACI GEO — ${localize(place.name, language)} — ${copy.remoteMode}`;
 }
 
 function configureRoutes() {
@@ -118,72 +159,167 @@ function configureRoutes() {
   document.getElementById("place-vr-link").href = withLanguage(routes.placeVr, language);
 }
 
-function configureModels() {
-  const models = place.remoteExperience.models;
-  const controls = document.getElementById("model-controls");
-  controls.replaceChildren();
-
-  models.forEach((model) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "model-choice";
-    button.dataset.modelId = model.id;
-    button.textContent = model.kind === "place" ? copy.placeModel : copy.artworkModel;
-    button.setAttribute("aria-label", localize(model.label, language));
-    button.addEventListener("click", () => selectModel(model.id));
-    controls.appendChild(button);
+function configureViewer() {
+  viewer.addEventListener("progress", (event) => {
+    if (!event.detail || status.dataset.state !== "loading") return;
+    const percent = Math.round(event.detail.totalProgress * 100);
+    status.textContent = copy.loadingProgress.replace("{percent}", String(percent));
   });
-
   viewer.addEventListener("load", () => {
-    status.textContent = copy.ready;
+    const elapsedSeconds = Math.max(0, performance.now() - modelLoadStartedAt) / 1000;
+    viewer.dataset.loadMs = String(Math.round(elapsedSeconds * 1000));
+    status.textContent = copy.ready.replace("{seconds}", elapsedSeconds.toFixed(1));
     status.dataset.state = "ready";
   });
   viewer.addEventListener("error", () => {
     status.textContent = copy.failed;
     status.dataset.state = "error";
   });
-  selectModel(place.remoteExperience.defaultModelId);
+}
+
+function bindControls() {
+  document.getElementById("overview-button").addEventListener("click", () => {
+    selectPointOfInterest(place.remoteExperience.defaultPointOfInterestId);
+  });
+  document.getElementById("reset-view-button").addEventListener("click", resetCamera);
+}
+
+function renderPointsOfInterest() {
+  const list = document.getElementById("poi-list");
+  list.replaceChildren();
+  place.pointsOfInterest.forEach((point, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "poi-card";
+    button.dataset.poiId = point.id;
+    button.innerHTML = `<span class="poi-number">${String(index + 1).padStart(2, "0")}</span><span><small>${pointTypeLabel(point.type)}</small><strong>${localize(point.content.title, language)}</strong></span>`;
+    button.addEventListener("click", () => selectPointOfInterest(point.id));
+    list.appendChild(button);
+  });
+}
+
+function selectPointOfInterest(pointId) {
+  const point = place.pointsOfInterest.find((candidate) => candidate.id === pointId);
+  if (!point) return;
+
+  document.querySelectorAll("[data-poi-id]").forEach((button) => {
+    const selected = button.dataset.poiId === point.id;
+    button.classList.toggle("is-active", selected);
+    button.setAttribute("aria-pressed", String(selected));
+  });
+
+  document.getElementById("poi-type").textContent = pointTypeLabel(point.type);
+  document.getElementById("poi-title").textContent = localize(point.content.title, language);
+  document.getElementById("poi-description").textContent = localize(point.content.description, language);
+  document.getElementById("poi-calibration").textContent = copy.uncalibrated;
+
+  const artist = document.getElementById("poi-artist");
+  const artistName = localize(point.content.artist, language);
+  artist.hidden = !artistName;
+  artist.textContent = artistName ? `${copy.artistLabel} · ${artistName}` : "";
+
+  renderPointActions(point);
+  configurePointAudio(point);
+  selectModel(point.modelId);
+}
+
+function pointTypeLabel(type) {
+  if (type === "artwork") return copy.typeArtwork;
+  if (type === "character") return copy.typeCharacter;
+  return copy.typePlace;
+}
+
+function renderPointActions(point) {
+  const container = document.getElementById("poi-actions");
+  container.replaceChildren();
+  point.actions.forEach((action) => {
+    const route = place.remoteExperience.routes[action.routeId];
+    if (!route) return;
+    const link = document.createElement("a");
+    link.className = "geo-button poi-action";
+    link.href = withLanguage(route, language);
+    link.textContent = localize(action.label, language);
+    container.appendChild(link);
+  });
 }
 
 function selectModel(modelId) {
   const model = place.remoteExperience.models.find((candidate) => candidate.id === modelId);
   if (!model) return;
+
+  document.getElementById("viewer-model-label").textContent = localize(model.label, language);
+  if (model.id === activeModelId) {
+    resetCamera();
+    return;
+  }
+
+  activeModelId = model.id;
+  modelLoadStartedAt = performance.now();
   status.textContent = copy.loading;
   status.dataset.state = "loading";
+  viewer.dataset.modelId = model.id;
   viewer.src = projectAssetUrl(model.path, import.meta.url);
   viewer.alt = localize(model.label, language);
-  document.querySelectorAll("[data-model-id]").forEach((button) => {
-    const selected = button.dataset.modelId === modelId;
-    button.classList.toggle("is-active", selected);
-    button.setAttribute("aria-pressed", String(selected));
+  resetCamera();
+}
+
+function resetCamera() {
+  viewer.cameraOrbit = "auto auto auto";
+  viewer.cameraTarget = "auto auto auto";
+  viewer.fieldOfView = "35deg";
+  viewer.jumpCameraToGoal?.();
+}
+
+function configurePointAudio(point) {
+  const requestId = ++audioRequestId;
+  audio.pause();
+  audio.hidden = true;
+  audio.removeAttribute("src");
+  audio.load();
+  activeAudioFallback = "";
+
+  const audioReference = point.content.audio;
+  if (!audioReference) {
+    audioDescription.textContent = copy.audioUnavailable;
+    return;
+  }
+
+  const content = place.contents.find((candidate) => candidate.artworkId === audioReference.contentArtworkId);
+  const audioConfig = content?.media?.audio?.[language] || content?.media?.audio?.fr;
+  if (!content || !audioConfig) {
+    audioDescription.textContent = copy.audioUnavailable;
+    return;
+  }
+
+  activeAudioFallback = projectAssetUrl(audioConfig.localFallback, import.meta.url);
+  audio.src = activeAudioFallback;
+  audio.hidden = false;
+  audioDescription.textContent = copy.audioAvailable;
+
+  resolveCanonicalAudio(content, audioConfig).then((remoteUrl) => {
+    if (requestId !== audioRequestId || !remoteUrl) return;
+    audio.src = remoteUrl;
   });
 }
 
-async function configureAudio() {
-  const audio = document.getElementById("artwork-audio");
-  const content = place.contents[0];
-  const audioConfig = content.media.audio[language] || content.media.audio.fr;
-  const fallbackUrl = projectAssetUrl(audioConfig.localFallback, import.meta.url);
-  audio.src = fallbackUrl;
-
+async function resolveCanonicalAudio(content, audioConfig) {
   try {
-    const response = await fetch(place.mediaResolver.canonicalManifestUrl, {
+    canonicalManifestPromise ||= fetch(place.mediaResolver.canonicalManifestUrl, {
       cache: "no-store",
       credentials: "omit",
-    });
-    if (!response.ok) return;
-    const manifest = await response.json();
-    if (manifest.id !== content.artworkId) return;
-    const remoteUrl = resolveManifestMedia(manifest, audioConfig.manifestKey, language);
-    if (!remoteUrl) return;
-    audio.addEventListener("error", () => {
-      if (audio.src !== fallbackUrl) {
-        audio.src = fallbackUrl;
-        audio.load();
-      }
-    }, { once: true });
-    audio.src = remoteUrl;
+    }).then((response) => response.ok ? response.json() : null);
+    const manifest = await canonicalManifestPromise;
+    if (manifest?.id !== content.artworkId) return "";
+    return resolveManifestMedia(manifest, audioConfig.manifestKey, language) || "";
   } catch (error) {
     console.warn("Canonical ld01 audio unavailable; keeping the local fallback.", error);
+    return "";
   }
 }
+
+audio.addEventListener("error", () => {
+  if (activeAudioFallback && audio.src !== activeAudioFallback) {
+    audio.src = activeAudioFallback;
+    audio.load();
+  }
+});
