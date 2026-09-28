@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "2.0",
+  "schemaVersion": "3.0",
   "id": "louvre-paris",
   "slug": "louvre",
   "status": "prototype",
@@ -55,6 +55,29 @@
           "ar": "متحف اللوفر ثلاثي الأبعاد"
         },
         "path": "assets/environments/gallery/models/museums/Louvre-full-joint_c.glb",
+        "variants": [
+          {
+            "id": "desktop",
+            "status": "experimental",
+            "path": "assets/environments/gallery/models/museums/Louvre-full-joint-desktop.glb",
+            "geometryTargetRatio": 0.5,
+            "textureStrategy": "original-webp-2k-preserved"
+          },
+          {
+            "id": "mobile",
+            "status": "experimental",
+            "path": "assets/environments/gallery/models/museums/Louvre-full-joint-mobile.glb",
+            "geometryTargetRatio": 0.2,
+            "textureStrategy": "original-webp-2k-preserved"
+          },
+          {
+            "id": "quest",
+            "status": "experimental",
+            "path": "assets/environments/gallery/models/museums/Louvre-full-joint-quest.glb",
+            "geometryTargetRatio": 0.1,
+            "textureStrategy": "original-webp-2k-preserved"
+          }
+        ],
         "loading": "initial"
       },
       {

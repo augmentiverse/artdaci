@@ -1,4 +1,46 @@
 export const GEO_LANGUAGES = Object.freeze(["fr", "en", "ar"]);
+export const GEO_PERFORMANCE_PROFILES = Object.freeze(["desktop", "mobile", "quest"]);
+
+export function selectPerformanceProfile(signals = {}) {
+  if (GEO_PERFORMANCE_PROFILES.includes(signals.forcedProfile)) return signals.forcedProfile;
+
+  const deviceMemory = Number(signals.deviceMemory) || 0;
+  const hardwareConcurrency = Number(signals.hardwareConcurrency) || 0;
+  const maxTextureSize = Number(signals.maxTextureSize) || 0;
+  const viewportWidth = Number(signals.viewportWidth) || 0;
+  const constrainedForXr = signals.coarsePointer
+    || (deviceMemory > 0 && deviceMemory <= 8)
+    || (maxTextureSize > 0 && maxTextureSize <= 8192);
+
+  if (signals.immersiveVr && constrainedForXr) return "quest";
+
+  const constrained = signals.saveData
+    || signals.coarsePointer
+    || (viewportWidth > 0 && viewportWidth < 900)
+    || (deviceMemory > 0 && deviceMemory < 6)
+    || (hardwareConcurrency > 0 && hardwareConcurrency < 6)
+    || (maxTextureSize > 0 && maxTextureSize < 8192);
+  return constrained ? "mobile" : "desktop";
+}
+
+export function modelVariantCandidates(model, profile) {
+  if (!model?.path) return [];
+  const variants = new Map((model.variants || []).map((variant) => [variant.id, variant]));
+  const orders = {
+    desktop: ["desktop", "mobile", "quest"],
+    mobile: ["mobile", "quest", "desktop"],
+    quest: ["quest", "mobile", "desktop"],
+  };
+  const requestedOrder = orders[profile] || orders.mobile;
+  const candidates = requestedOrder
+    .map((id) => variants.get(id))
+    .filter((variant) => typeof variant?.path === "string" && variant.path.trim())
+    .map((variant) => ({ id: variant.id, path: variant.path }));
+  candidates.push({ id: "original", path: model.path });
+  return candidates.filter((candidate, index, all) => (
+    all.findIndex((other) => other.path === candidate.path) === index
+  ));
+}
 
 export function normalizeGeoLanguage(value, fallback = "fr") {
   const language = String(value || "").trim().replaceAll("_", "-").toLowerCase().split("-")[0];
@@ -138,6 +180,26 @@ export function validatePlaceRecord(place) {
     if (!modelIds.has(place.remoteExperience.defaultModelId)) {
       errors.push("Default remote 3D model must reference an available model");
     }
+
+    models.forEach((model, modelIndex) => {
+      if (!model?.path) errors.push(`remoteExperience.models[${modelIndex}].path is required`);
+      if (model?.variants !== undefined) {
+        if (!Array.isArray(model.variants)) {
+          errors.push(`remoteExperience.models[${modelIndex}].variants must be an array`);
+        } else {
+          const variantIds = new Set(model.variants.map((variant) => variant?.id).filter(Boolean));
+          if (variantIds.size !== model.variants.length) {
+            errors.push(`remoteExperience.models[${modelIndex}].variant ids must be unique and present`);
+          }
+          model.variants.forEach((variant, variantIndex) => {
+            const prefix = `remoteExperience.models[${modelIndex}].variants[${variantIndex}]`;
+            if (!GEO_PERFORMANCE_PROFILES.includes(variant?.id)) errors.push(`${prefix}.id is invalid`);
+            if (!variant?.path) errors.push(`${prefix}.path is required`);
+            if (variant?.status !== "experimental") errors.push(`${prefix}.status must be experimental`);
+          });
+        }
+      }
+    });
 
     const points = place.pointsOfInterest;
     if (!Array.isArray(points) || points.length === 0) {

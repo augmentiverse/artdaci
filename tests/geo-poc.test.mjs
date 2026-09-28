@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { readFile, stat } from "node:fs/promises";
 import { resolve } from "node:path";
 import test from "node:test";
@@ -6,7 +7,9 @@ import test from "node:test";
 import {
   languageFromSearch,
   localize,
+  modelVariantCandidates,
   projectAssetUrl,
+  selectPerformanceProfile,
   validatePlaceRecord,
   withLanguage,
 } from "../geo/scripts/geo-core.mjs";
@@ -79,6 +82,56 @@ test("GEO V2 reuses existing Louvre, Mona Lisa and Leonardo models without dupli
   assert.ok(mainV2.size < framed.size, "main-v2 should remain the lighter comparison candidate");
 });
 
+test("GEO V3 declares non-destructive Louvre performance variants and preserves the original", async () => {
+  const louvre = place.remoteExperience.models.find((model) => model.id === "louvre-building");
+  assert.equal(place.schemaVersion, "3.0");
+  assert.equal(louvre.path, "assets/environments/gallery/models/museums/Louvre-full-joint_c.glb");
+  assert.deepEqual(louvre.variants.map((variant) => variant.id), ["desktop", "mobile", "quest"]);
+
+  const originalBytes = await readFile(resolve(repositoryRoot, louvre.path));
+  assert.equal(
+    createHash("sha256").update(originalBytes).digest("hex"),
+    "06276e8634b6e759513ba4ceed823931dd0547fe1e6de42b9868f3f80fb13b91",
+  );
+  for (const variant of louvre.variants) {
+    assert.equal(variant.status, "experimental");
+    const variantStats = await stat(resolve(repositoryRoot, variant.path));
+    assert.ok(variantStats.isFile(), `${variant.path} must exist`);
+    assert.ok(variantStats.size < originalBytes.length, `${variant.id} must be smaller than the original`);
+  }
+});
+
+test("GEO V3 selects profiles from capabilities and always keeps a safe fallback", () => {
+  assert.equal(selectPerformanceProfile({
+    deviceMemory: 16,
+    hardwareConcurrency: 12,
+    maxTextureSize: 16384,
+    viewportWidth: 1440,
+  }), "desktop");
+  assert.equal(selectPerformanceProfile({
+    coarsePointer: true,
+    deviceMemory: 4,
+    hardwareConcurrency: 4,
+    viewportWidth: 390,
+  }), "mobile");
+  assert.equal(selectPerformanceProfile({
+    immersiveVr: true,
+    coarsePointer: true,
+    maxTextureSize: 8192,
+  }), "quest");
+  assert.equal(selectPerformanceProfile({ forcedProfile: "quest" }), "quest");
+
+  const louvre = place.remoteExperience.models.find((model) => model.id === "louvre-building");
+  assert.deepEqual(
+    modelVariantCandidates(louvre, "mobile").map((candidate) => candidate.id),
+    ["mobile", "quest", "desktop", "original"],
+  );
+  assert.deepEqual(
+    modelVariantCandidates({ path: "fallback.glb", variants: [{ id: "mobile", path: "" }] }, "mobile"),
+    [{ id: "original", path: "fallback.glb" }],
+  );
+});
+
 test("Mona Lisa POI resolves canonical audio with FR EN AR local fallbacks", () => {
   const content = place.contents[0];
   const point = place.pointsOfInterest.find((candidate) => candidate.id === "ld01-mona-lisa");
@@ -130,5 +183,8 @@ test("Remote page exposes the V2 journey while V1 entry pages remain intact", as
   assert.match(remote, /vendor\/model-viewer\.min\.js/);
   assert.match(runtime, /selectPointOfInterest/);
   assert.match(runtime, /resolveCanonicalAudio/);
+  assert.match(runtime, /modelCacheSize\s*=\s*1/);
+  assert.match(runtime, /activeCandidateIndex \+ 1 < activeModelCandidates\.length/);
+  assert.doesNotMatch(runtime, /navigator\.userAgent/);
   assert.doesNotMatch(`${index}\n${placePage}\n${remote}\n${runtime}`, /maps\.googleapis\.com|geospatial\.googleapis/i);
 });

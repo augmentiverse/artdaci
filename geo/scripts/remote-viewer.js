@@ -2,7 +2,9 @@ import { resolveManifestMedia } from "../../scripts/artwork-media-manifest-core.
 import {
   languageFromSearch,
   localize,
+  modelVariantCandidates,
   projectAssetUrl,
+  selectPerformanceProfile,
   validatePlaceRecord,
   withLanguage,
 } from "./geo-core.mjs";
@@ -103,10 +105,13 @@ const audio = document.getElementById("artwork-audio");
 const audioDescription = document.getElementById("audio-description");
 let place;
 let activeModelId = "";
+let activeModelCandidates = [];
+let activeCandidateIndex = -1;
 let activeAudioFallback = "";
 let audioRequestId = 0;
 let modelLoadStartedAt = 0;
 let canonicalManifestPromise;
+let performanceProfile = "mobile";
 
 init().catch((error) => {
   console.error(error);
@@ -125,6 +130,7 @@ async function init() {
   const errors = validatePlaceRecord(place);
   if (errors.length) throw new Error(errors.join("; "));
 
+  await configurePerformanceProfile();
   renderIdentity();
   configureRoutes();
   configureViewer();
@@ -172,9 +178,47 @@ function configureViewer() {
     status.dataset.state = "ready";
   });
   viewer.addEventListener("error", () => {
+    if (activeCandidateIndex + 1 < activeModelCandidates.length) {
+      const failedCandidate = activeModelCandidates[activeCandidateIndex];
+      console.warn(`Model variant ${failedCandidate.id} unavailable; trying the next candidate.`);
+      activeCandidateIndex += 1;
+      loadActiveModelCandidate();
+      return;
+    }
     status.textContent = copy.failed;
     status.dataset.state = "error";
   });
+}
+
+async function configurePerformanceProfile() {
+  await customElements.whenDefined("model-viewer");
+  const ModelViewerElement = customElements.get("model-viewer");
+  if (ModelViewerElement) ModelViewerElement.modelCacheSize = 1;
+
+  const params = new URLSearchParams(location.search);
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext("webgl2") || canvas.getContext("webgl");
+  const maxTextureSize = context?.getParameter(context.MAX_TEXTURE_SIZE) || 0;
+  context?.getExtension("WEBGL_lose_context")?.loseContext();
+
+  let immersiveVr = false;
+  try {
+    immersiveVr = Boolean(await navigator.xr?.isSessionSupported?.("immersive-vr"));
+  } catch (error) {
+    console.info("WebXR capability could not be queried; continuing with browser signals.", error);
+  }
+
+  performanceProfile = selectPerformanceProfile({
+    forcedProfile: params.get("quality"),
+    immersiveVr,
+    coarsePointer: matchMedia("(pointer: coarse)").matches,
+    saveData: Boolean(navigator.connection?.saveData),
+    deviceMemory: navigator.deviceMemory,
+    hardwareConcurrency: navigator.hardwareConcurrency,
+    maxTextureSize,
+    viewportWidth: innerWidth,
+  });
+  viewer.dataset.performanceProfile = performanceProfile;
 }
 
 function bindControls() {
@@ -254,13 +298,26 @@ function selectModel(modelId) {
   }
 
   activeModelId = model.id;
+  activeModelCandidates = modelVariantCandidates(model, performanceProfile);
+  activeCandidateIndex = 0;
+  viewer.dataset.modelId = model.id;
+  viewer.alt = localize(model.label, language);
+  loadActiveModelCandidate();
+  resetCamera();
+}
+
+function loadActiveModelCandidate() {
+  const candidate = activeModelCandidates[activeCandidateIndex];
+  if (!candidate) {
+    status.textContent = copy.failed;
+    status.dataset.state = "error";
+    return;
+  }
   modelLoadStartedAt = performance.now();
   status.textContent = copy.loading;
   status.dataset.state = "loading";
-  viewer.dataset.modelId = model.id;
-  viewer.src = projectAssetUrl(model.path, import.meta.url);
-  viewer.alt = localize(model.label, language);
-  resetCamera();
+  viewer.dataset.variantId = candidate.id;
+  viewer.src = projectAssetUrl(candidate.path, import.meta.url);
 }
 
 function resetCamera() {
