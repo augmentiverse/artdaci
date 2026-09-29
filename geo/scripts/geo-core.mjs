@@ -1,5 +1,11 @@
 export const GEO_LANGUAGES = Object.freeze(["fr", "en", "ar"]);
-export const GEO_PERFORMANCE_PROFILES = Object.freeze(["desktop", "mobile", "quest"]);
+export const GEO_PERFORMANCE_PROFILES = Object.freeze([
+  "desktop",
+  "mobile",
+  "quest",
+  "quest-low",
+  "quest-webp",
+]);
 
 export function selectPerformanceProfile(signals = {}) {
   if (GEO_PERFORMANCE_PROFILES.includes(signals.forcedProfile)) return signals.forcedProfile;
@@ -27,18 +33,32 @@ export function modelVariantCandidates(model, profile) {
   if (!model?.path) return [];
   const variants = new Map((model.variants || []).map((variant) => [variant.id, variant]));
   const orders = {
-    desktop: ["desktop", "mobile", "quest"],
-    mobile: ["mobile", "quest", "desktop"],
-    quest: ["quest", "mobile", "desktop"],
+    desktop: ["desktop", "mobile", "quest-webp", "quest"],
+    mobile: ["mobile", "quest-webp", "quest"],
+    quest: ["quest", "quest-low", "quest-webp"],
+    "quest-low": ["quest-low", "quest-webp"],
+    "quest-webp": ["quest-webp"],
   };
-  const requestedOrder = orders[profile] || orders.mobile;
+  const configuredOrder = model.profileOrders?.[profile];
+  const requestedOrder = Array.isArray(configuredOrder) ? configuredOrder : (orders[profile] || orders.mobile);
   const candidates = requestedOrder
     .map((id) => variants.get(id))
-    .filter((variant) => typeof variant?.path === "string" && variant.path.trim())
-    .map((variant) => ({ id: variant.id, path: variant.path }));
-  candidates.push({ id: "original", path: model.path });
+    .filter(Boolean)
+    .map((variant) => {
+      const path = typeof variant.path === "string" ? variant.path.trim() : "";
+      const remotePath = typeof variant.remotePath === "string" ? variant.remotePath.trim() : "";
+      if (!path && !remotePath) return null;
+      return {
+        id: variant.id,
+        path,
+        remoteUrl: remotePath ? remoteAssetUrl(model.remoteBaseUrl, remotePath) : "",
+        source: remotePath ? "r2" : "project",
+      };
+    })
+    .filter(Boolean);
+  candidates.push({ id: "original", path: model.path, remoteUrl: "", source: "project" });
   return candidates.filter((candidate, index, all) => (
-    all.findIndex((other) => other.path === candidate.path) === index
+    all.findIndex((other) => (other.remoteUrl || other.path) === (candidate.remoteUrl || candidate.path)) === index
   ));
 }
 
@@ -75,6 +95,36 @@ export function projectAssetUrl(path, moduleUrl) {
     throw new TypeError("Project asset path contains an invalid segment");
   }
   return new URL(`../../${cleanPath}`, moduleUrl).href;
+}
+
+export function remoteAssetUrl(baseUrl, path) {
+  if (typeof baseUrl !== "string" || !baseUrl.trim()) throw new TypeError("Remote asset base URL is required");
+  if (typeof path !== "string" || !path.trim()) throw new TypeError("Remote asset path is required");
+  if (/^[a-z][a-z\d+.-]*:/i.test(path) || path.startsWith("//") || path.includes("\\")) {
+    throw new TypeError("Remote asset paths must be relative");
+  }
+  const cleanPath = path.replace(/^\/+/, "");
+  if (cleanPath.split("/").some((segment) => !segment || segment === "." || segment === "..")) {
+    throw new TypeError("Remote asset path contains an invalid segment");
+  }
+  const base = new URL(baseUrl);
+  if (base.protocol !== "https:" || !base.pathname.endsWith("/")) {
+    throw new TypeError("Remote asset base URL must be HTTPS and end with a slash");
+  }
+  const resolved = new URL(cleanPath, base);
+  if (resolved.origin !== base.origin || !resolved.pathname.startsWith(base.pathname)) {
+    throw new TypeError("Remote asset path escapes its configured base URL");
+  }
+  return resolved.href;
+}
+
+export function modelCandidateUrl(candidate, moduleUrl) {
+  if (candidate?.remoteUrl) {
+    const remote = new URL(candidate.remoteUrl);
+    if (remote.protocol !== "https:") throw new TypeError("Remote model candidates must use HTTPS");
+    return remote.href;
+  }
+  return projectAssetUrl(candidate?.path, moduleUrl);
 }
 
 export function validatePointOfInterest(point, context = {}) {
@@ -183,6 +233,13 @@ export function validatePlaceRecord(place) {
 
     models.forEach((model, modelIndex) => {
       if (!model?.path) errors.push(`remoteExperience.models[${modelIndex}].path is required`);
+      if (model?.remoteBaseUrl !== undefined) {
+        try {
+          remoteAssetUrl(model.remoteBaseUrl, "probe.glb");
+        } catch {
+          errors.push(`remoteExperience.models[${modelIndex}].remoteBaseUrl is invalid`);
+        }
+      }
       if (model?.variants !== undefined) {
         if (!Array.isArray(model.variants)) {
           errors.push(`remoteExperience.models[${modelIndex}].variants must be an array`);
@@ -194,9 +251,42 @@ export function validatePlaceRecord(place) {
           model.variants.forEach((variant, variantIndex) => {
             const prefix = `remoteExperience.models[${modelIndex}].variants[${variantIndex}]`;
             if (!GEO_PERFORMANCE_PROFILES.includes(variant?.id)) errors.push(`${prefix}.id is invalid`);
-            if (!variant?.path) errors.push(`${prefix}.path is required`);
-            if (variant?.status !== "experimental") errors.push(`${prefix}.status must be experimental`);
+            const hasPath = typeof variant?.path === "string" && Boolean(variant.path.trim());
+            const hasRemotePath = typeof variant?.remotePath === "string" && Boolean(variant.remotePath.trim());
+            if (hasPath === hasRemotePath) errors.push(`${prefix} must define exactly one of path or remotePath`);
+            if (hasRemotePath) {
+              try {
+                remoteAssetUrl(model.remoteBaseUrl, variant.remotePath);
+              } catch {
+                errors.push(`${prefix}.remotePath is invalid`);
+              }
+            }
+            if (!new Set(["experimental", "validated"]).has(variant?.status)) {
+              errors.push(`${prefix}.status is invalid`);
+            }
+            if (variant?.status === "validated") {
+              if (!/^[a-f\d]{64}$/i.test(variant.sha256 || "")) errors.push(`${prefix}.sha256 is required`);
+              if (!Number.isInteger(variant.bytes) || variant.bytes <= 0) errors.push(`${prefix}.bytes is required`);
+            }
           });
+          if (model.profileOrders !== undefined) {
+            if (!model.profileOrders || typeof model.profileOrders !== "object" || Array.isArray(model.profileOrders)) {
+              errors.push(`remoteExperience.models[${modelIndex}].profileOrders must be an object`);
+            } else {
+              for (const [profile, order] of Object.entries(model.profileOrders)) {
+                const prefix = `remoteExperience.models[${modelIndex}].profileOrders.${profile}`;
+                if (!GEO_PERFORMANCE_PROFILES.includes(profile)) errors.push(`${prefix} is not a supported profile`);
+                if (!Array.isArray(order) || order.length === 0) {
+                  errors.push(`${prefix} must be a non-empty array`);
+                  continue;
+                }
+                if (new Set(order).size !== order.length) errors.push(`${prefix} must not contain duplicates`);
+                for (const variantId of order) {
+                  if (!variantIds.has(variantId)) errors.push(`${prefix} references an unavailable variant`);
+                }
+              }
+            }
+          }
         }
       }
     });

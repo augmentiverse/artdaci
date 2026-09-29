@@ -2,6 +2,7 @@ import { resolveManifestMedia } from "../../scripts/artwork-media-manifest-core.
 import {
   languageFromSearch,
   localize,
+  modelCandidateUrl,
   modelVariantCandidates,
   projectAssetUrl,
   selectPerformanceProfile,
@@ -317,7 +318,8 @@ function loadActiveModelCandidate() {
   status.textContent = copy.loading;
   status.dataset.state = "loading";
   viewer.dataset.variantId = candidate.id;
-  viewer.src = projectAssetUrl(candidate.path, import.meta.url);
+  viewer.dataset.variantSource = candidate.source;
+  viewer.src = modelCandidateUrl(candidate, import.meta.url);
 }
 
 function resetCamera() {

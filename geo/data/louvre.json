@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "3.0",
+  "schemaVersion": "3.1",
   "id": "louvre-paris",
   "slug": "louvre",
   "status": "prototype",
@@ -55,6 +55,14 @@
           "ar": "متحف اللوفر ثلاثي الأبعاد"
         },
         "path": "assets/environments/gallery/models/museums/Louvre-full-joint_c.glb",
+        "remoteBaseUrl": "https://media.artdaci.com/geo/louvre/models/",
+        "profileOrders": {
+          "desktop": ["desktop", "mobile", "quest-webp"],
+          "mobile": ["mobile", "quest-webp"],
+          "quest": ["quest", "quest-low", "quest-webp"],
+          "quest-low": ["quest-low", "quest-webp"],
+          "quest-webp": ["quest-webp"]
+        },
         "variants": [
           {
             "id": "desktop",
@@ -72,10 +80,42 @@
           },
           {
             "id": "quest",
-            "status": "experimental",
-            "path": "assets/environments/gallery/models/museums/Louvre-full-joint-quest.glb",
+            "status": "validated",
+            "remotePath": "louvre-quest-1k.glb",
+            "bytes": 8588080,
+            "sha256": "FE3F680040D46BD96ECD509D86ED62581566433F4130B68A3D7A1B5BF8C27ECA",
             "geometryTargetRatio": 0.1,
-            "textureStrategy": "original-webp-2k-preserved"
+            "textureStrategy": "ktx2-1k-uastc-normal-and-corrected-basecolor",
+            "hardwareValidation": {
+              "device": "Meta Quest 3S",
+              "status": "user-validated",
+              "observedAt": "2026-09-29",
+              "observations": [
+                "good-rendering",
+                "no-observed-magenta-fringe",
+                "satisfactory-fluidity",
+                "preferred-quality-over-512"
+              ],
+              "benchmark": null
+            }
+          },
+          {
+            "id": "quest-low",
+            "status": "validated",
+            "remotePath": "louvre-quest-low.glb",
+            "bytes": 5368512,
+            "sha256": "FEBB083D55F1836883A7EF064479D9EE2FCF1E619E99454C6F1A090B19C50C07",
+            "geometryTargetRatio": 0.1,
+            "textureStrategy": "ktx2-512-low-memory"
+          },
+          {
+            "id": "quest-webp",
+            "status": "validated",
+            "remotePath": "louvre-quest-webp.glb",
+            "bytes": 7690072,
+            "sha256": "FE024A765591D4110DD77BCDB9C4EA80FD26D1536A892EE3D6CB0A3F4315BAE0",
+            "geometryTargetRatio": 0.1,
+            "textureStrategy": "original-webp-2k-compatibility"
           }
         ],
         "loading": "initial"

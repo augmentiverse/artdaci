@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <title>ARTDACI GEO — QA Louvre Performance</title>
+    <link rel="stylesheet" href="louvre-performance.css?v=2" />
+    <script type="module" src="../../vendor/model-viewer.min.js?v=3.5.0"></script>
+  </head>
+  <body>
+    <main class="qa-shell">
+      <header class="qa-header">
+        <div>
+          <p class="eyebrow">ARTDACI GEO · QA QUEST</p>
+          <h1 data-copy="title">Comparaison Louvre — Quest</h1>
+          <p class="intro" data-copy="intro">Page expérimentale locale, absente de la navigation publique.</p>
+        </div>
+        <nav class="language-switcher" aria-label="Langue">
+          <a href="?lang=fr" hreflang="fr">FR</a>
+          <a href="?lang=en" hreflang="en">EN</a>
+          <a href="?lang=ar" hreflang="ar">AR</a>
+        </nav>
+      </header>
+
+      <section class="qa-layout">
+        <div id="viewer-frame" class="viewer-frame">
+          <model-viewer
+            id="louvre-viewer"
+            camera-controls
+            touch-action="pan-y"
+            interaction-prompt="auto"
+            shadow-intensity="1"
+            exposure="1"
+            environment-image="neutral"
+            camera-orbit="35deg 70deg auto"
+            min-camera-orbit="auto 25deg 35%"
+            max-camera-orbit="auto 100deg 220%"
+            field-of-view="35deg"
+            min-field-of-view="18deg"
+            max-field-of-view="60deg"
+            ar
+            ar-modes="webxr"
+            alt="Modèle 3D du Louvre"
+          ></model-viewer>
+          <div class="active-variant">
+            <span data-copy="active">Variante active</span>
+            <strong id="active-name">—</strong>
+          </div>
+          <p id="load-status" class="load-status" role="status" aria-live="polite">—</p>
+        </div>
+
+        <aside class="control-panel">
+          <section class="panel-section">
+            <label for="variant-select" data-copy="variant">Variante à tester</label>
+            <select id="variant-select">
+              <optgroup label="Comparaison principale" data-copy-label="mainGroup">
+                <option value="quest-webp">Quest WebP 2K</option>
+                <option value="quest-ktx1k">Quest KTX2 1K ancien · local</option>
+                <option value="quest-ktx1k-base-padding-clean-uastc">Quest KTX2 1K corrigé · validé Quest 3S</option>
+                <option value="quest-ktx512">Quest KTX2 512 · basse mémoire</option>
+              </optgroup>
+            </select>
+            <div class="button-grid">
+              <button id="load-button" class="primary" type="button" data-copy="load">Charger / recharger</button>
+              <button id="fallback-button" type="button" data-copy="fallback">Fallback WebP</button>
+              <button id="recenter-button" type="button" data-copy="recenter">Recentrer</button>
+              <button id="fullscreen-button" type="button" data-copy="fullscreen">Plein écran</button>
+            </div>
+          </section>
+
+          <section class="panel-section xr-section">
+            <div class="section-heading">
+              <h2>WebXR</h2>
+              <span id="xr-indicator" class="indicator pending" data-copy="xrChecking">Vérification…</span>
+            </div>
+            <p id="xr-detail" class="muted" data-copy="xrInfo">Le test visuel 3D reste disponible sans session immersive.</p>
+            <button id="xr-button" type="button" disabled data-copy="xrStart">Lancer WebXR</button>
+          </section>
+
+          <section class="panel-section diagnostics" aria-labelledby="diagnostic-title">
+            <h2 id="diagnostic-title" data-copy="diagnostics">Diagnostic</h2>
+            <dl>
+              <div><dt data-copy="download">Téléchargement</dt><dd id="metric-file">—</dd></div>
+              <div><dt data-copy="texturePayload">Payload KTX2</dt><dd id="metric-textures">—</dd></div>
+              <div><dt data-copy="gpu">Mémoire textures GPU estimée</dt><dd id="metric-gpu">—</dd></div>
+              <div><dt data-copy="triangles">Triangles</dt><dd id="metric-triangles">—</dd></div>
+              <div><dt data-copy="strategy">Stratégie</dt><dd id="metric-strategy">—</dd></div>
+              <div><dt data-copy="loadTime">Temps de chargement observé</dt><dd id="metric-time">—</dd></div>
+              <div><dt data-copy="progress">Progression</dt><dd id="metric-progress">—</dd></div>
+            </dl>
+          </section>
+
+          <p class="basis-note">
+            <strong>Basis Universal</strong><br />
+            <span data-copy="basis">Transcodeur actuel fourni à l’exécution par gstatic ; l’hébergement local est prévu pour une version de production.</span>
+          </p>
+        </aside>
+      </section>
+    </main>
+    <script type="module" src="louvre-performance.js?v=2"></script>
+  </body>
+</html>

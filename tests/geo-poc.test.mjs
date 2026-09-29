@@ -7,8 +7,10 @@ import test from "node:test";
 import {
   languageFromSearch,
   localize,
+  modelCandidateUrl,
   modelVariantCandidates,
   projectAssetUrl,
+  remoteAssetUrl,
   selectPerformanceProfile,
   validatePlaceRecord,
   withLanguage,
@@ -82,26 +84,49 @@ test("GEO V2 reuses existing Louvre, Mona Lisa and Leonardo models without dupli
   assert.ok(mainV2.size < framed.size, "main-v2 should remain the lighter comparison candidate");
 });
 
-test("GEO V3 declares non-destructive Louvre performance variants and preserves the original", async () => {
+test("GEO Quest publishes only validated profiles while preserving the original fallback", async () => {
   const louvre = place.remoteExperience.models.find((model) => model.id === "louvre-building");
-  assert.equal(place.schemaVersion, "3.0");
+  assert.equal(place.schemaVersion, "3.1");
   assert.equal(louvre.path, "assets/environments/gallery/models/museums/Louvre-full-joint_c.glb");
-  assert.deepEqual(louvre.variants.map((variant) => variant.id), ["desktop", "mobile", "quest"]);
+  assert.equal(louvre.remoteBaseUrl, "https://media.artdaci.com/geo/louvre/models/");
+  assert.deepEqual(
+    louvre.variants.map((variant) => variant.id),
+    ["desktop", "mobile", "quest", "quest-low", "quest-webp"],
+  );
 
   const originalBytes = await readFile(resolve(repositoryRoot, louvre.path));
   assert.equal(
     createHash("sha256").update(originalBytes).digest("hex"),
     "06276e8634b6e759513ba4ceed823931dd0547fe1e6de42b9868f3f80fb13b91",
   );
-  for (const variant of louvre.variants) {
-    assert.equal(variant.status, "experimental");
-    const variantStats = await stat(resolve(repositoryRoot, variant.path));
-    assert.ok(variantStats.isFile(), `${variant.path} must exist`);
-    assert.ok(variantStats.size < originalBytes.length, `${variant.id} must be smaller than the original`);
-  }
+  const published = Object.fromEntries(
+    louvre.variants.filter((variant) => variant.status === "validated").map((variant) => [variant.id, variant]),
+  );
+  assert.deepEqual(Object.keys(published), ["quest", "quest-low", "quest-webp"]);
+  assert.deepEqual(
+    [published.quest.remotePath, published["quest-low"].remotePath, published["quest-webp"].remotePath],
+    ["louvre-quest-1k.glb", "louvre-quest-low.glb", "louvre-quest-webp.glb"],
+  );
+  assert.deepEqual(
+    [published.quest.bytes, published["quest-low"].bytes, published["quest-webp"].bytes],
+    [8588080, 5368512, 7690072],
+  );
+  assert.deepEqual(
+    [published.quest.sha256, published["quest-low"].sha256, published["quest-webp"].sha256],
+    [
+      "FE3F680040D46BD96ECD509D86ED62581566433F4130B68A3D7A1B5BF8C27ECA",
+      "FEBB083D55F1836883A7EF064479D9EE2FCF1E619E99454C6F1A090B19C50C07",
+      "FE024A765591D4110DD77BCDB9C4EA80FD26D1536A892EE3D6CB0A3F4315BAE0",
+    ],
+  );
+  assert.equal(published.quest.hardwareValidation.device, "Meta Quest 3S");
+  assert.equal(published.quest.hardwareValidation.status, "user-validated");
+  assert.equal(published.quest.hardwareValidation.benchmark, null);
+  assert.ok(published.quest.hardwareValidation.observations.includes("no-observed-magenta-fringe"));
+  assert.equal(louvre.variants.some((variant) => /mat001-(?:mr|basecolor-uastc|basecolor-mr)/.test(variant.path || variant.remotePath || "")), false);
 });
 
-test("GEO V3 selects profiles from capabilities and always keeps a safe fallback", () => {
+test("GEO Quest selection is data-driven and keeps low-memory, compatibility and original fallbacks", () => {
   assert.equal(selectPerformanceProfile({
     deviceMemory: 16,
     hardwareConcurrency: 12,
@@ -120,16 +145,48 @@ test("GEO V3 selects profiles from capabilities and always keeps a safe fallback
     maxTextureSize: 8192,
   }), "quest");
   assert.equal(selectPerformanceProfile({ forcedProfile: "quest" }), "quest");
+  assert.equal(selectPerformanceProfile({ forcedProfile: "quest-low" }), "quest-low");
+  assert.equal(selectPerformanceProfile({ forcedProfile: "quest-webp" }), "quest-webp");
+  assert.notEqual(selectPerformanceProfile({ viewportWidth: 390 }), "quest-low");
 
   const louvre = place.remoteExperience.models.find((model) => model.id === "louvre-building");
   assert.deepEqual(
     modelVariantCandidates(louvre, "mobile").map((candidate) => candidate.id),
-    ["mobile", "quest", "desktop", "original"],
+    ["mobile", "quest-webp", "original"],
   );
   assert.deepEqual(
-    modelVariantCandidates({ path: "fallback.glb", variants: [{ id: "mobile", path: "" }] }, "mobile"),
-    [{ id: "original", path: "fallback.glb" }],
+    modelVariantCandidates(louvre, "quest").map((candidate) => candidate.id),
+    ["quest", "quest-low", "quest-webp", "original"],
   );
+  assert.deepEqual(
+    modelVariantCandidates(louvre, "quest-low").map((candidate) => candidate.id),
+    ["quest-low", "quest-webp", "original"],
+  );
+  assert.deepEqual(
+    modelVariantCandidates(louvre, "quest-webp").map((candidate) => candidate.id),
+    ["quest-webp", "original"],
+  );
+  const questCandidates = modelVariantCandidates(louvre, "quest");
+  assert.equal(new Set(questCandidates.map((candidate) => candidate.remoteUrl || candidate.path)).size, questCandidates.length);
+  assert.equal(questCandidates[0].remoteUrl, "https://media.artdaci.com/geo/louvre/models/louvre-quest-1k.glb");
+  assert.equal(questCandidates[1].remoteUrl, "https://media.artdaci.com/geo/louvre/models/louvre-quest-low.glb");
+  assert.equal(questCandidates[2].remoteUrl, "https://media.artdaci.com/geo/louvre/models/louvre-quest-webp.glb");
+  assert.equal(questCandidates[3].source, "project");
+  assert.deepEqual(
+    modelVariantCandidates({ path: "fallback.glb", variants: [{ id: "mobile", path: "" }] }, "mobile"),
+    [{ id: "original", path: "fallback.glb", remoteUrl: "", source: "project" }],
+  );
+});
+
+test("GEO remote model URLs stay within their configured HTTPS base", () => {
+  const moduleUrl = new URL("../geo/scripts/remote-viewer.js", import.meta.url).href;
+  const remote = remoteAssetUrl("https://media.artdaci.com/geo/louvre/models/", "louvre-quest-1k.glb");
+  assert.equal(remote, "https://media.artdaci.com/geo/louvre/models/louvre-quest-1k.glb");
+  assert.equal(modelCandidateUrl({ remoteUrl: remote }, moduleUrl), remote);
+  assert.match(modelCandidateUrl({ path: "assets/model.glb" }, moduleUrl), /assets\/model\.glb$/);
+  assert.throws(() => remoteAssetUrl("http://media.artdaci.com/geo/", "model.glb"));
+  assert.throws(() => remoteAssetUrl("https://media.artdaci.com/geo/", "../model.glb"));
+  assert.throws(() => modelCandidateUrl({ remoteUrl: "http://example.com/model.glb" }, moduleUrl));
 });
 
 test("Mona Lisa POI resolves canonical audio with FR EN AR local fallbacks", () => {
@@ -185,6 +242,7 @@ test("Remote page exposes the V2 journey while V1 entry pages remain intact", as
   assert.match(runtime, /resolveCanonicalAudio/);
   assert.match(runtime, /modelCacheSize\s*=\s*1/);
   assert.match(runtime, /activeCandidateIndex \+ 1 < activeModelCandidates\.length/);
+  assert.match(runtime, /modelCandidateUrl/);
   assert.doesNotMatch(runtime, /navigator\.userAgent/);
   assert.doesNotMatch(`${index}\n${placePage}\n${remote}\n${runtime}`, /maps\.googleapis\.com|geospatial\.googleapis/i);
 });
