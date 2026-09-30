@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#171310" />
+  <title>ARTDACI GEO — Salle des États</title>
+  <link rel="stylesheet" href="styles/geo.css?v=2" />
+  <link rel="stylesheet" href="styles/room.css?v=2" />
+  <script type="importmap">{"imports":{"three":"../vendor/three.module.js"}}</script>
+</head>
+<body class="room-page">
+  <header class="room-header">
+    <a id="back-link" class="geo-brand" href="remote.html?lang=fr">ARTDACI GEO <span data-copy="back">← Retour au parcours</span></a>
+    <nav class="language-nav" aria-label="Languages"><a href="room.html?lang=fr" data-lang="fr">FR</a><a href="room.html?lang=en" data-lang="en">EN</a><a href="room.html?lang=ar" data-lang="ar">AR</a></nav>
+  </header>
+  <main class="room-main">
+    <div class="room-heading"><div><p class="eyebrow">LOUVRE · ARTDACI GEO</p><h1 data-copy="title">Salle des États</h1></div><span class="room-badge" data-copy="badge">Parquet plan · V5</span></div>
+    <section id="room-stage" class="room-stage" aria-label="Salle des États 3D">
+      <canvas id="room-canvas" tabindex="0" aria-label="Vue 3D interactive"></canvas>
+      <div id="room-loading" class="room-loading"><p id="room-status" role="status" data-copy="loading">Chargement de la salle…</p><button id="retry-button" class="geo-button" hidden data-copy="retry">Réessayer</button></div>
+      <div class="room-toolbar">
+        <button id="entry-button" class="viewer-tool" data-copy="entry" disabled>Vue générale</button>
+        <button id="mona-button" class="viewer-tool primary" data-copy="mona" disabled>Voir La Joconde</button>
+        <button id="xr-button" class="viewer-tool" data-copy="vrUnavailable" disabled>VR indisponible</button>
+        <button id="fullscreen-button" class="viewer-tool" data-copy="fullscreen">Plein écran</button>
+      </div>
+      <div class="room-pad" role="group" aria-label="Navigation">
+        <button data-move="forward" aria-label="Avancer">↑</button>
+        <button data-move="left" aria-label="Gauche">←</button>
+        <button data-move="backward" aria-label="Reculer">↓</button>
+        <button data-move="right" aria-label="Droite">→</button>
+      </div>
+      <div class="room-turn" role="group" aria-label="360°">
+        <button data-turn="turnLeft">↶</button>
+        <button data-turn="turnAround" data-copy="turnAround">Voir derrière</button>
+        <button data-turn="turnRight">↷</button>
+      </div>
+      <p class="room-hint" data-copy="controls">Glisser pour regarder · flèches / ZQSD / WASD pour marcher</p>
+    </section>
+    <p class="room-xr-hint" data-copy="xrControls"></p>
+    <footer class="room-footer"><p data-copy="disclaimer">Interprétation générée de la salle. Placement de La Joconde ajusté visuellement ; dimensions non relevées sur place.</p><a id="mona-link" href="remote.html?lang=fr&poi=ld01-mona-lisa" data-copy="audio">La Joconde · récit et audio</a></footer>
+  </main>
+  <script type="module" src="scripts/room-viewer.js?v=5-r2"></script>
+</body>
+</html>

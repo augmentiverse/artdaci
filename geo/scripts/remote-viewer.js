@@ -17,6 +17,7 @@ const COPY = {
     title: "Explorez le Louvre à travers trois récits",
     intro: "Orientez la vue, choisissez un point d’intérêt et poursuivez dans les expériences WebXR existantes.",
     overview: "Vue Louvre",
+    enterRoom: "Entrer dans la Salle des États",
     recenter: "Recentrer",
     loading: "Chargement du modèle 3D…",
     loadingProgress: "Chargement du modèle 3D · {percent} %",
@@ -45,6 +46,7 @@ const COPY = {
     title: "Explore the Louvre through three stories",
     intro: "Orbit the view, choose a point of interest and continue into the existing WebXR experiences.",
     overview: "Louvre view",
+    enterRoom: "Enter the Salle des États",
     recenter: "Recenter",
     loading: "Loading 3D model…",
     loadingProgress: "Loading 3D model · {percent}%",
@@ -73,6 +75,7 @@ const COPY = {
     title: "استكشف اللوفر من خلال ثلاث حكايات",
     intro: "حرّك المشهد واختر نقطة اهتمام، ثم انتقل إلى تجارب WebXR الحالية.",
     overview: "منظر اللوفر",
+    enterRoom: "الدخول إلى قاعة الدول",
     recenter: "إعادة توسيط العرض",
     loading: "جارٍ تحميل النموذج ثلاثي الأبعاد…",
     loadingProgress: "جارٍ تحميل النموذج ثلاثي الأبعاد · {percent}٪",
@@ -137,7 +140,8 @@ async function init() {
   configureViewer();
   renderPointsOfInterest();
   bindControls();
-  selectPointOfInterest(place.remoteExperience.defaultPointOfInterestId);
+  const requestedPoi = new URLSearchParams(location.search).get("poi");
+  selectPointOfInterest(place.pointsOfInterest.some(point => point.id === requestedPoi) ? requestedPoi : place.remoteExperience.defaultPointOfInterestId);
 }
 
 function applyCopy() {
@@ -164,6 +168,7 @@ function configureRoutes() {
   const routes = place.remoteExperience.routes;
   document.getElementById("artwork-vr-link").href = withLanguage(routes.artworkVr, language);
   document.getElementById("place-vr-link").href = withLanguage(routes.placeVr, language);
+  document.getElementById("room-link").href = withLanguage(routes.salleDesEtats, language);
 }
 
 function configureViewer() {

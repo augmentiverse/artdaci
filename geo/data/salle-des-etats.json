@@ -1,0 +1,48 @@
+{
+  "id": "louvre-salle-des-etats",
+  "roomId": "louvre-salle-des-etats",
+  "version": "v5",
+  "status": "validated",
+  "model": {
+    "remote": "https://media.artdaci.com/geo/louvre/rooms/salle-des-etats-v5.glb",
+    "localFallback": "assets/salle-des-etats-artdaci-v5-flat.glb",
+    "bytes": 1687700,
+    "sha256": "59359407aa1ab092c30932bed3e79fcf60f993fc534c8197835943c79e00efac"
+  },
+  "validation": {
+    "hardwareValidated": "Meta Quest 3S",
+    "scope": "visual quality, ceiling, horizontal parquet perception and VR navigation",
+    "architecture": "visual-reconstruction-not-certified-survey"
+  },
+  "name": {"fr": "Salle des États", "en": "Salle des États", "ar": "قاعة الدول"},
+  "provenance": {
+    "generator": "ARTDACI procedural architecture, visually matched to user references",
+    "sourceSha256": "00CB2A406BB62C4AF6FB3334486DC6EC2A268A3E040D7B6A66978A9AD5E8ADDA",
+    "artworkImageSha256": "C067983D0BE5A0D202963C22586D6DD7A0D4C0BD67DB2C2F1A1DC8D1C87CB8E1",
+    "placementStatus": "user-reference-image-estimate-not-surveyed",
+    "reference": "https://www.louvre.fr/decouvrir/le-palais/de-la-joconde-aux-noces-de-cana",
+    "note": "Wider reference-inspired interpretation, not a museum survey. New chevron parquet, blue wall fabric, light stone portal and Mona Lisa display partition. Only ld01 is retained, as requested; no lateral paintings, statues, central cases or barriers. Local dimensions and navigation bounds are visual design estimates, not measured real-world coordinates.",
+    "referenceImages": ["sde-mona.png", "sde-1.png"],
+    "previousModel": "assets/salle-des-etats-artdaci-v4-reference.glb",
+    "architectureStatus": "reconstructed-not-surveyed",
+    "artworkTextureBytesUnchanged": true,
+    "newMaterialTextures": ["assets/oak-grain-v4.png", "assets/blue-fabric-v4.png"],
+    "dimensions": {"width": 12.1, "length": 28.8, "height": 7.325, "status": "visual-design-estimate-not-surveyed"},
+    "floorMode": "single-plane-no-relief",
+    "floorTexture": "assets/salle-des-etats-artdaci-v5-flat.parquet.png",
+    "ceilingReference": "codex-clipboard-26ae1b87-1993-42a6-8456-238d329443fb.png"
+  },
+  "navigation": {
+    "coordinateSpace": "generated-room-local-y-up",
+    "floorHeight": 0.1,
+    "eyeHeight": 1.65,
+    "bounds": {"minX": -5.6, "maxX": 5.6, "minZ": -9.0, "maxZ": 17.3},
+    "entry": {"x": 0, "z": 13.0, "yaw": 0},
+    "artworkView": {"x": 0, "z": -7.3, "yaw": 0},
+    "speed": 1.5,
+    "xrSpeed": 1.1,
+    "snapDegrees": 45
+  },
+  "artwork": {"artworkId": "ld01", "nodeName": "ARTDACI_ld01_Mona_Lisa", "position": [0, 2.1, -9.535]},
+  "publication": {"r2": true, "hardwareValidated": true}
+}

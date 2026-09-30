@@ -144,6 +144,7 @@
       }
     ],
     "routes": {
+      "salleDesEtats": "room.html",
       "artworkVr": "../vr.html?painting=mona-lisa&model=2",
       "placeVr": "../gallery-vr.html?room=louvre",
       "leonardoProfile": "../print-leonardo-tribute.html"
