@@ -12,7 +12,7 @@ export function createRoomXrPanel(THREE,language) {
   const ctx=canvas.getContext('2d');
   const texture=new THREE.CanvasTexture(canvas);texture.encoding=THREE.sRGBEncoding;
   const geometry=new THREE.PlaneGeometry(1.28,1);
-  const material=new THREE.MeshBasicMaterial({map:texture,transparent:true,side:THREE.DoubleSide,depthTest:false});
+  const material=new THREE.MeshBasicMaterial({map:texture,transparent:true,side:THREE.DoubleSide,depthTest:false,depthWrite:false});
   const mesh=new THREE.Mesh(geometry,material);mesh.visible=false;mesh.renderOrder=100;
   let actions=[],hoveredAction=null,lastDraw=null;
   const rightToLeft=language==='ar';
@@ -51,12 +51,20 @@ export function createRoomXrPanel(THREE,language) {
   function draw(copy,poi,{observing=false,audioLabel='',audioActionLabel=copy.play}) {
     lastDraw={copy,poi,options:{observing,audioLabel,audioActionLabel}};
     actions=[];ctx.clearRect(0,0,1024,800);
-    ctx.fillStyle='#101b24ef';ctx.fillRect(0,0,1024,800);
-    ctx.strokeStyle='#dfbd83';ctx.lineWidth=8;ctx.strokeRect(6,6,1012,788);
+    // Only the backdrop is translucent: labels, targets and hover remain opaque.
+    ctx.fillStyle='#101b24b3';ctx.fillRect(0,0,1024,800);
+    ctx.strokeStyle='#dfbd83';ctx.lineWidth=4;ctx.strokeRect(6,6,1012,788);
     text(copy.artworkLabel,48,76,25,'#eac78e');
     text(poi.title,48,143,51);
     text(poi.artist,48,192,31,'#eac78e');
-    if(observing){
+    if(poi.type==='character'){
+      lines(poi.description,48,250,920,4);
+      text(audioLabel,48,460,26,'#e9ddc8');
+      button('guide-mona',copy.mona,48,510,928,82);
+      button('guide-return',copy.returnRoom,48,616,448,72);
+      button('guide-close',copy.close,520,616,456,72);
+      if(poi.modelFailed)button('guide-retry',copy.retry,48,710,928,64);
+    } else if(observing){
       text(copy.observe,48,288,38);
       text(audioLabel,48,355,26,'#e9ddc8');
       text(copy.vrPoiHint,48,410,24,'#e9ddc8');
@@ -76,7 +84,9 @@ export function createRoomXrPanel(THREE,language) {
     const position=new THREE.Vector3().setFromMatrixPosition(cameraMatrix);
     const rotation=new THREE.Quaternion().setFromRotationMatrix(cameraMatrix);
     position.add(new THREE.Vector3(0,0,-1.55).applyQuaternion(rotation));
-    position.add(new THREE.Vector3(.36,-.06,0).applyQuaternion(rotation));
+    // Leave the central sightline clear; keep the existing UV hit regions intact.
+    position.add(new THREE.Vector3(rightToLeft?-.9:.9,-.12,0).applyQuaternion(rotation));
+    mesh.scale.setScalar(.82);
     mesh.position.copy(position);mesh.quaternion.copy(rotation);
     mesh.updateMatrixWorld(true);
   }

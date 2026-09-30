@@ -1,0 +1,35 @@
+{
+  "id": "leonardo-guide",
+  "type": "character",
+  "artistId": "leonardo-da-vinci",
+  "roomId": "louvre-salle-des-etats",
+  "version": "v6.8",
+  "status": "awaiting-user-quest-validation",
+  "model": {
+    "path": "assets/artists/leonardo-da-vinci/reimagined/models/davinci-standing-c.glb",
+    "loading": "on-selection",
+    "sha256": "528034c1a7a2cd1d6a3b86ca4cbe250fa9eca95ab793d866630cb59240b8b18f",
+    "bytes": 3107640
+  },
+  "placement": {
+    "coordinateSpace": "generated-room-local-y-up",
+    "status": "proposed-not-hardware-validated-not-surveyed",
+    "origin": "feet-centered",
+    "position": {"x": -3.3, "y": 0.1, "z": -2.8},
+    "rotationY": 0,
+    "scale": 0.94
+  },
+  "observationView": {"x": -3.3, "z": 0.2, "yaw": 0},
+  "interaction": {"shape": "box", "width": 1.1, "height": 2.0, "depth": 0.85},
+  "content": {
+    "title": {"fr": "Léonard de Vinci", "en": "Leonardo da Vinci", "ar": "ليوناردو دا فينشي"},
+    "role": {"fr": "Votre guide virtuel", "en": "Your virtual guide", "ar": "دليلك الافتراضي"},
+    "description": {
+      "fr": "Peintre, ingénieur et observateur de la nature, Léonard de Vinci incarne la curiosité de la Renaissance. Cette représentation virtuelle vous accompagne dans la salle et vous invite à découvrir La Joconde.",
+      "en": "A painter, engineer and observer of nature, Leonardo da Vinci embodies the curiosity of the Renaissance. This virtual representation accompanies you through the room and invites you to discover the Mona Lisa.",
+      "ar": "كان ليوناردو دا فينشي رسامًا ومهندسًا ومراقبًا للطبيعة، وجسّد فضول عصر النهضة. يرافقك هذا التمثيل الافتراضي في القاعة ويدعوك إلى اكتشاف الموناليزا."
+    },
+    "audio": {"status": "not-available", "fr": null, "en": null, "ar": null}
+  },
+  "action": {"id": "see-mona-lisa", "targetPoiId": "ld01-mona-lisa", "observationView": "artworkView"}
+}
