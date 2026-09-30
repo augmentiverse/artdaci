@@ -44,5 +44,20 @@
     "snapDegrees": 45
   },
   "artwork": {"artworkId": "ld01", "nodeName": "ARTDACI_ld01_Mona_Lisa", "position": [0, 2.1, -9.535]},
+  "pointsOfInterest": [
+    {
+      "id": "ld01-mona-lisa",
+      "type": "artwork",
+      "artworkId": "ld01",
+      "contentRef": "ld01-mona-lisa",
+      "anchor": {
+        "coordinateSpace": "generated-room-local-y-up",
+        "targetNode": "ARTDACI_ld01_Mona_Lisa",
+        "offset": [0, -0.71, 0.28],
+        "calibrationStatus": "visual-design-estimate-not-surveyed"
+      },
+      "observationView": "artworkView"
+    }
+  ],
   "publication": {"r2": true, "hardwareValidated": true}
 }
