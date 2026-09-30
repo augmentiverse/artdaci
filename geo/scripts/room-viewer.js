@@ -6,6 +6,7 @@ import { clampPosition, movePosition, pivotRig, snapTurn, readStick, deadZone, v
 import {validateRoomPoi,resolveRoomPoi,roomPoiAudioCandidates,roomHotspotPosition,interpolateRoomView} from './room-poi.mjs?v=6-4';
 import {createRoomXrPanel,controllerRayScale} from './room-xr-panel.mjs?v=6-8-2';
 import {GUIDE_COPY,validateRoomGuide,resolveRoomGuide,createRoomGuide} from './room-guide.mjs?v=6-8-3';
+import {JOURNEY_COPY,createJourney,createJourneyPortal,returnScene} from './journey.mjs?v=6-9';
 
 const COPY = {
   fr: {title:'Salle des États',back:'← Retour au parcours',badge:'Reconstitution Marble',loading:'Chargement de la salle…',retry:'Réessayer',entry:'Vue générale',mona:'Voir La Joconde',vr:'Entrer en VR',exitVr:'Quitter la VR',vrUnavailable:'VR indisponible',fullscreen:'Plein écran',controls:'Glisser pour regarder · flèches / ZQSD / WASD pour marcher',disclaimer:'Interprétation générée de la salle. Placement de La Joconde ajusté visuellement ; dimensions non relevées sur place.',audio:'La Joconde · récit et audio',failed:'Impossible de charger cette salle. Vous pouvez réessayer ou revenir au parcours GEO.',ready:'Salle prête',forward:'Avancer',backward:'Reculer',left:'Se déplacer à gauche',right:'Se déplacer à droite',xrError:'La session VR n’a pas pu démarrer.',contextLost:'Le contexte 3D a été interrompu. Réessayez pour recharger la page.'},
@@ -26,13 +27,16 @@ Object.assign(COPY.fr,{discover:'Découvrir l’œuvre',artworkLabel:'Œuvre · 
 Object.assign(COPY.en,{discover:'Discover the artwork',artworkLabel:'Artwork · ld01',close:'Close',audioGroup:'Audio',audioPreparing:'Preparing audio…',audioReady:'Audio story available',audioFallback:'Local audio available',audioFailed:'Audio unavailable',play:'Listen',pause:'Pause',resume:'Resume',stop:'Stop',approach:'Approach the artwork',observe:'Observe the artwork',explore:'Explore the artwork',returnRoom:'Return to the room',vrPoiHint:'Aim at the gold point or panel buttons and press the trigger.'});
 Object.assign(COPY.ar,{discover:'اكتشف العمل الفني',artworkLabel:'عمل فني · ld01',close:'إغلاق',audioGroup:'الصوت',audioPreparing:'جارٍ تجهيز الصوت…',audioReady:'الرواية الصوتية متاحة',audioFallback:'الصوت المحلي متاح',audioFailed:'الصوت غير متاح',play:'استمع',pause:'إيقاف مؤقت',resume:'متابعة',stop:'إيقاف',approach:'اقترب من اللوحة',observe:'تأمل اللوحة',explore:'استكشف اللوحة',returnRoom:'العودة إلى القاعة',vrPoiHint:'وجّه المؤشر إلى النقطة الذهبية أو أزرار اللوحة واضغط الزناد.'});
 const copy=COPY[lang];
+const journey=createJourney({destination:returnScene(location.search),language:lang,getSession:()=>renderer?.xr.getSession(),release:releaseRoom});
+const returnLink=document.createElement('a');returnLink.id='journey-return';returnLink.textContent=JOURNEY_COPY[lang].back;
+journey.bind(returnLink);document.querySelector('.room-heading').after(returnLink);
 const guideCopy=GUIDE_COPY[lang];
 document.querySelectorAll('[data-guide]').forEach(el=>{el.textContent=guideCopy[el.dataset.guide];});
 document.documentElement.lang=lang;
 document.documentElement.dir=lang==='ar'?'rtl':'ltr';
 document.title=`ARTDACI GEO — ${copy.title}`;
 document.querySelectorAll('[data-copy]').forEach(el=>{el.textContent=copy[el.dataset.copy];});
-document.querySelectorAll('[data-lang]').forEach(el=>{el.href=withLanguage('room.html',el.dataset.lang);el.setAttribute('aria-current',el.dataset.lang===lang?'page':'false');});
+document.querySelectorAll('[data-lang]').forEach(el=>{el.href=withLanguage('room.html?from='+returnScene(location.search),el.dataset.lang);el.setAttribute('aria-current',el.dataset.lang===lang?'page':'false');});
 document.querySelectorAll('[data-move]').forEach(el=>el.setAttribute('aria-label',copy[el.dataset.move]));
 document.querySelectorAll('[data-turn]').forEach(el=>{el.setAttribute('aria-label',copy[el.dataset.turn]);el.title=copy[el.dataset.turn];});
 document.getElementById('poi-close').setAttribute('aria-label',copy.close);
@@ -224,7 +228,8 @@ async function explorePoi() {
 }
 
 function runPoiAction(action) {
-  if(action==='guide-mona')showMonaFromGuide();
+  if(action==='journey')journey.go();
+  else if(action==='guide-mona')showMonaFromGuide();
   else if(action==='guide-return' || action==='guide-close')closeGuide();
   else if(action==='guide-retry')requestGuideModel();
   else if(action==='approach')approachPoi();
@@ -359,6 +364,7 @@ async function loadRoom() {
     createHotspot();
     xrButton.disabled=!xrSupported;
     setView(config.navigation.entry);
+    journey.ready(stage);
   } catch(error) {showError(copy.failed,error);} finally {loading=false;}
 }
 
@@ -387,6 +393,7 @@ async function init() {
   scene=new THREE.Scene();scene.background=new THREE.Color('#24282e');
   camera=new THREE.PerspectiveCamera(65,1,.05,40);
   rig=new THREE.Group();rig.add(camera);scene.add(rig);
+  scene.userData.journey=createJourneyPortal(THREE,{scene,label:JOURNEY_COPY[lang].back,language:lang,position:new THREE.Vector3(-2,1.45,config.navigation.entry.z-2.5),journey});
   scene.add(xrPanel.mesh);
   decoder=new DRACOLoader().setDecoderPath(new URL('../../vendor/draco/',import.meta.url).href).setWorkerLimit(2);
   observer=new ResizeObserver(()=>{
@@ -489,7 +496,8 @@ function xrInteractiveHit(controller) {
   const artworkHit=hitArtwork(xrRay);
   if(artworkHit)return {kind:'artwork',distance:artworkHit.distance,point:artworkHit.point};
   const characterHit=guide?.hit(xrRay);
-  return characterHit?{kind:'character',distance:characterHit.distance,point:characterHit.point}:null;
+  if(characterHit)return {kind:'character',distance:characterHit.distance,point:characterHit.point};
+  return scene.userData.journey?.hit(xrRay) || null;
 }
 
 async function configureXr() {
@@ -581,6 +589,7 @@ async function configureXr() {
       teleportPoint??=controller.userData.getTarget();
     }
     xrPanel.setHover(panelHover);
+    scene.userData.journey?.setHover(panelHover==='journey');
     guide?.setHover(guideTargeted);
     if(!interactiveTargeted && teleportPoint){marker.position.copy(teleportPoint);marker.position.y+=.015;marker.visible=true;}
     if(hotspotHover!==artworkTargeted){hotspotHover=artworkTargeted;updateHotspot();}
@@ -630,6 +639,7 @@ function navigateXr(dt,frame) {
 }
 
 function render(time,frame) {
+  if(scene?.userData.journey)scene.userData.journey.update(renderer.xr.isPresenting?renderer.xr.getCamera(camera).matrixWorld:camera.matrixWorld,renderer.xr.isPresenting);
   const dt=Math.min(Math.max((time-lastTime)/1000,0),.05);lastTime=time;
   if(ready && !document.hidden && !renderer.xr.isPresenting){
     const touch=new Set(held.values());
@@ -663,11 +673,14 @@ function render(time,frame) {
   }
 }
 
-window.addEventListener('pagehide',()=>{
+function releaseRoom(){
+  if(disposed)return;
   stopAudio(true);disposed=true;ready=false;keys.clear();held.clear();observer?.disconnect();
   renderer?.setAnimationLoop(null);renderer?.xr.getSession()?.end().catch(()=>{});
   guide?.dispose();
+  scene?.userData.journey?.dispose();
   disposeModel(scene);decoder?.dispose();renderer?.dispose();
-});
+}
+window.addEventListener('pagehide',releaseRoom);
 window.addEventListener('pageshow',e=>{if(e.persisted)location.reload();});
 init().catch(error=>showError(copy.failed,error));

@@ -7,6 +7,7 @@
     <meta name="theme-color" content="#171310" />
     <title>ARTDACI GEO — Exploration distante</title>
     <link rel="stylesheet" href="styles/geo.css?v=2" />
+    <link rel="stylesheet" href="styles/journey.css?v=6-9" />
     <script type="module" src="../vendor/model-viewer.min.js?v=3.5.0"></script>
   </head>
   <body data-geo-page="remote">
@@ -26,6 +27,7 @@
             <button id="overview-button" class="viewer-tool primary" type="button" data-copy="overview">Vue Louvre</button>
             <button id="reset-view-button" class="viewer-tool" type="button" data-copy="recenter">Recentrer</button>
             <a id="room-link" class="viewer-tool" href="room.html?lang=fr" data-copy="enterRoom">Entrer dans la Salle des États</a>
+            <a id="exterior-xr-link" class="viewer-tool" href="louvre-xr.html?lang=fr">Vue extérieure en VR</a>
             <span id="viewer-model-label" class="viewer-model-label"></span>
           </div>
           <model-viewer
@@ -47,6 +49,7 @@
             alt="Le Louvre en 3D"
           ></model-viewer>
           <p id="viewer-status" class="viewer-status" role="status" data-copy="loading">Chargement du modèle 3D…</p>
+          <p class="journey-note" id="journey-note"></p>
         </div>
 
         <div class="remote-guide">
@@ -117,6 +120,6 @@
       </section>
       <footer class="geo-footer">ARTDACI GEO · POC 03 · Louvre / ld01</footer>
     </main>
-    <script type="module" src="scripts/remote-viewer.js?v=5"></script>
+    <script type="module" src="scripts/remote-viewer.js?v=6-9"></script>
   </body>
 </html>

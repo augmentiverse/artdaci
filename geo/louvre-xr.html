@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ARTDACI GEO — Louvre / WebXR</title>
+  <link rel="stylesheet" href="styles/geo.css?v=2"><link rel="stylesheet" href="styles/room.css?v=6-8-2"><link rel="stylesheet" href="styles/journey.css?v=6-9">
+  <script type="importmap">{"imports":{"three":"../vendor/three.module.js"}}</script>
+</head>
+<body class="room-page">
+  <header class="room-header"><a class="geo-brand" id="remote-back" href="remote.html?lang=fr">ARTDACI GEO · Louvre</a><nav class="language-nav" aria-label="Languages"><a href="louvre-xr.html?lang=fr" lang="fr">FR</a><a href="louvre-xr.html?lang=en" lang="en">EN</a><a href="louvre-xr.html?lang=ar" lang="ar">AR</a></nav></header>
+  <main class="room-main">
+    <h1>ARTDACI GEO · Louvre</h1><p class="journey-note" id="journey-note"></p>
+    <div class="journey-links"><a class="geo-button" id="museum-enter" href="room.html?lang=fr&from=louvre-xr">Entrer dans le musée</a><button class="geo-button" id="exterior-vr" disabled>VR</button><button class="geo-button" id="exterior-reset">Vue générale</button><button class="geo-button" id="exterior-retry" hidden>Réessayer</button></div>
+    <section class="room-stage exterior-stage" id="exterior-stage"><canvas id="room-canvas" aria-label="Louvre 3D" tabindex="0"></canvas></section>
+    <p id="exterior-status" role="status"></p>
+  </main>
+  <script type="module" src="scripts/louvre-xr.js?v=6-9-2"></script>
+</body></html>

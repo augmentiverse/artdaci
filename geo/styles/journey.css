@@ -1,0 +1,15 @@
+.journey-cover { position:fixed; inset:0; z-index:99999; display:grid; place-items:center; background:#050505; color:#fff6e8; font:1rem/1.5 system-ui; opacity:0; pointer-events:auto; }
+.journey-cover[hidden] { display:none; }
+.journey-cover.is-active { animation:journey-fade .22s ease-out forwards; }
+@keyframes journey-fade { from {opacity:0} to {opacity:1} }
+.journey-notice,.journey-note { color:#ddc9a6; font:.85rem/1.6 system-ui; }
+.journey-notice:empty { display:none; }
+.journey-note { margin:.7rem 0; }
+#journey-return { display:inline-flex; align-items:center; min-height:44px; padding:.5rem .8rem; box-sizing:border-box; border:1px solid #d0ae74; border-radius:8px; background:#211c17e8; color:#fff6e8; text-decoration:none; }
+.journey-links { display:flex; flex-wrap:wrap; gap:.5rem; margin-block:.7rem; }
+.journey-links .geo-button { background:#29251e; color:#fff6e8; border:1px solid #d0ae74; min-height:44px; }
+.journey-links .geo-button:disabled { opacity:.5; }
+.journey-links [hidden] { display:none; }
+.room-page:has(.exterior-stage) h1 { font-size:clamp(1.6rem,3vw,2.6rem); margin-block:.8rem; }
+.exterior-stage { height:65vh; min-height:360px; }
+@media(prefers-reduced-motion:reduce) { .journey-cover.is-active { animation-duration:.01s; } }

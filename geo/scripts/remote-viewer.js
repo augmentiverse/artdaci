@@ -1,4 +1,5 @@
 import { resolveManifestMedia } from "../../scripts/artwork-media-manifest-core.mjs";
+import {JOURNEY_COPY,createJourney,readJourneyState,writeJourneyState,validExteriorView,journeyStorage} from './journey.mjs?v=6-9';
 import {
   languageFromSearch,
   localize,
@@ -116,6 +117,15 @@ let audioRequestId = 0;
 let modelLoadStartedAt = 0;
 let canonicalManifestPromise;
 let performanceProfile = "mobile";
+let leaving=false,restoredView=false;
+const storage=journeyStorage();
+const savedView=validExteriorView(readJourneyState(storage,'remote-view'));
+const journey=createJourney({destination:'room',source:'remote',language,release:releaseExterior,saveState:()=>{
+  const orbit=viewer.getCameraOrbit();writeJourneyState(storage,'remote-view',activeModelId==='louvre-building'?{theta:orbit.theta,phi:orbit.phi,radius:orbit.radius,fov:viewer.getFieldOfView()}:null);
+}});
+window.addEventListener('pagehide',releaseExterior);
+window.addEventListener('pageshow',event=>{if(event.persisted)location.reload();});
+function releaseExterior(){if(leaving)return;leaving=true;audioRequestId++;audio.pause();audio.removeAttribute('src');audio.load();const Viewer=customElements.get('model-viewer');if(Viewer)Viewer.modelCacheSize=0;viewer.removeAttribute('src');viewer.remove();}
 
 init().catch((error) => {
   console.error(error);
@@ -169,6 +179,10 @@ function configureRoutes() {
   document.getElementById("artwork-vr-link").href = withLanguage(routes.artworkVr, language);
   document.getElementById("place-vr-link").href = withLanguage(routes.placeVr, language);
   document.getElementById("room-link").href = withLanguage(routes.salleDesEtats, language);
+  document.getElementById('room-link').textContent=JOURNEY_COPY[language].enter;
+  document.getElementById('journey-note').textContent=JOURNEY_COPY[language].note;
+  journey.bind(document.getElementById('room-link'));
+  const xrLink=document.getElementById('exterior-xr-link');xrLink.textContent=JOURNEY_COPY[language].xr;xrLink.href=withLanguage('louvre-xr.html',language);
 }
 
 function configureViewer() {
@@ -178,12 +192,18 @@ function configureViewer() {
     status.textContent = copy.loadingProgress.replace("{percent}", String(percent));
   });
   viewer.addEventListener("load", () => {
+    if(leaving)return;
+    if(!restoredView && savedView && new URLSearchParams(location.search).get('return')==='room'){
+      viewer.cameraOrbit=`${savedView.theta}rad ${savedView.phi}rad ${savedView.radius}m`;viewer.fieldOfView=`${savedView.fov}deg`;viewer.jumpCameraToGoal?.();restoredView=true;
+    }
+    journey.ready(viewer);
     const elapsedSeconds = Math.max(0, performance.now() - modelLoadStartedAt) / 1000;
     viewer.dataset.loadMs = String(Math.round(elapsedSeconds * 1000));
     status.textContent = copy.ready.replace("{seconds}", elapsedSeconds.toFixed(1));
     status.dataset.state = "ready";
   });
   viewer.addEventListener("error", () => {
+    if(leaving)return;
     if (activeCandidateIndex + 1 < activeModelCandidates.length) {
       const failedCandidate = activeModelCandidates[activeCandidateIndex];
       console.warn(`Model variant ${failedCandidate.id} unavailable; trying the next candidate.`);
