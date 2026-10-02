@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="styles/room.css?v=6-8-2" />
   <link rel="stylesheet" href="styles/journey.css?v=6-9" />
   <link rel="stylesheet" href="styles/active-guide.css?v=6-10" />
+  <link rel="stylesheet" href="styles/art-trail.css?v=6-11-1" />
   <script type="importmap">{"imports":{"three":"../vendor/three.module.js"}}</script>
 </head>
 <body class="room-page">
@@ -56,11 +57,18 @@
         <div id="guide-actions" class="room-poi-actions" hidden></div>
         <div id="guide-legacy-actions" class="room-poi-actions"><button id="guide-mona" type="button" data-guide="seeMona">Voir La Joconde</button><button id="guide-return" type="button" data-guide="returnVisit">Retour à la visite</button><button id="guide-retry" type="button" data-guide="retry" hidden>Réessayer</button></div>
       </aside>
+      <aside id="art-trail-panel" class="room-poi-panel art-trail-panel" aria-labelledby="art-trail-title" hidden>
+        <div class="room-poi-head"><span class="room-poi-kicker">ARTDACI · ART TRAIL</span><button type="button" class="room-poi-close" data-trail-close>Retour à Léonard</button></div>
+        <div class="art-trail-content"><h2 id="art-trail-title"></h2><p class="room-poi-artist" data-trail-role></p><span class="art-trail-badge" data-trail-badge hidden></span>
+        <p class="room-poi-description" data-trail-description></p>
+        <img class="art-trail-image" alt="" hidden />
+        <p role="status" data-trail-status></p></div><div class="room-poi-actions" data-trail-actions></div>
+      </aside>
       <p class="room-hint" data-copy="controls">Glisser pour regarder · flèches / ZQSD / WASD pour marcher</p>
     </section>
     <p class="room-xr-hint" data-copy="xrControls"></p>
     <footer class="room-footer"><p data-copy="disclaimer">Interprétation générée de la salle. Placement de La Joconde ajusté visuellement ; dimensions non relevées sur place.</p><a id="mona-link" href="remote.html?lang=fr&poi=ld01-mona-lisa" data-copy="audio">La Joconde · récit et audio</a></footer>
   </main>
-  <script type="module" src="scripts/room-viewer.js?v=6-10"></script>
+  <script type="module" src="scripts/room-viewer.js?v=6-11-1"></script>
 </body>
 </html>

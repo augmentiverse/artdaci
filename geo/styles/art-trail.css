@@ -1,0 +1,18 @@
+/* Scoped to the V6.11 Art Trail; validated room/guide/painting controls are untouched. */
+.art-trail-panel { display:flex; flex-direction:column; overflow:hidden; }
+.art-trail-panel .art-trail-content { overflow:auto; min-height:0; }
+.art-trail-panel .room-poi-head,.art-trail-panel [data-trail-actions] { flex-shrink:0; }
+.art-trail-panel [data-trail-description] { white-space:pre-line; }
+.art-trail-panel .art-trail-badge { display:inline-block; max-width:100%; padding:.2rem .5rem; border:1px solid #d9bf91a8; border-radius:999px; color:#e7d4b3; background:#4e402675; font-size:.68rem; line-height:1.3; }
+.art-trail-panel .art-trail-badge[hidden] { display:none; }
+.art-trail-panel .art-trail-image { display:block; max-width:100%; max-height:170px; margin:.5rem auto; object-fit:contain; }
+.art-trail-panel .art-trail-image[hidden] { display:none; }
+.art-trail-panel [data-trail-status] { font-size:.7rem; color:#e6c79a; }
+.art-trail-panel [data-trail-actions] { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+.art-trail-panel button { min-height:44px; overflow-wrap:anywhere; }
+.art-trail-panel button:disabled { opacity:.5; }
+@media(max-width:600px){
+  .art-trail-panel { width:min(275px,calc(100% - 1.2rem)); }
+  .art-trail-panel h2 { font-size:1rem; }
+  .art-trail-panel .art-trail-image { max-height:130px; }
+}

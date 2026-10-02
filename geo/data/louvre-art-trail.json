@@ -1,0 +1,336 @@
+{
+  "schemaVersion": "1.0",
+  "id": "louvre-art-trail",
+  "museum": "louvre",
+  "verifiedOn": "2026-10-02",
+  "title": {
+    "fr": "Parcours ARTDACI · Louvre",
+    "en": "ARTDACI Louvre trail",
+    "ar": "مسار ARTDACI · اللوفر"
+  },
+  "description": {
+    "fr": "Deux parcours distincts : les œuvres actuellement exposées dans le musée et les œuvres de sa collection non exposées. Les localisations sont documentaires, sans téléportation vers une nouvelle salle.",
+    "en": "Two separate paths: works currently on display in the museum and collection works not on display. Locations are documentary, without teleporting to another room.",
+    "ar": "مساران منفصلان: الأعمال المعروضة حاليًا في المتحف وأعمال المجموعة غير المعروضة. المواقع معلومات توثيقية ولا تنقلك إلى قاعة أخرى."
+  },
+  "categories": {
+    "museum-trail": {
+      "title": {"fr": "Parcours dans le musée", "en": "Museum trail", "ar": "مسار داخل المتحف"},
+      "description": {"fr": "La Joconde (salle 711), puis L’Astronome (salle 837). Après La Joconde, L’Astronome est la prochaine étape. Les salles indiquées ne sont pas recréées en 3D.", "en": "Mona Lisa (Room 711), then The Astronomer (Room 837). After Mona Lisa, The Astronomer is next. These rooms are not recreated in 3D.", "ar": "الموناليزا (القاعة 711)، ثم الفلكي (القاعة 837). بعد الموناليزا، الفلكي هو المحطة التالية. لم تُعَد بناء هذه القاعات ثلاثية الأبعاد."}
+    },
+    "collection": {
+      "title": {"fr": "Collection ARTDACI / Louvre", "en": "ARTDACI / Louvre collection", "ar": "مجموعة ARTDACI / اللوفر"},
+      "description": {"fr": "Autres œuvres de Léonard conservées au Louvre mais actuellement non exposées. La Belle Ferronnière est accessible comme fiche documentaire, sans salle ni téléportation.", "en": "Other Leonardo works held by the Louvre but not currently on display. La Belle Ferronnière is available as a documentary entry, without a room or teleportation.", "ar": "أعمال أخرى لليوناردو محفوظة في اللوفر لكنها غير معروضة حاليًا. تُعرض الجميلة فيرونيير كمحتوى توثيقي بلا قاعة أو انتقال."}
+    }
+  },
+  "stops": [
+    {
+      "id": "louvre",
+      "type": "museum",
+      "trailCategory": "context",
+      "spatiallyVisitable": false,
+      "title": {
+        "fr": "Musée du Louvre",
+        "en": "Louvre Museum",
+        "ar": "متحف اللوفر"
+      },
+      "description": {
+        "fr": "Un parcours culturel, pas un itinéraire physique : découvrez des œuvres des collections du Louvre sans quitter cette scène.",
+        "en": "A cultural trail, not a physical route: discover works in the Louvre collections without leaving this scene.",
+        "ar": "مسار ثقافي وليس طريقًا فعليًا: اكتشف أعمال مجموعات اللوفر دون مغادرة هذا المشهد."
+      },
+      "actions": [
+        "EXTERIOR"
+      ],
+      "sources": [
+        {
+          "provider": "Musée du Louvre",
+          "url": "https://www.louvre.fr/decouvrir/le-palais/de-la-joconde-aux-noces-de-cana",
+          "checkedOn": "2026-10-02",
+          "statement": "Musée du Louvre / Salle des États"
+        }
+      ],
+      "spatial": {
+        "status": "not-calibrated",
+        "position": {
+          "x": null,
+          "y": null,
+          "z": null
+        }
+      }
+    },
+    {
+      "id": "salle-des-etats",
+      "type": "room",
+      "trailCategory": "context",
+      "spatiallyVisitable": false,
+      "title": {
+        "fr": "Salle des États",
+        "en": "Salle des États",
+        "ar": "قاعة الدول"
+      },
+      "description": {
+        "fr": "La Joconde est exposée dans cette salle. La scène ARTDACI est une reconstitution, non un relevé architectural.",
+        "en": "Mona Lisa is displayed here. The ARTDACI scene is a reconstruction, not an architectural survey.",
+        "ar": "تُعرض الموناليزا في هذه القاعة. مشهد ARTDACI إعادة بناء وليس مسحًا معماريًا."
+      },
+      "museumLocation": {
+        "room": "711",
+        "wing": "Denon",
+        "level": 1
+      },
+      "actions": [
+        "ROOM"
+      ],
+      "sources": [
+        {
+          "provider": "Musée du Louvre",
+          "url": "https://www.louvre.fr/decouvrir/le-palais/de-la-joconde-aux-noces-de-cana",
+          "checkedOn": "2026-10-02",
+          "statement": "Salle 711, Denon, niveau 1"
+        }
+      ],
+      "spatial": {
+        "status": "not-calibrated",
+        "position": {
+          "x": null,
+          "y": null,
+          "z": null
+        }
+      }
+    },
+    {
+      "id": "leonardo-trail",
+      "type": "artist",
+      "trailCategory": "context",
+      "spatiallyVisitable": false,
+      "artistId": "ld",
+      "title": {
+        "fr": "Parcours Léonard",
+        "en": "Leonardo trail",
+        "ar": "مسار ليوناردو"
+      },
+      "description": {
+        "fr": "Deux œuvres de Léonard dans les collections : La Joconde, exposée, et La Belle Ferronnière, actuellement non exposée.",
+        "en": "Two Leonardo works in the collection: Mona Lisa, on display, and La Belle Ferronnière, currently not displayed.",
+        "ar": "عملان لليوناردو ضمن المجموعات: الموناليزا معروضة، والجميلة فيرونيير غير معروضة حاليًا."
+      },
+      "actions": [
+        "GUIDE"
+      ],
+      "sources": [
+        {
+          "provider": "Musée du Louvre",
+          "url": "https://collections.louvre.fr/ark:/53355/cl010062370",
+          "checkedOn": "2026-10-02",
+          "statement": "Leonardo da Vinci"
+        },
+        {
+          "provider": "Musée du Louvre",
+          "url": "https://collections.louvre.fr/ark:/53355/cl010062372",
+          "checkedOn": "2026-10-02",
+          "statement": "non exposé"
+        }
+      ],
+      "spatial": {
+        "status": "not-calibrated",
+        "position": {
+          "x": null,
+          "y": null,
+          "z": null
+        }
+      }
+    },
+    {
+      "id": "ld01-mona-lisa",
+      "type": "artwork",
+      "trailCategory": "museum-trail",
+      "spatiallyVisitable": true,
+      "artworkId": "ld01",
+      "artistId": "ld",
+      "artist": {
+        "fr": "Leonardo da Vinci",
+        "en": "Leonardo da Vinci",
+        "ar": "ليوناردو دا فينشي"
+      },
+      "title": {
+        "fr": "La Joconde",
+        "en": "Mona Lisa",
+        "ar": "الموناليزا"
+      },
+      "description": {
+        "fr": "Portrait de Lisa Gherardini. Ouvrez l’interaction de La Joconde déjà présente dans la salle.",
+        "en": "Portrait of Lisa Gherardini. Open the existing Mona Lisa interaction in this room.",
+        "ar": "صورة ليزا غيرارديني. افتح تفاعل الموناليزا الموجود في القاعة."
+      },
+      "displayStatus": "on-display",
+      "collection": "Département des Peintures — Musée du Louvre",
+      "inventory": "INV 779",
+      "museumLocation": {
+        "room": "711",
+        "wing": "Denon",
+        "level": 1
+      },
+      "actions": [
+        "MONA"
+      ],
+      "sources": [
+        {
+          "provider": "Musée du Louvre",
+          "url": "https://collections.louvre.fr/ark:/53355/cl010062370",
+          "checkedOn": "2026-10-02",
+          "statement": "Actuellement visible — salle 711, Denon, niveau 1"
+        }
+      ],
+      "spatial": {
+        "status": "not-calibrated",
+        "position": {
+          "x": null,
+          "y": null,
+          "z": null
+        }
+      }
+    },
+    {
+      "id": "ld06-belle-ferronniere",
+      "type": "artwork",
+      "trailCategory": "collection",
+      "spatiallyVisitable": false,
+      "artworkId": "ld06",
+      "artistId": "ld",
+      "artist": {
+        "fr": "Leonardo da Vinci",
+        "en": "Leonardo da Vinci",
+        "ar": "ليوناردو دا فينشي"
+      },
+      "title": {
+        "fr": "La Belle Ferronnière",
+        "en": "La Belle Ferronnière",
+        "ar": "الجميلة فيرونيير"
+      },
+      "description": {
+        "fr": "Portrait d’une femme, vers 1490–1497. Explorez ses médias ARTDACI : aucune salle ni position réelle n’est attribuée à cette œuvre non exposée.",
+        "en": "Portrait of a woman, c. 1490–1497. Explore its ARTDACI media: no room or real position is assigned to this undisplayed work.",
+        "ar": "صورة امرأة، نحو 1490–1497. استكشف وسائط ARTDACI: لا تُنسب قاعة أو نقطة فعلية لهذا العمل غير المعروض."
+      },
+      "displayStatus": "not-currently-displayed",
+      "collection": "Département des Peintures — Musée du Louvre",
+      "inventory": "INV 778",
+      "museumLocation": null,
+      "actions": [
+        "EXPLORE"
+      ],
+      "sources": [
+        {
+          "provider": "Musée du Louvre",
+          "url": "https://collections.louvre.fr/ark:/53355/cl010062372",
+          "checkedOn": "2026-10-02",
+          "statement": "Localisation actuelle : non exposé"
+        }
+      ],
+      "media": {
+        "manifest": "content/media-manifests/artworks/ld06/manifest.json",
+        "image": "assets/artists/leonardo-da-vinci/collection/la-belle-ferronnière-davinci.webp",
+        "model": null
+      },
+      "spatial": {
+        "status": "not-calibrated",
+        "position": {
+          "x": null,
+          "y": null,
+          "z": null
+        }
+      }
+    },
+    {
+      "id": "vermeer-trail",
+      "type": "artist",
+      "trailCategory": "context",
+      "spatiallyVisitable": false,
+      "artistId": "ve",
+      "title": {
+        "fr": "Parcours Vermeer",
+        "en": "Vermeer trail",
+        "ar": "مسار فيرمير"
+      },
+      "description": {
+        "fr": "L’Astronome, peint en 1668, vous invite à découvrir Johannes Vermeer. Ce parcours ne reconstruit pas sa salle d’exposition.",
+        "en": "The Astronomer, painted in 1668, introduces Johannes Vermeer. This trail does not reconstruct its exhibition room.",
+        "ar": "تعرّف إلى يوهانس فيرمير من خلال الفلكي، المرسومة عام 1668. لا يعيد هذا المسار بناء قاعة عرضها."
+      },
+      "actions": [],
+      "sources": [
+        {
+          "provider": "Musée du Louvre",
+          "url": "https://collections.louvre.fr/ark:/53355/cl010064324",
+          "checkedOn": "2026-10-02",
+          "statement": "Vermeer, 1668"
+        }
+      ],
+      "spatial": {
+        "status": "not-calibrated",
+        "position": {
+          "x": null,
+          "y": null,
+          "z": null
+        }
+      }
+    },
+    {
+      "id": "ve05-astronomer",
+      "type": "artwork",
+      "trailCategory": "museum-trail",
+      "spatiallyVisitable": true,
+      "artworkId": "ve05",
+      "artistId": "ve",
+      "artist": {
+        "fr": "Johannes Vermeer",
+        "en": "Johannes Vermeer",
+        "ar": "يوهانس فيرمير"
+      },
+      "title": {
+        "fr": "L’Astronome",
+        "en": "The Astronomer",
+        "ar": "الفلكي"
+      },
+      "description": {
+        "fr": "Vermeer, 1668. L’œuvre est exposée dans l’aile Richelieu ; sa salle n’est pas recréée ici. Découvrez l’image et le récit ARTDACI.",
+        "en": "Vermeer, 1668. On display in the Richelieu wing; its room is not recreated here. Discover the ARTDACI image and narration.",
+        "ar": "فيرمير، 1668. العمل معروض في جناح ريشيليو؛ لم تُنشأ قاعته هنا. اكتشف الصورة والسرد الصوتي في ARTDACI."
+      },
+      "displayStatus": "on-display",
+      "collection": "Département des Peintures — Musée du Louvre",
+      "inventory": "RF 1983 28",
+      "museumLocation": {
+        "room": "837",
+        "wing": "Richelieu",
+        "level": 2
+      },
+      "actions": [
+        "EXPLORE"
+      ],
+      "sources": [
+        {
+          "provider": "Musée du Louvre",
+          "url": "https://collections.louvre.fr/ark:/53355/cl010064324",
+          "checkedOn": "2026-10-02",
+          "statement": "Actuellement visible — salle 837, Richelieu, niveau 2"
+        }
+      ],
+      "media": {
+        "manifest": "content/media-manifests/artworks/ve05/manifest.json",
+        "image": "assets/artists/johannes-vermeer/collection/the-astronomer-vermeer.webp",
+        "model": "assets/artists/johannes-vermeer/profile/models/the-astronomer-vermeer-c2.glb",
+        "modelPolicy": "audited-not-loaded"
+      },
+      "spatial": {
+        "status": "not-calibrated",
+        "position": {
+          "x": null,
+          "y": null,
+          "z": null
+        }
+      }
+    }
+  ]
+}
