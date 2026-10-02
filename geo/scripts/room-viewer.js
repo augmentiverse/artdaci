@@ -7,6 +7,8 @@ import {validateRoomPoi,resolveRoomPoi,roomPoiAudioCandidates,roomHotspotPositio
 import {createRoomXrPanel,controllerRayScale} from './room-xr-panel.mjs?v=6-8-2';
 import {GUIDE_COPY,validateRoomGuide,resolveRoomGuide,createRoomGuide} from './room-guide.mjs?v=6-8-3';
 import {JOURNEY_COPY,createJourney,createJourneyPortal,returnScene} from './journey.mjs?v=6-9';
+import {validateActiveGuideConfig,createActiveGuideFlow,guideText} from './active-guide.mjs?v=6-10';
+import {createActiveGuideXrPanel} from './active-guide-xr-panel.mjs?v=6-10';
 
 const COPY = {
   fr: {title:'Salle des États',back:'← Retour au parcours',badge:'Reconstitution Marble',loading:'Chargement de la salle…',retry:'Réessayer',entry:'Vue générale',mona:'Voir La Joconde',vr:'Entrer en VR',exitVr:'Quitter la VR',vrUnavailable:'VR indisponible',fullscreen:'Plein écran',controls:'Glisser pour regarder · flèches / ZQSD / WASD pour marcher',disclaimer:'Interprétation générée de la salle. Placement de La Joconde ajusté visuellement ; dimensions non relevées sur place.',audio:'La Joconde · récit et audio',failed:'Impossible de charger cette salle. Vous pouvez réessayer ou revenir au parcours GEO.',ready:'Salle prête',forward:'Avancer',backward:'Reculer',left:'Se déplacer à gauche',right:'Se déplacer à droite',xrError:'La session VR n’a pas pu démarrer.',contextLost:'Le contexte 3D a été interrompu. Réessayez pour recharger la page.'},
@@ -65,6 +67,9 @@ const guideButton=document.getElementById('guide-button');
 const guidePanel=document.getElementById('room-guide-panel');
 const guideStatus=document.getElementById('guide-status');
 let guide,guideConfig,guidePoi,guideOpen=false;
+const guideActions=document.getElementById('guide-actions');
+const legacyGuideActions=document.getElementById('guide-legacy-actions');
+let activeGuideConfig,activeGuideFlow,activeGuidePanel;
 let renderer, camera, rig, scene, room, config, place, poi, decoder, ready=false, yaw=0, pitch=0, contextLost=false;
 let xrSupported=false, loading=false, disposed=false;
 let poiOpen=false,observing=false,hotspot=null,hotspotHit=null,hotspotHover=false,xrPanel=null,panelNeedsPlacement=false;
@@ -187,6 +192,8 @@ async function prepareAudio() {
 function openPoi() {
   if(!ready)return;
   if(guideOpen)closeGuide();
+  activeGuideFlow?.dispatch('MONA_LISA_OPENED');
+  if(activeGuideFlow)stage.dataset.guideFlowState=activeGuideFlow.snapshot().state;
   if(!poiOpen){poiOpen=true;observing=false;prepareAudio();}
   observing=false;
   poiPanel.hidden=false;
@@ -199,6 +206,7 @@ function openPoi() {
 }
 
 function closePoi() {
+  if(poiOpen)activeGuideFlow?.dispatch('MONA_LISA_VISITED');
   poiOpen=false;observing=false;poiPanel.hidden=true;observationControls.hidden=true;
   if(xrPanel)xrPanel.mesh.visible=false;
   stopAudio(true);updateHotspot();
@@ -229,6 +237,7 @@ async function explorePoi() {
 
 function runPoiAction(action) {
   if(action==='journey')journey.go();
+  else if(action?.startsWith('guide-v610:'))runGuideAction(action.slice('guide-v610:'.length));
   else if(action==='guide-mona')showMonaFromGuide();
   else if(action==='guide-return' || action==='guide-close')closeGuide();
   else if(action==='guide-retry')requestGuideModel();
@@ -238,6 +247,25 @@ function runPoiAction(action) {
   else if(action==='stop')stopAudio();
   else if(action==='explore')explorePoi().catch(error=>console.warn('GEO artwork route:',error));
   else if(action==='return')returnToRoom();
+}
+
+function runGuideAction(action) {
+  if(!activeGuideFlow)return;
+  if(action==='RETRY_MODEL'){requestGuideModel();return;}
+  if(action==='CLOSE'){closeGuide();return;}
+  const result=activeGuideFlow.dispatch(action);
+  stage.dataset.guideFlowState=result.state;
+  if(result.effect?.type==='roomPoi'){
+    if(result.effect.targetPoiId===poi?.entry.id)showMonaFromGuide();
+    return;
+  }
+  if(result.effect?.type==='route'){
+    const destination=withLanguage(result.effect.path,lang);
+    if(renderer.xr.isPresenting)renderer.xr.getSession().end().then(()=>{location.href=destination;}).catch(error=>console.warn('GEO guide route:',error));
+    else location.href=destination;
+    return;
+  }
+  drawGuidePanel();
 }
 
 function toggleAudio() {
@@ -255,6 +283,29 @@ function disposeModel(model) {
 
 function drawGuidePanel() {
   if(!guideOpen)return;
+  const presentation=activeGuideFlow?.presentation(lang);
+  if(presentation){
+    document.getElementById('guide-title').textContent=presentation.title;
+    document.getElementById('guide-description').textContent=presentation.description;
+    guideActions.replaceChildren();
+    for(const action of [...presentation.actions,{id:'CLOSE',label:guideText(activeGuideConfig.actionLabels.CLOSE,lang)}]){
+      const button=document.createElement('button');button.type='button';button.dataset.guideAction=action.id;
+      button.textContent=action.label;button.addEventListener('click',()=>runGuideAction(action.id));
+      guideActions.append(button);
+    }
+    if(guide?.state==='error'){
+      const button=document.createElement('button');button.type='button';button.dataset.guideAction='RETRY_MODEL';
+      button.textContent=guideText(activeGuideConfig.actionLabels.RETRY_MODEL,lang);
+      button.addEventListener('click',()=>runGuideAction('RETRY_MODEL'));guideActions.append(button);
+    }
+    guideActions.hidden=false;legacyGuideActions.hidden=true;
+    guideStatus.textContent=guide?.state==='loading'?guideCopy.loading:guide?.state==='error'?guideCopy.failed:'';
+    activeGuidePanel?.draw(presentation,{kicker:guideCopy.label,role:guidePoi.artist,status:guideStatus.textContent,
+      closeLabel:guideText(activeGuideConfig.actionLabels.CLOSE,lang),failed:guide?.state==='error',
+      retryLabel:guideText(activeGuideConfig.actionLabels.RETRY_MODEL,lang)});
+    if(renderer.xr.isPresenting){activeGuidePanel.mesh.visible=true;xrPanel.mesh.visible=false;panelNeedsPlacement=true;}
+    return;
+  }
   xrPanel.draw({...copy,artworkLabel:guideCopy.label,returnRoom:guideCopy.returnVisit,retry:guideCopy.retry},
     {...guidePoi,modelFailed:guide.state==='error'},{audioLabel:guideStatus.textContent});
 }
@@ -268,9 +319,13 @@ function openGuide() {
   if(poiOpen)closePoi();
   guideOpen=true;guidePanel.hidden=false;
   stage.dataset.guidePanel='open';
+  if(activeGuideFlow){
+    const event=activeGuideFlow.snapshot().visited?'RETURN_TO_GUIDE':'LEONARDO_SELECTED';
+    const result=activeGuideFlow.dispatch(event);stage.dataset.guideFlowState=result.state;
+  }
   xrPanel.setHover(null);
   requestGuideModel();drawGuidePanel();
-  if(renderer.xr.isPresenting){xrPanel.mesh.visible=true;panelNeedsPlacement=true;}
+  if(renderer.xr.isPresenting){(activeGuidePanel || xrPanel).mesh.visible=true;panelNeedsPlacement=true;}
 }
 
 function closeGuide() {
@@ -278,6 +333,7 @@ function closeGuide() {
   guideOpen=false;guidePanel.hidden=true;
   stage.dataset.guidePanel='closed';
   xrPanel.mesh.visible=false;xrPanel.setHover(null);
+  if(activeGuidePanel){activeGuidePanel.mesh.visible=false;activeGuidePanel.setHover(null);activeGuideFlow?.dispatch('CLOSE');}
 }
 
 function showMonaFromGuide() {
@@ -309,6 +365,18 @@ async function initGuide() {
         drawGuidePanel();
       },
     });
+    try{
+      const activeResponse=await fetch(new URL('../data/leonardo-active-guide.json',import.meta.url),{cache:'no-store'});
+      if(!activeResponse.ok)throw new Error('Active guide configuration HTTP '+activeResponse.status);
+      const candidate=await activeResponse.json();
+      const problems=validateActiveGuideConfig(candidate,{roomPoiIds:config.pointsOfInterest.map(item=>item.id)});
+      if(problems.length)throw new Error(problems.join('; '));
+      if(disposed)return;
+      activeGuideConfig=candidate;
+      activeGuideFlow=createActiveGuideFlow(candidate,{availablePoiIds:config.pointsOfInterest.map(item=>item.id)});
+      activeGuidePanel=createActiveGuideXrPanel(THREE,lang);scene.add(activeGuidePanel.mesh);
+      stage.dataset.guideFlowState=activeGuideFlow.snapshot().state;
+    }catch(error){console.warn('GEO active guide fallback:',error);}
     guideButton.disabled=false;
     guideStatus.textContent=guideCopy.ready;
     guideButton.addEventListener('click',()=>{setView(guideConfig.observationView);openGuide();});
@@ -491,6 +559,10 @@ function xrInteractiveHit(controller) {
   const origin=new THREE.Vector3(),direction=new THREE.Vector3();
   controller.getWorldPosition(origin);direction.set(0,0,-1).transformDirection(controller.matrixWorld);
   xrRay.set(origin,direction);
+  if(typeof activeGuidePanel!=='undefined'){
+    const guidePanelHit=activeGuidePanel?.hit(xrRay);
+    if(guidePanelHit)return {kind:'panel',...guidePanelHit};
+  }
   const panelHit=xrPanel?.hit(xrRay);
   if(panelHit)return {kind:'panel',...panelHit};
   const artworkHit=hitArtwork(xrRay);
@@ -546,11 +618,12 @@ async function configureXr() {
     xrButton.textContent=copy.exitVr;
     stage.dataset.xr='true';
     if(poiOpen){xrPanel.mesh.visible=true;panelNeedsPlacement=true;xrPanel.draw(copy,poi,{observing,audioLabel:audioLabel(),audioActionLabel:audioActionLabel()});}
-    if(guideOpen){drawGuidePanel();xrPanel.mesh.visible=true;panelNeedsPlacement=true;}
+    if(guideOpen){drawGuidePanel();(activeGuidePanel || xrPanel).mesh.visible=true;panelNeedsPlacement=true;}
   });
   renderer.xr.addEventListener('sessionend',()=>{
     xrView=null;turnArmed=false;marker.visible=false;xrButton.textContent=copy.vr;
     stage.dataset.xr='false';xrPanel.mesh.visible=false;xrPanel.setHover(null);hotspotHover=false;updateHotspot();
+    activeGuidePanel?.setHover(null);if(activeGuidePanel)activeGuidePanel.mesh.visible=false;
     guide?.setHover(false);
     for(const controller of controllers){controller.userData.cursor.visible=false;controller.userData.line.scale.z=1;}
     setView(config.navigation.entry);
@@ -589,6 +662,7 @@ async function configureXr() {
       teleportPoint??=controller.userData.getTarget();
     }
     xrPanel.setHover(panelHover);
+    if(typeof activeGuidePanel!=='undefined')activeGuidePanel?.setHover(panelHover);
     scene.userData.journey?.setHover(panelHover==='journey');
     guide?.setHover(guideTargeted);
     if(!interactiveTargeted && teleportPoint){marker.position.copy(teleportPoint);marker.position.y+=.015;marker.visible=true;}
@@ -660,7 +734,7 @@ function render(time,frame) {
   if(ready && renderer.xr.isPresenting)navigateXr(dt,frame);
   if(ready && renderer.xr.isPresenting && panelNeedsPlacement && (poiOpen || guideOpen)){
     rig.updateMatrixWorld(true);
-    xrPanel.place(renderer.xr.getCamera(camera).matrixWorld);
+    (guideOpen && activeGuidePanel?activeGuidePanel:xrPanel).place(renderer.xr.getCamera(camera).matrixWorld);
     panelNeedsPlacement=false;
   }
   scene.userData.updateTeleport?.();
@@ -678,6 +752,7 @@ function releaseRoom(){
   stopAudio(true);disposed=true;ready=false;keys.clear();held.clear();observer?.disconnect();
   renderer?.setAnimationLoop(null);renderer?.xr.getSession()?.end().catch(()=>{});
   guide?.dispose();
+  activeGuidePanel?.dispose();
   scene?.userData.journey?.dispose();
   disposeModel(scene);decoder?.dispose();renderer?.dispose();
 }

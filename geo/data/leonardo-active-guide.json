@@ -1,0 +1,83 @@
+{
+  "schemaVersion": "1.0",
+  "id": "leonardo-active-guide",
+  "guideId": "leonardo-guide",
+  "role": "active-guide",
+  "focusArtworkId": "ld01",
+  "states": {
+    "welcome": {
+      "title": {"fr": "Bienvenue dans la Salle des États", "en": "Welcome to the Salle des États", "ar": "مرحبًا بكم في قاعة الدول"},
+      "description": {"fr": "Je suis Léonard de Vinci. Souhaitez-vous commencer par une œuvre qui a marqué mon parcours ?", "en": "I am Leonardo da Vinci. Shall we begin with a work that shaped my journey?", "ar": "أنا ليوناردو دا فينشي. هل نبدأ بعمل ترك أثرًا في مسيرتي؟"},
+      "actions": ["START_TOUR", "ABOUT_LEONARDO"]
+    },
+    "monaLisaIntro": {
+      "title": {"fr": "Découvrons La Joconde", "en": "Discover the Mona Lisa", "ar": "لنكتشف الموناليزا"},
+      "description": {"fr": "La Joconde est l’une de mes œuvres majeures. Elle vous attend ici, dans la Salle des États ; je peux vous conduire à son point d’observation.", "en": "The Mona Lisa is one of my major works. It is here in the Salle des États; I can guide you to its viewing point.", "ar": "الموناليزا إحدى أبرز أعمالي. إنها هنا في قاعة الدول، ويمكنني إرشادك إلى موضع مشاهدتها."},
+      "actions": ["SEE_MONA_LISA", "MONA_MORE", "BACK"]
+    },
+    "monaMore": {
+      "title": {"fr": "Un regard sur l’œuvre", "en": "A closer look", "ar": "نظرة أقرب إلى العمل"},
+      "description": {"fr": "Les transitions douces du sfumato donnent au visage et au paysage leur profondeur. Approchez-vous de l’œuvre pour l’observer.", "en": "Soft sfumato transitions give depth to the face and landscape. Come closer to observe the work.", "ar": "تمنح انتقالات السفوماتو الناعمة عمقًا للوجه والمنظر الطبيعي. اقترب لتأمل العمل."},
+      "actions": ["SEE_MONA_LISA", "BACK"]
+    },
+    "aboutLeonardo": {
+      "title": {"fr": "À propos de Léonard", "en": "About Leonardo", "ar": "عن ليوناردو"},
+      "description": {"fr": "Peintre, ingénieur et scientifique de la Renaissance, j’ai étudié le corps, la lumière et la nature. Ma curiosité reliait l’art aux sciences.", "en": "A Renaissance painter, engineer and scientist, I studied the body, light and nature. My curiosity connected art and science.", "ar": "كنت رسامًا ومهندسًا وعالمًا من عصر النهضة، درست الجسد والضوء والطبيعة. وقد ربط فضولي الفن بالعلوم."},
+      "actions": ["OPEN_PROFILE", "BACK"]
+    },
+    "postMonaLisa": {
+      "title": {"fr": "Poursuivons la visite", "en": "Let us continue", "ar": "لنواصل الزيارة"},
+      "description": {"fr": "Vous avez découvert La Joconde. Souhaitez-vous explorer d’autres œuvres associées à mon parcours ou la revoir ?", "en": "You have discovered the Mona Lisa. Would you like to explore other works linked to my journey or see it again?", "ar": "لقد اكتشفت الموناليزا. هل ترغب في استكشاف أعمال أخرى مرتبطة بمسيرتي أم مشاهدتها مجددًا؟"},
+      "actions": ["SHOW_WORKS", "CONTINUE_TRAIL", "REVIEW_MONA"]
+    },
+    "works": {
+      "title": {"fr": "Mes œuvres au Louvre", "en": "My works at the Louvre", "ar": "أعمالي في اللوفر"},
+      "description": {"fr": "Deux œuvres ARTDACI sont référencées dans les collections du Louvre. Seule La Joconde est placée dans cette salle virtuelle.", "en": "Two ARTDACI works are referenced in the Louvre collection. Only the Mona Lisa is placed in this virtual room.", "ar": "يرتبط عملان في ARTDACI بمجموعات اللوفر. وُضعت الموناليزا وحدها في هذه القاعة الافتراضية."},
+      "actions": ["BACK"]
+    },
+    "workDetail": {
+      "title": {"fr": "Œuvre du Louvre", "en": "A Louvre work", "ar": "عمل من اللوفر"},
+      "description": {"fr": "Aucun emplacement dans cette salle n’est attribué à cette œuvre.", "en": "No position in this room is assigned to this work.", "ar": "لم يُحدَّد لهذا العمل موضع في هذه القاعة."},
+      "actions": ["BACK"]
+    },
+    "trail": {
+      "title": {"fr": "Parcours ARTDACI", "en": "ARTDACI trail", "ar": "مسار ARTDACI"},
+      "description": {"fr": "Le parcours complet sera disponible ultérieurement. Aucun déplacement vers une autre salle n’est simulé pour le moment.", "en": "The complete trail will be available later. No movement to another room is simulated yet.", "ar": "سيتوفر المسار الكامل لاحقًا. لا تُحاكى الآن أي حركة إلى قاعة أخرى."},
+      "actions": ["BACK"]
+    }
+  },
+  "actionLabels": {
+    "START_TOUR": {"fr": "Commencer la visite", "en": "Start the visit", "ar": "ابدأ الزيارة"},
+    "ABOUT_LEONARDO": {"fr": "À propos de Léonard", "en": "About Leonardo", "ar": "عن ليوناردو"},
+    "SEE_MONA_LISA": {"fr": "Voir La Joconde", "en": "See the Mona Lisa", "ar": "شاهد الموناليزا"},
+    "MONA_MORE": {"fr": "En savoir plus", "en": "Learn more", "ar": "اعرف المزيد"},
+    "SHOW_WORKS": {"fr": "Mes œuvres au Louvre", "en": "My works at the Louvre", "ar": "أعمالي في اللوفر"},
+    "CONTINUE_TRAIL": {"fr": "Continuer le parcours ARTDACI", "en": "Continue the ARTDACI trail", "ar": "تابع مسار ARTDACI"},
+    "REVIEW_MONA": {"fr": "Revoir La Joconde", "en": "See the Mona Lisa again", "ar": "شاهد الموناليزا مجددًا"},
+    "OPEN_PROFILE": {"fr": "Fiche Léonard", "en": "Leonardo profile", "ar": "صفحة ليوناردو"},
+    "BACK": {"fr": "Retour", "en": "Back", "ar": "رجوع"},
+    "CLOSE": {"fr": "Fermer", "en": "Close", "ar": "إغلاق"},
+    "RETRY_MODEL": {"fr": "Réessayer le modèle", "en": "Retry the model", "ar": "أعد تحميل النموذج"}
+  },
+  "guideSections": {
+    "leonardoWorks": [
+      {
+        "artworkId": "ld01",
+        "title": {"fr": "La Joconde", "en": "Mona Lisa", "ar": "الموناليزا"},
+        "museumStatus": "on-display-in-current-room",
+        "statusLabel": {"fr": "Exposée dans la Salle des États", "en": "Displayed in the Salle des États", "ar": "معروضة في قاعة الدول"},
+        "action": {"type": "roomPoi", "targetPoiId": "ld01-mona-lisa"}
+      },
+      {
+        "artworkId": "ld06",
+        "title": {"fr": "La Belle Ferronnière", "en": "La Belle Ferronnière", "ar": "لا بيل فيرونيير"},
+        "museumStatus": "louvre-collection-display-unverified",
+        "statusLabel": {"fr": "Collection du Louvre · exposition actuelle non vérifiée", "en": "Louvre collection · current display unverified", "ar": "من مجموعة اللوفر · العرض الحالي غير متحقق منه"},
+        "action": {"type": "information"}
+      }
+    ],
+    "artTrail": {"nextPoiId": null, "status": "not-yet-configured"}
+  },
+  "links": {"leonardoProfile": "../print-leonardo-tribute.html"},
+  "audio": {"status": "not-available", "fr": null, "en": null, "ar": null}
+}

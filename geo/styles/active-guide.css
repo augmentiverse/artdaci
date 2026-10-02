@@ -1,0 +1,10 @@
+/* V6.10 adds stages to the guide without enlarging V6.8's compact panel. */
+.room-guide-panel #guide-actions button { min-width:0; overflow-wrap:anywhere; }
+.room-guide-panel #guide-description { white-space:pre-line; }
+.room-guide-panel #guide-actions button[data-guide-action="START_TOUR"],
+.room-guide-panel #guide-actions button[data-guide-action="SEE_MONA_LISA"],
+.room-guide-panel #guide-actions button[data-guide-action="REVIEW_MONA"] { background:#d0ae74; color:#211a10; }
+@media (max-width:600px) {
+  .room-guide-panel #guide-actions { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .room-guide-panel #guide-actions button { min-height:44px; }
+}
