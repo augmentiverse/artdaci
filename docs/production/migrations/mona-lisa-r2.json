@@ -1,0 +1,164 @@
+{
+  "version": 1,
+  "publicId": "ldv-ml",
+  "slug": "mona-lisa",
+  "status": "planned",
+  "sourceManifest": "content/paintings/mona-lisa.json",
+  "mediaOrigin": "https://media.artdaci.com",
+  "policy": {
+    "keepInGitHub": ["image target", ".mind target", "UI assets"],
+    "deleteSourceAfterMigration": false,
+    "requirePreviewValidationBeforeManifestSwitch": true
+  },
+  "summary": {
+    "mappedFiles": 15,
+    "mappedBytes": 133434317,
+    "mappedMiB": 127.25
+  },
+  "objects": [
+    {
+      "type": "3d",
+      "source": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa.glb",
+      "bytes": 21712828,
+      "targetKey": "leonardo/mona-lisa/3d/v1/mona-lisa.glb",
+      "publicUrl": "https://media.artdaci.com/leonardo/mona-lisa/3d/v1/mona-lisa.glb",
+      "contentType": "model/gltf-binary",
+      "status": "pending-upload"
+    },
+    {
+      "type": "3d",
+      "source": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa-out-of-frame-c.glb",
+      "bytes": 10357732,
+      "targetKey": "leonardo/mona-lisa/3d/v1/mona-lisa-out-of-frame.glb",
+      "publicUrl": "https://media.artdaci.com/leonardo/mona-lisa/3d/v1/mona-lisa-out-of-frame.glb",
+      "contentType": "model/gltf-binary",
+      "status": "pending-upload"
+    },
+    {
+      "type": "3d",
+      "source": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/monalisa-framed-c.glb",
+      "bytes": 5052400,
+      "targetKey": "leonardo/mona-lisa/3d/v1/framed-scene.glb",
+      "publicUrl": "https://media.artdaci.com/leonardo/mona-lisa/3d/v1/framed-scene.glb",
+      "contentType": "model/gltf-binary",
+      "status": "pending-upload"
+    },
+    {
+      "type": "3d",
+      "source": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/monalisa-tableau-c.glb",
+      "bytes": 10322332,
+      "targetKey": "leonardo/mona-lisa/3d/v1/tableau-scene.glb",
+      "publicUrl": "https://media.artdaci.com/leonardo/mona-lisa/3d/v1/tableau-scene.glb",
+      "contentType": "model/gltf-binary",
+      "status": "pending-upload"
+    },
+    {
+      "type": "3d",
+      "source": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/davinci-monalisa-c.glb",
+      "bytes": 5106132,
+      "targetKey": "leonardo/mona-lisa/3d/v1/davinci-and-mona-lisa.glb",
+      "publicUrl": "https://media.artdaci.com/leonardo/mona-lisa/3d/v1/davinci-and-mona-lisa.glb",
+      "contentType": "model/gltf-binary",
+      "status": "pending-upload"
+    },
+    {
+      "type": "audio",
+      "source": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/inside-the-mona-lisa-1m40-en.m4a",
+      "bytes": 3235229,
+      "targetKey": "leonardo/mona-lisa/audio/v1/en-guide.m4a",
+      "publicUrl": "https://media.artdaci.com/leonardo/mona-lisa/audio/v1/en-guide.m4a",
+      "contentType": "audio/mp4",
+      "status": "pending-upload"
+    },
+    {
+      "type": "audio",
+      "source": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/inside-the-mona-lisa-1m46-fr.m4a",
+      "bytes": 3439918,
+      "targetKey": "leonardo/mona-lisa/audio/v1/fr-guide.m4a",
+      "publicUrl": "https://media.artdaci.com/leonardo/mona-lisa/audio/v1/fr-guide.m4a",
+      "contentType": "audio/mp4",
+      "status": "pending-upload"
+    },
+    {
+      "type": "audio",
+      "source": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/mona-lisa-en.mp3",
+      "bytes": 21228074,
+      "targetKey": "leonardo/mona-lisa/audio/v1/en-overview.mp3",
+      "publicUrl": "https://media.artdaci.com/leonardo/mona-lisa/audio/v1/en-overview.mp3",
+      "contentType": "audio/mpeg",
+      "status": "pending-upload"
+    },
+    {
+      "type": "audio",
+      "source": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/mona-lisa-fr.mp3",
+      "bytes": 17915747,
+      "targetKey": "leonardo/mona-lisa/audio/v1/fr-overview.mp3",
+      "publicUrl": "https://media.artdaci.com/leonardo/mona-lisa/audio/v1/fr-overview.mp3",
+      "contentType": "audio/mpeg",
+      "status": "pending-upload"
+    },
+    {
+      "type": "audio",
+      "source": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/الموناليزا-لغز-الابتسامة-والسرقة-والرموش-المفقودة.mp3",
+      "bytes": 24294374,
+      "targetKey": "leonardo/mona-lisa/audio/v1/ar-overview.mp3",
+      "publicUrl": "https://media.artdaci.com/leonardo/mona-lisa/audio/v1/ar-overview.mp3",
+      "contentType": "audio/mpeg",
+      "status": "pending-upload"
+    },
+    {
+      "type": "audio",
+      "source": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/centuries-behind-glass.mp3",
+      "bytes": 744610,
+      "targetKey": "leonardo/mona-lisa/audio/v1/video-layer-en.mp3",
+      "publicUrl": "https://media.artdaci.com/leonardo/mona-lisa/audio/v1/video-layer-en.mp3",
+      "contentType": "audio/mpeg",
+      "status": "pending-upload"
+    },
+    {
+      "type": "audio",
+      "source": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/la-joconde-s-évade.mp3",
+      "bytes": 744610,
+      "targetKey": "leonardo/mona-lisa/audio/v1/video-layer-fr.mp3",
+      "publicUrl": "https://media.artdaci.com/leonardo/mona-lisa/audio/v1/video-layer-fr.mp3",
+      "contentType": "audio/mpeg",
+      "status": "pending-upload"
+    },
+    {
+      "type": "audio",
+      "source": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/رقصة-خلف-الإطار.mp3",
+      "bytes": 744610,
+      "targetKey": "leonardo/mona-lisa/audio/v1/video-layer-ar.mp3",
+      "publicUrl": "https://media.artdaci.com/leonardo/mona-lisa/audio/v1/video-layer-ar.mp3",
+      "contentType": "audio/mpeg",
+      "status": "pending-upload"
+    },
+    {
+      "type": "video",
+      "source": "assets/animations/artdaci-Mona_Lisa_animation.mp4",
+      "bytes": 2845975,
+      "targetKey": "leonardo/mona-lisa/video/v1/leonardo-painting.mp4",
+      "publicUrl": "https://media.artdaci.com/leonardo/mona-lisa/video/v1/leonardo-painting.mp4",
+      "contentType": "video/mp4",
+      "status": "pending-upload"
+    },
+    {
+      "type": "video",
+      "source": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/mona-lisa-video.mp4",
+      "bytes": 5689746,
+      "targetKey": "leonardo/mona-lisa/video/v1/mona-lisa-reimagined.mp4",
+      "publicUrl": "https://media.artdaci.com/leonardo/mona-lisa/video/v1/mona-lisa-reimagined.mp4",
+      "contentType": "video/mp4",
+      "status": "pending-upload"
+    }
+  ],
+  "intentionallyNotMapped": [
+    "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg",
+    "assets/targets/mona-lisa.mind"
+  ],
+  "notes": [
+    "Only current manifest dependencies are mapped in Wave 1.",
+    "Large legacy files in the same GitHub directories are not migrated until dependency review confirms they are still used.",
+    "After upload and CORS validation, change only manifest media/model URLs; keep GitHub originals during rollback validation."
+  ]
+}

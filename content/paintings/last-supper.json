@@ -1,0 +1,25 @@
+{
+  "slug": "last-supper",
+  "bookOrder": 9,
+  "title": "The Last Supper",
+  "artist": { "name": "Leonardo da Vinci" },
+  "date": "c. 1495–1498",
+  "medium": "Tempera and oil on plaster",
+  "dimensions": {},
+  "currentLocation": { "museum": "Santa Maria delle Grazie", "city": "Milan" },
+  "movement": ["Renaissance"],
+  "media": { "image": "assets/artists/leonardo-da-vinci/collection/the-last-supper-davinci.webp" },
+  "print": { "chapter": "Renaissance", "imageTargetSource": "assets/artists/leonardo-da-vinci/collection/the-last-supper-davinci.webp" },
+  "texts": {
+    "historicalContext": "Leonardo painted the refectory scene for the Dominican convent of Santa Maria delle Grazie in Milan.",
+    "artisticAnalysis": "Christ's announcement of betrayal sends a wave of distinct reactions through the apostles, while his still figure anchors the composition.",
+    "composition": "Perspective lines converge behind Christ and the apostles form four rhythmic groups.",
+    "palette": "Light, gesture and restrained colour separate each response without breaking the unity of the table.",
+    "perspectiveTechnique": "A single vanishing point extends the architecture into the real refectory.",
+    "culturalSignificance": "The mural transformed the Last Supper into a study of human emotion and collective drama."
+  },
+  "localizations": {
+    "fr": { "title": "La Cène" },
+    "ar": { "title": "العشاء الأخير" }
+  }
+}

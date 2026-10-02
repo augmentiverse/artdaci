@@ -1,0 +1,26 @@
+{
+  "id": "johannes-vermeer-milkmaid-c1658-1660",
+  "slug": "vermeer-milkmaid",
+  "bookOrder": 13,
+  "title": "The Milkmaid",
+  "artist": { "name": "Johannes Vermeer" },
+  "date": "c. 1658–1660",
+  "medium": "Oil on canvas",
+  "dimensions": {},
+  "currentLocation": { "museum": "Rijksmuseum", "city": "Amsterdam" },
+  "movement": ["Dutch Golden Age"],
+  "media": { "image": "assets/artists/paintings_images/vermeer/vermeer_milkmaid.png" },
+  "print": { "chapter": "Dutch Golden Age" },
+  "texts": {
+    "historicalContext": "Vermeer dignifies an ordinary domestic task by giving it extraordinary concentration.",
+    "artisticAnalysis": "The steady stream of milk and the woman's absorbed posture make time seem suspended.",
+    "composition": "A strong figure, table and window form a stable geometry within the bare room.",
+    "palette": "Ultramarine blue and lead-tin yellow glow against the pale wall and earthy bread.",
+    "perspectiveTechnique": "Window light, controlled edges and small highlights make surfaces tangible.",
+    "culturalSignificance": "The painting is celebrated for transforming daily labour into monumental stillness."
+  },
+  "localizations": {
+    "fr": { "title": "La Laitière" },
+    "ar": { "title": "خادمة الحليب" }
+  }
+}

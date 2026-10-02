@@ -1,0 +1,26 @@
+{
+  "id": "johannes-vermeer-art-of-painting-c1666-1668",
+  "slug": "art-of-painting",
+  "bookOrder": 14,
+  "title": "The Art of Painting",
+  "artist": { "name": "Johannes Vermeer" },
+  "date": "c. 1666–1668",
+  "medium": "Oil on canvas",
+  "dimensions": {},
+  "currentLocation": { "museum": "Kunsthistorisches Museum", "city": "Vienna" },
+  "movement": ["Dutch Golden Age"],
+  "media": { "image": "assets/artists/paintings_images/vermeer/vermeer_art-painting.png" },
+  "print": { "chapter": "Dutch Golden Age" },
+  "texts": {
+    "historicalContext": "Vermeer turns the artist's studio into an allegory of painting, history and reputation.",
+    "artisticAnalysis": "A curtain draws us into a staged encounter between the painter and a model embodying history.",
+    "composition": "Foreground curtain, tiled floor, figures and wall map create layered depth.",
+    "palette": "Cool blues, black and white accents are warmed by wood, parchment and filtered light.",
+    "perspectiveTechnique": "Precise recession and selective focus make the room both convincing and theatrical.",
+    "culturalSignificance": "The work is Vermeer's most ambitious meditation on the status and memory of art."
+  },
+  "localizations": {
+    "fr": { "title": "L’Art de la peinture" },
+    "ar": { "title": "فن الرسم" }
+  }
+}

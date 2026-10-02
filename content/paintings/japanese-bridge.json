@@ -1,0 +1,26 @@
+{
+  "id": "claude-monet-japanese-bridge-1899",
+  "slug": "japanese-bridge",
+  "bookOrder": 22,
+  "title": "The Japanese Bridge",
+  "artist": { "name": "Claude Monet" },
+  "date": "1899",
+  "medium": "Oil on canvas",
+  "dimensions": {},
+  "currentLocation": { "museum": "National Gallery of Art", "city": "Washington" },
+  "movement": ["Impressionism"],
+  "media": { "image": "assets/artists/paintings_images/monet/monet_japanese-bridge.png" },
+  "print": { "chapter": "Impressionism" },
+  "texts": {
+    "historicalContext": "Monet designed the bridge and pond at Giverny, drawing inspiration from Japanese prints and gardens.",
+    "artisticAnalysis": "The arch provides a calm structure amid dense foliage, reflections and floating lilies.",
+    "composition": "The bridge spans the upper field while paths of water and vegetation lead beneath it.",
+    "palette": "Greens are varied with blue, violet, pink and warm highlights rather than treated as one local colour.",
+    "perspectiveTechnique": "Broken brushwork dissolves solid forms into changing light and atmosphere.",
+    "culturalSignificance": "The motif joined garden design, collecting and painting in Monet's sustained experiment with perception."
+  },
+  "localizations": {
+    "fr": { "title": "Le Pont japonais" },
+    "ar": { "title": "الجسر الياباني" }
+  }
+}
