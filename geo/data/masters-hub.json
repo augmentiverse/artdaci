@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "1.0",
+  "version": "6.13",
+  "id": "artdaci-masters-hub",
+  "kind": "virtual-artdaci-gallery",
+  "title": "ARTDACI Masters Hub",
+  "subtitle": {"fr":"Galerie virtuelle ARTDACI","en":"ARTDACI Virtual Gallery","ar":"معرض ARTDACI الافتراضي"},
+  "catalog": "content/media-manifests/catalog.json",
+  "navigation": {"bounds":{"minX":-9,"maxX":9,"minZ":-9,"maxZ":9},"entry":{"x":0,"z":6,"yaw":0},"eyeHeight":1.65,"speed":1.8,"xrSpeed":1.4},
+  "artists": [
+    {
+      "artistId":"ld", "name":{"fr":"Léonard de Vinci","en":"Leonardo da Vinci","ar":"ليوناردو دا فينشي"},
+      "guide":{"guideId":"leonardo-guide","status":"reserved"},
+      "zone":{"wall":"north","color":"#386b68","view":{"x":0,"z":-5.5,"yaw":0}},
+      "works":[
+        {"artworkId":"ld01","title":{"fr":"La Joconde","en":"Mona Lisa","ar":"الموناليزا"},"thumbnail":"assets/artists/leonardo-da-vinci/collection/mana-lisa-davici.webp","imageFallback":"assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg","museumId":"louvre","description":{"fr":"Un portrait au sourire énigmatique. Observez les transitions douces entre ombre et lumière et le paysage derrière la figure.","en":"A portrait with an enigmatic smile. Look at the soft transitions between light and shadow and the landscape behind the figure.","ar":"صورة شخصية بابتسامة غامضة. تأمل الانتقالات الناعمة بين الضوء والظل والمنظر الطبيعي خلف الشخصية."}},
+        {"artworkId":"ld06","title":{"fr":"La Belle Ferronnière","en":"La Belle Ferronnière","ar":"الجميلة فيرونيير"},"thumbnail":"assets/artists/leonardo-da-vinci/collection/la-belle-ferronnière-davinci.webp","imageFallback":"assets/artists/paintings_images/davinci/davinci_belle-ferronnière.png","museumId":"louvre","description":{"fr":"Le regard de côté anime ce portrait. Le fond sombre fait ressortir les volumes du visage et la couleur du vêtement.","en":"A sideways glance animates this portrait. The dark background brings out the face's volume and the colour of the clothing.","ar":"تمنح النظرة الجانبية هذه الصورة حيوية. وتبرز الخلفية الداكنة حجم الوجه ولون الثياب."}},
+        {"artworkId":"ld02","title":{"fr":"La Dame à l’hermine","en":"Lady with an Ermine","ar":"سيدة مع قاقم"},"thumbnail":"assets/artists/leonardo-da-vinci/collection/the-lady-with-an-ermine-davinci.webp","imageFallback":"assets/artists/leonardo-da-vinci/collection/the-lady-with-an-ermine-davinci.webp","museumId":"czartoryski","description":{"fr":"La jeune femme et l’animal tournent leur attention dans la même direction. Regardez le dialogue entre les mains, la tête et les courbes du corps.","en":"The young woman and the animal turn their attention in the same direction. Notice the relationship between the hands, head and curves of the body.","ar":"تلتفت الشابة والحيوان في الاتجاه نفسه. تأمل العلاقة بين اليدين والرأس وانحناءات الجسد."}}
+      ]
+    },
+    {
+      "artistId":"ve", "name":{"fr":"Johannes Vermeer","en":"Johannes Vermeer","ar":"يوهانس فيرمير"},
+      "guide":{"guideId":"vermeer-guide","status":"reserved"},
+      "zone":{"wall":"east","color":"#455e88","view":{"x":5.5,"z":0,"yaw":-1.5707963267948966}},
+      "works":[
+        {"artworkId":"ve01","title":{"fr":"La Jeune Fille à la perle","en":"Girl with a Pearl Earring","ar":"الفتاة ذات القرط اللؤلؤي"},"thumbnail":"assets/artists/johannes-vermeer/collection/girl-with-a-pearl-earring-vermeer.webp","imageFallback":"assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg","museumId":"mauritshuis","description":{"fr":"La figure se retourne vers nous. Quelques touches lumineuses suffisent à faire apparaître le regard, les lèvres et la perle.","en":"The figure turns towards us. A few touches of light bring the eyes, lips and pearl into view.","ar":"تلتفت الشخصية نحونا. وتكفي لمسات ضوئية قليلة لإبراز العينين والشفتين واللؤلؤة."}},
+        {"artworkId":"ve05","title":{"fr":"L’Astronome","en":"The Astronomer","ar":"عالم الفلك"},"thumbnail":"assets/artists/johannes-vermeer/collection/the-astronomer-vermeer.webp","imageFallback":"assets/artists/paintings_images/vermeer/vermeer_astronomer.png","museumId":"louvre","description":{"fr":"Un savant se penche vers un globe. La lumière de la fenêtre relie le geste de la main, les objets d’étude et l’espace intérieur.","en":"A scholar leans towards a globe. Window light connects the gesture of the hand, the objects of study and the interior space.","ar":"ينحني عالم نحو كرة فلكية. يربط ضوء النافذة بين حركة اليد وأدوات الدراسة وفضاء الغرفة."}},
+        {"artworkId":"ve02","title":{"fr":"Vue de Delft","en":"View of Delft","ar":"منظر دلفت"},"thumbnail":"assets/artists/johannes-vermeer/collection/view-of-delft-vermeer.webp","imageFallback":"assets/artists/johannes-vermeer/collection/view-of-delft-vermeer.webp","museumId":"mauritshuis","description":{"fr":"L’eau, les bâtiments et le vaste ciel composent des bandes calmes. Suivez l’alternance des zones d’ombre et de soleil sur la ville.","en":"Water, buildings and a wide sky form calm horizontal bands. Follow the alternation of shadow and sunlight across the city.","ar":"يشكل الماء والمباني والسماء الواسعة نطاقات أفقية هادئة. تتبع تعاقب الظل وضوء الشمس فوق المدينة."}}
+      ]
+    },
+    {
+      "artistId":"vg", "name":{"fr":"Vincent van Gogh","en":"Vincent van Gogh","ar":"فنسنت فان غوخ"},
+      "guide":{"guideId":"vangogh-guide","status":"reserved"},
+      "zone":{"wall":"south","color":"#a07936","view":{"x":0,"z":5.5,"yaw":3.141592653589793}},
+      "works":[
+        {"artworkId":"vg01","title":{"fr":"Autoportrait","en":"Self-Portrait","ar":"صورة ذاتية"},"thumbnail":"assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp","imageFallback":"assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait.jpg","museumId":null,"description":{"fr":"Les touches visibles construisent le visage et le fond. Observez comment la couleur et la direction des coups de pinceau donnent de l’intensité au regard.","en":"Visible brushstrokes build the face and background. Notice how colour and the direction of the strokes intensify the gaze.","ar":"تبني ضربات الفرشاة الظاهرة الوجه والخلفية. تأمل كيف يمنح اللون واتجاه الضربات النظرة قوة."}},
+        {"artworkId":"vg02","title":{"fr":"La Chambre à Arles","en":"The Bedroom","ar":"غرفة النوم في آرل"},"thumbnail":"assets/artists/vincent-van-gogh/collection/the-bedroom-vangogh.webp","imageFallback":"assets/artists/vincent-van-gogh/artworks/the-bedroom/images/bed-van-gogh.jpeg","museumId":"van-gogh-museum","description":{"fr":"Des meubles simples et de larges aplats colorés structurent la chambre. Regardez les lignes du lit, des chaises et du sol.","en":"Simple furniture and broad areas of colour structure the bedroom. Look at the lines of the bed, chairs and floor.","ar":"ينظم الأثاث البسيط والمساحات اللونية الواسعة غرفة النوم. تأمل خطوط السرير والكراسي والأرضية."}},
+        {"artworkId":"vg03","title":{"fr":"La Nuit étoilée","en":"The Starry Night","ar":"ليلة النجوم"},"thumbnail":"assets/artists/vincent-van-gogh/collection/the-starry-night-vangogh.webp","imageFallback":"assets/artists/paintings_images/vangogh/vangogh_starry-night.png","museumId":null,"description":{"fr":"Les mouvements du ciel contrastent avec le village tranquille. Suivez les courbes qui relient les étoiles, la lune et le cyprès.","en":"The movements of the sky contrast with the quiet village. Follow the curves linking the stars, moon and cypress.","ar":"تتباين حركة السماء مع هدوء القرية. تتبع المنحنيات التي تربط النجوم والقمر وشجرة السرو."}}
+      ]
+    },
+    {
+      "artistId":"mo", "name":{"fr":"Claude Monet","en":"Claude Monet","ar":"كلود مونيه"},
+      "guide":{"guideId":"monet-guide","status":"reserved"},
+      "zone":{"wall":"west","color":"#827096","view":{"x":-5.5,"z":0,"yaw":1.5707963267948966}},
+      "works":[
+        {"artworkId":"mo01","title":{"fr":"Impression, soleil levant","en":"Impression, Sunrise","ar":"انطباع، شروق الشمس"},"thumbnail":"assets/artists/claude-monet/collection/impression-sunrise-monet.webp","imageFallback":"assets/artists/claude-monet/collection/impression-sunrise-monet.webp","museumId":null,"description":{"fr":"Un soleil orange traverse une atmosphère bleutée. Les silhouettes et les reflets suggèrent le port avec quelques touches de couleur.","en":"An orange sun cuts through a bluish atmosphere. Silhouettes and reflections suggest the harbour with a few touches of colour.","ar":"تخترق شمس برتقالية أجواء زرقاء. توحي الظلال والانعكاسات بالميناء عبر لمسات لونية قليلة."}},
+        {"artworkId":"mo03","title":{"fr":"Les Nymphéas","en":"Water Lilies","ar":"زنابق الماء"},"thumbnail":"assets/artists/claude-monet/collection/water-lilies-monet.webp","imageFallback":"assets/artists/paintings_images/monet/monet_water_lilies.png","museumId":null,"description":{"fr":"La surface de l’eau mêle plantes, lumière et reflets. Laissez le regard circuler entre les touches colorées, sans chercher un horizon fixe.","en":"The water's surface combines plants, light and reflections. Let your gaze move between the touches of colour without looking for a fixed horizon.","ar":"يجمع سطح الماء بين النباتات والضوء والانعكاسات. دع بصرك يتنقل بين اللمسات اللونية دون البحث عن أفق ثابت."}},
+        {"artworkId":"mo06","title":{"fr":"La Femme à l’ombrelle","en":"Woman with a Parasol","ar":"امرأة تحمل مظلة"},"thumbnail":"assets/artists/claude-monet/artworks/the-woman-with-a-parasol/images/woman-with-a-parasol.webp","imageFallback":"assets/artists/paintings_images/monet/monet_woman-parasol.png","museumId":"national-gallery-of-art-washington","description":{"fr":"La figure se détache sur un ciel lumineux. L’ombrelle, les herbes et les vêtements rendent sensibles le vent et la lumière extérieure.","en":"The figure stands against a bright sky. The parasol, grasses and clothing convey the wind and outdoor light.","ar":"تبرز الشخصية أمام سماء مضيئة. تنقل المظلة والأعشاب والثياب إحساس الريح وضوء الهواء الطلق."}}
+      ]
+    }
+  ]
+}

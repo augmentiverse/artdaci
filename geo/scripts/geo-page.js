@@ -73,6 +73,13 @@ const COPY = {
 
 const language = languageFromSearch(location.search);
 const copy = COPY[language];
+// The GEO landing page now offers two independent experiences. Louvre pages
+// keep their existing language copy and behaviour.
+if (document.body.dataset.geoPage === 'index') Object.assign(copy, {
+  fr: {prototype:'Lieux culturels · Galeries virtuelles',intro:'Choisissez votre expérience culturelle ARTDACI.',discover:'Découvrir le Louvre',louvreTitle:'Louvre',louvreHubBody:'Le Louvre extérieur, la Salle des États et le parcours culturel ARTDACI.',openLouvre:'Explorer le Louvre',mastersLabel:'Galerie virtuelle ARTDACI',mastersBody:'Quatre peintres, douze œuvres. Une galerie imaginée par ARTDACI, indépendante de tout musée réel.',openMasters:'Explorer le Masters Hub'},
+  en: {prototype:'Cultural places · Virtual galleries',intro:'Choose your ARTDACI cultural experience.',discover:'Discover the Louvre',louvreTitle:'Louvre',louvreHubBody:'The Louvre exterior, Salle des États and the ARTDACI cultural journey.',openLouvre:'Explore the Louvre',mastersLabel:'ARTDACI Virtual Gallery',mastersBody:'Four painters, twelve works. A gallery imagined by ARTDACI, independent of any real museum.',openMasters:'Explore the Masters Hub'},
+  ar: {prototype:'أماكن ثقافية · معارض افتراضية',intro:'اختر تجربتك الثقافية في ARTDACI.',discover:'اكتشف اللوفر',louvreTitle:'اللوفر',louvreHubBody:'اللوفر الخارجي وقاعة الدول والمسار الثقافي في ARTDACI.',openLouvre:'استكشف اللوفر',mastersLabel:'معرض ARTDACI الافتراضي',mastersBody:'أربعة رسامين واثنا عشر عملاً. معرض من تصور ARTDACI، مستقل عن أي متحف حقيقي.',openMasters:'استكشف معرض الأساتذة'}
+}[language]);
 const dataUrl = new URL("../data/louvre.json", import.meta.url);
 
 init().catch((error) => {
@@ -145,7 +152,7 @@ function renderPlace(place) {
     image.src = projectAssetUrl(content.media.image.localFallback, import.meta.url);
     image.alt = `${localize(content.title, language)} — ${localize(content.artist, language)}`;
   }
-  document.title = `ARTDACI GEO — ${localize(place.name, language)}`;
+  document.title = document.body.dataset.geoPage === 'index' ? 'ARTDACI GEO — Louvre · Masters Hub' : `ARTDACI GEO — ${localize(place.name, language)}`;
 }
 
 async function preferCanonicalImage(place) {
