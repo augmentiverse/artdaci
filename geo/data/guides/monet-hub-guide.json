@@ -1,0 +1,10 @@
+{
+  "schemaVersion":"1.0","guideId":"monet-guide","artistId":"mo",
+  "model":{"status":"reserved","path":null},"works":["mo01","mo03","mo06"],
+  "transform":{"scale":null,"rotationY":null,"groundOffset":null,"centerOffsetX":null},
+  "content":{
+    "fr":{"welcome":{"title":"Bienvenue avec Monet","description":"Découvrez trois œuvres attentives aux variations de lumière et d'atmosphère."},"about":{"title":"À propos de Monet","description":"Peintre français, j'ai observé la lumière changeante dans les paysages et les jardins."},"works":{"title":"Mes œuvres","description":"Choisissez une œuvre pour commencer la découverte."},"actions":{"DISCOVER_WORKS":"Découvrir mes œuvres","ABOUT_ARTIST":"À propos de l’artiste","NEXT_WORK":"Œuvre suivante","PREVIOUS_WORK":"Œuvre précédente","BACK_TO_GUIDE":"Retour au guide","CLOSE":"Fermer"}},
+    "en":{"welcome":{"title":"Welcome with Monet","description":"Discover three works attentive to changing light and atmosphere."},"about":{"title":"About Monet","description":"A French painter, I observed changing light in landscapes and gardens."},"works":{"title":"My artworks","description":"Choose an artwork to begin exploring."},"actions":{"DISCOVER_WORKS":"Discover my artworks","ABOUT_ARTIST":"About the artist","NEXT_WORK":"Next artwork","PREVIOUS_WORK":"Previous artwork","BACK_TO_GUIDE":"Back to guide","CLOSE":"Close"}},
+    "ar":{"welcome":{"title":"مرحبًا مع مونيه","description":"اكتشف ثلاثة أعمال تهتم بتغيرات الضوء والجو."},"about":{"title":"عن مونيه","description":"كنت رسامًا فرنسيًا رصدت تغير الضوء في المناظر الطبيعية والحدائق."},"works":{"title":"أعمالي","description":"اختر عملاً فنيًا لتبدأ الاستكشاف."},"actions":{"DISCOVER_WORKS":"اكتشف أعمالي","ABOUT_ARTIST":"عن الفنان","NEXT_WORK":"العمل التالي","PREVIOUS_WORK":"العمل السابق","BACK_TO_GUIDE":"العودة إلى الدليل","CLOSE":"إغلاق"}}
+  }
+}

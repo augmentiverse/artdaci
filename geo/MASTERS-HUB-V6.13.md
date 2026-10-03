@@ -28,8 +28,7 @@ le statut `reserved` et la mention « Guide bientôt disponible ». Aucun guide
 - Manifestes canoniques réutilisés sans modification ; repli local en cas
   d'échec du manifeste distant et images de secours existantes.
 - Français, anglais et arabe ; interface et panneaux XR adaptés au RTL arabe.
-- Audio proposé uniquement si l'overview de la langue exacte est disponible.
-  **vg02 ne propose aucun audio arabe** ; aucun repli anglais silencieux.
+- En V6.13, l'audio était proposé uniquement si l'overview canonique de la langue exacte était disponible. L'overview arabe canonique de `vg02` était absent. La V6.14 ajoute un MP3 arabe local vérifié comme fallback explicite, sans modifier le manifest ni substituer une autre langue.
 - Actions limitées à À propos, Voir l'image, Écouter si disponible,
   Galerie musée ARTDACI si la route est vérifiée, et Retour.
 
@@ -39,7 +38,7 @@ Le **3 octobre 2026**, l'utilisateur a confirmé la validation de V6.13 sur un
 **Meta Quest 3S réel** : ouverture, quatre zones lisibles, douze œuvres,
 panneaux confortables, navigation, manettes gauche et droite, raycast,
 surbrillance, locomotion, rotation 360° et téléportation fonctionnent.
-Il confirme aussi FR/EN/AR et RTL, le cas vg02 sans audio arabe, l'absence de
+Il confirme aussi FR/EN/AR et RTL, le comportement audio de `vg02` propre à V6.13, l'absence de
 guides 3D et de GLB d'œuvre au démarrage, ainsi que la préservation du Louvre GEO.
 
 Cette validation matérielle est celle de l'utilisateur, non un test casque

@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#17212d">
   <title>ARTDACI Masters Hub — Galerie virtuelle</title>
   <link rel="icon" href="../assets/app/artdaci-app-icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles/masters-hub.css?v=6-13">
+  <link rel="stylesheet" href="styles/masters-hub.css?v=6-14-compact-4">
   <script type="importmap">{"imports":{"three":"../vendor/three.module.js"}}</script>
 </head>
 <body>
@@ -15,6 +15,7 @@
     <nav class="hub-languages" aria-label="Languages"><a data-lang="fr" href="?lang=fr">FR</a><a data-lang="en" href="?lang=en">EN</a><a data-lang="ar" href="?lang=ar">AR</a></nav>
   </header>
   <main>
+    <div class="hub-experience">
     <section class="hub-intro"><div><p class="hub-eyebrow" data-copy="subtitle">Galerie virtuelle ARTDACI</p><h1>ARTDACI <em>Masters Hub</em></h1><p data-copy="intro">Quatre peintres, douze œuvres. Explorez librement cette création virtuelle ARTDACI.</p></div><span class="hub-edition">01 — 04<br>MASTERS</span></section>
     <div class="hub-toolbar"><nav id="hub-zones" aria-label="Artists"></nav><div class="hub-tools"><button id="hub-home" data-copy="free">Explorer librement</button><button id="hub-fullscreen" data-copy="fullscreen">Plein écran</button><button id="hub-vr" disabled data-copy="noVr">VR indisponible ici</button></div></div>
     <section id="hub-stage" aria-label="ARTDACI Masters Hub">
@@ -26,11 +27,12 @@
         <img id="hub-detail" alt="" hidden><p id="hub-media-status" role="status"></p><div id="hub-actions"></div>
       </section>
     </section>
+    </div>
     <p class="hub-controls" data-copy="controls"></p><p class="hub-controls" data-copy="xrControls"></p>
     <section class="hub-collection" aria-labelledby="hub-works-title"><h2 id="hub-works-title" data-copy="works">Les douze œuvres</h2><div id="hub-works"></div></section>
     <footer><p data-copy="fiction"></p><a id="footer-return" href="./?lang=fr" data-copy="back">Retour à ARTDACI GEO</a></footer>
   </main>
   <audio id="hub-audio" preload="none"></audio>
-  <script type="module" src="scripts/masters-hub-viewer.js?v=6-13"></script>
+  <script type="module" src="scripts/masters-hub-viewer.js?v=6-14-final-audio-5"></script>
 </body>
 </html>

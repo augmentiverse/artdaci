@@ -1,0 +1,10 @@
+{
+  "schemaVersion":"1.0","guideId":"vermeer-guide","artistId":"ve",
+  "model":{"status":"reserved","path":null},"works":["ve01","ve05","ve02"],
+  "transform":{"scale":null,"rotationY":null,"groundOffset":null,"centerOffsetX":null},
+  "content":{
+    "fr":{"welcome":{"title":"Bienvenue avec Vermeer","description":"Explorez trois œuvres où la lumière donne vie aux scènes et aux paysages."},"about":{"title":"À propos de Vermeer","description":"Peintre néerlandais, j'ai accordé une attention particulière à la lumière et aux instants calmes."},"works":{"title":"Mes œuvres","description":"Choisissez une œuvre pour commencer la découverte."},"actions":{"DISCOVER_WORKS":"Découvrir mes œuvres","ABOUT_ARTIST":"À propos de l’artiste","NEXT_WORK":"Œuvre suivante","PREVIOUS_WORK":"Œuvre précédente","BACK_TO_GUIDE":"Retour au guide","CLOSE":"Fermer"}},
+    "en":{"welcome":{"title":"Welcome with Vermeer","description":"Explore three works in which light brings scenes and landscapes to life."},"about":{"title":"About Vermeer","description":"A Dutch painter, I paid close attention to light and quiet moments."},"works":{"title":"My artworks","description":"Choose an artwork to begin exploring."},"actions":{"DISCOVER_WORKS":"Discover my artworks","ABOUT_ARTIST":"About the artist","NEXT_WORK":"Next artwork","PREVIOUS_WORK":"Previous artwork","BACK_TO_GUIDE":"Back to guide","CLOSE":"Close"}},
+    "ar":{"welcome":{"title":"مرحبًا مع فيرمير","description":"استكشف ثلاثة أعمال يضفي فيها الضوء الحياة على المشاهد والمناظر."},"about":{"title":"عن فيرمير","description":"كنت رسامًا هولنديًا أوليت الضوء واللحظات الهادئة اهتمامًا خاصًا."},"works":{"title":"أعمالي","description":"اختر عملاً فنيًا لتبدأ الاستكشاف."},"actions":{"DISCOVER_WORKS":"اكتشف أعمالي","ABOUT_ARTIST":"عن الفنان","NEXT_WORK":"العمل التالي","PREVIOUS_WORK":"العمل السابق","BACK_TO_GUIDE":"العودة إلى الدليل","CLOSE":"إغلاق"}}
+  }
+}

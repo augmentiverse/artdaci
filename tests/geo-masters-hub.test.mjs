@@ -19,13 +19,15 @@ test('V6.13 contains exactly four artists and the twelve requested IDs in order'
 test('every work resolves to its canonical catalogue identity and local manifest',()=>{
   for(const a of config.artists)for(const w of a.works){const entry=catalog.artworks.find(e=>e.id===w.artworkId),m=manifest(w.artworkId);assert.equal(entry.slug,m.slug);assert.equal(m.artist.id,a.artistId);assert.equal(entry.manifest.path,`artworks/${w.artworkId}/manifest.json`);}
 });
-test('all twelve thumbnail and fallback image references exist without duplicated media files',()=>{
-  for(const work of works)for(const key of ['thumbnail','imageFallback']){assert.ok(existsSync(new URL(work[key],root)),work[key]);assert.match(work[key],/^assets\/artists\//);}
+test('all twelve thumbnail and fallback references exist in shared assets or isolated Hub media',()=>{
+  for(const work of works)for(const key of ['thumbnail','imageFallback']){assert.ok(existsSync(new URL(work[key],root)),work[key]);assert.match(work[key],/^(assets\/artists|geo\/media)\//);}
 });
-test('audio is offered for the exact language only, including no Arabic overview for vg02',()=>{
+test('audio is exact-language: canonical overview or explicitly configured Hub narration',()=>{
   let available=0;
-  for(const w of works)for(const lang of HUB_LANGUAGES){const media=resolveHubMedia(w,manifest(w.artworkId),lang);const expected=!(w.artworkId==='vg02'&&lang==='ar');assert.equal(Boolean(media.audio),expected,`${w.artworkId}/${lang}`);if(media.audio){available++;assert.match(media.audio,new RegExp(`/audio/${lang}/overview\\.mp3$`));}assert.equal(artworkActions(media,lang).some(a=>a.id==='audio'),expected);}
-  assert.equal(available,35);
+  for(const w of works)for(const lang of HUB_LANGUAGES){const media=resolveHubMedia(w,manifest(w.artworkId),lang);assert.ok(media.audio,`${w.artworkId}/${lang}`);available++;if(w.artworkId==='vg02'&&lang==='ar')assert.equal(media.audio,w.audioPresentation.ar.path);else assert.match(media.audio,new RegExp(`/audio/${lang}/overview\\.mp3$`));assert.ok(artworkActions(media,lang).some(a=>a.id==='audio'));}
+  assert.equal(available,36);
+  const canonicalBedroom={...works.find(w=>w.artworkId==='vg02'),audioPresentation:undefined};
+  assert.equal(resolveHubMedia(canonicalBedroom,manifest('vg02'),'ar').audio,null);
 });
 test('planned, wrong-language and wrong-artwork media cannot enable an audio action',()=>{
   const work=works[0],m=structuredClone(manifest('ld01'));m.media.audio.overview.ar.available=false;assert.equal(resolveHubMedia(work,m,'ar').audio,null);
@@ -34,9 +36,9 @@ test('planned, wrong-language and wrong-artwork media cannot enable an audio act
   delete m.media.audio.overview.ar;m.defaultLanguage='en';assert.equal(resolveHubMedia(work,m,'ar').audio,null);
 });
 test('image fallback survives absent, planned or malformed remote image entries',()=>{
-  const work=works[0],m=structuredClone(manifest('ld01'));m.media.images.main.available=false;assert.deepEqual(resolveHubMedia(work,m,'fr').imageCandidates,[work.imageFallback]);
-  m.media.images.main.available=true;m.media.images.main.path='../escape.png';assert.deepEqual(resolveHubMedia(work,m,'fr').imageCandidates,[work.imageFallback]);
-  assert.equal(resolveHubMedia(work,manifest('ld01'),'fr').imageCandidates.at(-1),work.imageFallback);
+  const work=works[0],m=structuredClone(manifest('ld01'));m.media.images[work.imagePresentation?.manifestKey||'main'].available=false;assert.deepEqual(resolveHubMedia(work,m,'fr').imageCandidates,[work.imageFallback]);
+  m.media.images[work.imagePresentation?.manifestKey||'main'].available=true;m.media.images[work.imagePresentation?.manifestKey||'main'].path='../escape.png';assert.deepEqual(resolveHubMedia(work,m,'fr').imageCandidates,[work.imageFallback]);
+  assert.ok(resolveHubMedia(work,manifest('ld01'),'fr').imageCandidates.includes(work.imageFallback));
 });
 test('manifest loading falls back locally after remote failure or identity mismatch',async()=>{
   for(const remote of ['failure','wrong']){const calls=[];const result=await loadHubManifest('vg02',{rootUrl:root,fetchImpl:async url=>{calls.push(url);if(calls.length===1){if(remote==='failure')throw new Error('offline');return {ok:true,json:async()=>manifest('ld01')};}return {ok:true,json:async()=>manifest('vg02')};}});assert.equal(result.id,'vg02');assert.equal(calls.length,2);assert.equal(calls[1],new URL('content/media-manifests/artworks/vg02/manifest.json',root).href);}
@@ -135,10 +137,10 @@ test('actual left and right controller handlers select artworks, target panels a
 test('actual thumbnail loader falls back once and keeps a selectable placeholder if both images fail',async()=>{
   const source=readFileSync(new URL('geo/scripts/masters-hub-viewer.js',root),'utf8');
   for(const failBoth of [false,true]){
-    const calls=[],item={work:works[0],mesh:new THREE.Mesh(new THREE.PlaneGeometry(),new THREE.MeshBasicMaterial()),frame:new THREE.Mesh(new THREE.BoxGeometry(),new THREE.MeshBasicMaterial())};
+    const calls=[],item={work:works[1],mesh:new THREE.Mesh(new THREE.PlaneGeometry(),new THREE.MeshBasicMaterial()),frame:new THREE.Mesh(new THREE.BoxGeometry(),new THREE.MeshBasicMaterial())};
     const state=vm.createContext({THREE,disposed:false,imagesLoaded:0,imageFailures:0,lang:'fr',copy:HUB_COPY.fr,asset:p=>p,renderer:{capabilities:{getMaxAnisotropy:()=>4}},labelTexture:()=>new THREE.Texture(),imageCanvas:async path=>{calls.push(path);if(failBoth||calls.length===1)throw new Error('unavailable');return {width:600,height:768};}});
     vm.runInContext(source.slice(source.indexOf('async function loadExhibit('),source.indexOf('function configureHtml(')),state);await state.loadExhibit(item);
-    assert.deepEqual(calls,[works[0].thumbnail,works[0].imageFallback]);assert.equal(state.imagesLoaded,failBoth?0:1);assert.equal(state.imageFailures,failBoth?1:0);assert.ok(item.mesh.material.map);
+    assert.deepEqual(calls,[works[1].thumbnail,works[1].imageFallback]);assert.equal(state.imagesLoaded,failBoth?0:1);assert.equal(state.imageFailures,failBoth?1:0);assert.ok(item.mesh.material.map);
   }
 });
 
