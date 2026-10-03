@@ -1,14 +1,22 @@
 import * as THREE from 'three';
+import {GLTFLoader} from '../../vendor/GLTFLoader.module.js';
+import {DRACOLoader} from '../../vendor/DRACOLoader.module.js';
 import {languageFromSearch} from './geo-core.mjs';
 import {movePosition,pivotRig,snapTurn,deadZone} from './room-navigation.mjs';
-import {HUB_COPY,HUB_LOCAL_AUDIO_COPY,validateHub,wallPlacement,readHubSticks,readHubKeyboard,createSelectionGate,firstHubHit} from './masters-hub-core.mjs';
+import {HUB_COPY,HUB_LOCAL_AUDIO_COPY,HUB_GUIDE_COPY,validateHub,wallPlacement,readHubSticks,readHubKeyboard,createSelectionGate,firstHubHit} from './masters-hub-core.mjs';
 import {createHubXrPanel} from './masters-hub-panel.mjs';
 import {createArtistGuideEngine,validateArtistGuideConfig} from './artist-guide-engine.mjs';
+import {createArtistGuideUi} from './artist-guide-ui.mjs';
+import {createArtistGuideXrPanel} from './artist-guide-xr-panel.mjs';
+import {createGuideModelHandle} from './artist-guide-model.mjs';
+import {createGuideQa} from './artist-guide-qa.mjs';
 import {createArtworkExperience} from './artwork-experience.mjs';
 import {artworkExperiencePresentation} from './artwork-experience-panel.mjs';
 import {createHubArchitecture,HUB_EXIT} from './masters-hub-room.mjs';
 
 const lang=languageFromSearch(location.search),copy=HUB_COPY[lang],rootUrl=new URL('../../',import.meta.url);
+const guideCopy=HUB_GUIDE_COPY[lang],guideQaEnabled=new URLSearchParams(location.search).get('guideQA')==='leonardo';
+const immersiveCopy={fr:{open:'Expériences immersives',back:'Retour à l’œuvre',ar:'Voir en AR',space:'Space AR',vr:'Explorer en VR'},en:{open:'Immersive experiences',back:'Back to artwork',ar:'View in AR',space:'Space AR',vr:'Explore in VR'},ar:{open:'تجارب غامرة',back:'العودة إلى العمل',ar:'عرض بالواقع المعزز',space:'واقع معزز مكاني',vr:'استكشف بالواقع الافتراضي'}}[lang];
 const $=id=>document.getElementById(id),stage=$('hub-stage'),canvas=$('hub-canvas'),panel=$('hub-panel'),audio=$('hub-audio');
 document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';
 document.title=`ARTDACI Masters Hub — ${copy.subtitle}`;
@@ -18,9 +26,9 @@ document.querySelectorAll('[data-lang]').forEach(el=>{el.href=`masters-hub.html?
 $('geo-return').textContent=copy.back;
 for(const id of ['geo-return','footer-return'])$(id).href=`./?lang=${lang}`;
 
-let config,scene,renderer,camera,rig,xrPanel,observer,guideEngine,artworkExperience,exitTarget,disposed=false,ready=false;
-let yaw=0,pitch=0,lastTime=0,turnArmed=false,xrEntry=null,needsPanelPlacement=false;
-let selected=null,media=null,panelView='menu',mediaStatus='',detailImage=null,detailUrl=null,lastFocus=null,audioCandidateIndex=0;
+let config,scene,renderer,camera,rig,xrPanel,guideXrPanel,guideUi,guideConfig,guideHandle,guideCallTarget,guideQa,decoder,observer,guideEngine,artworkExperience,exitTarget,disposed=false,ready=false;
+let yaw=0,pitch=0,lastTime=0,turnArmed=false,xrEntry=null,needsPanelPlacement=false,needsGuidePanelPlacement=false,guideLoadMs=null;
+let selected=null,media=null,panelView='menu',mediaStatus='',detailImage=null,detailUrl=null,lastFocus=null,audioCandidateIndex=0,guideTransform=null;
 let imagesLoaded=0,imageFailures=0,firstReadyTime=0,frameCount=0,metricStart=0,lastMetrics=0;
 const exhibits=[],targets=[],controllers=[],keys=new Set(),held=new Map(),selection=createSelectionGate(),detailGate=createSelectionGate();
 const pointerRay=new THREE.Raycaster(),xrRay=new THREE.Raycaster(),head=new THREE.Vector3(),look=new THREE.Vector3();
@@ -34,9 +42,61 @@ function closePanel(focus=true){
   if(xrPanel){xrPanel.mesh.visible=false;xrPanel.setHover(null);}
   if(focus&&lastFocus?.isConnected)lastFocus.focus({preventScroll:true});
 }
+function guideState(){return guideEngine?.snapshot().phase||'closed';}
+function syncGuideState(){
+  const state=guideState(),loaded=guideEngine?.snapshot().guidesLoaded||0;
+  stage.dataset.guideState=state;stage.dataset.guidesLoaded=String(loaded);
+  $('hub-call-leonardo').textContent=state==='closed'||state==='error'?guideCopy.call:guideCopy.release;
+  $('hub-call-leonardo').setAttribute('aria-pressed',loaded?'true':'false');
+  if(guideCallTarget){
+    guideCallTarget.material.map?.dispose();
+    guideCallTarget.material.map=guideButtonTexture(state==='closed'||state==='error'?guideCopy.call:guideCopy.release,state!=='closed'&&state!=='error');
+    guideCallTarget.material.needsUpdate=true;
+  }
+  if(guideLoadMs!==null)stage.dataset.guideLoadMs=String(guideLoadMs);
+  $('hub-guide-status').textContent=state==='loading'?guideCopy.loading:state==='error'?guideCopy.failed:state==='ready'?guideCopy.ready:'';
+}
+function renderGuide(){
+  const view=guideUi?.render();
+  if(guideXrPanel){guideXrPanel.drawGuide(view,{artistName:guideCopy.guide,status:guideCopy.ready});guideXrPanel.mesh.visible=Boolean(view&&renderer?.xr.isPresenting);}
+  if(view)needsGuidePanelPlacement=true;
+}
+function showGuide(){
+  if(guideState()!=='ready')return;
+  closePanel(false);guideEngine.dispatch('BACK_TO_GUIDE');guideUi.show();renderGuide();
+}
+function closeGuide(){
+  if(selected&&guideEngine?.snapshot().view==='artwork')closePanel(false);
+  guideUi?.hide();guideXrPanel&&(guideXrPanel.mesh.visible=false);
+  guideEngine?.unloadGuide();guideLoadMs=null;syncGuideState();
+}
+async function callGuide(){
+  if(!guideEngine||!ready)return;
+  if(guideState()==='loading'||guideState()==='ready'){closeGuide();return;}
+  closePanel(false);guideUi?.hide();const start=performance.now();
+  const pending=guideEngine.loadGuide('leonardo-guide');syncGuideState();
+  try{const result=await pending;if(disposed||result.phase!=='ready')return;
+    guideLoadMs=Math.round(performance.now()-start);syncGuideState();guideUi.show();renderGuide();
+  }catch(error){if(!disposed){syncGuideState();console.warn('Hub guide unavailable:',error);}}
+}
+function openGuideArtwork(artworkId){
+  const artist=config.artists.find(entry=>entry.artistId==='ld'),work=artist.works.find(entry=>entry.artworkId===artworkId);
+  if(!work)return;
+  if(guideEngine.snapshot().artworkId!==artworkId)guideEngine.dispatch('ARTWORK_SELECTED',{artworkId});
+  guideEngine.dispatch('ARTWORK_OPENED');guideUi.hide();guideXrPanel.mesh.visible=false;
+  openArtwork({artist,work});
+}
+function returnToGuide(){
+  closePanel(false);guideEngine.dispatch('BACK_TO_GUIDE');guideUi.show();renderGuide();
+}
 function drawPanel(){
   if(!selected)return;
   const work=selected.work,presentation=artworkExperiencePresentation({artist:selected.artist,work,language:lang,view:panelView,status:mediaStatus,capabilities:media?.capabilities,playing:!audio.paused,image:panelView==='image'?detailImage:null});
+  if(guideEngine?.snapshot().view==='artwork'&&guideEngine.snapshot().artworkId===work.artworkId){
+    const routes=['ar','space','vr'].filter(kind=>media?.capabilities?.[kind]?.status==='available'&&media.capabilities[kind].url);
+    if(panelView==='experiences')presentation.actions=[...routes.map(kind=>({id:kind,label:immersiveCopy[kind]})),{id:'work',label:immersiveCopy.back},{id:'guide-return',label:guideConfig.content[lang].actions.BACK_TO_GUIDE}];
+    else presentation.actions=[...presentation.actions.filter(action=>action.id!=='return'),...(routes.length?[{id:'experiences',label:immersiveCopy.open}]:[]),{id:'previous',label:guideConfig.content[lang].actions.PREVIOUS_WORK},{id:'next',label:guideConfig.content[lang].actions.NEXT_WORK},{id:'guide-return',label:guideConfig.content[lang].actions.BACK_TO_GUIDE}];
+  }
   const {actions,description}=presentation;
   $('hub-panel-title').textContent=presentation.title;$('hub-panel-artist').textContent=presentation.artist;
   $('hub-panel-description').textContent=description;$('hub-media-status').textContent=mediaStatus;
@@ -48,6 +108,7 @@ function drawPanel(){
   if(xrPanel){xrPanel.draw(presentation);xrPanel.mesh.visible=Boolean(renderer?.xr.isPresenting);}
 }
 async function openArtwork(item){
+  guideUi?.hide();if(guideXrPanel)guideXrPanel.mesh.visible=false;
   closePanel(false);lastFocus=document.activeElement;selected=item;panelView='menu';mediaStatus=copy.mediaLoading;
   const pending=artworkExperience.open(item.work.artworkId);
   media=artworkExperience.snapshot().media;const token=selection.next();drawPanel();needsPanelPlacement=true;
@@ -85,6 +146,15 @@ async function showDetail(){
 async function navigate(url){stopAudio();try{await renderer?.xr.getSession()?.end();}catch{}location.assign(url);}
 async function runAction(action){
   if(!selected)return;
+  if(action==='guide-return'){returnToGuide();return;}
+  if(action==='previous'||action==='next'){
+    const next=guideEngine.dispatch(action==='previous'?'ARTWORK_PREVIOUS':'ARTWORK_NEXT').artworkId;
+    if(next)openGuideArtwork(next);return;
+  }
+  if(action==='experiences'||action==='work'){panelView=action==='work'?'menu':'experiences';drawPanel();return;}
+  if(['ar','space','vr'].includes(action)&&media?.capabilities?.[action]?.status==='available'){
+    await navigate(media.capabilities[action].url);return;
+  }
   if(action==='return'){closePanel();return;}
   if(action==='about'){panelView='about';mediaStatus='';drawPanel();return;}
   if(action==='image'){await showDetail();return;}
@@ -112,6 +182,17 @@ function labelTexture(lines,{width=1024,height=192,color='#f1e9db',background='t
   lines.forEach((line,i)=>{ctx.fillStyle=i?secondaryColor:color;ctx.font=`${i?400:600} ${i?size*.55:size}px system-ui,sans-serif`;ctx.fillText(line,width/2,height/(lines.length+1)*(i+1)+size*.3,width-96);});
   const t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;t.generateMipmaps=false;t.minFilter=THREE.LinearFilter;return t;
 }
+function guideButtonTexture(label,release=false){
+  const c=document.createElement('canvas');c.width=1024;c.height=256;const ctx=c.getContext('2d');
+  ctx.fillStyle=release?'#44353a':'#234552';ctx.fillRect(0,0,c.width,c.height);
+  ctx.strokeStyle='#dbbc75';ctx.lineWidth=12;ctx.strokeRect(12,12,c.width-24,c.height-24);
+  ctx.strokeStyle='#f2dfa9';ctx.lineWidth=2;ctx.strokeRect(29,29,c.width-58,c.height-58);
+  ctx.fillStyle='#fff3d7';ctx.textAlign='center';ctx.direction=lang==='ar'?'rtl':'ltr';
+  ctx.font='600 76px system-ui,sans-serif';ctx.textBaseline='middle';ctx.fillText(label,c.width/2,c.height/2,c.width-128);
+  const texture=new THREE.CanvasTexture(c);texture.encoding=THREE.sRGBEncoding;
+  texture.generateMipmaps=true;texture.minFilter=THREE.LinearMipmapLinearFilter;texture.magFilter=THREE.LinearFilter;
+  return texture;
+}
 function board(texture,width,height,position,rotation=0){const m=new THREE.Mesh(new THREE.PlaneGeometry(width,height),new THREE.MeshBasicMaterial({map:texture,transparent:true,side:THREE.DoubleSide}));m.position.copy(position);m.rotation.y=rotation;scene.add(m);return m;}
 function wallLabel(lines,width,height,position,rotation,options={}){
   // Real depth offset, not an overlay: the plaque covers mouldings but never renders through artworks.
@@ -131,8 +212,12 @@ function buildShell(){
   for(const artist of config.artists){
     const middle=wallPlacement(artist.zone.wall,1),q=new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),middle.yaw);
     wallLabel([artist.name[lang]],6.5,.5,new THREE.Vector3(middle.x,3.78,middle.z),middle.yaw,{width:1560,height:120,size:60});
-    const reserve=new THREE.Vector3(7.8,1.6,0).applyQuaternion(q).add(new THREE.Vector3(middle.x,0,middle.z));
-    wallLabel([copy.guide,copy.reserved],2.5,.85,reserve,middle.yaw,{width:768,height:256,size:42});
+    const reserve=new THREE.Vector3(artist.artistId==='ld'?8.2:7.8,1.6,0).applyQuaternion(q).add(new THREE.Vector3(middle.x,0,middle.z));
+    if(artist.artistId==='ld'){
+      guideCallTarget=board(guideButtonTexture(guideCopy.call),1.72,.43,reserve,middle.yaw);
+      guideCallTarget.material.transparent=false;
+      guideCallTarget.name='Hub_Leonardo_Call';guideCallTarget.userData.guideCall=true;targets.push(guideCallTarget);
+    }else wallLabel([copy.guide,copy.reserved],2.5,.85,reserve,middle.yaw,{width:768,height:256,size:42});
     artist.works.forEach((work,index)=>{
       const p=wallPlacement(artist.zone.wall,index),group=new THREE.Group();group.position.set(p.x,2,p.z);group.rotation.y=p.yaw;scene.add(group);
       // The supplied image already contains its frame and caption: no backing or duplicate label.
@@ -160,7 +245,11 @@ function configureHtml(){
     const section=document.createElement('section');section.className='hub-artist-list';section.style.setProperty('--zone',artist.zone.color);
     const h=document.createElement('h3');h.textContent=artist.name[lang];section.append(h);
     for(const work of artist.works){const b=document.createElement('button');b.className='hub-work-link';b.dataset.artwork=work.artworkId;b.textContent=work.title[lang];const small=document.createElement('span');small.textContent=work.artworkId.toUpperCase();b.append(small);b.onclick=()=>{setView(artist.zone.view);stage.scrollIntoView({block:'center'});openArtwork({artist,work});};section.append(b);}
-    const note=document.createElement('small');note.textContent=copy.guide;section.append(note);$('hub-works').append(section);
+    if(artist.artistId==='ld'){
+      const button=document.createElement('button');button.id='hub-call-leonardo';button.textContent=guideCopy.call;button.onclick=()=>{stage.scrollIntoView({block:'center'});callGuide();};section.append(button);
+      const status=document.createElement('small');status.id='hub-guide-status';status.setAttribute('role','status');section.append(status);
+    }else{const note=document.createElement('small');note.textContent=copy.guide;section.append(note);}
+    $('hub-works').append(section);
   }
   for(const event of ['play','pause','ended'])audio.addEventListener(event,drawPanel);
   audio.addEventListener('error',()=>{if(selected&&media?.audioCandidates&&audio.getAttribute('src')&&audioCandidateIndex>=media.audioCandidates.length-1){mediaStatus=copy.audioFailed;drawPanel();}});
@@ -177,16 +266,18 @@ function configureHtml(){
   $('hub-fullscreen').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await stage.requestFullscreen();}catch{}};
 }
 function pointerHit(e){const r=canvas.getBoundingClientRect();pointerRay.setFromCamera(new THREE.Vector2((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1),camera);return pointerRay.intersectObjects(targets,false)[0];}
-function highlight(items,exitActive=false){for(const item of exhibits)item.frame.visible=items.has(item)&&item.mesh.visible;if(exitTarget)exitTarget.material.color.set(exitActive?0xffd88a:0xffffff);}
+function highlight(items,exitActive=false,guideActive=false,callActive=false){for(const item of exhibits)item.frame.visible=items.has(item)&&item.mesh.visible;if(exitTarget)exitTarget.material.color.set(exitActive?0xffd88a:0xffffff);guideHandle?.setHover(guideActive);guideCallTarget?.material.color.set(callActive?0x9de2dd:0xffffff);}
 function configurePointer(){
   canvas.onpointerdown=e=>{if(renderer.xr.isPresenting)return;canvas.focus({preventScroll:true});canvas.setPointerCapture(e.pointerId);drag={id:e.pointerId,x:e.clientX,y:e.clientY,distance:0};};
-  canvas.onpointermove=e=>{if(renderer.xr.isPresenting)return;if(drag?.id===e.pointerId){const dx=e.clientX-drag.x,dy=e.clientY-drag.y;drag.distance+=Math.hypot(dx,dy);yaw-=dx*.004;pitch=Math.max(-1.3,Math.min(1.3,pitch-dy*.004));drag.x=e.clientX;drag.y=e.clientY;}else{const hit=pointerHit(e);highlight(new Set(hit?.object.userData.item?[hit.object.userData.item]:[]),Boolean(hit?.object.userData.exit));canvas.style.cursor=hit?'pointer':'grab';}};
-  canvas.onpointerup=e=>{if(drag?.id===e.pointerId&&drag.distance<7){const h=pointerHit(e);if(h?.object.userData.item)openArtwork(h.object.userData.item);else if(h?.object.userData.exit)navigate(`./?lang=${lang}`);}drag=null;};
+  canvas.onpointermove=e=>{if(renderer.xr.isPresenting)return;if(drag?.id===e.pointerId){const dx=e.clientX-drag.x,dy=e.clientY-drag.y;drag.distance+=Math.hypot(dx,dy);yaw-=dx*.004;pitch=Math.max(-1.3,Math.min(1.3,pitch-dy*.004));drag.x=e.clientX;drag.y=e.clientY;}else{const hit=pointerHit(e);highlight(new Set(hit?.object.userData.item?[hit.object.userData.item]:[]),Boolean(hit?.object.userData.exit),Boolean(hit?.object.userData.guide),Boolean(hit?.object.userData.guideCall));canvas.style.cursor=hit?'pointer':'grab';}};
+  canvas.onpointerup=e=>{if(drag?.id===e.pointerId&&drag.distance<7){const h=pointerHit(e);if(h?.object.userData.guideCall)callGuide();else if(h?.object.userData.guide)showGuide();else if(h?.object.userData.item)openArtwork(h.object.userData.item);else if(h?.object.userData.exit)navigate(`./?lang=${lang}`);}drag=null;};
   canvas.onpointercancel=()=>drag=null;canvas.onlostpointercapture=()=>drag=null;canvas.onpointerleave=()=>highlight(new Set());
 }
 function controllerTarget(controller){
   const origin=new THREE.Vector3().setFromMatrixPosition(controller.matrixWorld),direction=new THREE.Vector3(0,0,-1).transformDirection(controller.matrixWorld);xrRay.set(origin,direction);
-  const panelHit=xrPanel.hit(xrRay),objects=xrRay.intersectObjects(targets,false).map(h=>({...h,kind:h.object.userData.exit?'exit':'artwork',item:h.object.userData.item}));
+  const panelHit=xrPanel.hit(xrRay),guidePanelHit=guideXrPanel?.hit(xrRay);
+  if(guidePanelHit&&(!panelHit||guidePanelHit.distance<panelHit.distance))return {...guidePanelHit,kind:'guide-panel'};
+  const objects=xrRay.intersectObjects(targets,false).map(h=>({...h,kind:h.object.userData.guideCall?'guide-call':h.object.userData.guide?'guide':h.object.userData.exit?'exit':'artwork',item:h.object.userData.item}));
   const hit=firstHubHit(panelHit,objects);if(hit)return hit;
   const point=new THREE.Vector3(),plane=new THREE.Plane(new THREE.Vector3(0,1,0),0),b=config.navigation.bounds;
   if(direction.y<-.05&&xrRay.ray.intersectPlane(plane,point)&&point.x>=b.minX&&point.x<=b.maxX&&point.z>=b.minZ&&point.z<=b.maxZ)return {kind:'floor',point,distance:origin.distanceTo(point)};
@@ -206,14 +297,17 @@ async function configureXr(){
     controller.addEventListener('disconnected',()=>{controller.userData.active=false;line.visible=cursor.visible=marker.visible=false;turnArmed=false;});
     controller.addEventListener('select',()=>{
       if(!ready||renderer.xr.getSession()?.visibilityState!=='visible')return;rig.updateMatrixWorld(true);const hit=controllerTarget(controller);
+      if(hit?.kind==='guide-panel'){if(hit.action){guideUi.activate(hit.action);renderGuide();}return;}
       if(hit?.kind==='panel'){if(hit.action)runAction(hit.action);return;}
+      if(hit?.kind==='guide-call'){callGuide();return;}
+      if(hit?.kind==='guide'){showGuide();return;}
       if(hit?.kind==='artwork'){openArtwork(hit.item);return;}
       if(hit?.kind==='exit'){navigate(`./?lang=${lang}`);return;}
       if(hit?.kind==='floor'){head.setFromMatrixPosition(renderer.xr.getCamera(camera).matrixWorld);rig.position.x+=hit.point.x-head.x;rig.position.z+=hit.point.z-head.z;}
     });
   }
-  renderer.xr.addEventListener('sessionstart',()=>{keys.clear();held.clear();drag=null;turnArmed=false;xrEntry={x:rig.position.x,z:rig.position.z,yaw};camera.position.set(0,0,0);camera.rotation.set(0,0,0);button.textContent=copy.exitVr;stage.dataset.xr='true';if(selected){drawPanel();needsPanelPlacement=true;}});
-  renderer.xr.addEventListener('sessionend',()=>{stage.dataset.xr='false';button.textContent=copy.vr;xrEntry=null;turnArmed=false;for(const c of controllers)c.userData.line.visible=c.userData.cursor.visible=c.userData.marker.visible=false;setView(config.navigation.entry);resize();});
+  renderer.xr.addEventListener('sessionstart',()=>{keys.clear();held.clear();drag=null;turnArmed=false;xrEntry={x:rig.position.x,z:rig.position.z,yaw};camera.position.set(0,0,0);camera.rotation.set(0,0,0);button.textContent=copy.exitVr;stage.dataset.xr='true';if(selected){drawPanel();needsPanelPlacement=true;}if(guideUi?.visible)renderGuide();});
+  renderer.xr.addEventListener('sessionend',()=>{stage.dataset.xr='false';button.textContent=copy.vr;xrEntry=null;turnArmed=false;guideXrPanel.mesh.visible=false;for(const c of controllers)c.userData.line.visible=c.userData.cursor.visible=c.userData.marker.visible=false;setView(config.navigation.entry);resize();});
   button.onclick=async()=>{try{if(renderer.xr.isPresenting){await renderer.xr.getSession().end();return;}const session=await navigator.xr.requestSession('immersive-vr',{requiredFeatures:['local-floor']});try{await renderer.xr.setSession(session);}catch(e){await session.end();throw e;}}catch{button.textContent=copy.xrError;}};
 }
 function navigateXr(dt,frame){
@@ -226,12 +320,13 @@ function navigateXr(dt,frame){
   if(forward||side){const p=movePosition(head,yaw,forward,side,dt*config.navigation.xrSpeed,config.navigation.bounds);rig.position.x+=p.x-head.x;rig.position.z+=p.z-head.z;}
   rig.updateMatrixWorld(true);
   if(needsPanelPlacement&&selected){xrPanel.place(renderer.xr.getCamera(camera).matrixWorld);needsPanelPlacement=false;}
-  const hovered=new Set();let panelHover=null,exitHover=false;
+  if(needsGuidePanelPlacement&&guideUi?.visible){guideXrPanel.place(renderer.xr.getCamera(camera).matrixWorld);needsGuidePanelPlacement=false;}
+  const hovered=new Set();let panelHover=null,guidePanelHover=null,exitHover=false,guideHover=false,callHover=false;
   for(const c of controllers){const d=c.userData;d.line.visible=d.active;d.cursor.visible=d.marker.visible=false;if(!d.active)continue;const h=controllerTarget(c);d.line.scale.z=h?Math.max(.02,h.distance):5;d.line.material.color.set(h?0x9de2dd:0xd6bd86);if(!h)continue;
     if(h.kind==='floor'){d.marker.position.copy(h.point);d.marker.position.y=.018;d.marker.visible=true;}
-    else{d.cursor.visible=true;d.cursor.position.copy(h.point);if(h.kind==='exit')exitHover=true;if(h.item)hovered.add(h.item);if(h.kind==='panel'&&h.action)panelHover=h.action;}
+    else{d.cursor.visible=true;d.cursor.position.copy(h.point);if(h.kind==='exit')exitHover=true;if(h.kind==='guide')guideHover=true;if(h.kind==='guide-call')callHover=true;if(h.item)hovered.add(h.item);if(h.kind==='panel'&&h.action)panelHover=h.action;if(h.kind==='guide-panel'&&h.action)guidePanelHover=h.action;}
   }
-  highlight(hovered,exitHover);xrPanel.setHover(panelHover);
+  highlight(hovered,exitHover,guideHover,callHover);xrPanel.setHover(panelHover);guideXrPanel?.setHover(guidePanelHover);
 }
 function resize(){if(!renderer||renderer.xr.isPresenting)return;renderer.setSize(stage.clientWidth,stage.clientHeight,false);camera.aspect=stage.clientWidth/stage.clientHeight;camera.updateProjectionMatrix();}
 function render(time,frame){
@@ -245,7 +340,7 @@ function render(time,frame){
   if(ready&&renderer.xr.isPresenting)navigateXr(dt,frame);
   if(!document.hidden||renderer.xr.isPresenting)renderer.render(scene,camera);
   frameCount++;
-  if(time-lastMetrics>1000){stage.dataset.metrics=JSON.stringify({fps:Math.round(frameCount*1000/Math.max(1,time-metricStart)),calls:renderer.info.render.calls,triangles:renderer.info.render.triangles,textures:renderer.info.memory.textures,imagesLoaded,imageFailures,readyMs:Math.round(firstReadyTime)});stage.dataset.pose=JSON.stringify({x:rig.position.x,z:rig.position.z,yaw,pitch});frameCount=0;metricStart=time;lastMetrics=time;}
+  if(time-lastMetrics>1000){stage.dataset.metrics=JSON.stringify({fps:Math.round(frameCount*1000/Math.max(1,time-metricStart)),calls:renderer.info.render.calls,triangles:renderer.info.render.triangles,textures:renderer.info.memory.textures,imagesLoaded,imageFailures,readyMs:Math.round(firstReadyTime),guidesLoaded:guideEngine?.snapshot().guidesLoaded||0,artworkModelsLoaded:artworkExperience?.snapshot().artworkModelsLoaded||0});stage.dataset.pose=JSON.stringify({x:rig.position.x,z:rig.position.z,yaw,pitch});frameCount=0;metricStart=time;lastMetrics=time;}
 }
 async function init(){
   const started=performance.now(),guideFiles=['leonardo-hub-guide.json','vermeer-hub-guide.json','vangogh-hub-guide.json','monet-hub-guide.json'];
@@ -255,13 +350,26 @@ async function init(){
   const errors=validateHub(config,catalog);
   for(const artist of config.artists){const guide=guideConfigs.find(item=>item.guideId===artist.guide.guideId);errors.push(...validateArtistGuideConfig(guide,{artist,knownArtworkIds:artist.works.map(work=>work.artworkId)}));}
   if(errors.length)throw new Error(errors.join('; '));
-  guideEngine=createArtistGuideEngine({configs:guideConfigs,workTitle:(id,language)=>config.artists.flatMap(artist=>artist.works).find(work=>work.artworkId===id)?.title[language]||id});
+  guideConfig=guideConfigs.find(item=>item.guideId==='leonardo-guide');guideTransform={...guideConfig.transform};
   artworkExperience=createArtworkExperience({catalog,artists:config.artists,language:lang,rootUrl,onCloseMedia:stopAudio});
   stage.dataset.guidesLoaded='0';stage.dataset.artworkModelsLoaded='0';configureHtml();
   try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false});}catch{$('hub-status').textContent=copy.failed;return;}
   renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.outputEncoding=THREE.sRGBEncoding;renderer.xr.enabled=true;renderer.xr.setReferenceSpaceType('local-floor');
   buildShell();camera=new THREE.PerspectiveCamera(65,1,.05,60);rig=new THREE.Group();rig.add(camera);scene.add(rig);setView(config.navigation.entry);
-  xrPanel=createHubXrPanel(THREE,lang);scene.add(xrPanel.mesh);observer=new ResizeObserver(resize);observer.observe(stage);resize();configurePointer();await configureXr();ready=true;renderer.setAnimationLoop(render);
+  decoder=new DRACOLoader().setDecoderPath(new URL('../../vendor/draco/',import.meta.url).href).setWorkerLimit(2);
+  const loader=new GLTFLoader().setDRACOLoader(decoder);
+  guideEngine=createArtistGuideEngine({configs:guideConfigs,
+    loadModel:async descriptor=>{const gltf=await loader.loadAsync(asset(descriptor.path));const handle=createGuideModelHandle(THREE,gltf.scene);handle.apply(guideTransform);return handle;},
+    onModelReady:handle=>{handle.apply(guideTransform);handle.mount(scene);guideHandle=handle;targets.push(handle.proxy);},
+    disposeModel:handle=>{const index=targets.indexOf(handle.proxy);if(index>=0)targets.splice(index,1);handle.dispose();if(guideHandle===handle)guideHandle=null;},
+    onCloseMedia:stopAudio,
+    workTitle:(id,language)=>config.artists.flatMap(artist=>artist.works).find(work=>work.artworkId===id)?.title[language]||id
+  });
+  guideUi=createArtistGuideUi({element:$('hub-guide-panel'),engine:guideEngine,language:lang,onArtwork:openGuideArtwork,onClose:()=>{guideXrPanel.mesh.visible=false;syncGuideState();}});
+  xrPanel=createHubXrPanel(THREE,lang);scene.add(xrPanel.mesh);
+  guideXrPanel=createArtistGuideXrPanel(THREE,lang);scene.add(guideXrPanel.mesh);
+  if(guideQaEnabled)guideQa=createGuideQa({stage,initial:guideTransform,onChange:transform=>{guideTransform=transform;guideHandle?.apply(guideTransform);}});
+  syncGuideState();observer=new ResizeObserver(resize);observer.observe(stage);resize();configurePointer();await configureXr();ready=true;renderer.setAnimationLoop(render);
   const queue=[...exhibits];await Promise.all(Array.from({length:3},async()=>{while(queue.length&&!disposed)await loadExhibit(queue.shift());}));
   if(disposed)return;firstReadyTime=performance.now()-started;stage.dataset.ready='true';
   stage.dataset.startupResources=JSON.stringify(performance.getEntriesByType('resource').map(r=>({url:r.name,bytes:r.encodedBodySize})));
@@ -269,9 +377,9 @@ async function init(){
   $('hub-status').textContent=copy.ready+(imageFailures?` · ${imageFailures} ${copy.imageFailed}`:'');
 }
 function dispose(){
-  if(disposed)return;disposed=true;ready=false;selection.next();detailGate.next();guideEngine?.dispose();artworkExperience?.dispose();stopAudio();clearDetail();observer?.disconnect();renderer?.setAnimationLoop(null);renderer?.xr.getSession()?.end().catch(()=>{});
+  if(disposed)return;disposed=true;ready=false;selection.next();detailGate.next();guideEngine?.dispose();artworkExperience?.dispose();stopAudio();clearDetail();guideQa?.remove();observer?.disconnect();renderer?.setAnimationLoop(null);renderer?.xr.getSession()?.end().catch(()=>{});
   const textures=new Set(),geometries=new Set(),materials=new Set();scene?.traverse(o=>{if(o.geometry)geometries.add(o.geometry);for(const m of Array.isArray(o.material)?o.material:o.material?[o.material]:[]){materials.add(m);if(m.map)textures.add(m.map);}});
-  for(const t of textures)t.dispose();for(const g of geometries)g.dispose();for(const m of materials)m.dispose();renderer?.dispose();
+  for(const t of textures)t.dispose();for(const g of geometries)g.dispose();for(const m of materials)m.dispose();renderer?.dispose();decoder?.dispose();
 }
 window.addEventListener('pagehide',dispose);window.addEventListener('pageshow',e=>{if(e.persisted)location.reload();});
 canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();$('hub-status').textContent=copy.failed;ready=false;});

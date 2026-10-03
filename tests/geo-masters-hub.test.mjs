@@ -61,8 +61,9 @@ test('guide configurations reserve identities without runtime paths or models',(
   const mutated=structuredClone(config);mutated.artists[1].guide.model='vermeer_standing.glb';assert.ok(validateHub(mutated,catalog).length);
   assert.equal(existsSync(new URL('assets/artists/johannes-vermeer/reimagined/models/vermeer_standing.glb',root)),false);
 });
-test('Hub startup has no model loader or video import and audio has preload none',()=>{
-  for(const path of ['geo/scripts/masters-hub-viewer.js','geo/scripts/masters-hub-panel.mjs','geo/masters-hub.html']){const source=readFileSync(new URL(path,root),'utf8');assert.doesNotMatch(source,/GLTFLoader|DRACOLoader|model-viewer|\.glb|<video|VideoTexture/);}
+test('Hub startup prepares a guide loader but loads no GLB or video before explicit selection',()=>{
+  const viewer=readFileSync(new URL('geo/scripts/masters-hub-viewer.js',root),'utf8');assert.match(viewer,/loadModel:async descriptor/);assert.match(viewer,/guideEngine\.loadGuide\('leonardo-guide'\)/);
+  for(const path of ['geo/scripts/masters-hub-panel.mjs','geo/masters-hub.html'])assert.doesNotMatch(readFileSync(new URL(path,root),'utf8'),/GLTFLoader|DRACOLoader|model-viewer|\.glb|<video|VideoTexture/);
   assert.match(readFileSync(new URL('geo/masters-hub.html',root),'utf8'),/<audio[^>]+preload="none"/);
 });
 test('every label and work description exists in FR/EN/AR; Arabic uses RTL in HTML and XR',()=>{
@@ -122,7 +123,7 @@ test('actual left and right controller handlers select artworks, target panels a
   const item={work:works[0]},art=new THREE.Mesh(new THREE.PlaneGeometry(2,2),new THREE.MeshBasicMaterial());art.position.set(0,1.3,-3);art.userData.item=item;scene.add(art);scene.updateMatrixWorld(true);
   const actions=[],opened=[],button={},session={visibilityState:'visible',inputSources:[]};let panelHit=null;
   const renderer={xr:{isPresenting:true,getController:i=>hands[i],getCamera:()=>{scene.updateMatrixWorld(true);return camera;},getSession:()=>session,getReferenceSpace:()=>({}),addEventListener(){}}};
-  const state=vm.createContext({THREE,scene,rig,camera,renderer,controllers:[],targets:[art],xrRay:new THREE.Raycaster(),xrPanel:{hit:()=>panelHit,setHover(){},place(){}},firstHubHit,config,ready:true,head:new THREE.Vector3(),look:new THREE.Vector3(),turnArmed:false,xrEntry:null,needsPanelPlacement:false,selected:null,readHubSticks,snapTurn,pivotRig,movePosition,deadZone,yaw:0,
+  const state=vm.createContext({THREE,scene,rig,camera,renderer,controllers:[],targets:[art],xrRay:new THREE.Raycaster(),xrPanel:{hit:()=>panelHit,setHover(){},place(){}},guideXrPanel:null,guideUi:null,guideHandle:null,firstHubHit,config,ready:true,head:new THREE.Vector3(),look:new THREE.Vector3(),turnArmed:false,xrEntry:null,needsPanelPlacement:false,needsGuidePanelPlacement:false,selected:null,readHubSticks,snapTurn,pivotRig,movePosition,deadZone,yaw:0,
     navigator:{xr:{isSessionSupported:async()=>true}},$:()=>button,copy:HUB_COPY.fr,lang:'fr',highlight(){},runAction:a=>actions.push(a),openArtwork:w=>opened.push(w),navigate(){},keys:new Set(),held:new Map()});
   vm.runInContext(source.slice(source.indexOf('function controllerTarget('),source.indexOf('function resize(')),state);await state.configureXr();
   for(const [i,c] of hands.entries()){c.dispatchEvent({type:'connected',data:{handedness:i?'right':'left'}});c.dispatchEvent({type:'select'});}

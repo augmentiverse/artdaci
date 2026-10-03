@@ -1,6 +1,6 @@
 import {panelButtonAt,layoutHubButtons} from './masters-hub-core.mjs';
 
-export function createHubXrPanel(THREE,language){
+export function createHubXrPanel(THREE,language,{side='default'}={}){
   const canvas=document.createElement('canvas');canvas.width=1024;canvas.height=900;
   const ctx=canvas.getContext('2d'),texture=new THREE.CanvasTexture(canvas);texture.encoding=THREE.sRGBEncoding;
   const mesh=new THREE.Mesh(new THREE.PlaneGeometry(1.08,.95),new THREE.MeshBasicMaterial({map:texture,transparent:true,depthTest:false,depthWrite:false,side:THREE.DoubleSide}));
@@ -20,17 +20,17 @@ export function createHubXrPanel(THREE,language){
     text(view.artist,52,62,27,'#ddc592');text(view.title,52,126,44);
     if(view.image){const s=Math.min(920/view.image.width,350/view.image.height);ctx.drawImage(view.image,(1024-view.image.width*s)/2,166,view.image.width*s,view.image.height*s);}
     else paragraph(view.description||'',196);
-    text(view.status||'',52,542,25,'#d6cab6');
+    text(view.status||'',52,view.actions.length>4?516:542,25,'#d6cab6');
     layoutHubButtons(view.actions,rtl).forEach(a=>{
       const {x,y,width,height}=a;
       ctx.fillStyle=hover===a.id?'#a5e6e0':'#273b4b';ctx.fillRect(x,y,width,height);
       ctx.strokeStyle=hover===a.id?'#fff':'#ad9566';ctx.lineWidth=hover===a.id?6:2;ctx.strokeRect(x,y,width,height);
-      ctx.font='30px system-ui,sans-serif';ctx.textAlign='center';ctx.direction=rtl?'rtl':'ltr';ctx.fillStyle=hover===a.id?'#17212d':'#fff9ed';ctx.fillText(a.label,x+width/2,y+51,width-20);
+      ctx.font='30px system-ui,sans-serif';ctx.textAlign='center';ctx.direction=rtl?'rtl':'ltr';ctx.fillStyle=hover===a.id?'#17212d':'#fff9ed';ctx.fillText(a.label,x+width/2,y+height*.64,width-20);
       buttons.push({id:a.id,x,y,width,height});
     });texture.needsUpdate=true;
   }
   return {mesh,draw,
-    place(matrix){const q=new THREE.Quaternion().setFromRotationMatrix(matrix);mesh.position.setFromMatrixPosition(matrix).add(new THREE.Vector3(rtl?-.67:.67,-.18,-1.5).applyQuaternion(q));mesh.quaternion.copy(q);mesh.updateMatrixWorld(true);},
+    place(matrix){const q=new THREE.Quaternion().setFromRotationMatrix(matrix);mesh.position.setFromMatrixPosition(matrix).add(new THREE.Vector3(side==='left'?-.67:rtl?-.67:.67,-.18,-1.5).applyQuaternion(q));mesh.quaternion.copy(q);mesh.updateMatrixWorld(true);},
     hit(ray){if(!mesh.visible)return null;const h=ray.intersectObject(mesh)[0];return h?{distance:h.distance,point:h.point,action:panelButtonAt(buttons,h.uv.x*1024,(1-h.uv.y)*900)}:null;},
     setHover(id){if(id===hover)return;hover=id;if(view)draw(view);},
     dispose(){mesh.geometry.dispose();mesh.material.dispose();texture.dispose();}

@@ -18,14 +18,15 @@ const works=hub.artists.flatMap(artist=>artist.works.map(work=>({artist,work,ent
 const manifest=id=>json(`content/media-manifests/artworks/${id}/manifest.json`);
 const flush=()=>new Promise(resolve=>setImmediate(resolve));
 
-test('four reserved guide configurations match the twelve unchanged Hub works and translate all views',()=>{
+test('four guide configurations keep the twelve unchanged Hub works and translate all views',()=>{
   assert.equal(MAX_ACTIVE_GUIDES,1);assert.equal(configs.length,4);
   for(const artist of hub.artists){
     const config=configs.find(item=>item.artistId===artist.artistId);
     assert.deepEqual(validateArtistGuideConfig(config,{artist,knownArtworkIds:artist.works.map(work=>work.artworkId)}),[]);
-    assert.deepEqual(config.model,{status:'reserved',path:null});
+    assert.equal(config.model.status,artist.artistId==='ld'?'available':'reserved');
+    if(artist.artistId!=='ld')assert.equal(config.model.path,null);
     assert.deepEqual(config.works,artist.works.map(work=>work.artworkId));
-    assert.ok(Object.values(config.transform).every(value=>value===null));
+    assert.ok(Object.values(config.transform).every(value=>artist.artistId==='ld'?Number.isFinite(value):value===null));
     for(const language of ['fr','en','ar'])assert.ok(config.content[language].welcome.title&&config.content[language].about.description);
   }
   assert.deepEqual(configs.find(config=>config.artistId==='ve').guideId,'vermeer-guide');

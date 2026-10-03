@@ -20,7 +20,7 @@ export function validateArtistGuideConfig(config,{artist,knownArtworkIds=[]}={})
   return errors;
 }
 
-export function createArtistGuideEngine({configs,loadModel=async()=>null,disposeModel,onEvent=()=>{},onCloseMedia=()=>{},workTitle=(id)=>id}={}){
+export function createArtistGuideEngine({configs,loadModel=async()=>null,disposeModel,onModelReady=()=>{},onEvent=()=>{},onCloseMedia=()=>{},workTitle=(id)=>id}={}){
   const byId=new Map(configs?.map(config=>[config.guideId,config])||[]);
   if(!byId.size||byId.size!==configs.length||configs.some(config=>validateArtistGuideConfig(config).length))throw new Error('Invalid guide configurations');
   const slot=createResourceSlot({load:loadModel,dispose:disposeModel});
@@ -40,10 +40,11 @@ export function createArtistGuideEngine({configs,loadModel=async()=>null,dispose
     emit('GUIDE_REQUESTED');
     try{
       // Reserved guides have no path and never invoke a model loader.
-      await slot.select(guideId,config.model.status==='available'?config.model:null);
+      const handle=await slot.select(guideId,config.model.status==='available'?config.model:null);
       if(request!==revision)return snapshot();
+      if(handle)onModelReady(handle,config);
       phase='ready';emit('GUIDE_READY');return snapshot();
-    }catch(error){if(request===revision){phase='error';view=null;}throw error;}
+    }catch(error){if(request===revision){slot.clear();phase='error';view=null;}throw error;}
   }
   async function switchGuide(guideId){
     if(!byId.has(guideId))throw new Error('Unknown guide');

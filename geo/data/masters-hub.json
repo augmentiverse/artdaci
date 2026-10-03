@@ -10,7 +10,7 @@
   "artists": [
     {
       "artistId":"ld", "name":{"fr":"Léonard de Vinci","en":"Leonardo da Vinci","ar":"ليوناردو دا فينشي"},
-      "guide":{"guideId":"leonardo-guide","status":"reserved"},
+      "guide":{"guideId":"leonardo-guide","status":"available"},
       "zone":{"wall":"north","color":"#354d70","view":{"x":0,"z":-5.5,"yaw":0}},
       "works":[
         {"artworkId":"ld01","title":{"fr":"La Joconde","en":"Mona Lisa","ar":"الموناليزا"},"thumbnail":"geo/media/ld01/mana-lisa-davici.webp","imageFallback":"geo/media/ld01/mana-lisa-davici.webp","museumId":"louvre","description":{"fr":"Un portrait au sourire énigmatique. Observez les transitions douces entre ombre et lumière et le paysage derrière la figure.","en":"A portrait with an enigmatic smile. Look at the soft transitions between light and shadow and the landscape behind the figure.","ar":"صورة شخصية بابتسامة غامضة. تأمل الانتقالات الناعمة بين الضوء والظل والمنظر الطبيعي خلف الشخصية."},"imagePresentation":{"source":"hub-local","sha256":"db84573594972a603d67f80da227ad014d6f5c32e201c2cd80cc0b1fff9ff2f1","orientation":"portrait"}},

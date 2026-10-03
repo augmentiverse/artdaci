@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import vm from 'node:vm';
 import * as THREE from '../vendor/three.module.js';
-import {resolveHubMedia,resolveHubImage,wallPlacement,firstHubHit,HUB_COPY,readHubKeyboard,validateHub} from '../geo/scripts/masters-hub-core.mjs';
+import {resolveHubMedia,resolveHubImage,wallPlacement,firstHubHit,HUB_COPY,HUB_GUIDE_COPY,readHubKeyboard,validateHub} from '../geo/scripts/masters-hub-core.mjs';
 import {movePosition} from '../geo/scripts/room-navigation.mjs';
 import {resolveArtworkCapabilities} from '../geo/scripts/artwork-experience.mjs';
 import {artworkExperiencePresentation} from '../geo/scripts/artwork-experience-panel.mjs';
@@ -111,10 +111,10 @@ test('actual Hub frame moves with all four arrows without rotating the desktop c
 
 test('actual Hub shell exposes twelve bare image planes and only transient hover outlines, with no repeated wall captions',()=>{
   const source=readFileSync(new URL('geo/scripts/masters-hub-viewer.js',root),'utf8');
-  const state=vm.createContext({THREE,scene:null,renderer:{capabilities:{getMaxAnisotropy:()=>4}},createHubArchitecture:()=>new THREE.Group(),config:hub,lang:'fr',copy:HUB_COPY.fr,wallPlacement,HUB_EXIT,exhibits:[],targets:[],exitTarget:null,labelTexture:()=>new THREE.Texture()});
+  const state=vm.createContext({THREE,scene:null,renderer:{capabilities:{getMaxAnisotropy:()=>4}},createHubArchitecture:()=>new THREE.Group(),config:hub,lang:'fr',copy:HUB_COPY.fr,guideCopy:HUB_GUIDE_COPY.fr,wallPlacement,HUB_EXIT,exhibits:[],targets:[],exitTarget:null,guideCallTarget:null,guideHandle:null,labelTexture:()=>new THREE.Texture(),guideButtonTexture:()=>new THREE.Texture()});
   vm.runInContext(source.slice(source.indexOf('function board('),source.indexOf('async function loadExhibit(')),state);state.buildShell();
   assert.equal(state.exhibits.length,12);
-  // Four artist signs, four reserved-guide signs and the exit, but no artwork captions.
+  // Four artist signs, three reservations, one Leonardo call and the exit; no artwork captions.
   assert.equal(state.scene.children.filter(node=>node.isMesh).length,9);
   for(const item of state.exhibits){assert.equal(item.group.children.filter(node=>node.isMesh).length,1);assert.ok(item.frame.isLineLoop);assert.equal(item.frame.visible,false);}
   vm.runInContext(source.slice(source.indexOf('function highlight('),source.indexOf('function configurePointer(')),state);
@@ -134,7 +134,7 @@ test('GEO exit occupies a neutral corner and is directly raycastable from either
     hand.position.set(7.4+i*.4,1.4,7.6);hand.quaternion.setFromUnitVectors(new THREE.Vector3(0,0,-1),target.position.clone().sub(hand.position).normalize());
   }
   const renderer={xr:{getController:i=>hands[i],getSession:()=>({visibilityState:'visible'}),addEventListener(){}}};
-  const state=vm.createContext({THREE,scene,rig,camera,renderer,controllers:[],targets:[target],xrRay:new THREE.Raycaster(),xrPanel:{hit:()=>null},firstHubHit,config:hub,ready:true,lang:'ar',head:new THREE.Vector3(),turnArmed:false,navigator:{xr:{isSessionSupported:async()=>true}},$:()=>({}),copy:HUB_COPY.ar,navigate:url=>routes.push(url)});
+  const state=vm.createContext({THREE,scene,rig,camera,renderer,controllers:[],targets:[target],xrRay:new THREE.Raycaster(),xrPanel:{hit:()=>null},guideXrPanel:null,firstHubHit,config:hub,ready:true,lang:'ar',head:new THREE.Vector3(),turnArmed:false,navigator:{xr:{isSessionSupported:async()=>true}},$:()=>({}),copy:HUB_COPY.ar,navigate:url=>routes.push(url)});
   const source=readFileSync(new URL('geo/scripts/masters-hub-viewer.js',root),'utf8');
   vm.runInContext(source.slice(source.indexOf('function controllerTarget('),source.indexOf('function navigateXr(')),state);
   await state.configureXr();scene.updateMatrixWorld(true);

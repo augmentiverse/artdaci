@@ -10,6 +10,11 @@ export const HUB_COPY = {
   ar:{back:'العودة إلى ARTDACI GEO',subtitle:'معرض ARTDACI الافتراضي',intro:'أربعة رسامين واثنا عشر عملاً. استكشف بحرية هذا الإبداع الافتراضي من ARTDACI.',fiction:'معرض من تصور ARTDACI، مستقل عن أي متحف حقيقي.',free:'استكشف بحرية',guide:'الدليل متاح قريبًا',reserved:'مكان الدليل المستقبلي',vr:'الدخول إلى الواقع الافتراضي',exitVr:'مغادرة الواقع الافتراضي',noVr:'الواقع الافتراضي غير متاح هنا',xrError:'تعذر بدء الواقع الافتراضي. حاول مجددًا.',loading:'جارٍ تحضير المعرض…',ready:'المعرض جاهز',failed:'تعذر تحميل المعرض. عد إلى ARTDACI GEO للمحاولة مجددًا.',controls:'اسحب للنظر · الأسهم ↑ ↓ ← → أو WASD أو ZQSD للتنقل',xrControls:'العصا اليسرى للمشي واليمنى للدوران. وجّه نحو الأرض واضغط الزناد للانتقال، أو نحو لوحة لاكتشافها.',forward:'تقدم',backward:'تراجع',left:'يسار',right:'يمين',turnLeft:'استدر يسارًا',turnRight:'استدر يمينًا',about:'عن العمل',image:'شاهد الصورة',audio:'استمع',pause:'إيقاف مؤقت',museum:'معرض المتحف في ARTDACI',return:'العودة',choose:'اختر إجراءً لاكتشاف هذا العمل الفني.',mediaLoading:'جارٍ التحقق من الوسائط…',mediaFailed:'الوسائط البعيدة غير متاحة. تظل معلومات العمل متاحة.',imageFailed:'الصورة غير متاحة',audioFailed:'الصوت غير متاح. يمكنك المحاولة مجددًا.',museumNote:'يفتح الرابط معرضًا افتراضيًا للمتحف في ARTDACI، ولا يؤكد أن هذا العمل معروض حاليًا.',works:'الأعمال الاثنا عشر',retry:'أعد المحاولة',fullscreen:'ملء الشاشة'}
 };
 export const HUB_LOCAL_AUDIO_COPY=Object.freeze({fr:'Audio local dans la langue choisie',en:'Local audio in the selected language',ar:'صوت محلي باللغة المختارة'});
+export const HUB_GUIDE_COPY=Object.freeze({
+  fr:{call:'Appeler Leonardo',loading:'Chargement de Leonardo…',ready:'Leonardo est prêt',failed:'Leonardo est indisponible. Réessayez.',release:'Libérer Leonardo',guide:'Guide virtuel'},
+  en:{call:'Call Leonardo',loading:'Loading Leonardo…',ready:'Leonardo is ready',failed:'Leonardo is unavailable. Try again.',release:'Release Leonardo',guide:'Virtual guide'},
+  ar:{call:'استدعاء ليوناردو',loading:'جارٍ تحميل ليوناردو…',ready:'ليوناردو جاهز',failed:'ليوناردو غير متاح. حاول مجددًا.',release:'تحرير ليوناردو',guide:'الدليل الافتراضي'}
+});
 
 export function validateHub(config,catalog){
   const errors=[];
@@ -21,7 +26,7 @@ export function validateHub(config,catalog){
     if(!expected||seen.has(artist.artistId))errors.push('Invalid artist');
     seen.add(artist.artistId);
     if(JSON.stringify(artist.works?.map(w=>w.artworkId))!==JSON.stringify(expected))errors.push('Invalid artwork selection');
-    if(artist.guide?.status!=='reserved'||!artist.guide?.guideId||Object.keys(artist.guide).some(k=>!['status','guideId'].includes(k)))errors.push('Guide must remain reserved without media');
+    if(artist.guide?.status!==(artist.artistId==='ld'?'available':'reserved')||!artist.guide?.guideId||Object.keys(artist.guide).some(k=>!['status','guideId'].includes(k)))errors.push('Only Leonardo may have an active guide');
     if(!['north','east','south','west'].includes(artist.zone?.wall))errors.push('Invalid zone');
     for(const language of HUB_LANGUAGES)if(!artist.name?.[language]||!config.subtitle?.[language])errors.push('Missing translation');
     for(const work of artist.works||[]){
@@ -119,7 +124,8 @@ export function createSelectionGate(){
 }
 export function panelButtonAt(buttons,x,y){return buttons.find(b=>x>=b.x&&x<=b.x+b.width&&y>=b.y&&y<=b.y+b.height)?.id||null;}
 export function layoutHubButtons(actions,rtl=false){
-  return actions.map((action,i)=>{const full=i===actions.length-1,col=rtl?1-i%2:i%2,row=full?Math.ceil(i/2):Math.floor(i/2);return {...action,x:full?52:52+col*474,y:576+row*99,width:full?920:446,height:80};});
+  const dense=actions.length>4;
+  return actions.map((action,i)=>{const full=i===actions.length-1,col=rtl?1-i%2:i%2,row=full?Math.ceil(i/2):Math.floor(i/2);return {...action,x:full?52:52+col*474,y:(dense?550:576)+row*(dense?68:99),width:full?920:446,height:dense?60:80};});
 }
 export function firstHubHit(panelHit,objectHits){
   // A panel surface blocks selection/teleportation even between its buttons.
