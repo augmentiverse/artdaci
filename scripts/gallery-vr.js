@@ -144,6 +144,40 @@ const BEDROOM_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/48b7eb17-56e4-
 const LEONARDO_STUDIO_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/862ab5f6-8608-469c-a840-8cb10f3859ae";
 const LEONARDO_ENRICHED_STUDIO_URL = "https://marble.worldlabs.ai/project/c7853f32-4025-4d66-a536-54bb9db6162d";
 const LOUVRE_GALLERY_VR_WORLD_URL = "https://marble.worldlabs.ai/worldvr/5327a462-1e90-479b-8cec-d2a52a33e04f";
+const INDIVIDUAL_EXPERIENCES = Object.freeze({
+  "mona-lisa": {
+    title: { en: "Mona Lisa", fr: "La Joconde", ar: "الموناليزا" },
+    route: "space"
+  },
+  "lady-with-an-ermine": {
+    title: { en: "The Lady with an Ermine", fr: "La Dame à l’hermine", ar: "السيدة ذات القاقم" },
+    route: "artwork"
+  },
+  "vermeer-girl-with-a-pearl-earring": {
+    title: { en: "Girl with a Pearl Earring", fr: "La Jeune Fille à la perle", ar: "الفتاة ذات القرط اللؤلؤي" },
+    route: "space"
+  },
+  "view-of-delft": {
+    title: { en: "View of Delft", fr: "Vue de Delft", ar: "منظر دلفت" },
+    route: "artwork"
+  },
+  "van-gogh": {
+    title: { en: "Self-Portrait", fr: "Autoportrait", ar: "بورتريه ذاتي" },
+    route: "space"
+  },
+  "van-gogh-bedroom": {
+    title: { en: "The Bedroom", fr: "La Chambre", ar: "غرفة النوم" },
+    route: "space"
+  },
+  "woman-with-parasol": {
+    title: { en: "Woman with a Parasol", fr: "La Femme à l’ombrelle", ar: "امرأة تحمل مظلة" },
+    route: "artwork"
+  },
+  "pont-d-argenteuil": {
+    title: { en: "The Bridge at Argenteuil", fr: "Le Pont d’Argenteuil", ar: "جسر أرجنتوي" },
+    route: "artwork"
+  }
+});
 const CINEMA_ROOM_X = 14;
 const CINEMA_VIDEO_LIBRARY = [
   {
@@ -596,6 +630,10 @@ const COPY = {
     modelsReady: "The painting models and independent walk-around 3D exhibits are ready.",
     exitGallery: "Exit to collection",
     individualExperiences: "Individual experiences",
+    menuCore: "Gallery & Artists",
+    menuMuseums: "Museums",
+    menuVrWorlds: "VR Worlds",
+    menuIndividual: "Individual Experiences",
     paintingsRoom: "PAINTINGS",
     modelsRoom: "3D MODELS",
     bedroomRoom: "VAN GOGH'S BEDROOM",
@@ -651,6 +689,10 @@ const COPY = {
     modelsReady: "Les modèles des tableaux et les œuvres 3D autonomes observables sous tous les angles sont prêts.",
     exitGallery: "Sortir vers la collection",
     individualExperiences: "Expériences individuelles",
+    menuCore: "Galerie et artistes",
+    menuMuseums: "Musées",
+    menuVrWorlds: "Mondes VR",
+    menuIndividual: "Expériences individuelles",
     paintingsRoom: "TABLEAUX",
     modelsRoom: "MODÈLES 3D",
     bedroomRoom: "LA CHAMBRE DE VAN GOGH",
@@ -710,6 +752,10 @@ const COPY = {
     modelsReady: "نماذج اللوحات والأعمال ثلاثية الأبعاد المستقلة جاهزة.",
     exitGallery: "الخروج إلى المجموعة",
     individualExperiences: "تجارب فردية",
+    menuCore: "المعرض والفنانون",
+    menuMuseums: "المتاحف",
+    menuVrWorlds: "عوالم الواقع الافتراضي",
+    menuIndividual: "تجارب فردية",
     paintingsRoom: "اللوحات",
     modelsRoom: "نماذج ثلاثية الأبعاد",
     bedroomRoom: "غرفة نوم فان غوخ",
@@ -782,6 +828,15 @@ const musicNextButton = document.getElementById("gallery-music-next");
 const musicBackButton = document.getElementById("gallery-music-back");
 const musicForwardButton = document.getElementById("gallery-music-forward");
 const uiToggleButton = document.getElementById("gallery-ui-toggle");
+const galleryMenuGroups = [...document.querySelectorAll(".gallery-menu-group")];
+galleryMenuGroups.forEach((group) => {
+  group.addEventListener("toggle", () => {
+    if (!group.open) return;
+    galleryMenuGroups.forEach((other) => {
+      if (other !== group) other.open = false;
+    });
+  });
+});
 function canCreateWebGLContext() {
   try {
     const canvas = document.createElement("canvas");
@@ -1356,7 +1411,7 @@ function addVirtualGuideStation(position, rotationY, context) {
 function applyCopy() {
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-  document.title = `DACIART — ${text.title}`;
+  document.title = `ARTDACI — ${text.title}`;
   document.getElementById("gallery-back").textContent = isCinemaOnly ? text.cinemaReturn : text.back;
   document.getElementById("gallery-back").href = isCinemaOnly
     ? `gallery-vr.html?lang=${lang}`
@@ -1423,8 +1478,33 @@ function applyCopy() {
     cinemaBookLink.textContent = text.livingBook;
     cinemaBookLink.href = `book-3d.html?lang=${lang}`;
   }
-  const experiencesLink = document.getElementById("gallery-experiences-link");
-  if (experiencesLink) { experiencesLink.textContent = text.individualExperiences; experiencesLink.href = `space.html?painting=mona-lisa&lang=${lang}`; }
+  const groupedMenuLabels = [
+    ["gallery-menu-core-label", text.menuCore],
+    ["gallery-menu-museums-label", text.menuMuseums],
+    ["gallery-menu-vr-worlds-label", text.menuVrWorlds],
+    ["gallery-menu-experiences-label", text.menuIndividual]
+  ];
+  groupedMenuLabels.forEach(([id, label]) => {
+    const element = document.getElementById(id);
+    if (element) element.textContent = label;
+  });
+
+  document.querySelectorAll("[data-museum-link]").forEach((link) => {
+    const museum = MUSEUM_ROOMS.find((item) => item.id === link.dataset.museumLink);
+    if (!museum) return;
+    link.textContent = museum.name[lang] || museum.name.en;
+    link.href = `gallery-vr.html?lang=${lang}&room=museums&museum=${museum.id}`;
+  });
+
+  document.querySelectorAll("[data-individual-experience]").forEach((link) => {
+    const slug = link.dataset.individualExperience;
+    const config = INDIVIDUAL_EXPERIENCES[slug];
+    if (!config) return;
+    link.textContent = config.title[lang] || config.title.en;
+    link.href = config.route === "space"
+      ? `space.html?painting=${slug}&lang=${lang}`
+      : `print-artwork.html?painting=${slug}&lang=${lang}`;
+  });
   const productLinks = [
     ["gallery-models-link", text.modelsRoom, `gallery-vr.html?lang=${lang}&room=models`],
     ["gallery-paintings-link", text.paintingsRoom, `gallery-vr.html?lang=${lang}&room=paintings`],
