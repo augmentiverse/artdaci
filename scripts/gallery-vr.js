@@ -1356,7 +1356,22 @@ function addVirtualGuideStation(position, rotationY, context) {
 function applyCopy() {
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-  document.title = `DACIART — ${text.title}`;
+  document.title = `ARTDACI — ${text.title}`;
+  const menuLabels = lang === "ar"
+    ? { main: "المعرض والمجموعات", museums: "المتاحف", worlds: "عوالم الواقع الافتراضي", individual: "تجارب فردية" }
+    : lang === "fr"
+      ? { main: "Galerie et collections", museums: "Musées", worlds: "Mondes VR", individual: "Expériences individuelles" }
+      : { main: "Gallery & Collections", museums: "Museums", worlds: "VR Worlds", individual: "Individual Experiences" };
+  const menuTitles = {
+    "gallery-main-menu-title": menuLabels.main,
+    "gallery-museums-menu-title": menuLabels.museums,
+    "gallery-vr-worlds-menu-title": menuLabels.worlds,
+    "gallery-individual-menu-title": menuLabels.individual
+  };
+  Object.entries(menuTitles).forEach(([id, label]) => {
+    const element = document.getElementById(id);
+    if (element) element.textContent = label;
+  });
   document.getElementById("gallery-back").textContent = isCinemaOnly ? text.cinemaReturn : text.back;
   document.getElementById("gallery-back").href = isCinemaOnly
     ? `gallery-vr.html?lang=${lang}`
@@ -1423,8 +1438,22 @@ function applyCopy() {
     cinemaBookLink.textContent = text.livingBook;
     cinemaBookLink.href = `book-3d.html?lang=${lang}`;
   }
-  const experiencesLink = document.getElementById("gallery-experiences-link");
-  if (experiencesLink) { experiencesLink.textContent = text.individualExperiences; experiencesLink.href = `space.html?painting=mona-lisa&lang=${lang}`; }
+  const experienceLinks = [
+    ["experience-mona-lisa", { en: "Mona Lisa", fr: "La Joconde", ar: "الموناليزا" }, `space.html?painting=mona-lisa&lang=${lang}`],
+    ["experience-lady-ermine", { en: "Lady with an Ermine", fr: "La Dame à l’hermine", ar: "السيدة ذات القاقم" }, `print-artwork.html?painting=lady-with-an-ermine&lang=${lang}`],
+    ["experience-girl-pearl", { en: "Girl with a Pearl Earring", fr: "La Jeune Fille à la perle", ar: "الفتاة ذات القرط اللؤلؤي" }, `space.html?painting=vermeer-girl-with-a-pearl-earring&lang=${lang}`],
+    ["experience-view-delft", { en: "View of Delft", fr: "Vue de Delft", ar: "منظر دلفت" }, `print-artwork.html?painting=view-of-delft&lang=${lang}`],
+    ["experience-self-portrait", { en: "Self-Portrait", fr: "Autoportrait", ar: "بورتريه ذاتي" }, `space.html?painting=van-gogh&lang=${lang}`],
+    ["experience-bedroom", { en: "The Bedroom", fr: "La Chambre", ar: "غرفة النوم" }, `space.html?painting=van-gogh-bedroom&lang=${lang}`],
+    ["experience-woman-parasol", { en: "Woman with a Parasol", fr: "La Femme à l’ombrelle", ar: "امرأة تحمل مظلة" }, `print-artwork.html?painting=woman-with-parasol&lang=${lang}`],
+    ["experience-pont-argenteuil", { en: "Pont d'Argenteuil", fr: "Le Pont d’Argenteuil", ar: "جسر أرجنتوي" }, `print-artwork.html?painting=pont-d-argenteuil&lang=${lang}`]
+  ];
+  experienceLinks.forEach(([id, labels, href]) => {
+    const link = document.getElementById(id);
+    if (!link) return;
+    link.textContent = labels[lang] || labels.en;
+    link.href = href;
+  });
   const productLinks = [
     ["gallery-models-link", text.modelsRoom, `gallery-vr.html?lang=${lang}&room=models`],
     ["gallery-paintings-link", text.paintingsRoom, `gallery-vr.html?lang=${lang}&room=paintings`],

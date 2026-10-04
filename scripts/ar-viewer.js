@@ -512,7 +512,7 @@ async function showUnavailableRoute() {
   const message = t(isKnown ? "routeUnavailable" : "routeUnknown");
   const loadingScreen = document.getElementById("loading-screen");
 
-  document.title = `DACIART - ${title}`;
+  document.title = `ARTDACI - ${title}`;
   loadingScreen.querySelector("h1").textContent = title;
   setStartupMessage(message);
   document.getElementById("artwork-title").textContent = title;
@@ -1095,7 +1095,7 @@ function updateInterfaceFromManifest(manifest) {
   const artist = manifest.artist?.name || "";
   const artworkNumber = document.getElementById("spread-label");
   const hasBookOrder = Number.isInteger(manifest.bookOrder);
-  document.title = `DACIART WebAR Viewer - ${title}`;
+  document.title = `ARTDACI WebAR Viewer - ${title}`;
   artworkNumber.textContent = hasBookOrder ? formatArtworkNumber(manifest.bookOrder, CONFIG.lang) : "";
   artworkNumber.style.display = hasBookOrder ? "" : "none";
   document.getElementById("artwork-title").textContent = title;

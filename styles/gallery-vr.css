@@ -724,3 +724,59 @@ body[data-experience="cinema"] .gallery-video-select option {
   .gallery-toolbar { max-height: 35vh; overflow: auto; }
   .gallery-guide { max-width: calc(100vw - 20px); }
 }
+
+.gallery-exit-links {
+  display: grid;
+  gap: 7px;
+  max-height: min(44vh, 430px);
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.gallery-menu-group {
+  border: 1px solid rgba(199, 164, 93, .28);
+  background: rgba(12, 15, 18, .24);
+}
+
+.gallery-menu-group > summary {
+  padding: 8px 10px;
+  color: var(--room-menu-gold, var(--gold));
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  list-style-position: inside;
+}
+
+.gallery-menu-group[open] > summary {
+  border-bottom: 1px solid rgba(199, 164, 93, .2);
+}
+
+.gallery-menu-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding: 8px;
+}
+
+.gallery-individual-links .gallery-button {
+  flex: 1 1 150px;
+}
+
+.gallery-exit-button {
+  justify-self: start;
+}
+
+html[dir="rtl"] .gallery-menu-group > summary {
+  text-align: right;
+}
+
+@media (max-width: 700px) {
+  .gallery-exit-links {
+    max-height: min(42vh, 360px);
+  }
+  .gallery-individual-links .gallery-button {
+    flex-basis: 130px;
+  }
+}
