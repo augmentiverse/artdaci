@@ -180,7 +180,7 @@ async function showUnavailableRoute() {
   const message = COPY[lang][isKnown ? "routeUnavailable" : "routeUnknown"];
   const status = document.getElementById("space-status");
 
-  document.title = `DACIART - ${title}`;
+  document.title = `ARTDACI - ${title}`;
   document.getElementById("space-title").textContent = title;
   document.getElementById("space-copy").textContent = message;
   status.textContent = message;
@@ -223,7 +223,7 @@ async function configureViewer(manifest, mediaContext) {
   const usdz = manifest.media?.usdz || manifest.media?.usdzModel;
   const audioOverviewUrl = await resolveSpatialAudioOverview(mediaContext);
 
-  document.title = `DACIART - ${title} - ${COPY[lang].kicker}`;
+  document.title = `ARTDACI - ${title} - ${COPY[lang].kicker}`;
   document.getElementById("space-title").textContent = title;
 
   if (!src) throw new Error("No 3D model is configured for this painting.");
