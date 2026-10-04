@@ -188,7 +188,7 @@ async function showUnavailableRoute() {
   const title = text[isKnown ? "routeUnavailableTitle" : "routeUnknownTitle"];
   const message = text[isKnown ? "routeUnavailable" : "routeUnknown"];
 
-  document.title = `DACIART - ${title}`;
+  document.title = `ARTDACI - ${title}`;
   document.getElementById("vr-title").textContent = title;
   status.textContent = message;
   status.setAttribute("role", "alert");
