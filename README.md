@@ -1,4 +1,4 @@
-# DACIART WebAR Art Book
+# ARTDACI WebAR Art Book
 
 This repository is a GitHub Pages-ready augmented-reality art book for four masters: Leonardo da Vinci, Vincent van Gogh, Johannes Vermeer, and Claude Monet. It includes print-first catalogue pages, image-tracked WebAR, room-placement AR, multilingual entry points, QR access, VR galleries, and data-driven manifests.
 

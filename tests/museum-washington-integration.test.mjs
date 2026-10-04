@@ -80,7 +80,7 @@ test("activation versions address every changed browser module", async () => {
     ["ar.html", "scripts/ar-viewer.js?v=55"],
     ["space.html", "scripts/space-viewer.js?v=36"],
     ["book-3d.html", "scripts/book-3d.js?v=36"],
-    ["gallery-vr.html", "scripts/gallery-vr.js?v=175"],
+    ["gallery-vr.html", "scripts/gallery-vr.js?v=177"],
     ["cinema-vr.html", "scripts/gallery-vr.js?v=148"],
     ["print-artwork.html", "scripts/print-artwork.js?v=9"],
   ]);

@@ -1,114 +1,155 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#191512" />
-    <title>DACIART - Atlas augmenté des chefs-d'œuvre</title>
-    <link rel="stylesheet" href="styles/site.css" />
-  </head>
-  <body>
-    <main class="home-shell">
-      <article class="concept-page">
-        <header class="concept-hero">
-          <p class="eyebrow">Concept éditorial et Augmentiverse</p>
-          <h1>Atlas augmenté des chefs-d'œuvre</h1>
-          <p class="dek">
-            Un livre d'art de qualité muséale qui fonctionne d'abord sur papier, puis ouvre une seconde couche en réalité augmentée, narration audio, vidéo, reconstruction 3D et placement spatial.
-          </p>
-          <div class="actions">
-            <a class="button primary" href="index-fr.html">Retour à l'index</a>
-            <a class="button" href="index.html">English index</a>
-          </div>
-        </header>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#191512" />
+  <meta name="application-name" content="ARTDACI" />
+  <link rel="icon" href="assets/app/artdaci-app-icon.svg" type="image/svg+xml" />
+  <title>ARTDACI — Concept d’Atlas augmenté</title>
+  <link rel="stylesheet" href="styles/site.css" />
+</head>
+<body>
+  <main class="home-shell">
+    <article class="concept-page">
+      <header class="concept-hero">
+        <p class="eyebrow" id="atlas-eyebrow"></p>
+        <h1 id="atlas-title"></h1>
+        <p class="dek" id="atlas-dek"></p>
+        <div class="actions" id="atlas-actions" aria-label="Atlas navigation"></div>
+      </header>
+      <div id="atlas-content"></div>
+    </article>
+  </main>
 
-        <section class="concept-band">
-          <h2>Paper First, Magic Second</h2>
-          <p>
-            Chaque double page doit rester une notice encyclopédique complète : contexte, analyse, technique, symbolique, chronologie, détails à observer et renvois vers d'autres œuvres. La réalité augmentée est une dimension bonus, jamais une obligation. Le lecteur qui ne scanne rien doit quand même recevoir une expérience riche.
-          </p>
-        </section>
+  <script>
+    const COPY = {
+      en: {
+        pageTitle: "ARTDACI — Augmented Atlas Concept",
+        eyebrow: "Editorial concept · ARTDACI",
+        title: "Augmented Atlas of Masterpieces",
+        dek: "A museum-quality printed art book that works first on paper, then opens an optional second layer through augmented reality, audio narration, video, 3D reconstruction, spatial placement, and immersive experiences.",
+        back: "Back to the index",
+        backUrl: "index.html",
+        sections: [
+          ["band", "Paper First, Magic Second", "Every spread should remain a complete editorial experience on its own: context, analysis, technique, symbolism, chronology, details to observe, and links to other works. The augmented layer is an enrichment, never a requirement. A reader who scans nothing should still receive a rich and coherent experience."],
+          ["grid", "Book structure", "The Atlas organizes masterpieces into a clear museum-style journey that connects artists, periods, techniques, and visual ideas.", ["Artist and artwork introductions", "Historical and artistic context", "Technique, composition, palette, and symbolism", "Timelines, comparisons, and close-looking prompts", "Connections to museums and immersive experiences"],
+                   "Spread model", "The artwork remains visually central, while the facing content provides the information needed to understand and observe it carefully.", ["Title, artist, date, medium, dimensions, and museum", "Historical context and artistic movement", "Composition, palette, technique, and symbolism", "Hidden details, anecdotes, restoration, and influence", "Timeline and comparisons with other works"]],
+          ["modes", "Augmented modes", [
+            ["Image AR", "The printed artwork becomes a target for 3D models, labels, audio, video, and contextual layers."],
+            ["Narration", "Short audio guides provide an accessible introduction without replacing the printed reading experience."],
+            ["Interactive labels", "Concise hotspots reveal composition, technique, symbolism, and hidden details."],
+            ["3D reconstruction", "Models can emerge from the page or be placed independently in the reader’s physical space."],
+            ["Artistic process", "Future layers may reveal underdrawings, glazing, restoration, X-rays, or other technical imagery."],
+            ["Museum and time", "Selected works can extend into galleries, studios, cities, or reconstructed museum spaces."]
+          ]],
+          ["gridText", "Personal gallery", "Beyond page scanning, spatial mode can let readers place 3D content in their own environment, compare works, enlarge details, and build a personal gallery around the printed book.",
+                       "QR strategy", "QR codes complement rather than replace image tracking. They should remain discreet and provide direct access to longer videos, learning resources, spatial galleries, language options, and evolving online content."],
+          ["grid", "Education", "", ["Observation questions for younger readers, students, and adults", "Guided comparisons between works, periods, and techniques", "Symbol and hidden-detail exploration", "Teacher resources and discussion prompts"],
+                   "Accessibility", "", ["Audio descriptions and spoken overviews", "Subtitles for narration and video", "Readable typography and strong contrast", "Short navigation paths back to the printed-book experience"]],
+          ["roadmap", "Development path", [
+            ["Print.", "A complete museum-style book that works independently."],
+            ["Augment.", "Image tracking, narration, labels, 3D, video, and QR access."],
+            ["Immerse.", "Spatial galleries, WebXR, VR, reconstructed places, and richer interactions."],
+            ["Extend.", "Future glasses and spatial-computing experiences with hands-free interpretation and museum guidance."]
+          ]]
+        ]
+      },
+      fr: {
+        pageTitle: "ARTDACI — Concept d’Atlas augmenté",
+        eyebrow: "Concept éditorial · ARTDACI",
+        title: "Atlas augmenté des chefs-d’œuvre",
+        dek: "Un livre d’art de qualité muséale qui fonctionne d’abord sur papier, puis ouvre une seconde couche optionnelle grâce à la réalité augmentée, la narration audio, la vidéo, la reconstruction 3D, le placement spatial et les expériences immersives.",
+        back: "Retour à l’index",
+        backUrl: "index-fr.html",
+        sections: [
+          ["band", "Paper First, Magic Second", "Chaque double page doit rester une expérience éditoriale complète : contexte, analyse, technique, symbolique, chronologie, détails à observer et liens vers d’autres œuvres. La couche augmentée enrichit la lecture sans jamais devenir obligatoire. Un lecteur qui ne scanne rien doit tout de même bénéficier d’une expérience riche et cohérente."],
+          ["grid", "Structure du livre", "L’Atlas organise les chefs-d’œuvre comme un parcours muséal clair reliant artistes, périodes, techniques et idées visuelles.", ["Présentation de l’artiste et de l’œuvre", "Contexte historique et artistique", "Technique, composition, palette et symbolique", "Chronologies, comparaisons et pistes d’observation", "Liens avec les musées et les expériences immersives"],
+                   "Modèle de double page", "L’œuvre reste visuellement centrale tandis que le contenu en regard apporte les informations nécessaires pour la comprendre et l’observer attentivement.", ["Titre, artiste, date, médium, dimensions et musée", "Contexte historique et mouvement artistique", "Composition, palette, technique et symbolique", "Détails cachés, anecdotes, restauration et influence", "Chronologie et comparaison avec d’autres œuvres"]],
+          ["modes", "Modes augmentés", [
+            ["AR sur image", "Le tableau imprimé devient une cible pour les modèles 3D, étiquettes, audios, vidéos et couches contextuelles."],
+            ["Narration", "De courts guides audio offrent une introduction accessible sans remplacer l’expérience de lecture imprimée."],
+            ["Étiquettes interactives", "Des points d’intérêt concis révèlent composition, technique, symbolique et détails cachés."],
+            ["Reconstruction 3D", "Les modèles peuvent émerger de la page ou être placés indépendamment dans l’espace du lecteur."],
+            ["Processus artistique", "Des couches futures pourront montrer dessin sous-jacent, glacis, restauration, rayons X ou imagerie technique."],
+            ["Musée et temps", "Certaines œuvres peuvent se prolonger en galeries, ateliers, villes ou espaces muséaux reconstruits."]
+          ]],
+          ["gridText", "Galerie personnelle", "Au-delà du scan de page, le mode spatial peut permettre de placer les contenus 3D dans l’environnement du lecteur, de comparer des œuvres, d’agrandir des détails et de construire une galerie personnelle autour du livre imprimé.",
+                       "Stratégie QR", "Les QR codes complètent le suivi d’image sans le remplacer. Ils doivent rester discrets et donner un accès direct aux vidéos longues, ressources pédagogiques, galeries spatiales, choix de langue et contenus en ligne évolutifs."],
+          ["grid", "Pédagogie", "", ["Questions d’observation pour jeunes lecteurs, étudiants et adultes", "Comparaisons guidées entre œuvres, périodes et techniques", "Exploration des symboles et détails cachés", "Ressources pour enseignants et pistes de discussion"],
+                   "Accessibilité", "", ["Descriptions audio et aperçus parlés", "Sous-titres pour narration et vidéo", "Typographie lisible et contraste renforcé", "Navigation courte pour revenir facilement au livre imprimé"]],
+          ["roadmap", "Parcours de développement", [
+            ["Imprimer.", "Un livre de type muséal complet et autonome."],
+            ["Augmenter.", "Suivi d’image, narration, étiquettes, 3D, vidéo et accès QR."],
+            ["Immerger.", "Galeries spatiales, WebXR, VR, lieux reconstruits et interactions plus riches."],
+            ["Étendre.", "Futures lunettes et expériences de spatial computing avec interprétation mains libres et guidage muséal."]
+          ]]
+        ]
+      },
+      ar: {
+        pageTitle: "ARTDACI — مفهوم الأطلس المعزّز",
+        eyebrow: "المفهوم التحريري · ARTDACI",
+        title: "الأطلس المعزّز للروائع الفنية",
+        dek: "كتاب فني بجودة كتالوجات المتاحف يعمل أولاً ككتاب مطبوع مستقل، ثم يفتح طبقة رقمية اختيارية عبر الواقع المعزز، والسرد الصوتي، والفيديو، وإعادة البناء ثلاثية الأبعاد، والوضع المكاني، والتجارب الغامرة.",
+        back: "العودة إلى الفهرس",
+        backUrl: "index-ar.html",
+        sections: [
+          ["band", "الكتاب أولاً، والسحر ثانياً", "ينبغي أن تظل كل صفحتين متقابلتين تجربة تحريرية متكاملة بذاتها: سياق تاريخي، وتحليل، وتقنية، ورمزية، وتسلسل زمني، وتفاصيل تستحق الملاحظة، وروابط بأعمال أخرى. الطبقة المعززة توسّع القراءة ولا تجعل الجهاز شرطاً للاستفادة من الكتاب."],
+          ["grid", "بنية الكتاب", "ينظم الأطلس الروائع الفنية في مسار واضح يشبه زيارة المتحف ويربط بين الفنانين والفترات والتقنيات والأفكار البصرية.", ["تقديم الفنان والعمل الفني", "السياق التاريخي والفني", "التقنية والتكوين ولوحة الألوان والرمزية", "التسلسل الزمني والمقارنات وأسئلة الملاحظة", "الروابط بالمتاحف والتجارب الغامرة"],
+                   "نموذج الصفحتين المتقابلتين", "يبقى العمل الفني في المركز بصرياً، بينما تقدم الصفحة المقابلة المعلومات الضرورية لفهمه وملاحظته بعناية.", ["العنوان والفنان والتاريخ والخامة والأبعاد والمتحف", "السياق التاريخي والحركة الفنية", "التكوين والألوان والتقنية والرمزية", "التفاصيل الخفية والطرائف والترميم والتأثير", "التسلسل الزمني والمقارنة مع أعمال أخرى"]],
+          ["modes", "أنماط التعزيز الرقمي", [
+            ["الواقع المعزز بالصورة", "تصبح اللوحة المطبوعة هدفاً تظهر فوقه النماذج ثلاثية الأبعاد والعلامات والصوت والفيديو والمعلومات السياقية."],
+            ["السرد الصوتي", "تقدم الأدلة الصوتية القصيرة مدخلاً ميسراً إلى العمل من دون أن تحل محل القراءة المطبوعة."],
+            ["العلامات التفاعلية", "تكشف نقاط الاهتمام المختصرة عن التكوين والتقنية والرمزية والتفاصيل الخفية."],
+            ["إعادة البناء ثلاثية الأبعاد", "يمكن أن تخرج النماذج من الصفحة أو توضع بصورة مستقلة داخل مساحة القارئ."],
+            ["العملية الفنية", "يمكن مستقبلاً عرض الرسم التحضيري وطبقات الطلاء والترميم والأشعة السينية وغيرها من الصور التقنية."],
+            ["المتحف والزمن", "يمكن لبعض الأعمال أن تمتد إلى قاعات ومراسم ومدن وفضاءات متحفية معاد بناؤها رقمياً."]
+          ]],
+          ["gridText", "المعرض الشخصي", "إلى جانب مسح الصفحة، يمكن للوضع المكاني أن يسمح للقارئ بوضع المحتوى ثلاثي الأبعاد في محيطه، ومقارنة الأعمال، وتكبير التفاصيل، وبناء معرض شخصي ينطلق من الكتاب المطبوع.",
+                       "استراتيجية رموز QR", "تكمل رموز QR تتبع الصورة ولا تستبدله. ويُفضّل أن تبقى بسيطة وغير مزعجة، مع توفير وصول مباشر إلى الفيديوهات الطويلة والموارد التعليمية والمعارض المكانية وخيارات اللغة والمحتوى المتجدد على الإنترنت."],
+          ["grid", "التعلّم", "", ["أسئلة ملاحظة تناسب القراء الصغار والطلبة والبالغين", "مقارنات موجهة بين الأعمال والفترات والتقنيات", "استكشاف الرموز والتفاصيل الخفية", "موارد للمدرسين ومحاور للنقاش"],
+                   "إتاحة الوصول", "", ["وصف صوتي وملخصات مسموعة", "ترجمة نصية للسرد والفيديو", "خط واضح وتباين بصري قوي", "تنقل بسيط يسمح بالعودة بسهولة إلى تجربة الكتاب المطبوع"]],
+          ["roadmap", "مسار التطوير", [
+            ["الطباعة.", "كتاب متحفي متكامل يعمل بصورة مستقلة."],
+            ["التعزيز.", "تتبع الصور والسرد والعلامات والنماذج ثلاثية الأبعاد والفيديو والوصول عبر QR."],
+            ["الانغماس.", "معارض مكانية وWebXR وVR وأماكن معاد بناؤها وتفاعلات أكثر ثراءً."],
+            ["التوسّع.", "دعم مستقبلي للنظارات والحوسبة المكانية مع إرشاد متحفي وتفسير دون استخدام اليدين."]
+          ]]
+        ]
+      }
+    };
 
-        <section class="concept-grid">
-          <div>
-            <h2>Structure du livre</h2>
-            <p>L'atlas est pensé comme une grande histoire mondiale de la peinture, organisee par civilisation, période et mouvement.</p>
-            <ul>
-              <li>Origines et Antiquite</li>
-              <li>Moyen Age et premiers panneaux chretiens</li>
-              <li>Renaissance, Baroque, Rococo et Neoclassicisme</li>
-              <li>Romantisme, Réalisme, Impressionnisme et Post-impressionnisme</li>
-              <li>Modernismes, Surrealisme, Pop Art, contemporain et traditions globales</li>
-            </ul>
-          </div>
-          <div>
-            <h2>Modèle de double page</h2>
-            <p>La page gauche prèsente l'œuvre en grand format comme cible AR. La page droite porte la lecture savante.</p>
-            <ul>
-              <li>Titre, artiste, date, medium, dimensions, musée</li>
-              <li>Contexte historique et mouvement artistique</li>
-              <li>Composition, palette, technique et symbolique</li>
-              <li>Détails cachés, anecdotes, restauration et influence</li>
-              <li>Chronologie et comparaison avec d'autres œuvres</li>
-            </ul>
-          </div>
-        </section>
+    const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (ch) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+    })[ch]);
 
-        <section class="concept-band">
-          <h2>Modes augmentes</h2>
-          <div class="mode-grid">
-            <div><strong>Image AR</strong><span>Le tableau imprimé devient une cible : le modèle 3D, les étiquettes et les medias surgissent de la page.</span></div>
-            <div><strong>Narration</strong><span>Audio de 2 à 4 minutes, avec version humaine enregistrée quand elle existe et textes accessibles.</span></div>
-            <div><strong>Étiquettes interactives</strong><span>Points d'intérêt courts sur composition, technique, symbolique et détails cachés.</span></div>
-            <div><strong>Reconstruction 3D</strong><span>Modèle spatial placé sur la page ou détaché dans l'espace personnel du lecteur.</span></div>
-            <div><strong>Processus artistique</strong><span>Couches futures : dessin sous-jacent, glacis, restauration, rayons X ou imagerie technique.</span></div>
-            <div><strong>Musée et temps</strong><span>Mode galerie, contexte historique, atelier, ville ou salle de musée reconstruite pour les œuvres phares.</span></div>
-          </div>
-        </section>
+    const list = (items) => "<ul>" + items.map((item) => "<li>" + escapeHtml(item) + "</li>").join("") + "</ul>";
+    const renderSection = (s) => {
+      if (s[0] === "band") return '<section class="concept-band"><h2>' + escapeHtml(s[1]) + '</h2><p>' + escapeHtml(s[2]) + '</p></section>';
+      if (s[0] === "grid") return '<section class="concept-grid"><div><h2>' + escapeHtml(s[1]) + '</h2>' + (s[2] ? '<p>' + escapeHtml(s[2]) + '</p>' : '') + list(s[3]) + '</div><div><h2>' + escapeHtml(s[4]) + '</h2>' + (s[5] ? '<p>' + escapeHtml(s[5]) + '</p>' : '') + list(s[6]) + '</div></section>';
+      if (s[0] === "gridText") return '<section class="concept-grid"><div><h2>' + escapeHtml(s[1]) + '</h2><p>' + escapeHtml(s[2]) + '</p></div><div><h2>' + escapeHtml(s[3]) + '</h2><p>' + escapeHtml(s[4]) + '</p></div></section>';
+      if (s[0] === "modes") return '<section class="concept-band"><h2>' + escapeHtml(s[1]) + '</h2><div class="mode-grid">' + s[2].map((item) => '<div><strong>' + escapeHtml(item[0]) + '</strong><span>' + escapeHtml(item[1]) + '</span></div>').join("") + '</div></section>';
+      if (s[0] === "roadmap") return '<section class="concept-band"><h2>' + escapeHtml(s[1]) + '</h2><ol class="roadmap">' + s[2].map((item) => '<li><strong>' + escapeHtml(item[0]) + '</strong> ' + escapeHtml(item[1]) + '</li>').join("") + '</ol></section>';
+      return "";
+    };
 
-        <section class="concept-grid">
-          <div>
-            <h2>Galerie personnelle</h2>
-            <p>Au-delà du scan de page, chaque modèle 3D peut être placé dans l'espace du lecteur. Le livre devient alors une réserve personnelle : comparer deux œuvres, les agrandir, les observer à l'échelle d'une pièce, ou composer sa propre galerie.</p>
-          </div>
-          <div>
-            <h2>Strategie QR</h2>
-            <p>Les QR codes sont des complements, pas le declencheur principal de l'AR. Ils doivent rester discrets, situes près de la legende, et servir aux vidéos longues, ressources pédagogiques, accès direct à la galerie spatiale, langues et mises a jour vivantes.</p>
-          </div>
-        </section>
+    const requested = (new URLSearchParams(location.search).get("lang") || "fr").toLowerCase().split(/[-_]/)[0];
+    const lang = ["en", "fr", "ar"].includes(requested) ? requested : "fr";
+    const t = COPY[lang];
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+    document.title = t.pageTitle;
+    document.getElementById("atlas-eyebrow").textContent = t.eyebrow;
+    document.getElementById("atlas-title").textContent = t.title;
+    document.getElementById("atlas-dek").textContent = t.dek;
 
-        <section class="concept-grid">
-          <div>
-            <h2>Pedagogie</h2>
-            <ul>
-              <li>Questions d'observation adaptées aux lecteurs jeunes, étudiants et adultes</li>
-              <li>Comparaisons guidées entre œuvres, périodes et techniques</li>
-              <li>Chasses aux symboles et détails cachés</li>
-              <li>Kits enseignants et pistes de discussion pour chaque notice</li>
-            </ul>
-          </div>
-          <div>
-            <h2>Accèssibilite</h2>
-            <ul>
-              <li>Audio-description pour chaque image</li>
-              <li>Sous-titres pour narration et vidéo</li>
-              <li>Contraste eleve et typographie lisible</li>
-              <li>Navigation courte : revenir au livre imprimé doit toujours être simple</li>
-            </ul>
-          </div>
-        </section>
-
-        <section class="concept-band">
-          <h2>Feuille de route</h2>
-          <ol class="roadmap">
-            <li><strong>Phase 1.</strong> Livre imprimé + WebAR image tracking + narration + étiquettes + QR.</li>
-            <li><strong>Phase 2.</strong> Application compagnon avec sauvegarde de galerie, contenus hors ligne et expériences plus riches.</li>
-            <li><strong>Phase 3.</strong> Galerie spatiale Vision Pro / Quest, comparaisons multi-œuvres, scenes historiques et reconstructions.</li>
-            <li><strong>Phase 4.</strong> Profil lunettes AR : narration mains libres, étiquettes discretes et parcours museal.</li>
-          </ol>
-        </section>
-      </article>
-    </main>
-  </body>
+    const switches = [
+      ["en", "English"], ["fr", "Français"], ["ar", "العربية"]
+    ].filter(([code]) => code !== lang)
+      .map(([code, label]) => '<a class="button" href="atlas.html?lang=' + code + '" lang="' + code + '"' + (code === "ar" ? ' dir="rtl"' : '') + '>' + label + '</a>')
+      .join("");
+    document.getElementById("atlas-actions").innerHTML = '<a class="button primary" href="' + t.backUrl + '">' + t.back + '</a>' + switches;
+    document.getElementById("atlas-content").innerHTML = t.sections.map(renderSection).join("");
+  </script>
+</body>
 </html>
-
