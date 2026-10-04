@@ -1,0 +1,257 @@
+{
+  "schemaVersion": "1.0",
+  "artworks": {
+    "ld01": {
+      "source": "content/paintings/mona-lisa.json",
+      "sourceSlug": null,
+      "printedSlug": "mona-lisa",
+      "relation": "same-work",
+      "routes": {
+        "fr": "../print-target-fr.html?lang=fr",
+        "en": "../print-target.html?lang=en",
+        "ar": "../print-ar.html?painting=mona-lisa&lang=ar"
+      },
+      "pageTextLanguages": {
+        "fr": "fr",
+        "en": "en",
+        "ar": "ar"
+      },
+      "summary": {
+        "fr": "Peinte au début du XVIe siècle, La Joconde associe portrait psychologique et observation de la nature. Le sfumato adoucit les contours et rend l’expression changeante.",
+        "en": "Painted in the early sixteenth century, the Mona Lisa combines psychological portraiture with observation of nature. Sfumato softens contours and makes the expression seem to change.",
+        "ar": "رُسمت الموناليزا في مطلع القرن السادس عشر، وتجمع بين عمق الشخصية وملاحظة الطبيعة. تُذيب تقنية السفوماتو الحدود وتجعل التعبير يبدو متغيّرًا."
+      }
+    },
+    "ld06": {
+      "source": "content/paintings/additional-16.json",
+      "sourceSlug": "belle-ferronniere",
+      "printedSlug": "belle-ferronniere",
+      "relation": "same-work",
+      "routes": {
+        "fr": "../print-artwork.html?painting=belle-ferronniere&lang=fr",
+        "en": "../print-artwork.html?painting=belle-ferronniere&lang=en",
+        "ar": "../print-artwork.html?painting=belle-ferronniere&lang=ar"
+      },
+      "pageTextLanguages": {
+        "fr": "en",
+        "en": "en",
+        "ar": "en"
+      },
+      "summary": {
+        "fr": "Peint durant les années milanaises de Léonard, ce portrait représente une femme non identifiée de la cour. Le regard de côté et le modelé subtil lui donnent une présence attentive.",
+        "en": "Painted during Leonardo’s Milan years, this portrait depicts an unidentified woman at court. Her sideways glance and subtle modelling create an alert, self-possessed presence.",
+        "ar": "رُسمت هذه الصورة خلال سنوات ليوناردو في ميلانو، وتمثّل امرأة غير معروفة من البلاط. تمنحها النظرة الجانبية والتدرّجات الدقيقة حضورًا يقظًا."
+      }
+    },
+    "ld02": {
+      "source": "content/paintings/lady-with-an-ermine.json",
+      "sourceSlug": null,
+      "printedSlug": "lady-with-an-ermine",
+      "relation": "same-work",
+      "routes": {
+        "fr": "../print-artwork.html?painting=lady-with-an-ermine&lang=fr",
+        "en": "../print-artwork.html?painting=lady-with-an-ermine&lang=en",
+        "ar": "../print-artwork.html?painting=lady-with-an-ermine&lang=ar"
+      },
+      "pageTextLanguages": {
+        "fr": "fr",
+        "en": "en",
+        "ar": "en"
+      },
+      "summary": {
+        "fr": "Vers 1489–1491, Léonard peint Cecilia Gallerani à la cour de Milan. La jeune femme et l’hermine se tournent ensemble, transformant le portrait en un instant vivant.",
+        "en": "Around 1489–1491, Leonardo portrayed Cecilia Gallerani at the Milanese court. Woman and ermine turn together, transforming the portrait into a captured, living moment.",
+        "ar": "نحو 1489–1491، رسم ليوناردو تشيتشيليا غاليراني في بلاط ميلانو. تلتفت المرأة والقاقم معًا، فيتحوّل البورتريه إلى لحظة حيّة."
+      }
+    },
+    "ve01": {
+      "source": "content/paintings/vermeer-girl-with-a-pearl-earring.json",
+      "sourceSlug": null,
+      "printedSlug": "vermeer-girl-with-a-pearl-earring",
+      "relation": "same-work",
+      "routes": {
+        "fr": "../print-vermeer-girl-with-a-pearl-earring-fr.html?lang=fr",
+        "en": "../print-vermeer-girl-with-a-pearl-earring.html?lang=en",
+        "ar": "../print-ar.html?painting=vermeer-girl-with-a-pearl-earring&lang=ar"
+      },
+      "pageTextLanguages": {
+        "fr": "fr",
+        "en": "en",
+        "ar": "ar"
+      },
+      "summary": {
+        "fr": "Vers 1665, Vermeer peint une tronie : une étude de visage et de costume plutôt qu’un portrait commandé. La lumière relie le regard, les lèvres et la perle.",
+        "en": "Around 1665, Vermeer painted a tronie: a study of a face and costume rather than a commissioned portrait. Light connects the gaze, parted lips and pearl.",
+        "ar": "نحو 1665، رسم فيرمير دراسة للوجه والزيّ، لا بورتريه لشخص محدّد بطلب منه. يربط الضوء بين النظرة والشفتين واللؤلؤة."
+      }
+    },
+    "ve05": {
+      "source": "content/paintings/additional-16.json",
+      "sourceSlug": "vermeer-astronomer",
+      "printedSlug": "vermeer-astronomer",
+      "relation": "same-work",
+      "routes": {
+        "fr": "../print-artwork.html?painting=vermeer-astronomer&lang=fr",
+        "en": "../print-artwork.html?painting=vermeer-astronomer&lang=en",
+        "ar": "../print-artwork.html?painting=vermeer-astronomer&lang=ar"
+      },
+      "pageTextLanguages": {
+        "fr": "en",
+        "en": "en",
+        "ar": "en"
+      },
+      "summary": {
+        "fr": "L’œuvre reflète l’intérêt néerlandais du XVIIe siècle pour la science et la navigation. Le bras du savant relie le globe céleste, le livre ouvert et son visage concentré.",
+        "en": "The painting reflects seventeenth-century Dutch interest in science and navigation. The scholar’s arm links the celestial globe, open book and concentrated face.",
+        "ar": "تعكس اللوحة اهتمام الهولنديين في القرن السابع عشر بالعلم والملاحة. يربط ذراع العالم بين الكرة الفلكية والكتاب المفتوح ووجهه المركّز."
+      }
+    },
+    "ve02": {
+      "source": "content/paintings/view-of-delft.json",
+      "sourceSlug": null,
+      "printedSlug": "view-of-delft",
+      "relation": "same-work",
+      "routes": {
+        "fr": "../print-artwork.html?painting=view-of-delft&lang=fr",
+        "en": "../print-artwork.html?painting=view-of-delft&lang=en",
+        "ar": "../print-artwork.html?painting=view-of-delft&lang=ar"
+      },
+      "pageTextLanguages": {
+        "fr": "fr",
+        "en": "en",
+        "ar": "en"
+      },
+      "summary": {
+        "fr": "Vers 1660–1661, Vermeer transforme une vue de Delft depuis le sud en méditation sur la lumière. Les nuages alternent ombre et soleil ; la Nieuwe Kerk éclairée attire le regard.",
+        "en": "Around 1660–1661, Vermeer turned a view of Delft from the south into a meditation on light. Clouds alternate shadow and sunlight; the bright Nieuwe Kerk draws the eye.",
+        "ar": "نحو 1660–1661، حوّل فيرمير منظر دلفت من الجنوب إلى تأمّل في الضوء. تتعاقب ظلال الغيوم والشمس، ويجذب برج الكنيسة المضيء النظر."
+      }
+    },
+    "vg01": {
+      "source": "content/paintings/van-gogh.json",
+      "sourceSlug": null,
+      "printedSlug": "van-gogh",
+      "relation": "other-version",
+      "routes": {
+        "fr": "../print-van-gogh-fr.html?lang=fr",
+        "en": "../print-van-gogh.html?lang=en",
+        "ar": "../print-ar.html?painting=van-gogh&lang=ar"
+      },
+      "pageTextLanguages": {
+        "fr": "fr",
+        "en": "en",
+        "ar": "ar"
+      },
+      "summary": {
+        "fr": "Van Gogh utilise ses autoportraits pour étudier expression, couleur et identité. Attention : le Hub montre l’Autoportrait de 1889 ; la fiche liée décrit celui de 1887.",
+        "en": "Van Gogh used self-portraits to study expression, colour and identity. Note: the Hub displays the 1889 Self-Portrait; the linked printed page describes the 1887 painting.",
+        "ar": "استخدم فان غوخ صوره الذاتية لدراسة التعبير واللون والهويّة. تنبيه: يعرض المعرض صورة 1889، بينما تتناول الصفحة المرتبطة صورة 1887."
+      }
+    },
+    "vg02": {
+      "source": "content/paintings/van-gogh-bedroom.json",
+      "sourceSlug": null,
+      "printedSlug": "van-gogh-bedroom",
+      "relation": "same-work",
+      "routes": {
+        "fr": "../print-van-gogh-bedroom-fr.html?lang=fr",
+        "en": "../print-van-gogh-bedroom.html?lang=en",
+        "ar": "../print-ar.html?painting=van-gogh-bedroom&lang=ar"
+      },
+      "pageTextLanguages": {
+        "fr": "fr",
+        "en": "en",
+        "ar": "ar"
+      },
+      "summary": {
+        "fr": "Peinte à Arles en octobre 1888, la chambre évoque le repos et la sécurité domestique. Perspective déformée, contours forts et aplats colorés donnent à cet intérieur une force intime.",
+        "en": "Painted in Arles in October 1888, the bedroom evokes rest and domestic security. Distorted perspective, bold outlines and flat colours give this interior an intimate emotional force.",
+        "ar": "رُسمت الغرفة في آرل في أكتوبر 1888، وتوحي بالراحة والأمان المنزلي. يمنحها المنظور المشوّه والخطوط القويّة والمساحات اللونيّة قوّة عاطفيّة حميمة."
+      }
+    },
+    "vg03": {
+      "source": "content/paintings/additional-16.json",
+      "sourceSlug": "starry-night",
+      "printedSlug": "starry-night",
+      "relation": "same-work",
+      "routes": {
+        "fr": "../print-artwork.html?painting=starry-night&lang=fr",
+        "en": "../print-artwork.html?painting=starry-night&lang=en",
+        "ar": "../print-artwork.html?painting=starry-night&lang=ar"
+      },
+      "pageTextLanguages": {
+        "fr": "en",
+        "en": "en",
+        "ar": "en"
+      },
+      "summary": {
+        "fr": "À Saint-Rémy, Van Gogh transforme le paysage nocturne en vision intérieure. Les étoiles tourbillonnantes animent le ciel ; le cyprès relie la terre au ciel au-dessus du village.",
+        "en": "At Saint-Rémy, Van Gogh transformed the night landscape into an inner vision. Whirling stars animate the sky; the cypress links earth and sky above the village.",
+        "ar": "في سان ريمي، حوّل فان غوخ المشهد الليلي إلى رؤية داخليّة. تحرّك النجوم الدوّارة السماء، وتصل شجرة السرو بين الأرض والسماء فوق القرية."
+      }
+    },
+    "mo01": {
+      "source": "content/paintings/monet-impression-sunrise.json",
+      "sourceSlug": null,
+      "printedSlug": "monet-impression-sunrise",
+      "relation": "same-work",
+      "routes": {
+        "fr": "../print-monet-impression-sunrise-fr.html?lang=fr",
+        "en": "../print-monet-impression-sunrise.html?lang=en",
+        "ar": "../print-ar.html?painting=monet-impression-sunrise&lang=ar"
+      },
+      "pageTextLanguages": {
+        "fr": "fr",
+        "en": "en",
+        "ar": "ar"
+      },
+      "summary": {
+        "fr": "Monet peint le port du Havre au petit matin en 1872. Exposé en 1874, ce tableau inspire le nom « impressionnistes » ; le soleil orange contraste avec la brume bleu-gris.",
+        "en": "Monet painted Le Havre harbour at dawn in 1872. Exhibited in 1874, it inspired the name “Impressionists”; the orange sun contrasts with the blue-grey mist.",
+        "ar": "رسم مونيه ميناء لوهافر عند الفجر عام 1872. وعند عرضه سنة 1874، ألهم اسم «الانطباعيين»؛ تتباين الشمس البرتقاليّة مع الضباب الأزرق الرمادي."
+      }
+    },
+    "mo03": {
+      "source": "content/paintings/additional-16.json",
+      "sourceSlug": "water-lilies",
+      "printedSlug": "water-lilies",
+      "relation": "same-work",
+      "routes": {
+        "fr": "../print-artwork.html?painting=water-lilies&lang=fr",
+        "en": "../print-artwork.html?painting=water-lilies&lang=en",
+        "ar": "../print-artwork.html?painting=water-lilies&lang=ar"
+      },
+      "pageTextLanguages": {
+        "fr": "en",
+        "en": "en",
+        "ar": "en"
+      },
+      "summary": {
+        "fr": "Monet revient au jardin d’eau de Giverny. Ciel, arbres et fleurs se mêlent aux reflets ; l’horizon disparaît et le bassin remplit toute la toile, ouvrant la voie à l’abstraction.",
+        "en": "Monet repeatedly returned to his water garden at Giverny. Sky, trees and flowers merge with reflections; the horizon disappears and the pond fills the canvas, pointing towards abstraction.",
+        "ar": "عاد مونيه مرارًا إلى حديقة الماء في جيفرني. يمتزج السماء والشجر والزهور بالانعكاسات، ويختفي الأفق ليملأ الحوض اللوحة ويمهّد للتجريد."
+      }
+    },
+    "mo06": {
+      "source": "content/paintings/additional-16.json",
+      "sourceSlug": "woman-with-parasol",
+      "printedSlug": "woman-with-parasol",
+      "relation": "same-work",
+      "routes": {
+        "fr": "../print-artwork.html?painting=woman-with-parasol&lang=fr",
+        "en": "../print-artwork.html?painting=woman-with-parasol&lang=en",
+        "ar": "../print-artwork.html?painting=woman-with-parasol&lang=ar"
+      },
+      "pageTextLanguages": {
+        "fr": "en",
+        "en": "en",
+        "ar": "en"
+      },
+      "summary": {
+        "fr": "Monet représente Camille et leur fils Jean lors d’une promenade à Argenteuil. Le point de vue bas, le voile et l’ombrelle inclinée rendent sensibles le vent et la lumière.",
+        "en": "Monet portrayed Camille and their son Jean during a walk at Argenteuil. The low viewpoint, moving veil and tilted parasol convey the wind and outdoor light.",
+        "ar": "صوّر مونيه كاميل وابنهما جان خلال نزهة في أرجنتوي. تنقل زاوية النظر المنخفضة والوشاح والمظلّة المائلة إحساس الريح وضوء الهواء الطلق."
+      }
+    }
+  }
+}

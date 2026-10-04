@@ -554,6 +554,10 @@ const previewPositionZ = isCinemaOnly || previewRoom === "cinema"
         ? 8.4
         : 4;
 const previewRotationY = isCinemaOnly || ["models", "bedroom", "reimagined", "groups", "cinema"].includes(previewRoom) ? Math.PI : 0;
+const museumWingStartZ = requestedMuseumIndex * MUSEUM_WING_ROOM_DEPTH - 5.2;
+const experienceStartX = isConnectedMuseum ? connectedStartX : isFiveMuseumsWing ? 0 : previewPositionX;
+const experienceStartZ = isConnectedMuseum ? connectedStartZ : isFiveMuseumsWing ? museumWingStartZ : previewPositionZ;
+const experienceStartYaw = isConnectedMuseum ? connectedStartYaw : isFiveMuseumsWing ? Math.PI : previewRotationY;
 const PAINTING_INFO = {
   en: {
     "mona-lisa": "Leonardo used delicate layers of sfumato to soften outlines and give the sitter a lifelike presence. Her expression and the imaginary landscape seem to change as we look.",
@@ -814,9 +818,9 @@ camera.position.set(0, 1.65, 0);
 const audioListener = new THREE.AudioListener();
 camera.add(audioListener);
 const visitor = new THREE.Group();
-visitor.position.x = previewPositionX;
-visitor.position.z = previewPositionZ;
-visitor.rotation.y = previewRotationY;
+visitor.position.x = experienceStartX;
+visitor.position.z = experienceStartZ;
+visitor.rotation.y = experienceStartYaw;
 visitor.add(camera);
 scene.add(visitor);
 
@@ -1854,8 +1858,8 @@ function museumImagePath(template) {
 
 function buildFiveMuseumsWing() {
   const roomCenters = MUSEUM_ROOMS.map((_, index) => index * MUSEUM_WING_ROOM_DEPTH);
-  visitor.position.set(0, 0, requestedMuseumIndex ? requestedMuseumIndex * MUSEUM_WING_ROOM_DEPTH - 5.2 : -5.2);
-  visitor.rotation.y = Math.PI;
+  visitor.position.set(experienceStartX, 0, experienceStartZ);
+  visitor.rotation.y = experienceStartYaw;
   scene.background = new THREE.Color(0x10171b);
   scene.fog = new THREE.Fog(0x10171b, 28, MUSEUM_WING_LAST_BOUNDARY_Z + MUSEUM_WING_ROOM_DEPTH);
   scene.add(new THREE.HemisphereLight(0xffefd6, 0x182129, isQuestBrowser ? 1.3 : 1.55));
@@ -8462,14 +8466,14 @@ async function toggleVR() {
       }
 
       document.body.dataset.xrNavigation = "idle";
-      visitor.position.set(isConnectedMuseum ? connectedStartX : previewPositionX, 0, isConnectedMuseum ? connectedStartZ : previewPositionZ);
-      visitor.rotation.set(0, isConnectedMuseum ? connectedStartYaw : previewRotationY, 0);
+      visitor.position.set(experienceStartX, 0, experienceStartZ);
+      visitor.rotation.set(0, experienceStartYaw, 0);
     }, { once: true });
 
     const xrLayer = session.renderState?.baseLayer;
     if (isQuestBrowser && xrLayer && "fixedFoveation" in xrLayer) xrLayer.fixedFoveation = 1;
-    visitor.position.set(isConnectedMuseum ? connectedStartX : previewPositionX, 0, isConnectedMuseum ? connectedStartZ : previewPositionZ);
-    visitor.rotation.set(0, isConnectedMuseum ? connectedStartYaw : previewRotationY, 0);
+    visitor.position.set(experienceStartX, 0, experienceStartZ);
+    visitor.rotation.set(0, experienceStartYaw, 0);
     await audioListener.context.resume().catch(() => {});
     enterButton.textContent = text.exit;
   } catch (error) {

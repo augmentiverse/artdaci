@@ -20,7 +20,7 @@
     },
     {
       "artistId":"ve", "name":{"fr":"Johannes Vermeer","en":"Johannes Vermeer","ar":"يوهانس فيرمير"},
-      "guide":{"guideId":"vermeer-guide","status":"reserved"},
+      "guide":{"guideId":"vermeer-guide","status":"available"},
       "zone":{"wall":"east","color":"#28554f","view":{"x":5.5,"z":0,"yaw":-1.5707963267948966}},
       "works":[
         {"artworkId":"ve01","title":{"fr":"La Jeune Fille à la perle","en":"Girl with a Pearl Earring","ar":"الفتاة ذات القرط اللؤلؤي"},"thumbnail":"assets/artists/johannes-vermeer/collection/girl-with-a-pearl-earring-vermeer.webp","imageFallback":"assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg","museumId":"mauritshuis","description":{"fr":"La figure se retourne vers nous. Quelques touches lumineuses suffisent à faire apparaître le regard, les lèvres et la perle.","en":"The figure turns towards us. A few touches of light bring the eyes, lips and pearl into view.","ar":"تلتفت الشخصية نحونا. وتكفي لمسات ضوئية قليلة لإبراز العينين والشفتين واللؤلؤة."}},
@@ -30,7 +30,7 @@
     },
     {
       "artistId":"vg", "name":{"fr":"Vincent van Gogh","en":"Vincent van Gogh","ar":"فنسنت فان غوخ"},
-      "guide":{"guideId":"vangogh-guide","status":"reserved"},
+      "guide":{"guideId":"vangogh-guide","status":"available"},
       "zone":{"wall":"south","color":"#775337","view":{"x":0,"z":5.5,"yaw":3.141592653589793}},
       "works":[
         {"artworkId":"vg01","title":{"fr":"Autoportrait (1889)","en":"Self-Portrait (1889)","ar":"صورة ذاتية (1889)"},"thumbnail":"assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp","imageFallback":"assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp","museumId":null,"description":{"fr":"Dans cet autoportrait de 1889, le veston et le fond aux courbes ondulantes entourent le visage. Observez le contraste entre les bleus et les verts et l’orangé de la barbe.","en":"In this self-portrait from 1889, the jacket and swirling background surround the face. Notice the contrast between the blues and greens and the orange of the beard.","ar":"في هذه الصورة الذاتية من عام 1889، تحيط السترة والخلفية ذات الخطوط المتموجة بالوجه. تأمل التباين بين الأزرق والأخضر واللون البرتقالي للحية."},"imagePresentation":{"manifestKey":"collection","sha256":"07be648ab3f4b0176881f8cac6f5ccba4f73868a73486a44ac496958f24b514e","orientation":"portrait","date":"1889","source":"https://www.musee-orsay.fr/fr/oeuvres/portrait-de-lartiste-747"}},
@@ -40,7 +40,7 @@
     },
     {
       "artistId":"mo", "name":{"fr":"Claude Monet","en":"Claude Monet","ar":"كلود مونيه"},
-      "guide":{"guideId":"monet-guide","status":"reserved"},
+      "guide":{"guideId":"monet-guide","status":"available"},
       "zone":{"wall":"west","color":"#66506c","view":{"x":-5.5,"z":0,"yaw":1.5707963267948966}},
       "works":[
         {"artworkId":"mo01","title":{"fr":"Impression, soleil levant","en":"Impression, Sunrise","ar":"انطباع، شروق الشمس"},"thumbnail":"assets/artists/claude-monet/collection/impression-sunrise-monet.webp","imageFallback":"assets/artists/claude-monet/collection/impression-sunrise-monet.webp","museumId":null,"description":{"fr":"Un soleil orange traverse une atmosphère bleutée. Les silhouettes et les reflets suggèrent le port avec quelques touches de couleur.","en":"An orange sun cuts through a bluish atmosphere. Silhouettes and reflections suggest the harbour with a few touches of colour.","ar":"تخترق شمس برتقالية أجواء زرقاء. توحي الظلال والانعكاسات بالميناء عبر لمسات لونية قليلة."}},

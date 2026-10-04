@@ -16,6 +16,7 @@ export function validateArtistGuideConfig(config,{artist,knownArtworkIds=[]}={})
     const entry=config?.content?.[lang];
     for(const view of ['welcome','about','works'])if(!entry?.[view]?.title||!entry?.[view]?.description)errors.push(`Missing ${lang} ${view}`);
     for(const action of ACTIONS)if(!entry?.actions?.[action])errors.push(`Missing ${lang} ${action}`);
+    if(config?.profile&&(!entry?.actions?.OPEN_PROFILE||!/^\.\.\/[a-z0-9-]+\.html(?:\?[a-z0-9=&%-]+)?$/.test(config.profile.routes?.[lang]||'')))errors.push(`Invalid ${lang} profile route`);
   }
   return errors;
 }
@@ -69,7 +70,7 @@ export function createArtistGuideEngine({configs,loadModel=async()=>null,dispose
     const lang=LANGUAGES.includes(language)?language:'fr',content=active.content[lang];
     const action=id=>({id,label:content.actions[id]});
     const actions=view==='welcome'?[action('DISCOVER_WORKS'),action('ABOUT_ARTIST')]
-      :view==='about'?[action('BACK_TO_GUIDE')]
+      :view==='about'?[...(active.profile?[{...action('OPEN_PROFILE'),href:active.profile.routes[lang]}]:[]),action('BACK_TO_GUIDE')]
       :view==='works'?[...active.works.map(id=>({id:`ARTWORK_SELECTED:${id}`,label:workTitle(id,lang)})),action('BACK_TO_GUIDE')]
       :[action('PREVIOUS_WORK'),action('NEXT_WORK'),action('BACK_TO_GUIDE')];
     actions.push(action('CLOSE'));

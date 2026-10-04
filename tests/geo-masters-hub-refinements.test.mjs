@@ -103,7 +103,7 @@ test('actual Hub frame moves with all four arrows without rotating the desktop c
   const source=readFileSync(new URL('geo/scripts/masters-hub-viewer.js',root),'utf8');
   for(const [key,axis,sign] of [['ArrowUp','z',-1],['ArrowDown','z',1],['ArrowLeft','x',-1],['ArrowRight','x',1]]){
     const rig=new THREE.Group(),camera=new THREE.PerspectiveCamera();
-    const state=vm.createContext({scene:new THREE.Scene(),disposed:false,lastTime:0,ready:true,renderer:{xr:{isPresenting:false},render(){}},document:{hidden:false},keys:new Set([key]),held:new Map(),rig,camera,yaw:0,pitch:0,config:hub,readHubKeyboard,movePosition,frameCount:0,lastMetrics:0});
+    const state=vm.createContext({scene:new THREE.Scene(),disposed:false,lastTime:0,ready:true,guideUi:null,selected:null,renderer:{xr:{isPresenting:false},render(){}},document:{hidden:false},keys:new Set([key]),held:new Map(),rig,camera,yaw:0,pitch:0,config:hub,readHubKeyboard,movePosition,frameCount:0,lastMetrics:0});
     vm.runInContext(source.slice(source.indexOf('function render('),source.indexOf('async function init(')),state);
     state.render(50);assert.ok(rig.position[axis]*sign>0);assert.equal(state.yaw,0);assert.equal(camera.rotation.y,0);
   }
@@ -111,10 +111,11 @@ test('actual Hub frame moves with all four arrows without rotating the desktop c
 
 test('actual Hub shell exposes twelve bare image planes and only transient hover outlines, with no repeated wall captions',()=>{
   const source=readFileSync(new URL('geo/scripts/masters-hub-viewer.js',root),'utf8');
-  const state=vm.createContext({THREE,scene:null,renderer:{capabilities:{getMaxAnisotropy:()=>4}},createHubArchitecture:()=>new THREE.Group(),config:hub,lang:'fr',copy:HUB_COPY.fr,guideCopy:HUB_GUIDE_COPY.fr,wallPlacement,HUB_EXIT,exhibits:[],targets:[],exitTarget:null,guideCallTarget:null,guideHandle:null,labelTexture:()=>new THREE.Texture(),guideButtonTexture:()=>new THREE.Texture()});
+  const guideCopy=HUB_GUIDE_COPY.fr;
+  const state=vm.createContext({THREE,scene:null,renderer:{capabilities:{getMaxAnisotropy:()=>4}},createHubArchitecture:()=>new THREE.Group(),config:hub,lang:'fr',copy:HUB_COPY.fr,guideCopy,guideLabels:artistId=>guideCopy.artists?.[artistId]||guideCopy,wallPlacement,HUB_EXIT,exhibits:[],targets:[],exitTarget:null,guideCallTargets:new Map(),guideHandle:null,labelTexture:()=>new THREE.Texture(),guideButtonTexture:()=>new THREE.Texture()});
   vm.runInContext(source.slice(source.indexOf('function board('),source.indexOf('async function loadExhibit(')),state);state.buildShell();
   assert.equal(state.exhibits.length,12);
-  // Four artist signs, three reservations, one Leonardo call and the exit; no artwork captions.
+  // Four artist signs, two reservations, two guide calls and the exit; no artwork captions.
   assert.equal(state.scene.children.filter(node=>node.isMesh).length,9);
   for(const item of state.exhibits){assert.equal(item.group.children.filter(node=>node.isMesh).length,1);assert.ok(item.frame.isLineLoop);assert.equal(item.frame.visible,false);}
   vm.runInContext(source.slice(source.indexOf('function highlight('),source.indexOf('function configurePointer(')),state);

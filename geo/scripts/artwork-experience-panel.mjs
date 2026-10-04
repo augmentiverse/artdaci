@@ -1,4 +1,4 @@
-import {HUB_COPY} from './masters-hub-core.mjs';
+import {HUB_COPY} from './masters-hub-core.mjs?v=6-15-10';
 
 const usable=capability=>['available','local-fallback'].includes(capability?.status);
 // V6.14 keeps the V6.13 visible action set. Other verified capabilities are
@@ -13,7 +13,10 @@ export function artworkExperienceActions(capabilities,language,playing=false){
     {id:'return',label:copy.return}
   ];
 }
-export function artworkExperiencePresentation({artist,work,language,view='menu',status='',capabilities,playing=false,image=null}){
+export function artworkExperiencePresentation({artist,work,language,view='menu',status='',capabilities,playing=false,image=null,printedNotice=null}){
   const copy=HUB_COPY[language];
-  return {artist:artist.name[language],title:work.title[language],description:view==='about'?work.description[language]:view==='image'?'':copy.choose,status,image,actions:artworkExperienceActions(capabilities,language,playing),dir:language==='ar'?'rtl':'ltr'};
+  const actions=artworkExperienceActions(capabilities,language,playing);
+  if(printedNotice)actions.splice(actions.length-1,0,{id:'printed',label:printedNotice.label,href:printedNotice.href});
+  actions.splice(actions.length-1,0,{id:'goto-artwork',label:copy.goToArtwork});
+  return {artist:artist.name[language],title:work.title[language],description:view==='about'?(printedNotice?.description||work.description[language]):view==='image'?'':copy.choose,status,image,actions,dir:language==='ar'?'rtl':'ltr'};
 }

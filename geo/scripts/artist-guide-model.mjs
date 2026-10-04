@@ -21,6 +21,7 @@ export function createGuideModelHandle(THREE,model){
       root.rotation.y=transform.rotationY;root.scale.setScalar(transform.scale);root.updateMatrixWorld(true);
     },
     mount(scene){if(!mounted){scene.add(root);mounted=true;this.mounted=true;}},
+    headPosition(target=new THREE.Vector3()){root.updateMatrixWorld(true);proxy.getWorldPosition(target);target.y+=size.y*root.scale.y/2;return target;},
     setHover(active){marker.material.color.set(active?0x9de2dd:0xc5a971);},
     dispose(){if(mounted){root.parent?.remove(root);mounted=false;this.mounted=false;}disposeOwnedResource({owned:true,object:model});proxy.geometry.dispose();proxy.material.dispose();marker.geometry.dispose();marker.material.dispose();}
   };

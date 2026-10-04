@@ -52,17 +52,31 @@ test('only verified museum routes are exposed, preserving FR/EN/AR',()=>{
   for(const work of works)for(const lang of HUB_LANGUAGES){const route=museumRoute(work.museumId,lang);if(work.museumId){assert.ok(existsSync(new URL(`content/museums/${work.museumId}.json`,root)));assert.equal(new URL(route,new URL('geo/masters-hub.html',root)).searchParams.get('lang'),lang);}else assert.equal(route,null);}
   assert.ok(existsSync(new URL('gallery-vr.html',root)));
 });
+test('museum gallery routes retain their requested room when WebXR starts and ends',()=>{
+  const source=readFileSync(new URL('scripts/gallery-vr.js',root),'utf8');
+  const routed=works.filter(work=>work.museumId);
+  assert.deepEqual(routed.map(work=>[work.artworkId,work.museumId]),[
+    ['ld01','louvre'],['ld06','louvre'],['ld02','czartoryski'],
+    ['ve01','mauritshuis'],['ve05','louvre'],['ve02','mauritshuis'],
+    ['vg02','van-gogh-museum'],['mo06','national-gallery-of-art-washington']
+  ]);
+  assert.match(source,/const museumWingStartZ = requestedMuseumIndex \* MUSEUM_WING_ROOM_DEPTH - 5\.2;/);
+  assert.match(source,/const experienceStartZ = isConnectedMuseum \? connectedStartZ : isFiveMuseumsWing \? museumWingStartZ : previewPositionZ;/);
+  assert.match(source,/const experienceStartYaw = isConnectedMuseum \? connectedStartYaw : isFiveMuseumsWing \? Math\.PI : previewRotationY;/);
+  assert.equal((source.match(/visitor\.position\.set\(experienceStartX, 0, experienceStartZ\);/g)||[]).length,3);
+  assert.equal((source.match(/visitor\.rotation(?:\.set\(0, experienceStartYaw, 0\)|\.y = experienceStartYaw)/g)||[]).length,4);
+});
 test('V6.13 actions exclude future 3D, AR, Space, VR and video capabilities',()=>{
   for(const w of works){const actions=artworkActions(resolveHubMedia(w,manifest(w.artworkId),'fr'),'fr');assert.deepEqual(actions.map(a=>a.id),['about','image','audio',...(w.museumId?['museum']:[]),'return']);}
 });
-test('guide configurations reserve identities without runtime paths or models',()=>{
-  assert.deepEqual(config.artists.find(a=>a.artistId==='ve').guide,{guideId:'vermeer-guide',status:'reserved'});
+test('Hub guide identities expose availability without embedding runtime model paths',()=>{
+  assert.deepEqual(config.artists.find(a=>a.artistId==='ve').guide,{guideId:'vermeer-guide',status:'available'});
   for(const a of config.artists)assert.deepEqual(Object.keys(a.guide).sort(),['guideId','status']);
   const mutated=structuredClone(config);mutated.artists[1].guide.model='vermeer_standing.glb';assert.ok(validateHub(mutated,catalog).length);
-  assert.equal(existsSync(new URL('assets/artists/johannes-vermeer/reimagined/models/vermeer_standing.glb',root)),false);
+  assert.equal(existsSync(new URL('assets/artists/johannes-vermeer/reimagined/models/vermeer_standing.glb',root)),true);
 });
 test('Hub startup prepares a guide loader but loads no GLB or video before explicit selection',()=>{
-  const viewer=readFileSync(new URL('geo/scripts/masters-hub-viewer.js',root),'utf8');assert.match(viewer,/loadModel:async descriptor/);assert.match(viewer,/guideEngine\.loadGuide\('leonardo-guide'\)/);
+  const viewer=readFileSync(new URL('geo/scripts/masters-hub-viewer.js',root),'utf8');assert.match(viewer,/loadModel:async\(descriptor/);assert.match(viewer,/async function callGuide\(guideId\)/);assert.match(viewer,/guideEngine\.loadGuide\(guideId\)/);
   for(const path of ['geo/scripts/masters-hub-panel.mjs','geo/masters-hub.html'])assert.doesNotMatch(readFileSync(new URL(path,root),'utf8'),/GLTFLoader|DRACOLoader|model-viewer|\.glb|<video|VideoTexture/);
   assert.match(readFileSync(new URL('geo/masters-hub.html',root),'utf8'),/<audio[^>]+preload="none"/);
 });

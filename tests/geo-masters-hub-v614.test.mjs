@@ -23,14 +23,17 @@ test('four guide configurations keep the twelve unchanged Hub works and translat
   for(const artist of hub.artists){
     const config=configs.find(item=>item.artistId===artist.artistId);
     assert.deepEqual(validateArtistGuideConfig(config,{artist,knownArtworkIds:artist.works.map(work=>work.artworkId)}),[]);
-    assert.equal(config.model.status,artist.artistId==='ld'?'available':'reserved');
-    if(artist.artistId!=='ld')assert.equal(config.model.path,null);
+    const available=['ld','ve','vg','mo'].includes(artist.artistId);
+    assert.equal(config.model.status,available?'available':'reserved');
+    if(!available)assert.equal(config.model.path,null);
     assert.deepEqual(config.works,artist.works.map(work=>work.artworkId));
-    assert.ok(Object.values(config.transform).every(value=>artist.artistId==='ld'?Number.isFinite(value):value===null));
+    assert.ok(Object.values(config.transform).every(value=>available?Number.isFinite(value):value===null));
     for(const language of ['fr','en','ar'])assert.ok(config.content[language].welcome.title&&config.content[language].about.description);
   }
   assert.deepEqual(configs.find(config=>config.artistId==='ve').guideId,'vermeer-guide');
-  assert.equal(existsSync(new URL('assets/artists/johannes-vermeer/reimagined/models/vermeer_standing.glb',root)),false);
+  assert.equal(existsSync(new URL('assets/artists/johannes-vermeer/reimagined/models/vermeer_standing.glb',root)),true);
+  assert.equal(existsSync(new URL('assets/artists/vincent-van-gogh/profile/models/standing.glb',root)),true);
+  assert.equal(existsSync(new URL('assets/artists/claude-monet/reimagined/models/claude-monet-standing-c.glb',root)),true);
   const engine=readFileSync(new URL('geo/scripts/artist-guide-engine.mjs',root),'utf8');
   assert.doesNotMatch(engine,/Leonardo|Mona Lisa|Vermeer|Van Gogh|Monet|MONA_LISA_VISITED/i);
 });

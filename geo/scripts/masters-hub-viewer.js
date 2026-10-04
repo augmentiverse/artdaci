@@ -3,19 +3,20 @@ import {GLTFLoader} from '../../vendor/GLTFLoader.module.js';
 import {DRACOLoader} from '../../vendor/DRACOLoader.module.js';
 import {languageFromSearch} from './geo-core.mjs';
 import {movePosition,pivotRig,snapTurn,deadZone} from './room-navigation.mjs';
-import {HUB_COPY,HUB_LOCAL_AUDIO_COPY,HUB_GUIDE_COPY,validateHub,wallPlacement,readHubSticks,readHubKeyboard,createSelectionGate,firstHubHit} from './masters-hub-core.mjs';
-import {createHubXrPanel} from './masters-hub-panel.mjs';
-import {createArtistGuideEngine,validateArtistGuideConfig} from './artist-guide-engine.mjs';
-import {createArtistGuideUi} from './artist-guide-ui.mjs';
+import {HUB_COPY,HUB_LOCAL_AUDIO_COPY,HUB_GUIDE_COPY,validateHub,wallPlacement,readHubSticks,readHubKeyboard,createSelectionGate,firstHubHit} from './masters-hub-core.mjs?v=6-15-13';
+import {createHubXrPanel} from './masters-hub-panel.mjs?v=6-15-10';
+import {createArtistGuideEngine,validateArtistGuideConfig} from './artist-guide-engine.mjs?v=6-15-5';
+import {createArtistGuideUi,guideBubbleScreenPlacement} from './artist-guide-ui.mjs?v=6-15-6';
 import {createArtistGuideXrPanel} from './artist-guide-xr-panel.mjs';
 import {createGuideModelHandle} from './artist-guide-model.mjs';
 import {createGuideQa} from './artist-guide-qa.mjs';
 import {createArtworkExperience} from './artwork-experience.mjs';
-import {artworkExperiencePresentation} from './artwork-experience-panel.mjs';
+import {artworkExperiencePresentation} from './artwork-experience-panel.mjs?v=6-15-10';
+import {printedNotice,validatePrintedNotices,artworkVisitorPose} from './masters-hub-notices.mjs?v=6-15-10';
 import {createHubArchitecture,HUB_EXIT} from './masters-hub-room.mjs';
 
 const lang=languageFromSearch(location.search),copy=HUB_COPY[lang],rootUrl=new URL('../../',import.meta.url);
-const guideCopy=HUB_GUIDE_COPY[lang],guideQaEnabled=new URLSearchParams(location.search).get('guideQA')==='leonardo';
+const guideCopy=HUB_GUIDE_COPY[lang],guideQaSlug=new URLSearchParams(location.search).get('guideQA'),guideQaId={leonardo:'leonardo-guide',vermeer:'vermeer-guide',vangogh:'vangogh-guide','van-gogh':'vangogh-guide',monet:'monet-guide'}[guideQaSlug]||null;
 const immersiveCopy={fr:{open:'Expériences immersives',back:'Retour à l’œuvre',ar:'Voir en AR',space:'Space AR',vr:'Explorer en VR'},en:{open:'Immersive experiences',back:'Back to artwork',ar:'View in AR',space:'Space AR',vr:'Explore in VR'},ar:{open:'تجارب غامرة',back:'العودة إلى العمل',ar:'عرض بالواقع المعزز',space:'واقع معزز مكاني',vr:'استكشف بالواقع الافتراضي'}}[lang];
 const $=id=>document.getElementById(id),stage=$('hub-stage'),canvas=$('hub-canvas'),panel=$('hub-panel'),audio=$('hub-audio');
 document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';
@@ -26,12 +27,13 @@ document.querySelectorAll('[data-lang]').forEach(el=>{el.href=`masters-hub.html?
 $('geo-return').textContent=copy.back;
 for(const id of ['geo-return','footer-return'])$(id).href=`./?lang=${lang}`;
 
-let config,scene,renderer,camera,rig,xrPanel,guideXrPanel,guideUi,guideConfig,guideHandle,guideCallTarget,guideQa,decoder,observer,guideEngine,artworkExperience,exitTarget,disposed=false,ready=false;
-let yaw=0,pitch=0,lastTime=0,turnArmed=false,xrEntry=null,needsPanelPlacement=false,needsGuidePanelPlacement=false,guideLoadMs=null;
-let selected=null,media=null,panelView='menu',mediaStatus='',detailImage=null,detailUrl=null,lastFocus=null,audioCandidateIndex=0,guideTransform=null;
+let config,guideConfigs,scene,renderer,camera,rig,xrPanel,guideXrPanel,guideUi,guideHandle,guideQa,decoder,observer,guideEngine,artworkExperience,exitTarget,disposed=false,ready=false;
+let yaw=0,pitch=0,lastTime=0,turnArmed=false,xrEntry=null,guideLoadMs=null,notices=null;
+let selected=null,media=null,panelView='menu',mediaStatus='',detailImage=null,detailUrl=null,lastFocus=null,audioCandidateIndex=0;
 let imagesLoaded=0,imageFailures=0,firstReadyTime=0,frameCount=0,metricStart=0,lastMetrics=0;
-const exhibits=[],targets=[],controllers=[],keys=new Set(),held=new Map(),selection=createSelectionGate(),detailGate=createSelectionGate();
+const exhibits=[],targets=[],controllers=[],keys=new Set(),held=new Map(),selection=createSelectionGate(),detailGate=createSelectionGate(),guideCallTargets=new Map(),guideTransforms=new Map();
 const pointerRay=new THREE.Raycaster(),xrRay=new THREE.Raycaster(),head=new THREE.Vector3(),look=new THREE.Vector3();
+const guideHead=new THREE.Vector3(),guideProjection=new THREE.Vector3(),guideBounds=new THREE.Box3();
 let drag=null;
 
 function asset(path){return /^https?:/.test(path)?path:new URL(path,rootUrl).href;}
@@ -39,48 +41,76 @@ function stopAudio(){audioCandidateIndex=0;audio.pause();audio.removeAttribute('
 function clearDetail(){if(detailUrl)URL.revokeObjectURL(detailUrl);detailUrl=null;$('hub-detail').removeAttribute('src');delete $('hub-detail').dataset.source;if(detailImage){detailImage.width=1;detailImage.height=1;}detailImage=null;}
 function closePanel(focus=true){
   selection.next();detailGate.next();if(artworkExperience)artworkExperience.close();else stopAudio();clearDetail();selected=null;media=null;panel.hidden=true;stage.dataset.panel='false';
-  if(xrPanel){xrPanel.mesh.visible=false;xrPanel.setHover(null);}
+  if(xrPanel){xrPanel.mesh.visible=false;xrPanel.setHover(null);xrPanel.resetFollower();}
   if(focus&&lastFocus?.isConnected)lastFocus.focus({preventScroll:true});
 }
+function guideLabels(artistId){return guideCopy.artists?.[artistId]||guideCopy;}
+function activeGuideConfig(){const id=guideEngine?.snapshot().guideId;return guideConfigs?.find(item=>item.guideId===id)||null;}
 function guideState(){return guideEngine?.snapshot().phase||'closed';}
 function syncGuideState(){
-  const state=guideState(),loaded=guideEngine?.snapshot().guidesLoaded||0;
-  stage.dataset.guideState=state;stage.dataset.guidesLoaded=String(loaded);
-  $('hub-call-leonardo').textContent=state==='closed'||state==='error'?guideCopy.call:guideCopy.release;
-  $('hub-call-leonardo').setAttribute('aria-pressed',loaded?'true':'false');
-  if(guideCallTarget){
-    guideCallTarget.material.map?.dispose();
-    guideCallTarget.material.map=guideButtonTexture(state==='closed'||state==='error'?guideCopy.call:guideCopy.release,state!=='closed'&&state!=='error');
-    guideCallTarget.material.needsUpdate=true;
+  const snapshot=guideEngine?.snapshot()||{phase:'closed',guideId:null,guidesLoaded:0},loaded=snapshot.guidesLoaded||0;
+  stage.dataset.guideState=snapshot.phase;stage.dataset.guidesLoaded=String(loaded);stage.dataset.activeGuide=snapshot.guideId||'';
+  for(const artist of config.artists.filter(item=>item.guide.status==='available')){
+    const active=snapshot.guideId===artist.guide.guideId,state=active?snapshot.phase:'closed',labels=guideLabels(artist.artistId),release=active&&(state==='loading'||state==='ready');
+    const button=$(`hub-call-${artist.artistId}`),status=$(`hub-guide-status-${artist.artistId}`),target=guideCallTargets.get(artist.guide.guideId);
+    if(button){button.textContent=release?labels.release:labels.call;button.setAttribute('aria-pressed',active&&loaded?'true':'false');}
+    if(target){target.material.map?.dispose();target.material.map=guideButtonTexture(release?labels.release:labels.call,release,target.userData.guideColor);target.material.needsUpdate=true;}
+    if(status)status.textContent=!active?'':state==='loading'?labels.loading:state==='error'?labels.failed:state==='ready'?labels.ready:'';
   }
   if(guideLoadMs!==null)stage.dataset.guideLoadMs=String(guideLoadMs);
-  $('hub-guide-status').textContent=state==='loading'?guideCopy.loading:state==='error'?guideCopy.failed:state==='ready'?guideCopy.ready:'';
 }
 function renderGuide(){
-  const view=guideUi?.render();
-  if(guideXrPanel){guideXrPanel.drawGuide(view,{artistName:guideCopy.guide,status:guideCopy.ready});guideXrPanel.mesh.visible=Boolean(view&&renderer?.xr.isPresenting);}
-  if(view)needsGuidePanelPlacement=true;
+  const view=guideUi?.render(),artist=config?.artists.find(item=>item.artistId===view?.artistId),labels=guideLabels(view?.artistId);
+  if(guideXrPanel){guideXrPanel.drawGuide(view,{artistName:artist?.name[lang]||guideCopy.guide,status:labels.ready});guideXrPanel.mesh.visible=Boolean(view&&renderer?.xr.isPresenting);}
+  if(view)positionGuideBubble();
+}
+function positionGuideBubble(){
+  if(!guideUi?.visible||!guideHandle||renderer.xr.isPresenting)return;
+  const element=$('hub-guide-panel'),dock=$('hub-guide-dock'),width=stage.clientWidth,height=stage.clientHeight;
+  element.style.width=`${Math.min(280,width-20)}px`;rig.updateMatrixWorld(true);
+  guideHandle.headPosition(guideHead);guideProjection.copy(guideHead).project(camera);
+  let placement=null;
+  if(guideProjection.z>-1&&guideProjection.z<1){
+    guideBounds.setFromObject(guideHandle.proxy);
+    const bounds={left:Infinity,right:-Infinity,top:Infinity,bottom:-Infinity};
+    for(const horizontal of [guideBounds.min.x,guideBounds.max.x])for(const vertical of [guideBounds.min.y,guideBounds.max.y])for(const depth of [guideBounds.min.z,guideBounds.max.z]){
+      guideProjection.set(horizontal,vertical,depth).project(camera);
+      const screenX=(guideProjection.x+1)*width/2,screenY=(1-guideProjection.y)*height/2;
+      bounds.left=Math.min(bounds.left,screenX);bounds.right=Math.max(bounds.right,screenX);bounds.top=Math.min(bounds.top,screenY);bounds.bottom=Math.max(bounds.bottom,screenY);
+    }
+    placement=guideBubbleScreenPlacement(bounds,{width,height,panelWidth:element.offsetWidth,panelHeight:element.offsetHeight});
+  }
+  if(placement){if(element.parentElement!==stage)stage.append(element);element.style.left=`${placement.left}px`;element.style.top=`${placement.top}px`;element.dataset.placement=placement.placement;}
+  else{const moved=element.parentElement!==dock;if(moved)dock.append(element);element.style.left='';element.style.top='';element.dataset.placement='docked';if(moved)element.scrollIntoView({block:'nearest'});}
 }
 function showGuide(){
   if(guideState()!=='ready')return;
   closePanel(false);guideEngine.dispatch('BACK_TO_GUIDE');guideUi.show();renderGuide();
+}
+function positionArtworkBubble(){
+  if(!selected||panel.hidden||renderer.xr.isPresenting)return;
+  const dock=$('hub-artwork-dock'),width=stage.clientWidth;
+  panel.style.width=`${Math.min(280,width-20)}px`;rig.updateMatrixWorld(true);
+  if(width>=720){if(panel.parentElement!==stage)stage.append(panel);panel.style.left=`${lang==='ar'?12:Math.max(12,width-panel.offsetWidth-12)}px`;panel.style.top='12px';panel.dataset.placement='visitor';}
+  else{const moved=panel.parentElement!==dock;if(moved)dock.append(panel);panel.style.left='';panel.style.top='';panel.dataset.placement='docked';if(moved)panel.scrollIntoView({block:'nearest'});}
 }
 function closeGuide(){
   if(selected&&guideEngine?.snapshot().view==='artwork')closePanel(false);
   guideUi?.hide();guideXrPanel&&(guideXrPanel.mesh.visible=false);
   guideEngine?.unloadGuide();guideLoadMs=null;syncGuideState();
 }
-async function callGuide(){
+async function callGuide(guideId){
   if(!guideEngine||!ready)return;
-  if(guideState()==='loading'||guideState()==='ready'){closeGuide();return;}
+  const snapshot=guideEngine.snapshot();
+  if(snapshot.guideId===guideId&&(snapshot.phase==='loading'||snapshot.phase==='ready')){closeGuide();return;}
   closePanel(false);guideUi?.hide();const start=performance.now();
-  const pending=guideEngine.loadGuide('leonardo-guide');syncGuideState();
+  const pending=snapshot.guideId&&snapshot.guideId!==guideId?guideEngine.switchGuide(guideId):guideEngine.loadGuide(guideId);syncGuideState();
   try{const result=await pending;if(disposed||result.phase!=='ready')return;
     guideLoadMs=Math.round(performance.now()-start);syncGuideState();guideUi.show();renderGuide();
   }catch(error){if(!disposed){syncGuideState();console.warn('Hub guide unavailable:',error);}}
 }
 function openGuideArtwork(artworkId){
-  const artist=config.artists.find(entry=>entry.artistId==='ld'),work=artist.works.find(entry=>entry.artworkId===artworkId);
+  const artist=config.artists.find(entry=>entry.artistId===guideEngine.snapshot().artistId),work=artist?.works.find(entry=>entry.artworkId===artworkId);
   if(!work)return;
   if(guideEngine.snapshot().artworkId!==artworkId)guideEngine.dispatch('ARTWORK_SELECTED',{artworkId});
   guideEngine.dispatch('ARTWORK_OPENED');guideUi.hide();guideXrPanel.mesh.visible=false;
@@ -91,27 +121,29 @@ function returnToGuide(){
 }
 function drawPanel(){
   if(!selected)return;
-  const work=selected.work,presentation=artworkExperiencePresentation({artist:selected.artist,work,language:lang,view:panelView,status:mediaStatus,capabilities:media?.capabilities,playing:!audio.paused,image:panelView==='image'?detailImage:null});
-  if(guideEngine?.snapshot().view==='artwork'&&guideEngine.snapshot().artworkId===work.artworkId){
+  const work=selected.work,presentation=artworkExperiencePresentation({artist:selected.artist,work,language:lang,view:panelView,status:mediaStatus,capabilities:media?.capabilities,playing:!audio.paused,image:panelView==='image'?detailImage:null,printedNotice:printedNotice(notices,work.artworkId,lang)});
+  const currentGuide=activeGuideConfig();
+  if(currentGuide&&guideEngine?.snapshot().view==='artwork'&&guideEngine.snapshot().artworkId===work.artworkId){
     const routes=['ar','space','vr'].filter(kind=>media?.capabilities?.[kind]?.status==='available'&&media.capabilities[kind].url);
-    if(panelView==='experiences')presentation.actions=[...routes.map(kind=>({id:kind,label:immersiveCopy[kind]})),{id:'work',label:immersiveCopy.back},{id:'guide-return',label:guideConfig.content[lang].actions.BACK_TO_GUIDE}];
-    else presentation.actions=[...presentation.actions.filter(action=>action.id!=='return'),...(routes.length?[{id:'experiences',label:immersiveCopy.open}]:[]),{id:'previous',label:guideConfig.content[lang].actions.PREVIOUS_WORK},{id:'next',label:guideConfig.content[lang].actions.NEXT_WORK},{id:'guide-return',label:guideConfig.content[lang].actions.BACK_TO_GUIDE}];
+    if(panelView==='experiences')presentation.actions=[...routes.map(kind=>({id:kind,label:immersiveCopy[kind]})),{id:'work',label:immersiveCopy.back},{id:'guide-return',label:currentGuide.content[lang].actions.BACK_TO_GUIDE}];
+    else presentation.actions=[...presentation.actions.filter(action=>action.id!=='return'),...(routes.length?[{id:'experiences',label:immersiveCopy.open}]:[]),{id:'previous',label:currentGuide.content[lang].actions.PREVIOUS_WORK},{id:'next',label:currentGuide.content[lang].actions.NEXT_WORK},{id:'guide-return',label:currentGuide.content[lang].actions.BACK_TO_GUIDE}];
   }
   const {actions,description}=presentation;
   $('hub-panel-title').textContent=presentation.title;$('hub-panel-artist').textContent=presentation.artist;
   $('hub-panel-description').textContent=description;$('hub-media-status').textContent=mediaStatus;
   $('hub-detail').hidden=panelView!=='image'||!detailUrl;$('hub-detail').alt=presentation.title;
   const focused=document.activeElement?.dataset?.action;
-  $('hub-actions').replaceChildren(...actions.map(action=>{const b=document.createElement('button');b.dataset.action=action.id;b.textContent=action.label;b.addEventListener('click',()=>runAction(action.id));return b;}));
+  $('hub-actions').replaceChildren(...actions.map(action=>{const b=document.createElement(action.href?'a':'button');if(action.href)b.href=action.href;else b.type='button';b.dataset.action=action.id;b.textContent=action.label;b.addEventListener('click',event=>{event.preventDefault();runAction(action.id);});return b;}));
   if(focused)$('hub-actions').querySelector(`[data-action="${focused}"]`)?.focus({preventScroll:true});
   panel.hidden=false;stage.dataset.panel='true';
   if(xrPanel){xrPanel.draw(presentation);xrPanel.mesh.visible=Boolean(renderer?.xr.isPresenting);}
+  positionArtworkBubble();
 }
 async function openArtwork(item){
   guideUi?.hide();if(guideXrPanel)guideXrPanel.mesh.visible=false;
-  closePanel(false);lastFocus=document.activeElement;selected=item;panelView='menu';mediaStatus=copy.mediaLoading;
+  closePanel(false);lastFocus=document.activeElement;selected=item;panelView='menu';mediaStatus=copy.mediaLoading;xrPanel?.resetFollower();
   const pending=artworkExperience.open(item.work.artworkId);
-  media=artworkExperience.snapshot().media;const token=selection.next();drawPanel();needsPanelPlacement=true;
+  media=artworkExperience.snapshot().media;const token=selection.next();drawPanel();
   if(!renderer?.xr.isPresenting)$('hub-panel-title').focus({preventScroll:true});
   const result=await pending;
   if(!selection.current(token)||!result)return;
@@ -144,8 +176,19 @@ async function showDetail(){
   if(detailGate.current(token)&&request.current()){mediaStatus=copy.imageFailed;drawPanel();}
 }
 async function navigate(url){stopAudio();try{await renderer?.xr.getSession()?.end();}catch{}location.assign(url);}
+function goToSelectedArtwork(){
+  if(!selected)return;
+  const item=exhibits.find(entry=>entry.work.artworkId===selected.work.artworkId),pose=artworkVisitorPose(THREE,item);if(!pose)return;
+  if(renderer.xr.isPresenting){
+    rig.updateMatrixWorld(true);let cam=renderer.xr.getCamera(camera);head.setFromMatrixPosition(cam.matrixWorld);look.set(0,0,-1).transformDirection(cam.matrixWorld);
+    const currentYaw=Math.atan2(-look.x,-look.z),delta=Math.atan2(Math.sin(pose.yaw-currentYaw),Math.cos(pose.yaw-currentYaw));turnRig(delta);
+    rig.updateMatrixWorld(true);cam=renderer.xr.getCamera(camera);head.setFromMatrixPosition(cam.matrixWorld);rig.position.x+=pose.x-head.x;rig.position.z+=pose.z-head.z;rig.updateMatrixWorld(true);yaw=pose.yaw;xrPanel.resetFollower();
+  }else{rig.position.x=pose.x;rig.position.z=pose.z;yaw=pose.yaw;pitch=0;camera.rotation.set(0,yaw,0,'YXZ');canvas.focus({preventScroll:true});}
+  stage.dataset.lastArtworkApproach=selected.work.artworkId;
+}
 async function runAction(action){
   if(!selected)return;
+  if(action==='printed'){const notice=printedNotice(notices,selected.work.artworkId,lang);if(notice)await navigate(notice.href);return;}
   if(action==='guide-return'){returnToGuide();return;}
   if(action==='previous'||action==='next'){
     const next=guideEngine.dispatch(action==='previous'?'ARTWORK_PREVIOUS':'ARTWORK_NEXT').artworkId;
@@ -156,6 +199,7 @@ async function runAction(action){
     await navigate(media.capabilities[action].url);return;
   }
   if(action==='return'){closePanel();return;}
+  if(action==='goto-artwork'){goToSelectedArtwork();return;}
   if(action==='about'){panelView='about';mediaStatus='';drawPanel();return;}
   if(action==='image'){await showDetail();return;}
   if(action==='audio'&&media.audio){
@@ -182,9 +226,9 @@ function labelTexture(lines,{width=1024,height=192,color='#f1e9db',background='t
   lines.forEach((line,i)=>{ctx.fillStyle=i?secondaryColor:color;ctx.font=`${i?400:600} ${i?size*.55:size}px system-ui,sans-serif`;ctx.fillText(line,width/2,height/(lines.length+1)*(i+1)+size*.3,width-96);});
   const t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;t.generateMipmaps=false;t.minFilter=THREE.LinearFilter;return t;
 }
-function guideButtonTexture(label,release=false){
+function guideButtonTexture(label,release=false,background='#234552'){
   const c=document.createElement('canvas');c.width=1024;c.height=256;const ctx=c.getContext('2d');
-  ctx.fillStyle=release?'#44353a':'#234552';ctx.fillRect(0,0,c.width,c.height);
+  ctx.fillStyle=release?'#44353a':background;ctx.fillRect(0,0,c.width,c.height);
   ctx.strokeStyle='#dbbc75';ctx.lineWidth=12;ctx.strokeRect(12,12,c.width-24,c.height-24);
   ctx.strokeStyle='#f2dfa9';ctx.lineWidth=2;ctx.strokeRect(29,29,c.width-58,c.height-58);
   ctx.fillStyle='#fff3d7';ctx.textAlign='center';ctx.direction=lang==='ar'?'rtl':'ltr';
@@ -212,11 +256,12 @@ function buildShell(){
   for(const artist of config.artists){
     const middle=wallPlacement(artist.zone.wall,1),q=new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),middle.yaw);
     wallLabel([artist.name[lang]],6.5,.5,new THREE.Vector3(middle.x,3.78,middle.z),middle.yaw,{width:1560,height:120,size:60});
-    const reserve=new THREE.Vector3(artist.artistId==='ld'?8.2:7.8,1.6,0).applyQuaternion(q).add(new THREE.Vector3(middle.x,0,middle.z));
-    if(artist.artistId==='ld'){
-      guideCallTarget=board(guideButtonTexture(guideCopy.call),1.72,.43,reserve,middle.yaw);
-      guideCallTarget.material.transparent=false;
-      guideCallTarget.name='Hub_Leonardo_Call';guideCallTarget.userData.guideCall=true;targets.push(guideCallTarget);
+    const reserve=new THREE.Vector3(artist.guide.status==='available'?8.2:7.8,1.6,0).applyQuaternion(q).add(new THREE.Vector3(middle.x,0,middle.z));
+    if(artist.guide.status==='available'){
+      const labels=guideLabels(artist.artistId),target=board(guideButtonTexture(labels.call,false,artist.zone.color),1.72,.43,reserve,middle.yaw);
+      target.material.transparent=false;target.name=`Hub_${artist.guide.guideId}_Call`;target.userData.guideCall=artist.guide.guideId;
+      target.userData.guideColor=artist.zone.color;
+      guideCallTargets.set(artist.guide.guideId,target);targets.push(target);
     }else wallLabel([copy.guide,copy.reserved],2.5,.85,reserve,middle.yaw,{width:768,height:256,size:42});
     artist.works.forEach((work,index)=>{
       const p=wallPlacement(artist.zone.wall,index),group=new THREE.Group();group.position.set(p.x,2,p.z);group.rotation.y=p.yaw;scene.add(group);
@@ -245,9 +290,9 @@ function configureHtml(){
     const section=document.createElement('section');section.className='hub-artist-list';section.style.setProperty('--zone',artist.zone.color);
     const h=document.createElement('h3');h.textContent=artist.name[lang];section.append(h);
     for(const work of artist.works){const b=document.createElement('button');b.className='hub-work-link';b.dataset.artwork=work.artworkId;b.textContent=work.title[lang];const small=document.createElement('span');small.textContent=work.artworkId.toUpperCase();b.append(small);b.onclick=()=>{setView(artist.zone.view);stage.scrollIntoView({block:'center'});openArtwork({artist,work});};section.append(b);}
-    if(artist.artistId==='ld'){
-      const button=document.createElement('button');button.id='hub-call-leonardo';button.textContent=guideCopy.call;button.onclick=()=>{stage.scrollIntoView({block:'center'});callGuide();};section.append(button);
-      const status=document.createElement('small');status.id='hub-guide-status';status.setAttribute('role','status');section.append(status);
+    if(artist.guide.status==='available'){
+      const labels=guideLabels(artist.artistId),button=document.createElement('button');button.id=`hub-call-${artist.artistId}`;button.className='hub-guide-call';button.style.setProperty('--guide-color',artist.zone.color);button.textContent=labels.call;button.onclick=()=>{stage.scrollIntoView({block:'center'});callGuide(artist.guide.guideId);};section.append(button);
+      const status=document.createElement('small');status.id=`hub-guide-status-${artist.artistId}`;status.setAttribute('role','status');section.append(status);
     }else{const note=document.createElement('small');note.textContent=copy.guide;section.append(note);}
     $('hub-works').append(section);
   }
@@ -263,21 +308,21 @@ function configureHtml(){
   });
   document.querySelectorAll('[data-turn]').forEach(b=>b.onclick=()=>{if(!renderer?.xr.isPresenting)yaw+=b.dataset.turn==='left'?Math.PI/4:-Math.PI/4;});
   $('hub-home').onclick=()=>{setView(config.navigation.entry);canvas.focus({preventScroll:true});};
-  $('hub-fullscreen').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await stage.requestFullscreen();}catch{}};
+  $('hub-fullscreen').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await stage.parentElement.requestFullscreen();}catch{}};
 }
 function pointerHit(e){const r=canvas.getBoundingClientRect();pointerRay.setFromCamera(new THREE.Vector2((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1),camera);return pointerRay.intersectObjects(targets,false)[0];}
-function highlight(items,exitActive=false,guideActive=false,callActive=false){for(const item of exhibits)item.frame.visible=items.has(item)&&item.mesh.visible;if(exitTarget)exitTarget.material.color.set(exitActive?0xffd88a:0xffffff);guideHandle?.setHover(guideActive);guideCallTarget?.material.color.set(callActive?0x9de2dd:0xffffff);}
+function highlight(items,exitActive=false,guideActive=false,callGuideId=null){for(const item of exhibits)item.frame.visible=items.has(item)&&item.mesh.visible;if(exitTarget)exitTarget.material.color.set(exitActive?0xffd88a:0xffffff);guideHandle?.setHover(guideActive);for(const [guideId,target] of guideCallTargets)target.material.color.set(callGuideId===guideId?0x9de2dd:0xffffff);}
 function configurePointer(){
   canvas.onpointerdown=e=>{if(renderer.xr.isPresenting)return;canvas.focus({preventScroll:true});canvas.setPointerCapture(e.pointerId);drag={id:e.pointerId,x:e.clientX,y:e.clientY,distance:0};};
-  canvas.onpointermove=e=>{if(renderer.xr.isPresenting)return;if(drag?.id===e.pointerId){const dx=e.clientX-drag.x,dy=e.clientY-drag.y;drag.distance+=Math.hypot(dx,dy);yaw-=dx*.004;pitch=Math.max(-1.3,Math.min(1.3,pitch-dy*.004));drag.x=e.clientX;drag.y=e.clientY;}else{const hit=pointerHit(e);highlight(new Set(hit?.object.userData.item?[hit.object.userData.item]:[]),Boolean(hit?.object.userData.exit),Boolean(hit?.object.userData.guide),Boolean(hit?.object.userData.guideCall));canvas.style.cursor=hit?'pointer':'grab';}};
-  canvas.onpointerup=e=>{if(drag?.id===e.pointerId&&drag.distance<7){const h=pointerHit(e);if(h?.object.userData.guideCall)callGuide();else if(h?.object.userData.guide)showGuide();else if(h?.object.userData.item)openArtwork(h.object.userData.item);else if(h?.object.userData.exit)navigate(`./?lang=${lang}`);}drag=null;};
+  canvas.onpointermove=e=>{if(renderer.xr.isPresenting)return;if(drag?.id===e.pointerId){const dx=e.clientX-drag.x,dy=e.clientY-drag.y;drag.distance+=Math.hypot(dx,dy);yaw-=dx*.004;pitch=Math.max(-1.3,Math.min(1.3,pitch-dy*.004));drag.x=e.clientX;drag.y=e.clientY;}else{const hit=pointerHit(e);highlight(new Set(hit?.object.userData.item?[hit.object.userData.item]:[]),Boolean(hit?.object.userData.exit),Boolean(hit?.object.userData.guide),hit?.object.userData.guideCall||null);canvas.style.cursor=hit?'pointer':'grab';}};
+  canvas.onpointerup=e=>{if(drag?.id===e.pointerId&&drag.distance<7){const h=pointerHit(e);if(h?.object.userData.guideCall)callGuide(h.object.userData.guideCall);else if(h?.object.userData.guide)showGuide();else if(h?.object.userData.item)openArtwork(h.object.userData.item);else if(h?.object.userData.exit)navigate(`./?lang=${lang}`);}drag=null;};
   canvas.onpointercancel=()=>drag=null;canvas.onlostpointercapture=()=>drag=null;canvas.onpointerleave=()=>highlight(new Set());
 }
 function controllerTarget(controller){
   const origin=new THREE.Vector3().setFromMatrixPosition(controller.matrixWorld),direction=new THREE.Vector3(0,0,-1).transformDirection(controller.matrixWorld);xrRay.set(origin,direction);
   const panelHit=xrPanel.hit(xrRay),guidePanelHit=guideXrPanel?.hit(xrRay);
   if(guidePanelHit&&(!panelHit||guidePanelHit.distance<panelHit.distance))return {...guidePanelHit,kind:'guide-panel'};
-  const objects=xrRay.intersectObjects(targets,false).map(h=>({...h,kind:h.object.userData.guideCall?'guide-call':h.object.userData.guide?'guide':h.object.userData.exit?'exit':'artwork',item:h.object.userData.item}));
+  const objects=xrRay.intersectObjects(targets,false).map(h=>({...h,kind:h.object.userData.guideCall?'guide-call':h.object.userData.guide?'guide':h.object.userData.exit?'exit':'artwork',item:h.object.userData.item,guideId:h.object.userData.guideCall||null}));
   const hit=firstHubHit(panelHit,objects);if(hit)return hit;
   const point=new THREE.Vector3(),plane=new THREE.Plane(new THREE.Vector3(0,1,0),0),b=config.navigation.bounds;
   if(direction.y<-.05&&xrRay.ray.intersectPlane(plane,point)&&point.x>=b.minX&&point.x<=b.maxX&&point.z>=b.minZ&&point.z<=b.maxZ)return {kind:'floor',point,distance:origin.distanceTo(point)};
@@ -299,15 +344,15 @@ async function configureXr(){
       if(!ready||renderer.xr.getSession()?.visibilityState!=='visible')return;rig.updateMatrixWorld(true);const hit=controllerTarget(controller);
       if(hit?.kind==='guide-panel'){if(hit.action){guideUi.activate(hit.action);renderGuide();}return;}
       if(hit?.kind==='panel'){if(hit.action)runAction(hit.action);return;}
-      if(hit?.kind==='guide-call'){callGuide();return;}
+      if(hit?.kind==='guide-call'){callGuide(hit.guideId);return;}
       if(hit?.kind==='guide'){showGuide();return;}
       if(hit?.kind==='artwork'){openArtwork(hit.item);return;}
       if(hit?.kind==='exit'){navigate(`./?lang=${lang}`);return;}
       if(hit?.kind==='floor'){head.setFromMatrixPosition(renderer.xr.getCamera(camera).matrixWorld);rig.position.x+=hit.point.x-head.x;rig.position.z+=hit.point.z-head.z;}
     });
   }
-  renderer.xr.addEventListener('sessionstart',()=>{keys.clear();held.clear();drag=null;turnArmed=false;xrEntry={x:rig.position.x,z:rig.position.z,yaw};camera.position.set(0,0,0);camera.rotation.set(0,0,0);button.textContent=copy.exitVr;stage.dataset.xr='true';if(selected){drawPanel();needsPanelPlacement=true;}if(guideUi?.visible)renderGuide();});
-  renderer.xr.addEventListener('sessionend',()=>{stage.dataset.xr='false';button.textContent=copy.vr;xrEntry=null;turnArmed=false;guideXrPanel.mesh.visible=false;for(const c of controllers)c.userData.line.visible=c.userData.cursor.visible=c.userData.marker.visible=false;setView(config.navigation.entry);resize();});
+  renderer.xr.addEventListener('sessionstart',()=>{keys.clear();held.clear();drag=null;turnArmed=false;xrEntry={x:rig.position.x,z:rig.position.z,yaw};camera.position.set(0,0,0);camera.rotation.set(0,0,0);button.textContent=copy.exitVr;stage.dataset.xr='true';$('hub-guide-dock').hidden=true;$('hub-artwork-dock').hidden=true;xrPanel.resetFollower();if(selected)drawPanel();if(guideUi?.visible)renderGuide();});
+  renderer.xr.addEventListener('sessionend',()=>{stage.dataset.xr='false';$('hub-guide-dock').hidden=false;$('hub-artwork-dock').hidden=false;button.textContent=copy.vr;xrEntry=null;turnArmed=false;xrPanel.resetFollower();guideXrPanel.mesh.visible=false;for(const c of controllers)c.userData.line.visible=c.userData.cursor.visible=c.userData.marker.visible=false;setView(config.navigation.entry);resize();});
   button.onclick=async()=>{try{if(renderer.xr.isPresenting){await renderer.xr.getSession().end();return;}const session=await navigator.xr.requestSession('immersive-vr',{requiredFeatures:['local-floor']});try{await renderer.xr.setSession(session);}catch(e){await session.end();throw e;}}catch{button.textContent=copy.xrError;}};
 }
 function navigateXr(dt,frame){
@@ -319,12 +364,12 @@ function navigateXr(dt,frame){
   const forward=-deadZone(left.y),side=deadZone(left.x);
   if(forward||side){const p=movePosition(head,yaw,forward,side,dt*config.navigation.xrSpeed,config.navigation.bounds);rig.position.x+=p.x-head.x;rig.position.z+=p.z-head.z;}
   rig.updateMatrixWorld(true);
-  if(needsPanelPlacement&&selected){xrPanel.place(renderer.xr.getCamera(camera).matrixWorld);needsPanelPlacement=false;}
-  if(needsGuidePanelPlacement&&guideUi?.visible){guideXrPanel.place(renderer.xr.getCamera(camera).matrixWorld);needsGuidePanelPlacement=false;}
-  const hovered=new Set();let panelHover=null,guidePanelHover=null,exitHover=false,guideHover=false,callHover=false;
+  if(selected&&xrPanel.mesh.visible)xrPanel.placeBodyLocked(renderer.xr.getCamera(camera).matrixWorld);
+  if(guideUi?.visible&&guideHandle)guideXrPanel.placeAbove(guideHandle.headPosition(guideHead),renderer.xr.getCamera(camera).matrixWorld);
+  const hovered=new Set();let panelHover=null,guidePanelHover=null,exitHover=false,guideHover=false,callHover=null;
   for(const c of controllers){const d=c.userData;d.line.visible=d.active;d.cursor.visible=d.marker.visible=false;if(!d.active)continue;const h=controllerTarget(c);d.line.scale.z=h?Math.max(.02,h.distance):5;d.line.material.color.set(h?0x9de2dd:0xd6bd86);if(!h)continue;
     if(h.kind==='floor'){d.marker.position.copy(h.point);d.marker.position.y=.018;d.marker.visible=true;}
-    else{d.cursor.visible=true;d.cursor.position.copy(h.point);if(h.kind==='exit')exitHover=true;if(h.kind==='guide')guideHover=true;if(h.kind==='guide-call')callHover=true;if(h.item)hovered.add(h.item);if(h.kind==='panel'&&h.action)panelHover=h.action;if(h.kind==='guide-panel'&&h.action)guidePanelHover=h.action;}
+    else{d.cursor.visible=true;d.cursor.position.copy(h.point);if(h.kind==='exit')exitHover=true;if(h.kind==='guide')guideHover=true;if(h.kind==='guide-call')callHover=h.guideId;if(h.item)hovered.add(h.item);if(h.kind==='panel'&&h.action)panelHover=h.action;if(h.kind==='guide-panel'&&h.action)guidePanelHover=h.action;}
   }
   highlight(hovered,exitHover,guideHover,callHover);xrPanel.setHover(panelHover);guideXrPanel?.setHover(guidePanelHover);
 }
@@ -338,19 +383,22 @@ function render(time,frame){
     const p=movePosition(rig.position,yaw,forward,side,dt*config.navigation.speed,config.navigation.bounds);rig.position.x=p.x;rig.position.z=p.z;camera.rotation.set(pitch,yaw,0,'YXZ');
   }
   if(ready&&renderer.xr.isPresenting)navigateXr(dt,frame);
+  if(ready&&!renderer.xr.isPresenting&&guideUi?.visible)positionGuideBubble();
+  if(ready&&!renderer.xr.isPresenting&&selected)positionArtworkBubble();
   if(!document.hidden||renderer.xr.isPresenting)renderer.render(scene,camera);
   frameCount++;
   if(time-lastMetrics>1000){stage.dataset.metrics=JSON.stringify({fps:Math.round(frameCount*1000/Math.max(1,time-metricStart)),calls:renderer.info.render.calls,triangles:renderer.info.render.triangles,textures:renderer.info.memory.textures,imagesLoaded,imageFailures,readyMs:Math.round(firstReadyTime),guidesLoaded:guideEngine?.snapshot().guidesLoaded||0,artworkModelsLoaded:artworkExperience?.snapshot().artworkModelsLoaded||0});stage.dataset.pose=JSON.stringify({x:rig.position.x,z:rig.position.z,yaw,pitch});frameCount=0;metricStart=time;lastMetrics=time;}
 }
 async function init(){
   const started=performance.now(),guideFiles=['leonardo-hub-guide.json','vermeer-hub-guide.json','vangogh-hub-guide.json','monet-hub-guide.json'];
-  const [c,k,...guideResponses]=await Promise.all([fetch(new URL('../data/masters-hub.json',import.meta.url)),fetch(new URL('content/media-manifests/catalog.json',rootUrl)),...guideFiles.map(file=>fetch(new URL(`../data/guides/${file}`,import.meta.url)))]);
-  if(!c.ok||!k.ok||guideResponses.some(response=>!response.ok))throw new Error('Hub configuration unavailable');
-  config=await c.json();const catalog=await k.json(),guideConfigs=await Promise.all(guideResponses.map(response=>response.json()));
-  const errors=validateHub(config,catalog);
+  const fresh=url=>fetch(url,{cache:'no-store'});
+  const [c,k,n,...guideResponses]=await Promise.all([fresh(new URL('../data/masters-hub.json',import.meta.url)),fresh(new URL('content/media-manifests/catalog.json',rootUrl)),fresh(new URL('../data/masters-hub-notices.json',import.meta.url)),...guideFiles.map(file=>fresh(new URL(`../data/guides/${file}`,import.meta.url)))]);
+  if(!c.ok||!k.ok||!n.ok||guideResponses.some(response=>!response.ok))throw new Error('Hub configuration unavailable');
+  config=await c.json();notices=await n.json();const catalog=await k.json();guideConfigs=await Promise.all(guideResponses.map(response=>response.json()));
+  const errors=[...validateHub(config,catalog),...validatePrintedNotices(notices,config.artists.flatMap(artist=>artist.works.map(work=>work.artworkId)))];
   for(const artist of config.artists){const guide=guideConfigs.find(item=>item.guideId===artist.guide.guideId);errors.push(...validateArtistGuideConfig(guide,{artist,knownArtworkIds:artist.works.map(work=>work.artworkId)}));}
   if(errors.length)throw new Error(errors.join('; '));
-  guideConfig=guideConfigs.find(item=>item.guideId==='leonardo-guide');guideTransform={...guideConfig.transform};
+  for(const guide of guideConfigs)if(guide.model.status==='available')guideTransforms.set(guide.guideId,{...guide.transform});
   artworkExperience=createArtworkExperience({catalog,artists:config.artists,language:lang,rootUrl,onCloseMedia:stopAudio});
   stage.dataset.guidesLoaded='0';stage.dataset.artworkModelsLoaded='0';configureHtml();
   try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false});}catch{$('hub-status').textContent=copy.failed;return;}
@@ -359,16 +407,16 @@ async function init(){
   decoder=new DRACOLoader().setDecoderPath(new URL('../../vendor/draco/',import.meta.url).href).setWorkerLimit(2);
   const loader=new GLTFLoader().setDRACOLoader(decoder);
   guideEngine=createArtistGuideEngine({configs:guideConfigs,
-    loadModel:async descriptor=>{const gltf=await loader.loadAsync(asset(descriptor.path));const handle=createGuideModelHandle(THREE,gltf.scene);handle.apply(guideTransform);return handle;},
-    onModelReady:handle=>{handle.apply(guideTransform);handle.mount(scene);guideHandle=handle;targets.push(handle.proxy);},
+    loadModel:async(descriptor,{id})=>{const gltf=await loader.loadAsync(asset(descriptor.path));const handle=createGuideModelHandle(THREE,gltf.scene);handle.apply(guideTransforms.get(id));return handle;},
+    onModelReady:(handle,guide)=>{handle.apply(guideTransforms.get(guide.guideId));handle.proxy.userData.guideId=guide.guideId;handle.mount(scene);guideHandle=handle;targets.push(handle.proxy);},
     disposeModel:handle=>{const index=targets.indexOf(handle.proxy);if(index>=0)targets.splice(index,1);handle.dispose();if(guideHandle===handle)guideHandle=null;},
     onCloseMedia:stopAudio,
     workTitle:(id,language)=>config.artists.flatMap(artist=>artist.works).find(work=>work.artworkId===id)?.title[language]||id
   });
-  guideUi=createArtistGuideUi({element:$('hub-guide-panel'),engine:guideEngine,language:lang,onArtwork:openGuideArtwork,onClose:()=>{guideXrPanel.mesh.visible=false;syncGuideState();}});
-  xrPanel=createHubXrPanel(THREE,lang);scene.add(xrPanel.mesh);
+  guideUi=createArtistGuideUi({element:$('hub-guide-panel'),engine:guideEngine,language:lang,onArtwork:openGuideArtwork,onNavigate:navigate,onClose:()=>{guideXrPanel.mesh.visible=false;syncGuideState();}});
+  xrPanel=createHubXrPanel(THREE,lang,{bubble:true,showStatus:true});rig.add(xrPanel.mesh);
   guideXrPanel=createArtistGuideXrPanel(THREE,lang);scene.add(guideXrPanel.mesh);
-  if(guideQaEnabled)guideQa=createGuideQa({stage,initial:guideTransform,onChange:transform=>{guideTransform=transform;guideHandle?.apply(guideTransform);}});
+  if(guideQaId){const qaGuide=guideConfigs.find(item=>item.guideId===guideQaId),qaArtist=config.artists.find(item=>item.artistId===qaGuide?.artistId);guideQa=createGuideQa({stage,label:qaArtist?.name[lang]||guideQaSlug,initial:guideTransforms.get(guideQaId),onChange:transform=>{guideTransforms.set(guideQaId,transform);if(guideEngine.snapshot().guideId===guideQaId)guideHandle?.apply(transform);}});}
   syncGuideState();observer=new ResizeObserver(resize);observer.observe(stage);resize();configurePointer();await configureXr();ready=true;renderer.setAnimationLoop(render);
   const queue=[...exhibits];await Promise.all(Array.from({length:3},async()=>{while(queue.length&&!disposed)await loadExhibit(queue.shift());}));
   if(disposed)return;firstReadyTime=performance.now()-started;stage.dataset.ready='true';
