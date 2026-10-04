@@ -414,16 +414,92 @@ body[data-experience="cinema"] .gallery-guide {
 }
 
 .gallery-exit-links {
+  display: grid;
+  gap: 7px;
+  margin-top: 6px;
+  max-height: min(46vh, 430px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 2px;
+}
+
+.gallery-menu-group {
+  border: 1px solid rgba(255, 250, 241, .18);
+  background: rgba(10, 9, 8, .24);
+}
+
+.gallery-menu-group > summary {
+  position: relative;
+  list-style: none;
+  padding: 8px 30px 8px 10px;
+  color: var(--room-menu-gold, var(--gold));
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.gallery-menu-group > summary::-webkit-details-marker {
+  display: none;
+}
+
+.gallery-menu-group > summary::after {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  content: "＋";
+  transform: translateY(-50%);
+  font-size: 14px;
+}
+
+.gallery-menu-group[open] > summary::after {
+  content: "−";
+}
+
+.gallery-menu-items {
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
-  margin-top: 3px;
+  padding: 0 8px 8px;
 }
 
 .gallery-exit-links .gallery-button {
   min-height: 34px;
   padding: 6px 10px;
   font-size: 12px;
+}
+
+.gallery-exit-button {
+  justify-self: start;
+}
+
+html[dir="rtl"] .gallery-menu-group > summary {
+  padding-right: 10px;
+  padding-left: 30px;
+}
+
+html[dir="rtl"] .gallery-menu-group > summary::after {
+  right: auto;
+  left: 10px;
+}
+
+@media (max-width: 760px) {
+  .gallery-exit-links {
+    max-height: min(42vh, 360px);
+  }
+
+  .gallery-menu-items {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-menu-items .gallery-button {
+    width: 100%;
+    justify-content: flex-start;
+    text-align: start;
+  }
 }
 
 .gallery-exit-links .bedroom-world-link {
