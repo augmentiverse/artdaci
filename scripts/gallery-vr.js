@@ -448,7 +448,7 @@ const ARTIST_ROOMS = {
     portrait: "assets/artists/leonardo-da-vinci/profile/portrait.png",
     accent: 0x9d7040,
     works: [
-      ["Mona Lisa", "assets/artists/leonardo-da-vinci/collection/mana-lisa-davici.webp"],
+      ["Mona Lisa", "assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp"],
       ["The Last Supper", "assets/artists/leonardo-da-vinci/collection/the-last-supper-davinci.webp"],
       ["Lady with an Ermine", "assets/artists/leonardo-da-vinci/collection/the-lady-with-an-ermine-davinci.webp"],
       ["The Annunciation", "assets/artists/leonardo-da-vinci/collection/the-annunciation-davinci.webp"],
