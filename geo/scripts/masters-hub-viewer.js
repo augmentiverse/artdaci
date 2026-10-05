@@ -14,7 +14,7 @@ import {createArtworkExperience} from './artwork-experience.mjs';
 import {artworkExperiencePresentation} from './artwork-experience-panel.mjs?v=6-15-10';
 import {printedNotice,validatePrintedNotices,artworkVisitorPose} from './masters-hub-notices.mjs?v=6-15-10';
 import {createHubArchitecture,HUB_EXIT} from './masters-hub-room.mjs';
-import {mountSemanticRuntimePanel} from '../../scripts/semantics/semantic-runtime-client.mjs?v=1';
+import {mountSemanticRuntimePanel} from '../../scripts/semantics/semantic-runtime-client.mjs?v=2';
 
 const lang=languageFromSearch(location.search),copy=HUB_COPY[lang],rootUrl=new URL('../../',import.meta.url);
 const hubParams=new URLSearchParams(location.search);

@@ -1,4 +1,4 @@
-/* ARTDACI Semantic Runtime V2.6 */
+/* ARTDACI Semantic Runtime V2.10 */
 .semantic-runtime-trigger {
   min-height: 34px;
   padding: 7px 10px;
@@ -95,4 +95,68 @@
 @media (max-width: 600px) {
   .semantic-runtime-panel { inset-inline: 8px; width: auto; bottom: 74px; max-height: 62vh; }
   .semantic-runtime-trigger { padding-inline: 8px; font-size: 11px; }
+}
+
+
+/* V2.10 adaptive learning path */
+.semantic-runtime-path-section { overflow: hidden; }
+.semantic-runtime-path {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(150px, 1fr);
+  gap: 7px;
+  overflow-x: auto;
+  padding: 1px 1px 5px;
+  scroll-snap-type: x proximity;
+}
+.semantic-runtime-path-step {
+  display: grid;
+  grid-template-columns: 27px minmax(0, 1fr);
+  gap: 7px;
+  align-items: center;
+  min-height: 58px;
+  padding: 7px;
+  border: 1px solid rgba(142,197,214,.36);
+  border-radius: 10px;
+  background: rgba(142,197,214,.08);
+  color: #f8f5ef;
+  text-decoration: none;
+  scroll-snap-align: start;
+}
+.semantic-runtime-path-step:hover,
+.semantic-runtime-path-step:focus-visible {
+  border-color: rgba(142,197,214,.9);
+  background: rgba(142,197,214,.16);
+  outline: none;
+}
+.semantic-runtime-path-index {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: rgba(142,197,214,.18);
+  color: #dff7ff;
+  font-size: 11px;
+  font-weight: 900;
+}
+.semantic-runtime-path-step > span:last-child { display: grid; min-width: 0; gap: 1px; }
+.semantic-runtime-path-step small {
+  color: #a9d8e5;
+  font-size: 8px;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.semantic-runtime-path-step strong {
+  overflow: hidden;
+  color: #fff;
+  font-size: 10px;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+}
+.semantic-runtime-path-step em {
+  color: #a9a39a;
+  font-size: 8px;
+  font-style: normal;
 }

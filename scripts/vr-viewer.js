@@ -4,7 +4,7 @@ import { DRACOLoader } from "../vendor/DRACOLoader.module.js";
 import { fetchArtworkManifest } from "./artwork-media-manifest.js";
 import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
 import { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./catalogue.js";
-import { mountSemanticRuntimePanel, resolveSemanticRuntime } from "./semantics/semantic-runtime-client.mjs?v=1";
+import { mountSemanticRuntimePanel, resolveSemanticRuntime } from "./semantics/semantic-runtime-client.mjs?v=2";
 import { createSemanticVrConstellation } from "./semantics/semantic-vr-constellation.mjs?v=2";
 
 const PAINTINGS = {

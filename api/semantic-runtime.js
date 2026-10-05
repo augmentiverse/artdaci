@@ -23,7 +23,7 @@ function originFromRequest(req) {
 
 async function loadJson(origin, path) {
   const response = await fetch(`${origin}${path}`, {
-    headers: { Accept: "application/json", "User-Agent": "ARTDACI-Semantic-Runtime/2.9" }
+    headers: { Accept: "application/json", "User-Agent": "ARTDACI-Semantic-Runtime/2.10" }
   });
   if (!response.ok) throw new Error(`${path}: HTTP ${response.status}`);
   return response.json();
@@ -436,7 +436,7 @@ module.exports = async function handler(req, res) {
 
     const payload = {
       schemaVersion: "1.0",
-      runtimeVersion: "2.9",
+      runtimeVersion: "2.10",
       context: {
         environment,
         environmentLabel: localize(policy.label, lang),

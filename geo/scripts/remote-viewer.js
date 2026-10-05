@@ -1,6 +1,6 @@
 import { resolveManifestMedia } from "../../scripts/artwork-media-manifest-core.mjs";
 import {JOURNEY_COPY,createJourney,readJourneyState,writeJourneyState,validExteriorView,journeyStorage} from './journey.mjs?v=6-9';
-import { mountSemanticRuntimePanel } from "../../scripts/semantics/semantic-runtime-client.mjs?v=1";
+import { mountSemanticRuntimePanel } from "../../scripts/semantics/semantic-runtime-client.mjs?v=2";
 import {
   languageFromSearch,
   localize,
