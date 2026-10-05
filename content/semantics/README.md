@@ -776,3 +776,16 @@ The generated guide prompt includes only a compact ARTDACI context: focus, top c
 If the Semantic Runtime is unavailable, the guide falls back to the previous generic ARTDACI museum-guide prompt. The immersive experience therefore remains non-blocking.
 
 The same guide control is now available on AR, VR, GEO remote exploration, and Masters Hub. No production merge is implied by this POC branch.
+
+
+## Main-site entry points
+
+The semantic layer is now discoverable from the three ARTDACI homepages (FR / EN / AR) through a global ARTDACI Semantic action.
+
+The catalogue also exposes contextual semantic links only for the four artworks currently supported by the pilot graph:
+- Mona Lisa (`ld01`);
+- Girl with a Pearl Earring (`ve01`);
+- Van Gogh Self-Portrait 1889 (`vg01`);
+- Impression, Sunrise (`mo01`).
+
+Unsupported artworks do not receive a semantic action, so the main catalogue never advertises a semantic destination that does not exist.

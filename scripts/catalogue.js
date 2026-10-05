@@ -64,6 +64,13 @@ const AUDIO_ARTWORK_IDS = Object.freeze({
   "woman-with-parasol": "mo06",
 });
 
+const SEMANTIC_ARTWORK_IDS = Object.freeze({
+  "mona-lisa": "ld01",
+  "vermeer-girl-with-a-pearl-earring": "ve01",
+  "van-gogh": "vg01",
+  "monet-impression-sunrise": "mo01"
+});
+
 const UI = {
   en: {
     search: "Search by title, artist, technique, period...",
@@ -84,7 +91,8 @@ const UI = {
     location: "Location",
     palette: "Palette",
     technique: "Technique",
-    context: "Context"
+    context: "Context",
+    semantic: "Explore semantic graph"
     , museums: "MUSEUMS", museumsIntro: "Discover the institutions that preserve these paintings and open their architectural models in VR, image AR, or spatial AR.", museumVr: "Museum VR", museumAr: "Image AR", museumSpace: "Space AR"
   },
   fr: {
@@ -106,7 +114,8 @@ const UI = {
     location: "Lieu",
     palette: "Palette",
     technique: "Technique",
-    context: "Contexte"
+    context: "Contexte",
+    semantic: "Explorer le graphe sémantique"
     , museums: "MUSÉES", museumsIntro: "Découvrez les institutions qui conservent ces tableaux et ouvrez leurs modèles architecturaux en VR, AR image ou AR espace.", museumVr: "VR du musée", museumAr: "AR image", museumSpace: "AR espace"
   },
   ar: {
@@ -128,7 +137,8 @@ const UI = {
     location: "الموقع",
     palette: "الألوان",
     technique: "التقنية",
-    context: "السياق"
+    context: "السياق",
+    semantic: "استكشف الرسم البياني الدلالي"
     , museums: "المتاحف", museumsIntro: "اكتشف المتاحف التي تحفظ هذه اللوحات وافتح نماذجها المعمارية في الواقع الافتراضي أو المعزز.", museumVr: "واقع افتراضي", museumAr: "واقع معزز بالصورة", museumSpace: "واقع معزز مكاني"
   }
 };
@@ -429,6 +439,10 @@ function renderCard(manifest, lang, text) {
   const immersiveActions = getArtworkImmersiveActions(slug, lang, text)
     .map((action) => `<a class="button" href="${action.href}">${action.label}</a>`)
     .join("\n");
+  const semanticArtworkId = SEMANTIC_ARTWORK_IDS[slug];
+  const semanticAction = semanticArtworkId
+    ? `<a class="button semantic-artwork-link" href="semantic/?artwork=${encodeURIComponent(semanticArtworkId)}&amp;lang=${encodeURIComponent(lang)}">${text.semantic}</a>`
+    : "";
 
   return `
     <article class="artwork-card">
@@ -450,6 +464,7 @@ function renderCard(manifest, lang, text) {
         <div class="card-actions">
           <a class="button primary" href="${printUrl}">${text.print}</a>
           ${immersiveActions}
+          ${semanticAction}
           ${audioOverviewUrl ? `<a class="button" href="${escapeHtml(audioOverviewUrl)}">${text.audioOverview}</a>` : ""}
         </div>
       </div>

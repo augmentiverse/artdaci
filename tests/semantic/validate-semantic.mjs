@@ -47,6 +47,10 @@ const mastersHubHtml = await fs.readFile(path.join(root, "geo/masters-hub.html")
 const embeddingClient = await fs.readFile(path.join(root, "scripts/semantics/embedding-client.mjs"), "utf8");
 const embeddingApi = await fs.readFile(path.join(root, "api/semantic-embeddings.js"), "utf8");
 const semanticRuntimeApi = await fs.readFile(path.join(root, "api/semantic-runtime.js"), "utf8");
+const catalogueJs = await fs.readFile(path.join(root, "scripts/catalogue.js"), "utf8");
+const homeEn = await fs.readFile(path.join(root, "index.html"), "utf8");
+const homeFr = await fs.readFile(path.join(root, "index-fr.html"), "utf8");
+const homeAr = await fs.readFile(path.join(root, "index-ar.html"), "utf8");
 const semanticRuntimeClient = await fs.readFile(path.join(root, "scripts/semantics/semantic-runtime-client.mjs"), "utf8");
 const semanticRuntimeCss = await fs.readFile(path.join(root, "styles/semantic-runtime.css"), "utf8");
 const visitorGuide = await fs.readFile(path.join(root, "scripts/visitor-guide.js"), "utf8");
@@ -287,6 +291,15 @@ assert(semanticRuntimeApi.includes("rankedExperiences"), "Semantic Runtime API m
 assert(semanticRuntimeApi.includes("guideFor"), "Semantic Runtime must expose grounded conversational guide context.");
 assert(semanticRuntimeApi.includes("guideQuestionForStep"), "Semantic Runtime must derive guide questions from learning-path stages.");
 assert(semanticRuntimeApi.includes('mode: "grounded-semantic"'), "Semantic Runtime guide must identify grounded semantic mode.");
+assert(homeEn.includes('href="semantic/?lang=en"'), "Main EN homepage must expose ARTDACI Semantic.");
+assert(homeFr.includes('href="semantic/?lang=fr"'), "Main FR homepage must expose ARTDACI Semantic.");
+assert(homeAr.includes('href="semantic/?lang=ar"'), "Main AR homepage must expose ARTDACI Semantic.");
+assert(catalogueJs.includes("SEMANTIC_ARTWORK_IDS"), "Catalogue must map only supported semantic pilot artworks.");
+assert(catalogueJs.includes('"mona-lisa": "ld01"'), "Catalogue semantic mapping must include Mona Lisa.");
+assert(catalogueJs.includes('"vermeer-girl-with-a-pearl-earring": "ve01"'), "Catalogue semantic mapping must include Girl with a Pearl Earring.");
+assert(catalogueJs.includes('"van-gogh": "vg01"'), "Catalogue semantic mapping must include Van Gogh Self-Portrait.");
+assert(catalogueJs.includes('"monet-impression-sunrise": "mo01"'), "Catalogue semantic mapping must include Impression, Sunrise.");
+assert(catalogueJs.includes("semanticAction"), "Catalogue cards must render contextual semantic actions.");
 assert(semanticRuntimeClient.includes("resolveSemanticRuntime"), "Semantic Runtime client must expose context resolution.");
 assert(semanticRuntimeClient.includes("mountSemanticRuntimePanel"), "Semantic Runtime client must mount immersive UI.");
 assert(semanticRuntimeClient.includes("learningPathMarkup"), "Shared Semantic Runtime panel must render the adaptive learning path.");
