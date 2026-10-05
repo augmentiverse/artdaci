@@ -1,0 +1,144 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "https://artdaci.com/iiif/vg01/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "fr": [
+      "Autoportrait"
+    ],
+    "en": [
+      "Self-Portrait"
+    ],
+    "ar": [
+      "بورتريه ذاتي"
+    ]
+  },
+  "summary": {
+    "fr": [
+      "Manifest IIIF ARTDACI avec annotations sémantiques de régions pour Autoportrait."
+    ],
+    "en": [
+      "ARTDACI IIIF manifest with semantic image-region annotations for Self-Portrait."
+    ],
+    "ar": [
+      "بيان IIIF من ARTDACI يتضمن تعليقات دلالية على مناطق صورة بورتريه ذاتي."
+    ]
+  },
+  "provider": [
+    {
+      "id": "https://artdaci.com/",
+      "type": "Agent",
+      "label": {
+        "fr": [
+          "ARTDACI"
+        ],
+        "en": [
+          "ARTDACI"
+        ],
+        "ar": [
+          "ARTDACI"
+        ]
+      },
+      "homepage": [
+        {
+          "id": "https://artdaci.com/",
+          "type": "Text",
+          "label": {
+            "fr": [
+              "ARTDACI"
+            ],
+            "en": [
+              "ARTDACI"
+            ],
+            "ar": [
+              "ARTDACI"
+            ]
+          },
+          "format": "text/html"
+        }
+      ]
+    }
+  ],
+  "homepage": [
+    {
+      "id": "https://artdaci.com/semantic/?artwork=vg01&lang=fr",
+      "type": "Text",
+      "label": {
+        "fr": [
+          "Explorer Autoportrait dans ARTDACI Semantic"
+        ],
+        "en": [
+          "Explore Self-Portrait in ARTDACI Semantic"
+        ],
+        "ar": [
+          "استكشاف بورتريه ذاتي في ARTDACI Semantic"
+        ]
+      },
+      "format": "text/html"
+    }
+  ],
+  "seeAlso": [
+    {
+      "id": "https://artdaci.com/api/linked-art?kind=artwork&id=vg01&lang=fr",
+      "type": "Dataset",
+      "label": {
+        "fr": [
+          "Données Linked Art JSON-LD"
+        ],
+        "en": [
+          "Linked Art JSON-LD data"
+        ],
+        "ar": [
+          "بيانات Linked Art JSON-LD"
+        ]
+      },
+      "format": "application/ld+json;profile=\"https://linked.art/ns/v1/linked-art.json\""
+    }
+  ],
+  "items": [
+    {
+      "id": "https://artdaci.com/iiif/vg01/canvas",
+      "type": "Canvas",
+      "label": {
+        "fr": [
+          "Autoportrait"
+        ],
+        "en": [
+          "Self-Portrait"
+        ],
+        "ar": [
+          "بورتريه ذاتي"
+        ]
+      },
+      "width": 1000,
+      "height": 1204,
+      "items": [
+        {
+          "id": "https://artdaci.com/iiif/vg01/painting",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://artdaci.com/iiif/vg01/painting/1",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://artdaci.com/assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp",
+                "type": "Image",
+                "format": "image/webp",
+                "width": 1000,
+                "height": 1204
+              },
+              "target": "https://artdaci.com/iiif/vg01/canvas"
+            }
+          ]
+        }
+      ],
+      "annotations": [
+        {
+          "id": "https://artdaci.com/iiif/vg01/annotations.json",
+          "type": "AnnotationPage"
+        }
+      ]
+    }
+  ]
+}

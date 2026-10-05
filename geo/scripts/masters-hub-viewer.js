@@ -16,14 +16,21 @@ import {printedNotice,validatePrintedNotices,artworkVisitorPose} from './masters
 import {createHubArchitecture,HUB_EXIT} from './masters-hub-room.mjs';
 
 const lang=languageFromSearch(location.search),copy=HUB_COPY[lang],rootUrl=new URL('../../',import.meta.url);
-const guideCopy=HUB_GUIDE_COPY[lang],guideQaSlug=new URLSearchParams(location.search).get('guideQA'),guideQaId={leonardo:'leonardo-guide',vermeer:'vermeer-guide',vangogh:'vangogh-guide','van-gogh':'vangogh-guide',monet:'monet-guide'}[guideQaSlug]||null;
+const hubParams=new URLSearchParams(location.search);
+const guideSlugMap={leonardo:'leonardo-guide',vermeer:'vermeer-guide',vangogh:'vangogh-guide','van-gogh':'vangogh-guide',monet:'monet-guide'};
+const guideCopy=HUB_GUIDE_COPY[lang],guideQaSlug=hubParams.get('guideQA'),guideQaId=guideSlugMap[guideQaSlug]||null;
+const guideDeepLinkSlug=hubParams.get('guide'),guideDeepLinkId=guideSlugMap[guideDeepLinkSlug]||null;
 const immersiveCopy={fr:{open:'Expériences immersives',back:'Retour à l’œuvre',ar:'Voir en AR',space:'Space AR',vr:'Explorer en VR'},en:{open:'Immersive experiences',back:'Back to artwork',ar:'View in AR',space:'Space AR',vr:'Explore in VR'},ar:{open:'تجارب غامرة',back:'العودة إلى العمل',ar:'عرض بالواقع المعزز',space:'واقع معزز مكاني',vr:'استكشف بالواقع الافتراضي'}}[lang];
 const $=id=>document.getElementById(id),stage=$('hub-stage'),canvas=$('hub-canvas'),panel=$('hub-panel'),audio=$('hub-audio');
 document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';
 document.title=`ARTDACI Masters Hub — ${copy.subtitle}`;
 document.querySelectorAll('[data-copy]').forEach(el=>el.textContent=copy[el.dataset.copy]);
 document.querySelectorAll('[data-label]').forEach(el=>el.setAttribute('aria-label',copy[el.dataset.label]));
-document.querySelectorAll('[data-lang]').forEach(el=>{el.href=`masters-hub.html?lang=${el.dataset.lang}`;el.setAttribute('aria-current',el.dataset.lang===lang?'page':'false');});
+document.querySelectorAll('[data-lang]').forEach(el=>{
+  const guidePart=guideDeepLinkSlug?`&guide=${encodeURIComponent(guideDeepLinkSlug)}`:'';
+  el.href=`masters-hub.html?lang=${el.dataset.lang}${guidePart}`;
+  el.setAttribute('aria-current',el.dataset.lang===lang?'page':'false');
+});
 $('geo-return').textContent=copy.back;
 for(const id of ['geo-return','footer-return'])$(id).href=`./?lang=${lang}`;
 
@@ -418,6 +425,15 @@ async function init(){
   guideXrPanel=createArtistGuideXrPanel(THREE,lang);scene.add(guideXrPanel.mesh);
   if(guideQaId){const qaGuide=guideConfigs.find(item=>item.guideId===guideQaId),qaArtist=config.artists.find(item=>item.artistId===qaGuide?.artistId);guideQa=createGuideQa({stage,label:qaArtist?.name[lang]||guideQaSlug,initial:guideTransforms.get(guideQaId),onChange:transform=>{guideTransforms.set(guideQaId,transform);if(guideEngine.snapshot().guideId===guideQaId)guideHandle?.apply(transform);}});}
   syncGuideState();observer=new ResizeObserver(resize);observer.observe(stage);resize();configurePointer();await configureXr();ready=true;renderer.setAnimationLoop(render);
+  if(guideDeepLinkId){
+    const deepGuide=guideConfigs.find(item=>item.guideId===guideDeepLinkId);
+    const deepArtist=config.artists.find(item=>item.artistId===deepGuide?.artistId);
+    if(deepArtist){
+      setView(deepArtist.zone.view);
+      stage.scrollIntoView({block:'center'});
+      await callGuide(guideDeepLinkId);
+    }
+  }
   const queue=[...exhibits];await Promise.all(Array.from({length:3},async()=>{while(queue.length&&!disposed)await loadExhibit(queue.shift());}));
   if(disposed)return;firstReadyTime=performance.now()-started;stage.dataset.ready='true';
   stage.dataset.startupResources=JSON.stringify(performance.getEntriesByType('resource').map(r=>({url:r.name,bytes:r.encodedBodySize})));

@@ -1,0 +1,306 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "https://artdaci.com/iiif/mo01/annotations.json",
+  "type": "AnnotationPage",
+  "items": [
+    {
+      "id": "https://artdaci.com/iiif/mo01/annotation/harbor",
+      "type": "Annotation",
+      "motivation": [
+        "commenting",
+        "tagging"
+      ],
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "Port dans la brume — Les silhouettes du port émergent de la brume : l’atmosphère réduit la précision des formes tout en évoquant la modernité industrielle.",
+          "language": "fr",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "Harbor in mist — Harbor silhouettes emerge from the mist: atmosphere reduces formal precision while evoking industrial modernity.",
+          "language": "en",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "الميناء في الضباب — تظهر ظلال الميناء من الضباب؛ إذ يقلل الجو من دقة الأشكال مع استحضار الحداثة الصناعية.",
+          "language": "ar",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.atmosphere&lang=fr",
+            "type": "Type",
+            "_label": "Atmosphère"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.mist&lang=fr",
+            "type": "Type",
+            "_label": "Brume"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.modernity&lang=fr",
+            "type": "Type",
+            "_label": "Modernité"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.industry&lang=fr",
+            "type": "Type",
+            "_label": "Industrie moderne"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.depth&lang=fr",
+            "type": "Type",
+            "_label": "Profondeur"
+          }
+        }
+      ],
+      "target": "https://artdaci.com/iiif/mo01/canvas#xywh=20,210,1270,355"
+    },
+    {
+      "id": "https://artdaci.com/iiif/mo01/annotation/water",
+      "type": "Annotation",
+      "motivation": [
+        "commenting",
+        "tagging"
+      ],
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "Eau et reflets — Les touches visibles et la couleur fragmentée transforment l’eau en vibration optique plutôt qu’en surface décrite avec précision.",
+          "language": "fr",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "Water and reflections — Visible brushwork and broken color turn the water into optical vibration rather than a precisely described surface.",
+          "language": "en",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "الماء والانعكاسات — تحول ضربات الفرشاة الظاهرة واللون المجزأ الماء إلى اهتزاز بصري بدل سطح موصوف بدقة.",
+          "language": "ar",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=technique.visible-brushwork&lang=fr",
+            "type": "Type",
+            "_label": "Touche visible"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=technique.broken-color&lang=fr",
+            "type": "Type",
+            "_label": "Couleur fragmentée"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.chromatic-vibration&lang=fr",
+            "type": "Type",
+            "_label": "Vibration chromatique"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.optical-perception&lang=fr",
+            "type": "Type",
+            "_label": "Perception optique"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.movement&lang=fr",
+            "type": "Type",
+            "_label": "Mouvement"
+          }
+        }
+      ],
+      "target": "https://artdaci.com/iiif/mo01/canvas#xywh=420,500,720,430"
+    },
+    {
+      "id": "https://artdaci.com/iiif/mo01/annotation/boat",
+      "type": "Annotation",
+      "motivation": [
+        "commenting",
+        "tagging"
+      ],
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "Barque au premier plan — La barque est indiquée par des touches rapides qui renforcent l’immédiateté de la perception et l’impression d’un instant saisi.",
+          "language": "fr",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "Foreground boat — The boat is indicated with rapid strokes that reinforce perceptual immediacy and the sense of a captured instant.",
+          "language": "en",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "القارب في المقدمة — يُشار إلى القارب بضربات سريعة تعزز فورية الإدراك والإحساس بلحظة ملتقطة.",
+          "language": "ar",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.immediacy&lang=fr",
+            "type": "Type",
+            "_label": "Immédiateté"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.brushwork&lang=fr",
+            "type": "Type",
+            "_label": "Touche picturale"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=technique.visible-brushwork&lang=fr",
+            "type": "Type",
+            "_label": "Touche visible"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.temporality&lang=fr",
+            "type": "Type",
+            "_label": "Temporalité"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=genre.seascape&lang=fr",
+            "type": "Type",
+            "_label": "Marine"
+          }
+        }
+      ],
+      "target": "https://artdaci.com/iiif/mo01/canvas#xywh=300,520,480,285"
+    },
+    {
+      "id": "https://artdaci.com/iiif/mo01/annotation/sun",
+      "type": "Annotation",
+      "motivation": [
+        "commenting",
+        "tagging"
+      ],
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "Soleil levant — Le disque orangé du soleil et son reflet exploitent le contraste chromatique et la lumière pour organiser la perception de toute la scène.",
+          "language": "fr",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "Rising sun — The orange sun and its reflection use chromatic contrast and light to organize perception of the entire scene.",
+          "language": "en",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "الشمس المشرقة — تستعمل الشمس البرتقالية وانعكاسها التباين اللوني والضوء لتنظيم إدراك المشهد كله.",
+          "language": "ar",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.light&lang=fr",
+            "type": "Type",
+            "_label": "Lumière"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=technique.complementary-contrast&lang=fr",
+            "type": "Type",
+            "_label": "Contraste complémentaire"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.color&lang=fr",
+            "type": "Type",
+            "_label": "Couleur"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.optical-perception&lang=fr",
+            "type": "Type",
+            "_label": "Perception optique"
+          }
+        }
+      ],
+      "target": "https://artdaci.com/iiif/mo01/canvas#xywh=780,270,245,245"
+    }
+  ]
+}

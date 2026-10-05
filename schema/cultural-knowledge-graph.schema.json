@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://artdaci.com/schema/cultural-knowledge-graph.schema.json",
+  "title": "ARTDACI Cultural Knowledge Graph",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "entityTypes",
+    "relationTypes",
+    "entities",
+    "relations"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "entityTypes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "relationTypes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "entities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "labels",
+          "descriptions",
+          "external"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "enum": [
+              "artist",
+              "museum",
+              "place",
+              "subject",
+              "event"
+            ]
+          },
+          "labels": {
+            "$ref": "#/$defs/i18n"
+          },
+          "descriptions": {
+            "$ref": "#/$defs/i18n"
+          },
+          "external": {
+            "type": "object",
+            "properties": {
+              "wikidata": {
+                "type": "string",
+                "pattern": "^Q[0-9]+$"
+              },
+              "gettyUlan": {
+                "type": "string",
+                "pattern": "^[0-9]{6,12}$"
+              },
+              "gettyTgn": {
+                "type": "string",
+                "pattern": "^[0-9]{6,12}$"
+              }
+            },
+            "additionalProperties": false
+          },
+          "temporal": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "source",
+          "target",
+          "type"
+        ],
+        "properties": {
+          "source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "target": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "$defs": {
+    "i18n": {
+      "type": "object",
+      "required": [
+        "fr",
+        "en",
+        "ar"
+      ],
+      "properties": {
+        "fr": {
+          "type": "string",
+          "minLength": 1
+        },
+        "en": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ar": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

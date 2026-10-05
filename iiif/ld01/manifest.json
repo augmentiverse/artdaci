@@ -1,0 +1,144 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "https://artdaci.com/iiif/ld01/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "fr": [
+      "La Joconde"
+    ],
+    "en": [
+      "Mona Lisa"
+    ],
+    "ar": [
+      "الموناليزا"
+    ]
+  },
+  "summary": {
+    "fr": [
+      "Manifest IIIF pilote ARTDACI avec annotations sémantiques de régions d’image."
+    ],
+    "en": [
+      "ARTDACI pilot IIIF manifest with semantic image-region annotations."
+    ],
+    "ar": [
+      "بيان IIIF تجريبي من ARTDACI يتضمن تعليقات دلالية على مناطق الصورة."
+    ]
+  },
+  "provider": [
+    {
+      "id": "https://artdaci.com/",
+      "type": "Agent",
+      "label": {
+        "fr": [
+          "ARTDACI"
+        ],
+        "en": [
+          "ARTDACI"
+        ],
+        "ar": [
+          "ARTDACI"
+        ]
+      },
+      "homepage": [
+        {
+          "id": "https://artdaci.com/",
+          "type": "Text",
+          "label": {
+            "fr": [
+              "ARTDACI"
+            ],
+            "en": [
+              "ARTDACI"
+            ],
+            "ar": [
+              "ARTDACI"
+            ]
+          },
+          "format": "text/html"
+        }
+      ]
+    }
+  ],
+  "homepage": [
+    {
+      "id": "https://artdaci.com/semantic/?artwork=ld01&lang=fr",
+      "type": "Text",
+      "label": {
+        "fr": [
+          "Explorer La Joconde dans ARTDACI Semantic"
+        ],
+        "en": [
+          "Explore the Mona Lisa in ARTDACI Semantic"
+        ],
+        "ar": [
+          "استكشاف الموناليزا في ARTDACI Semantic"
+        ]
+      },
+      "format": "text/html"
+    }
+  ],
+  "seeAlso": [
+    {
+      "id": "https://artdaci.com/api/linked-art?kind=artwork&id=ld01&lang=fr",
+      "type": "Dataset",
+      "label": {
+        "fr": [
+          "Données Linked Art JSON-LD"
+        ],
+        "en": [
+          "Linked Art JSON-LD data"
+        ],
+        "ar": [
+          "بيانات Linked Art JSON-LD"
+        ]
+      },
+      "format": "application/ld+json;profile=\"https://linked.art/ns/v1/linked-art.json\""
+    }
+  ],
+  "items": [
+    {
+      "id": "https://artdaci.com/iiif/ld01/canvas",
+      "type": "Canvas",
+      "label": {
+        "fr": [
+          "La Joconde"
+        ],
+        "en": [
+          "Mona Lisa"
+        ],
+        "ar": [
+          "الموناليزا"
+        ]
+      },
+      "width": 1000,
+      "height": 1453,
+      "items": [
+        {
+          "id": "https://artdaci.com/iiif/ld01/painting",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://artdaci.com/iiif/ld01/painting/1",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://artdaci.com/assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp",
+                "type": "Image",
+                "format": "image/webp",
+                "width": 1000,
+                "height": 1453
+              },
+              "target": "https://artdaci.com/iiif/ld01/canvas"
+            }
+          ]
+        }
+      ],
+      "annotations": [
+        {
+          "id": "https://artdaci.com/iiif/ld01/annotations.json",
+          "type": "AnnotationPage"
+        }
+      ]
+    }
+  ]
+}

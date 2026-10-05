@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://artdaci.com/schema/image-semantic-annotations.schema.json",
+  "title": "ARTDACI Semantic Image Annotations",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "coordinateSystem",
+    "artworks"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "coordinateSystem": {
+      "const": "normalized-canvas"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "artworks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "artworkId",
+          "canvas",
+          "regions"
+        ],
+        "properties": {
+          "artworkId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "canvas": {
+            "type": "object",
+            "required": [
+              "width",
+              "height",
+              "image",
+              "imageFormat"
+            ],
+            "properties": {
+              "width": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "height": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "image": {
+                "type": "string",
+                "minLength": 1
+              },
+              "imageFormat": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false
+          },
+          "regions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "shape",
+                "xywh",
+                "labels",
+                "descriptions",
+                "conceptIds"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "shape": {
+                  "const": "rect"
+                },
+                "xywh": {
+                  "type": "array",
+                  "minItems": 4,
+                  "maxItems": 4,
+                  "items": {
+                    "type": "number",
+                    "minimum": 0
+                  }
+                },
+                "labels": {
+                  "$ref": "#/$defs/i18n"
+                },
+                "descriptions": {
+                  "$ref": "#/$defs/i18n"
+                },
+                "conceptIds": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "string"
+                  },
+                  "uniqueItems": true
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "$defs": {
+    "i18n": {
+      "type": "object",
+      "required": [
+        "fr",
+        "en",
+        "ar"
+      ],
+      "properties": {
+        "fr": {
+          "type": "string",
+          "minLength": 1
+        },
+        "en": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ar": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

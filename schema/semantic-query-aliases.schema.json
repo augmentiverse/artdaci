@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://artdaci.com/schema/semantic-query-aliases.schema.json",
+  "title": "ARTDACI Natural-Language Semantic Query Hints",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "intents",
+    "channelAliases",
+    "nodeAliases",
+    "examples"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "intents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "phrases"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "phrases": {
+            "$ref": "#/$defs/i18nList"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "channelAliases": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "nodeAliases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "nodeId",
+          "aliases"
+        ],
+        "properties": {
+          "nodeId": {
+            "type": "string"
+          },
+          "aliases": {
+            "$ref": "#/$defs/i18nList"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "examples": {
+      "$ref": "#/$defs/i18nList"
+    }
+  },
+  "$defs": {
+    "i18nList": {
+      "type": "object",
+      "required": [
+        "fr",
+        "en",
+        "ar"
+      ],
+      "properties": {
+        "fr": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "en": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ar": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "2.2",
+  "policy": "ARTDACI keeps its reviewed pedagogical layer as the presentation authority. External providers enrich identifiers, labels, descriptions, hierarchy and provenance; they do not silently overwrite ARTDACI editorial content.",
+  "verifiedAt": "2026-10-05",
+  "sources": [
+    {
+      "id": "artdaci-editorial",
+      "name": "ARTDACI editorial",
+      "status": "active",
+      "mode": "local-reviewed",
+      "role": "presentation-authority",
+      "notes": "Reviewed trilingual pedagogical labels, definitions and semantic assertions."
+    },
+    {
+      "id": "wikidata",
+      "name": "Wikidata",
+      "status": "active",
+      "mode": "live-api",
+      "role": "linked-open-data",
+      "endpoint": "https://www.wikidata.org/w/api.php",
+      "queryService": "https://query.wikidata.org/sparql",
+      "license": "CC0 1.0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "attribution": "Wikidata structured data (CC0).",
+      "notes": "Used for persistent Q identifiers, multilingual labels/descriptions and cross-dataset identifiers."
+    },
+    {
+      "id": "getty-aat",
+      "name": "Getty Art & Architecture Thesaurus (AAT)",
+      "status": "active",
+      "mode": "live-sparql",
+      "role": "controlled-vocabulary",
+      "endpoint": "https://vocab.getty.edu/sparql",
+      "recordBase": "http://vocab.getty.edu/aat/",
+      "pageBase": "http://vocab.getty.edu/page/aat/",
+      "license": "ODC-By 1.0",
+      "licenseUrl": "https://opendatacommons.org/licenses/by/1-0/",
+      "attribution": "Contains information from the J. Paul Getty Trust, Getty Research Institute, the Art & Architecture Thesaurus, which is made available under the ODC Attribution License.",
+      "notes": "Used for authoritative art/architecture concept identifiers and thesaurus alignment. Getty XML web services are discontinued; ARTDACI uses LOD/SPARQL."
+    },
+    {
+      "id": "memodata-tid",
+      "name": "Memodata / The Integral Dictionary",
+      "status": "contact-required",
+      "mode": "adapter-disabled",
+      "role": "lexical-semantic-enrichment",
+      "homepage": "http://www.memodata.com/",
+      "serviceSurface": "https://dictionary.sensagent.com/",
+      "notes": "Sensagent pages still advertise XML/content services powered by Memodata, but no sufficiently clear current public API/reuse license was verified on 2026-10-04. No automated ingestion is enabled until access and reuse terms are confirmed."
+    },
+    {
+      "id": "wordnet",
+      "name": "WordNet",
+      "status": "prospective-disabled",
+      "mode": "external-provider"
+    },
+    {
+      "id": "museum-source",
+      "name": "Museum source",
+      "status": "prospective",
+      "mode": "curated-reference"
+    },
+    {
+      "id": "getty-ulan",
+      "name": "Getty Union List of Artist Names (ULAN)",
+      "role": "people-and-organizations-authority",
+      "recordBase": "http://vocab.getty.edu/ulan/",
+      "pageBase": "http://vocab.getty.edu/page/ulan/",
+      "notes": "Used for authoritative identifiers and linked-data enrichment for artists, museums, repositories and other people/corporate bodies.",
+      "status": "active",
+      "mode": "live-sparql",
+      "endpoint": "https://vocab.getty.edu/sparql",
+      "license": "ODC-By 1.0",
+      "licenseUrl": "https://opendatacommons.org/licenses/by/1-0/",
+      "attribution": "Contains information from the J. Paul Getty Trust, Getty Research Institute, Getty Vocabulary Program, made available under the ODC Attribution License."
+    },
+    {
+      "id": "getty-tgn",
+      "name": "Getty Thesaurus of Geographic Names (TGN)",
+      "role": "geographic-authority",
+      "recordBase": "http://vocab.getty.edu/tgn/",
+      "pageBase": "http://vocab.getty.edu/page/tgn/",
+      "notes": "Used for authoritative identifiers and linked-data enrichment for places associated with artworks, artists and museums.",
+      "status": "active",
+      "mode": "live-sparql",
+      "endpoint": "https://vocab.getty.edu/sparql",
+      "license": "ODC-By 1.0",
+      "licenseUrl": "https://opendatacommons.org/licenses/by/1-0/",
+      "attribution": "Contains information from the J. Paul Getty Trust, Getty Research Institute, Getty Vocabulary Program, made available under the ODC Attribution License."
+    },
+    {
+      "id": "iconclass",
+      "name": "Iconclass",
+      "role": "iconographic-subject-authority",
+      "status": "active",
+      "mode": "live-lod",
+      "recordBase": "https://iconclass.org/",
+      "jsonBase": "https://iconclass.org/",
+      "documentation": "https://iconclass.org/help/lod",
+      "license": null,
+      "licenseUrl": "https://iconclass.org/help/terms",
+      "attribution": "Iconclass notation and linked record; live linking only. No bulk reuse is assumed because the current public Terms page does not state a reusable data license.",
+      "notes": "Used for iconographic subjects and depicted content. ARTDACI stores only selected notation mappings and retrieves linked records on demand."
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://artdaci.com/schema/linked-art-export.schema.json",
+  "title": "ARTDACI Linked Art Export Envelope",
+  "description": "Minimal validation for ARTDACI Linked Art JSON-LD exports. Linked Art's official schemas remain authoritative.",
+  "type": "object",
+  "required": [
+    "@context",
+    "id",
+    "type",
+    "_label"
+  ],
+  "properties": {
+    "@context": {
+      "const": "https://linked.art/ns/v1/linked-art.json"
+    },
+    "id": {
+      "type": "string",
+      "format": "uri"
+    },
+    "type": {
+      "enum": [
+        "HumanMadeObject",
+        "Person",
+        "Group",
+        "Place",
+        "Type",
+        "Activity"
+      ]
+    },
+    "_label": {
+      "type": "string",
+      "minLength": 1
+    },
+    "identified_by": {
+      "type": "array"
+    },
+    "equivalent": {
+      "type": "array"
+    },
+    "produced_by": {
+      "type": "object"
+    },
+    "current_custodian": {
+      "type": "array"
+    },
+    "current_location": {
+      "type": "object"
+    },
+    "timespan": {
+      "type": "object"
+    },
+    "carried_out_by": {
+      "type": "array"
+    },
+    "took_place_at": {
+      "type": "array"
+    }
+  },
+  "additionalProperties": true
+}
