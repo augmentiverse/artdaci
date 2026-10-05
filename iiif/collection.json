@@ -1,0 +1,89 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "https://artdaci.com/iiif/collection.json",
+  "type": "Collection",
+  "label": {
+    "fr": [
+      "ARTDACI · Collection pilote IIIF"
+    ],
+    "en": [
+      "ARTDACI · IIIF Pilot Collection"
+    ],
+    "ar": [
+      "ARTDACI · مجموعة IIIF التجريبية"
+    ]
+  },
+  "summary": {
+    "fr": [
+      "Quatre chefs-d’œuvre pilotes enrichis d’annotations sémantiques de régions d’image."
+    ],
+    "en": [
+      "Four pilot masterpieces enriched with semantic image-region annotations."
+    ],
+    "ar": [
+      "أربع روائع تجريبية معززة بتعليقات دلالية على مناطق الصور."
+    ]
+  },
+  "items": [
+    {
+      "id": "https://artdaci.com/iiif/ld01/manifest.json",
+      "type": "Manifest",
+      "label": {
+        "fr": [
+          "La Joconde"
+        ],
+        "en": [
+          "Mona Lisa"
+        ],
+        "ar": [
+          "الموناليزا"
+        ]
+      }
+    },
+    {
+      "id": "https://artdaci.com/iiif/ve01/manifest.json",
+      "type": "Manifest",
+      "label": {
+        "fr": [
+          "La Jeune Fille à la perle"
+        ],
+        "en": [
+          "Girl with a Pearl Earring"
+        ],
+        "ar": [
+          "الفتاة ذات القرط اللؤلؤي"
+        ]
+      }
+    },
+    {
+      "id": "https://artdaci.com/iiif/vg01/manifest.json",
+      "type": "Manifest",
+      "label": {
+        "fr": [
+          "Autoportrait"
+        ],
+        "en": [
+          "Self-Portrait"
+        ],
+        "ar": [
+          "بورتريه ذاتي"
+        ]
+      }
+    },
+    {
+      "id": "https://artdaci.com/iiif/mo01/manifest.json",
+      "type": "Manifest",
+      "label": {
+        "fr": [
+          "Impression, soleil levant"
+        ],
+        "en": [
+          "Impression, Sunrise"
+        ],
+        "ar": [
+          "انطباع، شروق الشمس"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://artdaci.com/schema/iconography.schema.json",
+  "title": "ARTDACI Iconography and Depicted Subjects",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "nodeTypes",
+    "relationTypes",
+    "subjects",
+    "artworkLinks",
+    "regionLinks"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "nodeTypes": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "iconographic-subject",
+          "motif",
+          "depicted-object"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "relationTypes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "subjects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "labels",
+          "descriptions",
+          "iconclass"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "enum": [
+              "iconographic-subject",
+              "motif",
+              "depicted-object"
+            ]
+          },
+          "labels": {
+            "$ref": "#/$defs/i18n"
+          },
+          "descriptions": {
+            "$ref": "#/$defs/i18n"
+          },
+          "iconclass": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "required": [
+                  "notation",
+                  "uri"
+                ],
+                "properties": {
+                  "notation": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "uri": {
+                    "type": "string",
+                    "format": "uri"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "artworkLinks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "artworkId",
+          "subjectId",
+          "relation",
+          "weight"
+        ],
+        "properties": {
+          "artworkId": {
+            "type": "string"
+          },
+          "subjectId": {
+            "type": "string"
+          },
+          "relation": {
+            "enum": [
+              "depicts",
+              "hasMotif",
+              "containsObject"
+            ]
+          },
+          "weight": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "regionLinks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "regionId",
+          "subjectIds"
+        ],
+        "properties": {
+          "regionId": {
+            "type": "string"
+          },
+          "subjectIds": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "$defs": {
+    "i18n": {
+      "type": "object",
+      "required": [
+        "fr",
+        "en",
+        "ar"
+      ],
+      "properties": {
+        "fr": {
+          "type": "string"
+        },
+        "en": {
+          "type": "string"
+        },
+        "ar": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

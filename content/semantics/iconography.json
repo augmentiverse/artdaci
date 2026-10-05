@@ -1,0 +1,470 @@
+{
+  "schemaVersion": "1.0",
+  "defaultLanguage": "fr",
+  "nodeTypes": [
+    "iconographic-subject",
+    "motif",
+    "depicted-object"
+  ],
+  "relationTypes": [
+    "depicts",
+    "hasMotif",
+    "containsObject",
+    "broaderIconography"
+  ],
+  "subjects": [
+    {
+      "id": "icon.person.adult-woman",
+      "type": "iconographic-subject",
+      "labels": {
+        "fr": "Femme adulte",
+        "en": "Adult woman",
+        "ar": "امرأة بالغة"
+      },
+      "descriptions": {
+        "fr": "Figure féminine adulte représentée comme sujet principal ou secondaire.",
+        "en": "Adult female figure represented as a primary or secondary subject.",
+        "ar": "شخصية نسائية بالغة ممثلة كموضوع رئيسي أو ثانوي."
+      },
+      "iconclass": {
+        "notation": "31D15",
+        "uri": "https://iconclass.org/31D15"
+      }
+    },
+    {
+      "id": "icon.person.young-woman",
+      "type": "iconographic-subject",
+      "labels": {
+        "fr": "Jeune femme",
+        "en": "Young woman / maiden",
+        "ar": "شابة"
+      },
+      "descriptions": {
+        "fr": "Jeune figure féminine ou jeune femme représentée.",
+        "en": "Young female figure or maiden represented.",
+        "ar": "شخصية نسائية شابة ممثلة في العمل."
+      },
+      "iconclass": {
+        "notation": "31D13",
+        "uri": "https://iconclass.org/31D13"
+      }
+    },
+    {
+      "id": "icon.person.adult-man",
+      "type": "iconographic-subject",
+      "labels": {
+        "fr": "Homme adulte",
+        "en": "Adult man",
+        "ar": "رجل بالغ"
+      },
+      "descriptions": {
+        "fr": "Figure masculine adulte représentée.",
+        "en": "Adult male figure represented.",
+        "ar": "شخصية ذكورية بالغة ممثلة."
+      },
+      "iconclass": {
+        "notation": "31D14",
+        "uri": "https://iconclass.org/31D14"
+      }
+    },
+    {
+      "id": "icon.person.artist-self-portrait",
+      "type": "iconographic-subject",
+      "labels": {
+        "fr": "Autoportrait d’artiste",
+        "en": "Artist self-portrait",
+        "ar": "بورتريه ذاتي لفنان"
+      },
+      "descriptions": {
+        "fr": "L’artiste est représenté dans un portrait ou un autoportrait.",
+        "en": "The artist is represented in a portrait or self-portrait.",
+        "ar": "يُمثل الفنان في بورتريه أو بورتريه ذاتي."
+      },
+      "iconclass": {
+        "notation": "48B3",
+        "uri": "https://iconclass.org/48B3"
+      }
+    },
+    {
+      "id": "icon.body.hand",
+      "type": "depicted-object",
+      "labels": {
+        "fr": "Main humaine",
+        "en": "Human hand",
+        "ar": "يد بشرية"
+      },
+      "descriptions": {
+        "fr": "Main humaine visible comme élément iconographique identifiable.",
+        "en": "Human hand visible as an identifiable iconographic element.",
+        "ar": "يد بشرية ظاهرة كعنصر أيقونوغرافي قابل للتحديد."
+      },
+      "iconclass": {
+        "notation": "31A2245",
+        "uri": "https://iconclass.org/31A2245"
+      }
+    },
+    {
+      "id": "icon.body.female-head",
+      "type": "depicted-object",
+      "labels": {
+        "fr": "Tête féminine",
+        "en": "Female head",
+        "ar": "رأس نسائي"
+      },
+      "descriptions": {
+        "fr": "Tête humaine féminine représentée comme élément visuel principal.",
+        "en": "Female human head represented as a principal visual element.",
+        "ar": "رأس إنساني نسائي ممثل كعنصر بصري رئيسي."
+      },
+      "iconclass": {
+        "notation": "31A221(+822)",
+        "uri": "https://iconclass.org/31A221(%2B822)"
+      }
+    },
+    {
+      "id": "icon.nature.sunrise",
+      "type": "iconographic-subject",
+      "labels": {
+        "fr": "Lever du soleil",
+        "en": "Sunrise",
+        "ar": "شروق الشمس"
+      },
+      "descriptions": {
+        "fr": "Le soleil au moment de son apparition à l’horizon.",
+        "en": "The sun appearing at the horizon at sunrise.",
+        "ar": "ظهور الشمس عند الأفق وقت الشروق."
+      },
+      "iconclass": {
+        "notation": "24A1",
+        "uri": "https://iconclass.org/24A1"
+      }
+    },
+    {
+      "id": "icon.nature.seascape",
+      "type": "iconographic-subject",
+      "labels": {
+        "fr": "Paysage marin",
+        "en": "Sea / seascape",
+        "ar": "منظر بحري"
+      },
+      "descriptions": {
+        "fr": "Mer ou paysage marin représenté dans une scène.",
+        "en": "Sea or seascape represented in a scene.",
+        "ar": "بحر أو منظر بحري ممثل في المشهد."
+      },
+      "iconclass": {
+        "notation": "25H23",
+        "uri": "https://iconclass.org/25H23"
+      }
+    },
+    {
+      "id": "icon.nature.waterscape",
+      "type": "iconographic-subject",
+      "labels": {
+        "fr": "Paysage avec eau",
+        "en": "Waterscape",
+        "ar": "منظر مائي"
+      },
+      "descriptions": {
+        "fr": "Paysage dans lequel l’eau structure une partie importante de l’espace représenté.",
+        "en": "Landscape in which water forms an important part of the represented space.",
+        "ar": "منظر تشكل فيه المياه جزءًا مهمًا من الفضاء الممثل."
+      },
+      "iconclass": {
+        "notation": "25H2",
+        "uri": "https://iconclass.org/25H2"
+      }
+    },
+    {
+      "id": "icon.place.harbor",
+      "type": "iconographic-subject",
+      "labels": {
+        "fr": "Port",
+        "en": "Harbor",
+        "ar": "ميناء"
+      },
+      "descriptions": {
+        "fr": "Port ou installations portuaires représentés dans la scène.",
+        "en": "Harbor or harbor facilities represented in the scene.",
+        "ar": "ميناء أو منشآت مينائية ممثلة في المشهد."
+      },
+      "iconclass": {
+        "notation": "46C223",
+        "uri": "https://iconclass.org/46C223"
+      }
+    },
+    {
+      "id": "icon.transport.rowing-boat",
+      "type": "depicted-object",
+      "labels": {
+        "fr": "Barque à rames",
+        "en": "Rowing boat",
+        "ar": "قارب تجديف"
+      },
+      "descriptions": {
+        "fr": "Petite embarcation propulsée à la rame.",
+        "en": "Small boat propelled by oars.",
+        "ar": "قارب صغير يتحرك بالمجاديف."
+      },
+      "iconclass": {
+        "notation": "46C232",
+        "uri": "https://iconclass.org/46C232"
+      }
+    },
+    {
+      "id": "icon.landscape.manmade",
+      "type": "iconographic-subject",
+      "labels": {
+        "fr": "Paysage avec constructions humaines",
+        "en": "Landscape with man-made constructions",
+        "ar": "منظر بمنشآت بشرية"
+      },
+      "descriptions": {
+        "fr": "Paysage comprenant des constructions ou structures créées par l’être humain.",
+        "en": "Landscape including human-made buildings or structures.",
+        "ar": "منظر يضم مباني أو منشآت من صنع الإنسان."
+      },
+      "iconclass": {
+        "notation": "25I",
+        "uri": "https://iconclass.org/25I"
+      }
+    },
+    {
+      "id": "motif.enigmatic-female-portrait",
+      "type": "motif",
+      "labels": {
+        "fr": "Portrait féminin énigmatique",
+        "en": "Enigmatic female portrait",
+        "ar": "بورتريه نسائي غامض"
+      },
+      "descriptions": {
+        "fr": "Motif ARTDACI décrivant un portrait féminin dont l’identité, l’expression ou le regard entretiennent une ambiguïté interprétative.",
+        "en": "ARTDACI motif for a female portrait whose identity, expression, or gaze sustains interpretive ambiguity.",
+        "ar": "نمط ARTDACI لبورتريه نسائي تتسم هويته أو تعبيره أو نظرته بغموض تأويلي."
+      },
+      "iconclass": null
+    },
+    {
+      "id": "motif.pearl-earring",
+      "type": "motif",
+      "labels": {
+        "fr": "Boucle d’oreille en perle",
+        "en": "Pearl earring",
+        "ar": "قرط لؤلؤي"
+      },
+      "descriptions": {
+        "fr": "Motif distinctif de la perle portée à l’oreille dans l’œuvre de Vermeer.",
+        "en": "Distinctive motif of the pearl worn at the ear in Vermeer’s painting.",
+        "ar": "عنصر مميز يتمثل في اللؤلؤة المعلقة بالأذن في لوحة فيرمير."
+      },
+      "iconclass": null
+    },
+    {
+      "id": "motif.headscarf",
+      "type": "motif",
+      "labels": {
+        "fr": "Coiffe / turban",
+        "en": "Headscarf / turban",
+        "ar": "غطاء الرأس / العمامة"
+      },
+      "descriptions": {
+        "fr": "Coiffe textile constituant un motif visuel majeur de la figure.",
+        "en": "Textile head covering forming a major visual motif of the figure.",
+        "ar": "غطاء رأس نسيجي يشكل عنصرًا بصريًا بارزًا في الشخصية."
+      },
+      "iconclass": null
+    },
+    {
+      "id": "motif.misty-industrial-harbor",
+      "type": "motif",
+      "labels": {
+        "fr": "Port industriel dans la brume",
+        "en": "Misty industrial harbor",
+        "ar": "ميناء صناعي في الضباب"
+      },
+      "descriptions": {
+        "fr": "Motif ARTDACI combinant port, activité industrielle, eau, brume et lumière matinale.",
+        "en": "ARTDACI motif combining harbor, industrial activity, water, mist, and morning light.",
+        "ar": "نمط ARTDACI يجمع بين الميناء والنشاط الصناعي والماء والضباب وضوء الصباح."
+      },
+      "iconclass": null
+    }
+  ],
+  "artworkLinks": [
+    {
+      "artworkId": "ld01",
+      "subjectId": "icon.person.adult-woman",
+      "relation": "depicts",
+      "weight": 1
+    },
+    {
+      "artworkId": "ld01",
+      "subjectId": "icon.body.hand",
+      "relation": "containsObject",
+      "weight": 0.78
+    },
+    {
+      "artworkId": "ld01",
+      "subjectId": "icon.nature.waterscape",
+      "relation": "depicts",
+      "weight": 0.62
+    },
+    {
+      "artworkId": "ld01",
+      "subjectId": "motif.enigmatic-female-portrait",
+      "relation": "hasMotif",
+      "weight": 0.92
+    },
+    {
+      "artworkId": "ve01",
+      "subjectId": "icon.person.young-woman",
+      "relation": "depicts",
+      "weight": 1
+    },
+    {
+      "artworkId": "ve01",
+      "subjectId": "icon.body.female-head",
+      "relation": "containsObject",
+      "weight": 0.82
+    },
+    {
+      "artworkId": "ve01",
+      "subjectId": "motif.pearl-earring",
+      "relation": "hasMotif",
+      "weight": 0.96
+    },
+    {
+      "artworkId": "ve01",
+      "subjectId": "motif.headscarf",
+      "relation": "hasMotif",
+      "weight": 0.88
+    },
+    {
+      "artworkId": "vg01",
+      "subjectId": "icon.person.artist-self-portrait",
+      "relation": "depicts",
+      "weight": 1
+    },
+    {
+      "artworkId": "vg01",
+      "subjectId": "icon.person.adult-man",
+      "relation": "depicts",
+      "weight": 0.9
+    },
+    {
+      "artworkId": "mo01",
+      "subjectId": "icon.nature.sunrise",
+      "relation": "depicts",
+      "weight": 1
+    },
+    {
+      "artworkId": "mo01",
+      "subjectId": "icon.nature.seascape",
+      "relation": "depicts",
+      "weight": 0.92
+    },
+    {
+      "artworkId": "mo01",
+      "subjectId": "icon.place.harbor",
+      "relation": "depicts",
+      "weight": 0.95
+    },
+    {
+      "artworkId": "mo01",
+      "subjectId": "icon.transport.rowing-boat",
+      "relation": "containsObject",
+      "weight": 0.86
+    },
+    {
+      "artworkId": "mo01",
+      "subjectId": "icon.landscape.manmade",
+      "relation": "depicts",
+      "weight": 0.72
+    },
+    {
+      "artworkId": "mo01",
+      "subjectId": "motif.misty-industrial-harbor",
+      "relation": "hasMotif",
+      "weight": 0.94
+    }
+  ],
+  "regionLinks": [
+    {
+      "regionId": "ld01.face",
+      "subjectIds": [
+        "icon.person.adult-woman",
+        "motif.enigmatic-female-portrait"
+      ]
+    },
+    {
+      "regionId": "ld01.hands",
+      "subjectIds": [
+        "icon.body.hand"
+      ]
+    },
+    {
+      "regionId": "ld01.landscape-left",
+      "subjectIds": [
+        "icon.nature.waterscape"
+      ]
+    },
+    {
+      "regionId": "ld01.landscape-right",
+      "subjectIds": [
+        "icon.nature.waterscape"
+      ]
+    },
+    {
+      "regionId": "ve01.face",
+      "subjectIds": [
+        "icon.person.young-woman",
+        "icon.body.female-head"
+      ]
+    },
+    {
+      "regionId": "ve01.pearl",
+      "subjectIds": [
+        "motif.pearl-earring"
+      ]
+    },
+    {
+      "regionId": "ve01.headscarf",
+      "subjectIds": [
+        "motif.headscarf"
+      ]
+    },
+    {
+      "regionId": "vg01.face",
+      "subjectIds": [
+        "icon.person.artist-self-portrait",
+        "icon.person.adult-man"
+      ]
+    },
+    {
+      "regionId": "mo01.sun",
+      "subjectIds": [
+        "icon.nature.sunrise"
+      ]
+    },
+    {
+      "regionId": "mo01.harbor",
+      "subjectIds": [
+        "icon.place.harbor",
+        "icon.landscape.manmade",
+        "motif.misty-industrial-harbor"
+      ]
+    },
+    {
+      "regionId": "mo01.water",
+      "subjectIds": [
+        "icon.nature.seascape"
+      ]
+    },
+    {
+      "regionId": "mo01.boat",
+      "subjectIds": [
+        "icon.transport.rowing-boat"
+      ]
+    }
+  ]
+}

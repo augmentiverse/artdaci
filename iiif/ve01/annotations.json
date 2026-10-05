@@ -1,0 +1,270 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "https://artdaci.com/iiif/ve01/annotations.json",
+  "type": "AnnotationPage",
+  "items": [
+    {
+      "id": "https://artdaci.com/iiif/ve01/annotation/headscarf",
+      "type": "Annotation",
+      "motivation": [
+        "commenting",
+        "tagging"
+      ],
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "Coiffe et couleurs — La coiffe met en valeur les rapports de couleur et le contraste entre les zones éclairées et le fond sombre.",
+          "language": "fr",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "Headscarf and color — The headscarf emphasizes color relationships and the contrast between illuminated areas and the dark background.",
+          "language": "en",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "غطاء الرأس والألوان — يبرز غطاء الرأس العلاقات اللونية والتباين بين المناطق المضيئة والخلفية الداكنة.",
+          "language": "ar",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.color&lang=fr",
+            "type": "Type",
+            "_label": "Couleur"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.light&lang=fr",
+            "type": "Type",
+            "_label": "Lumière"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.optical-perception&lang=fr",
+            "type": "Type",
+            "_label": "Perception optique"
+          }
+        }
+      ],
+      "target": "https://artdaci.com/iiif/ve01/canvas#xywh=145,55,700,405"
+    },
+    {
+      "id": "https://artdaci.com/iiif/ve01/annotation/garment",
+      "type": "Annotation",
+      "motivation": [
+        "commenting",
+        "tagging"
+      ],
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "Vêtement et volume — Le vêtement combine transitions douces, lumière et modelé pour donner du volume à la figure sans rigidifier les contours.",
+          "language": "fr",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "Garment and volume — The garment combines soft transitions, light, and modeling to give the figure volume without hardening its contours.",
+          "language": "en",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "الملابس والحجم — تجمع الملابس بين الانتقالات الناعمة والضوء والتشكيل لإعطاء الشخصية حجمًا من دون تصلب الحواف.",
+          "language": "ar",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.volume&lang=fr",
+            "type": "Type",
+            "_label": "Volume"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=technique.soft-edges&lang=fr",
+            "type": "Type",
+            "_label": "Contours adoucis"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.light&lang=fr",
+            "type": "Type",
+            "_label": "Lumière"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.color&lang=fr",
+            "type": "Type",
+            "_label": "Couleur"
+          }
+        }
+      ],
+      "target": "https://artdaci.com/iiif/ve01/canvas#xywh=150,650,710,440"
+    },
+    {
+      "id": "https://artdaci.com/iiif/ve01/annotation/pearl",
+      "type": "Annotation",
+      "motivation": [
+        "commenting",
+        "tagging"
+      ],
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "Perle — La perle est rendue par quelques accents lumineux : un exemple frappant de perception optique et d’économie picturale.",
+          "language": "fr",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "Pearl — The pearl is rendered with only a few highlights, a striking example of optical perception and pictorial economy.",
+          "language": "en",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "اللؤلؤة — تُصوَّر اللؤلؤة ببضع لمعات ضوئية فقط، في مثال واضح على الإدراك البصري والاقتصاد في المعالجة.",
+          "language": "ar",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.light&lang=fr",
+            "type": "Type",
+            "_label": "Lumière"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.optical-perception&lang=fr",
+            "type": "Type",
+            "_label": "Perception optique"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.visual-ambiguity&lang=fr",
+            "type": "Type",
+            "_label": "Ambiguïté visuelle"
+          }
+        }
+      ],
+      "target": "https://artdaci.com/iiif/ve01/canvas#xywh=650,475,185,250"
+    },
+    {
+      "id": "https://artdaci.com/iiif/ve01/annotation/face",
+      "type": "Annotation",
+      "motivation": [
+        "commenting",
+        "tagging"
+      ],
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "Visage et regard — Le visage, tourné vers le spectateur, concentre le regard, l’intimité et l’ambiguïté identitaire propres à la tronie.",
+          "language": "fr",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "Face and gaze — The face, turned toward the viewer, concentrates gaze, intimacy, and the identity ambiguity characteristic of the tronie.",
+          "language": "en",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "الوجه والنظرة — يركز الوجه الملتفت نحو المشاهد على النظرة والحميمية وغموض الهوية المميز لدراسة الشخصية.",
+          "language": "ar",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.gaze&lang=fr",
+            "type": "Type",
+            "_label": "Regard"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.intimacy&lang=fr",
+            "type": "Type",
+            "_label": "Intimité"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.psychological-presence&lang=fr",
+            "type": "Type",
+            "_label": "Présence psychologique"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.identity&lang=fr",
+            "type": "Type",
+            "_label": "Identité"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=genre.tronie&lang=fr",
+            "type": "Type",
+            "_label": "Tronie"
+          }
+        }
+      ],
+      "target": "https://artdaci.com/iiif/ve01/canvas#xywh=315,220,430,405"
+    }
+  ]
+}

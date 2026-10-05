@@ -1,0 +1,594 @@
+{
+  "schemaVersion": "1.0",
+  "intents": [
+    {
+      "id": "observe",
+      "phrases": {
+        "fr": [
+          "où observer",
+          "où voir",
+          "montre-moi où",
+          "dans quelle partie",
+          "quel détail"
+        ],
+        "en": [
+          "where can i observe",
+          "where can i see",
+          "show me where",
+          "which part",
+          "which detail"
+        ],
+        "ar": [
+          "أين ألاحظ",
+          "أين أرى",
+          "أرني أين",
+          "في أي جزء",
+          "أي تفصيل"
+        ]
+      }
+    },
+    {
+      "id": "compare",
+      "phrases": {
+        "fr": [
+          "comparer",
+          "compare",
+          "différence entre",
+          "contraste entre"
+        ],
+        "en": [
+          "compare",
+          "difference between",
+          "contrast between"
+        ],
+        "ar": [
+          "قارن",
+          "مقارنة",
+          "الفرق بين",
+          "التباين بين"
+        ]
+      }
+    },
+    {
+      "id": "experience",
+      "phrases": {
+        "fr": [
+          "expérience",
+          "expériences",
+          "vr",
+          "ar",
+          "3d",
+          "geo",
+          "réalité virtuelle",
+          "réalité augmentée"
+        ],
+        "en": [
+          "experience",
+          "experiences",
+          "vr",
+          "ar",
+          "3d",
+          "geo",
+          "virtual reality",
+          "augmented reality"
+        ],
+        "ar": [
+          "تجربة",
+          "تجارب",
+          "واقع افتراضي",
+          "واقع معزز",
+          "ثلاثي الأبعاد",
+          "جغرافي"
+        ]
+      }
+    },
+    {
+      "id": "location",
+      "phrases": {
+        "fr": [
+          "où est",
+          "où se trouve",
+          "dans quel musée",
+          "quel musée",
+          "à paris"
+        ],
+        "en": [
+          "where is",
+          "where can i find",
+          "which museum",
+          "in paris"
+        ],
+        "ar": [
+          "أين توجد",
+          "أين يوجد",
+          "في أي متحف",
+          "أي متحف",
+          "في باريس"
+        ]
+      }
+    },
+    {
+      "id": "explain",
+      "phrases": {
+        "fr": [
+          "expliquer",
+          "comprendre",
+          "qu'est-ce que",
+          "c'est quoi",
+          "pourquoi"
+        ],
+        "en": [
+          "explain",
+          "understand",
+          "what is",
+          "why"
+        ],
+        "ar": [
+          "اشرح",
+          "فهم",
+          "ما هو",
+          "ما هي",
+          "لماذا"
+        ]
+      }
+    }
+  ],
+  "channelAliases": {
+    "vr": [
+      "vr",
+      "réalité virtuelle",
+      "virtual reality",
+      "واقع افتراضي"
+    ],
+    "ar": [
+      "ar",
+      "réalité augmentée",
+      "augmented reality",
+      "واقع معزز"
+    ],
+    "space-ar": [
+      "ar espace",
+      "ar spatial",
+      "spatial ar",
+      "واقع معزز مكاني"
+    ],
+    "geo": [
+      "geo",
+      "géolocalisé",
+      "geospatial",
+      "géospatial",
+      "جغرافي"
+    ],
+    "3d": [
+      "3d",
+      "trois dimensions",
+      "three dimensional",
+      "ثلاثي الأبعاد"
+    ],
+    "book": [
+      "livre",
+      "book",
+      "كتاب"
+    ],
+    "video": [
+      "vidéo",
+      "video",
+      "فيديو"
+    ],
+    "vr-world": [
+      "monde vr",
+      "vr world",
+      "عالم افتراضي"
+    ]
+  },
+  "nodeAliases": [
+    {
+      "nodeId": "technique.sfumato",
+      "aliases": {
+        "fr": [
+          "sfumato",
+          "contours fondus"
+        ],
+        "en": [
+          "sfumato",
+          "soft smoky transitions"
+        ],
+        "ar": [
+          "سفوماتو",
+          "تدرجات دخانية"
+        ]
+      }
+    },
+    {
+      "nodeId": "concept.gaze",
+      "aliases": {
+        "fr": [
+          "regard",
+          "yeux"
+        ],
+        "en": [
+          "gaze",
+          "eyes",
+          "look"
+        ],
+        "ar": [
+          "نظرة",
+          "عين",
+          "عيون"
+        ]
+      }
+    },
+    {
+      "nodeId": "technique.visible-brushwork",
+      "aliases": {
+        "fr": [
+          "touche visible",
+          "coups de pinceau",
+          "touche"
+        ],
+        "en": [
+          "visible brushwork",
+          "brush strokes",
+          "brushstroke"
+        ],
+        "ar": [
+          "ضربات الفرشاة",
+          "لمسات الفرشاة"
+        ]
+      }
+    },
+    {
+      "nodeId": "technique.directional-brushwork",
+      "aliases": {
+        "fr": [
+          "touche directionnelle",
+          "direction des touches"
+        ],
+        "en": [
+          "directional brushwork",
+          "stroke direction"
+        ],
+        "ar": [
+          "اتجاه ضربات الفرشاة"
+        ]
+      }
+    },
+    {
+      "nodeId": "technique.broken-color",
+      "aliases": {
+        "fr": [
+          "couleur fragmentée",
+          "couleurs fragmentées"
+        ],
+        "en": [
+          "broken color",
+          "fragmented color"
+        ],
+        "ar": [
+          "لون مجزأ",
+          "ألوان مجزأة"
+        ]
+      }
+    },
+    {
+      "nodeId": "technique.complementary-contrast",
+      "aliases": {
+        "fr": [
+          "contraste complémentaire",
+          "couleurs complémentaires"
+        ],
+        "en": [
+          "complementary contrast",
+          "complementary colors"
+        ],
+        "ar": [
+          "تباين تكاملي",
+          "ألوان متكاملة"
+        ]
+      }
+    },
+    {
+      "nodeId": "concept.light",
+      "aliases": {
+        "fr": [
+          "lumière",
+          "éclairage"
+        ],
+        "en": [
+          "light",
+          "lighting"
+        ],
+        "ar": [
+          "ضوء",
+          "إضاءة"
+        ]
+      }
+    },
+    {
+      "nodeId": "concept.depth",
+      "aliases": {
+        "fr": [
+          "profondeur",
+          "distance"
+        ],
+        "en": [
+          "depth",
+          "distance"
+        ],
+        "ar": [
+          "عمق",
+          "مسافة"
+        ]
+      }
+    },
+    {
+      "nodeId": "concept.identity",
+      "aliases": {
+        "fr": [
+          "identité",
+          "personne représentée"
+        ],
+        "en": [
+          "identity",
+          "sitter identity"
+        ],
+        "ar": [
+          "هوية",
+          "هوية الشخص"
+        ]
+      }
+    },
+    {
+      "nodeId": "concept.optical-perception",
+      "aliases": {
+        "fr": [
+          "perception optique",
+          "illusion visuelle"
+        ],
+        "en": [
+          "optical perception",
+          "visual perception"
+        ],
+        "ar": [
+          "إدراك بصري",
+          "خداع بصري"
+        ]
+      }
+    },
+    {
+      "nodeId": "concept.expression",
+      "aliases": {
+        "fr": [
+          "expression",
+          "expressivité"
+        ],
+        "en": [
+          "expression",
+          "expressiveness"
+        ],
+        "ar": [
+          "تعبير",
+          "تعبيرية"
+        ]
+      }
+    },
+    {
+      "nodeId": "movement.impressionism",
+      "aliases": {
+        "fr": [
+          "impressionnisme",
+          "impressionniste"
+        ],
+        "en": [
+          "impressionism",
+          "impressionist"
+        ],
+        "ar": [
+          "انطباعية",
+          "انطباعي"
+        ]
+      }
+    },
+    {
+      "nodeId": "movement.post-impressionism",
+      "aliases": {
+        "fr": [
+          "post-impressionnisme",
+          "postimpressionnisme"
+        ],
+        "en": [
+          "post-impressionism",
+          "post impressionism"
+        ],
+        "ar": [
+          "ما بعد الانطباعية"
+        ]
+      }
+    },
+    {
+      "nodeId": "ld01",
+      "aliases": {
+        "fr": [
+          "joconde",
+          "mona lisa"
+        ],
+        "en": [
+          "mona lisa",
+          "la gioconda"
+        ],
+        "ar": [
+          "الموناليزا",
+          "الجيوكوندا"
+        ]
+      }
+    },
+    {
+      "nodeId": "ve01",
+      "aliases": {
+        "fr": [
+          "jeune fille à la perle",
+          "fille à la perle"
+        ],
+        "en": [
+          "girl with a pearl earring",
+          "pearl girl"
+        ],
+        "ar": [
+          "الفتاة ذات القرط اللؤلؤي"
+        ]
+      }
+    },
+    {
+      "nodeId": "vg01",
+      "aliases": {
+        "fr": [
+          "autoportrait van gogh 1889",
+          "autoportrait de van gogh"
+        ],
+        "en": [
+          "van gogh self portrait 1889",
+          "van gogh self-portrait"
+        ],
+        "ar": [
+          "بورتريه فان غوخ الذاتي 1889"
+        ]
+      }
+    },
+    {
+      "nodeId": "mo01",
+      "aliases": {
+        "fr": [
+          "impression soleil levant",
+          "soleil levant"
+        ],
+        "en": [
+          "impression sunrise",
+          "sunrise"
+        ],
+        "ar": [
+          "انطباع شروق الشمس",
+          "شروق الشمس"
+        ]
+      }
+    },
+    {
+      "nodeId": "artist.vincent-van-gogh",
+      "aliases": {
+        "fr": [
+          "van gogh",
+          "vincent van gogh"
+        ],
+        "en": [
+          "van gogh",
+          "vincent van gogh"
+        ],
+        "ar": [
+          "فان غوخ",
+          "فنسنت فان غوخ"
+        ]
+      }
+    },
+    {
+      "nodeId": "artist.claude-monet",
+      "aliases": {
+        "fr": [
+          "monet",
+          "claude monet"
+        ],
+        "en": [
+          "monet",
+          "claude monet"
+        ],
+        "ar": [
+          "مونيه",
+          "كلود مونيه"
+        ]
+      }
+    },
+    {
+      "nodeId": "artist.leonardo-da-vinci",
+      "aliases": {
+        "fr": [
+          "léonard de vinci",
+          "leonard de vinci",
+          "da vinci"
+        ],
+        "en": [
+          "leonardo da vinci",
+          "da vinci"
+        ],
+        "ar": [
+          "ليوناردو دا فينشي"
+        ]
+      }
+    },
+    {
+      "nodeId": "artist.johannes-vermeer",
+      "aliases": {
+        "fr": [
+          "vermeer",
+          "johannes vermeer"
+        ],
+        "en": [
+          "vermeer",
+          "johannes vermeer"
+        ],
+        "ar": [
+          "فيرمير",
+          "يوهانس فيرمير"
+        ]
+      }
+    },
+    {
+      "nodeId": "museum.louvre",
+      "aliases": {
+        "fr": [
+          "louvre",
+          "musée du louvre"
+        ],
+        "en": [
+          "louvre",
+          "louvre museum"
+        ],
+        "ar": [
+          "اللوفر",
+          "متحف اللوفر"
+        ]
+      }
+    },
+    {
+      "nodeId": "place.paris",
+      "aliases": {
+        "fr": [
+          "paris"
+        ],
+        "en": [
+          "paris"
+        ],
+        "ar": [
+          "باريس"
+        ]
+      }
+    }
+  ],
+  "examples": {
+    "fr": [
+      "Où observer le sfumato dans La Joconde ?",
+      "Comparer Van Gogh et Monet",
+      "Quelles expériences VR pour Van Gogh ?",
+      "Quels musées et œuvres sont liés à Paris ?"
+    ],
+    "en": [
+      "Where can I observe sfumato in the Mona Lisa?",
+      "Compare Van Gogh and Monet",
+      "Which VR experiences are available for Van Gogh?",
+      "Which museums and artworks are linked to Paris?"
+    ],
+    "ar": [
+      "أين ألاحظ السفوماتو في الموناليزا؟",
+      "قارن بين فان غوخ ومونيه",
+      "ما تجارب الواقع الافتراضي المتاحة لفان غوخ؟",
+      "ما المتاحف والأعمال المرتبطة بباريس؟"
+    ]
+  }
+}

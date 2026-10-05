@@ -1,0 +1,698 @@
+{
+  "schemaVersion": "1.0",
+  "channels": [
+    "web",
+    "ar",
+    "space-ar",
+    "vr",
+    "geo",
+    "3d",
+    "book",
+    "video",
+    "vr-world"
+  ],
+  "nodes": [
+    {
+      "nodeId": "ld01",
+      "experiences": [
+        {
+          "id": "ld01-geo-room",
+          "channel": "geo",
+          "href": "/geo/room.html?lang={lang}",
+          "labels": {
+            "fr": "Salle des États",
+            "en": "Salle des États",
+            "ar": "قاعة الدول"
+          },
+          "descriptions": {
+            "fr": "Explorer la salle de La Joconde dans ARTDACI GEO.",
+            "en": "Explore the Mona Lisa room in ARTDACI GEO.",
+            "ar": "استكشف قاعة الموناليزا في ARTDACI GEO."
+          }
+        },
+        {
+          "id": "ld01-image-ar",
+          "channel": "ar",
+          "href": "/ar.html?painting=mona-lisa&lang={lang}",
+          "labels": {
+            "fr": "AR d’image",
+            "en": "Image AR",
+            "ar": "واقع معزز بالصورة"
+          },
+          "descriptions": {
+            "fr": "Scanner la page imprimée et afficher les contenus augmentés.",
+            "en": "Scan the printed page and reveal augmented content.",
+            "ar": "امسح الصفحة المطبوعة لعرض المحتوى المعزز."
+          }
+        },
+        {
+          "id": "ld01-space-ar",
+          "channel": "space-ar",
+          "href": "/space.html?painting=mona-lisa&lang={lang}",
+          "labels": {
+            "fr": "Placer en AR",
+            "en": "Place in AR",
+            "ar": "وضع في الواقع المعزز"
+          },
+          "descriptions": {
+            "fr": "Placer le modèle 3D de La Joconde dans votre espace.",
+            "en": "Place the Mona Lisa 3D model in your space.",
+            "ar": "ضع نموذج الموناليزا ثلاثي الأبعاد في مساحتك."
+          }
+        },
+        {
+          "id": "ld01-vr",
+          "channel": "vr",
+          "href": "/vr.html?painting=mona-lisa&model=2&lang={lang}",
+          "labels": {
+            "fr": "La Joconde en VR",
+            "en": "Mona Lisa in VR",
+            "ar": "الموناليزا في الواقع الافتراضي"
+          },
+          "descriptions": {
+            "fr": "Ouvrir l’expérience WebXR individuelle.",
+            "en": "Open the individual WebXR experience.",
+            "ar": "افتح تجربة WebXR الفردية."
+          }
+        },
+        {
+          "id": "ld01-louvre-vr",
+          "channel": "vr",
+          "href": "/gallery-vr.html?room=louvre&lang={lang}",
+          "labels": {
+            "fr": "Louvre virtuel",
+            "en": "Virtual Louvre",
+            "ar": "اللوفر الافتراضي"
+          },
+          "descriptions": {
+            "fr": "Rejoindre l’espace Louvre dans la galerie VR ARTDACI.",
+            "en": "Enter the Louvre space in the ARTDACI VR gallery.",
+            "ar": "ادخل إلى مساحة اللوفر في معرض ARTDACI الافتراضي."
+          }
+        },
+        {
+          "id": "ld01-book",
+          "channel": "book",
+          "href": "/book-3d.html?lang={lang}",
+          "labels": {
+            "fr": "Livre vivant",
+            "en": "Living Book",
+            "ar": "الكتاب الحي"
+          },
+          "descriptions": {
+            "fr": "Revenir au livre 3D ARTDACI et à ses contenus reliés.",
+            "en": "Return to the ARTDACI 3D living book and linked content.",
+            "ar": "العودة إلى كتاب ARTDACI ثلاثي الأبعاد ومحتواه المرتبط."
+          }
+        }
+      ]
+    },
+    {
+      "nodeId": "ve01",
+      "experiences": [
+        {
+          "id": "ve01-image-ar",
+          "channel": "ar",
+          "href": "/ar.html?painting=vermeer-girl-with-a-pearl-earring&lang={lang}",
+          "labels": {
+            "fr": "AR d’image",
+            "en": "Image AR",
+            "ar": "واقع معزز بالصورة"
+          },
+          "descriptions": {
+            "fr": "Explorer l’œuvre depuis la page imprimée.",
+            "en": "Explore the artwork from its printed page.",
+            "ar": "استكشف العمل انطلاقًا من الصفحة المطبوعة."
+          }
+        },
+        {
+          "id": "ve01-space-ar",
+          "channel": "space-ar",
+          "href": "/space.html?painting=vermeer-girl-with-a-pearl-earring&lang={lang}",
+          "labels": {
+            "fr": "Placer en AR",
+            "en": "Place in AR",
+            "ar": "وضع في الواقع المعزز"
+          },
+          "descriptions": {
+            "fr": "Placer le modèle 3D dans votre espace.",
+            "en": "Place the 3D model in your space.",
+            "ar": "ضع النموذج ثلاثي الأبعاد في مساحتك."
+          }
+        },
+        {
+          "id": "ve01-vr",
+          "channel": "vr",
+          "href": "/vr.html?painting=vermeer-girl-with-a-pearl-earring&lang={lang}",
+          "labels": {
+            "fr": "Œuvre en VR",
+            "en": "Artwork in VR",
+            "ar": "العمل في الواقع الافتراضي"
+          },
+          "descriptions": {
+            "fr": "Ouvrir l’expérience WebXR individuelle.",
+            "en": "Open the individual WebXR experience.",
+            "ar": "افتح تجربة WebXR الفردية."
+          }
+        },
+        {
+          "id": "ve01-gallery",
+          "channel": "vr",
+          "href": "/gallery-vr.html?artist=vermeer&lang={lang}",
+          "labels": {
+            "fr": "Salle Vermeer",
+            "en": "Vermeer room",
+            "ar": "قاعة فيرمير"
+          },
+          "descriptions": {
+            "fr": "Explorer la salle Vermeer de la galerie VR.",
+            "en": "Explore the Vermeer room in the VR gallery.",
+            "ar": "استكشف قاعة فيرمير في المعرض الافتراضي."
+          }
+        },
+        {
+          "id": "ve01-guide",
+          "channel": "3d",
+          "href": "/geo/masters-hub.html?lang={lang}&guide=vermeer",
+          "labels": {
+            "fr": "Guide 3D Vermeer",
+            "en": "Vermeer 3D guide",
+            "ar": "دليل فيرمير ثلاثي الأبعاد"
+          },
+          "descriptions": {
+            "fr": "Ouvrir directement le guide 3D de Vermeer dans le Masters Hub.",
+            "en": "Open Vermeer’s 3D guide directly in the Masters Hub.",
+            "ar": "افتح دليل فيرمير ثلاثي الأبعاد مباشرة في Masters Hub."
+          }
+        }
+      ]
+    },
+    {
+      "nodeId": "vg01",
+      "experiences": [
+        {
+          "id": "vg01-image-ar",
+          "channel": "ar",
+          "href": "/ar.html?painting=van-gogh&lang={lang}",
+          "labels": {
+            "fr": "AR d’image",
+            "en": "Image AR",
+            "ar": "واقع معزز بالصورة"
+          },
+          "descriptions": {
+            "fr": "Explorer l’Autoportrait 1889 en AR.",
+            "en": "Explore the 1889 Self-Portrait in AR.",
+            "ar": "استكشف البورتريه الذاتي لعام 1889 بالواقع المعزز."
+          }
+        },
+        {
+          "id": "vg01-space-ar",
+          "channel": "space-ar",
+          "href": "/space.html?painting=van-gogh&lang={lang}",
+          "labels": {
+            "fr": "Placer en AR",
+            "en": "Place in AR",
+            "ar": "وضع في الواقع المعزز"
+          },
+          "descriptions": {
+            "fr": "Placer le modèle de Van Gogh dans votre espace.",
+            "en": "Place the Van Gogh model in your space.",
+            "ar": "ضع نموذج فان غوخ في مساحتك."
+          }
+        },
+        {
+          "id": "vg01-vr",
+          "channel": "vr",
+          "href": "/vr.html?painting=van-gogh&lang={lang}",
+          "labels": {
+            "fr": "Autoportrait en VR",
+            "en": "Self-Portrait in VR",
+            "ar": "البورتريه الذاتي في الواقع الافتراضي"
+          },
+          "descriptions": {
+            "fr": "Ouvrir l’expérience WebXR individuelle.",
+            "en": "Open the individual WebXR experience.",
+            "ar": "افتح تجربة WebXR الفردية."
+          }
+        },
+        {
+          "id": "vg01-gallery",
+          "channel": "vr",
+          "href": "/gallery-vr.html?artist=van-gogh&lang={lang}",
+          "labels": {
+            "fr": "Salle Van Gogh",
+            "en": "Van Gogh room",
+            "ar": "قاعة فان غوخ"
+          },
+          "descriptions": {
+            "fr": "Explorer la salle Van Gogh dans la galerie VR.",
+            "en": "Explore the Van Gogh room in the VR gallery.",
+            "ar": "استكشف قاعة فان غوخ في المعرض الافتراضي."
+          }
+        },
+        {
+          "id": "vg01-guide",
+          "channel": "3d",
+          "href": "/geo/masters-hub.html?lang={lang}&guide=van-gogh",
+          "labels": {
+            "fr": "Guide 3D Van Gogh",
+            "en": "Van Gogh 3D guide",
+            "ar": "دليل فان غوخ ثلاثي الأبعاد"
+          },
+          "descriptions": {
+            "fr": "Ouvrir directement le guide 3D de Van Gogh.",
+            "en": "Open Van Gogh’s 3D guide directly.",
+            "ar": "افتح دليل فان غوخ ثلاثي الأبعاد مباشرة."
+          }
+        },
+        {
+          "id": "vg01-book",
+          "channel": "book",
+          "href": "/book-3d.html?lang={lang}",
+          "labels": {
+            "fr": "Livre vivant",
+            "en": "Living Book",
+            "ar": "الكتاب الحي"
+          },
+          "descriptions": {
+            "fr": "Accéder au livre 3D et à ses médias liés.",
+            "en": "Open the 3D book and its linked media.",
+            "ar": "افتح الكتاب ثلاثي الأبعاد ووسائطه المرتبطة."
+          }
+        }
+      ]
+    },
+    {
+      "nodeId": "mo01",
+      "experiences": [
+        {
+          "id": "mo01-gallery",
+          "channel": "vr",
+          "href": "/gallery-vr.html?artist=monet&lang={lang}",
+          "labels": {
+            "fr": "Salle Monet",
+            "en": "Monet room",
+            "ar": "قاعة مونيه"
+          },
+          "descriptions": {
+            "fr": "Explorer Monet dans la galerie VR ARTDACI.",
+            "en": "Explore Monet in the ARTDACI VR gallery.",
+            "ar": "استكشف مونيه في معرض ARTDACI الافتراضي."
+          }
+        },
+        {
+          "id": "mo01-guide",
+          "channel": "3d",
+          "href": "/geo/masters-hub.html?lang={lang}&guide=monet",
+          "labels": {
+            "fr": "Guide 3D Monet",
+            "en": "Monet 3D guide",
+            "ar": "دليل مونيه ثلاثي الأبعاد"
+          },
+          "descriptions": {
+            "fr": "Ouvrir directement le guide 3D de Monet.",
+            "en": "Open Monet’s 3D guide directly.",
+            "ar": "افتح دليل مونيه ثلاثي الأبعاد مباشرة."
+          }
+        },
+        {
+          "id": "mo01-book",
+          "channel": "book",
+          "href": "/book-3d.html?lang={lang}",
+          "labels": {
+            "fr": "Livre vivant",
+            "en": "Living Book",
+            "ar": "الكتاب الحي"
+          },
+          "descriptions": {
+            "fr": "Revenir au livre 3D ARTDACI.",
+            "en": "Return to the ARTDACI 3D living book.",
+            "ar": "العودة إلى كتاب ARTDACI ثلاثي الأبعاد."
+          }
+        }
+      ]
+    },
+    {
+      "nodeId": "museum.louvre",
+      "experiences": [
+        {
+          "id": "louvre-geo",
+          "channel": "geo",
+          "href": "/geo/remote.html?lang={lang}",
+          "labels": {
+            "fr": "Louvre GEO",
+            "en": "Louvre GEO",
+            "ar": "Louvre GEO"
+          },
+          "descriptions": {
+            "fr": "Explorer le Louvre, ses points d’intérêt et La Joconde.",
+            "en": "Explore the Louvre, its points of interest, and the Mona Lisa.",
+            "ar": "استكشف اللوفر ونقاط الاهتمام والموناليزا."
+          }
+        },
+        {
+          "id": "louvre-room",
+          "channel": "geo",
+          "href": "/geo/room.html?lang={lang}",
+          "labels": {
+            "fr": "Salle des États",
+            "en": "Salle des États",
+            "ar": "قاعة الدول"
+          },
+          "descriptions": {
+            "fr": "Entrer directement dans la salle de La Joconde.",
+            "en": "Enter the Mona Lisa room directly.",
+            "ar": "ادخل مباشرة إلى قاعة الموناليزا."
+          }
+        },
+        {
+          "id": "louvre-gallery-vr",
+          "channel": "vr",
+          "href": "/gallery-vr.html?room=louvre&lang={lang}",
+          "labels": {
+            "fr": "Louvre en VR",
+            "en": "Louvre in VR",
+            "ar": "اللوفر في الواقع الافتراضي"
+          },
+          "descriptions": {
+            "fr": "Explorer l’espace Louvre de la galerie VR.",
+            "en": "Explore the Louvre area of the VR gallery.",
+            "ar": "استكشف مساحة اللوفر في المعرض الافتراضي."
+          }
+        },
+        {
+          "id": "louvre-space",
+          "channel": "3d",
+          "href": "/space.html?museum=louvre&lang={lang}",
+          "labels": {
+            "fr": "Louvre en 3D / AR",
+            "en": "Louvre in 3D / AR",
+            "ar": "اللوفر ثلاثي الأبعاد / الواقع المعزز"
+          },
+          "descriptions": {
+            "fr": "Ouvrir le modèle du Louvre dans le viewer spatial.",
+            "en": "Open the Louvre model in the spatial viewer.",
+            "ar": "افتح نموذج اللوفر في العارض المكاني."
+          }
+        },
+        {
+          "id": "louvre-world",
+          "channel": "vr-world",
+          "href": "https://marble.worldlabs.ai/worldvr/5327a462-1e90-479b-8cec-d2a52a33e04f",
+          "external": true,
+          "labels": {
+            "fr": "Monde VR Louvre",
+            "en": "Louvre VR world",
+            "ar": "عالم اللوفر الافتراضي"
+          },
+          "descriptions": {
+            "fr": "Explorer un monde VR du Louvre généré avec Marble.",
+            "en": "Explore a Louvre VR world generated with Marble.",
+            "ar": "استكشف عالمًا افتراضيًا للوفر مولدًا بواسطة Marble."
+          }
+        }
+      ]
+    },
+    {
+      "nodeId": "place.paris",
+      "experiences": [
+        {
+          "id": "paris-geo",
+          "channel": "geo",
+          "href": "/geo/index.html?lang={lang}",
+          "labels": {
+            "fr": "ARTDACI GEO Paris",
+            "en": "ARTDACI GEO Paris",
+            "ar": "ARTDACI GEO باريس"
+          },
+          "descriptions": {
+            "fr": "Accéder au parcours géoculturel ARTDACI à Paris.",
+            "en": "Open the ARTDACI geocultural journey in Paris.",
+            "ar": "افتح المسار الجغرافي الثقافي لـ ARTDACI في باريس."
+          }
+        },
+        {
+          "id": "paris-louvre",
+          "channel": "geo",
+          "href": "/geo/remote.html?lang={lang}",
+          "labels": {
+            "fr": "Louvre à Paris",
+            "en": "Louvre in Paris",
+            "ar": "اللوفر في باريس"
+          },
+          "descriptions": {
+            "fr": "Explorer le principal lieu parisien actuellement relié au POC GEO.",
+            "en": "Explore the main Paris location currently linked to the GEO POC.",
+            "ar": "استكشف الموقع الباريسي الرئيسي المرتبط حاليًا بنموذج GEO."
+          }
+        }
+      ]
+    },
+    {
+      "nodeId": "artist.leonardo-da-vinci",
+      "experiences": [
+        {
+          "id": "leonardo-guide",
+          "channel": "3d",
+          "href": "/geo/masters-hub.html?lang={lang}&guide=leonardo",
+          "labels": {
+            "fr": "Guide 3D Léonard",
+            "en": "Leonardo 3D guide",
+            "ar": "دليل ليوناردو ثلاثي الأبعاد"
+          },
+          "descriptions": {
+            "fr": "Ouvrir directement Léonard comme guide dans le Masters Hub.",
+            "en": "Open Leonardo directly as a guide in the Masters Hub.",
+            "ar": "افتح ليوناردو مباشرة كدليل في Masters Hub."
+          }
+        },
+        {
+          "id": "leonardo-room",
+          "channel": "vr",
+          "href": "/gallery-vr.html?artist=da-vinci&lang={lang}",
+          "labels": {
+            "fr": "Salle Léonard",
+            "en": "Leonardo room",
+            "ar": "قاعة ليوناردو"
+          },
+          "descriptions": {
+            "fr": "Explorer la collection Léonard en VR.",
+            "en": "Explore the Leonardo collection in VR.",
+            "ar": "استكشف مجموعة ليوناردو في الواقع الافتراضي."
+          }
+        },
+        {
+          "id": "leonardo-world",
+          "channel": "vr-world",
+          "href": "https://marble.worldlabs.ai/worldvr/862ab5f6-8608-469c-a840-8cb10f3859ae",
+          "external": true,
+          "labels": {
+            "fr": "Atelier de Léonard en VR",
+            "en": "Leonardo’s studio in VR",
+            "ar": "مرسم ليوناردو في الواقع الافتراضي"
+          },
+          "descriptions": {
+            "fr": "Visiter l’atelier virtuel de Léonard.",
+            "en": "Visit Leonardo’s virtual studio.",
+            "ar": "زر مرسم ليوناردو الافتراضي."
+          }
+        }
+      ]
+    },
+    {
+      "nodeId": "artist.johannes-vermeer",
+      "experiences": [
+        {
+          "id": "vermeer-guide",
+          "channel": "3d",
+          "href": "/geo/masters-hub.html?lang={lang}&guide=vermeer",
+          "labels": {
+            "fr": "Guide 3D Vermeer",
+            "en": "Vermeer 3D guide",
+            "ar": "دليل فيرمير ثلاثي الأبعاد"
+          },
+          "descriptions": {
+            "fr": "Ouvrir directement Vermeer comme guide.",
+            "en": "Open Vermeer directly as a guide.",
+            "ar": "افتح فيرمير مباشرة كدليل."
+          }
+        },
+        {
+          "id": "vermeer-room",
+          "channel": "vr",
+          "href": "/gallery-vr.html?artist=vermeer&lang={lang}",
+          "labels": {
+            "fr": "Salle Vermeer",
+            "en": "Vermeer room",
+            "ar": "قاعة فيرمير"
+          },
+          "descriptions": {
+            "fr": "Explorer la collection Vermeer en VR.",
+            "en": "Explore the Vermeer collection in VR.",
+            "ar": "استكشف مجموعة فيرمير في الواقع الافتراضي."
+          }
+        }
+      ]
+    },
+    {
+      "nodeId": "artist.vincent-van-gogh",
+      "experiences": [
+        {
+          "id": "vangogh-guide",
+          "channel": "3d",
+          "href": "/geo/masters-hub.html?lang={lang}&guide=van-gogh",
+          "labels": {
+            "fr": "Guide 3D Van Gogh",
+            "en": "Van Gogh 3D guide",
+            "ar": "دليل فان غوخ ثلاثي الأبعاد"
+          },
+          "descriptions": {
+            "fr": "Ouvrir directement Van Gogh comme guide.",
+            "en": "Open Van Gogh directly as a guide.",
+            "ar": "افتح فان غوخ مباشرة كدليل."
+          }
+        },
+        {
+          "id": "vangogh-room",
+          "channel": "vr",
+          "href": "/gallery-vr.html?artist=van-gogh&lang={lang}",
+          "labels": {
+            "fr": "Salle Van Gogh",
+            "en": "Van Gogh room",
+            "ar": "قاعة فان غوخ"
+          },
+          "descriptions": {
+            "fr": "Explorer la collection Van Gogh en VR.",
+            "en": "Explore the Van Gogh collection in VR.",
+            "ar": "استكشف مجموعة فان غوخ في الواقع الافتراضي."
+          }
+        },
+        {
+          "id": "vangogh-bedroom",
+          "channel": "3d",
+          "href": "/gallery-vr.html?room=bedroom&lang={lang}",
+          "labels": {
+            "fr": "La Chambre en 3D",
+            "en": "The Bedroom in 3D",
+            "ar": "غرفة النوم ثلاثية الأبعاد"
+          },
+          "descriptions": {
+            "fr": "Entrer dans l’expérience 3D de La Chambre.",
+            "en": "Enter The Bedroom 3D experience.",
+            "ar": "ادخل إلى تجربة غرفة النوم ثلاثية الأبعاد."
+          }
+        }
+      ]
+    },
+    {
+      "nodeId": "artist.claude-monet",
+      "experiences": [
+        {
+          "id": "monet-guide",
+          "channel": "3d",
+          "href": "/geo/masters-hub.html?lang={lang}&guide=monet",
+          "labels": {
+            "fr": "Guide 3D Monet",
+            "en": "Monet 3D guide",
+            "ar": "دليل مونيه ثلاثي الأبعاد"
+          },
+          "descriptions": {
+            "fr": "Ouvrir directement Monet comme guide.",
+            "en": "Open Monet directly as a guide.",
+            "ar": "افتح مونيه مباشرة كدليل."
+          }
+        },
+        {
+          "id": "monet-room",
+          "channel": "vr",
+          "href": "/gallery-vr.html?artist=monet&lang={lang}",
+          "labels": {
+            "fr": "Salle Monet",
+            "en": "Monet room",
+            "ar": "قاعة مونيه"
+          },
+          "descriptions": {
+            "fr": "Explorer la collection Monet en VR.",
+            "en": "Explore the Monet collection in VR.",
+            "ar": "استكشف مجموعة مونيه في الواقع الافتراضي."
+          }
+        }
+      ]
+    },
+    {
+      "nodeId": "technique.sfumato",
+      "experiences": [
+        {
+          "id": "sfumato-video",
+          "channel": "video",
+          "href": "/assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/davinci-painting-monalisa.mp4",
+          "labels": {
+            "fr": "Processus pictural de La Joconde",
+            "en": "Mona Lisa painting process",
+            "ar": "عملية رسم الموناليزا"
+          },
+          "descriptions": {
+            "fr": "Voir une vidéo ARTDACI liée au processus pictural de La Joconde.",
+            "en": "Watch an ARTDACI video related to the Mona Lisa painting process.",
+            "ar": "شاهد فيديو ARTDACI مرتبطًا بعملية رسم الموناليزا."
+          }
+        },
+        {
+          "id": "sfumato-room",
+          "channel": "geo",
+          "href": "/geo/room.html?lang={lang}",
+          "labels": {
+            "fr": "Observer dans la Salle des États",
+            "en": "Observe in the Salle des États",
+            "ar": "الملاحظة في قاعة الدول"
+          },
+          "descriptions": {
+            "fr": "Replacer le sfumato dans son contexte d’œuvre et de musée.",
+            "en": "Reconnect sfumato with the artwork and museum context.",
+            "ar": "أعد ربط السفوماتو بسياق العمل والمتحف."
+          }
+        }
+      ]
+    },
+    {
+      "nodeId": "technique.visible-brushwork",
+      "experiences": [
+        {
+          "id": "brushwork-vangogh",
+          "channel": "3d",
+          "href": "/geo/masters-hub.html?lang={lang}&guide=van-gogh",
+          "labels": {
+            "fr": "Explorer avec Van Gogh",
+            "en": "Explore with Van Gogh",
+            "ar": "استكشف مع فان غوخ"
+          },
+          "descriptions": {
+            "fr": "Relier la touche visible aux œuvres de Van Gogh dans le Masters Hub.",
+            "en": "Connect visible brushwork with Van Gogh’s works in the Masters Hub.",
+            "ar": "اربط ضربات الفرشاة الظاهرة بأعمال فان غوخ في Masters Hub."
+          }
+        }
+      ]
+    },
+    {
+      "nodeId": "technique.broken-color",
+      "experiences": [
+        {
+          "id": "broken-color-monet",
+          "channel": "3d",
+          "href": "/geo/masters-hub.html?lang={lang}&guide=monet",
+          "labels": {
+            "fr": "Explorer avec Monet",
+            "en": "Explore with Monet",
+            "ar": "استكشف مع مونيه"
+          },
+          "descriptions": {
+            "fr": "Relier la couleur fragmentée aux œuvres de Monet.",
+            "en": "Connect broken color with Monet’s works.",
+            "ar": "اربط اللون المجزأ بأعمال مونيه."
+          }
+        }
+      ]
+    }
+  ]
+}

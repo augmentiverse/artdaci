@@ -1,0 +1,584 @@
+{
+  "schemaVersion": "1.1",
+  "scoring": {
+    "method": "weighted-jaccard",
+    "explanation": "Similarity uses concept relevance weights; core concepts carry the strongest weights while contextual material/support concepts contribute less."
+  },
+  "artworks": [
+    {
+      "id": "ld01",
+      "title": {
+        "fr": "La Joconde",
+        "en": "Mona Lisa",
+        "ar": "الموناليزا"
+      },
+      "artist": {
+        "fr": "Léonard de Vinci",
+        "en": "Leonardo da Vinci",
+        "ar": "ليوناردو دا فينشي"
+      },
+      "date": {
+        "fr": "vers 1503–1519",
+        "en": "c. 1503–1519",
+        "ar": "حوالي 1503–1519"
+      },
+      "museum": {
+        "fr": "Musée du Louvre, Paris",
+        "en": "Musée du Louvre, Paris",
+        "ar": "متحف اللوفر، باريس"
+      },
+      "image": "../assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp",
+      "assertions": [
+        {
+          "conceptId": "technique.sfumato",
+          "weight": 1,
+          "role": "core"
+        },
+        {
+          "conceptId": "technique.atmospheric-perspective",
+          "weight": 0.97,
+          "role": "core"
+        },
+        {
+          "conceptId": "genre.portrait",
+          "weight": 0.96,
+          "role": "core"
+        },
+        {
+          "conceptId": "period.renaissance",
+          "weight": 0.95,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.optical-perception",
+          "weight": 0.92,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.psychological-presence",
+          "weight": 0.9,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.visual-ambiguity",
+          "weight": 0.88,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.light",
+          "weight": 0.86,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "technique.soft-edges",
+          "weight": 0.86,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.depth",
+          "weight": 0.84,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.volume",
+          "weight": 0.82,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.gaze",
+          "weight": 0.8,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.nature-human-continuity",
+          "weight": 0.78,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "technique.glazing",
+          "weight": 0.74,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.shadow",
+          "weight": 0.7,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.identity",
+          "weight": 0.68,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.asymmetry",
+          "weight": 0.62,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "medium.oil-painting",
+          "weight": 0.55,
+          "role": "contextual"
+        },
+        {
+          "conceptId": "support.panel",
+          "weight": 0.45,
+          "role": "contextual"
+        }
+      ],
+      "concepts": [
+        "technique.sfumato",
+        "technique.atmospheric-perspective",
+        "genre.portrait",
+        "period.renaissance",
+        "concept.optical-perception",
+        "concept.psychological-presence",
+        "concept.visual-ambiguity",
+        "concept.light",
+        "technique.soft-edges",
+        "concept.depth",
+        "concept.volume",
+        "concept.gaze",
+        "concept.nature-human-continuity",
+        "technique.glazing",
+        "concept.shadow",
+        "concept.identity",
+        "concept.asymmetry",
+        "medium.oil-painting",
+        "support.panel"
+      ]
+    },
+    {
+      "id": "ve01",
+      "title": {
+        "fr": "La Jeune Fille à la perle",
+        "en": "Girl with a Pearl Earring",
+        "ar": "الفتاة ذات القرط اللؤلؤي"
+      },
+      "artist": {
+        "fr": "Johannes Vermeer",
+        "en": "Johannes Vermeer",
+        "ar": "يوهانس فيرمير"
+      },
+      "date": {
+        "fr": "vers 1665",
+        "en": "c. 1665",
+        "ar": "حوالي 1665"
+      },
+      "museum": {
+        "fr": "Mauritshuis, La Haye",
+        "en": "Mauritshuis, The Hague",
+        "ar": "موريتشهاوس، لاهاي"
+      },
+      "image": "../assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg",
+      "assertions": [
+        {
+          "conceptId": "genre.tronie",
+          "weight": 1,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.light",
+          "weight": 0.97,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.gaze",
+          "weight": 0.95,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.optical-perception",
+          "weight": 0.93,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.intimacy",
+          "weight": 0.9,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.visual-ambiguity",
+          "weight": 0.88,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.psychological-presence",
+          "weight": 0.86,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "technique.soft-edges",
+          "weight": 0.84,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.identity",
+          "weight": 0.82,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.stillness",
+          "weight": 0.8,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.color",
+          "weight": 0.78,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "period.dutch-golden-age",
+          "weight": 0.76,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "movement.baroque",
+          "weight": 0.62,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "technique.glazing",
+          "weight": 0.6,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.volume",
+          "weight": 0.58,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.spatial-ambiguity",
+          "weight": 0.54,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "medium.oil-painting",
+          "weight": 0.5,
+          "role": "contextual"
+        },
+        {
+          "conceptId": "support.canvas",
+          "weight": 0.42,
+          "role": "contextual"
+        }
+      ],
+      "concepts": [
+        "genre.tronie",
+        "concept.light",
+        "concept.gaze",
+        "concept.optical-perception",
+        "concept.intimacy",
+        "concept.visual-ambiguity",
+        "concept.psychological-presence",
+        "technique.soft-edges",
+        "concept.identity",
+        "concept.stillness",
+        "concept.color",
+        "period.dutch-golden-age",
+        "movement.baroque",
+        "technique.glazing",
+        "concept.volume",
+        "concept.spatial-ambiguity",
+        "medium.oil-painting",
+        "support.canvas"
+      ]
+    },
+    {
+      "id": "vg01",
+      "title": {
+        "fr": "Autoportrait",
+        "en": "Self-Portrait",
+        "ar": "بورتريه ذاتي"
+      },
+      "artist": {
+        "fr": "Vincent van Gogh",
+        "en": "Vincent van Gogh",
+        "ar": "فنسنت فان غوخ"
+      },
+      "date": {
+        "fr": "1889",
+        "en": "1889",
+        "ar": "1889"
+      },
+      "museum": {
+        "fr": "Musée d’Orsay, Paris",
+        "en": "Musée d’Orsay, Paris",
+        "ar": "متحف أورسي، باريس"
+      },
+      "image": "../assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp",
+      "imageStatus": "pending-canonical-1889-asset",
+      "assertions": [
+        {
+          "conceptId": "genre.self-portrait",
+          "weight": 1,
+          "role": "core"
+        },
+        {
+          "conceptId": "technique.directional-brushwork",
+          "weight": 1,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.color",
+          "weight": 0.97,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.expression",
+          "weight": 0.96,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.self-scrutiny",
+          "weight": 0.95,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.psychological-presence",
+          "weight": 0.94,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.surface-rhythm",
+          "weight": 0.92,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.chromatic-vibration",
+          "weight": 0.9,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.identity",
+          "weight": 0.9,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.brushwork",
+          "weight": 0.88,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "technique.visible-brushwork",
+          "weight": 0.87,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "technique.complementary-contrast",
+          "weight": 0.84,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.movement",
+          "weight": 0.82,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.gaze",
+          "weight": 0.78,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.materiality",
+          "weight": 0.74,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "movement.post-impressionism",
+          "weight": 0.72,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.optical-perception",
+          "weight": 0.68,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "genre.portrait",
+          "weight": 0.66,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "medium.oil-painting",
+          "weight": 0.5,
+          "role": "contextual"
+        },
+        {
+          "conceptId": "support.canvas",
+          "weight": 0.42,
+          "role": "contextual"
+        }
+      ],
+      "concepts": [
+        "genre.self-portrait",
+        "technique.directional-brushwork",
+        "concept.color",
+        "concept.expression",
+        "concept.self-scrutiny",
+        "concept.psychological-presence",
+        "concept.surface-rhythm",
+        "concept.chromatic-vibration",
+        "concept.identity",
+        "concept.brushwork",
+        "technique.visible-brushwork",
+        "technique.complementary-contrast",
+        "concept.movement",
+        "concept.gaze",
+        "concept.materiality",
+        "movement.post-impressionism",
+        "concept.optical-perception",
+        "genre.portrait",
+        "medium.oil-painting",
+        "support.canvas"
+      ]
+    },
+    {
+      "id": "mo01",
+      "title": {
+        "fr": "Impression, soleil levant",
+        "en": "Impression, Sunrise",
+        "ar": "انطباع، شروق الشمس"
+      },
+      "artist": {
+        "fr": "Claude Monet",
+        "en": "Claude Monet",
+        "ar": "كلود مونيه"
+      },
+      "date": {
+        "fr": "1872",
+        "en": "1872",
+        "ar": "1872"
+      },
+      "museum": {
+        "fr": "Musée Marmottan Monet, Paris",
+        "en": "Musée Marmottan Monet, Paris",
+        "ar": "متحف مارموتان مونيه، باريس"
+      },
+      "image": "../assets/artists/claude-monet/collection/impression-sunrise-monet.webp",
+      "assertions": [
+        {
+          "conceptId": "movement.impressionism",
+          "weight": 1,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.atmosphere",
+          "weight": 1,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.light",
+          "weight": 0.98,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.immediacy",
+          "weight": 0.96,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.optical-perception",
+          "weight": 0.94,
+          "role": "core"
+        },
+        {
+          "conceptId": "technique.visible-brushwork",
+          "weight": 0.93,
+          "role": "core"
+        },
+        {
+          "conceptId": "technique.broken-color",
+          "weight": 0.91,
+          "role": "core"
+        },
+        {
+          "conceptId": "genre.seascape",
+          "weight": 0.9,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.temporality",
+          "weight": 0.88,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.mist",
+          "weight": 0.86,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.chromatic-vibration",
+          "weight": 0.84,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.modernity",
+          "weight": 0.82,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.industry",
+          "weight": 0.8,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "technique.complementary-contrast",
+          "weight": 0.78,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.color",
+          "weight": 0.76,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.brushwork",
+          "weight": 0.72,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.movement",
+          "weight": 0.68,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.depth",
+          "weight": 0.62,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "medium.oil-painting",
+          "weight": 0.5,
+          "role": "contextual"
+        },
+        {
+          "conceptId": "support.canvas",
+          "weight": 0.42,
+          "role": "contextual"
+        }
+      ],
+      "concepts": [
+        "movement.impressionism",
+        "concept.atmosphere",
+        "concept.light",
+        "concept.immediacy",
+        "concept.optical-perception",
+        "technique.visible-brushwork",
+        "technique.broken-color",
+        "genre.seascape",
+        "concept.temporality",
+        "concept.mist",
+        "concept.chromatic-vibration",
+        "concept.modernity",
+        "concept.industry",
+        "technique.complementary-contrast",
+        "concept.color",
+        "concept.brushwork",
+        "concept.movement",
+        "concept.depth",
+        "medium.oil-painting",
+        "support.canvas"
+      ]
+    }
+  ]
+}

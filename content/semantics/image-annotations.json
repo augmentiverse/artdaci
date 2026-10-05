@@ -1,0 +1,472 @@
+{
+  "schemaVersion": "1.1",
+  "coordinateSystem": "normalized-canvas",
+  "notes": "IIIF pilot collection. Each artwork uses a stable virtual Canvas whose coordinates scale to the displayed image. Regions are pedagogical semantic overlays and can be reused in Web, AR and VR.",
+  "artworks": [
+    {
+      "artworkId": "ld01",
+      "canvas": {
+        "width": 1000,
+        "height": 1453,
+        "image": "/assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp",
+        "imageFormat": "image/webp"
+      },
+      "regions": [
+        {
+          "id": "ld01.face",
+          "shape": "rect",
+          "xywh": [
+            335,
+            245,
+            330,
+            385
+          ],
+          "labels": {
+            "fr": "Visage",
+            "en": "Face",
+            "ar": "الوجه"
+          },
+          "descriptions": {
+            "fr": "Le visage concentre le sfumato, les contours adoucis et l’ambiguïté du regard qui contribuent à la présence psychologique du portrait.",
+            "en": "The face concentrates sfumato, softened edges, and the ambiguity of the gaze that contribute to the portrait’s psychological presence.",
+            "ar": "يركز الوجه على تقنية السفوماتو والحواف الناعمة وغموض النظرة، وهي عناصر تعزز الحضور النفسي في البورتريه."
+          },
+          "conceptIds": [
+            "technique.sfumato",
+            "technique.soft-edges",
+            "concept.gaze",
+            "concept.visual-ambiguity",
+            "concept.psychological-presence"
+          ]
+        },
+        {
+          "id": "ld01.hands",
+          "shape": "rect",
+          "xywh": [
+            245,
+            735,
+            510,
+            305
+          ],
+          "labels": {
+            "fr": "Mains",
+            "en": "Hands",
+            "ar": "اليدان"
+          },
+          "descriptions": {
+            "fr": "Le modelé progressif des mains met en évidence le volume, les transitions douces et le rôle des glacis dans la continuité des formes.",
+            "en": "The gradual modeling of the hands emphasizes volume, soft transitions, and the role of glazing in maintaining continuity of form.",
+            "ar": "يبرز التشكيل التدريجي لليدين الحجم والانتقالات الناعمة ودور الطبقات الشفافة في استمرارية الأشكال."
+          },
+          "conceptIds": [
+            "concept.volume",
+            "technique.glazing",
+            "technique.soft-edges",
+            "concept.contour"
+          ]
+        },
+        {
+          "id": "ld01.landscape-left",
+          "shape": "rect",
+          "xywh": [
+            35,
+            300,
+            275,
+            560
+          ],
+          "labels": {
+            "fr": "Paysage gauche",
+            "en": "Left landscape",
+            "ar": "المشهد الأيسر"
+          },
+          "descriptions": {
+            "fr": "Le paysage lointain utilise la perspective atmosphérique pour produire profondeur et continuité entre la figure humaine et la nature.",
+            "en": "The distant landscape uses atmospheric perspective to create depth and continuity between the human figure and nature.",
+            "ar": "يستخدم المشهد البعيد المنظور الجوي لإنتاج العمق والاستمرارية بين الشخصية البشرية والطبيعة."
+          },
+          "conceptIds": [
+            "technique.atmospheric-perspective",
+            "concept.depth",
+            "concept.atmosphere",
+            "concept.nature-human-continuity"
+          ]
+        },
+        {
+          "id": "ld01.landscape-right",
+          "shape": "rect",
+          "xywh": [
+            690,
+            300,
+            275,
+            560
+          ],
+          "labels": {
+            "fr": "Paysage droit",
+            "en": "Right landscape",
+            "ar": "المشهد الأيمن"
+          },
+          "descriptions": {
+            "fr": "Les niveaux du paysage et leurs horizons légèrement disjoints renforcent la profondeur et une subtile ambiguïté spatiale.",
+            "en": "The landscape levels and their slightly disjointed horizons reinforce depth and a subtle spatial ambiguity.",
+            "ar": "تعزز مستويات المشهد وآفاقه غير المتطابقة قليلًا الإحساس بالعمق وبغموض مكاني دقيق."
+          },
+          "conceptIds": [
+            "technique.atmospheric-perspective",
+            "concept.depth",
+            "concept.spatial-ambiguity",
+            "concept.atmosphere"
+          ]
+        }
+      ]
+    },
+    {
+      "artworkId": "ve01",
+      "canvas": {
+        "width": 1000,
+        "height": 1141,
+        "image": "/assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg",
+        "imageFormat": "image/jpeg"
+      },
+      "regions": [
+        {
+          "id": "ve01.headscarf",
+          "shape": "rect",
+          "xywh": [
+            145,
+            55,
+            700,
+            405
+          ],
+          "labels": {
+            "fr": "Coiffe et couleurs",
+            "en": "Headscarf and color",
+            "ar": "غطاء الرأس والألوان"
+          },
+          "descriptions": {
+            "fr": "La coiffe met en valeur les rapports de couleur et le contraste entre les zones éclairées et le fond sombre.",
+            "en": "The headscarf emphasizes color relationships and the contrast between illuminated areas and the dark background.",
+            "ar": "يبرز غطاء الرأس العلاقات اللونية والتباين بين المناطق المضيئة والخلفية الداكنة."
+          },
+          "conceptIds": [
+            "concept.color",
+            "concept.light",
+            "concept.optical-perception"
+          ]
+        },
+        {
+          "id": "ve01.garment",
+          "shape": "rect",
+          "xywh": [
+            150,
+            650,
+            710,
+            440
+          ],
+          "labels": {
+            "fr": "Vêtement et volume",
+            "en": "Garment and volume",
+            "ar": "الملابس والحجم"
+          },
+          "descriptions": {
+            "fr": "Le vêtement combine transitions douces, lumière et modelé pour donner du volume à la figure sans rigidifier les contours.",
+            "en": "The garment combines soft transitions, light, and modeling to give the figure volume without hardening its contours.",
+            "ar": "تجمع الملابس بين الانتقالات الناعمة والضوء والتشكيل لإعطاء الشخصية حجمًا من دون تصلب الحواف."
+          },
+          "conceptIds": [
+            "concept.volume",
+            "technique.soft-edges",
+            "concept.light",
+            "concept.color"
+          ]
+        },
+        {
+          "id": "ve01.pearl",
+          "shape": "rect",
+          "xywh": [
+            650,
+            475,
+            185,
+            250
+          ],
+          "labels": {
+            "fr": "Perle",
+            "en": "Pearl",
+            "ar": "اللؤلؤة"
+          },
+          "descriptions": {
+            "fr": "La perle est rendue par quelques accents lumineux : un exemple frappant de perception optique et d’économie picturale.",
+            "en": "The pearl is rendered with only a few highlights, a striking example of optical perception and pictorial economy.",
+            "ar": "تُصوَّر اللؤلؤة ببضع لمعات ضوئية فقط، في مثال واضح على الإدراك البصري والاقتصاد في المعالجة."
+          },
+          "conceptIds": [
+            "concept.light",
+            "concept.optical-perception",
+            "concept.visual-ambiguity"
+          ]
+        },
+        {
+          "id": "ve01.face",
+          "shape": "rect",
+          "xywh": [
+            315,
+            220,
+            430,
+            405
+          ],
+          "labels": {
+            "fr": "Visage et regard",
+            "en": "Face and gaze",
+            "ar": "الوجه والنظرة"
+          },
+          "descriptions": {
+            "fr": "Le visage, tourné vers le spectateur, concentre le regard, l’intimité et l’ambiguïté identitaire propres à la tronie.",
+            "en": "The face, turned toward the viewer, concentrates gaze, intimacy, and the identity ambiguity characteristic of the tronie.",
+            "ar": "يركز الوجه الملتفت نحو المشاهد على النظرة والحميمية وغموض الهوية المميز لدراسة الشخصية."
+          },
+          "conceptIds": [
+            "concept.gaze",
+            "concept.intimacy",
+            "concept.psychological-presence",
+            "concept.identity",
+            "genre.tronie"
+          ]
+        }
+      ]
+    },
+    {
+      "artworkId": "vg01",
+      "canvas": {
+        "width": 1000,
+        "height": 1204,
+        "image": "/assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp",
+        "imageFormat": "image/webp"
+      },
+      "regions": [
+        {
+          "id": "vg01.background",
+          "shape": "rect",
+          "xywh": [
+            655,
+            125,
+            300,
+            655
+          ],
+          "labels": {
+            "fr": "Fond rythmé",
+            "en": "Rhythmic background",
+            "ar": "الخلفية الإيقاعية"
+          },
+          "descriptions": {
+            "fr": "Les touches courbes du fond donnent un rythme continu à la surface et renforcent la sensation de mouvement autour de la figure.",
+            "en": "The curving background strokes create a continuous surface rhythm and strengthen the sense of movement around the figure.",
+            "ar": "تخلق ضربات الفرشاة المنحنية في الخلفية إيقاعًا مستمرًا على السطح وتعزز الإحساس بالحركة حول الشخصية."
+          },
+          "conceptIds": [
+            "technique.directional-brushwork",
+            "concept.surface-rhythm",
+            "concept.movement",
+            "concept.brushwork"
+          ]
+        },
+        {
+          "id": "vg01.jacket",
+          "shape": "rect",
+          "xywh": [
+            175,
+            650,
+            670,
+            505
+          ],
+          "labels": {
+            "fr": "Veste et contrastes chromatiques",
+            "en": "Jacket and chromatic contrasts",
+            "ar": "السترة والتباينات اللونية"
+          },
+          "descriptions": {
+            "fr": "La veste construit la forme par la couleur et la direction des touches, avec des contrastes qui produisent une vibration chromatique.",
+            "en": "The jacket builds form through color and stroke direction, using contrasts that produce chromatic vibration.",
+            "ar": "تُبنى السترة باللون واتجاه ضربات الفرشاة، مع تباينات تولد اهتزازًا لونيًا."
+          },
+          "conceptIds": [
+            "concept.color",
+            "technique.complementary-contrast",
+            "concept.chromatic-vibration",
+            "technique.visible-brushwork",
+            "concept.materiality"
+          ]
+        },
+        {
+          "id": "vg01.hair-beard",
+          "shape": "rect",
+          "xywh": [
+            245,
+            95,
+            525,
+            585
+          ],
+          "labels": {
+            "fr": "Cheveux et barbe",
+            "en": "Hair and beard",
+            "ar": "الشعر واللحية"
+          },
+          "descriptions": {
+            "fr": "Les touches directionnelles suivent les cheveux et la barbe et transforment le modelé en un réseau visible de gestes picturaux.",
+            "en": "Directional strokes follow the hair and beard, turning modeling into a visible network of painterly gestures.",
+            "ar": "تتبع ضربات الفرشاة الاتجاهية الشعر واللحية وتحول التشكيل إلى شبكة ظاهرة من الحركات التصويرية."
+          },
+          "conceptIds": [
+            "technique.directional-brushwork",
+            "technique.visible-brushwork",
+            "concept.brushwork",
+            "concept.surface-rhythm"
+          ]
+        },
+        {
+          "id": "vg01.face",
+          "shape": "rect",
+          "xywh": [
+            305,
+            205,
+            405,
+            390
+          ],
+          "labels": {
+            "fr": "Visage et regard",
+            "en": "Face and gaze",
+            "ar": "الوجه والنظرة"
+          },
+          "descriptions": {
+            "fr": "Le visage concentre l’examen de soi, l’expression et la présence psychologique qui donnent à l’autoportrait son intensité.",
+            "en": "The face concentrates self-scrutiny, expression, and psychological presence, giving the self-portrait its intensity.",
+            "ar": "يركز الوجه على فحص الذات والتعبير والحضور النفسي الذي يمنح البورتريه الذاتي شدته."
+          },
+          "conceptIds": [
+            "concept.self-scrutiny",
+            "concept.expression",
+            "concept.psychological-presence",
+            "concept.gaze",
+            "genre.self-portrait"
+          ]
+        }
+      ]
+    },
+    {
+      "artworkId": "mo01",
+      "canvas": {
+        "width": 1313,
+        "height": 1000,
+        "image": "/assets/artists/claude-monet/collection/impression-sunrise-monet.webp",
+        "imageFormat": "image/webp"
+      },
+      "regions": [
+        {
+          "id": "mo01.harbor",
+          "shape": "rect",
+          "xywh": [
+            20,
+            210,
+            1270,
+            355
+          ],
+          "labels": {
+            "fr": "Port dans la brume",
+            "en": "Harbor in mist",
+            "ar": "الميناء في الضباب"
+          },
+          "descriptions": {
+            "fr": "Les silhouettes du port émergent de la brume : l’atmosphère réduit la précision des formes tout en évoquant la modernité industrielle.",
+            "en": "Harbor silhouettes emerge from the mist: atmosphere reduces formal precision while evoking industrial modernity.",
+            "ar": "تظهر ظلال الميناء من الضباب؛ إذ يقلل الجو من دقة الأشكال مع استحضار الحداثة الصناعية."
+          },
+          "conceptIds": [
+            "concept.atmosphere",
+            "concept.mist",
+            "concept.modernity",
+            "concept.industry",
+            "concept.depth"
+          ]
+        },
+        {
+          "id": "mo01.water",
+          "shape": "rect",
+          "xywh": [
+            420,
+            500,
+            720,
+            430
+          ],
+          "labels": {
+            "fr": "Eau et reflets",
+            "en": "Water and reflections",
+            "ar": "الماء والانعكاسات"
+          },
+          "descriptions": {
+            "fr": "Les touches visibles et la couleur fragmentée transforment l’eau en vibration optique plutôt qu’en surface décrite avec précision.",
+            "en": "Visible brushwork and broken color turn the water into optical vibration rather than a precisely described surface.",
+            "ar": "تحول ضربات الفرشاة الظاهرة واللون المجزأ الماء إلى اهتزاز بصري بدل سطح موصوف بدقة."
+          },
+          "conceptIds": [
+            "technique.visible-brushwork",
+            "technique.broken-color",
+            "concept.chromatic-vibration",
+            "concept.optical-perception",
+            "concept.movement"
+          ]
+        },
+        {
+          "id": "mo01.boat",
+          "shape": "rect",
+          "xywh": [
+            300,
+            520,
+            480,
+            285
+          ],
+          "labels": {
+            "fr": "Barque au premier plan",
+            "en": "Foreground boat",
+            "ar": "القارب في المقدمة"
+          },
+          "descriptions": {
+            "fr": "La barque est indiquée par des touches rapides qui renforcent l’immédiateté de la perception et l’impression d’un instant saisi.",
+            "en": "The boat is indicated with rapid strokes that reinforce perceptual immediacy and the sense of a captured instant.",
+            "ar": "يُشار إلى القارب بضربات سريعة تعزز فورية الإدراك والإحساس بلحظة ملتقطة."
+          },
+          "conceptIds": [
+            "concept.immediacy",
+            "concept.brushwork",
+            "technique.visible-brushwork",
+            "concept.temporality",
+            "genre.seascape"
+          ]
+        },
+        {
+          "id": "mo01.sun",
+          "shape": "rect",
+          "xywh": [
+            780,
+            270,
+            245,
+            245
+          ],
+          "labels": {
+            "fr": "Soleil levant",
+            "en": "Rising sun",
+            "ar": "الشمس المشرقة"
+          },
+          "descriptions": {
+            "fr": "Le disque orangé du soleil et son reflet exploitent le contraste chromatique et la lumière pour organiser la perception de toute la scène.",
+            "en": "The orange sun and its reflection use chromatic contrast and light to organize perception of the entire scene.",
+            "ar": "تستعمل الشمس البرتقالية وانعكاسها التباين اللوني والضوء لتنظيم إدراك المشهد كله."
+          },
+          "conceptIds": [
+            "concept.light",
+            "technique.complementary-contrast",
+            "concept.color",
+            "concept.optical-perception"
+          ]
+        }
+      ]
+    }
+  ]
+}

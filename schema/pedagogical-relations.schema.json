@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://artdaci.com/schema/pedagogical-relations.schema.json",
+  "title": "ARTDACI Pedagogical Relations",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "relationTypes",
+    "relations"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "relationTypes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "helpsUnderstand",
+          "observeIn",
+          "compareWith",
+          "contrastForLearning",
+          "buildsOn",
+          "fromDetailToConcept"
+        ]
+      }
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "source",
+          "target",
+          "rationale",
+          "prompt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "enum": [
+              "helpsUnderstand",
+              "observeIn",
+              "compareWith",
+              "contrastForLearning",
+              "buildsOn",
+              "fromDetailToConcept"
+            ]
+          },
+          "source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "target": {
+            "type": "string",
+            "minLength": 1
+          },
+          "rationale": {
+            "$ref": "#/$defs/i18n"
+          },
+          "prompt": {
+            "$ref": "#/$defs/i18n"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "$defs": {
+    "i18n": {
+      "type": "object",
+      "required": [
+        "fr",
+        "en",
+        "ar"
+      ],
+      "properties": {
+        "fr": {
+          "type": "string",
+          "minLength": 1
+        },
+        "en": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ar": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

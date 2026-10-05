@@ -1,0 +1,144 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "https://artdaci.com/iiif/mo01/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "fr": [
+      "Impression, soleil levant"
+    ],
+    "en": [
+      "Impression, Sunrise"
+    ],
+    "ar": [
+      "انطباع، شروق الشمس"
+    ]
+  },
+  "summary": {
+    "fr": [
+      "Manifest IIIF ARTDACI avec annotations sémantiques de régions pour Impression, soleil levant."
+    ],
+    "en": [
+      "ARTDACI IIIF manifest with semantic image-region annotations for Impression, Sunrise."
+    ],
+    "ar": [
+      "بيان IIIF من ARTDACI يتضمن تعليقات دلالية على مناطق صورة انطباع، شروق الشمس."
+    ]
+  },
+  "provider": [
+    {
+      "id": "https://artdaci.com/",
+      "type": "Agent",
+      "label": {
+        "fr": [
+          "ARTDACI"
+        ],
+        "en": [
+          "ARTDACI"
+        ],
+        "ar": [
+          "ARTDACI"
+        ]
+      },
+      "homepage": [
+        {
+          "id": "https://artdaci.com/",
+          "type": "Text",
+          "label": {
+            "fr": [
+              "ARTDACI"
+            ],
+            "en": [
+              "ARTDACI"
+            ],
+            "ar": [
+              "ARTDACI"
+            ]
+          },
+          "format": "text/html"
+        }
+      ]
+    }
+  ],
+  "homepage": [
+    {
+      "id": "https://artdaci.com/semantic/?artwork=mo01&lang=fr",
+      "type": "Text",
+      "label": {
+        "fr": [
+          "Explorer Impression, soleil levant dans ARTDACI Semantic"
+        ],
+        "en": [
+          "Explore Impression, Sunrise in ARTDACI Semantic"
+        ],
+        "ar": [
+          "استكشاف انطباع، شروق الشمس في ARTDACI Semantic"
+        ]
+      },
+      "format": "text/html"
+    }
+  ],
+  "seeAlso": [
+    {
+      "id": "https://artdaci.com/api/linked-art?kind=artwork&id=mo01&lang=fr",
+      "type": "Dataset",
+      "label": {
+        "fr": [
+          "Données Linked Art JSON-LD"
+        ],
+        "en": [
+          "Linked Art JSON-LD data"
+        ],
+        "ar": [
+          "بيانات Linked Art JSON-LD"
+        ]
+      },
+      "format": "application/ld+json;profile=\"https://linked.art/ns/v1/linked-art.json\""
+    }
+  ],
+  "items": [
+    {
+      "id": "https://artdaci.com/iiif/mo01/canvas",
+      "type": "Canvas",
+      "label": {
+        "fr": [
+          "Impression, soleil levant"
+        ],
+        "en": [
+          "Impression, Sunrise"
+        ],
+        "ar": [
+          "انطباع، شروق الشمس"
+        ]
+      },
+      "width": 1313,
+      "height": 1000,
+      "items": [
+        {
+          "id": "https://artdaci.com/iiif/mo01/painting",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://artdaci.com/iiif/mo01/painting/1",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://artdaci.com/assets/artists/claude-monet/collection/impression-sunrise-monet.webp",
+                "type": "Image",
+                "format": "image/webp",
+                "width": 1313,
+                "height": 1000
+              },
+              "target": "https://artdaci.com/iiif/mo01/canvas"
+            }
+          ]
+        }
+      ],
+      "annotations": [
+        {
+          "id": "https://artdaci.com/iiif/mo01/annotations.json",
+          "type": "AnnotationPage"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,532 @@
+{
+  "schemaVersion": "1.0",
+  "defaultLanguage": "fr",
+  "entityTypes": [
+    "artist",
+    "museum",
+    "place",
+    "subject",
+    "event"
+  ],
+  "relationTypes": [
+    "createdBy",
+    "heldBy",
+    "locatedIn",
+    "associatedWithPlace",
+    "depictsSubject",
+    "creationEvent",
+    "carriedOutBy",
+    "concernsArtwork",
+    "occurredAt"
+  ],
+  "entities": [
+    {
+      "id": "artist.leonardo-da-vinci",
+      "type": "artist",
+      "labels": {
+        "fr": "Léonard de Vinci",
+        "en": "Leonardo da Vinci",
+        "ar": "ليوناردو دا فينشي"
+      },
+      "descriptions": {
+        "fr": "Artiste et savant de la Renaissance italienne.",
+        "en": "Italian Renaissance artist and polymath.",
+        "ar": "فنان وعالم من عصر النهضة الإيطالية."
+      },
+      "external": {
+        "wikidata": "Q762",
+        "gettyUlan": "500010879"
+      }
+    },
+    {
+      "id": "artist.johannes-vermeer",
+      "type": "artist",
+      "labels": {
+        "fr": "Johannes Vermeer",
+        "en": "Johannes Vermeer",
+        "ar": "يوهانس فيرمير"
+      },
+      "descriptions": {
+        "fr": "Peintre néerlandais du XVIIe siècle, actif principalement à Delft.",
+        "en": "Seventeenth-century Dutch painter, primarily active in Delft.",
+        "ar": "رسام هولندي من القرن السابع عشر ارتبط نشاطه أساسًا بمدينة دلفت."
+      },
+      "external": {
+        "wikidata": "Q41264",
+        "gettyUlan": "500032927"
+      }
+    },
+    {
+      "id": "artist.vincent-van-gogh",
+      "type": "artist",
+      "labels": {
+        "fr": "Vincent van Gogh",
+        "en": "Vincent van Gogh",
+        "ar": "فنسنت فان غوخ"
+      },
+      "descriptions": {
+        "fr": "Peintre néerlandais majeur du postimpressionnisme.",
+        "en": "Major Dutch Post-Impressionist painter.",
+        "ar": "رسام هولندي بارز من تيار ما بعد الانطباعية."
+      },
+      "external": {
+        "wikidata": "Q5582",
+        "gettyUlan": "500115588"
+      }
+    },
+    {
+      "id": "artist.claude-monet",
+      "type": "artist",
+      "labels": {
+        "fr": "Claude Monet",
+        "en": "Claude Monet",
+        "ar": "كلود مونيه"
+      },
+      "descriptions": {
+        "fr": "Peintre français, figure majeure de l’impressionnisme.",
+        "en": "French painter and major figure of Impressionism.",
+        "ar": "رسام فرنسي وأحد أبرز أعلام الانطباعية."
+      },
+      "external": {
+        "wikidata": "Q296",
+        "gettyUlan": "500019484"
+      }
+    },
+    {
+      "id": "museum.louvre",
+      "type": "museum",
+      "labels": {
+        "fr": "Musée du Louvre",
+        "en": "Louvre Museum",
+        "ar": "متحف اللوفر"
+      },
+      "descriptions": {
+        "fr": "Musée d’art et d’archéologie à Paris.",
+        "en": "Art and archaeology museum in Paris.",
+        "ar": "متحف للفنون والآثار في باريس."
+      },
+      "external": {
+        "wikidata": "Q19675",
+        "gettyUlan": "500125189"
+      }
+    },
+    {
+      "id": "museum.mauritshuis",
+      "type": "museum",
+      "labels": {
+        "fr": "Mauritshuis",
+        "en": "Mauritshuis",
+        "ar": "متحف موريتشهاوس"
+      },
+      "descriptions": {
+        "fr": "Musée d’art à La Haye, aux Pays-Bas.",
+        "en": "Art museum in The Hague, Netherlands.",
+        "ar": "متحف فني في لاهاي بهولندا."
+      },
+      "external": {
+        "wikidata": "Q221092",
+        "gettyUlan": "500307433"
+      }
+    },
+    {
+      "id": "museum.orsay",
+      "type": "museum",
+      "labels": {
+        "fr": "Musée d’Orsay",
+        "en": "Musée d’Orsay",
+        "ar": "متحف أورسي"
+      },
+      "descriptions": {
+        "fr": "Musée d’art à Paris consacré notamment au XIXe siècle.",
+        "en": "Paris art museum particularly focused on nineteenth-century art.",
+        "ar": "متحف فني في باريس يهتم خصوصًا بفنون القرن التاسع عشر."
+      },
+      "external": {
+        "wikidata": "Q23402",
+        "gettyUlan": "500310001"
+      }
+    },
+    {
+      "id": "museum.marmottan-monet",
+      "type": "museum",
+      "labels": {
+        "fr": "Musée Marmottan Monet",
+        "en": "Musée Marmottan Monet",
+        "ar": "متحف مارموتان مونيه"
+      },
+      "descriptions": {
+        "fr": "Musée parisien connu notamment pour son importante collection de Monet.",
+        "en": "Paris museum known in particular for its major collection of Monet.",
+        "ar": "متحف في باريس معروف خصوصًا بمجموعته المهمة لأعمال مونيه."
+      },
+      "external": {
+        "wikidata": "Q1327886",
+        "gettyUlan": "500310013"
+      }
+    },
+    {
+      "id": "place.paris",
+      "type": "place",
+      "labels": {
+        "fr": "Paris",
+        "en": "Paris",
+        "ar": "باريس"
+      },
+      "descriptions": {
+        "fr": "Capitale de la France.",
+        "en": "Capital of France.",
+        "ar": "عاصمة فرنسا."
+      },
+      "external": {
+        "wikidata": "Q90",
+        "gettyTgn": "7008038"
+      }
+    },
+    {
+      "id": "place.the-hague",
+      "type": "place",
+      "labels": {
+        "fr": "La Haye",
+        "en": "The Hague",
+        "ar": "لاهاي"
+      },
+      "descriptions": {
+        "fr": "Ville des Pays-Bas et siège du gouvernement néerlandais.",
+        "en": "City in the Netherlands and seat of the Dutch government.",
+        "ar": "مدينة هولندية ومقر الحكومة الهولندية."
+      },
+      "external": {
+        "wikidata": "Q36600",
+        "gettyTgn": "7006810"
+      }
+    },
+    {
+      "id": "place.delft",
+      "type": "place",
+      "labels": {
+        "fr": "Delft",
+        "en": "Delft",
+        "ar": "دلفت"
+      },
+      "descriptions": {
+        "fr": "Ville néerlandaise étroitement associée à la vie et à l’œuvre de Vermeer.",
+        "en": "Dutch city closely associated with Vermeer’s life and work.",
+        "ar": "مدينة هولندية ترتبط ارتباطًا وثيقًا بحياة فيرمير وأعماله."
+      },
+      "external": {
+        "wikidata": "Q690",
+        "gettyTgn": "7006804"
+      }
+    },
+    {
+      "id": "place.le-havre",
+      "type": "place",
+      "labels": {
+        "fr": "Le Havre",
+        "en": "Le Havre",
+        "ar": "لو هافر"
+      },
+      "descriptions": {
+        "fr": "Ville portuaire normande associée à Impression, soleil levant.",
+        "en": "Normandy port city associated with Impression, Sunrise.",
+        "ar": "مدينة ساحلية في نورماندي مرتبطة بلوحة انطباع، شروق الشمس."
+      },
+      "external": {
+        "wikidata": "Q42810"
+      }
+    },
+    {
+      "id": "subject.female-sitter",
+      "type": "subject",
+      "labels": {
+        "fr": "Figure féminine",
+        "en": "Female sitter",
+        "ar": "شخصية نسائية"
+      },
+      "descriptions": {
+        "fr": "Sujet centré sur la représentation d’une figure féminine.",
+        "en": "Subject centered on the representation of a female figure.",
+        "ar": "موضوع يركز على تمثيل شخصية نسائية."
+      },
+      "external": {}
+    },
+    {
+      "id": "subject.tronie-figure",
+      "type": "subject",
+      "labels": {
+        "fr": "Étude de figure",
+        "en": "Figure study",
+        "ar": "دراسة شخصية"
+      },
+      "descriptions": {
+        "fr": "Figure étudiée comme type, expression ou caractère plutôt que comme portrait identifié.",
+        "en": "A figure studied as a type, expression, or character rather than an identified portrait.",
+        "ar": "دراسة لشخصية بوصفها نمطًا أو تعبيرًا أو طابعًا لا بورتريه محدد الهوية."
+      },
+      "external": {}
+    },
+    {
+      "id": "subject.self-representation",
+      "type": "subject",
+      "labels": {
+        "fr": "Représentation de soi",
+        "en": "Self-representation",
+        "ar": "تمثيل الذات"
+      },
+      "descriptions": {
+        "fr": "L’artiste prend sa propre apparence comme sujet de l’œuvre.",
+        "en": "The artist uses their own appearance as the subject of the work.",
+        "ar": "يتخذ الفنان مظهره الشخصي موضوعًا للعمل."
+      },
+      "external": {}
+    },
+    {
+      "id": "subject.harbor-sunrise",
+      "type": "subject",
+      "labels": {
+        "fr": "Port au lever du soleil",
+        "en": "Harbor at sunrise",
+        "ar": "ميناء عند شروق الشمس"
+      },
+      "descriptions": {
+        "fr": "Paysage portuaire observé dans une lumière de lever du soleil.",
+        "en": "Harbor landscape observed in sunrise light.",
+        "ar": "مشهد ميناء تحت ضوء شروق الشمس."
+      },
+      "external": {}
+    },
+    {
+      "id": "event.creation-ld01",
+      "type": "event",
+      "labels": {
+        "fr": "Création de La Joconde",
+        "en": "Creation of the Mona Lisa",
+        "ar": "إنجاز الموناليزا"
+      },
+      "descriptions": {
+        "fr": "Épisode de création de La Joconde, généralement situé vers 1503–1519.",
+        "en": "Creation episode of the Mona Lisa, generally dated c. 1503–1519.",
+        "ar": "مرحلة إنجاز الموناليزا والمؤرخة عادة بحوالي 1503–1519."
+      },
+      "temporal": {
+        "start": "1503",
+        "end": "1519"
+      },
+      "external": {}
+    },
+    {
+      "id": "event.creation-ve01",
+      "type": "event",
+      "labels": {
+        "fr": "Création de La Jeune Fille à la perle",
+        "en": "Creation of Girl with a Pearl Earring",
+        "ar": "إنجاز الفتاة ذات القرط اللؤلؤي"
+      },
+      "descriptions": {
+        "fr": "Épisode de création de l’œuvre, généralement daté vers 1665.",
+        "en": "Creation episode of the work, generally dated c. 1665.",
+        "ar": "مرحلة إنجاز العمل والمؤرخة عادة بحوالي 1665."
+      },
+      "temporal": {
+        "start": "1665",
+        "end": "1665"
+      },
+      "external": {}
+    },
+    {
+      "id": "event.creation-vg01",
+      "type": "event",
+      "labels": {
+        "fr": "Création de l’Autoportrait de 1889",
+        "en": "Creation of the 1889 Self-Portrait",
+        "ar": "إنجاز البورتريه الذاتي لسنة 1889"
+      },
+      "descriptions": {
+        "fr": "Épisode de création de l’Autoportrait de Van Gogh conservé au Musée d’Orsay.",
+        "en": "Creation episode of Van Gogh’s 1889 Self-Portrait now at the Musée d’Orsay.",
+        "ar": "مرحلة إنجاز بورتريه فان غوخ الذاتي لسنة 1889 المحفوظ بمتحف أورسي."
+      },
+      "temporal": {
+        "start": "1889",
+        "end": "1889"
+      },
+      "external": {}
+    },
+    {
+      "id": "event.creation-mo01",
+      "type": "event",
+      "labels": {
+        "fr": "Création d’Impression, soleil levant",
+        "en": "Creation of Impression, Sunrise",
+        "ar": "إنجاز انطباع، شروق الشمس"
+      },
+      "descriptions": {
+        "fr": "Épisode de création d’Impression, soleil levant en 1872.",
+        "en": "Creation episode of Impression, Sunrise in 1872.",
+        "ar": "مرحلة إنجاز لوحة انطباع، شروق الشمس سنة 1872."
+      },
+      "temporal": {
+        "start": "1872",
+        "end": "1872"
+      },
+      "external": {}
+    }
+  ],
+  "relations": [
+    {
+      "source": "ld01",
+      "target": "artist.leonardo-da-vinci",
+      "type": "createdBy"
+    },
+    {
+      "source": "ld01",
+      "target": "museum.louvre",
+      "type": "heldBy"
+    },
+    {
+      "source": "ld01",
+      "target": "subject.female-sitter",
+      "type": "depictsSubject"
+    },
+    {
+      "source": "ld01",
+      "target": "event.creation-ld01",
+      "type": "creationEvent"
+    },
+    {
+      "source": "event.creation-ld01",
+      "target": "artist.leonardo-da-vinci",
+      "type": "carriedOutBy"
+    },
+    {
+      "source": "event.creation-ld01",
+      "target": "ld01",
+      "type": "concernsArtwork"
+    },
+    {
+      "source": "museum.louvre",
+      "target": "place.paris",
+      "type": "locatedIn"
+    },
+    {
+      "source": "ve01",
+      "target": "artist.johannes-vermeer",
+      "type": "createdBy"
+    },
+    {
+      "source": "ve01",
+      "target": "museum.mauritshuis",
+      "type": "heldBy"
+    },
+    {
+      "source": "ve01",
+      "target": "subject.tronie-figure",
+      "type": "depictsSubject"
+    },
+    {
+      "source": "ve01",
+      "target": "event.creation-ve01",
+      "type": "creationEvent"
+    },
+    {
+      "source": "event.creation-ve01",
+      "target": "artist.johannes-vermeer",
+      "type": "carriedOutBy"
+    },
+    {
+      "source": "event.creation-ve01",
+      "target": "ve01",
+      "type": "concernsArtwork"
+    },
+    {
+      "source": "artist.johannes-vermeer",
+      "target": "place.delft",
+      "type": "associatedWithPlace"
+    },
+    {
+      "source": "museum.mauritshuis",
+      "target": "place.the-hague",
+      "type": "locatedIn"
+    },
+    {
+      "source": "vg01",
+      "target": "artist.vincent-van-gogh",
+      "type": "createdBy"
+    },
+    {
+      "source": "vg01",
+      "target": "museum.orsay",
+      "type": "heldBy"
+    },
+    {
+      "source": "vg01",
+      "target": "subject.self-representation",
+      "type": "depictsSubject"
+    },
+    {
+      "source": "vg01",
+      "target": "event.creation-vg01",
+      "type": "creationEvent"
+    },
+    {
+      "source": "event.creation-vg01",
+      "target": "artist.vincent-van-gogh",
+      "type": "carriedOutBy"
+    },
+    {
+      "source": "event.creation-vg01",
+      "target": "vg01",
+      "type": "concernsArtwork"
+    },
+    {
+      "source": "museum.orsay",
+      "target": "place.paris",
+      "type": "locatedIn"
+    },
+    {
+      "source": "mo01",
+      "target": "artist.claude-monet",
+      "type": "createdBy"
+    },
+    {
+      "source": "mo01",
+      "target": "museum.marmottan-monet",
+      "type": "heldBy"
+    },
+    {
+      "source": "mo01",
+      "target": "subject.harbor-sunrise",
+      "type": "depictsSubject"
+    },
+    {
+      "source": "mo01",
+      "target": "place.le-havre",
+      "type": "associatedWithPlace"
+    },
+    {
+      "source": "mo01",
+      "target": "event.creation-mo01",
+      "type": "creationEvent"
+    },
+    {
+      "source": "event.creation-mo01",
+      "target": "artist.claude-monet",
+      "type": "carriedOutBy"
+    },
+    {
+      "source": "event.creation-mo01",
+      "target": "mo01",
+      "type": "concernsArtwork"
+    },
+    {
+      "source": "event.creation-mo01",
+      "target": "place.le-havre",
+      "type": "occurredAt"
+    },
+    {
+      "source": "museum.marmottan-monet",
+      "target": "place.paris",
+      "type": "locatedIn"
+    }
+  ]
+}

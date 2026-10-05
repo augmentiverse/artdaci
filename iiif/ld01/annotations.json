@@ -1,0 +1,288 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "https://artdaci.com/iiif/ld01/annotations.json",
+  "type": "AnnotationPage",
+  "items": [
+    {
+      "id": "https://artdaci.com/iiif/ld01/annotation/face",
+      "type": "Annotation",
+      "motivation": [
+        "commenting",
+        "tagging"
+      ],
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "Visage — Le visage concentre le sfumato, les contours adoucis et l’ambiguïté du regard qui contribuent à la présence psychologique du portrait.",
+          "language": "fr",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "Face — The face concentrates sfumato, softened edges, and the ambiguity of the gaze that contribute to the portrait’s psychological presence.",
+          "language": "en",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "الوجه — يركز الوجه على تقنية السفوماتو والحواف الناعمة وغموض النظرة، وهي عناصر تعزز الحضور النفسي في البورتريه.",
+          "language": "ar",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=technique.sfumato&lang=fr",
+            "type": "Type",
+            "_label": "Sfumato"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=technique.soft-edges&lang=fr",
+            "type": "Type",
+            "_label": "Contours adoucis"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.gaze&lang=fr",
+            "type": "Type",
+            "_label": "Regard"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.visual-ambiguity&lang=fr",
+            "type": "Type",
+            "_label": "Ambiguïté visuelle"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.psychological-presence&lang=fr",
+            "type": "Type",
+            "_label": "Présence psychologique"
+          }
+        }
+      ],
+      "target": "https://artdaci.com/iiif/ld01/canvas#xywh=335,245,330,385"
+    },
+    {
+      "id": "https://artdaci.com/iiif/ld01/annotation/hands",
+      "type": "Annotation",
+      "motivation": [
+        "commenting",
+        "tagging"
+      ],
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "Mains — Le modelé progressif des mains met en évidence le volume, les transitions douces et le rôle des glacis dans la continuité des formes.",
+          "language": "fr",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "Hands — The gradual modeling of the hands emphasizes volume, soft transitions, and the role of glazing in maintaining continuity of form.",
+          "language": "en",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "اليدان — يبرز التشكيل التدريجي لليدين الحجم والانتقالات الناعمة ودور الطبقات الشفافة في استمرارية الأشكال.",
+          "language": "ar",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.volume&lang=fr",
+            "type": "Type",
+            "_label": "Volume"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=technique.glazing&lang=fr",
+            "type": "Type",
+            "_label": "Glacis"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=technique.soft-edges&lang=fr",
+            "type": "Type",
+            "_label": "Contours adoucis"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.contour&lang=fr",
+            "type": "Type",
+            "_label": "Contour"
+          }
+        }
+      ],
+      "target": "https://artdaci.com/iiif/ld01/canvas#xywh=245,735,510,305"
+    },
+    {
+      "id": "https://artdaci.com/iiif/ld01/annotation/landscape-left",
+      "type": "Annotation",
+      "motivation": [
+        "commenting",
+        "tagging"
+      ],
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "Paysage gauche — Le paysage lointain utilise la perspective atmosphérique pour produire profondeur et continuité entre la figure humaine et la nature.",
+          "language": "fr",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "Left landscape — The distant landscape uses atmospheric perspective to create depth and continuity between the human figure and nature.",
+          "language": "en",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "المشهد الأيسر — يستخدم المشهد البعيد المنظور الجوي لإنتاج العمق والاستمرارية بين الشخصية البشرية والطبيعة.",
+          "language": "ar",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=technique.atmospheric-perspective&lang=fr",
+            "type": "Type",
+            "_label": "Perspective atmosphérique"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.depth&lang=fr",
+            "type": "Type",
+            "_label": "Profondeur"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.atmosphere&lang=fr",
+            "type": "Type",
+            "_label": "Atmosphère"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.nature-human-continuity&lang=fr",
+            "type": "Type",
+            "_label": "Continuité humain-nature"
+          }
+        }
+      ],
+      "target": "https://artdaci.com/iiif/ld01/canvas#xywh=35,300,275,560"
+    },
+    {
+      "id": "https://artdaci.com/iiif/ld01/annotation/landscape-right",
+      "type": "Annotation",
+      "motivation": [
+        "commenting",
+        "tagging"
+      ],
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "Paysage droit — Les niveaux du paysage et leurs horizons légèrement disjoints renforcent la profondeur et une subtile ambiguïté spatiale.",
+          "language": "fr",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "Right landscape — The landscape levels and their slightly disjointed horizons reinforce depth and a subtle spatial ambiguity.",
+          "language": "en",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "المشهد الأيمن — تعزز مستويات المشهد وآفاقه غير المتطابقة قليلًا الإحساس بالعمق وبغموض مكاني دقيق.",
+          "language": "ar",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=technique.atmospheric-perspective&lang=fr",
+            "type": "Type",
+            "_label": "Perspective atmosphérique"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.depth&lang=fr",
+            "type": "Type",
+            "_label": "Profondeur"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.spatial-ambiguity&lang=fr",
+            "type": "Type",
+            "_label": "Ambiguïté spatiale"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.atmosphere&lang=fr",
+            "type": "Type",
+            "_label": "Atmosphère"
+          }
+        }
+      ],
+      "target": "https://artdaci.com/iiif/ld01/canvas#xywh=690,300,275,560"
+    }
+  ]
+}

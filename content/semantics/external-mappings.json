@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "1.0",
+  "verifiedAt": "2026-10-04",
+  "artworkMappings": [
+    {
+      "artworkId": "ld01",
+      "wikidata": "Q12418",
+      "sameAs": [
+        "https://www.wikidata.org/entity/Q12418"
+      ],
+      "status": "verified"
+    },
+    {
+      "artworkId": "ve01",
+      "wikidata": "Q185372",
+      "sameAs": [
+        "https://www.wikidata.org/entity/Q185372"
+      ],
+      "status": "verified"
+    },
+    {
+      "artworkId": "vg01",
+      "wikidata": "Q3630735",
+      "sameAs": [
+        "https://www.wikidata.org/entity/Q3630735"
+      ],
+      "status": "verified",
+      "notes": "1889 Self-Portrait, Musée d’Orsay."
+    },
+    {
+      "artworkId": "mo01",
+      "wikidata": "Q86013499",
+      "sameAs": [
+        "https://www.wikidata.org/entity/Q86013499"
+      ],
+      "status": "verified"
+    }
+  ],
+  "conceptMappings": [
+    {
+      "conceptId": "period.renaissance",
+      "wikidata": "Q4692",
+      "gettyAat": "300021140",
+      "status": "verified"
+    },
+    {
+      "conceptId": "movement.baroque",
+      "wikidata": "Q37853",
+      "gettyAat": "300021147",
+      "status": "verified"
+    },
+    {
+      "conceptId": "movement.impressionism",
+      "wikidata": "Q40415",
+      "gettyAat": "300021503",
+      "status": "verified"
+    },
+    {
+      "conceptId": "movement.post-impressionism",
+      "wikidata": "Q166713",
+      "gettyAat": "300021508",
+      "status": "verified"
+    },
+    {
+      "conceptId": "genre.portrait",
+      "wikidata": "Q134307",
+      "gettyAat": "300015637",
+      "status": "verified"
+    },
+    {
+      "conceptId": "genre.self-portrait",
+      "wikidata": "Q192110",
+      "gettyAat": "300124534",
+      "status": "verified"
+    },
+    {
+      "conceptId": "genre.seascape",
+      "gettyAat": "300117546",
+      "status": "verified",
+      "wikidata": "Q158607"
+    },
+    {
+      "conceptId": "technique.sfumato",
+      "wikidata": "Q210788",
+      "gettyAat": "300053421",
+      "status": "verified"
+    },
+    {
+      "conceptId": "technique.glazing",
+      "gettyAat": "300053914",
+      "status": "verified"
+    },
+    {
+      "conceptId": "medium.oil-painting",
+      "wikidata": "Q174705",
+      "gettyAat": "300178684",
+      "status": "verified"
+    },
+    {
+      "conceptId": "support.canvas",
+      "wikidata": "Q12321255",
+      "gettyAat": "300014078",
+      "status": "verified"
+    }
+  ]
+}

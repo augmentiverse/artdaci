@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#191512" />
+    <meta name="application-name" content="ARTDACI" />
+    <meta name="description" content="ARTDACI Semantic POC — exploration trilingue des œuvres par concepts reliés." />
+    <link rel="icon" href="../assets/app/artdaci-app-icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../styles/site.css" />
+    <link rel="stylesheet" href="../styles/semantic.css?v=17" />
+    <title>ARTDACI Semantic · POC V2.5</title>
+  </head>
+  <body>
+    <main class="semantic-shell">
+      <nav class="semantic-topbar" aria-label="ARTDACI Semantic">
+        <a class="semantic-brand" data-back-link href="../index-fr.html">ARTDACI</a>
+        <div class="semantic-top-actions">
+          <div class="semantic-language-nav" data-language-nav aria-label="Languages"></div>
+        </div>
+      </nav>
+
+      <header class="semantic-intro">
+        <p class="eyebrow" data-eyebrow>ARTDACI Semantic · V2.5</p>
+        <h1 data-page-title>Explorer l’art par les relations</h1>
+        <p class="dek" data-intro>
+          Naviguez directement dans le graphe : œuvres, techniques, mouvements et concepts se répondent dans un même espace.
+        </p>
+        <p class="semantic-status" data-semantic-status aria-live="polite">Chargement du graphe sémantique…</p>
+      </header>
+
+      <div data-semantic-app></div>
+
+      <footer class="semantic-footer">
+        <span>ARTDACI Semantic POC V2.5</span>
+        <span>Recherche naturelle · Pédagogie ARTDACI · AR · VR · GEO · 3D · IIIF</span>
+      </footer>
+    </main>
+    <script type="module" src="../scripts/semantics/semantic-ui.mjs?v=16"></script>
+  </body>
+</html>

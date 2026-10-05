@@ -1,0 +1,144 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "https://artdaci.com/iiif/ve01/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "fr": [
+      "La Jeune Fille à la perle"
+    ],
+    "en": [
+      "Girl with a Pearl Earring"
+    ],
+    "ar": [
+      "الفتاة ذات القرط اللؤلؤي"
+    ]
+  },
+  "summary": {
+    "fr": [
+      "Manifest IIIF ARTDACI avec annotations sémantiques de régions pour La Jeune Fille à la perle."
+    ],
+    "en": [
+      "ARTDACI IIIF manifest with semantic image-region annotations for Girl with a Pearl Earring."
+    ],
+    "ar": [
+      "بيان IIIF من ARTDACI يتضمن تعليقات دلالية على مناطق صورة الفتاة ذات القرط اللؤلؤي."
+    ]
+  },
+  "provider": [
+    {
+      "id": "https://artdaci.com/",
+      "type": "Agent",
+      "label": {
+        "fr": [
+          "ARTDACI"
+        ],
+        "en": [
+          "ARTDACI"
+        ],
+        "ar": [
+          "ARTDACI"
+        ]
+      },
+      "homepage": [
+        {
+          "id": "https://artdaci.com/",
+          "type": "Text",
+          "label": {
+            "fr": [
+              "ARTDACI"
+            ],
+            "en": [
+              "ARTDACI"
+            ],
+            "ar": [
+              "ARTDACI"
+            ]
+          },
+          "format": "text/html"
+        }
+      ]
+    }
+  ],
+  "homepage": [
+    {
+      "id": "https://artdaci.com/semantic/?artwork=ve01&lang=fr",
+      "type": "Text",
+      "label": {
+        "fr": [
+          "Explorer La Jeune Fille à la perle dans ARTDACI Semantic"
+        ],
+        "en": [
+          "Explore Girl with a Pearl Earring in ARTDACI Semantic"
+        ],
+        "ar": [
+          "استكشاف الفتاة ذات القرط اللؤلؤي في ARTDACI Semantic"
+        ]
+      },
+      "format": "text/html"
+    }
+  ],
+  "seeAlso": [
+    {
+      "id": "https://artdaci.com/api/linked-art?kind=artwork&id=ve01&lang=fr",
+      "type": "Dataset",
+      "label": {
+        "fr": [
+          "Données Linked Art JSON-LD"
+        ],
+        "en": [
+          "Linked Art JSON-LD data"
+        ],
+        "ar": [
+          "بيانات Linked Art JSON-LD"
+        ]
+      },
+      "format": "application/ld+json;profile=\"https://linked.art/ns/v1/linked-art.json\""
+    }
+  ],
+  "items": [
+    {
+      "id": "https://artdaci.com/iiif/ve01/canvas",
+      "type": "Canvas",
+      "label": {
+        "fr": [
+          "La Jeune Fille à la perle"
+        ],
+        "en": [
+          "Girl with a Pearl Earring"
+        ],
+        "ar": [
+          "الفتاة ذات القرط اللؤلؤي"
+        ]
+      },
+      "width": 1000,
+      "height": 1141,
+      "items": [
+        {
+          "id": "https://artdaci.com/iiif/ve01/painting",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://artdaci.com/iiif/ve01/painting/1",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://artdaci.com/assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "width": 1000,
+                "height": 1141
+              },
+              "target": "https://artdaci.com/iiif/ve01/canvas"
+            }
+          ]
+        }
+      ],
+      "annotations": [
+        {
+          "id": "https://artdaci.com/iiif/ve01/annotations.json",
+          "type": "AnnotationPage"
+        }
+      ]
+    }
+  ]
+}

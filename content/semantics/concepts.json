@@ -1,0 +1,1477 @@
+{
+  "schemaVersion": "1.1",
+  "defaultLanguage": "fr",
+  "relationTypes": [
+    "broader",
+    "narrower",
+    "related",
+    "enables",
+    "expresses",
+    "contrastsWith",
+    "associatedWith",
+    "dependsOn"
+  ],
+  "concepts": [
+    {
+      "id": "period.renaissance",
+      "type": "period",
+      "labels": {
+        "fr": "Renaissance",
+        "en": "Renaissance",
+        "ar": "عصر النهضة"
+      },
+      "definitions": {
+        "fr": "Période européenne marquée par un renouvellement des arts, des sciences et de l’étude de la nature.",
+        "en": "A European period marked by renewed approaches to art, science, and the study of nature.",
+        "ar": "مرحلة أوروبية شهدت تجددًا في الفنون والعلوم ودراسة الطبيعة."
+      },
+      "relations": {
+        "broader": [
+          "period.early-modern"
+        ],
+        "narrower": [],
+        "related": [
+          "technique.sfumato",
+          "technique.atmospheric-perspective",
+          "concept.nature-human-continuity"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "period.dutch-golden-age",
+      "type": "period",
+      "labels": {
+        "fr": "Siècle d’or néerlandais",
+        "en": "Dutch Golden Age",
+        "ar": "العصر الذهبي الهولندي"
+      },
+      "definitions": {
+        "fr": "Période de prospérité culturelle et artistique aux Provinces-Unies au XVIIe siècle.",
+        "en": "A seventeenth-century period of cultural and artistic prosperity in the Dutch Republic.",
+        "ar": "فترة ازدهار ثقافي وفني في الجمهورية الهولندية خلال القرن السابع عشر."
+      },
+      "relations": {
+        "broader": [
+          "period.early-modern"
+        ],
+        "narrower": [],
+        "related": [
+          "movement.baroque",
+          "concept.light",
+          "concept.stillness",
+          "concept.intimacy"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "period.early-modern",
+      "type": "period",
+      "labels": {
+        "fr": "Époque moderne",
+        "en": "Early modern period",
+        "ar": "العصر الحديث المبكر"
+      },
+      "definitions": {
+        "fr": "Large période historique reliant la Renaissance aux transformations culturelles des XVIIe et XVIIIe siècles.",
+        "en": "A broad historical period linking the Renaissance with the cultural transformations of the seventeenth and eighteenth centuries.",
+        "ar": "مرحلة تاريخية واسعة تربط عصر النهضة بالتحولات الثقافية في القرنين السابع عشر والثامن عشر."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [
+          "period.renaissance",
+          "period.dutch-golden-age"
+        ],
+        "related": []
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "movement.baroque",
+      "type": "movement",
+      "labels": {
+        "fr": "Baroque",
+        "en": "Baroque",
+        "ar": "الباروك"
+      },
+      "definitions": {
+        "fr": "Courant artistique européen privilégiant souvent l’intensité visuelle, le mouvement, la lumière et les effets dramatiques.",
+        "en": "A European artistic movement often emphasizing visual intensity, movement, light, and dramatic effects.",
+        "ar": "تيار فني أوروبي يبرز غالبًا الكثافة البصرية والحركة والضوء والتأثير الدرامي."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "period.dutch-golden-age",
+          "concept.light",
+          "concept.expression"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "movement.impressionism",
+      "type": "movement",
+      "labels": {
+        "fr": "Impressionnisme",
+        "en": "Impressionism",
+        "ar": "الانطباعية"
+      },
+      "definitions": {
+        "fr": "Mouvement du XIXe siècle centré sur les effets fugitifs de la lumière, de l’atmosphère et de la perception.",
+        "en": "A nineteenth-century movement focused on fleeting effects of light, atmosphere, and perception.",
+        "ar": "حركة فنية في القرن التاسع عشر ركزت على التأثيرات العابرة للضوء والجو والإدراك البصري."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.light",
+          "concept.atmosphere",
+          "concept.immediacy",
+          "concept.temporality",
+          "concept.modernity",
+          "technique.visible-brushwork",
+          "technique.broken-color"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "movement.post-impressionism",
+      "type": "movement",
+      "labels": {
+        "fr": "Postimpressionnisme",
+        "en": "Post-Impressionism",
+        "ar": "ما بعد الانطباعية"
+      },
+      "definitions": {
+        "fr": "Ensemble de démarches de la fin du XIXe siècle qui prolongent l’impressionnisme en renforçant structure, couleur ou expression.",
+        "en": "A group of late-nineteenth-century approaches that extend Impressionism through stronger structure, color, or expression.",
+        "ar": "مجموعة اتجاهات في أواخر القرن التاسع عشر طورت الانطباعية عبر تعزيز البناء واللون والتعبير."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "movement.impressionism",
+          "concept.color",
+          "concept.expression",
+          "concept.surface-rhythm",
+          "concept.movement",
+          "technique.directional-brushwork"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "genre.portrait",
+      "type": "genre",
+      "labels": {
+        "fr": "Portrait",
+        "en": "Portrait",
+        "ar": "بورتريه"
+      },
+      "definitions": {
+        "fr": "Genre artistique centré sur la représentation d’une personne et de sa présence physique ou psychologique.",
+        "en": "An artistic genre centered on representing a person and their physical or psychological presence.",
+        "ar": "جنس فني يركز على تمثيل شخص وحضوره الجسدي أو النفسي."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [
+          "genre.self-portrait"
+        ],
+        "related": [
+          "concept.gaze",
+          "concept.psychological-presence"
+        ],
+        "associatedWith": [
+          "concept.identity",
+          "concept.intimacy"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "genre.self-portrait",
+      "type": "genre",
+      "labels": {
+        "fr": "Autoportrait",
+        "en": "Self-portrait",
+        "ar": "بورتريه ذاتي"
+      },
+      "definitions": {
+        "fr": "Portrait dans lequel l’artiste se représente lui-même.",
+        "en": "A portrait in which the artist represents themself.",
+        "ar": "بورتريه يصور فيه الفنان نفسه."
+      },
+      "relations": {
+        "broader": [
+          "genre.portrait"
+        ],
+        "narrower": [],
+        "related": [
+          "concept.gaze",
+          "concept.psychological-presence"
+        ],
+        "associatedWith": [
+          "concept.identity",
+          "concept.self-scrutiny",
+          "concept.expression"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "genre.tronie",
+      "type": "genre",
+      "labels": {
+        "fr": "Tronie",
+        "en": "Tronie",
+        "ar": "تروني"
+      },
+      "definitions": {
+        "fr": "Étude de tête ou de caractère dans la peinture néerlandaise, sans être nécessairement le portrait d’une personne identifiée.",
+        "en": "A Dutch study of a head or character that is not necessarily a portrait of an identified sitter.",
+        "ar": "دراسة هولندية للرأس أو الشخصية لا تُعد بالضرورة بورتريه لشخص محدد الهوية."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.gaze",
+          "concept.light",
+          "concept.visual-ambiguity"
+        ],
+        "associatedWith": [
+          "concept.identity",
+          "concept.intimacy"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "genre.seascape",
+      "type": "genre",
+      "labels": {
+        "fr": "Marine",
+        "en": "Seascape",
+        "ar": "منظر بحري"
+      },
+      "definitions": {
+        "fr": "Genre représentant la mer, les ports, les côtes ou les activités liées à l’eau.",
+        "en": "A genre depicting the sea, harbors, coasts, or activities connected with water.",
+        "ar": "جنس فني يصور البحر أو الموانئ أو السواحل أو الأنشطة المرتبطة بالماء."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.atmosphere",
+          "concept.mist",
+          "concept.modernity",
+          "concept.temporality"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.light",
+      "type": "concept",
+      "labels": {
+        "fr": "Lumière",
+        "en": "Light",
+        "ar": "الضوء"
+      },
+      "definitions": {
+        "fr": "Élément visuel qui modèle les formes, organise l’espace et influence l’atmosphère d’une œuvre.",
+        "en": "A visual element that models form, organizes space, and shapes the atmosphere of an artwork.",
+        "ar": "عنصر بصري يشكل الأحجام وينظم الفضاء ويؤثر في جو العمل الفني."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.atmosphere",
+          "concept.optical-perception"
+        ],
+        "enables": [
+          "concept.volume",
+          "concept.depth"
+        ],
+        "contrastsWith": [
+          "concept.shadow"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.shadow",
+      "type": "concept",
+      "labels": {
+        "fr": "Ombre",
+        "en": "Shadow",
+        "ar": "الظل"
+      },
+      "definitions": {
+        "fr": "Zone moins éclairée qui contribue au volume, au contraste et à la profondeur.",
+        "en": "A less illuminated area that contributes to volume, contrast, and depth.",
+        "ar": "منطقة أقل إضاءة تسهم في إبراز الحجم والتباين والعمق."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "technique.sfumato"
+        ],
+        "enables": [
+          "concept.volume"
+        ],
+        "contrastsWith": [
+          "concept.light"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.atmosphere",
+      "type": "concept",
+      "labels": {
+        "fr": "Atmosphère",
+        "en": "Atmosphere",
+        "ar": "الجو"
+      },
+      "definitions": {
+        "fr": "Impression d’air, de lumière et de conditions ambiantes qui unifie une scène.",
+        "en": "The sense of air, light, and surrounding conditions that unifies a scene.",
+        "ar": "الإحساس بالهواء والضوء والظروف المحيطة التي توحد المشهد."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.light",
+          "concept.mist",
+          "technique.atmospheric-perspective",
+          "concept.temporality",
+          "concept.depth"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.gaze",
+      "type": "concept",
+      "labels": {
+        "fr": "Regard",
+        "en": "Gaze",
+        "ar": "النظرة"
+      },
+      "definitions": {
+        "fr": "Direction et qualité du regard d’une figure, qui structurent la relation avec le spectateur.",
+        "en": "The direction and quality of a figure’s look, shaping the relationship with the viewer.",
+        "ar": "اتجاه نظرة الشخصية وطبيعتها، بما يحدد علاقتها بالمشاهد."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "genre.portrait",
+          "concept.psychological-presence"
+        ],
+        "enables": [
+          "concept.intimacy"
+        ],
+        "associatedWith": [
+          "concept.identity"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.color",
+      "type": "concept",
+      "labels": {
+        "fr": "Couleur",
+        "en": "Color",
+        "ar": "اللون"
+      },
+      "definitions": {
+        "fr": "Organisation des teintes et des valeurs qui construit l’unité visuelle et expressive d’une œuvre.",
+        "en": "The organization of hues and values that builds the visual and expressive unity of an artwork.",
+        "ar": "تنظيم الدرجات اللونية والقيم الضوئية بما يبني الوحدة البصرية والتعبيرية للعمل."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "technique.complementary-contrast",
+          "concept.light",
+          "concept.materiality"
+        ],
+        "enables": [
+          "concept.chromatic-vibration",
+          "concept.expression"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.brushwork",
+      "type": "concept",
+      "labels": {
+        "fr": "Touche picturale",
+        "en": "Brushwork",
+        "ar": "ضربات الفرشاة"
+      },
+      "definitions": {
+        "fr": "Trace visible ou structurante laissée par le geste du pinceau sur la surface peinte.",
+        "en": "The visible or structural trace left by the movement of the brush on a painted surface.",
+        "ar": "الأثر المرئي أو البنائي الذي تتركه حركة الفرشاة على سطح اللوحة."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [
+          "technique.visible-brushwork",
+          "technique.directional-brushwork"
+        ],
+        "related": [
+          "concept.color",
+          "concept.materiality"
+        ],
+        "expresses": [
+          "concept.movement",
+          "concept.surface-rhythm"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.optical-perception",
+      "type": "concept",
+      "labels": {
+        "fr": "Perception optique",
+        "en": "Optical perception",
+        "ar": "الإدراك البصري"
+      },
+      "definitions": {
+        "fr": "Façon dont la peinture exploite les mécanismes de la vision pour produire lumière, profondeur, vibration ou présence.",
+        "en": "The way painting uses mechanisms of vision to create light, depth, vibration, or presence.",
+        "ar": "كيفية توظيف الرسم لآليات الرؤية من أجل إنتاج الضوء والعمق والاهتزاز والحضور."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.light",
+          "technique.soft-edges",
+          "technique.complementary-contrast",
+          "concept.depth",
+          "concept.visual-ambiguity",
+          "concept.chromatic-vibration"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.psychological-presence",
+      "type": "concept",
+      "labels": {
+        "fr": "Présence psychologique",
+        "en": "Psychological presence",
+        "ar": "الحضور النفسي"
+      },
+      "definitions": {
+        "fr": "Impression qu’une figure possède une vie intérieure perceptible au-delà de sa simple ressemblance physique.",
+        "en": "The impression that a figure possesses an inner life beyond physical likeness alone.",
+        "ar": "الإحساس بأن الشخصية تمتلك حياة داخلية تتجاوز مجرد التشابه الجسدي."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.gaze",
+          "genre.portrait",
+          "concept.identity",
+          "concept.intimacy",
+          "concept.expression"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.mist",
+      "type": "concept",
+      "labels": {
+        "fr": "Brume",
+        "en": "Mist",
+        "ar": "الضباب"
+      },
+      "definitions": {
+        "fr": "Voile atmosphérique qui atténue les contrastes et modifie la perception des formes et des distances.",
+        "en": "An atmospheric veil that softens contrast and alters the perception of forms and distance.",
+        "ar": "حجاب جوي يخفف التباين ويغير إدراك الأشكال والمسافات."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.atmosphere",
+          "concept.light",
+          "concept.depth",
+          "concept.temporality"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.industry",
+      "type": "concept",
+      "labels": {
+        "fr": "Industrie moderne",
+        "en": "Modern industry",
+        "ar": "الصناعة الحديثة"
+      },
+      "definitions": {
+        "fr": "Présence de ports, cheminées, machines ou infrastructures qui inscrivent la vie moderne dans le paysage.",
+        "en": "The presence of ports, chimneys, machines, or infrastructure that places modern life within the landscape.",
+        "ar": "حضور الموانئ والمداخن والآلات والبنية التحتية بما يدرج الحياة الحديثة داخل المشهد."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "genre.seascape",
+          "concept.atmosphere"
+        ],
+        "associatedWith": [
+          "concept.modernity"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "technique.sfumato",
+      "type": "technique",
+      "labels": {
+        "fr": "Sfumato",
+        "en": "Sfumato",
+        "ar": "السفوماتو"
+      },
+      "definitions": {
+        "fr": "Technique de transitions extrêmement graduelles entre lumière, ombre et couleur, qui réduit les contours nets.",
+        "en": "A technique of extremely gradual transitions between light, shadow, and color that minimizes hard contours.",
+        "ar": "تقنية تقوم على انتقالات شديدة التدرج بين الضوء والظل واللون مع تقليل الحواف الحادة."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.light",
+          "concept.shadow",
+          "technique.atmospheric-perspective"
+        ],
+        "enables": [
+          "technique.soft-edges",
+          "concept.volume",
+          "concept.visual-ambiguity",
+          "concept.psychological-presence"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "technique.atmospheric-perspective",
+      "type": "technique",
+      "labels": {
+        "fr": "Perspective atmosphérique",
+        "en": "Atmospheric perspective",
+        "ar": "المنظور الجوي"
+      },
+      "definitions": {
+        "fr": "Technique qui suggère l’éloignement en réduisant progressivement contraste, netteté et saturation.",
+        "en": "A technique that suggests distance by progressively reducing contrast, sharpness, and saturation.",
+        "ar": "تقنية توحي بالبعد عبر تقليل التباين والحدة والتشبع تدريجيًا."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.atmosphere",
+          "concept.optical-perception",
+          "technique.sfumato"
+        ],
+        "enables": [
+          "concept.depth"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "technique.glazing",
+      "type": "technique",
+      "labels": {
+        "fr": "Glacis",
+        "en": "Glazing",
+        "ar": "الطلاء الشفاف المتراكب"
+      },
+      "definitions": {
+        "fr": "Superposition de couches fines et translucides pour moduler la couleur, la profondeur et la lumière.",
+        "en": "The layering of thin translucent paint to modulate color, depth, and light.",
+        "ar": "تراكب طبقات لونية رقيقة وشفافة لتعديل اللون والعمق والضوء."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.light",
+          "concept.color",
+          "concept.materiality"
+        ],
+        "enables": [
+          "concept.depth",
+          "concept.volume"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "technique.soft-edges",
+      "type": "technique",
+      "labels": {
+        "fr": "Contours adoucis",
+        "en": "Soft edges",
+        "ar": "الحواف الناعمة"
+      },
+      "definitions": {
+        "fr": "Traitement qui évite les limites trop nettes afin de renforcer volume, lumière ou ambiguïté visuelle.",
+        "en": "A treatment that avoids overly sharp boundaries to reinforce volume, light, or visual ambiguity.",
+        "ar": "معالجة تتجنب الحدود الحادة لتقوية الإحساس بالحجم والضوء أو الغموض البصري."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.optical-perception",
+          "technique.sfumato"
+        ],
+        "enables": [
+          "concept.visual-ambiguity"
+        ],
+        "contrastsWith": [
+          "concept.contour"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "technique.visible-brushwork",
+      "type": "technique",
+      "labels": {
+        "fr": "Touche visible",
+        "en": "Visible brushwork",
+        "ar": "ضربات فرشاة ظاهرة"
+      },
+      "definitions": {
+        "fr": "Technique laissant perceptible le geste du pinceau afin de transmettre rythme, lumière ou matière.",
+        "en": "A technique that leaves brush movement perceptible to convey rhythm, light, or material presence.",
+        "ar": "تقنية تُبقي حركة الفرشاة مرئية لنقل الإيقاع أو الضوء أو الإحساس بالمادة."
+      },
+      "relations": {
+        "broader": [
+          "concept.brushwork"
+        ],
+        "narrower": [],
+        "related": [
+          "concept.color",
+          "concept.materiality"
+        ],
+        "expresses": [
+          "concept.immediacy",
+          "concept.surface-rhythm",
+          "concept.movement"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "technique.directional-brushwork",
+      "type": "technique",
+      "labels": {
+        "fr": "Touche directionnelle",
+        "en": "Directional brushwork",
+        "ar": "ضربات فرشاة اتجاهية"
+      },
+      "definitions": {
+        "fr": "Touche dont l’orientation suit ou accentue la structure des formes et le mouvement visuel.",
+        "en": "Brushwork whose direction follows or intensifies the structure of forms and visual movement.",
+        "ar": "ضربات فرشاة تتبع اتجاهاتها بنية الأشكال أو تعزز الحركة البصرية."
+      },
+      "relations": {
+        "broader": [
+          "concept.brushwork"
+        ],
+        "narrower": [],
+        "related": [
+          "concept.color"
+        ],
+        "expresses": [
+          "concept.movement",
+          "concept.expression",
+          "concept.surface-rhythm"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "technique.complementary-contrast",
+      "type": "technique",
+      "labels": {
+        "fr": "Contraste complémentaire",
+        "en": "Complementary contrast",
+        "ar": "التباين التكميلي"
+      },
+      "definitions": {
+        "fr": "Juxtaposition de couleurs opposées sur le cercle chromatique afin d’intensifier leur vibration.",
+        "en": "The juxtaposition of colors opposite one another on the color wheel to intensify visual vibration.",
+        "ar": "مجاورة ألوان متقابلة على دائرة الألوان لزيادة قوة اهتزازها البصري."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.color",
+          "concept.optical-perception"
+        ],
+        "enables": [
+          "concept.chromatic-vibration"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "medium.oil-painting",
+      "type": "medium",
+      "labels": {
+        "fr": "Peinture à l’huile",
+        "en": "Oil painting",
+        "ar": "الرسم الزيتي"
+      },
+      "definitions": {
+        "fr": "Technique picturale utilisant des pigments liés par une huile siccative.",
+        "en": "A painting technique using pigments bound with a drying oil.",
+        "ar": "تقنية رسم تستخدم أصباغًا مرتبطة بزيت قابل للجفاف."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "technique.glazing",
+          "concept.color",
+          "concept.materiality"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "support.panel",
+      "type": "support",
+      "labels": {
+        "fr": "Panneau de bois",
+        "en": "Wood panel",
+        "ar": "لوح خشبي"
+      },
+      "definitions": {
+        "fr": "Support rigide en bois utilisé comme surface de peinture.",
+        "en": "A rigid wooden support used as a painting surface.",
+        "ar": "دعامة خشبية صلبة تستخدم كسطح للرسم."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "medium.oil-painting",
+          "concept.materiality"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "support.canvas",
+      "type": "support",
+      "labels": {
+        "fr": "Toile",
+        "en": "Canvas",
+        "ar": "قماش الرسم"
+      },
+      "definitions": {
+        "fr": "Support textile tendu utilisé pour recevoir les couches picturales.",
+        "en": "A stretched textile support used to receive layers of paint.",
+        "ar": "دعامة نسيجية مشدودة تستقبل طبقات الطلاء."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "medium.oil-painting",
+          "concept.materiality"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.depth",
+      "type": "concept",
+      "labels": {
+        "fr": "Profondeur",
+        "en": "Depth",
+        "ar": "العمق"
+      },
+      "definitions": {
+        "fr": "Organisation visuelle qui fait percevoir plusieurs plans ou distances dans l’espace représenté.",
+        "en": "Visual organization that creates a perception of multiple planes or distances in represented space.",
+        "ar": "تنظيم بصري يخلق الإحساس بتعدد المستويات والمسافات داخل الفضاء المُمثّل."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.volume",
+          "concept.spatial-ambiguity",
+          "concept.atmosphere"
+        ],
+        "dependsOn": [
+          "concept.light"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.volume",
+      "type": "concept",
+      "labels": {
+        "fr": "Volume",
+        "en": "Volume",
+        "ar": "الحجم المجسم"
+      },
+      "definitions": {
+        "fr": "Impression de tridimensionnalité donnée aux formes par la lumière, l’ombre, la couleur et les contours.",
+        "en": "The impression of three-dimensional form created through light, shadow, color, and edges.",
+        "ar": "الإحساس بثلاثية الأبعاد الناتج عن الضوء والظل واللون والحواف."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.contour",
+          "concept.light",
+          "concept.shadow",
+          "concept.depth"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.contour",
+      "type": "concept",
+      "labels": {
+        "fr": "Contour",
+        "en": "Contour",
+        "ar": "الحدود الشكلية"
+      },
+      "definitions": {
+        "fr": "Limite visuelle qui sépare ou définit une forme dans l’image.",
+        "en": "The visual boundary that separates or defines a form within an image.",
+        "ar": "الحد البصري الذي يفصل الشكل أو يحدده داخل الصورة."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.volume"
+        ],
+        "contrastsWith": [
+          "technique.soft-edges"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.chromatic-vibration",
+      "type": "concept",
+      "labels": {
+        "fr": "Vibration chromatique",
+        "en": "Chromatic vibration",
+        "ar": "الاهتزاز اللوني"
+      },
+      "definitions": {
+        "fr": "Effet de tension ou d’intensité produit par la proximité de couleurs fortement contrastées.",
+        "en": "A sense of tension or intensity produced by strongly contrasting adjacent colors.",
+        "ar": "إحساس بالتوتر أو الكثافة ينتج عن تجاور ألوان شديدة التباين."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.optical-perception",
+          "technique.complementary-contrast"
+        ],
+        "dependsOn": [
+          "concept.color"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.immediacy",
+      "type": "concept",
+      "labels": {
+        "fr": "Immédiateté",
+        "en": "Immediacy",
+        "ar": "الفورية"
+      },
+      "definitions": {
+        "fr": "Impression qu’une œuvre saisit un instant, une sensation ou un geste avec peu de distance entre perception et exécution.",
+        "en": "The sense that an artwork captures an instant, sensation, or gesture with little distance between perception and execution.",
+        "ar": "الإحساس بأن العمل يلتقط لحظة أو إحساسًا أو حركة بصورة مباشرة وقريبة من فعل الإدراك."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.temporality",
+          "concept.movement",
+          "technique.visible-brushwork"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.intimacy",
+      "type": "concept",
+      "labels": {
+        "fr": "Intimité",
+        "en": "Intimacy",
+        "ar": "الحميمية"
+      },
+      "definitions": {
+        "fr": "Qualité de proximité psychologique ou spatiale qui rapproche la figure, la scène et le spectateur.",
+        "en": "A quality of psychological or spatial closeness that draws figure, scene, and viewer together.",
+        "ar": "صفة من القرب النفسي أو المكاني تجعل الشخصية أو المشهد أقرب إلى المشاهد."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.gaze",
+          "concept.psychological-presence",
+          "concept.stillness",
+          "concept.identity"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.movement",
+      "type": "concept",
+      "labels": {
+        "fr": "Mouvement",
+        "en": "Movement",
+        "ar": "الحركة"
+      },
+      "definitions": {
+        "fr": "Impression de déplacement, d’énergie ou de direction créée par formes, gestes, lignes ou touches.",
+        "en": "The sense of displacement, energy, or direction created by forms, gestures, lines, or brushwork.",
+        "ar": "الإحساس بالانتقال أو الطاقة أو الاتجاه الناتج عن الأشكال أو الإيماءات أو الخطوط أو ضربات الفرشاة."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.surface-rhythm",
+          "concept.immediacy",
+          "concept.brushwork"
+        ],
+        "contrastsWith": [
+          "concept.stillness"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.stillness",
+      "type": "concept",
+      "labels": {
+        "fr": "Immobilité",
+        "en": "Stillness",
+        "ar": "السكون"
+      },
+      "definitions": {
+        "fr": "Impression de calme, de pause ou de stabilité dans la scène ou la figure.",
+        "en": "The sense of calm, pause, or stability within a scene or figure.",
+        "ar": "الإحساس بالهدوء أو التوقف أو الثبات داخل المشهد أو الشخصية."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.intimacy"
+        ],
+        "contrastsWith": [
+          "concept.movement"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.asymmetry",
+      "type": "concept",
+      "labels": {
+        "fr": "Asymétrie",
+        "en": "Asymmetry",
+        "ar": "اللاتناظر"
+      },
+      "definitions": {
+        "fr": "Organisation dans laquelle les éléments ne se répondent pas de manière strictement symétrique, créant tension ou dynamisme.",
+        "en": "An organization in which elements do not mirror one another strictly, creating tension or dynamism.",
+        "ar": "تنظيم لا تتقابل فيه العناصر بصورة متناظرة تمامًا، مما يخلق توترًا أو دينامية."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.movement",
+          "concept.visual-ambiguity",
+          "concept.spatial-ambiguity"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.modernity",
+      "type": "concept",
+      "labels": {
+        "fr": "Modernité",
+        "en": "Modernity",
+        "ar": "الحداثة"
+      },
+      "definitions": {
+        "fr": "Présence de la vie contemporaine, de nouvelles perceptions ou de nouveaux sujets liés aux transformations sociales et techniques.",
+        "en": "The presence of contemporary life, new modes of perception, or subjects tied to social and technological change.",
+        "ar": "حضور الحياة المعاصرة أو أنماط إدراك جديدة أو موضوعات مرتبطة بالتحولات الاجتماعية والتقنية."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.industry",
+          "concept.temporality",
+          "movement.impressionism"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.nature-human-continuity",
+      "type": "concept",
+      "labels": {
+        "fr": "Continuité humain-nature",
+        "en": "Human–nature continuity",
+        "ar": "استمرارية الإنسان والطبيعة"
+      },
+      "definitions": {
+        "fr": "Relation visuelle qui inscrit la figure humaine dans une même continuité atmosphérique ou spatiale que le paysage.",
+        "en": "A visual relationship that places the human figure within the same atmospheric or spatial continuity as the landscape.",
+        "ar": "علاقة بصرية تدمج الإنسان في الاستمرارية الجوية أو المكانية نفسها التي ينتمي إليها المشهد الطبيعي."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.atmosphere",
+          "concept.depth",
+          "period.renaissance"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.identity",
+      "type": "concept",
+      "labels": {
+        "fr": "Identité",
+        "en": "Identity",
+        "ar": "الهوية"
+      },
+      "definitions": {
+        "fr": "Question de la manière dont une figure est reconnue, construite ou rendue ambiguë par l’image.",
+        "en": "The question of how a figure is recognized, constructed, or made ambiguous through an image.",
+        "ar": "مسألة كيفية التعرف على الشخصية أو بنائها أو جعل هويتها ملتبسة من خلال الصورة."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "genre.portrait",
+          "genre.self-portrait",
+          "concept.gaze",
+          "concept.intimacy",
+          "concept.self-scrutiny"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.expression",
+      "type": "concept",
+      "labels": {
+        "fr": "Expression",
+        "en": "Expression",
+        "ar": "التعبير"
+      },
+      "definitions": {
+        "fr": "Capacité des formes, couleurs, gestes ou traits à communiquer une intensité émotionnelle ou psychologique.",
+        "en": "The capacity of forms, colors, gestures, or marks to communicate emotional or psychological intensity.",
+        "ar": "قدرة الأشكال والألوان والإيماءات والآثار البصرية على نقل كثافة عاطفية أو نفسية."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.psychological-presence",
+          "concept.color",
+          "concept.surface-rhythm",
+          "technique.directional-brushwork"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.temporality",
+      "type": "concept",
+      "labels": {
+        "fr": "Temporalité",
+        "en": "Temporality",
+        "ar": "الزمنية"
+      },
+      "definitions": {
+        "fr": "Manière dont une œuvre suggère un instant, une durée, un changement ou un passage du temps.",
+        "en": "The way an artwork suggests an instant, duration, change, or passage of time.",
+        "ar": "الطريقة التي يوحي بها العمل بلحظة أو مدة أو تغير أو مرور للزمن."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.atmosphere",
+          "concept.immediacy",
+          "concept.modernity",
+          "concept.mist"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.surface-rhythm",
+      "type": "concept",
+      "labels": {
+        "fr": "Rythme de surface",
+        "en": "Surface rhythm",
+        "ar": "إيقاع السطح"
+      },
+      "definitions": {
+        "fr": "Organisation répétée ou directionnelle des touches et marques à la surface qui produit un rythme visuel.",
+        "en": "The repeated or directional organization of marks on the surface that produces visual rhythm.",
+        "ar": "تنظيم متكرر أو اتجاهي للآثار على السطح بما ينتج إيقاعًا بصريًا."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.brushwork",
+          "concept.movement",
+          "concept.expression",
+          "concept.materiality"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.self-scrutiny",
+      "type": "concept",
+      "labels": {
+        "fr": "Examen de soi",
+        "en": "Self-scrutiny",
+        "ar": "فحص الذات"
+      },
+      "definitions": {
+        "fr": "Dimension introspective dans laquelle l’artiste utilise son propre visage comme objet d’observation et d’interrogation.",
+        "en": "An introspective dimension in which the artist uses their own face as an object of observation and inquiry.",
+        "ar": "بعد تأملي يستخدم فيه الفنان وجهه موضوعًا للملاحظة والتساؤل."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "genre.self-portrait",
+          "concept.identity",
+          "concept.psychological-presence"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.materiality",
+      "type": "concept",
+      "labels": {
+        "fr": "Matérialité",
+        "en": "Materiality",
+        "ar": "مادية العمل"
+      },
+      "definitions": {
+        "fr": "Attention portée à la présence physique du support, des couches de peinture et des traces d’exécution.",
+        "en": "Attention to the physical presence of the support, paint layers, and marks of execution.",
+        "ar": "الاهتمام بالحضور المادي للدعامة وطبقات الطلاء وآثار التنفيذ."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "medium.oil-painting",
+          "concept.brushwork",
+          "technique.visible-brushwork",
+          "concept.surface-rhythm"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.spatial-ambiguity",
+      "type": "concept",
+      "labels": {
+        "fr": "Ambiguïté spatiale",
+        "en": "Spatial ambiguity",
+        "ar": "الغموض المكاني"
+      },
+      "definitions": {
+        "fr": "Situation où les rapports de profondeur, de plan ou de position restent partiellement indéterminés.",
+        "en": "A situation in which depth, plane, or positional relationships remain partly indeterminate.",
+        "ar": "حالة تبقى فيها علاقات العمق أو المستويات أو المواضع غير محددة جزئيًا."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "concept.depth",
+          "concept.asymmetry",
+          "concept.visual-ambiguity"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "concept.visual-ambiguity",
+      "type": "concept",
+      "labels": {
+        "fr": "Ambiguïté visuelle",
+        "en": "Visual ambiguity",
+        "ar": "الغموض البصري"
+      },
+      "definitions": {
+        "fr": "Effet par lequel une forme, une expression ou une relation visuelle demeure ouverte à plusieurs lectures.",
+        "en": "An effect in which a form, expression, or visual relationship remains open to multiple readings.",
+        "ar": "تأثير تبقى فيه هيئة أو تعبير أو علاقة بصرية مفتوحة على أكثر من قراءة."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "technique.soft-edges",
+          "concept.optical-perception",
+          "concept.asymmetry",
+          "concept.spatial-ambiguity"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    },
+    {
+      "id": "technique.broken-color",
+      "type": "technique",
+      "labels": {
+        "fr": "Couleur fragmentée",
+        "en": "Broken color",
+        "ar": "اللون المجزأ"
+      },
+      "definitions": {
+        "fr": "Application de petites touches distinctes dont la fusion ou la vibration est en partie produite par la perception du spectateur.",
+        "en": "The use of distinct touches whose fusion or vibration is partly produced by the viewer’s perception.",
+        "ar": "استخدام ضربات لونية منفصلة يحقق المشاهد جزءًا من اندماجها أو اهتزازها عبر الإدراك البصري."
+      },
+      "relations": {
+        "broader": [],
+        "narrower": [],
+        "related": [
+          "movement.impressionism",
+          "concept.chromatic-vibration",
+          "concept.optical-perception",
+          "technique.visible-brushwork"
+        ]
+      },
+      "provenance": {
+        "status": "artdaci-reviewed",
+        "source": "artdaci-editorial"
+      }
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://artdaci.com/schema/artwork-semantic-profile.schema.json",
+  "title": "ARTDACI Artwork Semantic Profile",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "artist",
+    "assertions"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z]{2}[0-9]{2}$"
+    },
+    "title": {
+      "$ref": "#/$defs/i18n"
+    },
+    "artist": {
+      "$ref": "#/$defs/i18n"
+    },
+    "date": {
+      "$ref": "#/$defs/i18n"
+    },
+    "museum": {
+      "$ref": "#/$defs/i18n"
+    },
+    "image": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "imageStatus": {
+      "type": "string"
+    },
+    "concepts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "assertions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "conceptId",
+          "weight",
+          "role"
+        ],
+        "properties": {
+          "conceptId": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "role": {
+            "enum": [
+              "core",
+              "supporting",
+              "contextual"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "$defs": {
+    "i18n": {
+      "type": "object",
+      "required": [
+        "fr",
+        "en",
+        "ar"
+      ],
+      "properties": {
+        "fr": {
+          "type": "string",
+          "minLength": 1
+        },
+        "en": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ar": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}

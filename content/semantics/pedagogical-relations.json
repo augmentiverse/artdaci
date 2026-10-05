@@ -1,0 +1,397 @@
+{
+  "schemaVersion": "1.0",
+  "relationTypes": [
+    "helpsUnderstand",
+    "observeIn",
+    "compareWith",
+    "contrastForLearning",
+    "buildsOn",
+    "fromDetailToConcept"
+  ],
+  "relations": [
+    {
+      "id": "ped.sfumato-soft-edges",
+      "type": "helpsUnderstand",
+      "source": "technique.sfumato",
+      "target": "technique.soft-edges",
+      "rationale": {
+        "fr": "Comprendre le sfumato passe par l’observation de la disparition progressive des contours nets.",
+        "en": "Understanding sfumato involves observing the gradual disappearance of hard edges.",
+        "ar": "يتطلب فهم السفوماتو ملاحظة الاختفاء التدريجي للحواف الحادة."
+      },
+      "prompt": {
+        "fr": "Où le contour cesse-t-il d’être une ligne clairement visible ?",
+        "en": "Where does the contour stop behaving like a clearly visible line?",
+        "ar": "أين يتوقف المحيط عن الظهور كخط واضح؟"
+      }
+    },
+    {
+      "id": "ped.sfumato-face",
+      "type": "observeIn",
+      "source": "technique.sfumato",
+      "target": "ld01.face",
+      "rationale": {
+        "fr": "Le visage de La Joconde permet d’observer directement les transitions caractéristiques du sfumato.",
+        "en": "The Mona Lisa’s face makes the characteristic transitions of sfumato directly observable.",
+        "ar": "يتيح وجه الموناليزا ملاحظة الانتقالات المميزة للسفوماتو مباشرة."
+      },
+      "prompt": {
+        "fr": "Comparez les transitions entre joue, ombre et sourire.",
+        "en": "Compare the transitions between cheek, shadow, and smile.",
+        "ar": "قارن الانتقالات بين الخد والظل والابتسامة."
+      }
+    },
+    {
+      "id": "ped.atmospheric-depth",
+      "type": "helpsUnderstand",
+      "source": "technique.atmospheric-perspective",
+      "target": "concept.depth",
+      "rationale": {
+        "fr": "La perspective atmosphérique montre comment une variation de netteté et de couleur produit une sensation de profondeur.",
+        "en": "Atmospheric perspective shows how changes in sharpness and color create a sense of depth.",
+        "ar": "يوضح المنظور الجوي كيف تنتج تغيّرات الحدة واللون إحساسًا بالعمق."
+      },
+      "prompt": {
+        "fr": "Qu’est-ce qui paraît le plus éloigné, et grâce à quels indices visuels ?",
+        "en": "What appears farthest away, and which visual cues create that impression?",
+        "ar": "ما الذي يبدو أبعد، وما المؤشرات البصرية التي تولد هذا الانطباع؟"
+      }
+    },
+    {
+      "id": "ped.depth-landscape",
+      "type": "observeIn",
+      "source": "concept.depth",
+      "target": "ld01.landscape-left",
+      "rationale": {
+        "fr": "Le paysage de La Joconde offre un cas concret pour relier profondeur, atmosphère et éloignement.",
+        "en": "The Mona Lisa landscape provides a concrete case linking depth, atmosphere, and distance.",
+        "ar": "يوفر منظر الموناليزا مثالًا عمليًا يربط العمق بالجو والمسافة."
+      },
+      "prompt": {
+        "fr": "Repérez trois plans successifs dans le paysage.",
+        "en": "Identify three successive spatial planes in the landscape.",
+        "ar": "حدد ثلاث مستويات مكانية متتابعة في المشهد."
+      }
+    },
+    {
+      "id": "ped.gaze-portraits",
+      "type": "compareWith",
+      "source": "ld01",
+      "target": "ve01",
+      "rationale": {
+        "fr": "Comparer La Joconde et La Jeune Fille à la perle permet d’étudier deux formes de regard adressé au spectateur.",
+        "en": "Comparing the Mona Lisa and Girl with a Pearl Earring reveals two different ways of directing a gaze toward the viewer.",
+        "ar": "تتيح مقارنة الموناليزا وفتاة القرط اللؤلؤي دراسة طريقتين مختلفتين لتوجيه النظرة نحو المشاهد."
+      },
+      "prompt": {
+        "fr": "Dans quelle œuvre le regard vous paraît-il le plus immédiat ? Pourquoi ?",
+        "en": "In which work does the gaze feel more immediate, and why?",
+        "ar": "في أي عمل تبدو النظرة أكثر مباشرة؟ ولماذا؟"
+      }
+    },
+    {
+      "id": "ped.identity-portrait-types",
+      "type": "contrastForLearning",
+      "source": "genre.portrait",
+      "target": "genre.self-portrait",
+      "rationale": {
+        "fr": "Mettre portrait et autoportrait en contraste aide à distinguer représentation d’autrui et construction de soi.",
+        "en": "Contrasting portrait and self-portrait helps distinguish representing another person from constructing one’s own image.",
+        "ar": "يساعد التمييز بين البورتريه والبورتريه الذاتي على فهم الفرق بين تمثيل الآخر وبناء صورة الذات."
+      },
+      "prompt": {
+        "fr": "Qu’est-ce qui change lorsque le peintre devient lui-même le sujet ?",
+        "en": "What changes when the painter becomes the subject?",
+        "ar": "ما الذي يتغير عندما يصبح الرسام نفسه موضوع العمل؟"
+      }
+    },
+    {
+      "id": "ped.vangogh-self-scrutiny",
+      "type": "helpsUnderstand",
+      "source": "genre.self-portrait",
+      "target": "concept.self-scrutiny",
+      "rationale": {
+        "fr": "L’autoportrait peut être lu comme une situation d’observation et d’examen de soi.",
+        "en": "Self-portraiture can be read as a situation of self-observation and self-examination.",
+        "ar": "يمكن قراءة البورتريه الذاتي باعتباره حالة من ملاحظة الذات وفحصها."
+      },
+      "prompt": {
+        "fr": "Quels éléments du visage ou du regard suggèrent l’examen de soi ?",
+        "en": "Which facial or gaze-related elements suggest self-scrutiny?",
+        "ar": "ما عناصر الوجه أو النظرة التي توحي بفحص الذات؟"
+      }
+    },
+    {
+      "id": "ped.vangogh-face",
+      "type": "observeIn",
+      "source": "concept.self-scrutiny",
+      "target": "vg01.face",
+      "rationale": {
+        "fr": "Le visage de l’Autoportrait de 1889 est une région privilégiée pour observer l’intensité de l’examen de soi.",
+        "en": "The face in the 1889 Self-Portrait is a privileged region for observing the intensity of self-scrutiny.",
+        "ar": "يعد وجه البورتريه الذاتي لعام 1889 منطقة أساسية لملاحظة شدة فحص الذات."
+      },
+      "prompt": {
+        "fr": "Observez ensemble direction du regard, tension du visage et traitement des touches.",
+        "en": "Observe gaze direction, facial tension, and brushwork together.",
+        "ar": "لاحظ اتجاه النظرة وتوتر الوجه ومعالجة ضربات الفرشاة معًا."
+      }
+    },
+    {
+      "id": "ped.brushwork-materiality",
+      "type": "helpsUnderstand",
+      "source": "technique.visible-brushwork",
+      "target": "concept.materiality",
+      "rationale": {
+        "fr": "Des touches visibles rendent sensible la matière de la peinture et le geste du peintre.",
+        "en": "Visible strokes make the material presence of paint and the painter’s gesture perceptible.",
+        "ar": "تجعل ضربات الفرشاة الظاهرة مادة الطلاء وحركة الرسام محسوسة."
+      },
+      "prompt": {
+        "fr": "À quel endroit voyez-vous le plus clairement la trace physique du pinceau ?",
+        "en": "Where can you most clearly see the physical trace of the brush?",
+        "ar": "أين ترى الأثر المادي للفرشاة بوضوح أكبر؟"
+      }
+    },
+    {
+      "id": "ped.brushwork-vangogh-monet",
+      "type": "compareWith",
+      "source": "vg01",
+      "target": "mo01",
+      "rationale": {
+        "fr": "Van Gogh et Monet rendent tous deux la touche visible, mais avec des fonctions expressives et perceptives différentes.",
+        "en": "Van Gogh and Monet both expose brushwork, but use it for different expressive and perceptual purposes.",
+        "ar": "يُظهر فان غوخ ومونيه ضربات الفرشاة، لكنهما يستخدمانها لأغراض تعبيرية وإدراكية مختلفة."
+      },
+      "prompt": {
+        "fr": "La touche sert-elle surtout à exprimer une tension ou à saisir une impression lumineuse ?",
+        "en": "Does the brushwork mainly express tension or capture a luminous impression?",
+        "ar": "هل تخدم ضربات الفرشاة أساسًا التعبير عن توتر أم التقاط انطباع ضوئي؟"
+      }
+    },
+    {
+      "id": "ped.directional-rhythm",
+      "type": "helpsUnderstand",
+      "source": "technique.directional-brushwork",
+      "target": "concept.surface-rhythm",
+      "rationale": {
+        "fr": "La direction répétée des touches organise un rythme perceptible à la surface du tableau.",
+        "en": "Repeated stroke direction organizes a perceptible rhythm across the painting’s surface.",
+        "ar": "ينظم تكرار اتجاه ضربات الفرشاة إيقاعًا محسوسًا على سطح اللوحة."
+      },
+      "prompt": {
+        "fr": "Suivez le sens des touches : où changent-elles de direction ?",
+        "en": "Follow the stroke direction: where does it change?",
+        "ar": "تتبع اتجاه الضربات: أين يتغير اتجاهها؟"
+      }
+    },
+    {
+      "id": "ped.directional-background",
+      "type": "observeIn",
+      "source": "technique.directional-brushwork",
+      "target": "vg01.background",
+      "rationale": {
+        "fr": "Le fond de l’Autoportrait de 1889 rend particulièrement visible le rythme des touches courbes.",
+        "en": "The background of the 1889 Self-Portrait makes the rhythm of curving strokes especially visible.",
+        "ar": "تُظهر خلفية البورتريه الذاتي لعام 1889 إيقاع الضربات المنحنية بوضوح خاص."
+      },
+      "prompt": {
+        "fr": "Comment le fond paraît-il bouger autour d’une figure pourtant immobile ?",
+        "en": "How does the background seem to move around an otherwise still figure?",
+        "ar": "كيف تبدو الخلفية متحركة حول شخصية ساكنة؟"
+      }
+    },
+    {
+      "id": "ped.broken-color-optics",
+      "type": "helpsUnderstand",
+      "source": "technique.broken-color",
+      "target": "concept.optical-perception",
+      "rationale": {
+        "fr": "La couleur fragmentée fait participer l’œil du spectateur à la recomposition visuelle.",
+        "en": "Broken color makes the viewer’s eye participate in visually recombining the scene.",
+        "ar": "يجعل اللون المجزأ عين المشاهد تشارك في إعادة تركيب المشهد بصريًا."
+      },
+      "prompt": {
+        "fr": "À distance, les touches restent-elles séparées ou fusionnent-elles visuellement ?",
+        "en": "From a distance, do the strokes remain separate or visually merge?",
+        "ar": "من بعيد، هل تبقى الضربات منفصلة أم تندمج بصريًا؟"
+      }
+    },
+    {
+      "id": "ped.monet-water-optics",
+      "type": "observeIn",
+      "source": "concept.optical-perception",
+      "target": "mo01.water",
+      "rationale": {
+        "fr": "La surface de l’eau chez Monet permet d’observer directement la recomposition optique des touches colorées.",
+        "en": "Monet’s water surface makes the optical recombination of colored strokes directly observable.",
+        "ar": "يتيح سطح الماء عند مونيه ملاحظة إعادة التركيب البصري لضربات اللون مباشرة."
+      },
+      "prompt": {
+        "fr": "Que voyez-vous d’abord : de l’eau, des reflets ou des touches de couleur ?",
+        "en": "What do you notice first: water, reflections, or colored strokes?",
+        "ar": "ماذا تلاحظ أولًا: الماء أم الانعكاسات أم ضربات اللون؟"
+      }
+    },
+    {
+      "id": "ped.complementary-vibration",
+      "type": "helpsUnderstand",
+      "source": "technique.complementary-contrast",
+      "target": "concept.chromatic-vibration",
+      "rationale": {
+        "fr": "Le contraste de couleurs opposées peut intensifier la sensation de vibration lumineuse.",
+        "en": "Contrasting opposing colors can intensify the sensation of luminous vibration.",
+        "ar": "يمكن لتباين الألوان المتقابلة أن يعزز الإحساس بالاهتزاز الضوئي."
+      },
+      "prompt": {
+        "fr": "Quelles couleurs semblent s’activer mutuellement ?",
+        "en": "Which colors seem to activate one another?",
+        "ar": "ما الألوان التي تبدو وكأنها تنشط بعضها بعضًا؟"
+      }
+    },
+    {
+      "id": "ped.sun-contrast",
+      "type": "observeIn",
+      "source": "technique.complementary-contrast",
+      "target": "mo01.sun",
+      "rationale": {
+        "fr": "Le soleil orangé face aux tonalités bleu-gris permet d’observer un contraste chromatique structurant.",
+        "en": "The orange sun against blue-gray tones provides a clear example of a structuring chromatic contrast.",
+        "ar": "تقدم الشمس البرتقالية أمام الدرجات الزرقاء الرمادية مثالًا واضحًا على تباين لوني منظم."
+      },
+      "prompt": {
+        "fr": "Pourquoi le soleil reste-t-il visuellement dominant malgré sa petite taille ?",
+        "en": "Why does the sun remain visually dominant despite its small size?",
+        "ar": "لماذا تبقى الشمس مهيمنة بصريًا رغم صغر حجمها؟"
+      }
+    },
+    {
+      "id": "ped.light-vermeer-monet",
+      "type": "compareWith",
+      "source": "ve01",
+      "target": "mo01",
+      "rationale": {
+        "fr": "Comparer Vermeer et Monet permet d’opposer une lumière modelant une figure à une lumière structurant une atmosphère entière.",
+        "en": "Comparing Vermeer and Monet contrasts light modeling a figure with light structuring an entire atmosphere.",
+        "ar": "تتيح مقارنة فيرمير ومونيه التمييز بين ضوء يشكل شخصية وضوء ينظم جوًا كاملًا."
+      },
+      "prompt": {
+        "fr": "La lumière décrit-elle surtout un objet ou une ambiance ?",
+        "en": "Does the light primarily describe an object or an atmosphere?",
+        "ar": "هل يصف الضوء أساسًا جسمًا أم جوًا؟"
+      }
+    },
+    {
+      "id": "ped.gaze-identity",
+      "type": "helpsUnderstand",
+      "source": "concept.gaze",
+      "target": "concept.identity",
+      "rationale": {
+        "fr": "Le regard est un indice majeur pour comprendre comment un portrait construit ou trouble l’identité du sujet.",
+        "en": "Gaze is a major cue for understanding how a portrait constructs or unsettles the sitter’s identity.",
+        "ar": "تعد النظرة مؤشرًا أساسيًا لفهم كيفية بناء هوية الشخص أو إرباكها في البورتريه."
+      },
+      "prompt": {
+        "fr": "Le regard vous donne-t-il l’impression de mieux connaître le sujet ou de préserver son mystère ?",
+        "en": "Does the gaze make the subject feel more knowable, or does it preserve mystery?",
+        "ar": "هل تجعلك النظرة تشعر أنك تعرف الشخص أكثر، أم تحافظ على غموضه؟"
+      }
+    },
+    {
+      "id": "ped.pearl-perception",
+      "type": "fromDetailToConcept",
+      "source": "ve01.pearl",
+      "target": "concept.optical-perception",
+      "rationale": {
+        "fr": "Un détail minuscule permet d’aborder une idée générale : l’œil reconstruit une perle à partir de très peu d’informations peintes.",
+        "en": "A tiny detail opens onto a general idea: the eye reconstructs a pearl from very little painted information.",
+        "ar": "يفتح تفصيل صغير على فكرة عامة: تعيد العين بناء اللؤلؤة انطلاقًا من قدر ضئيل جدًا من المعلومات المرسومة."
+      },
+      "prompt": {
+        "fr": "Combien de marques peintes suffisent réellement à faire voir une perle ?",
+        "en": "How few painted marks are actually enough to make you perceive a pearl?",
+        "ar": "كم عدد العلامات المرسومة اللازمة فعلًا لكي ترى لؤلؤة؟"
+      }
+    },
+    {
+      "id": "ped.hands-volume",
+      "type": "fromDetailToConcept",
+      "source": "ld01.hands",
+      "target": "concept.volume",
+      "rationale": {
+        "fr": "Le détail des mains permet de passer d’une observation locale à la notion générale de modelé et de volume.",
+        "en": "The hands allow a local observation to lead into the broader notion of modeling and volume.",
+        "ar": "يسمح تفصيل اليدين بالانتقال من ملاحظة محلية إلى مفهوم أوسع هو التشكيل والحجم."
+      },
+      "prompt": {
+        "fr": "Quels passages de lumière et d’ombre font paraître les mains tridimensionnelles ?",
+        "en": "Which transitions of light and shadow make the hands appear three-dimensional?",
+        "ar": "ما انتقالات الضوء والظل التي تجعل اليدين تبدوان ثلاثيتي الأبعاد؟"
+      }
+    },
+    {
+      "id": "ped.renaissance-to-sfumato",
+      "type": "buildsOn",
+      "source": "period.renaissance",
+      "target": "technique.sfumato",
+      "rationale": {
+        "fr": "Le sfumato peut être étudié comme une réponse renaissante aux problèmes de modelé, d’espace et de continuité visuelle.",
+        "en": "Sfumato can be studied as a Renaissance response to problems of modeling, space, and visual continuity.",
+        "ar": "يمكن دراسة السفوماتو بوصفه استجابة من عصر النهضة لمشكلات التشكيل والفضاء والاستمرارية البصرية."
+      },
+      "prompt": {
+        "fr": "Quel idéal de représentation réaliste cette technique cherche-t-elle à renforcer ?",
+        "en": "Which ideal of realistic representation does this technique reinforce?",
+        "ar": "أي تصور للتمثيل الواقعي تسعى هذه التقنية إلى تعزيزه؟"
+      }
+    },
+    {
+      "id": "ped.impressionism-immediacy",
+      "type": "buildsOn",
+      "source": "movement.impressionism",
+      "target": "concept.immediacy",
+      "rationale": {
+        "fr": "L’impressionnisme peut être compris à partir de la volonté de saisir une perception momentanée plutôt qu’une description stable.",
+        "en": "Impressionism can be approached through its pursuit of momentary perception rather than stable description.",
+        "ar": "يمكن فهم الانطباعية من خلال سعيها إلى التقاط إدراك لحظي بدل وصف ثابت."
+      },
+      "prompt": {
+        "fr": "Quels éléments donnent l’impression que la scène vient d’être saisie sur le vif ?",
+        "en": "Which elements make the scene feel freshly captured in the moment?",
+        "ar": "ما العناصر التي تجعل المشهد يبدو وكأنه التُقط في اللحظة نفسها؟"
+      }
+    },
+    {
+      "id": "ped.postimpression-expression",
+      "type": "buildsOn",
+      "source": "movement.post-impressionism",
+      "target": "concept.expression",
+      "rationale": {
+        "fr": "Chez Van Gogh, la couleur et la touche peuvent être étudiées non seulement comme perception, mais comme moyens d’expression.",
+        "en": "In Van Gogh, color and brushwork can be studied not only as perception but as means of expression.",
+        "ar": "عند فان غوخ يمكن دراسة اللون وضربات الفرشاة ليس فقط كإدراك بل كوسائل للتعبير."
+      },
+      "prompt": {
+        "fr": "Qu’est-ce qui semble relever de l’observation et qu’est-ce qui paraît transformé par l’expression ?",
+        "en": "What seems observational, and what appears transformed by expression?",
+        "ar": "ما الذي يبدو قائمًا على الملاحظة، وما الذي يبدو محولًا بالتعبير؟"
+      }
+    },
+    {
+      "id": "ped.iconography-to-identity",
+      "type": "helpsUnderstand",
+      "source": "motif.enigmatic-female-portrait",
+      "target": "concept.identity",
+      "rationale": {
+        "fr": "Le motif du portrait féminin énigmatique aide à relier iconographie, regard et construction de l’identité.",
+        "en": "The enigmatic female portrait motif helps connect iconography, gaze, and the construction of identity.",
+        "ar": "يساعد نمط البورتريه النسائي الغامض على ربط الأيقونوغرافيا بالنظرة وبناء الهوية."
+      },
+      "prompt": {
+        "fr": "Quels éléments visuels vous donnent des informations sur l’identité, et lesquels la rendent plus incertaine ?",
+        "en": "Which visual elements inform you about identity, and which make it more uncertain?",
+        "ar": "ما العناصر البصرية التي تعطيك معلومات عن الهوية، وما العناصر التي تجعلها أكثر غموضًا؟"
+      }
+    }
+  ]
+}

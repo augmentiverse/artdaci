@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://artdaci.com/schema/semantic-review-item.schema.json",
+  "title": "ARTDACI Semantic Review Item",
+  "type": "object",
+  "required": [
+    "sourceConceptId",
+    "sourceConceptLabel",
+    "provider",
+    "externalId",
+    "label",
+    "relationType",
+    "relationLabel",
+    "status",
+    "proposedAt",
+    "provenance"
+  ],
+  "properties": {
+    "sourceConceptId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourceConceptLabel": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provider": {
+      "enum": [
+        "wikidata",
+        "getty-aat",
+        "memodata-tid"
+      ]
+    },
+    "externalId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "label": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string"
+    },
+    "relationType": {
+      "type": "string",
+      "minLength": 1
+    },
+    "relationLabel": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pageUrl": {
+      "type": "string"
+    },
+    "sourceUri": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "candidate",
+        "approved",
+        "rejected"
+      ]
+    },
+    "proposedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reviewedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "decision": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "candidate",
+        "approved",
+        "rejected",
+        null
+      ]
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "provider",
+        "sourceId",
+        "importedFrom"
+      ],
+      "properties": {
+        "provider": {
+          "type": "string"
+        },
+        "sourceId": {
+          "type": "string"
+        },
+        "sourceUrl": {
+          "type": "string"
+        },
+        "importedFrom": {
+          "const": "external-proposed"
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

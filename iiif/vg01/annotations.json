@@ -1,0 +1,297 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "https://artdaci.com/iiif/vg01/annotations.json",
+  "type": "AnnotationPage",
+  "items": [
+    {
+      "id": "https://artdaci.com/iiif/vg01/annotation/background",
+      "type": "Annotation",
+      "motivation": [
+        "commenting",
+        "tagging"
+      ],
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "Fond rythmé — Les touches courbes du fond donnent un rythme continu à la surface et renforcent la sensation de mouvement autour de la figure.",
+          "language": "fr",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "Rhythmic background — The curving background strokes create a continuous surface rhythm and strengthen the sense of movement around the figure.",
+          "language": "en",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "الخلفية الإيقاعية — تخلق ضربات الفرشاة المنحنية في الخلفية إيقاعًا مستمرًا على السطح وتعزز الإحساس بالحركة حول الشخصية.",
+          "language": "ar",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=technique.directional-brushwork&lang=fr",
+            "type": "Type",
+            "_label": "Touche directionnelle"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.surface-rhythm&lang=fr",
+            "type": "Type",
+            "_label": "Rythme de surface"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.movement&lang=fr",
+            "type": "Type",
+            "_label": "Mouvement"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.brushwork&lang=fr",
+            "type": "Type",
+            "_label": "Touche picturale"
+          }
+        }
+      ],
+      "target": "https://artdaci.com/iiif/vg01/canvas#xywh=655,125,300,655"
+    },
+    {
+      "id": "https://artdaci.com/iiif/vg01/annotation/jacket",
+      "type": "Annotation",
+      "motivation": [
+        "commenting",
+        "tagging"
+      ],
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "Veste et contrastes chromatiques — La veste construit la forme par la couleur et la direction des touches, avec des contrastes qui produisent une vibration chromatique.",
+          "language": "fr",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "Jacket and chromatic contrasts — The jacket builds form through color and stroke direction, using contrasts that produce chromatic vibration.",
+          "language": "en",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "السترة والتباينات اللونية — تُبنى السترة باللون واتجاه ضربات الفرشاة، مع تباينات تولد اهتزازًا لونيًا.",
+          "language": "ar",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.color&lang=fr",
+            "type": "Type",
+            "_label": "Couleur"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=technique.complementary-contrast&lang=fr",
+            "type": "Type",
+            "_label": "Contraste complémentaire"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.chromatic-vibration&lang=fr",
+            "type": "Type",
+            "_label": "Vibration chromatique"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=technique.visible-brushwork&lang=fr",
+            "type": "Type",
+            "_label": "Touche visible"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.materiality&lang=fr",
+            "type": "Type",
+            "_label": "Matérialité"
+          }
+        }
+      ],
+      "target": "https://artdaci.com/iiif/vg01/canvas#xywh=175,650,670,505"
+    },
+    {
+      "id": "https://artdaci.com/iiif/vg01/annotation/hair-beard",
+      "type": "Annotation",
+      "motivation": [
+        "commenting",
+        "tagging"
+      ],
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "Cheveux et barbe — Les touches directionnelles suivent les cheveux et la barbe et transforment le modelé en un réseau visible de gestes picturaux.",
+          "language": "fr",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "Hair and beard — Directional strokes follow the hair and beard, turning modeling into a visible network of painterly gestures.",
+          "language": "en",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "الشعر واللحية — تتبع ضربات الفرشاة الاتجاهية الشعر واللحية وتحول التشكيل إلى شبكة ظاهرة من الحركات التصويرية.",
+          "language": "ar",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=technique.directional-brushwork&lang=fr",
+            "type": "Type",
+            "_label": "Touche directionnelle"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=technique.visible-brushwork&lang=fr",
+            "type": "Type",
+            "_label": "Touche visible"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.brushwork&lang=fr",
+            "type": "Type",
+            "_label": "Touche picturale"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.surface-rhythm&lang=fr",
+            "type": "Type",
+            "_label": "Rythme de surface"
+          }
+        }
+      ],
+      "target": "https://artdaci.com/iiif/vg01/canvas#xywh=245,95,525,585"
+    },
+    {
+      "id": "https://artdaci.com/iiif/vg01/annotation/face",
+      "type": "Annotation",
+      "motivation": [
+        "commenting",
+        "tagging"
+      ],
+      "body": [
+        {
+          "type": "TextualBody",
+          "value": "Visage et regard — Le visage concentre l’examen de soi, l’expression et la présence psychologique qui donnent à l’autoportrait son intensité.",
+          "language": "fr",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "Face and gaze — The face concentrates self-scrutiny, expression, and psychological presence, giving the self-portrait its intensity.",
+          "language": "en",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "TextualBody",
+          "value": "الوجه والنظرة — يركز الوجه على فحص الذات والتعبير والحضور النفسي الذي يمنح البورتريه الذاتي شدته.",
+          "language": "ar",
+          "format": "text/plain",
+          "purpose": "commenting"
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.self-scrutiny&lang=fr",
+            "type": "Type",
+            "_label": "Examen de soi"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.expression&lang=fr",
+            "type": "Type",
+            "_label": "Expression"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.psychological-presence&lang=fr",
+            "type": "Type",
+            "_label": "Présence psychologique"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=concept.gaze&lang=fr",
+            "type": "Type",
+            "_label": "Regard"
+          }
+        },
+        {
+          "type": "SpecificResource",
+          "purpose": "tagging",
+          "source": {
+            "id": "https://artdaci.com/api/linked-art?kind=concept&id=genre.self-portrait&lang=fr",
+            "type": "Type",
+            "_label": "Autoportrait"
+          }
+        }
+      ],
+      "target": "https://artdaci.com/iiif/vg01/canvas#xywh=305,205,405,390"
+    }
+  ]
+}
