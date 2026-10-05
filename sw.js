@@ -1,4 +1,4 @@
-const VERSION = "artdaci-pwa-v5";
+const VERSION = "artdaci-pwa-v6";
 const SHELL = [
   "./",
   "./index.html",

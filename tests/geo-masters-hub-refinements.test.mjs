@@ -45,7 +45,7 @@ test('pinned variants never fall back to another portrait when the manifest is a
 });
 
 test('Mona Lisa and Parasol reuse the exact user-selected captioned images on the wall and in detail',()=>{
-  for(const [id,path] of [['ld01','geo/media/ld01/mana-lisa-davici.webp'],['mo06','assets/artists/claude-monet/collection/woman-with-a-parasol-claude-monet.png']]){
+  for(const [id,path] of [['ld01','assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp'],['mo06','assets/artists/claude-monet/collection/woman-with-a-parasol-claude-monet.png']]){
     const w=work(id);assert.equal(w.thumbnail,path);assert.equal(w.imageFallback,path);
     assert.equal(w.imagePresentation.source,'hub-local');
     assert.equal(createHash('sha256').update(readFileSync(new URL(path,root))).digest('hex'),w.imagePresentation.sha256);
