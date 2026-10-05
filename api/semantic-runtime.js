@@ -23,7 +23,7 @@ function originFromRequest(req) {
 
 async function loadJson(origin, path) {
   const response = await fetch(`${origin}${path}`, {
-    headers: { Accept: "application/json", "User-Agent": "ARTDACI-Semantic-Runtime/2.6" }
+    headers: { Accept: "application/json", "User-Agent": "ARTDACI-Semantic-Runtime/2.9" }
   });
   if (!response.ok) throw new Error(`${path}: HTTP ${response.status}`);
   return response.json();
@@ -258,6 +258,93 @@ function hotspotsFor(maps, artworkId, selectedRegionId, lang, limit) {
     .slice(0, limit);
 }
 
+function semanticHrefForNeighbor(neighbor, lang) {
+  if (!neighbor?.id) return "";
+  if (neighbor.kind === "region") {
+    return `/semantic/?artwork=${encodeURIComponent(neighbor.artworkId || "")}&lang=${encodeURIComponent(lang)}&region=${encodeURIComponent(neighbor.id)}`;
+  }
+  return `/semantic/?lang=${encodeURIComponent(lang)}&node=${encodeURIComponent(neighbor.id)}`;
+}
+
+const LEARNING_STAGE_LABELS = {
+  observe: { fr: "Observer", en: "Observe", ar: "لاحظ" },
+  understand: { fr: "Comprendre", en: "Understand", ar: "افهم" },
+  compare: { fr: "Comparer", en: "Compare", ar: "قارن" },
+  experience: { fr: "Expérimenter", en: "Experience", ar: "جرّب" }
+};
+
+function learningPathFor({ pedagogy, hotspots, concepts, experiences, artworkId, lang, environment }) {
+  const steps = [];
+  const observeRelation = pedagogy.find((item) =>
+    ["observeIn", "fromDetailToConcept"].includes(item.type) && item.neighbor?.kind === "region"
+  );
+  const observeRegion = observeRelation?.neighbor || hotspots[0] || null;
+  if (observeRegion?.id && artworkId) {
+    steps.push({
+      stage: "observe",
+      action: localize(LEARNING_STAGE_LABELS.observe, lang),
+      id: observeRegion.id,
+      label: observeRegion.label || localize(LEARNING_STAGE_LABELS.observe, lang),
+      description: observeRelation?.prompt || observeRelation?.rationale || observeRegion.description || "",
+      targetKind: "region",
+      href: `/semantic/?artwork=${encodeURIComponent(artworkId)}&lang=${encodeURIComponent(lang)}&region=${encodeURIComponent(observeRegion.id)}`,
+      external: false
+    });
+  }
+
+  const concept = concepts[0];
+  if (concept?.id) {
+    steps.push({
+      stage: "understand",
+      action: localize(LEARNING_STAGE_LABELS.understand, lang),
+      id: concept.id,
+      label: concept.label,
+      description: concept.definition || "",
+      targetKind: "concept",
+      href: `/semantic/?lang=${encodeURIComponent(lang)}&node=${encodeURIComponent(concept.id)}`,
+      external: false
+    });
+  }
+
+  const compareRelation = pedagogy.find((item) =>
+    ["compareWith", "contrastForLearning"].includes(item.type) && item.neighbor?.id
+  );
+  if (compareRelation) {
+    steps.push({
+      stage: "compare",
+      action: localize(LEARNING_STAGE_LABELS.compare, lang),
+      id: compareRelation.neighbor.id,
+      label: compareRelation.neighbor.label,
+      description: compareRelation.prompt || compareRelation.rationale || "",
+      targetKind: compareRelation.neighbor.kind,
+      href: semanticHrefForNeighbor(compareRelation.neighbor, lang),
+      external: false
+    });
+  }
+
+  const experience = experiences.find((item) =>
+    !(environment === "vr" && String(item.href || "").startsWith("/vr.html?"))
+  ) || experiences[0];
+  if (experience?.href) {
+    steps.push({
+      stage: "experience",
+      action: localize(LEARNING_STAGE_LABELS.experience, lang),
+      id: experience.id,
+      label: experience.label,
+      description: experience.description || "",
+      targetKind: "experience",
+      channel: experience.channel,
+      href: experience.href,
+      external: Boolean(experience.external)
+    });
+  }
+
+  return {
+    pattern: "observe-understand-compare-experience",
+    steps
+  };
+}
+
 function nextDestinations(pedagogy, experiences, lang) {
   const rows = [];
   for (const relation of pedagogy.slice(0, 3)) {
@@ -266,9 +353,7 @@ function nextDestinations(pedagogy, experiences, lang) {
       id: relation.neighbor.id,
       label: relation.neighbor.label,
       reason: relation.type,
-      href: relation.neighbor.kind === "region"
-        ? `/semantic/?artwork=${encodeURIComponent(relation.neighbor.artworkId)}&lang=${encodeURIComponent(lang)}&region=${encodeURIComponent(relation.neighbor.id)}`
-        : `/semantic/?lang=${encodeURIComponent(lang)}&node=${encodeURIComponent(relation.neighbor.id)}`
+      href: semanticHrefForNeighbor(relation.neighbor, lang)
     });
   }
   for (const experience of experiences.slice(0, 3)) {
@@ -351,7 +436,7 @@ module.exports = async function handler(req, res) {
 
     const payload = {
       schemaVersion: "1.0",
-      runtimeVersion: "2.8",
+      runtimeVersion: "2.9",
       context: {
         environment,
         environmentLabel: localize(policy.label, lang),
@@ -392,6 +477,15 @@ module.exports = async function handler(req, res) {
       pedagogy: pedagogyOut,
       experiences: experiencesOut,
       next: nextDestinations(pedagogyOut, experiencesOut, lang),
+      learningPath: learningPathFor({
+        pedagogy: pedagogyOut,
+        hotspots: artworkId ? hotspotsFor(maps, artworkId, regionId, lang, policy.maxRegions) : [],
+        concepts: conceptsOut,
+        experiences: experiencesOut,
+        artworkId,
+        lang,
+        environment
+      }),
       links: {
         semantic: artworkId
           ? `/semantic/?artwork=${encodeURIComponent(artworkId)}&lang=${encodeURIComponent(lang)}${regionId ? `&region=${encodeURIComponent(regionId)}` : ""}`

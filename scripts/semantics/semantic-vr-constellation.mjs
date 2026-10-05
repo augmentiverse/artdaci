@@ -1,6 +1,7 @@
 import * as THREE from "../../vendor/three.module.js";
 
 const NODE_COLOR = 0xd4b77f;
+const PORTAL_COLOR = 0x8ec5d6;
 const PANEL_COLOR = "rgba(20,18,16,0.92)";
 
 function roundRect(ctx, x, y, width, height, radius) {
@@ -84,8 +85,9 @@ function makeNode(concept, index, count, rtl) {
   const radiusY = 0.72;
   const group = new THREE.Group();
   group.name = `semantic-vr-node-${concept.id}`;
-  group.position.set(Math.cos(angle) * radiusX, 0.68 + Math.sin(angle) * radiusY * 0.55, 0.2);
+  group.position.set(Math.cos(angle) * radiusX, 0.72 + Math.sin(angle) * radiusY * 0.55, 0.2);
 
+  const selection = { kind: "concept", item: concept };
   const hit = new THREE.Mesh(
     new THREE.SphereGeometry(0.14, 24, 16),
     new THREE.MeshBasicMaterial({
@@ -97,7 +99,7 @@ function makeNode(concept, index, count, rtl) {
     })
   );
   hit.name = "semantic-vr-hit";
-  hit.userData.semanticConcept = concept;
+  hit.userData.semanticSelection = selection;
   group.add(hit);
 
   const ring = new THREE.Mesh(
@@ -130,10 +132,70 @@ function makeNode(concept, index, count, rtl) {
   }));
   label.scale.set(0.58, 0.17, 1);
   label.position.set(0, 0.21, 0.02);
-  label.userData.semanticConcept = concept;
+  label.userData.semanticSelection = selection;
   group.add(label);
 
-  return { group, hit };
+  return { group, hit, selection };
+}
+
+function makePortal(step, index, count, rtl) {
+  const group = new THREE.Group();
+  const spacing = count > 1 ? 1.8 / (count - 1) : 0;
+  const x = count > 1 ? -0.9 + index * spacing : 0;
+  group.name = `semantic-vr-portal-${step.stage}-${step.id}`;
+  group.position.set(x, 0.18, 0.58);
+
+  const selection = { kind: "portal", item: step };
+  const hit = new THREE.Mesh(
+    new THREE.PlaneGeometry(0.4, 0.55),
+    new THREE.MeshBasicMaterial({
+      color: PORTAL_COLOR,
+      transparent: true,
+      opacity: 0.09,
+      side: THREE.DoubleSide,
+      depthWrite: false,
+      toneMapped: false
+    })
+  );
+  hit.name = "semantic-vr-portal-hit";
+  hit.userData.semanticSelection = selection;
+  group.add(hit);
+
+  const frameMaterial = new THREE.MeshBasicMaterial({
+    color: PORTAL_COLOR,
+    transparent: true,
+    opacity: 0.9,
+    depthWrite: false,
+    toneMapped: false
+  });
+  const left = new THREE.Mesh(new THREE.BoxGeometry(0.025, 0.55, 0.025), frameMaterial.clone());
+  const right = new THREE.Mesh(new THREE.BoxGeometry(0.025, 0.55, 0.025), frameMaterial.clone());
+  const top = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.025, 0.025), frameMaterial.clone());
+  left.position.x = -0.2;
+  right.position.x = 0.2;
+  top.position.y = 0.275;
+  group.add(left, right, top);
+
+  const texture = makeTexture({
+    title: step.label,
+    kicker: step.action || step.stage,
+    width: 620,
+    height: 190,
+    rtl
+  });
+  const label = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: texture,
+    transparent: true,
+    depthTest: false,
+    depthWrite: false,
+    toneMapped: false
+  }));
+  label.scale.set(0.5, 0.155, 1);
+  label.position.set(0, -0.39, 0.02);
+  label.userData.semanticSelection = selection;
+  group.add(label);
+
+  return { group, hit, selection };
 }
 
 function findPedagogy(runtime, conceptId) {
@@ -142,6 +204,12 @@ function findPedagogy(runtime, conceptId) {
     item.target === conceptId ||
     item.neighbor?.id === conceptId
   ) || (runtime.pedagogy || []).find((item) => item.prompt) || null;
+}
+
+function portalInstruction(lang) {
+  if (lang === "ar") return "اختر البوابة مرة أخرى لفتح هذه المرحلة.";
+  if (lang === "fr") return "Sélectionnez à nouveau ce portail pour ouvrir cette étape.";
+  return "Select this portal again to open this step.";
 }
 
 export function createSemanticVrConstellation({
@@ -157,14 +225,22 @@ export function createSemanticVrConstellation({
   parent.add(group);
 
   const concepts = runtime.concepts.slice(0, 5);
+  const pathSteps = (runtime.learningPath?.steps || []).slice(0, 4);
   const hitTargets = [];
-  const nodeGroups = new Map();
+  const interactiveGroups = new Map();
 
   concepts.forEach((concept, index) => {
     const node = makeNode(concept, index, concepts.length, rtl);
-    nodeGroups.set(concept.id, node.group);
+    interactiveGroups.set(`concept:${concept.id}`, node.group);
     hitTargets.push(node.hit);
     group.add(node.group);
+  });
+
+  pathSteps.forEach((step, index) => {
+    const portal = makePortal(step, index, pathSteps.length, rtl);
+    interactiveGroups.set(`portal:${step.stage}:${step.id}`, portal.group);
+    hitTargets.push(portal.hit);
+    group.add(portal.group);
   });
 
   const panelTexture = makeTexture({
@@ -183,46 +259,78 @@ export function createSemanticVrConstellation({
   const panel = new THREE.Sprite(panelMaterial);
   panel.name = "semantic-vr-info";
   panel.scale.set(1.05, 0.41, 1);
-  panel.position.set(0, 1.65, 0.28);
+  panel.position.set(0, 1.72, 0.28);
   group.add(panel);
 
-  let selectedId = null;
+  let selectedKey = null;
 
-  const updatePanel = (concept) => {
+  const setPanel = ({ title, body, kicker }) => {
+    panelMaterial.map?.dispose?.();
+    panelMaterial.map = makeTexture({ title, body, kicker, rtl });
+    panelMaterial.needsUpdate = true;
+  };
+
+  const updateConceptPanel = (concept) => {
     const relation = findPedagogy(runtime, concept.id);
     const body = [
       concept.definition || "",
       relation?.prompt ? `${lang === "ar" ? "سؤال" : lang === "fr" ? "Question" : "Question"} : ${relation.prompt}` : ""
     ].filter(Boolean).join("\n");
-    panelMaterial.map?.dispose?.();
-    panelMaterial.map = makeTexture({
+    setPanel({
       title: concept.label,
       body,
       kicker: relation
         ? (lang === "ar" ? "تعلم وملاحظة" : lang === "fr" ? "Apprendre et observer" : "Learn and observe")
-        : (lang === "ar" ? "مفهوم" : lang === "fr" ? "Notion" : "Concept"),
-      rtl
+        : (lang === "ar" ? "مفهوم" : lang === "fr" ? "Notion" : "Concept")
     });
-    panelMaterial.needsUpdate = true;
   };
 
-  const select = (concept) => {
-    if (!concept) return false;
-    selectedId = concept.id;
-    for (const [id, node] of nodeGroups) {
-      const hit = node.getObjectByName("semantic-vr-hit");
-      if (hit?.material) hit.material.opacity = id === selectedId ? 0.42 : 0.16;
+  const updatePortalPanel = (step) => {
+    const body = [step.description || "", portalInstruction(lang)].filter(Boolean).join("\n");
+    setPanel({
+      title: step.label,
+      body,
+      kicker: step.action || step.stage
+    });
+  };
+
+  const selectionKey = (selection) => selection?.kind === "portal"
+    ? `portal:${selection.item.stage}:${selection.item.id}`
+    : `concept:${selection?.item?.id || ""}`;
+
+  const select = (selection) => {
+    if (!selection?.item) return { handled: false, activate: false };
+    const key = selectionKey(selection);
+    const activate = selection.kind === "portal" && selectedKey === key;
+    selectedKey = key;
+
+    for (const [id, object] of interactiveGroups) {
+      const conceptHit = object.getObjectByName("semantic-vr-hit");
+      const portalHit = object.getObjectByName("semantic-vr-portal-hit");
+      const selected = id === key;
+      if (conceptHit?.material) conceptHit.material.opacity = selected ? 0.42 : 0.16;
+      if (portalHit?.material) portalHit.material.opacity = selected ? 0.28 : 0.09;
     }
-    updatePanel(concept);
-    return true;
+
+    if (selection.kind === "portal") updatePortalPanel(selection.item);
+    else updateConceptPanel(selection.item);
+
+    return {
+      handled: true,
+      activate,
+      kind: selection.kind,
+      item: selection.item,
+      href: activate ? selection.item.href : ""
+    };
   };
 
   return {
     group,
     hitTargets,
+    hasPortals: pathSteps.length > 0,
     intersect(raycaster) {
       const intersection = raycaster.intersectObjects(hitTargets, false)[0];
-      return intersection?.object?.userData?.semanticConcept || null;
+      return intersection?.object?.userData?.semanticSelection || null;
     },
     select,
     setVisible(value) {

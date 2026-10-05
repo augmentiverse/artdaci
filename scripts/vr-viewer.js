@@ -5,7 +5,7 @@ import { fetchArtworkManifest } from "./artwork-media-manifest.js";
 import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
 import { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./catalogue.js";
 import { mountSemanticRuntimePanel, resolveSemanticRuntime } from "./semantics/semantic-runtime-client.mjs?v=1";
-import { createSemanticVrConstellation } from "./semantics/semantic-vr-constellation.mjs?v=1";
+import { createSemanticVrConstellation } from "./semantics/semantic-vr-constellation.mjs?v=2";
 
 const PAINTINGS = {
   "mona-lisa": "content/paintings/mona-lisa.json?v=5",
@@ -505,7 +505,7 @@ function renderSemanticConstellationToggle() {
   button.id = "semantic-vr-toggle";
   button.type = "button";
   button.className = "semantic-runtime-trigger";
-  button.textContent = lang === "ar" ? "المفاهيم" : lang === "fr" ? "Notions" : "Concepts";
+  button.textContent = lang === "ar" ? "المسار" : lang === "fr" ? "Parcours" : "Path";
   button.setAttribute("aria-pressed", "true");
   button.addEventListener("click", () => {
     const visible = semanticConstellation.group.visible;
@@ -521,15 +521,30 @@ function setControllerRay(controller) {
   raycaster.ray.direction.set(0, 0, -1).applyMatrix4(rayMatrix).normalize();
 }
 
+function activateSemanticPortal(result) {
+  if (!result?.activate || !result.href) return;
+  const navigate = () => window.location.assign(result.href);
+  if (currentSession) {
+    currentSession.end().then(navigate, navigate);
+  } else {
+    navigate();
+  }
+}
+
+function handleSemanticSelection(selection) {
+  if (!selection?.item) return false;
+  const result = semanticConstellation.select(selection);
+  status.textContent = selection.item.label || selection.item.action || text.ready;
+  activateSemanticPortal(result);
+  return true;
+}
+
 function selectSemanticWithController(index) {
   if (!semanticConstellation?.group?.visible) return false;
   const controller = controllers[index];
   setControllerRay(controller);
-  const concept = semanticConstellation.intersect(raycaster);
-  if (!concept) return false;
-  semanticConstellation.select(concept);
-  status.textContent = concept.label;
-  return true;
+  const selection = semanticConstellation.intersect(raycaster);
+  return handleSemanticSelection(selection);
 }
 
 function selectSemanticWithPointer(event) {
@@ -541,17 +556,18 @@ function selectSemanticWithPointer(event) {
     -(((event.clientY - rect.top) / rect.height) * 2 - 1)
   );
   raycaster.setFromCamera(pointer, camera);
-  const concept = semanticConstellation.intersect(raycaster);
-  if (!concept) return false;
-  semanticConstellation.select(concept);
-  status.textContent = concept.label;
-  return true;
+  const selection = semanticConstellation.intersect(raycaster);
+  return handleSemanticSelection(selection);
 }
 
 function isSemanticVrObject(object) {
   let current = object;
   while (current) {
-    if (current.name === "semantic-vr-constellation" || current.name?.startsWith("semantic-vr-node-")) return true;
+    if (
+      current.name === "semantic-vr-constellation" ||
+      current.name?.startsWith("semantic-vr-node-") ||
+      current.name?.startsWith("semantic-vr-portal-")
+    ) return true;
     current = current.parent;
   }
   return false;
