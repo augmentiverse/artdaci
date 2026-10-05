@@ -26,3 +26,8 @@ html[dir="rtl"] .visitor-guide-link { right: auto; left: 18px; }
   .visitor-guide-link { right: 10px; bottom: 10px; padding: 9px 11px; font-size: 12px; }
   html[dir="rtl"] .visitor-guide-link { right: auto; left: 10px; }
 }
+
+
+.visitor-guide-link[data-semantic-state="loading"]::before { content: "…"; }
+.visitor-guide-link[data-semantic-state="ready"]::before { content: "✦"; color: #9ed8e6; }
+.visitor-guide-link[data-semantic-state="ready"] { border-color: rgba(158, 216, 230, .84); }

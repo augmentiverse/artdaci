@@ -23,7 +23,7 @@ function originFromRequest(req) {
 
 async function loadJson(origin, path) {
   const response = await fetch(`${origin}${path}`, {
-    headers: { Accept: "application/json", "User-Agent": "ARTDACI-Semantic-Runtime/2.10" }
+    headers: { Accept: "application/json", "User-Agent": "ARTDACI-Semantic-Runtime/2.11" }
   });
   if (!response.ok) throw new Error(`${path}: HTTP ${response.status}`);
   return response.json();
@@ -345,6 +345,65 @@ function learningPathFor({ pedagogy, hotspots, concepts, experiences, artworkId,
   };
 }
 
+
+function guideQuestionForStep(step, lang) {
+  if (!step?.label) return "";
+  const label = `« ${step.label} »`;
+  if (lang === "ar") {
+    if (step.stage === "observe") return `ما الذي ينبغي أن ألاحظه في ${label}؟`;
+    if (step.stage === "understand") return `لماذا يُعد ${label} مهماً هنا؟`;
+    if (step.stage === "compare") return `قارن مع ${label}: ما الذي ينبغي أن ألاحظه؟`;
+    if (step.stage === "experience") return "ما تجربة ARTDACI التي يمكنني فتحها بعد ذلك؟";
+    return `اشرح لي ${label} ببساطة.`;
+  }
+  if (lang === "fr") {
+    if (step.stage === "observe") return `Que dois-je observer dans ${label} ?`;
+    if (step.stage === "understand") return `Pourquoi ${label} est-il important ici ?`;
+    if (step.stage === "compare") return `Compare avec ${label} : que dois-je remarquer ?`;
+    if (step.stage === "experience") return "Quelle expérience ARTDACI puis-je ouvrir ensuite ?";
+    return `Explique-moi ${label} simplement.`;
+  }
+  if (step.stage === "observe") return `What should I observe in ${label}?`;
+  if (step.stage === "understand") return `Why is ${label} important here?`;
+  if (step.stage === "compare") return `Compare with ${label}: what should I notice?`;
+  if (step.stage === "experience") return "Which ARTDACI experience should I open next?";
+  return `Explain ${label} simply.`;
+}
+
+function guideFor({ focus, learningPath, concepts, pedagogy, experiences, lang }) {
+  const suggestedQuestions = [];
+  for (const step of learningPath?.steps || []) {
+    const question = guideQuestionForStep(step, lang);
+    if (question && !suggestedQuestions.includes(question)) suggestedQuestions.push(question);
+  }
+
+  if (!suggestedQuestions.length && focus?.label) {
+    suggestedQuestions.push(
+      lang === "ar"
+        ? `اشرح لي « ${focus.label} » ببساطة.`
+        : lang === "fr"
+          ? `Explique-moi « ${focus.label} » simplement.`
+          : `Explain “${focus.label}” simply.`
+    );
+  }
+
+  return {
+    mode: "grounded-semantic",
+    focusId: focus?.id || null,
+    suggestedQuestions: suggestedQuestions.slice(0, 4),
+    grounding: {
+      factual: "ARTDACI reviewed factual graph and mapped authority identifiers",
+      pedagogical: "ARTDACI editorial pedagogical layer",
+      instruction: "Distinguish factual graph information from ARTDACI pedagogical interpretation and do not invent unsupported relations."
+    },
+    contextCounts: {
+      concepts: concepts?.length || 0,
+      pedagogy: pedagogy?.length || 0,
+      experiences: experiences?.length || 0
+    }
+  };
+}
+
 function nextDestinations(pedagogy, experiences, lang) {
   const rows = [];
   for (const relation of pedagogy.slice(0, 3)) {
@@ -433,10 +492,28 @@ module.exports = async function handler(req, res) {
     const pedagogyOut = pedagogyFor(docs, maps, pedagogyIds, lang, policy.maxPedagogy);
     const experienceNodeIds = [focus.id, artworkId].filter(Boolean);
     const experiencesOut = rankedExperiences(maps, experienceNodeIds, policy, lang);
+    const hotspotsOut = artworkId ? hotspotsFor(maps, artworkId, regionId, lang, policy.maxRegions) : [];
+    const learningPathOut = learningPathFor({
+      pedagogy: pedagogyOut,
+      hotspots: hotspotsOut,
+      concepts: conceptsOut,
+      experiences: experiencesOut,
+      artworkId,
+      lang,
+      environment
+    });
+    const guideOut = guideFor({
+      focus,
+      learningPath: learningPathOut,
+      concepts: conceptsOut,
+      pedagogy: pedagogyOut,
+      experiences: experiencesOut,
+      lang
+    });
 
     const payload = {
       schemaVersion: "1.0",
-      runtimeVersion: "2.10",
+      runtimeVersion: "2.11",
       context: {
         environment,
         environmentLabel: localize(policy.label, lang),
@@ -471,21 +548,14 @@ module.exports = async function handler(req, res) {
             };
           })()
         : null,
-      hotspots: artworkId ? hotspotsFor(maps, artworkId, regionId, lang, policy.maxRegions) : [],
+      hotspots: hotspotsOut,
       concepts: conceptsOut,
       iconography: iconographyFor(docs, maps, artworkId, regionId, lang),
       pedagogy: pedagogyOut,
       experiences: experiencesOut,
       next: nextDestinations(pedagogyOut, experiencesOut, lang),
-      learningPath: learningPathFor({
-        pedagogy: pedagogyOut,
-        hotspots: artworkId ? hotspotsFor(maps, artworkId, regionId, lang, policy.maxRegions) : [],
-        concepts: conceptsOut,
-        experiences: experiencesOut,
-        artworkId,
-        lang,
-        environment
-      }),
+      learningPath: learningPathOut,
+      guide: guideOut,
       links: {
         semantic: artworkId
           ? `/semantic/?artwork=${encodeURIComponent(artworkId)}&lang=${encodeURIComponent(lang)}${regionId ? `&region=${encodeURIComponent(regionId)}` : ""}`

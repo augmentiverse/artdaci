@@ -49,6 +49,8 @@ const embeddingApi = await fs.readFile(path.join(root, "api/semantic-embeddings.
 const semanticRuntimeApi = await fs.readFile(path.join(root, "api/semantic-runtime.js"), "utf8");
 const semanticRuntimeClient = await fs.readFile(path.join(root, "scripts/semantics/semantic-runtime-client.mjs"), "utf8");
 const semanticRuntimeCss = await fs.readFile(path.join(root, "styles/semantic-runtime.css"), "utf8");
+const visitorGuide = await fs.readFile(path.join(root, "scripts/visitor-guide.js"), "utf8");
+const visitorGuideCss = await fs.readFile(path.join(root, "styles/visitor-guide.css"), "utf8");
 const semanticArHotspots = await fs.readFile(path.join(root, "scripts/semantics/semantic-ar-hotspots.mjs"), "utf8");
 const semanticVrConstellation = await fs.readFile(path.join(root, "scripts/semantics/semantic-vr-constellation.mjs"), "utf8");
 const arCss = await fs.readFile(path.join(root, "styles/ar.css"), "utf8");
@@ -239,7 +241,7 @@ for (const mapping of externalMappings.conceptMappings) {
   if (mapping.gettyAat) assert(/^\d{6,12}$/.test(mapping.gettyAat), `Invalid Getty AAT ID for ${mapping.conceptId}`);
 }
 
-assert(semanticHtml.includes("POC V2.10"), "Semantic page must expose V2.10.");
+assert(semanticHtml.includes("POC V2.11"), "Semantic page must expose V2.11.");
 assert(semanticHtml.includes("semantic.css?v=17"), "Semantic page must load V2.10 CSS.");
 assert(semanticHtml.includes("semantic-ui.mjs?v=19"), "Semantic page must load V2.10 UI.");
 assert(semanticUi.includes("graphWithExternalSuggestions"), "External graph exploration must remain available.");
@@ -272,7 +274,7 @@ assert(semanticStore.includes("pedagogicalRegionResults"), "Hybrid search must r
 assert(embeddingClient.includes("rerankWithNeuralEmbeddings"), "Embedding client must expose optional neural reranking.");
 assert(embeddingApi.includes("ARTDACI_EMBEDDING_ENDPOINT"), "Embedding API must be provider-configurable.");
 assert(embeddingApi.includes("local-vector-fallback"), "Embedding API must advertise local fallback when unconfigured.");
-assert(semanticRuntimeApi.includes('runtimeVersion: "2.10"'), "Semantic Runtime API must expose runtime version 2.9.");
+assert(semanticRuntimeApi.includes('runtimeVersion: "2.11"'), "Semantic Runtime API must expose runtime version 2.11.");
 assert(semanticRuntimeApi.includes("learningPathFor"), "Semantic Runtime API must derive a contextual pedagogical learning path.");
 assert(semanticRuntimeApi.includes("observe-understand-compare-experience"), "Semantic Runtime must identify the four-stage learning pattern.");
 assert(semanticRuntimeApi.includes("compareWith"), "Semantic Runtime learning path must support ARTDACI comparison relations.");
@@ -282,6 +284,9 @@ assert(semanticRuntimeApi.includes("preferredChannels"), "Semantic Runtime API m
 assert(semanticRuntimeApi.includes("normalized"), "Semantic Runtime API must expose normalized hotspot geometry.");
 assert(semanticRuntimeApi.includes("pedagogyFor"), "Semantic Runtime API must expose pedagogical context.");
 assert(semanticRuntimeApi.includes("rankedExperiences"), "Semantic Runtime API must expose contextual immersive experiences.");
+assert(semanticRuntimeApi.includes("guideFor"), "Semantic Runtime must expose grounded conversational guide context.");
+assert(semanticRuntimeApi.includes("guideQuestionForStep"), "Semantic Runtime must derive guide questions from learning-path stages.");
+assert(semanticRuntimeApi.includes('mode: "grounded-semantic"'), "Semantic Runtime guide must identify grounded semantic mode.");
 assert(semanticRuntimeClient.includes("resolveSemanticRuntime"), "Semantic Runtime client must expose context resolution.");
 assert(semanticRuntimeClient.includes("mountSemanticRuntimePanel"), "Semantic Runtime client must mount immersive UI.");
 assert(semanticRuntimeClient.includes("learningPathMarkup"), "Shared Semantic Runtime panel must render the adaptive learning path.");
@@ -292,6 +297,16 @@ assert(arViewer.includes("semantic-runtime-client.mjs?v=2"), "AR viewer must loa
 assert(vrViewer.includes("semantic-runtime-client.mjs?v=2"), "VR viewer must load the V2.10 shared semantic client.");
 assert(geoRemoteViewer.includes("semantic-runtime-client.mjs?v=2"), "GEO viewer must load the V2.10 shared semantic client.");
 assert(mastersHubViewer.includes("semantic-runtime-client.mjs?v=2"), "Masters Hub must load the V2.10 shared semantic client.");
+assert(visitorGuide.includes("resolveSemanticRuntime"), "Visitor guide must resolve the current ARTDACI semantic context.");
+assert(visitorGuide.includes("semanticGuideRequest"), "Visitor guide must infer the semantic focus from the current immersive surface.");
+assert(visitorGuide.includes("ARTDACI semantic context"), "Visitor guide prompt must embed grounded ARTDACI semantic context.");
+assert(visitorGuide.includes("suggestedQuestions"), "Visitor guide must consume Runtime-generated starter questions.");
+assert(visitorGuide.includes("do not invent relations"), "Visitor guide must explicitly prohibit unsupported semantic claims.");
+assert(visitorGuideCss.includes('data-semantic-state="ready"'), "Visitor guide must visually indicate semantic grounding readiness.");
+assert(arHtml.includes("visitor-guide.js?v=2"), "AR must load the semantic-aware visitor guide.");
+assert(vrHtml.includes("visitor-guide.js?v=2"), "VR must load the semantic-aware visitor guide.");
+assert(geoRemoteHtml.includes("../scripts/visitor-guide.js?v=2"), "GEO remote must load the semantic-aware visitor guide.");
+assert(mastersHubHtml.includes("../scripts/visitor-guide.js?v=2"), "Masters Hub must load the semantic-aware visitor guide.");
 assert(semanticRuntimeCss.includes(".semantic-runtime-panel"), "Semantic Runtime panel styling must exist.");
 assert(arViewer.includes("mountSemanticRuntimePanel"), "Image AR viewer must consume Semantic Runtime.");
 assert(arViewer.includes("createSemanticArHotspots"), "Image AR viewer must project semantic regions into MindAR.");

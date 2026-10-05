@@ -1,4 +1,4 @@
-# ARTDACI Semantic POC V2.10
+# ARTDACI Semantic POC V2.11
 
 This folder adds an isolated semantic knowledge layer to ARTDACI without changing the existing media manifests.
 
@@ -6,7 +6,7 @@ This folder adds an isolated semantic knowledge layer to ARTDACI without changin
 
 The POC demonstrates how ARTDACI can connect artworks through concepts and explicit semantic relations rather than only through pages, artists, or museums.
 
-V2.10 supports:
+V2.11 supports:
 - a trilingual FR / EN / AR concept graph;
 - 50 curated concepts;
 - eight relation types: broader, narrower, related, enables, expresses, contrastsWith, associatedWith, dependsOn;
@@ -754,3 +754,25 @@ This layer is deliberately shared rather than reimplemented in each viewer:
 The VR in-world portals remain available. The V2.10 panel therefore provides a consistent 2D control surface while the VR constellation provides the spatial equivalent.
 
 As with the rest of the Semantic Runtime, this remains non-blocking: if semantic data cannot load, the underlying AR/VR/GEO/3D experience continues normally.
+
+
+## Grounded conversational guide
+
+V2.11 connects the existing ARTDACI ChatGPT visitor guide to the Semantic Runtime without adding an API key or a second conversational backend.
+
+The Semantic Runtime now exposes a `guide` block with up to four trilingual starter questions derived from the contextual learning path. Typical intents are:
+- observe a precise semantic region;
+- understand the most relevant concept;
+- compare with a pedagogically linked work or concept;
+- continue toward an ARTDACI immersive experience.
+
+The shared visitor guide resolves the current semantic focus before preparing its ChatGPT link:
+- image AR and individual VR use the current `painting` slug;
+- ARTDACI GEO remote exploration uses `museum.louvre`;
+- Masters Hub deep-linked artist guides use the current artist slug.
+
+The generated guide prompt includes only a compact ARTDACI context: focus, top concepts, semantic image regions, one pedagogical question, the adaptive learning path, and ranked immersive experiences. It explicitly instructs the conversational guide to distinguish factual graph information from ARTDACI pedagogical interpretation and not to invent unsupported relations.
+
+If the Semantic Runtime is unavailable, the guide falls back to the previous generic ARTDACI museum-guide prompt. The immersive experience therefore remains non-blocking.
+
+The same guide control is now available on AR, VR, GEO remote exploration, and Masters Hub. No production merge is implied by this POC branch.
