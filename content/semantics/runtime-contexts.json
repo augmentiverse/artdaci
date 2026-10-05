@@ -1,0 +1,213 @@
+{
+  "schemaVersion": "1.0",
+  "environments": {
+    "web": {
+      "label": {
+        "fr": "Web",
+        "en": "Web",
+        "ar": "ويب"
+      },
+      "priorities": [
+        "concepts",
+        "pedagogy",
+        "experiences",
+        "iconography",
+        "regions"
+      ],
+      "preferredChannels": [
+        "web",
+        "book",
+        "video",
+        "ar",
+        "vr",
+        "geo",
+        "3d",
+        "space-ar",
+        "vr-world"
+      ],
+      "maxConcepts": 8,
+      "maxPedagogy": 6,
+      "maxExperiences": 8,
+      "maxRegions": 4
+    },
+    "book": {
+      "label": {
+        "fr": "Livre",
+        "en": "Book",
+        "ar": "كتاب"
+      },
+      "priorities": [
+        "regions",
+        "pedagogy",
+        "concepts",
+        "experiences",
+        "iconography"
+      ],
+      "preferredChannels": [
+        "ar",
+        "video",
+        "book",
+        "3d",
+        "vr",
+        "geo",
+        "space-ar",
+        "web",
+        "vr-world"
+      ],
+      "maxConcepts": 5,
+      "maxPedagogy": 4,
+      "maxExperiences": 6,
+      "maxRegions": 4
+    },
+    "ar": {
+      "label": {
+        "fr": "AR",
+        "en": "AR",
+        "ar": "واقع معزز"
+      },
+      "priorities": [
+        "regions",
+        "pedagogy",
+        "concepts",
+        "experiences",
+        "iconography"
+      ],
+      "preferredChannels": [
+        "ar",
+        "space-ar",
+        "video",
+        "3d",
+        "vr",
+        "geo",
+        "book",
+        "web",
+        "vr-world"
+      ],
+      "maxConcepts": 5,
+      "maxPedagogy": 4,
+      "maxExperiences": 5,
+      "maxRegions": 4
+    },
+    "vr": {
+      "label": {
+        "fr": "VR",
+        "en": "VR",
+        "ar": "واقع افتراضي"
+      },
+      "priorities": [
+        "experiences",
+        "pedagogy",
+        "concepts",
+        "iconography",
+        "regions"
+      ],
+      "preferredChannels": [
+        "vr",
+        "3d",
+        "vr-world",
+        "geo",
+        "video",
+        "ar",
+        "space-ar",
+        "book",
+        "web"
+      ],
+      "maxConcepts": 6,
+      "maxPedagogy": 5,
+      "maxExperiences": 7,
+      "maxRegions": 4
+    },
+    "geo": {
+      "label": {
+        "fr": "GEO",
+        "en": "GEO",
+        "ar": "جغرافي"
+      },
+      "priorities": [
+        "experiences",
+        "iconography",
+        "pedagogy",
+        "concepts",
+        "regions"
+      ],
+      "preferredChannels": [
+        "geo",
+        "vr",
+        "3d",
+        "space-ar",
+        "ar",
+        "video",
+        "book",
+        "web",
+        "vr-world"
+      ],
+      "maxConcepts": 5,
+      "maxPedagogy": 4,
+      "maxExperiences": 7,
+      "maxRegions": 3
+    },
+    "3d": {
+      "label": {
+        "fr": "3D",
+        "en": "3D",
+        "ar": "ثلاثي الأبعاد"
+      },
+      "priorities": [
+        "experiences",
+        "pedagogy",
+        "concepts",
+        "regions",
+        "iconography"
+      ],
+      "preferredChannels": [
+        "3d",
+        "vr",
+        "space-ar",
+        "geo",
+        "video",
+        "ar",
+        "book",
+        "web",
+        "vr-world"
+      ],
+      "maxConcepts": 6,
+      "maxPedagogy": 5,
+      "maxExperiences": 7,
+      "maxRegions": 4
+    }
+  },
+  "runtimeAliases": {
+    "artworkSlugs": {
+      "mona-lisa": "ld01",
+      "vermeer-girl-with-a-pearl-earring": "ve01",
+      "van-gogh": "vg01",
+      "impression-sunrise": "mo01",
+      "impression-sunrise-monet": "mo01"
+    },
+    "museumSlugs": {
+      "louvre": "museum.louvre"
+    },
+    "artistSlugs": {
+      "leonardo": "artist.leonardo-da-vinci",
+      "da-vinci": "artist.leonardo-da-vinci",
+      "vermeer": "artist.johannes-vermeer",
+      "van-gogh": "artist.vincent-van-gogh",
+      "vangogh": "artist.vincent-van-gogh",
+      "monet": "artist.claude-monet"
+    }
+  },
+  "outputContract": {
+    "fields": [
+      "context",
+      "focus",
+      "spatial",
+      "hotspots",
+      "concepts",
+      "iconography",
+      "pedagogy",
+      "experiences",
+      "next"
+    ],
+    "notes": "Semantic Runtime responses are contextual recommendations, not new factual assertions. Spatial hotspot geometry is derived from IIIF normalized canvases and projected into the MindAR image-target coordinate system. Pedagogical links remain explicitly editorial ARTDACI relations."
+  }
+}

@@ -1,4 +1,4 @@
-# ARTDACI Semantic POC V2.5
+# ARTDACI Semantic POC V2.8
 
 This folder adds an isolated semantic knowledge layer to ARTDACI without changing the existing media manifests.
 
@@ -6,7 +6,7 @@ This folder adds an isolated semantic knowledge layer to ARTDACI without changin
 
 The POC demonstrates how ARTDACI can connect artworks through concepts and explicit semantic relations rather than only through pages, artists, or museums.
 
-V2.5 supports:
+V2.8 supports:
 - a trilingual FR / EN / AR concept graph;
 - 50 curated concepts;
 - eight relation types: broader, narrower, related, enables, expresses, contrastsWith, associatedWith, dependsOn;
@@ -65,7 +65,7 @@ Each assertion carries a weight between 0 and 1.
 
 ## Related-artwork score
 
-V2.5 uses weighted Jaccard similarity:
+V2.8 uses weighted Jaccard similarity:
 
 `sum(min(weightA, weightB)) / sum(max(weightA, weightB))`
 
@@ -85,9 +85,9 @@ These paths are shown in the UI to explain why two works can be semantically rel
 
 ## Interactive link graph
 
-V2.5 adds a dependency-free SVG graph to the semantic page.
+V2.8 adds a dependency-free SVG graph to the semantic page.
 
-V2.5 makes the graph the primary navigation surface. The page opens with the current artwork as its central node and displays its highest-weight concepts around it. Selecting a concept recenters the graph and simultaneously updates a compact contextual inspector rather than opening a separate long section.
+V2.8 makes the graph the primary navigation surface. The page opens with the current artwork as its central node and displays its highest-weight concepts around it. Selecting a concept recenters the graph and simultaneously updates a compact contextual inspector rather than opening a separate long section.
 
 Filters can show or hide:
 - periods;
@@ -102,7 +102,7 @@ The graph intentionally limits the visible neighborhood rather than rendering th
 
 ## External source integration
 
-V2.5 begins real linked-data integration while keeping ARTDACI editorial content as the presentation authority.
+V2.8 begins real linked-data integration while keeping ARTDACI editorial content as the presentation authority.
 
 ### Wikidata
 
@@ -143,7 +143,7 @@ Files:
 
 ## External graph expansion
 
-V2.5 adds a clear two-layer graph model:
+V2.8 adds a clear two-layer graph model:
 
 - **ARTDACI reviewed layer**: local concepts and relations curated by ARTDACI.
 - **External proposed layer**: on-demand suggestions from mapped Wikidata and Getty AAT records.
@@ -160,7 +160,7 @@ Clicking an external graph node opens the authoritative provider record rather t
 
 Memodata / The Integral Dictionary, WordNet, Wikidata, Getty AAT, and museum sources are modeled only as prospective providers.
 
-V2.5 performs no scraping and requires no external semantic API.
+V2.8 performs no scraping and requires no external semantic API.
 
 External semantic providers must only be activated after their current API access conditions, licensing, attribution requirements and reuse rights have been verified.
 
@@ -171,7 +171,7 @@ External semantic providers must only be activated after their current API acces
 - `/semantic/?artwork=vg01&lang=fr`
 - `/semantic/?artwork=mo01&lang=ar`
 
-## Future V2.5 / V2
+## Future V2.8 / V2
 
 Possible next steps:
 - review concept vocabulary against Getty AAT and other controlled vocabularies;
@@ -184,7 +184,7 @@ Possible next steps:
 
 ## Public reader mode and future curation
 
-V2.5 deliberately removes all approve/reject/review controls from the public semantic page.
+V2.8 deliberately removes all approve/reject/review controls from the public semantic page.
 
 For readers, Getty AAT and Wikidata remain an **exploration layer**:
 - external nodes are hidden by default;
@@ -198,7 +198,7 @@ A future curator-only route such as `/semantic/admin/` may reuse `schema/semanti
 
 ## Cultural Knowledge Graph
 
-V2.5 extends the semantic layer beyond Artwork ↔ Concept relationships.
+V2.8 extends the semantic layer beyond Artwork ↔ Concept relationships.
 
 New entity types:
 - `artist`
@@ -234,7 +234,7 @@ ARTDACI remains the pedagogical presentation layer; external authority records e
 
 ## Linked Art interoperability
 
-V2.5 adds a server-side Linked Art JSON-LD representation for ARTDACI artworks, cultural entities and concepts.
+V2.8 adds a server-side Linked Art JSON-LD representation for ARTDACI artworks, cultural entities and concepts.
 
 Endpoint:
 
@@ -262,7 +262,7 @@ The reader UI provides a compact **Linked Art JSON-LD** link in the contextual s
 
 ## IIIF semantic image regions
 
-V2.5 adds a focused IIIF pilot for the Mona Lisa (`ld01`) without changing the compact page layout.
+V2.8 adds a focused IIIF pilot for the Mona Lisa (`ld01`) without changing the compact page layout.
 
 ### Pilot model
 
@@ -300,7 +300,7 @@ The IIIF Manifest remains accessible as a technical/interoperability link, while
 
 ## IIIF Pilot Collection
 
-V2.5 extends the image-region pilot from the Mona Lisa to all four semantic pilot artworks:
+V2.8 extends the image-region pilot from the Mona Lisa to all four semantic pilot artworks:
 
 - `ld01` — Mona Lisa;
 - `ve01` — Girl with a Pearl Earring;
@@ -332,7 +332,7 @@ The existing **Explore image** interaction automatically appears for every artwo
 
 ## Iconography and depicted subjects
 
-V2.5 adds a distinct iconographic layer so that ARTDACI can separate **what is represented** from **how it is painted**.
+V2.8 adds a distinct iconographic layer so that ARTDACI can separate **what is represented** from **how it is painted**.
 
 The pilot contains **16 iconographic subjects, motifs, and depicted objects**, linked to the four artworks and to twelve IIIF image regions.
 
@@ -385,7 +385,7 @@ Twelve IIIF regions now have iconographic links in addition to formal semantic c
 
 ## Cross-media semantic navigation
 
-V2.5 turns the semantic graph into a transversal navigation layer across ARTDACI experiences.
+V2.8 turns the semantic graph into a transversal navigation layer across ARTDACI experiences.
 
 A dedicated mapping file, `content/semantics/experience-links.json`, links semantic node IDs to real ARTDACI destinations. The pilot maps **13 semantic nodes to 41 experiences** across:
 
@@ -426,7 +426,7 @@ The semantic graph therefore acts as the navigation backbone between the knowled
 
 ## ARTDACI pedagogical relations
 
-V2.5 adds a proprietary pedagogical layer that is intentionally distinct from factual, taxonomic, and external linked-data relations.
+V2.8 adds a proprietary pedagogical layer that is intentionally distinct from factual, taxonomic, and external linked-data relations.
 
 The pilot contains **24 pedagogical relations** across six learning intentions:
 
@@ -481,7 +481,7 @@ The pedagogical layer is editorial ARTDACI content. It is not presented as a Get
 
 ## Natural-language hybrid semantic search
 
-V2.5 upgrades the compact keyword search into a trilingual natural-language semantic query layer.
+V2.8 upgrades the compact keyword search into a trilingual natural-language semantic query layer.
 
 The pilot recognizes five query intentions:
 
@@ -509,7 +509,7 @@ The local vector layer is deliberately small and dependency-free. It is a fallba
 
 ### Optional neural embeddings
 
-V2.5 also adds an optional server adapter:
+V2.8 also adds an optional server adapter:
 
 - `/api/semantic-embeddings`
 - `scripts/semantics/embedding-client.mjs`
@@ -533,3 +533,167 @@ The same query can return:
 - direct ARTDACI experiences — AR, VR, GEO, 3D, book, or video.
 
 This makes search a second navigation entry point into the same semantic and immersive continuum already exposed by the graph.
+
+
+## Semantic Runtime
+
+V2.8 turns the semantic knowledge layer into a shared runtime for ARTDACI immersive surfaces.
+
+### Context resolution
+
+The runtime is exposed through:
+
+- `/api/semantic-runtime`
+- `scripts/semantics/semantic-runtime-client.mjs`
+- `content/semantics/runtime-contexts.json`
+
+A client can resolve a semantic context with:
+
+`nodeId | slug + resourceType + environment + lang + optional regionId`
+
+The current environments are:
+
+- `web`;
+- `book`;
+- `ar`;
+- `vr`;
+- `geo`;
+- `3d`.
+
+Each environment defines a different priority order, preferred experience channels, and output limits. This means that the same semantic node can generate a different contextual response depending on whether the reader is on the Web, scanning the printed book in AR, navigating a VR scene, or exploring a museum in GEO.
+
+### Runtime output
+
+The runtime response contains:
+
+- `focus` — resolved semantic node;
+- `hotspots` — IIIF regions with normalized 0–1 geometry for immersive overlays;
+- `concepts` — prioritized concepts for the current artwork or region;
+- `iconography` — depicted subjects and motifs;
+- `pedagogy` — ARTDACI learning relations and observation questions;
+- `experiences` — immersive destinations ranked by environment;
+- `next` — compact semantic or immersive continuation paths.
+
+Normalized hotspot geometry is derived from the stable IIIF virtual Canvas, so the same region definitions can be reused by Web, MindAR, WebXR, and future spatial interfaces.
+
+### First immersive consumers
+
+V2.8 integrates the shared runtime into four existing surfaces:
+
+1. **Image AR** — `ar.html`
+2. **Individual VR / WebXR** — `vr.html`
+3. **ARTDACI GEO Louvre** — `geo/remote.html`
+4. **Masters Hub 3D guides** — `geo/masters-hub.html?guide=...`
+
+The semantic runtime is non-blocking: if its API cannot load, the AR/VR/GEO/3D experience continues normally.
+
+Each supported surface displays a compact **Semantic** button. Its contextual panel exposes hotspots, concepts, a pedagogical question, continuation links, and a link back to the full semantic graph.
+
+### Deep links
+
+The Web semantic reader now supports semantic node deep links:
+
+`/semantic/?lang=fr&node=artist.vincent-van-gogh`
+
+and keeps the existing region deep links:
+
+`/semantic/?artwork=ld01&lang=fr&region=ld01.face`
+
+This makes the navigation bidirectional: immersive environments can enter the knowledge graph at the current semantic node, while the graph can route back into AR/VR/GEO/3D experiences.
+
+The Semantic Runtime does not create new factual assertions. It resolves and prioritizes existing ARTDACI semantic, iconographic, pedagogical, IIIF, and experience data according to the current environment.
+
+
+## Semantic hotspots in image-tracked AR
+
+V2.8 projects the existing IIIF semantic regions directly into the MindAR image-target coordinate system.
+
+The Semantic Runtime now exposes a `spatial` block containing:
+- the source IIIF Canvas width and height;
+- the image aspect ratio;
+- a MindAR target width normalized to `1`;
+- the corresponding target height derived from the Canvas aspect ratio.
+
+Each hotspot already contains normalized `x`, `y`, `width`, and `height` values. The AR hotspot module converts these values into target-local coordinates centered on the tracked painting.
+
+### Runtime behavior
+
+The new module:
+
+`scripts/semantics/semantic-ar-hotspots.mjs`
+
+creates, for each IIIF region:
+- a transparent raycastable plane;
+- a visible semantic outline;
+- a compact multilingual label;
+- a stable target-local position that follows the tracked image.
+
+Hotspot geometry is rendered with depth testing disabled so the semantic overlay remains visible above the 3D layer without changing the underlying artwork or model.
+
+### Direct interaction
+
+When the user touches a semantic region:
+1. the selected region is visually highlighted;
+2. the ordinary model-rotation gesture is suppressed for that tap;
+3. ARTDACI requests region-specific context from `/api/semantic-runtime`;
+4. the information panel displays the region description;
+5. up to five associated concepts are shown;
+6. the most relevant ARTDACI pedagogical observation question is displayed.
+
+A **Regions / Régions / المناطق** control in the AR dock lets the user show or hide the semantic overlay.
+
+The hotspot layer is non-blocking. If semantic data or the runtime API is unavailable, image tracking, 3D content, audio, video, and existing AR interaction continue normally.
+
+### Current pilot
+
+The system activates only when the current artwork has IIIF semantic regions. The existing four-region pilots for Mona Lisa, Girl with a Pearl Earring, Van Gogh Self-Portrait (1889), and Impression, Sunrise are therefore immediately compatible at the semantic-data level; only artworks currently routed through the image-AR viewer can display them in camera.
+
+This is the first step toward using the same regions for AR labels, contextual narration, semantic animations, and future WebXR spatial annotations.
+
+
+## Semantic constellation in VR / WebXR
+
+V2.8 extends the shared Semantic Runtime into the individual VR viewer with an in-world semantic constellation.
+
+The new module:
+
+`scripts/semantics/semantic-vr-constellation.mjs`
+
+uses the contextual concepts already returned by `/api/semantic-runtime?environment=vr`.
+
+### In-world behavior
+
+Up to five priority concepts are arranged around the 3D artwork as compact spatial nodes. The constellation follows the same `modelRoot`, so moving, rotating, or resizing the artwork also preserves the semantic context around it.
+
+Each node contains:
+- a raycastable semantic target;
+- a visible ring;
+- a multilingual concept label.
+
+A floating information card displays:
+- the selected concept;
+- its definition;
+- the most relevant ARTDACI pedagogical observation question when available.
+
+### Controller interaction
+
+In immersive VR, controller selection now follows this priority:
+
+1. semantic concept node;
+2. artwork/model grab.
+
+This prevents a semantic selection from accidentally moving the 3D model. All descendants of the semantic constellation are explicitly excluded from the model-grab raycast.
+
+The same semantic nodes are selectable with the mouse or pointer in the normal desktop VR preview, making the feature testable without entering a headset.
+
+### Visibility
+
+A **Notions / Concepts / المفاهيم** control is added to the VR toolbar. It toggles the in-world constellation without disabling the existing Semantic Runtime panel.
+
+The semantic constellation is non-blocking: if the runtime API or semantic data is unavailable, the existing VR model, manipulation controls, and WebXR session continue normally.
+
+V2.8 therefore establishes a shared semantic interaction pattern across immersive modes:
+
+`IIIF region → AR hotspot → concept → VR constellation → pedagogical question → semantic graph / next experience`.
+
+This makes the knowledge graph not only a Web navigation structure but an active spatial layer inside ARTDACI's immersive interfaces.

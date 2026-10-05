@@ -33,7 +33,7 @@ import { rerankWithNeuralEmbeddings } from "./embedding-client.mjs";
 
 const UI = {
   fr: {
-    eyebrow: "ARTDACI Semantic · V2.5",
+    eyebrow: "ARTDACI Semantic · V2.8",
     title: "Explorer l’art par les relations",
     intro: "Naviguez directement dans le graphe : œuvres, techniques, mouvements et concepts se répondent dans un même espace.",
     choose: "Œuvre",
@@ -74,7 +74,7 @@ const UI = {
     artworkOverview: "Vue d’ensemble",
     openProfile: "Voir le profil détaillé",
     source: "Définition éditoriale ARTDACI",
-    provider: "Memodata / TID prévu comme provider potentiel, désactivé dans V2.5",
+    provider: "Memodata / TID prévu comme provider potentiel, désactivé dans V2.8",
     externalSources: "Sources externes",
     sourceLoading: "Vérification des sources…",
     sourceUnavailable: "Source momentanément indisponible",
@@ -185,7 +185,7 @@ const UI = {
     fromDetailToConceptIncoming: "compris à partir du détail"
   },
   en: {
-    eyebrow: "ARTDACI Semantic · V2.5",
+    eyebrow: "ARTDACI Semantic · V2.8",
     title: "Explore art through relationships",
     intro: "Navigate directly through the graph: artworks, techniques, movements, and concepts share one compact workspace.",
     choose: "Artwork",
@@ -226,7 +226,7 @@ const UI = {
     artworkOverview: "Overview",
     openProfile: "View detailed profile",
     source: "ARTDACI editorial definition",
-    provider: "Memodata / TID is modeled as a potential provider and remains disabled in V2.5",
+    provider: "Memodata / TID is modeled as a potential provider and remains disabled in V2.8",
     externalSources: "External sources",
     sourceLoading: "Checking sources…",
     sourceUnavailable: "Source temporarily unavailable",
@@ -337,7 +337,7 @@ const UI = {
     fromDetailToConceptIncoming: "understood from the detail"
   },
   ar: {
-    eyebrow: "ARTDACI Semantic · V2.5",
+    eyebrow: "ARTDACI Semantic · V2.8",
     title: "استكشاف الفن عبر العلاقات",
     intro: "تنقل مباشرة داخل الشبكة: الأعمال والتقنيات والحركات والمفاهيم ضمن مساحة واحدة ومكثفة.",
     choose: "العمل",
@@ -378,7 +378,7 @@ const UI = {
     artworkOverview: "نظرة عامة",
     openProfile: "عرض الملف المفصل",
     source: "تعريف تحريري من ARTDACI",
-    provider: "Memodata / TID مزود محتمل ويبقى معطلاً في V2.5",
+    provider: "Memodata / TID مزود محتمل ويبقى معطلاً في V2.8",
     externalSources: "المصادر الخارجية",
     sourceLoading: "جارٍ التحقق من المصادر…",
     sourceUnavailable: "المصدر غير متاح مؤقتًا",
@@ -2159,6 +2159,15 @@ try {
   wireProfile();
   wireImageExplorer();
   wireSearch();
+
+  const requestedNode = params.get("node");
+  if (requestedNode) {
+    const resolved = resolveKnowledgeNode(semanticData, requestedNode);
+    if (resolved?.kind === "entity") setInspectorEntity(requestedNode, true);
+    else if (resolved?.kind === "iconography") setInspectorIconography(requestedNode, true);
+    else if (resolved?.kind === "concept") setInspectorConcept(requestedNode, true);
+    else if (resolved?.kind === "artwork" && requestedNode !== artwork.id) location.href = urlFor(requestedNode);
+  }
 
   const requestedRegion = params.get("region");
   if (requestedRegion) {

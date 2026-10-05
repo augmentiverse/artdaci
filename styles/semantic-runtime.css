@@ -1,0 +1,98 @@
+/* ARTDACI Semantic Runtime V2.6 */
+.semantic-runtime-trigger {
+  min-height: 34px;
+  padding: 7px 10px;
+  border: 1px solid rgba(214, 176, 111, 0.7);
+  border-radius: 999px;
+  background: rgba(29, 26, 22, 0.88);
+  color: #f7e7c8;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+
+.semantic-runtime-trigger:hover,
+.semantic-runtime-trigger:focus-visible,
+.semantic-runtime-trigger[aria-expanded="true"] {
+  background: #f0d5aa;
+  color: #33271b;
+  outline: none;
+}
+
+.semantic-runtime-panel {
+  position: fixed;
+  z-index: 120;
+  inset-inline-end: 14px;
+  bottom: 66px;
+  width: min(360px, calc(100vw - 28px));
+  max-height: min(68vh, 620px);
+  overflow: auto;
+  padding: 13px;
+  border: 1px solid rgba(227, 203, 164, 0.5);
+  border-radius: 15px;
+  background: rgba(19, 18, 17, 0.96);
+  color: #f8f5ef;
+  box-shadow: 0 18px 55px rgba(0,0,0,.38);
+  backdrop-filter: blur(16px);
+}
+
+.semantic-runtime-panel[hidden] { display: none; }
+
+.semantic-runtime-panel-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: start;
+  padding-bottom: 9px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+.semantic-runtime-panel-head div { display: grid; gap: 2px; }
+.semantic-runtime-panel-head small { color: #d4b77f; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+.semantic-runtime-panel-head strong { font-size: 18px; line-height: 1.1; }
+.semantic-runtime-panel-head button {
+  width: 30px; height: 30px; border-radius: 50%; border: 1px solid rgba(255,255,255,.18);
+  background: transparent; color: #fff; font-size: 20px; cursor: pointer;
+}
+
+.semantic-runtime-panel section { margin-top: 12px; }
+.semantic-runtime-panel h3 { margin: 0 0 6px; color: #d4b77f; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; }
+.semantic-runtime-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.semantic-runtime-chips a,
+.semantic-runtime-chips span {
+  padding: 5px 7px; border: 1px solid rgba(255,255,255,.14); border-radius: 999px;
+  background: rgba(255,255,255,.06); color: #f7f3ec; font-size: 10px; text-decoration: none;
+}
+.semantic-runtime-chips a:hover { border-color: #d4b77f; }
+
+.semantic-runtime-question {
+  padding: 9px;
+  border: 1px solid rgba(212,183,127,.32);
+  border-radius: 9px;
+  background: rgba(212,183,127,.08);
+}
+.semantic-runtime-question p { margin: 0; color: #f5ead9; font-size: 12px; line-height: 1.45; }
+
+.semantic-runtime-next { display: grid; gap: 5px; }
+.semantic-runtime-next a {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 7px 8px; border: 1px solid rgba(255,255,255,.12); border-radius: 8px;
+  color: #fff; text-decoration: none; background: rgba(255,255,255,.04);
+}
+.semantic-runtime-next a:hover { border-color: #d4b77f; }
+.semantic-runtime-next strong { font-size: 11px; }
+.semantic-runtime-next small { color: #b9b3aa; font-size: 9px; }
+
+.semantic-runtime-open {
+  display: block; margin-top: 12px; padding: 9px 10px; border-radius: 9px;
+  background: #d4b77f; color: #2b241b; font-size: 11px; font-weight: 850; text-align: center; text-decoration: none;
+}
+
+[dir="rtl"] .semantic-runtime-panel { direction: rtl; }
+
+@media (max-width: 600px) {
+  .semantic-runtime-panel { inset-inline: 8px; width: auto; bottom: 74px; max-height: 62vh; }
+  .semantic-runtime-trigger { padding-inline: 8px; font-size: 11px; }
+}

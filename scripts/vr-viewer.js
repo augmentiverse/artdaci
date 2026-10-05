@@ -4,6 +4,8 @@ import { DRACOLoader } from "../vendor/DRACOLoader.module.js";
 import { fetchArtworkManifest } from "./artwork-media-manifest.js";
 import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
 import { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./catalogue.js";
+import { mountSemanticRuntimePanel, resolveSemanticRuntime } from "./semantics/semantic-runtime-client.mjs?v=1";
+import { createSemanticVrConstellation } from "./semantics/semantic-vr-constellation.mjs?v=1";
 
 const PAINTINGS = {
   "mona-lisa": "content/paintings/mona-lisa.json?v=5",
@@ -140,6 +142,8 @@ let currentVariantIndex = -1;
 let initialVariantIndex = 0;
 let initialModelLoadPromise = null;
 let deferInitialModel = false;
+let semanticRuntimePromise = null;
+let semanticConstellation = null;
 
 init();
 
@@ -154,6 +158,15 @@ async function init() {
   }
   addControllers();
   bindUI();
+  semanticRuntimePromise = resolveSemanticRuntime({
+    slug,
+    resourceType: "painting",
+    environment: "vr",
+    lang
+  }).catch((error) => {
+    console.warn("Semantic VR runtime unavailable; viewer continues normally.", error);
+    return null;
+  });
 
   try {
     const response = await fetch(PAINTINGS[slug], { cache: "reload" });
@@ -174,6 +187,14 @@ async function init() {
       await ensureInitialModel();
     }
     await detectVR();
+    void setupSemanticVrConstellation();
+    void mountSemanticRuntimePanel({
+      anchor: document.querySelector(".vr-toolbar"),
+      slug,
+      resourceType: "painting",
+      environment: "vr",
+      lang
+    });
   } catch (error) {
     console.error(error);
     status.textContent = `${text.failed} ${error.message}`;
@@ -394,6 +415,12 @@ function normalizeModel(object) {
 
 function bindUI() {
   enterButton.addEventListener("click", toggleVR);
+  renderer.domElement.addEventListener("pointerdown", (event) => {
+    if (selectSemanticWithPointer(event)) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }
+  }, true);
   resetButton.addEventListener("click", () => {
     if (modelObject) resetModel();
     else ensureInitialModel().catch(showError);
@@ -438,7 +465,10 @@ async function toggleVR() {
 function addControllers() {
   controllers.forEach((controller, index) => {
     controller.userData.index = index;
-    controller.addEventListener("selectstart", () => startGrab(index));
+    controller.addEventListener("selectstart", () => {
+      if (selectSemanticWithController(index)) return;
+      startGrab(index);
+    });
     controller.addEventListener("selectend", () => endGrab(index));
 
     const geometry = new THREE.BufferGeometry().setFromPoints([
@@ -452,12 +482,87 @@ function addControllers() {
   });
 }
 
-function controllerHitsModel(controller) {
-  if (!modelObject) return false;
+async function setupSemanticVrConstellation() {
+  try {
+    const runtime = await semanticRuntimePromise;
+    if (!runtime?.concepts?.length) return;
+    semanticConstellation?.dispose?.();
+    semanticConstellation = createSemanticVrConstellation({
+      parent: modelRoot,
+      runtime,
+      lang
+    });
+    renderSemanticConstellationToggle();
+  } catch (error) {
+    console.warn("Semantic VR constellation unavailable; viewer continues normally.", error);
+  }
+}
+
+function renderSemanticConstellationToggle() {
+  const toolbar = document.querySelector(".vr-toolbar");
+  if (!toolbar || !semanticConstellation || document.getElementById("semantic-vr-toggle")) return;
+  const button = document.createElement("button");
+  button.id = "semantic-vr-toggle";
+  button.type = "button";
+  button.className = "semantic-runtime-trigger";
+  button.textContent = lang === "ar" ? "المفاهيم" : lang === "fr" ? "Notions" : "Concepts";
+  button.setAttribute("aria-pressed", "true");
+  button.addEventListener("click", () => {
+    const visible = semanticConstellation.group.visible;
+    semanticConstellation.setVisible(!visible);
+    button.setAttribute("aria-pressed", String(!visible));
+  });
+  toolbar.appendChild(button);
+}
+
+function setControllerRay(controller) {
   rayMatrix.identity().extractRotation(controller.matrixWorld);
   raycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
   raycaster.ray.direction.set(0, 0, -1).applyMatrix4(rayMatrix).normalize();
-  return raycaster.intersectObject(modelRoot, true).length > 0;
+}
+
+function selectSemanticWithController(index) {
+  if (!semanticConstellation?.group?.visible) return false;
+  const controller = controllers[index];
+  setControllerRay(controller);
+  const concept = semanticConstellation.intersect(raycaster);
+  if (!concept) return false;
+  semanticConstellation.select(concept);
+  status.textContent = concept.label;
+  return true;
+}
+
+function selectSemanticWithPointer(event) {
+  if (!semanticConstellation?.group?.visible || renderer.xr.isPresenting) return false;
+  const rect = renderer.domElement.getBoundingClientRect();
+  if (!rect.width || !rect.height) return false;
+  const pointer = new THREE.Vector2(
+    ((event.clientX - rect.left) / rect.width) * 2 - 1,
+    -(((event.clientY - rect.top) / rect.height) * 2 - 1)
+  );
+  raycaster.setFromCamera(pointer, camera);
+  const concept = semanticConstellation.intersect(raycaster);
+  if (!concept) return false;
+  semanticConstellation.select(concept);
+  status.textContent = concept.label;
+  return true;
+}
+
+function isSemanticVrObject(object) {
+  let current = object;
+  while (current) {
+    if (current.name === "semantic-vr-constellation" || current.name?.startsWith("semantic-vr-node-")) return true;
+    current = current.parent;
+  }
+  return false;
+}
+
+function controllerHitsModel(controller) {
+  if (!modelObject) return false;
+  setControllerRay(controller);
+  const intersections = raycaster.intersectObject(modelRoot, true)
+    .filter((item) => !isSemanticVrObject(item.object));
+  return intersections.length > 0;
 }
 
 function startGrab(index) {

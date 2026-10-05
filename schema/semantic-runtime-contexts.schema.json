@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://artdaci.com/schema/semantic-runtime-contexts.schema.json",
+  "title": "ARTDACI Semantic Runtime Contexts",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "environments",
+    "runtimeAliases",
+    "outputContract"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "environments": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "label",
+          "priorities",
+          "preferredChannels",
+          "maxConcepts",
+          "maxPedagogy",
+          "maxExperiences",
+          "maxRegions"
+        ],
+        "properties": {
+          "label": {
+            "$ref": "#/$defs/i18n"
+          },
+          "priorities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "preferredChannels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "maxConcepts": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "maxPedagogy": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "maxExperiences": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "maxRegions": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "runtimeAliases": {
+      "type": "object"
+    },
+    "outputContract": {
+      "type": "object"
+    }
+  },
+  "$defs": {
+    "i18n": {
+      "type": "object",
+      "required": [
+        "fr",
+        "en",
+        "ar"
+      ],
+      "properties": {
+        "fr": {
+          "type": "string"
+        },
+        "en": {
+          "type": "string"
+        },
+        "ar": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

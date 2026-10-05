@@ -6,6 +6,8 @@ import { fetchArtworkManifest } from "./artwork-media-manifest.js?v=4";
 import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
 import { formatArtworkNumber } from "./artwork-numbering.js?v=1";
 import { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./immersive-routing.js?v=1";
+import { mountSemanticRuntimePanel, resolveSemanticRuntime } from "./semantics/semantic-runtime-client.mjs?v=1";
+import { createSemanticArHotspots } from "./semantics/semantic-ar-hotspots.mjs?v=1";
 
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath("vendor/draco/");
@@ -76,6 +78,11 @@ const UI_TEXT = {
     rotate: "Rotate",
     reset: "Reset",
     modelChoice: "Model choice",
+    semanticRegions: "Regions",
+    hideSemanticRegions: "Hide regions",
+    semanticRegion: "Semantic region",
+    semanticConcepts: "Concepts",
+    semanticQuestion: "Observation question",
     noVideoTitle: "No video",
     noVideoBody: "This painting does not have a video layer yet.",
     videoReadyTitle: "Video ready",
@@ -128,6 +135,11 @@ const UI_TEXT = {
     rotate: "Rotation",
     reset: "Réinitialiser",
     modelChoice: "Choix du modèle",
+    semanticRegions: "Régions",
+    hideSemanticRegions: "Masquer régions",
+    semanticRegion: "Région sémantique",
+    semanticConcepts: "Notions",
+    semanticQuestion: "Question d’observation",
     noVideoTitle: "Aucune vidéo",
     noVideoBody: "Cette peinture n'a pas encore de couche vidéo.",
     videoReadyTitle: "Vidéo prête",
@@ -183,6 +195,11 @@ UI_TEXT.ar = {
   rotate: "تدوير",
   reset: "إعادة الضبط",
   modelChoice: "اختيار النموذج",
+  semanticRegions: "المناطق",
+  hideSemanticRegions: "إخفاء المناطق",
+  semanticRegion: "منطقة دلالية",
+  semanticConcepts: "المفاهيم",
+  semanticQuestion: "سؤال للملاحظة",
   noVideoTitle: "لا يوجد فيديو",
   noVideoBody: "لا تحتوي هذه اللوحة على طبقة فيديو حالياً.",
   videoReadyTitle: "الفيديو جاهز",
@@ -459,6 +476,9 @@ const state = {
   clock: null,
   manifest: null,
   mediaContext: null,
+  semanticRuntimePromise: null,
+  semanticHotspots: null,
+  semanticHotspotsVisible: true,
   started: false
 };
 
@@ -481,6 +501,22 @@ async function init() {
     return;
   }
   await loadManifest();
+  state.semanticRuntimePromise = resolveSemanticRuntime({
+    slug: CONFIG.slug,
+    resourceType: CONFIG.resourceType,
+    environment: "ar",
+    lang: CONFIG.lang
+  }).catch((error) => {
+    console.warn("Semantic runtime preload unavailable; AR continues without hotspots.", error);
+    return null;
+  });
+  void mountSemanticRuntimePanel({
+    anchor: document.querySelector(".mini-dock"),
+    slug: CONFIG.slug,
+    resourceType: CONFIG.resourceType,
+    environment: "ar",
+    lang: CONFIG.lang
+  });
   setStartupMessage(t("ready"));
   startButton.disabled = false;
 }
@@ -555,6 +591,7 @@ function applyStaticLanguage() {
     document.getElementById("space-link").href = `space.html?${CONFIG.resourceType}=${CONFIG.slug}&lang=${CONFIG.lang}&v=14`;
   }
   document.getElementById("panel-kicker").textContent = t("catalogue");
+  document.getElementById("info-panel").classList.remove("semantic-region-active");
 }
 
 function localizeManifest(manifest) {
@@ -1168,11 +1205,15 @@ async function startAR() {
     // Museum targets reveal their architectural GLB directly. The printed
     // museum image is used only as a last-resort fallback if that model fails.
     if (CONFIG.resourceType !== "museum") addTrackingPreview(state.contentGroup).catch(() => {});
+    if (CONFIG.resourceType === "painting") {
+      void setupSemanticArHotspots(camera, root);
+    }
 
     state.anchor.onTargetFound = () => {
       state.targetFoundOnce = true;
       state.targetTracked = true;
       state.contentGroup.visible = true;
+      state.semanticHotspots?.setVisible(state.semanticHotspotsVisible && state.targetTracked);
       setTrackingStatus(true);
       showHotspot("intro");
       if (!state.modelLoaded) {
@@ -1183,6 +1224,7 @@ async function startAR() {
 
     state.anchor.onTargetLost = () => {
       state.targetTracked = false;
+      state.semanticHotspots?.setVisible(false);
       setTrackingStatus(false);
       state.contentGroup.visible = state.keepVisible && state.targetFoundOnce;
     };
@@ -1204,6 +1246,79 @@ async function startAR() {
     }
   } catch (error) {
     showStartupError(error);
+  }
+}
+
+async function setupSemanticArHotspots(camera, root) {
+  try {
+    const runtime = await (state.semanticRuntimePromise || resolveSemanticRuntime({
+      slug: CONFIG.slug,
+      resourceType: CONFIG.resourceType,
+      environment: "ar",
+      lang: CONFIG.lang
+    }));
+    if (!runtime?.hotspots?.length || !runtime?.spatial || !state.contentGroup) return;
+
+    state.semanticHotspots?.dispose?.();
+    state.semanticHotspots = createSemanticArHotspots({
+      parent: state.contentGroup,
+      runtime,
+      camera,
+      root,
+      lang: CONFIG.lang,
+      onSelect: (hotspot) => {
+        state.semanticHotspots?.select?.(hotspot.id);
+        void showSemanticRegion(hotspot);
+      }
+    });
+    if (!state.semanticHotspots) return;
+    state.semanticHotspots.setVisible(state.semanticHotspotsVisible && state.targetTracked);
+    renderSemanticHotspotToggle();
+  } catch (error) {
+    console.warn("Semantic AR hotspots unavailable; standard AR remains active.", error);
+  }
+}
+
+function renderSemanticHotspotToggle() {
+  const dock = document.querySelector(".mini-dock");
+  if (!dock || document.getElementById("semantic-hotspots-toggle")) return;
+  const button = document.createElement("button");
+  button.id = "semantic-hotspots-toggle";
+  button.type = "button";
+  button.className = state.semanticHotspotsVisible ? "active" : "";
+  button.textContent = state.semanticHotspotsVisible ? t("hideSemanticRegions") : t("semanticRegions");
+  button.addEventListener("click", () => {
+    state.semanticHotspotsVisible = !state.semanticHotspotsVisible;
+    state.semanticHotspots?.setVisible(state.semanticHotspotsVisible);
+    button.classList.toggle("active", state.semanticHotspotsVisible);
+    button.textContent = state.semanticHotspotsVisible ? t("hideSemanticRegions") : t("semanticRegions");
+  });
+  dock.appendChild(button);
+}
+
+async function showSemanticRegion(hotspot) {
+  const panel = document.getElementById("info-panel");
+  document.getElementById("panel-kicker").textContent = t("semanticRegion");
+  document.getElementById("panel-title").textContent = hotspot.label || state.manifest?.title || "ARTDACI";
+  document.getElementById("panel-body").textContent = hotspot.description || "";
+  panel.classList.add("semantic-region-active");
+  panel.classList.remove("collapsed");
+
+  try {
+    const context = await resolveSemanticRuntime({
+      regionId: hotspot.id,
+      environment: "ar",
+      lang: CONFIG.lang
+    });
+    const concepts = (context.concepts || []).slice(0, 5).map((item) => item.label).filter(Boolean);
+    const regionRelation = (context.pedagogy || []).find((item) => item.source === hotspot.id || item.target === hotspot.id);
+    const question = regionRelation?.prompt || (context.pedagogy || []).find((item) => item.prompt)?.prompt || "";
+    const parts = [hotspot.description || ""];
+    if (concepts.length) parts.push(`${t("semanticConcepts")} : ${concepts.join(" · ")}`);
+    if (question) parts.push(`${t("semanticQuestion")} : ${question}`);
+    document.getElementById("panel-body").textContent = parts.filter(Boolean).join("\n\n");
+  } catch (error) {
+    console.warn(`Semantic region context unavailable for ${hotspot.id}.`, error);
   }
 }
 
@@ -1532,6 +1647,7 @@ function setTrackingStatus(locked) {
 
 function showHotspot(id) {
   const panel = document.getElementById("info-panel");
+  panel.classList.remove("semantic-region-active");
   const hotspot = getHotspotContent(id);
   document.getElementById("panel-kicker").textContent = hotspot.kicker;
   document.getElementById("panel-title").textContent = hotspot.title;

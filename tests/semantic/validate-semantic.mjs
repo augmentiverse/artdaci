@@ -26,6 +26,8 @@ const pedagogyDoc = await readJson("content/semantics/pedagogical-relations.json
 const pedagogySchema = await readJson("schema/pedagogical-relations.schema.json");
 const queryHintsDoc = await readJson("content/semantics/query-aliases.json");
 const queryHintsSchema = await readJson("schema/semantic-query-aliases.schema.json");
+const runtimeContexts = await readJson("content/semantics/runtime-contexts.json");
+const runtimeSchema = await readJson("schema/semantic-runtime-contexts.schema.json");
 const iiifCollection = await readJson("iiif/collection.json");
 const iiifIds = ["ld01", "ve01", "vg01", "mo01"];
 const iiifManifests = Object.fromEntries(
@@ -44,6 +46,18 @@ const mastersHubViewer = await fs.readFile(path.join(root, "geo/scripts/masters-
 const mastersHubHtml = await fs.readFile(path.join(root, "geo/masters-hub.html"), "utf8");
 const embeddingClient = await fs.readFile(path.join(root, "scripts/semantics/embedding-client.mjs"), "utf8");
 const embeddingApi = await fs.readFile(path.join(root, "api/semantic-embeddings.js"), "utf8");
+const semanticRuntimeApi = await fs.readFile(path.join(root, "api/semantic-runtime.js"), "utf8");
+const semanticRuntimeClient = await fs.readFile(path.join(root, "scripts/semantics/semantic-runtime-client.mjs"), "utf8");
+const semanticRuntimeCss = await fs.readFile(path.join(root, "styles/semantic-runtime.css"), "utf8");
+const semanticArHotspots = await fs.readFile(path.join(root, "scripts/semantics/semantic-ar-hotspots.mjs"), "utf8");
+const semanticVrConstellation = await fs.readFile(path.join(root, "scripts/semantics/semantic-vr-constellation.mjs"), "utf8");
+const arCss = await fs.readFile(path.join(root, "styles/ar.css"), "utf8");
+const arViewer = await fs.readFile(path.join(root, "scripts/ar-viewer.js"), "utf8");
+const vrViewer = await fs.readFile(path.join(root, "scripts/vr-viewer.js"), "utf8");
+const arHtml = await fs.readFile(path.join(root, "ar.html"), "utf8");
+const vrHtml = await fs.readFile(path.join(root, "vr.html"), "utf8");
+const geoRemoteViewer = await fs.readFile(path.join(root, "geo/scripts/remote-viewer.js"), "utf8");
+const geoRemoteHtml = await fs.readFile(path.join(root, "geo/remote.html"), "utf8");
 
 const errors = [];
 const assert = (condition, message) => { if (!condition) errors.push(message); };
@@ -53,25 +67,25 @@ const artworkIds = artworksDoc.artworks.map((item) => item.id);
 const conceptSet = new Set(conceptIds);
 const artworkSet = new Set(artworkIds);
 
-assert(conceptIds.length === 50, "V2.5 must contain 50 concepts.");
+assert(conceptIds.length === 50, "V2.8 must contain 50 concepts.");
 assert(conceptSet.size === conceptIds.length, "Concept IDs must be unique.");
-assert(artworkIds.length === 4, "V2.5 must contain four pilot artworks.");
+assert(artworkIds.length === 4, "V2.8 must contain four pilot artworks.");
 assert(artworkSet.size === artworkIds.length, "Artwork IDs must be unique.");
-assert(culturalDoc.entities.length === 20, "V2.5 must contain 20 cultural entities.");
-assert(culturalDoc.relations.length === 31, "V2.5 must contain 31 cultural relations.");
+assert(culturalDoc.entities.length === 20, "V2.8 must contain 20 cultural entities.");
+assert(culturalDoc.relations.length === 31, "V2.8 must contain 31 cultural relations.");
 assert(culturalSchema.properties?.entities, "Cultural knowledge graph schema must describe entities.");
 assert(linkedArtSchema.properties?.["@context"]?.const === "https://linked.art/ns/v1/linked-art.json", "Linked Art schema must use the official context.");
 assert(imageAnnotationSchema.properties?.coordinateSystem?.const === "normalized-canvas", "Image annotations must use the normalized canvas model.");
-assert(iconographyDoc.subjects.length === 16, "V2.5 must contain sixteen iconographic subjects and motifs.");
-assert(iconographyDoc.artworkLinks.length === 16, "V2.5 must contain sixteen artwork-iconography links.");
-assert(iconographyDoc.regionLinks.length === 12, "V2.5 must connect twelve IIIF regions to iconography.");
+assert(iconographyDoc.subjects.length === 16, "V2.8 must contain sixteen iconographic subjects and motifs.");
+assert(iconographyDoc.artworkLinks.length === 16, "V2.8 must contain sixteen artwork-iconography links.");
+assert(iconographyDoc.regionLinks.length === 12, "V2.8 must connect twelve IIIF regions to iconography.");
 assert(iconographySchema.properties?.subjects, "Iconography schema must describe subjects.");
 const iconographyIds = new Set(iconographyDoc.subjects.map((item) => item.id));
 assert(iconographyIds.size === iconographyDoc.subjects.length, "Iconography IDs must be unique.");
 
 assert(experienceSchema.properties?.nodes, "Experience schema must describe semantic node links.");
-assert(experienceDoc.nodes.length === 13, "V2.5 must map thirteen semantic nodes to experiences.");
-assert(experienceDoc.nodes.reduce((sum, entry) => sum + entry.experiences.length, 0) === 41, "V2.5 must expose forty-one cross-media experience links.");
+assert(experienceDoc.nodes.length === 13, "V2.8 must map thirteen semantic nodes to experiences.");
+assert(experienceDoc.nodes.reduce((sum, entry) => sum + entry.experiences.length, 0) === 41, "V2.8 must expose forty-one cross-media experience links.");
 const experienceNodeIds = new Set(experienceDoc.nodes.map((entry) => entry.nodeId));
 assert(experienceNodeIds.has("ld01"), "Mona Lisa must expose cross-media experiences.");
 assert(experienceNodeIds.has("museum.louvre"), "Louvre must expose cross-media experiences.");
@@ -95,17 +109,26 @@ for (const entry of experienceDoc.nodes) {
 }
 const allRegionIds = new Set(imageAnnotations.artworks.flatMap((profile) => profile.regions.map((region) => region.id)));
 assert(pedagogySchema.properties?.relations, "Pedagogical schema must describe relations.");
-assert(pedagogyDoc.relationTypes.length === 6, "V2.5 must define six pedagogical relation types.");
-assert(pedagogyDoc.relations.length === 24, "V2.5 must contain twenty-four pedagogical relations.");
+assert(pedagogyDoc.relationTypes.length === 6, "V2.8 must define six pedagogical relation types.");
+assert(pedagogyDoc.relations.length === 24, "V2.8 must contain twenty-four pedagogical relations.");
 assert(queryHintsSchema.properties?.nodeAliases, "Query hints schema must describe node aliases.");
-assert(queryHintsDoc.intents.length === 5, "V2.5 must define five natural-language query intents.");
-assert(queryHintsDoc.nodeAliases.length === 23, "V2.5 must define twenty-three semantic query aliases.");
+assert(queryHintsDoc.intents.length === 5, "V2.8 must define five natural-language query intents.");
+assert(queryHintsDoc.nodeAliases.length === 23, "V2.8 must define twenty-three semantic query aliases.");
 for (const language of ["fr", "en", "ar"]) {
-  assert(queryHintsDoc.examples?.[language]?.length >= 4, `V2.5 must provide at least four ${language} query examples.`);
+  assert(queryHintsDoc.examples?.[language]?.length >= 4, `V2.8 must provide at least four ${language} query examples.`);
 }
 assert(queryHintsDoc.nodeAliases.some((entry) => entry.nodeId === "technique.sfumato"), "Natural-language search must recognize sfumato.");
 assert(queryHintsDoc.nodeAliases.some((entry) => entry.nodeId === "artist.vincent-van-gogh"), "Natural-language search must recognize Van Gogh.");
 assert(queryHintsDoc.nodeAliases.some((entry) => entry.nodeId === "place.paris"), "Natural-language search must recognize Paris.");
+assert(runtimeSchema.properties?.environments, "Semantic runtime schema must describe environments.");
+assert(Object.keys(runtimeContexts.environments || {}).length === 6, "V2.8 must define six semantic runtime environments.");
+for (const environment of ["web", "book", "ar", "vr", "geo", "3d"]) {
+  assert(Boolean(runtimeContexts.environments?.[environment]), `V2.8 runtime environment missing: ${environment}.`);
+}
+assert(runtimeContexts.runtimeAliases?.artworkSlugs?.["mona-lisa"] === "ld01", "Runtime must map Mona Lisa to ld01.");
+assert(runtimeContexts.runtimeAliases?.artworkSlugs?.["van-gogh"] === "vg01", "Runtime must map Van Gogh self-portrait to vg01.");
+assert(runtimeContexts.runtimeAliases?.museumSlugs?.louvre === "museum.louvre", "Runtime must map Louvre museum slug.");
+assert(runtimeContexts.runtimeAliases?.artistSlugs?.["van-gogh"] === "artist.vincent-van-gogh", "Runtime must map Van Gogh guide slug.");
 const pedagogicalIds = new Set();
 const knownSemanticIds = new Set([
   ...conceptSet,
@@ -139,8 +162,8 @@ for (const link of iconographyDoc.regionLinks) {
   assert(allRegionIds.has(link.regionId), `${link.regionId}: unknown IIIF region.`);
   for (const subjectId of link.subjectIds) assert(iconographyIds.has(subjectId), `${link.regionId}: unknown iconography subject ${subjectId}.`);
 }
-assert(imageAnnotations.artworks.length === 4, "V2.5 must contain four annotated pilot artworks.");
-assert(imageAnnotations.artworks.reduce((sum, item) => sum + (item.regions?.length || 0), 0) === 16, "V2.5 must contain sixteen semantic image regions.");
+assert(imageAnnotations.artworks.length === 4, "V2.8 must contain four annotated pilot artworks.");
+assert(imageAnnotations.artworks.reduce((sum, item) => sum + (item.regions?.length || 0), 0) === 16, "V2.8 must contain sixteen semantic image regions.");
 for (const profile of imageAnnotations.artworks) {
   assert(iiifIds.includes(profile.artworkId), `${profile.artworkId}: unexpected IIIF pilot artwork.`);
   assert(profile.regions?.length === 4, `${profile.artworkId}: must expose four semantic regions.`);
@@ -187,7 +210,7 @@ assert(assertionCount === 77, `Expected 77 weighted assertions, got ${assertionC
 const vg01 = artworksDoc.artworks.find((item) => item.id === "vg01");
 assert(vg01?.date?.en === "1889", "vg01 must remain the 1889 Self-Portrait.");
 assert(String(vg01?.museum?.en || "").includes("Orsay"), "vg01 must remain linked to Musée d’Orsay.");
-assert(vg01?.image === "../assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp", "V2.5 must use the canonical 1889 Van Gogh image.");
+assert(vg01?.image === "../assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp", "V2.8 must use the canonical 1889 Van Gogh image.");
 const ld01 = artworksDoc.artworks.find((item) => item.id === "ld01");
 assert(ld01?.image === "../assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp", "ld01 must use the canonical portrait Mona Lisa asset.");
 const vg01Canonical = artworksDoc.artworks.find((item) => item.id === "vg01");
@@ -216,9 +239,9 @@ for (const mapping of externalMappings.conceptMappings) {
   if (mapping.gettyAat) assert(/^\d{6,12}$/.test(mapping.gettyAat), `Invalid Getty AAT ID for ${mapping.conceptId}`);
 }
 
-assert(semanticHtml.includes("POC V2.5"), "Semantic page must expose V2.5.");
-assert(semanticHtml.includes("semantic.css?v=17"), "Semantic page must load V2.5 CSS.");
-assert(semanticHtml.includes("semantic-ui.mjs?v=16"), "Semantic page must load V2.5 UI.");
+assert(semanticHtml.includes("POC V2.8"), "Semantic page must expose V2.8.");
+assert(semanticHtml.includes("semantic.css?v=17"), "Semantic page must load V2.8 CSS.");
+assert(semanticHtml.includes("semantic-ui.mjs?v=19"), "Semantic page must load V2.8 UI.");
 assert(semanticUi.includes("graphWithExternalSuggestions"), "External graph exploration must remain available.");
 assert(semanticUi.includes("graphDataForEntity"), "Cultural entities must be graph centers.");
 assert(semanticUi.includes("graphDataForIconography"), "Iconographic subjects must be graph centers.");
@@ -249,6 +272,47 @@ assert(semanticStore.includes("pedagogicalRegionResults"), "Hybrid search must r
 assert(embeddingClient.includes("rerankWithNeuralEmbeddings"), "Embedding client must expose optional neural reranking.");
 assert(embeddingApi.includes("ARTDACI_EMBEDDING_ENDPOINT"), "Embedding API must be provider-configurable.");
 assert(embeddingApi.includes("local-vector-fallback"), "Embedding API must advertise local fallback when unconfigured.");
+assert(semanticRuntimeApi.includes('runtimeVersion: "2.8"'), "Semantic Runtime API must expose runtime version 2.8.");
+assert(semanticRuntimeApi.includes("preferredChannels"), "Semantic Runtime API must prioritize channels by environment.");
+assert(semanticRuntimeApi.includes("normalized"), "Semantic Runtime API must expose normalized hotspot geometry.");
+assert(semanticRuntimeApi.includes("pedagogyFor"), "Semantic Runtime API must expose pedagogical context.");
+assert(semanticRuntimeApi.includes("rankedExperiences"), "Semantic Runtime API must expose contextual immersive experiences.");
+assert(semanticRuntimeClient.includes("resolveSemanticRuntime"), "Semantic Runtime client must expose context resolution.");
+assert(semanticRuntimeClient.includes("mountSemanticRuntimePanel"), "Semantic Runtime client must mount immersive UI.");
+assert(semanticRuntimeCss.includes(".semantic-runtime-panel"), "Semantic Runtime panel styling must exist.");
+assert(arViewer.includes("mountSemanticRuntimePanel"), "Image AR viewer must consume Semantic Runtime.");
+assert(arViewer.includes("createSemanticArHotspots"), "Image AR viewer must project semantic regions into MindAR.");
+assert(arViewer.includes("setupSemanticArHotspots"), "Image AR viewer must initialize semantic hotspots non-blockingly.");
+assert(arViewer.includes("showSemanticRegion"), "Image AR viewer must expose contextual region details.");
+assert(arViewer.includes("semantic-hotspots-toggle"), "Image AR viewer must let readers show or hide semantic regions.");
+assert(arViewer.includes("state.semanticHotspots?.setVisible(false)"), "Semantic AR hotspots must hide when image tracking is lost.");
+assert(arViewer.includes("state.semanticHotspotsVisible && state.targetTracked"), "Semantic AR hotspot visibility must require active image tracking.");
+assert(semanticArHotspots.includes("semantic-hotspot-hit"), "Semantic AR hotspot module must create raycastable region hit planes.");
+assert(semanticArHotspots.includes("stopImmediatePropagation"), "Semantic AR hotspot taps must not trigger model-rotation gestures.");
+assert(semanticArHotspots.includes("regionObjects"), "Semantic AR hotspot module must track selectable region objects.");
+assert(arCss.includes(".info-panel.semantic-region-active"), "AR semantic region panel must have dedicated readable styling.");
+assert(vrViewer.includes("mountSemanticRuntimePanel"), "Individual VR viewer must consume Semantic Runtime.");
+assert(vrViewer.includes("createSemanticVrConstellation"), "VR viewer must create an in-world semantic constellation.");
+assert(vrViewer.includes("setupSemanticVrConstellation"), "VR viewer must initialize the semantic constellation non-blockingly.");
+assert(vrViewer.includes("selectSemanticWithController"), "VR controllers must prioritize semantic node selection.");
+assert(vrViewer.includes("selectSemanticWithPointer"), "Desktop VR preview must allow semantic node selection.");
+assert(vrViewer.includes("isSemanticVrObject"), "Semantic VR objects must be excluded from model grabbing.");
+assert(vrViewer.includes("semantic-vr-toggle"), "VR toolbar must expose a semantic constellation visibility control.");
+assert(semanticVrConstellation.includes("semantic-vr-constellation"), "Semantic VR module must create a dedicated constellation group.");
+assert(semanticVrConstellation.includes("semantic-vr-hit"), "Semantic VR nodes must expose raycastable hit targets.");
+assert(semanticVrConstellation.includes("semantic-vr-info"), "Semantic VR must expose an in-world information card.");
+assert(semanticVrConstellation.includes("findPedagogy"), "Semantic VR cards must use ARTDACI pedagogical context.");
+assert(semanticVrConstellation.includes("runtime.concepts.slice(0, 5)"), "Semantic VR constellation must stay compact.");
+assert(geoRemoteViewer.includes("mountSemanticRuntimePanel"), "Louvre GEO viewer must consume Semantic Runtime.");
+assert(mastersHubViewer.includes("mountSemanticRuntimePanel"), "Masters Hub must consume Semantic Runtime for deep-linked guides.");
+assert(arHtml.includes("semantic-runtime.css?v=1"), "AR page must load Semantic Runtime styles.");
+assert(arHtml.includes("ar-viewer.js?v=57"), "AR page must load the V2.8 viewer cache version.");
+assert(arHtml.includes("styles/ar.css?v=40"), "AR page must load the V2.8 AR stylesheet cache version.");
+assert(vrHtml.includes("semantic-runtime.css?v=1"), "VR page must load Semantic Runtime styles.");
+assert(vrHtml.includes("vr-viewer.js?v=9"), "VR page must load the V2.8 viewer cache version.");
+assert(geoRemoteHtml.includes("../styles/semantic-runtime.css?v=1"), "GEO page must load Semantic Runtime styles.");
+assert(mastersHubHtml.includes("../styles/semantic-runtime.css?v=1"), "Masters Hub must load Semantic Runtime styles.");
+assert(semanticUi.includes('params.get("node")'), "Semantic reader must support node deep links from the runtime.");
 assert(semanticUi.includes("experienceLinksMarkup"), "Semantic inspectors must expose cross-media experience links.");
 assert(semanticUi.includes("getNodeExperiences"), "Semantic UI must load node experience mappings.");
 assert(semanticUi.includes("semantic-svg-experience-dot"), "Graph nodes with immersive destinations must be marked.");
@@ -294,7 +358,7 @@ assert(externalSourcesUi.includes("iconclass"), "Iconclass client support must b
 assert(semanticSourceApi.includes("fetchIconclass"), "Iconclass live LOD adapter must be enabled.");
 assert(mastersHubViewer.includes("guideDeepLinkSlug"), "Masters Hub must accept a guide deep-link parameter.");
 assert(mastersHubViewer.includes("await callGuide(guideDeepLinkId)"), "Masters Hub must auto-open a deep-linked 3D guide.");
-assert(mastersHubHtml.includes("masters-hub-viewer.js?v=6-15-17"), "Masters Hub must load the guide deep-link build.");
+assert(mastersHubHtml.includes("masters-hub-viewer.js?v=6-15-18"), "Masters Hub must load the guide deep-link build.");
 assert(semanticSourceApi.includes("suggestions"), "External expansion suggestions must remain supported.");
 
 assert(!semanticUi.includes("REVIEW_STORAGE_KEY"), "Public reader UI must not persist a review queue.");
@@ -308,9 +372,9 @@ assert(reviewSchema.properties?.status?.enum?.includes("approved"), "Future admi
 assert(reviewSchema.properties?.status?.enum?.includes("rejected"), "Future admin schema must retain rejected state.");
 
 if (errors.length) {
-  console.error("ARTDACI Semantic V2.5 validation failed:");
+  console.error("ARTDACI Semantic V2.8 validation failed:");
   errors.forEach((error) => console.error(" -", error));
   process.exit(1);
 }
 
-console.log("ARTDACI Semantic V2.5 validation OK.");
+console.log("ARTDACI Semantic V2.8 validation OK.");

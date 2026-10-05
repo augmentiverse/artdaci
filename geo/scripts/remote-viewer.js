@@ -1,5 +1,6 @@
 import { resolveManifestMedia } from "../../scripts/artwork-media-manifest-core.mjs";
 import {JOURNEY_COPY,createJourney,readJourneyState,writeJourneyState,validExteriorView,journeyStorage} from './journey.mjs?v=6-9';
+import { mountSemanticRuntimePanel } from "../../scripts/semantics/semantic-runtime-client.mjs?v=1";
 import {
   languageFromSearch,
   localize,
@@ -152,6 +153,13 @@ async function init() {
   bindControls();
   const requestedPoi = new URLSearchParams(location.search).get("poi");
   selectPointOfInterest(place.pointsOfInterest.some(point => point.id === requestedPoi) ? requestedPoi : place.remoteExperience.defaultPointOfInterestId);
+  void mountSemanticRuntimePanel({
+    anchor: document.querySelector(".viewer-toolbar"),
+    slug: "louvre",
+    resourceType: "museum",
+    environment: "geo",
+    lang: language
+  });
 }
 
 function applyCopy() {

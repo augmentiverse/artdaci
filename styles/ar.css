@@ -393,3 +393,30 @@ body {
     white-space: normal;
   }
 }
+
+
+/* V2.7 semantic region panel */
+.info-panel.semantic-region-active {
+  width: min(310px, calc(100vw - 32px));
+  max-height: min(46vh, 320px);
+  opacity: 0.96;
+}
+
+.info-panel.semantic-region-active #panel-body {
+  white-space: pre-line;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 11px;
+  line-height: 1.42;
+}
+
+#semantic-hotspots-toggle.active {
+  background: var(--gold);
+  color: #1b1309;
+}
+
+@media (max-width: 640px) {
+  .info-panel.semantic-region-active {
+    width: min(280px, calc(100vw - 24px));
+    left: 12px;
+  }
+}
