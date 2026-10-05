@@ -6,6 +6,14 @@ import { fetchArtworkManifest } from "./artwork-media-manifest.js?v=4";
 import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
 import { formatArtworkNumber } from "./artwork-numbering.js?v=1";
 import { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./immersive-routing.js?v=1";
+import { loadSemanticData } from "./semantics/semantic-store.mjs";
+import { resolveArtworkRegions, resolveSemanticContext } from "./semantics/semantic-runtime.mjs";
+
+const SEMANTIC_ARTWORK_IDS = Object.freeze({
+  "mona-lisa": "ld01",
+  "vermeer-girl-with-a-pearl-earring": "ve01",
+  "van-gogh": "vg01"
+});
 
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath("vendor/draco/");
@@ -102,6 +110,11 @@ const UI_TEXT = {
     routeUnknownTitle: "Artwork not found",
     routeUnknown: "The requested artwork was not recognized. Return to the catalogue to choose an available experience.",
     hotspot: "Hotspot",
+    semantic: "Semantic",
+    semanticKicker: "Semantic AR",
+    semanticGraph: "Open graph",
+    semanticConcepts: "concepts",
+    semanticPrompt: "Observe",
     futureLayer: "This interpretive layer is ready for future content.",
     permissionBlocked: "Camera permission was blocked. Tap the site controls in the address bar, allow Camera, then try again.",
     noCamera: "No camera was found. Test on a phone/tablet with a working rear camera, or connect a webcam.",
@@ -154,6 +167,11 @@ const UI_TEXT = {
     routeUnknownTitle: "Œuvre introuvable",
     routeUnknown: "L'œuvre demandée n'a pas été reconnue. Revenez au catalogue pour choisir une expérience disponible.",
     hotspot: "Point d'intérêt",
+    semantic: "Sémantique",
+    semanticKicker: "AR sémantique",
+    semanticGraph: "Ouvrir le graphe",
+    semanticConcepts: "concepts",
+    semanticPrompt: "À observer",
     futureLayer: "Cette couche d'interprétation est prête pour un contenu futur.",
     permissionBlocked: "L'autorisation caméra a été bloquée. Ouvrez les contrôles du site dans la barre d'adresse, autorisez la caméra, puis réessayez.",
     noCamera: "Aucune caméra n'a été trouvée. Testez sur un téléphone ou une tablette avec caméra arrière, ou connectez une webcam.",
@@ -200,6 +218,11 @@ UI_TEXT.ar = {
   intro: "مقدمة",
   tryAgain: "حاول مجدداً",
   hotspot: "نقطة تفاعلية",
+  semantic: "دلالي",
+  semanticKicker: "واقع معزز دلالي",
+  semanticGraph: "فتح الرسم البياني",
+  semanticConcepts: "مفاهيم",
+  semanticPrompt: "للملاحظة",
   videoReadyBody: "اضغط زر الفيديو لتشغيل المشهد. اسحبه لتحريكه، واستخدم إصبعين لتغيير حجمه أو تدويره.",
   modelErrorTitle: "تعذر تحميل النموذج",
   modelErrorBody: "الكاميرا تعمل، لكن تعذر تحميل ملف النموذج ثلاثي الأبعاد. تحقق من مسار ملف GLB وحجمه.",
@@ -459,6 +482,12 @@ const state = {
   clock: null,
   manifest: null,
   mediaContext: null,
+  semanticData: null,
+  semanticArtworkId: null,
+  semanticRegions: [],
+  semanticMarkerGroup: null,
+  semanticMarkerSprites: [],
+  semanticHotspotsVisible: true,
   started: false
 };
 
@@ -550,6 +579,7 @@ function applyStaticLanguage() {
   document.getElementById("video-guide").textContent = t("video");
   document.getElementById("toggle-spin").textContent = t("rotate");
   document.getElementById("reset-view").textContent = t("reset");
+  document.getElementById("semantic-toggle").textContent = t("semantic");
   document.getElementById("space-link").textContent = t("space");
   if (CONFIG.slug) {
     document.getElementById("space-link").href = `space.html?${CONFIG.resourceType}=${CONFIG.slug}&lang=${CONFIG.lang}&v=14`;
@@ -615,6 +645,12 @@ function bindUI() {
     document.getElementById("info-panel").classList.add("collapsed");
   });
 
+  document.getElementById("semantic-toggle").addEventListener("click", (event) => {
+    state.semanticHotspotsVisible = !state.semanticHotspotsVisible;
+    if (state.semanticMarkerGroup) state.semanticMarkerGroup.visible = state.semanticHotspotsVisible;
+    event.currentTarget.classList.toggle("active", state.semanticHotspotsVisible);
+  });
+
   bindRotationGestures();
 
   document.querySelectorAll(".hotspot").forEach((button) => {
@@ -630,6 +666,12 @@ function bindRotationGestures() {
   const root = document.getElementById("ar-root");
 
   root.addEventListener("pointerdown", (event) => {
+    const semanticMarker = getSemanticHotspotHit(event);
+    if (semanticMarker?.userData?.semanticRegionId) {
+      event.preventDefault();
+      showSemanticRegion(semanticMarker.userData.semanticRegionId);
+      return;
+    }
     if (!state.model && !state.videoMesh) return;
     event.preventDefault();
     state.activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
@@ -806,6 +848,7 @@ async function loadManifest() {
     state.mediaContext = await getArtworkMediaContext();
     hotspotFallback.intro.body = state.manifest.texts.artisticAnalysis;
     configureFromManifest(state.manifest, state.mediaContext);
+    await configureSemanticRuntime();
     updateInterfaceFromManifest(state.manifest);
     renderHotspotButtons(state.manifest);
   } catch (error) {
@@ -815,28 +858,202 @@ async function loadManifest() {
 
 function renderHotspotButtons(manifest) {
   const bar = document.querySelector(".hotspot-bar");
+  const semanticButtons = state.semanticRegions.map((region) => ({
+    id: region.id,
+    label: region.label,
+    semantic: true
+  }));
+  const legacyButtons = (manifest.hotspots || []).slice(0, semanticButtons.length ? 3 : 8).map((hotspot) => ({
+    id: hotspot.id,
+    label: hotspot.label,
+    semantic: false
+  }));
   const buttons = [
-    { id: "intro", label: t("intro") },
-    ...(manifest.hotspots || []).slice(0, 8).map((hotspot) => ({
-      id: hotspot.id,
-      label: hotspot.label
-    }))
+    { id: "intro", label: t("intro"), semantic: false },
+    ...semanticButtons,
+    ...legacyButtons
   ];
 
   bar.innerHTML = "";
   buttons.forEach((item, index) => {
     const button = document.createElement("button");
-    button.className = `hotspot${index === 0 ? " active" : ""}`;
+    button.className = `hotspot${item.semantic ? " semantic-region" : ""}${index === 0 ? " active" : ""}`;
     button.type = "button";
     button.dataset.hotspot = item.id;
+    if (item.semantic) button.dataset.semanticRegion = item.id;
     button.textContent = item.label;
     button.addEventListener("click", () => {
       document.querySelectorAll(".hotspot").forEach((node) => node.classList.remove("active"));
       button.classList.add("active");
-      showHotspot(item.id);
+      if (item.semantic) showSemanticRegion(item.id);
+      else showHotspot(item.id);
     });
     bar.appendChild(button);
   });
+}
+
+async function configureSemanticRuntime() {
+  state.semanticData = null;
+  state.semanticArtworkId = null;
+  state.semanticRegions = [];
+  state.semanticMarkerSprites = [];
+  const toggle = document.getElementById("semantic-toggle");
+  toggle.hidden = true;
+  toggle.classList.remove("active");
+
+  if (CONFIG.resourceType !== "painting") return;
+  const artworkId = SEMANTIC_ARTWORK_IDS[CONFIG.slug];
+  if (!artworkId) return;
+
+  try {
+    state.semanticData = await loadSemanticData();
+    state.semanticArtworkId = artworkId;
+    state.semanticRegions = resolveArtworkRegions(state.semanticData, artworkId, {
+      lang: CONFIG.lang,
+      environment: "ar"
+    });
+    if (!state.semanticRegions.length) return;
+    state.semanticHotspotsVisible = true;
+    toggle.hidden = false;
+    toggle.classList.add("active");
+  } catch (error) {
+    console.warn("Semantic AR runtime unavailable; keeping legacy hotspots.", error);
+  }
+}
+
+function renderSemanticActions(context) {
+  const actions = document.getElementById("semantic-actions");
+  if (!actions) return;
+  actions.replaceChildren();
+
+  if (!context?.region || !state.semanticArtworkId) {
+    actions.hidden = true;
+    return;
+  }
+
+  const graphLink = document.createElement("a");
+  graphLink.href = `/semantic/?artwork=${encodeURIComponent(state.semanticArtworkId)}&lang=${encodeURIComponent(CONFIG.lang)}&region=${encodeURIComponent(context.region.id)}`;
+  graphLink.textContent = t("semanticGraph");
+  actions.appendChild(graphLink);
+
+  context.destinations
+    .filter((destination) => destination.channel !== "ar")
+    .slice(0, 2)
+    .forEach((destination) => {
+      const link = document.createElement("a");
+      link.href = destination.href;
+      link.textContent = destination.label;
+      if (destination.external) {
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+      }
+      actions.appendChild(link);
+    });
+
+  actions.hidden = false;
+}
+
+function showSemanticRegion(regionId) {
+  if (!state.semanticData || !state.semanticArtworkId) return;
+  const context = resolveSemanticContext(state.semanticData, {
+    nodeId: state.semanticArtworkId,
+    regionId,
+    environment: "ar",
+    lang: CONFIG.lang
+  });
+  if (!context.region) return;
+
+  const panel = document.getElementById("info-panel");
+  const conceptCount = context.concepts.length;
+  const pedagogy = context.pedagogy[0];
+  const parts = [context.region.description];
+  if (pedagogy?.rationale) parts.push(pedagogy.rationale);
+  if (pedagogy?.prompt) parts.push(`${t("semanticPrompt")} : ${pedagogy.prompt}`);
+
+  document.getElementById("panel-kicker").textContent =
+    `${t("semanticKicker")} · ${conceptCount} ${t("semanticConcepts")}`;
+  document.getElementById("panel-title").textContent = context.region.label;
+  document.getElementById("panel-body").textContent = parts.filter(Boolean).join(" ");
+  panel.classList.add("semantic-context");
+  panel.classList.remove("collapsed");
+  renderSemanticActions(context);
+
+  document.querySelectorAll(".hotspot").forEach((button) => {
+    button.classList.toggle("active", button.dataset.semanticRegion === regionId);
+  });
+}
+
+function createSemanticMarkerTexture(index) {
+  const canvas = document.createElement("canvas");
+  canvas.width = 128;
+  canvas.height = 128;
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, 128, 128);
+  ctx.beginPath();
+  ctx.arc(64, 64, 48, 0, Math.PI * 2);
+  ctx.fillStyle = "rgba(34, 26, 18, 0.92)";
+  ctx.fill();
+  ctx.lineWidth = 8;
+  ctx.strokeStyle = "#d6b06b";
+  ctx.stroke();
+  ctx.fillStyle = "#fff8e9";
+  ctx.font = "700 46px system-ui, sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(String(index), 64, 66);
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.encoding = THREE.sRGBEncoding;
+  texture.needsUpdate = true;
+  return texture;
+}
+
+function addSemanticHotspotMarkers(group) {
+  if (!group || !state.semanticRegions.length) return;
+
+  const markerGroup = new THREE.Group();
+  markerGroup.name = "semantic-ar-hotspots";
+  markerGroup.visible = state.semanticHotspotsVisible;
+  state.semanticMarkerSprites = [];
+
+  state.semanticRegions.forEach((region, index) => {
+    const [x, y, width, height] = region.xywh;
+    const canvasWidth = region.canvas.width;
+    const canvasHeight = region.canvas.height;
+    const aspect = canvasHeight / canvasWidth;
+    const centerX = (x + width / 2) / canvasWidth - 0.5;
+    const centerY = (0.5 - (y + height / 2) / canvasHeight) * aspect;
+
+    const material = new THREE.SpriteMaterial({
+      map: createSemanticMarkerTexture(index + 1),
+      transparent: true,
+      depthTest: false,
+      depthWrite: false,
+      toneMapped: false
+    });
+    const sprite = new THREE.Sprite(material);
+    sprite.name = `semantic-hotspot-${region.id}`;
+    sprite.position.set(centerX, centerY, 0.055);
+    sprite.scale.set(0.085, 0.085, 0.085);
+    sprite.renderOrder = 1000;
+    sprite.userData.semanticRegionId = region.id;
+    markerGroup.add(sprite);
+    state.semanticMarkerSprites.push(sprite);
+  });
+
+  group.add(markerGroup);
+  state.semanticMarkerGroup = markerGroup;
+}
+
+function getSemanticHotspotHit(event) {
+  if (!state.semanticHotspotsVisible || !state.semanticMarkerSprites.length || !state.mindarThree?.camera) return null;
+  const rect = event.currentTarget.getBoundingClientRect();
+  const pointer = new THREE.Vector2(
+    ((event.clientX - rect.left) / rect.width) * 2 - 1,
+    -(((event.clientY - rect.top) / rect.height) * 2 - 1)
+  );
+  const raycaster = new THREE.Raycaster();
+  raycaster.setFromCamera(pointer, state.mindarThree.camera);
+  return raycaster.intersectObjects(state.semanticMarkerSprites, false)[0]?.object || null;
 }
 
 function configureFromManifest(manifest, mediaContext) {
@@ -1168,6 +1385,7 @@ async function startAR() {
     // Museum targets reveal their architectural GLB directly. The printed
     // museum image is used only as a last-resort fallback if that model fails.
     if (CONFIG.resourceType !== "museum") addTrackingPreview(state.contentGroup).catch(() => {});
+    addSemanticHotspotMarkers(state.contentGroup);
 
     state.anchor.onTargetFound = () => {
       state.targetFoundOnce = true;
@@ -1533,6 +1751,12 @@ function setTrackingStatus(locked) {
 function showHotspot(id) {
   const panel = document.getElementById("info-panel");
   const hotspot = getHotspotContent(id);
+  panel.classList.remove("semantic-context");
+  const semanticActions = document.getElementById("semantic-actions");
+  if (semanticActions) {
+    semanticActions.hidden = true;
+    semanticActions.replaceChildren();
+  }
   document.getElementById("panel-kicker").textContent = hotspot.kicker;
   document.getElementById("panel-title").textContent = hotspot.title;
   document.getElementById("panel-body").textContent = hotspot.body;

@@ -533,3 +533,47 @@ The same query can return:
 - direct ARTDACI experiences — AR, VR, GEO, 3D, book, or video.
 
 This makes search a second navigation entry point into the same semantic and immersive continuum already exposed by the graph.
+
+
+## Semantic Runtime and Image AR hotspots
+
+V2.6 introduces a shared client-side Semantic Runtime:
+
+`scripts/semantics/semantic-runtime.mjs`
+
+The runtime resolves a context from:
+
+- a semantic node ID;
+- an optional IIIF region ID;
+- the current environment (`web`, `ar`, `vr`, `geo`, `3d`, or `book`);
+- the active language.
+
+The returned context combines:
+
+- localized semantic node metadata;
+- concepts;
+- iconography;
+- pedagogical relations and observation prompts;
+- environment-ranked ARTDACI experiences;
+- recommended cross-media destinations.
+
+This provides one reusable semantic decision layer for Web, Image AR, spatial AR, WebXR, GEO, the Masters Hub, and future clients.
+
+### Image AR integration
+
+Image AR is the first runtime consumer. The supported semantic pilot routes are:
+
+- `mona-lisa` → `ld01`;
+- `vermeer-girl-with-a-pearl-earring` → `ve01`;
+- `van-gogh` → `vg01`.
+
+When semantic IIIF regions are available:
+
+1. the legacy hotspot bar gains semantic region entries;
+2. numbered semantic markers are anchored directly to the tracked painting plane;
+3. marker positions are calculated from normalized IIIF `xywh` coordinates;
+4. tapping a marker raycasts against the marker sprite and opens its localized semantic context;
+5. the context panel can open the exact IIIF region in `/semantic/` and surfaces up to two ranked cross-media destinations;
+6. the **Semantic** control can hide or show the anchored markers without changing MindAR tracking, the 3D model, video, audio, or existing legacy hotspots.
+
+The runtime is additive and failure-tolerant. If semantic data cannot load, Image AR falls back to its existing manifest hotspots and media behavior.

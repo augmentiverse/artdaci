@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <meta name="theme-color" content="#050505" />
     <title>ARTDACI WebAR Viewer - Mona Lisa</title>
-    <link rel="stylesheet" href="styles/ar.css?v=39" />
+    <link rel="stylesheet" href="styles/ar.css?v=40" />
     <link rel="stylesheet" href="styles/visitor-guide.css?v=1" />
     <script type="importmap">
       {
@@ -53,6 +53,7 @@
       <p class="panel-kicker" id="panel-kicker">Catalogue</p>
       <h1 id="panel-title">Mona Lisa</h1>
       <p id="panel-body">Point your camera at the printed target. When tracking locks, the 3D model will rise from the page.</p>
+      <div id="semantic-actions" class="semantic-actions" hidden></div>
     </aside>
 
     <nav class="hotspot-bar" aria-label="AR hotspots">
@@ -68,6 +69,7 @@
       <button id="video-guide" type="button" title="Show video">Video</button>
       <button id="toggle-spin" type="button" title="Auto rotate">Rotate</button>
       <button id="reset-view" type="button" title="Reset model">Reset</button>
+      <button id="semantic-toggle" type="button" title="Semantic hotspots" hidden>Semantic</button>
       <a id="space-link" href="space.html" title="Place in my space">Space</a>
     </section>
 
@@ -79,14 +81,14 @@
           <span class="camera-glyph" aria-hidden="true"></span>
           Start Camera
         </button>
-        <small class="version-note">WebAR viewer v37 - localized Vermeer audio</small>
+        <small class="version-note">WebAR viewer v38 - semantic runtime</small>
         <pre id="error-details" class="error-details" hidden></pre>
         <a id="target-image-link" href="print-target.html">Open target image</a>
         <a href="camera-test.html">Test camera only</a>
       </div>
     </div>
 
-    <script type="module" src="scripts/ar-viewer.js?v=55"></script>
+    <script type="module" src="scripts/ar-viewer.js?v=56"></script>
     <script type="module" src="scripts/visitor-guide.js?v=1"></script>
   </body>
 </html>

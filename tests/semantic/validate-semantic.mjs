@@ -44,6 +44,10 @@ const mastersHubViewer = await fs.readFile(path.join(root, "geo/scripts/masters-
 const mastersHubHtml = await fs.readFile(path.join(root, "geo/masters-hub.html"), "utf8");
 const embeddingClient = await fs.readFile(path.join(root, "scripts/semantics/embedding-client.mjs"), "utf8");
 const embeddingApi = await fs.readFile(path.join(root, "api/semantic-embeddings.js"), "utf8");
+const semanticRuntime = await fs.readFile(path.join(root, "scripts/semantics/semantic-runtime.mjs"), "utf8");
+const arViewer = await fs.readFile(path.join(root, "scripts/ar-viewer.js"), "utf8");
+const arHtml = await fs.readFile(path.join(root, "ar.html"), "utf8");
+const arCss = await fs.readFile(path.join(root, "styles/ar.css"), "utf8");
 
 const errors = [];
 const assert = (condition, message) => { if (!condition) errors.push(message); };
@@ -249,6 +253,21 @@ assert(semanticStore.includes("pedagogicalRegionResults"), "Hybrid search must r
 assert(embeddingClient.includes("rerankWithNeuralEmbeddings"), "Embedding client must expose optional neural reranking.");
 assert(embeddingApi.includes("ARTDACI_EMBEDDING_ENDPOINT"), "Embedding API must be provider-configurable.");
 assert(embeddingApi.includes("local-vector-fallback"), "Embedding API must advertise local fallback when unconfigured.");
+assert(semanticRuntime.includes("resolveSemanticContext"), "V2.6 must expose a shared semantic context resolver.");
+assert(semanticRuntime.includes("resolveArtworkRegions"), "V2.6 must expose IIIF artwork regions through the runtime.");
+assert(semanticRuntime.includes("ENVIRONMENT_CHANNEL_PRIORITY"), "V2.6 runtime must rank destinations by immersive environment.");
+assert(semanticRuntime.includes("semanticRuntimeCapabilities"), "V2.6 runtime must expose capability detection.");
+assert(arViewer.includes("SEMANTIC_ARTWORK_IDS"), "Image AR must map supported routes to semantic artwork IDs.");
+assert(arViewer.includes("configureSemanticRuntime"), "Image AR must load the shared Semantic Runtime.");
+assert(arViewer.includes("addSemanticHotspotMarkers"), "Image AR must anchor semantic markers on the tracked artwork.");
+assert(arViewer.includes("getSemanticHotspotHit"), "Image AR semantic markers must be raycast-interactive.");
+assert(arViewer.includes("resolveSemanticContext"), "Image AR must resolve contextual pedagogy and destinations.");
+assert(arHtml.includes('id="semantic-toggle"'), "Image AR must expose a semantic hotspot toggle.");
+assert(arHtml.includes('id="semantic-actions"'), "Image AR must expose contextual semantic actions.");
+assert(arHtml.includes("scripts/ar-viewer.js?v=56"), "Image AR must load the V2.6 semantic runtime viewer build.");
+assert(arHtml.includes("styles/ar.css?v=40"), "Image AR must load the V2.6 semantic AR stylesheet.");
+assert(arCss.includes("V2.6 semantic AR runtime"), "Semantic AR controls must have dedicated styling.");
+assert(arCss.includes(".info-panel.semantic-context"), "Semantic AR context panels must have dedicated styling.");
 assert(semanticUi.includes("experienceLinksMarkup"), "Semantic inspectors must expose cross-media experience links.");
 assert(semanticUi.includes("getNodeExperiences"), "Semantic UI must load node experience mappings.");
 assert(semanticUi.includes("semantic-svg-experience-dot"), "Graph nodes with immersive destinations must be marked.");
@@ -313,4 +332,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log("ARTDACI Semantic V2.5 validation OK.");
+console.log("ARTDACI Semantic V2.6 runtime validation OK.");

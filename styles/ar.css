@@ -393,3 +393,67 @@ body {
     white-space: normal;
   }
 }
+
+
+/* V2.6 semantic AR runtime */
+.semantic-actions {
+  margin-top: 7px;
+  padding-top: 7px;
+  border-top: 1px solid rgba(255, 250, 241, 0.2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.semantic-actions[hidden] {
+  display: none;
+}
+
+.semantic-actions a,
+.semantic-actions button {
+  min-height: 25px;
+  padding: 4px 7px;
+  border: 1px solid rgba(221, 185, 128, 0.48);
+  color: #fff7e8;
+  background: rgba(120, 82, 40, 0.24);
+  font: inherit;
+  font-size: 9px;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.semantic-actions a:hover,
+.semantic-actions a:focus-visible,
+.semantic-actions button:hover,
+.semantic-actions button:focus-visible {
+  border-color: var(--gold);
+  background: rgba(207, 167, 103, 0.24);
+  outline: none;
+}
+
+.info-panel.semantic-context {
+  max-height: min(44vh, 340px);
+  width: min(285px, calc(100vw - 32px));
+  opacity: 0.94;
+}
+
+#semantic-toggle.active {
+  color: #1b1309;
+  background: var(--gold);
+}
+
+.hotspot.semantic-region::before {
+  content: "●";
+  margin-inline-end: 5px;
+  color: var(--gold);
+  font-size: 8px;
+}
+
+@media (max-width: 700px) {
+  .info-panel.semantic-context {
+    top: 104px;
+    width: min(300px, calc(100vw - 24px));
+    max-height: 34vh;
+  }
+}
