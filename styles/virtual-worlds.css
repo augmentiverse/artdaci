@@ -317,3 +317,25 @@ a { color: inherit; }
     flex-direction: column;
   }
 }
+
+
+html[dir="rtl"] body {
+  font-family: Tahoma, "Segoe UI", Arial, sans-serif;
+}
+
+html[dir="rtl"] .vw-hero h1,
+html[dir="rtl"] .vw-world h2,
+html[dir="rtl"] .vw-lead {
+  font-family: Tahoma, "Segoe UI", Arial, sans-serif;
+  letter-spacing: 0;
+}
+
+html[dir="rtl"] .vw-world-arrow {
+  right: auto;
+  left: 30px;
+}
+
+html[dir="rtl"] .vw-world-no {
+  left: auto;
+  right: 32px;
+}
