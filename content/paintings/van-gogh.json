@@ -196,7 +196,7 @@
     ]
   },
   "media": {
-    "image": "assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp",
+    "image": "assets/artists/paintings_images/vangogh/vangogh_self-portrait.png",
     "model": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh-portrait.glb",
     "modelVariants": [
       {
