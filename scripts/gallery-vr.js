@@ -1468,7 +1468,8 @@ function applyCopy() {
     ["gallery-museums-link", lang === "fr" ? "Aile des six musées" : lang === "ar" ? "جناح المتاحف الستة" : "Six Museums Wing", `gallery-vr.html?lang=${lang}&room=museums`],
     ["gallery-people-link", lang === "fr" ? "Les personnes derrière les peintres" : lang === "ar" ? "الأشخاص وراء الرسامين" : "People Behind the Painters", `gallery-vr.html?lang=${lang}&room=people&artist=da-vinci`],
     ["gallery-book-link", text.livingBook, `book-3d.html?lang=${lang}`],
-    ["gallery-geo-link", "ARTDACI GEO", `geo/index.html?lang=${lang}`]
+    ["gallery-geo-link", "ARTDACI GEO", `geo/index.html?lang=${lang}`],
+    ["gallery-semantic-link", "ARTDACI Semantic", `semantic/?lang=${lang}`]
   ];
   productLinks.forEach(([id, label, href]) => {
     const link = document.getElementById(id);

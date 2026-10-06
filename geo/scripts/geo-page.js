@@ -127,6 +127,9 @@ function applyLanguageLinks() {
   document.querySelectorAll("[data-geo-link]").forEach((link) => {
     link.href = withLanguage(link.dataset.geoLink, language);
   });
+  document.querySelectorAll("[data-semantic-link]").forEach((link) => {
+    link.href = `../semantic/?lang=${language}`;
+  });
 }
 
 function renderPlace(place) {

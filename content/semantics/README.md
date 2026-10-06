@@ -789,3 +789,17 @@ The catalogue also exposes contextual semantic links only for the four artworks 
 - Impression, Sunrise (`mo01`).
 
 Unsupported artworks do not receive a semantic action, so the main catalogue never advertises a semantic destination that does not exist.
+
+
+## Cross-hub navigation
+
+ARTDACI Semantic is now exposed as a first-class transversal destination beyond the main catalogue.
+
+Direct trilingual entry points are available from:
+- the VR Gallery main navigation;
+- the Living 3D Book toolbar;
+- ARTDACI GEO landing and Louvre place pages;
+- GEO remote exploration;
+- the Masters Hub header.
+
+Each link preserves the current FR / EN / AR language. The immersive surface remains independent: opening Semantic is an explicit navigation action, not a forced redirect.

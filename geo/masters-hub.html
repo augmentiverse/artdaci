@@ -14,6 +14,7 @@
 <body>
   <header class="hub-header">
     <a id="geo-return" href="./?lang=fr">← ARTDACI GEO</a>
+    <a class="geo-return" href="../semantic/?lang=fr" data-semantic-link>ARTDACI Semantic</a>
     <nav class="hub-languages" aria-label="Languages"><a data-lang="fr" href="?lang=fr">FR</a><a data-lang="en" href="?lang=en">EN</a><a data-lang="ar" href="?lang=ar">AR</a></nav>
   </header>
   <main>
@@ -40,5 +41,12 @@
   <audio id="hub-audio" preload="none"></audio>
   <script type="module" src="scripts/masters-hub-viewer.js?v=6-15-19"></script>
   <script type="module" src="../scripts/visitor-guide.js?v=2"></script>
+  <script id="semantic-link-language-sync">
+    (() => {
+      const lang = new URLSearchParams(location.search).get("lang");
+      const link = document.querySelector("[data-semantic-link]");
+      if (link && ["fr", "en", "ar"].includes(lang)) link.href = `../semantic/?lang=${lang}`;
+    })();
+  </script>
 </body>
 </html>

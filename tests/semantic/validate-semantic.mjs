@@ -65,6 +65,20 @@ const vrHtml = await fs.readFile(path.join(root, "vr.html"), "utf8");
 const geoRemoteViewer = await fs.readFile(path.join(root, "geo/scripts/remote-viewer.js"), "utf8");
 const geoRemoteHtml = await fs.readFile(path.join(root, "geo/remote.html"), "utf8");
 
+const galleryVrHtml = await fs.readFile(path.join(root, "gallery-vr.html"), "utf8");
+
+const galleryVrJs = await fs.readFile(path.join(root, "scripts/gallery-vr.js"), "utf8");
+
+const book3dHtml = await fs.readFile(path.join(root, "book-3d.html"), "utf8");
+
+const book3dJs = await fs.readFile(path.join(root, "scripts/book-3d.js"), "utf8");
+
+const geoIndexHtml = await fs.readFile(path.join(root, "geo/index.html"), "utf8");
+
+const geoPlaceHtml = await fs.readFile(path.join(root, "geo/place.html"), "utf8");
+
+const geoPageJs = await fs.readFile(path.join(root, "geo/scripts/geo-page.js"), "utf8");
+
 const errors = [];
 const assert = (condition, message) => { if (!condition) errors.push(message); };
 
@@ -300,6 +314,15 @@ assert(catalogueJs.includes('"vermeer-girl-with-a-pearl-earring": "ve01"'), "Cat
 assert(catalogueJs.includes('"van-gogh": "vg01"'), "Catalogue semantic mapping must include Van Gogh Self-Portrait.");
 assert(catalogueJs.includes('"monet-impression-sunrise": "mo01"'), "Catalogue semantic mapping must include Impression, Sunrise.");
 assert(catalogueJs.includes("semanticAction"), "Catalogue cards must render contextual semantic actions.");
+assert(galleryVrHtml.includes('id="gallery-semantic-link"'), "VR Gallery must expose ARTDACI Semantic.");
+assert(galleryVrJs.includes('"gallery-semantic-link"'), "VR Gallery must preserve language for Semantic.");
+assert(book3dHtml.includes('id="book-semantic-link"'), "Living Book must expose ARTDACI Semantic.");
+assert(book3dJs.includes("book-semantic-link"), "Living Book must preserve language for Semantic.");
+assert(geoIndexHtml.includes("data-semantic-link"), "ARTDACI GEO landing must expose ARTDACI Semantic.");
+assert(geoPlaceHtml.includes("data-semantic-link"), "ARTDACI GEO place must expose ARTDACI Semantic.");
+assert(geoPageJs.includes('document.querySelectorAll("[data-semantic-link]")'), "GEO navigation must preserve Semantic language.");
+assert(geoRemoteHtml.includes("data-semantic-link"), "GEO remote must expose ARTDACI Semantic.");
+assert(mastersHubHtml.includes("data-semantic-link"), "Masters Hub must expose ARTDACI Semantic.");
 assert(semanticRuntimeClient.includes("resolveSemanticRuntime"), "Semantic Runtime client must expose context resolution.");
 assert(semanticRuntimeClient.includes("mountSemanticRuntimePanel"), "Semantic Runtime client must mount immersive UI.");
 assert(semanticRuntimeClient.includes("learningPathMarkup"), "Shared Semantic Runtime panel must render the adaptive learning path.");

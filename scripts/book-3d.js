@@ -345,6 +345,11 @@ function applyLanguage() {
   document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
   document.querySelector(".book-back").href = lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html";
   document.querySelector(".book-back").textContent = lang === "ar" ? "العودة إلى المجموعة" : lang === "fr" ? "Retour à la collection" : "Back to collection";
+  const semanticLink = document.getElementById("book-semantic-link");
+  if (semanticLink) {
+    semanticLink.href = `semantic/?lang=${lang}`;
+    semanticLink.textContent = "ARTDACI Semantic";
+  }
   document.querySelector(".book-toolbar p").textContent = lang === "ar" ? "كتاب فني تفاعلي" : lang === "fr" ? "Livre d’art interactif" : "Interactive art book";
   document.querySelector(".book-toolbar h1").textContent = lang === "ar" ? "الكتاب الحي" : lang === "fr" ? "Le Livre Vivant" : "The Living Book";
   document.querySelector(".book-hint").textContent = lang === "ar"

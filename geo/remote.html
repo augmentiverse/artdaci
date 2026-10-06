@@ -16,6 +16,7 @@
     <main class="geo-shell remote-shell">
       <nav class="geo-topbar" aria-label="ARTDACI GEO">
         <a class="geo-brand" href="place.html?lang=fr" data-back-link>ARTDACI GEO</a>
+        <a class="viewer-tool" href="../semantic/?lang=fr" data-semantic-link>ARTDACI Semantic</a>
         <div class="language-nav" aria-label="Langues">
           <a href="remote.html?lang=fr" data-lang-link="fr" lang="fr">FR</a>
           <a href="remote.html?lang=en" data-lang-link="en" lang="en">EN</a>
@@ -124,5 +125,12 @@
     </main>
     <script type="module" src="scripts/remote-viewer.js?v=6-11"></script>
     <script type="module" src="../scripts/visitor-guide.js?v=2"></script>
-  </body>
+    <script id="semantic-link-language-sync">
+    (() => {
+      const lang = new URLSearchParams(location.search).get("lang");
+      const link = document.querySelector("[data-semantic-link]");
+      if (link && ["fr", "en", "ar"].includes(lang)) link.href = `../semantic/?lang=${lang}`;
+    })();
+  </script>
+</body>
 </html>
