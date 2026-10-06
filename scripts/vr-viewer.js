@@ -5,7 +5,7 @@ import { fetchArtworkManifest } from "./artwork-media-manifest.js";
 import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
 import { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./catalogue.js";
 import { mountSemanticRuntimePanel, resolveSemanticRuntime } from "./semantics/semantic-runtime-client.mjs?v=2";
-import { createSemanticVrConstellation } from "./semantics/semantic-vr-constellation.mjs?v=6";
+import { createSemanticVrConstellation } from "./semantics/semantic-vr-constellation.mjs?v=7";
 
 const PAINTINGS = {
   "mona-lisa": "content/paintings/mona-lisa.json?v=5",
@@ -476,9 +476,35 @@ function addControllers() {
       new THREE.Vector3(0, 0, 0),
       new THREE.Vector3(0, 0, -1)
     ]);
-    const line = new THREE.Line(geometry, new THREE.LineBasicMaterial({ color: 0xc7a45d }));
+    const line = new THREE.Line(
+      geometry,
+      new THREE.LineBasicMaterial({ color: 0xc7a45d, transparent: true, opacity: 0.72 })
+    );
+    line.name = "vr-controller-ray";
     line.scale.z = 4;
-    controller.add(line);
+    line.visible = false;
+
+    const idleHead = new THREE.Mesh(
+      new THREE.SphereGeometry(0.018, 18, 12),
+      new THREE.MeshBasicMaterial({ color: 0xc7a45d, toneMapped: false })
+    );
+    idleHead.name = "vr-controller-ray-head-idle";
+    idleHead.position.z = -4;
+    idleHead.visible = false;
+
+    const activeHead = new THREE.Mesh(
+      new THREE.OctahedronGeometry(0.034, 0),
+      new THREE.MeshBasicMaterial({ color: 0xf2d6a2, toneMapped: false })
+    );
+    activeHead.name = "vr-controller-ray-head-active";
+    activeHead.position.z = -4;
+    activeHead.rotation.z = Math.PI / 4;
+    activeHead.visible = false;
+
+    controller.userData.pointerLine = line;
+    controller.userData.pointerIdleHead = idleHead;
+    controller.userData.pointerActiveHead = activeHead;
+    controller.add(line, idleHead, activeHead);
     scene.add(controller);
   });
 }
@@ -520,6 +546,41 @@ function setControllerRay(controller) {
   rayMatrix.identity().extractRotation(controller.matrixWorld);
   raycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
   raycaster.ray.direction.set(0, 0, -1).applyMatrix4(rayMatrix).normalize();
+  raycaster.near = 0;
+  raycaster.far = 4;
+}
+
+function updateControllerPointerVisual(controller) {
+  const line = controller.userData.pointerLine;
+  const idleHead = controller.userData.pointerIdleHead;
+  const activeHead = controller.userData.pointerActiveHead;
+  if (!line || !idleHead || !activeHead) return;
+
+  const inVr = Boolean(currentSession);
+  line.visible = inVr;
+  if (!inVr) {
+    idleHead.visible = false;
+    activeHead.visible = false;
+    return;
+  }
+
+  setControllerRay(controller);
+  const hit = semanticConstellation?.group?.visible
+    ? semanticConstellation.intersectDetailed?.(raycaster)
+    : null;
+  const distance = THREE.MathUtils.clamp(hit?.distance || 4, 0.08, 4);
+  const selected = Boolean(hit?.selection);
+
+  line.scale.z = distance;
+  line.material.opacity = selected ? 1 : 0.72;
+  idleHead.position.z = -distance;
+  activeHead.position.z = -distance;
+  idleHead.visible = !selected;
+  activeHead.visible = selected;
+}
+
+function updateControllerPointerVisuals() {
+  controllers.forEach(updateControllerPointerVisual);
 }
 
 function activateSemanticPortal(result) {
@@ -663,6 +724,7 @@ function resize() {
 
 function render() {
   updateTwoHandTransform();
+  updateControllerPointerVisuals();
   renderer.render(scene, camera);
 }
 

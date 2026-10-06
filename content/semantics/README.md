@@ -838,3 +838,15 @@ The immersive Semantic layer uses a low-clutter visual language while preserving
 - Individual VR uses small semantic ring markers with invisible controller hit volumes. Concept labels and the contextual information panel appear only after selection.
 - Learning portals use the existing light-brown framed cards as the visible clickable controls. The card itself is raycastable, while a larger `colorWrite: false` plane remains behind it only as an invisible tolerance area. Desktop preview shows a pointer cursor over these cards; Quest controllers can target them directly.
 - The semantic geometry, relations, learning path, and tracking behavior are unchanged; this revision is visual/interaction refinement only.
+
+
+## Homepage menu and VR pointer affordance
+
+The homepage primary experience menu is intentionally ordered as a 3 × 2 grid on desktop:
+
+1. Painting Index · Atlas Concept · ARTDACI Semantic
+2. VR Gallery · Masters Hub · VR Cinema
+
+The same structural order is preserved in FR and AR. The Living 3D Book remains accessible elsewhere in the site but no longer occupies one of these six primary homepage slots.
+
+In individual WebXR, controller rays now stop visually at the first clickable semantic card they hit. The pointer uses a small round head while idle and switches to a brighter diamond-shaped head when a clickable semantic control is targeted. The large invisible tolerance plane remains raycastable without rendering pixels.

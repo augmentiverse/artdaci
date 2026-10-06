@@ -346,6 +346,12 @@ export function createSemanticVrConstellation({
       const intersection = raycaster.intersectObjects(hitTargets, false)[0];
       return intersection?.object?.userData?.semanticSelection || null;
     },
+    intersectDetailed(raycaster) {
+      const intersection = raycaster.intersectObjects(hitTargets, false)[0];
+      if (!intersection) return null;
+      const selection = intersection.object?.userData?.semanticSelection || null;
+      return selection ? { selection, distance: intersection.distance, object: intersection.object } : null;
+    },
     select,
     setVisible(value) {
       group.visible = Boolean(value);
