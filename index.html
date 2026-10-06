@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="styles/site.css" />
     <link rel="stylesheet" href="styles/visitor-guide.css?v=1" />
     <link rel="stylesheet" href="styles/home-v2.css?v=1" />
+    <link rel="stylesheet" href="styles/home-v2-adjustments.css?v=1" />
   </head>
   <body class="home-v2">
     <header class="hv2-header" aria-label="ARTDACI navigation">
@@ -29,6 +30,7 @@
         <a href="#masters">Masters</a>
         <a href="#places">Museums</a>
         <a href="semantic/?lang=en">Knowledge</a>
+        <a class="hv2-nav-guide" href="atlas.html?lang=en">Guide</a>
       </nav>
 
       <nav class="hv2-language" aria-label="Languages">
@@ -98,11 +100,11 @@
         <div class="hv2-section-head">
           <div>
             <p class="hv2-section-kicker">Explore ARTDACI</p>
-            <h2 id="experiences-title">Six doors into the same cultural universe.</h2>
+            <h2 id="experiences-title">Six ways to experience the collection.</h2>
           </div>
           <p>
-            Start with the collection, the augmented-book concept or the knowledge graph, then move
-            naturally into immersive galleries, master-led experiences and cinema.
+            Move from artworks and connected knowledge to interactive 3D, virtual galleries,
+            master-led experiences and immersive cinema.
           </p>
         </div>
 
@@ -115,19 +117,19 @@
             <span class="hv2-arrow" aria-hidden="true">↗</span>
           </a>
 
-          <a class="hv2-experience-card" href="atlas.html?lang=en">
-            <span class="hv2-experience-no">02</span>
-            <span class="hv2-experience-type">Print + AR</span>
-            <h3>Atlas Concept</h3>
-            <p>Discover how the printed art book becomes an optional gateway to connected experiences.</p>
-            <span class="hv2-arrow" aria-hidden="true">↗</span>
-          </a>
-
           <a class="hv2-experience-card semantic-entry-link" href="semantic/?lang=en">
-            <span class="hv2-experience-no">03</span>
+            <span class="hv2-experience-no">02</span>
             <span class="hv2-experience-type">Knowledge Graph</span>
             <h3>ARTDACI Semantic</h3>
             <p>Navigate artworks through artists, museums, places, themes, techniques and cultural links.</p>
+            <span class="hv2-arrow" aria-hidden="true">↗</span>
+          </a>
+
+          <a class="hv2-experience-card" href="3d/?lang=en">
+            <span class="hv2-experience-no">03</span>
+            <span class="hv2-experience-type">Interactive 3D</span>
+            <h3>3D Models</h3>
+            <p>Inspect artworks, artists, ARTDACI objects and museum architecture as interactive 3D models.</p>
             <span class="hv2-arrow" aria-hidden="true">↗</span>
           </a>
 
@@ -155,6 +157,14 @@
             <span class="hv2-arrow" aria-hidden="true">↗</span>
           </a>
         </div>
+
+        <aside class="hv2-guide-note" aria-label="ARTDACI guide">
+          <div>
+            <span class="hv2-guide-label">New to ARTDACI?</span>
+            <strong>See how the printed book and its digital layers work together.</strong>
+          </div>
+          <a href="atlas.html?lang=en">Open the ARTDACI guide <span aria-hidden="true">→</span></a>
+        </aside>
       </section>
 
       <section id="masters" class="hv2-section hv2-masters" aria-labelledby="masters-title">
@@ -218,7 +228,7 @@
             <div class="hv2-continuum-step"><span>02</span><strong>Knowledge</strong></div>
             <div class="hv2-continuum-step"><span>03</span><strong>Semantic</strong></div>
             <div class="hv2-continuum-step"><span>04</span><strong>AR</strong></div>
-            <div class="hv2-continuum-step"><span>05</span><strong>3D</strong></div>
+            <a class="hv2-continuum-step hv2-continuum-link" href="3d/?lang=en"><span>05</span><strong>3D</strong></a>
             <div class="hv2-continuum-step"><span>06</span><strong>VR</strong></div>
             <div class="hv2-continuum-step"><span>07</span><strong>GEO</strong></div>
           </div>
