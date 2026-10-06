@@ -1,11 +1,26 @@
+const runtimeContextDoc = require("../content/semantics/runtime-contexts.json");
+const conceptsDoc = require("../content/semantics/concepts.json");
+const artworksDoc = require("../content/semantics/artwork-concepts.json");
+const culturalDoc = require("../content/semantics/cultural-knowledge.json");
+const iconographyDoc = require("../content/semantics/iconography.json");
+const imageAnnotationsDoc = require("../content/semantics/image-annotations.json");
+const pedagogyDoc = require("../content/semantics/pedagogical-relations.json");
+const experiencesDoc = require("../content/semantics/experience-links.json");
+
 const SUPPORTED_LANGS = new Set(["fr", "en", "ar"]);
 const SUPPORTED_ENVIRONMENTS = new Set(["web", "book", "ar", "vr", "geo", "3d"]);
 
 function send(res, status, payload) {
   res.statusCode = status;
   res.setHeader("Content-Type", "application/json; charset=utf-8");
-  res.setHeader("Cache-Control", "public, s-maxage=300, stale-while-revalidate=1800");
+  res.setHeader(
+    "Cache-Control",
+    status >= 200 && status < 300
+      ? "public, s-maxage=300, stale-while-revalidate=1800"
+      : "no-store"
+  );
   res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("X-ARTDACI-Semantic-Runtime", "2.12");
   res.end(JSON.stringify(payload));
 }
 
@@ -13,20 +28,6 @@ function localize(value, lang) {
   if (!value) return "";
   if (typeof value === "string") return value;
   return value[lang] || value.en || value.fr || value.ar || Object.values(value)[0] || "";
-}
-
-function originFromRequest(req) {
-  const proto = String(req.headers["x-forwarded-proto"] || "https").split(",")[0].trim();
-  const host = String(req.headers["x-forwarded-host"] || req.headers.host || "artdaci.com").split(",")[0].trim();
-  return `${proto}://${host}`;
-}
-
-async function loadJson(origin, path) {
-  const response = await fetch(`${origin}${path}`, {
-    headers: { Accept: "application/json", "User-Agent": "ARTDACI-Semantic-Runtime/2.11" }
-  });
-  if (!response.ok) throw new Error(`${path}: HTTP ${response.status}`);
-  return response.json();
 }
 
 function normalizeExperienceHref(href, lang) {
@@ -440,20 +441,19 @@ module.exports = async function handler(req, res) {
   try {
     const lang = SUPPORTED_LANGS.has(req.query?.lang) ? req.query.lang : "fr";
     const environment = SUPPORTED_ENVIRONMENTS.has(req.query?.environment) ? req.query.environment : "web";
-    const origin = originFromRequest(req);
-
-    const [runtime, concepts, artworks, cultural, iconography, images, pedagogy, experiences] = await Promise.all([
-      loadJson(origin, "/content/semantics/runtime-contexts.json"),
-      loadJson(origin, "/content/semantics/concepts.json"),
-      loadJson(origin, "/content/semantics/artwork-concepts.json"),
-      loadJson(origin, "/content/semantics/cultural-knowledge.json"),
-      loadJson(origin, "/content/semantics/iconography.json"),
-      loadJson(origin, "/content/semantics/image-annotations.json"),
-      loadJson(origin, "/content/semantics/pedagogical-relations.json"),
-      loadJson(origin, "/content/semantics/experience-links.json")
-    ]);
-
-    const docs = { runtime, concepts, artworks, cultural, iconography, images, pedagogy, experiences };
+    // Bundle the reviewed semantic documents with the serverless function.
+    // This avoids protected Preview self-fetches to the deployment's own hostname.
+    const docs = {
+      runtime: runtimeContextDoc,
+      concepts: conceptsDoc,
+      artworks: artworksDoc,
+      cultural: culturalDoc,
+      iconography: iconographyDoc,
+      images: imageAnnotationsDoc,
+      pedagogy: pedagogyDoc,
+      experiences: experiencesDoc
+    };
+    const { runtime } = docs;
     const maps = buildMaps(docs);
     const resourceType = String(req.query?.resourceType || "painting");
     const slug = String(req.query?.slug || "");
@@ -513,7 +513,7 @@ module.exports = async function handler(req, res) {
 
     const payload = {
       schemaVersion: "1.0",
-      runtimeVersion: "2.11",
+      runtimeVersion: "2.12",
       context: {
         environment,
         environmentLabel: localize(policy.label, lang),

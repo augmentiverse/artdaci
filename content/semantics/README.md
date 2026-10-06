@@ -814,3 +814,12 @@ The user-facing ARTDACI record for `vg01` is aligned with the selected 1889 Self
 - dimensions: 65 × 54.2 cm.
 
 The legacy MindAR binary is deliberately not overwritten in this commit. `compile-target.html?painting=van-gogh` is prepared to compile a new `van-gogh-1889.mind` from the canonical 1889 image. The AR target switch must happen only after that generated target has been tested, so the current tracking path cannot be broken by a display-only migration.
+
+
+## Semantic Runtime V2.12
+
+V2.12 fixes immersive Semantic Runtime delivery in Vercel Preview deployments.
+
+The serverless runtime now bundles the reviewed semantic JSON documents with the function through static CommonJS JSON imports instead of fetching those files back from its own deployment hostname. This removes the self-fetch dependency that can fail behind Preview deployment protection and silently suppress AR semantic hotspots, the shared Semantic button, and the VR `Parcours` constellation.
+
+Runtime failures are returned with `Cache-Control: no-store`, successful responses retain short edge caching, and the browser client adds `runtime=2.12` plus `cache: "no-store"` so phones and Quest browsers do not reuse a stale failed response.

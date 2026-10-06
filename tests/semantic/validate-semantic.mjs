@@ -301,7 +301,12 @@ assert(semanticStore.includes("pedagogicalRegionResults"), "Hybrid search must r
 assert(embeddingClient.includes("rerankWithNeuralEmbeddings"), "Embedding client must expose optional neural reranking.");
 assert(embeddingApi.includes("ARTDACI_EMBEDDING_ENDPOINT"), "Embedding API must be provider-configurable.");
 assert(embeddingApi.includes("local-vector-fallback"), "Embedding API must advertise local fallback when unconfigured.");
-assert(semanticRuntimeApi.includes('runtimeVersion: "2.11"'), "Semantic Runtime API must expose runtime version 2.11.");
+assert(semanticRuntimeApi.includes('runtimeVersion: "2.12"'), "Semantic Runtime API must expose runtime version 2.12.");
+assert(semanticRuntimeApi.includes('require("../content/semantics/runtime-contexts.json")'), "Semantic Runtime must bundle semantic documents instead of self-fetching the Preview hostname.");
+assert(!semanticRuntimeApi.includes("loadJson(origin"), "Semantic Runtime must not depend on same-origin HTTP self-fetches.");
+assert(semanticRuntimeApi.includes('"no-store"'), "Semantic Runtime errors must not be cached.");
+assert(semanticRuntimeClient.includes('params.set("runtime", "2.12")'), "Semantic Runtime client must version-bust runtime requests.");
+assert(semanticRuntimeClient.includes('cache:"no-store"'), "Semantic Runtime client must bypass stale browser/runtime failures.");
 assert(semanticRuntimeApi.includes("learningPathFor"), "Semantic Runtime API must derive a contextual pedagogical learning path.");
 assert(semanticRuntimeApi.includes("observe-understand-compare-experience"), "Semantic Runtime must identify the four-stage learning pattern.");
 assert(semanticRuntimeApi.includes("compareWith"), "Semantic Runtime learning path must support ARTDACI comparison relations.");

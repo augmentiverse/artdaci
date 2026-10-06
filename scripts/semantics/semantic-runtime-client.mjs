@@ -16,7 +16,11 @@ export async function resolveSemanticRuntime({ nodeId, slug, resourceType="paint
   if (slug) params.set("slug", slug);
   if (resourceType) params.set("resourceType", resourceType);
   if (regionId) params.set("regionId", regionId);
-  const response = await fetch(`/api/semantic-runtime?${params.toString()}`, { headers:{ Accept:"application/json" } });
+  params.set("runtime", "2.12");
+  const response = await fetch(`/api/semantic-runtime?${params.toString()}`, {
+    headers:{ Accept:"application/json" },
+    cache:"no-store"
+  });
   if (!response.ok) throw new Error(`Semantic runtime HTTP ${response.status}`);
   return response.json();
 }
