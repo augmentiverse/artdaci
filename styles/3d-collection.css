@@ -476,3 +476,28 @@ a { color: inherit; }
     flex: 1;
   }
 }
+
+
+html[dir="rtl"] body {
+  font-family: Tahoma, "Segoe UI", Arial, sans-serif;
+}
+
+html[dir="rtl"] .d3-copy h1,
+html[dir="rtl"] .d3-section-head h2,
+html[dir="rtl"] .d3-group-head h3,
+html[dir="rtl"] .d3-model-choice strong,
+html[dir="rtl"] .d3-stage-meta strong,
+html[dir="rtl"] .d3-lead {
+  font-family: Tahoma, "Segoe UI", Arial, sans-serif;
+  letter-spacing: 0;
+}
+
+html[dir="rtl"] .d3-model-choice {
+  text-align: right;
+}
+
+html[dir="rtl"] .d3-model-choice::after {
+  right: auto;
+  left: 21px;
+  content: "↖";
+}
