@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#100d0b" />
+    <meta
+      name="description"
+      content="Explore ARTDACI artworks, artists, objects and museum architecture as interactive 3D models."
+    />
+    <title>ARTDACI — 3D Models</title>
+    <link rel="icon" href="../assets/app/artdaci-app-icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../styles/3d-collection.css?v=1" />
+    <script type="module" src="../vendor/model-viewer.min.js?v=3.5.0"></script>
+  </head>
+  <body>
+    <header class="d3-header">
+      <a class="d3-back" href="../index.html">← ARTDACI Home</a>
+
+      <a class="d3-brand" href="../index.html" aria-label="ARTDACI home">
+        <img src="../assets/varia/artdaci-logo.png" alt="ARTDACI" />
+        <span>3D Collection</span>
+      </a>
+
+      <nav class="d3-lang" aria-label="Languages">
+        <a href="?lang=en" aria-current="page">EN</a>
+        <a href="../index-fr.html" lang="fr">FR</a>
+        <a href="../index-ar.html" lang="ar" dir="rtl">العربية</a>
+      </nav>
+    </header>
+
+    <main class="d3-shell">
+      <section class="d3-hero" aria-labelledby="d3-page-title">
+        <div class="d3-copy">
+          <p class="d3-kicker">ARTDACI · Interactive 3D</p>
+          <h1 id="d3-page-title">Explore the collection <span>in 3D.</span></h1>
+          <p class="d3-lead">
+            Rotate, inspect and explore selected ARTDACI models—from artwork interpretations and
+            artist figures to the living book and museum architecture.
+          </p>
+          <p class="d3-note">
+            Only one model is loaded at a time. Select any item below to replace the model in the
+            viewer. AR is offered when supported by the device and browser.
+          </p>
+        </div>
+
+        <div class="d3-stage-wrap">
+          <div class="d3-stage">
+            <span id="d3-loading" class="d3-loading">Loading 3D model</span>
+            <model-viewer
+              id="d3-model"
+              src="../assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa-main-v2.glb"
+              alt="Mona Lisa — interactive 3D model"
+              camera-controls
+              touch-action="pan-y"
+              auto-rotate
+              ar
+              ar-modes="webxr scene-viewer quick-look"
+              ar-placement="floor"
+              shadow-intensity="0.75"
+              exposure="1"
+              interaction-prompt="auto"
+              loading="eager"
+              reveal="auto">
+              <button class="d3-ar-button" slot="ar-button" type="button">View in AR</button>
+            </model-viewer>
+
+            <div class="d3-stage-meta">
+              <div>
+                <span id="d3-category">Artwork interpretation</span>
+                <strong id="d3-title">Mona Lisa — 3D interpretation</strong>
+              </div>
+              <div class="d3-controls" aria-label="3D viewer controls">
+                <button id="d3-rotate" type="button" aria-pressed="true">Stop rotation</button>
+                <button id="d3-reset" type="button">Reset view</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="d3-section" aria-labelledby="d3-library-title">
+        <div class="d3-section-head">
+          <div>
+            <p class="d3-kicker">3D Library</p>
+            <h2 id="d3-library-title">Choose what you want to inspect.</h2>
+          </div>
+          <p>
+            This first 3D portal brings together several types of assets already used across ARTDACI.
+            The collection can expand progressively without changing the interaction model.
+          </p>
+        </div>
+
+        <section class="d3-group" aria-labelledby="d3-artworks-title">
+          <div class="d3-group-head">
+            <h3 id="d3-artworks-title">Artworks & interpretations</h3>
+            <span>3 models</span>
+          </div>
+          <div class="d3-grid">
+            <button
+              class="d3-model-choice"
+              type="button"
+              aria-current="true"
+              data-category="Artwork interpretation"
+              data-title="Mona Lisa — 3D interpretation"
+              data-src="../assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa-main-v2.glb">
+              <span>Leonardo da Vinci</span>
+              <strong>Mona Lisa</strong>
+              <small>Compact 3D interpretation for interactive viewing.</small>
+            </button>
+
+            <button
+              class="d3-model-choice"
+              type="button"
+              aria-current="false"
+              data-category="Artwork interpretation"
+              data-title="Girl with a Pearl Earring — 3D interpretation"
+              data-src="../assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring.glb">
+              <span>Johannes Vermeer</span>
+              <strong>Girl with a Pearl Earring</strong>
+              <small>Three-dimensional interpretation of Vermeer's iconic figure.</small>
+            </button>
+
+            <button
+              class="d3-model-choice"
+              type="button"
+              aria-current="false"
+              data-category="Artwork environment"
+              data-title="The Bedroom — 3D interpretation"
+              data-src="../assets/artists/vincent-van-gogh/artworks/the-bedroom/models/bed-van-gogh-f-s.glb">
+              <span>Vincent van Gogh</span>
+              <strong>The Bedroom</strong>
+              <small>Spatial reconstruction inspired by Van Gogh's Arles bedroom.</small>
+            </button>
+          </div>
+        </section>
+
+        <section class="d3-group" aria-labelledby="d3-masters-title">
+          <div class="d3-group-head">
+            <h3 id="d3-masters-title">The Masters</h3>
+            <span>4 models</span>
+          </div>
+          <div class="d3-grid">
+            <button
+              class="d3-model-choice"
+              type="button"
+              aria-current="false"
+              data-category="Master figure"
+              data-title="Leonardo da Vinci — standing figure"
+              data-src="../assets/artists/leonardo-da-vinci/reimagined/models/davinci-standing-c.glb">
+              <span>Master figure</span>
+              <strong>Leonardo da Vinci</strong>
+              <small>Standing 3D character used in ARTDACI narrative experiences.</small>
+            </button>
+
+            <button
+              class="d3-model-choice"
+              type="button"
+              aria-current="false"
+              data-category="Master figure"
+              data-title="Johannes Vermeer — standing figure"
+              data-src="../assets/artists/johannes-vermeer/reimagined/models/vermeer_standing.glb">
+              <span>Master figure</span>
+              <strong>Johannes Vermeer</strong>
+              <small>Standing 3D character for guided and immersive experiences.</small>
+            </button>
+
+            <button
+              class="d3-model-choice"
+              type="button"
+              aria-current="false"
+              data-category="Master figure"
+              data-title="Vincent van Gogh — standing figure"
+              data-src="../assets/artists/vincent-van-gogh/profile/models/standing.glb">
+              <span>Master figure</span>
+              <strong>Vincent van Gogh</strong>
+              <small>Lightweight standing model for spatial experiences.</small>
+            </button>
+
+            <button
+              class="d3-model-choice"
+              type="button"
+              aria-current="false"
+              data-category="Master figure"
+              data-title="Claude Monet — standing figure"
+              data-src="../assets/artists/claude-monet/reimagined/models/claude-monet-standing-c.glb">
+              <span>Master figure</span>
+              <strong>Claude Monet</strong>
+              <small>Standing 3D character used across ARTDACI environments.</small>
+            </button>
+          </div>
+        </section>
+
+        <section class="d3-group" aria-labelledby="d3-museums-title">
+          <div class="d3-group-head">
+            <h3 id="d3-museums-title">Museums</h3>
+            <span>4 models</span>
+          </div>
+          <div class="d3-grid">
+            <button
+              class="d3-model-choice"
+              type="button"
+              aria-current="false"
+              data-category="Museum architecture"
+              data-title="Musée d'Orsay — architectural model"
+              data-src="../assets/environments/gallery/models/museums/Orsay_museum_c3.glb">
+              <span>Paris · France</span>
+              <strong>Musée d'Orsay</strong>
+              <small>Architectural 3D model used by ARTDACI museum experiences.</small>
+            </button>
+
+            <button
+              class="d3-model-choice"
+              type="button"
+              aria-current="false"
+              data-category="Museum architecture"
+              data-title="Mauritshuis — architectural model"
+              data-src="../assets/environments/gallery/models/museums/Mauritshuis_museum_c3.glb">
+              <span>The Hague · Netherlands</span>
+              <strong>Mauritshuis</strong>
+              <small>3D museum model connected to the Vermeer collection.</small>
+            </button>
+
+            <button
+              class="d3-model-choice"
+              type="button"
+              aria-current="false"
+              data-category="Museum architecture"
+              data-title="National Gallery of Art — architectural model"
+              data-src="../assets/environments/gallery/models/museums/National_Gallery_of_Art_Washington.glb">
+              <span>Washington · USA</span>
+              <strong>National Gallery of Art</strong>
+              <small>Architectural model for ARTDACI's Washington museum layer.</small>
+            </button>
+
+            <button
+              class="d3-model-choice"
+              type="button"
+              aria-current="false"
+              data-category="Museum architecture"
+              data-title="Louvre — architectural model"
+              data-src="../assets/environments/gallery/models/museums/Louvre_museum_c3.glb">
+              <span>Paris · France</span>
+              <strong>Musée du Louvre</strong>
+              <small>Optimized museum model for interactive inspection.</small>
+            </button>
+          </div>
+        </section>
+
+        <section class="d3-group" aria-labelledby="d3-objects-title">
+          <div class="d3-group-head">
+            <h3 id="d3-objects-title">ARTDACI objects</h3>
+            <span>1 model</span>
+          </div>
+          <div class="d3-grid">
+            <button
+              class="d3-model-choice"
+              type="button"
+              aria-current="false"
+              data-category="ARTDACI object"
+              data-title="ARTDACI — 3D book"
+              data-src="../assets/environments/gallery/models/artdaci_book3d_v2.glb">
+              <span>Printed + Digital</span>
+              <strong>The ARTDACI Book</strong>
+              <small>Three-dimensional representation of the printed ARTDACI object.</small>
+            </button>
+          </div>
+        </section>
+      </section>
+
+      <footer class="d3-footer">
+        <span>ARTDACI · Interactive 3D Collection</span>
+        <div>
+          <a href="../gallery-vr.html?lang=en">VR Gallery</a>
+          ·
+          <a href="../geo/masters-hub.html?lang=en">Masters Hub</a>
+          ·
+          <a href="../semantic/?lang=en">ARTDACI Semantic</a>
+        </div>
+      </footer>
+    </main>
+
+    <script type="module" src="../scripts/3d-collection.js?v=1"></script>
+  </body>
+</html>
