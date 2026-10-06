@@ -3,117 +3,316 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#191512" />
+    <meta name="theme-color" content="#100d0b" />
     <meta name="application-name" content="ARTDACI" />
     <meta name="mobile-web-app-capable" content="yes" />
+    <meta
+      name="description"
+      content="ARTDACI connects the printed art book with semantic knowledge, augmented reality, 3D, VR, GEO and immersive cultural experiences."
+    />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" href="assets/app/artdaci-app-icon.svg" type="image/svg+xml" />
-    <title>ARTDACI - Augmented Art Book</title>
+    <title>ARTDACI — Masterpieces Alive</title>
     <link rel="stylesheet" href="styles/site.css" />
     <link rel="stylesheet" href="styles/visitor-guide.css?v=1" />
+    <link rel="stylesheet" href="styles/home-v2.css?v=1" />
   </head>
-  <body>
-    <main class="home-shell">
-      <section class="book-hero index-hero" aria-labelledby="book-title">
-        <article class="intro">
-          <img class="artdaci-logo index-logo" src="assets/varia/artdaci-logo.png" alt="ARTDACI" />
-          <p class="eyebrow">Printed Art Book with Optional AR</p>
-          <h1 id="book-title">Masterpieces Alive</h1>
-          <p class="dek">
-            A museum-style printed art book designed to be read, studied, and enjoyed without a device. Each spread offers rich art-historical context, visual analysis, technique notes, timelines, and close-looking prompts. AR is an optional second layer for readers who want to go further.
+  <body class="home-v2">
+    <header class="hv2-header" aria-label="ARTDACI navigation">
+      <a class="hv2-brand" href="index.html" aria-label="ARTDACI home">
+        <img src="assets/varia/artdaci-logo.png" alt="ARTDACI" />
+      </a>
+
+      <nav class="hv2-nav" aria-label="Main navigation">
+        <a href="#painting-index">Collection</a>
+        <a href="#experiences">Experiences</a>
+        <a href="#masters">Masters</a>
+        <a href="#places">Museums</a>
+        <a href="semantic/?lang=en">Knowledge</a>
+      </nav>
+
+      <nav class="hv2-language" aria-label="Languages">
+        <a href="index.html" aria-current="page">EN</a>
+        <a href="index-fr.html" lang="fr">FR</a>
+        <a href="index-ar.html" lang="ar" dir="rtl">العربية</a>
+      </nav>
+    </header>
+
+    <main class="home-shell hv2-main">
+      <section class="hv2-hero" aria-labelledby="book-title">
+        <div class="hv2-hero-copy">
+          <p class="hv2-kicker">ARTDACI · Art beyond the frame</p>
+          <h1 id="book-title">Masterpieces <span>Alive.</span></h1>
+          <p class="hv2-hero-lead">
+            From the printed page to living worlds. Discover masterpieces through art history,
+            semantic knowledge, augmented reality, 3D, VR and spatial computing.
           </p>
+          <p class="hv2-tech-line">Print · Knowledge · Semantic · AR · 3D · VR · GEO</p>
 
-          <div class="actions home-actions" aria-label="Primary actions">
-            <div class="home-experience-menu">
-              <a class="button primary" href="#painting-index">Open Painting Index</a>
-              <a class="button primary" href="atlas.html?lang=en">Explore the Atlas Concept</a>
-              <a class="button primary semantic-entry-link" href="semantic/?lang=en">Explore ARTDACI Semantic</a>
-              <a class="button primary" href="gallery-vr.html?lang=en">Visit the VR Gallery</a>
-              <a class="button primary masters-hub-entry-link" href="geo/masters-hub.html?lang=en">Explore Masters Hub</a>
-              <a class="button primary" href="cinema-vr.html?lang=en">Enter the VR Cinema</a>
-            </div>
-            <div class="home-language-actions">
-              <a class="button" href="index-fr.html" lang="fr">Version française</a>
-              <a class="button" href="index-ar.html" lang="ar" dir="rtl">العربية</a>
-            </div>
-          </div>
-
-          <dl class="facts">
-            <div>
-              <dt>Format</dt>
-              <dd>Premium printed museum catalogue</dd>
-            </div>
-            <div>
-              <dt>Printed Content</dt>
-              <dd>Context, analysis, timelines, prompts</dd>
-            </div>
-            <div>
-              <dt>Optional Digital Layer</dt>
-              <dd>3D model, hotspots, audio, video</dd>
-            </div>
-            <div>
-              <dt>Collection</dt>
-              <dd>Expandable painting index</dd>
-            </div>
-            <div>
-              <dt>Principle</dt>
-              <dd>Paper First, Magic Second</dd>
-            </div>
-          </dl>
-        </article>
-      </section>
-
-      <section class="leonardo-introduction" aria-labelledby="leonardo-introduction-title">
-        <div class="leonardo-introduction-copy">
-          <p class="eyebrow">ARTDACI · Art, Curiosity, Immersion</p>
-          <h2 id="leonardo-introduction-title">A printed book. A living museum. A tribute to Leonardo.</h2>
-          <p>ARTDACI turns every printed page into a gateway: readers can study a masterpiece, then continue through AI, AR, VR, interactive 3D, sound, video, immersive storytelling, and spatial computing.</p>
-          <p>It is dedicated to Leonardo da Vinci—not as the inventor of today’s technologies, but as a visionary whose studies of art, optics, anatomy, machines, movement, and space embody the curiosity that makes them meaningful.</p>
-          <blockquote>“What else can we discover?”</blockquote>
-          <div class="actions">
-            <a class="button primary" href="print-leonardo-tribute.html?lang=en">Read the Full Dedication</a>
-            <a class="button" href="book-3d.html?lang=en">Experience It in the Living Book</a>
+          <div class="hv2-hero-actions">
+            <a class="hv2-button hv2-button-primary" href="#painting-index">
+              Explore the Collection <span aria-hidden="true">→</span>
+            </a>
+            <a class="hv2-button" href="#experiences">
+              Enter ARTDACI <span aria-hidden="true">↘</span>
+            </a>
           </div>
         </div>
-        <figure>
-          <img src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/davinci-monalisa.png" alt="A reimagined encounter between Leonardo da Vinci and the Mona Lisa" />
-          <figcaption>Your works belong to history. Your ideas belong to the future. Your spirit belongs to us all.</figcaption>
-        </figure>
+
+        <div class="hv2-art-wall" aria-label="Four masterpieces from the ARTDACI collection">
+          <figure class="hv2-art-card hv2-art-leonardo">
+            <img
+              src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg"
+              alt="Mona Lisa by Leonardo da Vinci"
+            />
+            <figcaption>Leonardo · Mona Lisa</figcaption>
+          </figure>
+
+          <figure class="hv2-art-card hv2-art-vermeer">
+            <img
+              src="assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg"
+              alt="Girl with a Pearl Earring by Johannes Vermeer"
+            />
+            <figcaption>Vermeer · Girl with a Pearl Earring</figcaption>
+          </figure>
+
+          <figure class="hv2-art-card hv2-art-vangogh">
+            <img
+              src="assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp"
+              alt="Self-Portrait by Vincent van Gogh, 1889"
+            />
+            <figcaption>Van Gogh · Self-Portrait 1889</figcaption>
+          </figure>
+
+          <figure class="hv2-art-card hv2-art-monet">
+            <img
+              src="assets/artists/claude-monet/collection/impression-sunrise-monet.webp"
+              alt="Impression, Sunrise by Claude Monet"
+            />
+            <figcaption>Monet · Impression, Sunrise</figcaption>
+          </figure>
+        </div>
       </section>
 
-      <section class="atlas-callout" aria-labelledby="atlas-callout-title">
-        <div>
-          <p class="eyebrow">Augmented Atlas Model</p>
-          <h2 id="atlas-callout-title">A printed book first. A spatial museum when the reader wants more.</h2>
+      <section id="experiences" class="hv2-section hv2-experiences" aria-labelledby="experiences-title">
+        <div class="hv2-section-head">
+          <div>
+            <p class="hv2-section-kicker">Explore ARTDACI</p>
+            <h2 id="experiences-title">Six doors into the same cultural universe.</h2>
+          </div>
           <p>
-            ARTDACI is designed as a rich paper atlas of masterpieces: each printed spread can stand alone with historical context, close-looking questions, technique notes, timelines, symbols, restoration stories, and comparison prompts. The digital layer extends the book with narrated AR, 3D models, video, QR access, and spatial placement.
+            Start with the collection, the augmented-book concept or the knowledge graph, then move
+            naturally into immersive galleries, master-led experiences and cinema.
           </p>
         </div>
-        <div class="atlas-pillars" aria-label="Atlas pillars">
-          <article>
-            <strong>Read</strong>
-            <span>Museum-style printed pages with enough context to enjoy the work without a screen.</span>
-          </article>
-          <article>
-            <strong>Scan</strong>
-            <span>Optional AR reveals audio, labels, videos, and 3D interpretations over the painting.</span>
-          </article>
-          <article>
-            <strong>Place</strong>
-            <span>Spatial mode lets readers position models in their own room and build a personal gallery.</span>
-          </article>
-          <article>
-            <strong>Teach</strong>
-            <span>QR links, accessibility options, and classroom prompts make the book usable at home or in school.</span>
-          </article>
+
+        <div class="hv2-experience-grid">
+          <a class="hv2-experience-card" href="#painting-index">
+            <span class="hv2-experience-no">01</span>
+            <span class="hv2-experience-type">Collection</span>
+            <h3>Painting Index</h3>
+            <p>Search the collection and open the print, digital and immersive layers of each artwork.</p>
+            <span class="hv2-arrow" aria-hidden="true">↗</span>
+          </a>
+
+          <a class="hv2-experience-card" href="atlas.html?lang=en">
+            <span class="hv2-experience-no">02</span>
+            <span class="hv2-experience-type">Print + AR</span>
+            <h3>Atlas Concept</h3>
+            <p>Discover how the printed art book becomes an optional gateway to connected experiences.</p>
+            <span class="hv2-arrow" aria-hidden="true">↗</span>
+          </a>
+
+          <a class="hv2-experience-card semantic-entry-link" href="semantic/?lang=en">
+            <span class="hv2-experience-no">03</span>
+            <span class="hv2-experience-type">Knowledge Graph</span>
+            <h3>ARTDACI Semantic</h3>
+            <p>Navigate artworks through artists, museums, places, themes, techniques and cultural links.</p>
+            <span class="hv2-arrow" aria-hidden="true">↗</span>
+          </a>
+
+          <a class="hv2-experience-card" href="gallery-vr.html?lang=en">
+            <span class="hv2-experience-no">04</span>
+            <span class="hv2-experience-type">Immersive</span>
+            <h3>VR Gallery</h3>
+            <p>Enter virtual exhibitions, museum environments and artwork-centered spatial experiences.</p>
+            <span class="hv2-arrow" aria-hidden="true">↗</span>
+          </a>
+
+          <a class="hv2-experience-card masters-hub-entry-link" href="geo/masters-hub.html?lang=en">
+            <span class="hv2-experience-no">05</span>
+            <span class="hv2-experience-type">Masters</span>
+            <h3>Masters Hub</h3>
+            <p>Meet Leonardo, Vermeer, Van Gogh and Monet through guided 3D and narrative experiences.</p>
+            <span class="hv2-arrow" aria-hidden="true">↗</span>
+          </a>
+
+          <a class="hv2-experience-card" href="cinema-vr.html?lang=en">
+            <span class="hv2-experience-no">06</span>
+            <span class="hv2-experience-type">Cinema</span>
+            <h3>VR Cinema</h3>
+            <p>Watch art stories, animations and interpretive media inside a dedicated immersive cinema.</p>
+            <span class="hv2-arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </section>
+
+      <section id="masters" class="hv2-section hv2-masters" aria-labelledby="masters-title">
+        <div class="hv2-section-head">
+          <div>
+            <p class="hv2-section-kicker">The Masters</p>
+            <h2 id="masters-title">Four artists. Four ways of seeing.</h2>
+          </div>
+          <p>
+            ARTDACI begins with four major figures whose works open distinct paths through portraiture,
+            light, perception, emotion and the modern experience of painting.
+          </p>
+        </div>
+
+        <div class="hv2-master-grid">
+          <a class="hv2-master-card" href="geo/masters-hub.html?lang=en">
+            <img src="assets/artists/leonardo-da-vinci/profile/portrait.png" alt="Leonardo da Vinci" loading="lazy" />
+            <div class="hv2-master-copy">
+              <span>Renaissance · Italy</span>
+              <strong>Leonardo da Vinci</strong>
+            </div>
+          </a>
+
+          <a class="hv2-master-card" href="geo/masters-hub.html?lang=en">
+            <img src="assets/artists/johannes-vermeer/profile/portrait.png" alt="Johannes Vermeer" loading="lazy" />
+            <div class="hv2-master-copy">
+              <span>Dutch Golden Age</span>
+              <strong>Johannes Vermeer</strong>
+            </div>
+          </a>
+
+          <a class="hv2-master-card" href="geo/masters-hub.html?lang=en">
+            <img src="assets/artists/vincent-van-gogh/profile/portrait.png" alt="Vincent van Gogh" loading="lazy" />
+            <div class="hv2-master-copy">
+              <span>Post-Impressionism</span>
+              <strong>Vincent van Gogh</strong>
+            </div>
+          </a>
+
+          <a class="hv2-master-card" href="geo/masters-hub.html?lang=en">
+            <img src="assets/artists/claude-monet/profile/portrait.png" alt="Claude Monet" loading="lazy" />
+            <div class="hv2-master-copy">
+              <span>Impressionism</span>
+              <strong>Claude Monet</strong>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="hv2-continuum-wrap" aria-labelledby="continuum-title">
+        <div class="hv2-continuum">
+          <p class="hv2-section-kicker">From Page to Space</p>
+          <h2 id="continuum-title">One artwork. Multiple dimensions of discovery.</h2>
+          <p class="hv2-continuum-lead">
+            ARTDACI connects the stability of the printed page with a growing spatial and semantic
+            continuum. Readers can move deeper without losing the artwork as their point of reference.
+          </p>
+
+          <div class="hv2-continuum-track" aria-label="ARTDACI content continuum">
+            <div class="hv2-continuum-step"><span>01</span><strong>Print</strong></div>
+            <div class="hv2-continuum-step"><span>02</span><strong>Knowledge</strong></div>
+            <div class="hv2-continuum-step"><span>03</span><strong>Semantic</strong></div>
+            <div class="hv2-continuum-step"><span>04</span><strong>AR</strong></div>
+            <div class="hv2-continuum-step"><span>05</span><strong>3D</strong></div>
+            <div class="hv2-continuum-step"><span>06</span><strong>VR</strong></div>
+            <div class="hv2-continuum-step"><span>07</span><strong>GEO</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="hv2-section" aria-labelledby="featured-title">
+        <div class="hv2-section-head">
+          <div>
+            <p class="hv2-section-kicker">Featured Masterpieces</p>
+            <h2 id="featured-title">Begin with an artwork.</h2>
+          </div>
+          <p>
+            Each masterpiece is more than a page: it can become a semantic node, an AR target, a 3D
+            object, a narrated story or the entrance to an immersive environment.
+          </p>
+        </div>
+
+        <div class="hv2-featured-grid">
+          <a class="hv2-work" href="print-target.html">
+            <img src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg" alt="Mona Lisa" loading="lazy" />
+            <div class="hv2-work-copy">
+              <span>Leonardo da Vinci · c. 1503–1519</span>
+              <strong>Mona Lisa</strong>
+              <small>Print · Semantic · AR · 3D · VR</small>
+            </div>
+          </a>
+
+          <a class="hv2-work" href="print-vermeer-girl-with-a-pearl-earring.html">
+            <img src="assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg" alt="Girl with a Pearl Earring" loading="lazy" />
+            <div class="hv2-work-copy">
+              <span>Johannes Vermeer · c. 1665</span>
+              <strong>Girl with a Pearl Earring</strong>
+              <small>Print · Semantic · AR · 3D</small>
+            </div>
+          </a>
+
+          <a class="hv2-work" href="print-van-gogh.html">
+            <img src="assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp" alt="Self-Portrait by Vincent van Gogh, 1889" loading="lazy" />
+            <div class="hv2-work-copy">
+              <span>Vincent van Gogh · 1889</span>
+              <strong>Self-Portrait</strong>
+              <small>Print · Semantic · 3D · Immersive guide</small>
+            </div>
+          </a>
+
+          <a class="hv2-work" href="print-monet-impression-sunrise.html">
+            <img src="assets/artists/claude-monet/collection/impression-sunrise-monet.webp" alt="Impression, Sunrise by Claude Monet" loading="lazy" />
+            <div class="hv2-work-copy">
+              <span>Claude Monet · 1872</span>
+              <strong>Impression, Sunrise</strong>
+              <small>Print · Interpretation · Multimedia · Spatial exploration</small>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section id="places" class="hv2-section" aria-labelledby="places-title">
+        <div class="hv2-section-head">
+          <div>
+            <p class="hv2-section-kicker">Museums & Places</p>
+            <h2 id="places-title">Art belongs to places, too.</h2>
+          </div>
+          <p>
+            ARTDACI connects paintings with the museums, rooms and geographic contexts that shape how
+            they are encountered in the real world.
+          </p>
+        </div>
+
+        <div class="hv2-places">
+          <a class="hv2-place-primary" href="gallery-vr.html?lang=en">
+            <p class="hv2-section-kicker">Virtual Museums</p>
+            <h3>Enter galleries built around the collection.</h3>
+            <p>Explore museum environments, dedicated rooms and cross-museum experiences in VR.</p>
+            <span class="hv2-place-cta">Visit the VR Gallery →</span>
+          </a>
+
+          <a class="hv2-place-secondary" href="geo/index.html?lang=en">
+            <p class="hv2-section-kicker">ARTDACI GEO</p>
+            <h3>Connect digital culture with real places.</h3>
+            <p>Move from artworks to museum locations and spatial experiences designed around place.</p>
+            <span class="hv2-place-cta">Explore GEO →</span>
+          </a>
         </div>
       </section>
 
       <section id="painting-index" class="painting-index" aria-labelledby="index-title">
         <div class="section-heading">
-          <p class="eyebrow">Index</p>
+          <p class="eyebrow">Collection</p>
           <h2 id="index-title">Painting Index</h2>
-          <p class="section-dek">Search the collection, compare artworks, open print spreads, launch AR, and build a teaching path from the same source data used by the experiences.</p>
+          <p class="section-dek">
+            Search the ARTDACI collection, compare artworks, open print spreads and continue into
+            available digital and immersive experiences.
+          </p>
         </div>
 
         <div
@@ -125,87 +324,71 @@
           aria-live="polite">
         </div>
 
-        <div class="static-index">
-          <p class="section-dek">Featured printable artwork pages</p>
-          <div class="artwork-grid">
-            <article class="artwork-card">
-              <a class="artwork-image" href="print-target.html">
-                <img src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg" alt="Mona Lisa" loading="lazy" />
-              </a>
-              <div class="artwork-content">
-                <p class="eyebrow">Artwork 001</p>
-                <h3>Mona Lisa</h3>
-                <p class="card-meta">Leonardo da Vinci, c. 1503–1519</p>
-                <div class="card-actions">
-                  <a class="button primary" href="print-target.html">Open printable artwork page</a>
-                  <a class="button semantic-artwork-link" href="semantic/?artwork=ld01&amp;lang=en">Explore semantic graph</a>
-                </div>
-              </div>
-            </article>
-
-            <article class="artwork-card">
-              <a class="artwork-image" href="print-vermeer-girl-with-a-pearl-earring.html">
-                <img src="assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg" alt="Girl with a Pearl Earring" loading="lazy" />
-              </a>
-              <div class="artwork-content">
-                <p class="eyebrow">Artwork 009</p>
-                <h3>Girl with a Pearl Earring</h3>
-                <p class="card-meta">Johannes Vermeer, c. 1665</p>
-                <div class="card-actions">
-                  <a class="button primary" href="print-vermeer-girl-with-a-pearl-earring.html">Open printable artwork page</a>
-                  <a class="button semantic-artwork-link" href="semantic/?artwork=ve01&amp;lang=en">Explore semantic graph</a>
-                </div>
-              </div>
-            </article>
-
-            <article class="artwork-card">
-              <a class="artwork-image" href="print-van-gogh.html">
-                <img src="assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp" alt="Self-Portrait" loading="lazy" />
-              </a>
-              <div class="artwork-content">
-                <p class="eyebrow">Artwork 013</p>
-                <h3>Self-Portrait</h3>
-                <p class="card-meta">Vincent van Gogh, 1889</p>
-                <div class="card-actions">
-                  <a class="button primary" href="print-van-gogh.html">Open printable artwork page</a>
-                  <a class="button semantic-artwork-link" href="semantic/?artwork=vg01&amp;lang=en">Explore semantic graph</a>
-                </div>
-              </div>
-            </article>
-
-            <article class="artwork-card">
-              <a class="artwork-image" href="print-van-gogh-bedroom.html">
-                <img src="assets/artists/vincent-van-gogh/artworks/the-bedroom/images/bed-van-gogh.jpeg" alt="The Bedroom" loading="lazy" />
-              </a>
-              <div class="artwork-content">
-                <p class="eyebrow">Artwork 015</p>
-                <h3>The Bedroom</h3>
-                <p class="card-meta">Vincent van Gogh, 1888</p>
-                <div class="card-actions">
-                  <a class="button primary" href="print-van-gogh-bedroom.html">Open printable artwork page</a>
-                </div>
-              </div>
-            </article>
+        <noscript>
+          <div class="section-heading">
+            <p class="section-dek">JavaScript is required for the searchable collection index.</p>
           </div>
-        </div>
+        </noscript>
       </section>
 
-      <section class="index-qr" aria-labelledby="book-qr-title">
-        <p class="eyebrow">Printed Book Access</p>
-        <h2 id="book-qr-title">Online Companion</h2>
-        <div class="qr-strip">
-          <div class="qr-card">
-            <img src="assets/qr/index-en.png" alt="QR code for the English ARTDACI online companion" />
-            <div><strong>English Index</strong><span>Scan from the printed book cover or index page.</span></div>
-          </div>
-          <div class="qr-card">
-            <img src="assets/qr/index-fr.png" alt="QR code for the French ARTDACI online companion" />
-            <div><strong>French Index</strong><span>Open the French version of the online companion.</span></div>
+      <section class="hv2-section hv2-tribute" aria-labelledby="tribute-title">
+        <div class="hv2-tribute-copy">
+          <p class="hv2-section-kicker">The Spirit Behind ARTDACI</p>
+          <h2 id="tribute-title">A tribute to Leonardo and the curiosity that connects disciplines.</h2>
+          <p>
+            ARTDACI is dedicated to Leonardo da Vinci—not as the inventor of today’s technologies, but
+            as a visionary whose studies of art, optics, anatomy, machines, movement and space embody
+            the curiosity that makes new forms of cultural discovery meaningful.
+          </p>
+          <blockquote class="hv2-tribute-quote">“What else can we discover?”</blockquote>
+          <div class="hv2-hero-actions">
+            <a class="hv2-button hv2-button-primary" href="print-leonardo-tribute.html?lang=en">Read the Dedication</a>
+            <a class="hv2-button" href="book-3d.html?lang=en">Open the Living Book</a>
           </div>
         </div>
-        <a class="button primary" href="print-multimedia-qr.html">Open the Printable Multimedia QR Page</a>
+
+        <figure>
+          <img
+            src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/davinci-monalisa.png"
+            alt="A reimagined encounter between Leonardo da Vinci and the Mona Lisa"
+            loading="lazy"
+          />
+        </figure>
+      </section>
+
+      <section class="hv2-section" aria-labelledby="book-bridge-title">
+        <div class="hv2-book-bridge">
+          <div>
+            <p class="hv2-section-kicker">Continue from the Printed Book</p>
+            <h2 id="book-bridge-title">Paper first. Digital when you want more.</h2>
+            <p>
+              Scan from the printed ARTDACI book to continue online, access multimedia layers and move
+              from reading into connected and immersive experiences.
+            </p>
+            <div class="hv2-hero-actions">
+              <a class="hv2-button" href="print-multimedia-qr.html">Open the Printable Multimedia QR Page</a>
+            </div>
+          </div>
+
+          <div class="hv2-qr-pair" aria-label="ARTDACI QR codes">
+            <figure>
+              <img src="assets/qr/index-en.png" alt="QR code for the English ARTDACI online companion" loading="lazy" />
+              <figcaption>English</figcaption>
+            </figure>
+            <figure>
+              <img src="assets/qr/index-fr.png" alt="QR code for the French ARTDACI online companion" loading="lazy" />
+              <figcaption>Français</figcaption>
+            </figure>
+          </div>
+        </div>
       </section>
     </main>
+
+    <footer class="hv2-footer">
+      <strong>ARTDACI</strong>
+      <span>Art · Knowledge · Print · AR · 3D · VR · GEO</span>
+    </footer>
+
     <script type="module" src="scripts/catalogue.js?v=17"></script>
     <script type="module" src="scripts/visitor-guide.js?v=1"></script>
     <script src="scripts/pwa.js?v=1" defer></script>
