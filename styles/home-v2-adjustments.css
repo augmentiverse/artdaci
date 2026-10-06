@@ -309,3 +309,74 @@
     font-size: 11px;
   }
 }
+
+
+/* Arabic / RTL polish for the redesigned homepage. */
+html[lang="ar"] .home-v2 {
+  font-family: Tahoma, "Segoe UI", Arial, sans-serif;
+}
+
+html[lang="ar"] .home-v2 .hv2-hero h1,
+html[lang="ar"] .home-v2 .hv2-section h2,
+html[lang="ar"] .home-v2 .hv2-master-copy strong,
+html[lang="ar"] .home-v2 .hv2-work-copy strong,
+html[lang="ar"] .home-v2 .hv2-place-primary h3,
+html[lang="ar"] .home-v2 .hv2-place-secondary h3,
+html[lang="ar"] .home-v2 .hv2-tribute-copy h2,
+html[lang="ar"] .home-v2 .hv2-book-bridge h2,
+html[lang="ar"] .home-v2 .hv2-continuum h2,
+html[lang="ar"] .home-v2 .hv2-continuum-step strong,
+html[lang="ar"] .home-v2 .hv2-experience-card h3 {
+  font-family: Tahoma, "Segoe UI", Arial, sans-serif;
+  letter-spacing: 0;
+}
+
+html[lang="ar"] .home-v2 .hv2-hero h1 {
+  line-height: 1.02;
+}
+
+html[lang="ar"] .home-v2 .hv2-hero-lead,
+html[lang="ar"] .home-v2 .hv2-continuum-lead,
+html[lang="ar"] .home-v2 .hv2-tribute-quote,
+html[lang="ar"] .home-v2 .hv2-guide-note strong {
+  font-family: Tahoma, "Segoe UI", Arial, sans-serif;
+}
+
+html[lang="ar"] .home-v2 .hv2-arrow {
+  right: auto;
+  left: 30px;
+}
+
+html[lang="ar"] .home-v2 .hv2-place-cta {
+  right: auto;
+  left: 30px;
+}
+
+html[lang="ar"] .home-v2 .hv2-continuum-step {
+  border-right: 0;
+  border-left: 1px solid rgba(71, 50, 36, 0.2);
+}
+
+html[lang="ar"] .home-v2 .hv2-continuum-step:last-child {
+  border-left: 0;
+}
+
+html[lang="ar"] .home-v2 .hv2-continuum-step::after {
+  right: auto;
+  left: -9px;
+  content: "←";
+}
+
+@media (max-width: 780px) {
+  html[lang="ar"] .home-v2 .hv2-continuum-step,
+  html[lang="ar"] .home-v2 .hv2-continuum-step:nth-child(n) {
+    border-left: 0;
+  }
+
+  html[lang="ar"] .home-v2 .hv2-continuum-step::after,
+  html[lang="ar"] .home-v2 .hv2-continuum-step:nth-child(4)::after {
+    right: auto;
+    left: 16px;
+    content: "←";
+  }
+}
