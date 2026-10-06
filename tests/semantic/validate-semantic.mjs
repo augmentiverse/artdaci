@@ -390,12 +390,13 @@ assert(semanticVrConstellation.includes("portalInstruction"), "Semantic portals 
 assert(semanticVrConstellation.includes("activate"), "Semantic portal selection must distinguish focus from activation.");
 assert(vrViewer.includes("activateSemanticPortal"), "VR viewer must safely activate a selected semantic portal.");
 assert(vrViewer.includes("currentSession.end().then(navigate, navigate)"), "VR portal navigation must end the active XR session before changing destination.");
-assert(vrViewer.includes('semantic-vr-constellation.mjs?v=5'), "VR viewer must load the fully invisible portal-hit renderer.");
+assert(vrViewer.includes('semantic-vr-constellation.mjs?v=6'), "VR viewer must load clickable visible semantic portal cards.");
 assert(semanticVrConstellation.includes('label.visible = false'), "VR semantic concept labels must remain hidden until selection.");
 assert(semanticVrConstellation.includes('panel.visible = false'), "VR semantic detail panel must remain hidden until selection.");
 assert(!semanticVrConstellation.includes("frameMaterial"), "VR learning portals must not render visible blue frames.");
 assert(!semanticVrConstellation.includes("PORTAL_COLOR"), "VR portal hit targets must not carry a visible blue color.");
 assert(semanticVrConstellation.includes("colorWrite: false"), "VR portal hit targets must remain raycastable but never draw pixels.");
+assert(semanticVrConstellation.includes("hitTargets.push(portal.hit, portal.label)"), "Visible brown VR portal cards must be directly raycastable.");
 assert(geoRemoteViewer.includes("mountSemanticRuntimePanel"), "Louvre GEO viewer must consume Semantic Runtime.");
 assert(mastersHubViewer.includes("mountSemanticRuntimePanel"), "Masters Hub must consume Semantic Runtime for deep-linked guides.");
 assert(arHtml.includes("semantic-runtime.css?v=2"), "AR page must load Semantic Runtime styles.");

@@ -200,7 +200,7 @@ function makePortal(step, index, count, rtl) {
   label.userData.semanticSelection = selection;
   group.add(label);
 
-  return { group, hit, selection };
+  return { group, hit, label, selection };
 }
 
 function findPedagogy(runtime, conceptId) {
@@ -244,7 +244,7 @@ export function createSemanticVrConstellation({
   pathSteps.forEach((step, index) => {
     const portal = makePortal(step, index, pathSteps.length, rtl);
     interactiveGroups.set(`portal:${step.stage}:${step.id}`, portal.group);
-    hitTargets.push(portal.hit);
+    hitTargets.push(portal.hit, portal.label);
     group.add(portal.group);
   });
 

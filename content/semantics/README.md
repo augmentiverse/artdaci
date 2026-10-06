@@ -831,5 +831,5 @@ The immersive Semantic layer uses a low-clutter visual language while preserving
 
 - Image AR keeps each full IIIF rectangle as an invisible touch target, but renders only a compact gold ring and center dot. Region labels appear only after selection.
 - Individual VR uses small semantic ring markers with invisible controller hit volumes. Concept labels and the contextual information panel appear only after selection.
-- Learning portals keep their labels and raycast interaction areas, but their hit planes use `colorWrite: false`: no blue frame or translucent blue rectangle is rendered at all.
+- Learning portals use the existing light-brown framed cards as the visible clickable controls. The card itself is raycastable, while a larger `colorWrite: false` plane remains behind it only as an invisible tolerance area. Desktop preview shows a pointer cursor over these cards; Quest controllers can target them directly.
 - The semantic geometry, relations, learning path, and tracking behavior are unchanged; this revision is visual/interaction refinement only.

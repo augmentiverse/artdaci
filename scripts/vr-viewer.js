@@ -5,7 +5,7 @@ import { fetchArtworkManifest } from "./artwork-media-manifest.js";
 import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
 import { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./catalogue.js";
 import { mountSemanticRuntimePanel, resolveSemanticRuntime } from "./semantics/semantic-runtime-client.mjs?v=2";
-import { createSemanticVrConstellation } from "./semantics/semantic-vr-constellation.mjs?v=5";
+import { createSemanticVrConstellation } from "./semantics/semantic-vr-constellation.mjs?v=6";
 
 const PAINTINGS = {
   "mona-lisa": "content/paintings/mona-lisa.json?v=5",
@@ -421,6 +421,7 @@ function bindUI() {
       event.stopImmediatePropagation();
     }
   }, true);
+  renderer.domElement.addEventListener("pointermove", updateSemanticPointerCursor);
   resetButton.addEventListener("click", () => {
     if (modelObject) resetModel();
     else ensureInitialModel().catch(showError);
@@ -547,17 +548,24 @@ function selectSemanticWithController(index) {
   return handleSemanticSelection(selection);
 }
 
-function selectSemanticWithPointer(event) {
-  if (!semanticConstellation?.group?.visible || renderer.xr.isPresenting) return false;
+function semanticSelectionFromPointer(event) {
+  if (!semanticConstellation?.group?.visible || renderer.xr.isPresenting) return null;
   const rect = renderer.domElement.getBoundingClientRect();
-  if (!rect.width || !rect.height) return false;
+  if (!rect.width || !rect.height) return null;
   const pointer = new THREE.Vector2(
     ((event.clientX - rect.left) / rect.width) * 2 - 1,
     -(((event.clientY - rect.top) / rect.height) * 2 - 1)
   );
   raycaster.setFromCamera(pointer, camera);
-  const selection = semanticConstellation.intersect(raycaster);
-  return handleSemanticSelection(selection);
+  return semanticConstellation.intersect(raycaster);
+}
+
+function updateSemanticPointerCursor(event) {
+  renderer.domElement.style.cursor = semanticSelectionFromPointer(event) ? "pointer" : "default";
+}
+
+function selectSemanticWithPointer(event) {
+  return handleSemanticSelection(semanticSelectionFromPointer(event));
 }
 
 function isSemanticVrObject(object) {
