@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="styles/site.css" />
     <link rel="stylesheet" href="styles/visitor-guide.css?v=1" />
     <link rel="stylesheet" href="styles/home-v2.css?v=1" />
-    <link rel="stylesheet" href="styles/home-v2-adjustments.css?v=1" />
+    <link rel="stylesheet" href="styles/home-v2-adjustments.css?v=2" />
+    <script type="module" src="vendor/model-viewer.min.js?v=3.5.0"></script>
   </head>
   <body class="home-v2">
     <header class="hv2-header" aria-label="التنقل في ARTDACI">
@@ -61,23 +62,27 @@
           </div>
         </div>
 
-        <div class="hv2-art-wall" aria-label="أربع روائع من مجموعة ARTDACI">
-          <figure class="hv2-art-card hv2-art-leonardo">
-            <img src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg" alt="الموناليزا لليوناردو دافنشي" />
-            <figcaption>ليوناردو · الموناليزا</figcaption>
-          </figure>
-          <figure class="hv2-art-card hv2-art-vermeer">
-            <img src="assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg" alt="الفتاة ذات القرط اللؤلؤي ليوهانس فيرمير" />
-            <figcaption>فيرمير · الفتاة ذات القرط اللؤلؤي</figcaption>
-          </figure>
-          <figure class="hv2-art-card hv2-art-vangogh">
-            <img src="assets/artists/paintings_images/vangogh/vangogh_self-portrait.png" alt="بورتريه ذاتي لفنسنت فان غوخ، 1889" />
-            <figcaption>فان غوخ · بورتريه ذاتي 1889</figcaption>
-          </figure>
-          <figure class="hv2-art-card hv2-art-monet">
-            <img src="assets/artists/paintings_images/monet/monet_impression-sunrise.png" alt="انطباع، شروق الشمس لكلود مونيه" />
-            <figcaption>مونيه · انطباع، شروق الشمس</figcaption>
-          </figure>
+        <div class="hv2-book-hero" aria-label="كتاب ARTDACI ثلاثي الأبعاد">
+          <div class="hv2-book-aura" aria-hidden="true"></div>
+          <model-viewer
+            class="hv2-book-model"
+            src="assets/environments/gallery/models/artdaci_book3d_v2.glb"
+            alt="كتاب ARTDACI ثلاثي الأبعاد"
+            auto-rotate
+            auto-rotate-delay="0"
+            rotation-per-second="10deg"
+            camera-controls
+            interaction-prompt="none"
+            shadow-intensity="1.15"
+            shadow-softness="0.85"
+            exposure="1.08"
+            environment-image="neutral"
+            camera-orbit="32deg 68deg 112%"
+            min-camera-orbit="auto 42deg 86%"
+            max-camera-orbit="auto 86deg 145%"
+            loading="eager"
+          ></model-viewer>
+          <p class="hv2-book-signature">كتاب ARTDACI · من المطبوع إلى الثقافة الغامرة</p>
         </div>
       </section>
 
@@ -101,7 +106,7 @@
           </a>
           <a class="hv2-experience-card semantic-entry-link" href="semantic/?lang=ar">
             <span class="hv2-experience-no">02</span><span class="hv2-experience-type">رسم المعرفة</span>
-            <h3>ARTDACI Semantic</h3><p>تنقّل بين الأعمال والفنانين والمتاحف والأماكن والموضوعات والتقنيات والعلاقات الثقافية.</p>
+            <h3>دلالات ARTDACI</h3><p>تنقّل بين الأعمال والفنانين والمتاحف والأماكن والموضوعات والتقنيات والعلاقات الثقافية.</p>
             <span class="hv2-arrow" aria-hidden="true">↖</span>
           </a>
           <a class="hv2-experience-card" href="3d/?lang=ar">
@@ -126,7 +131,7 @@
           </a>
           <a class="hv2-experience-card masters-hub-entry-link" href="geo/masters-hub.html?lang=ar">
             <span class="hv2-experience-no">07</span><span class="hv2-experience-type">كبار الفنانين</span>
-            <h3>Masters Hub</h3><p>التقِ بليوناردو وفيرمير وفان غوخ ومونيه عبر تجارب ثلاثية الأبعاد وسردية موجهة.</p>
+            <h3>بوابة الأساتذة</h3><p>التقِ بليوناردو وفيرمير وفان غوخ ومونيه عبر تجارب ثلاثية الأبعاد وسردية موجهة.</p>
             <span class="hv2-arrow" aria-hidden="true">↖</span>
           </a>
           <a class="hv2-experience-card" href="cinema-vr.html?lang=ar">

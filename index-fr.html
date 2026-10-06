@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="styles/site.css" />
     <link rel="stylesheet" href="styles/visitor-guide.css?v=1" />
     <link rel="stylesheet" href="styles/home-v2.css?v=1" />
-    <link rel="stylesheet" href="styles/home-v2-adjustments.css?v=1" />
+    <link rel="stylesheet" href="styles/home-v2-adjustments.css?v=2" />
+    <script type="module" src="vendor/model-viewer.min.js?v=3.5.0"></script>
   </head>
   <body class="home-v2">
     <header class="hv2-header" aria-label="Navigation ARTDACI">
@@ -61,38 +62,27 @@
           </div>
         </div>
 
-        <div class="hv2-art-wall" aria-label="Quatre chefs-d’œuvre de la collection ARTDACI">
-          <figure class="hv2-art-card hv2-art-leonardo">
-            <img
-              src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg"
-              alt="La Joconde de Léonard de Vinci"
-            />
-            <figcaption>Léonard · La Joconde</figcaption>
-          </figure>
-
-          <figure class="hv2-art-card hv2-art-vermeer">
-            <img
-              src="assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg"
-              alt="La Jeune Fille à la perle de Johannes Vermeer"
-            />
-            <figcaption>Vermeer · La Jeune Fille à la perle</figcaption>
-          </figure>
-
-          <figure class="hv2-art-card hv2-art-vangogh">
-            <img
-              src="assets/artists/paintings_images/vangogh/vangogh_self-portrait.png"
-              alt="Autoportrait de Vincent van Gogh, 1889"
-            />
-            <figcaption>Van Gogh · Autoportrait 1889</figcaption>
-          </figure>
-
-          <figure class="hv2-art-card hv2-art-monet">
-            <img
-              src="assets/artists/paintings_images/monet/monet_impression-sunrise.png"
-              alt="Impression, soleil levant de Claude Monet"
-            />
-            <figcaption>Monet · Impression, soleil levant</figcaption>
-          </figure>
+        <div class="hv2-book-hero" aria-label="Livre ARTDACI en 3D">
+          <div class="hv2-book-aura" aria-hidden="true"></div>
+          <model-viewer
+            class="hv2-book-model"
+            src="assets/environments/gallery/models/artdaci_book3d_v2.glb"
+            alt="Livre ARTDACI en 3D"
+            auto-rotate
+            auto-rotate-delay="0"
+            rotation-per-second="10deg"
+            camera-controls
+            interaction-prompt="none"
+            shadow-intensity="1.15"
+            shadow-softness="0.85"
+            exposure="1.08"
+            environment-image="neutral"
+            camera-orbit="32deg 68deg 112%"
+            min-camera-orbit="auto 42deg 86%"
+            max-camera-orbit="auto 86deg 145%"
+            loading="eager"
+          ></model-viewer>
+          <p class="hv2-book-signature">Le livre ARTDACI · De l’imprimé à la culture immersive</p>
         </div>
       </section>
 
@@ -120,7 +110,7 @@
           <a class="hv2-experience-card semantic-entry-link" href="semantic/?lang=fr">
             <span class="hv2-experience-no">02</span>
             <span class="hv2-experience-type">Graphe de connaissance</span>
-            <h3>ARTDACI Semantic</h3>
+            <h3>Sémantique ARTDACI</h3>
             <p>Naviguez entre œuvres, artistes, musées, lieux, thèmes, techniques et relations culturelles.</p>
             <span class="hv2-arrow" aria-hidden="true">↗</span>
           </a>
@@ -160,7 +150,7 @@
           <a class="hv2-experience-card masters-hub-entry-link" href="geo/masters-hub.html?lang=fr">
             <span class="hv2-experience-no">07</span>
             <span class="hv2-experience-type">Maîtres</span>
-            <h3>Masters Hub</h3>
+            <h3>Hub des Maîtres</h3>
             <p>Rencontrez Léonard, Vermeer, Van Gogh et Monet à travers des expériences guidées en 3D.</p>
             <span class="hv2-arrow" aria-hidden="true">↗</span>
           </a>

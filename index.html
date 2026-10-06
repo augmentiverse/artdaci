@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="styles/site.css" />
     <link rel="stylesheet" href="styles/visitor-guide.css?v=1" />
     <link rel="stylesheet" href="styles/home-v2.css?v=1" />
-    <link rel="stylesheet" href="styles/home-v2-adjustments.css?v=1" />
+    <link rel="stylesheet" href="styles/home-v2-adjustments.css?v=2" />
+    <script type="module" src="vendor/model-viewer.min.js?v=3.5.0"></script>
   </head>
   <body class="home-v2">
     <header class="hv2-header" aria-label="ARTDACI navigation">
@@ -61,38 +62,27 @@
           </div>
         </div>
 
-        <div class="hv2-art-wall" aria-label="Four masterpieces from the ARTDACI collection">
-          <figure class="hv2-art-card hv2-art-leonardo">
-            <img
-              src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg"
-              alt="Mona Lisa by Leonardo da Vinci"
-            />
-            <figcaption>Leonardo · Mona Lisa</figcaption>
-          </figure>
-
-          <figure class="hv2-art-card hv2-art-vermeer">
-            <img
-              src="assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg"
-              alt="Girl with a Pearl Earring by Johannes Vermeer"
-            />
-            <figcaption>Vermeer · Girl with a Pearl Earring</figcaption>
-          </figure>
-
-          <figure class="hv2-art-card hv2-art-vangogh">
-            <img
-              src="assets/artists/paintings_images/vangogh/vangogh_self-portrait.png"
-              alt="Self-Portrait by Vincent van Gogh, 1889"
-            />
-            <figcaption>Van Gogh · Self-Portrait 1889</figcaption>
-          </figure>
-
-          <figure class="hv2-art-card hv2-art-monet">
-            <img
-              src="assets/artists/paintings_images/monet/monet_impression-sunrise.png"
-              alt="Impression, Sunrise by Claude Monet"
-            />
-            <figcaption>Monet · Impression, Sunrise</figcaption>
-          </figure>
+        <div class="hv2-book-hero" aria-label="ARTDACI 3D book">
+          <div class="hv2-book-aura" aria-hidden="true"></div>
+          <model-viewer
+            class="hv2-book-model"
+            src="assets/environments/gallery/models/artdaci_book3d_v2.glb"
+            alt="ARTDACI 3D book"
+            auto-rotate
+            auto-rotate-delay="0"
+            rotation-per-second="10deg"
+            camera-controls
+            interaction-prompt="none"
+            shadow-intensity="1.15"
+            shadow-softness="0.85"
+            exposure="1.08"
+            environment-image="neutral"
+            camera-orbit="32deg 68deg 112%"
+            min-camera-orbit="auto 42deg 86%"
+            max-camera-orbit="auto 86deg 145%"
+            loading="eager"
+          ></model-viewer>
+          <p class="hv2-book-signature">The ARTDACI Book · Print meets immersive culture</p>
         </div>
       </section>
 
