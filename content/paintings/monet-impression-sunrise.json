@@ -16,7 +16,7 @@
   "collection": "Musée Marmottan Monet, Paris",
   "currentLocation": { "museum": "Musée Marmottan Monet", "city": "Paris" },
   "media": {
-    "image": "assets/artists/claude-monet/collection/impression-sunrise-monet.webp",
+    "image": "assets/artists/paintings_images/monet/monet_impression-sunrise.png",
     "videos": [
       {
         "id": "monet-impression-sunrise-animation",
