@@ -322,6 +322,9 @@ assert(semanticRuntimeApi.includes('mode: "grounded-semantic"'), "Semantic Runti
 assert(homeEn.includes('href="semantic/?lang=en"'), "Main EN homepage must expose ARTDACI Semantic.");
 assert(homeFr.includes('href="semantic/?lang=fr"'), "Main FR homepage must expose ARTDACI Semantic.");
 assert(homeAr.includes('href="semantic/?lang=ar"'), "Main AR homepage must expose ARTDACI Semantic.");
+assert(homeEn.includes('href="geo/masters-hub.html?lang=en"'), "Main EN homepage must expose Masters Hub.");
+assert(homeFr.includes('href="geo/masters-hub.html?lang=fr"'), "Main FR homepage must expose Masters Hub.");
+assert(homeAr.includes('href="geo/masters-hub.html?lang=ar"'), "Main AR homepage must expose Masters Hub.");
 assert(catalogueJs.includes("SEMANTIC_ARTWORK_IDS"), "Catalogue must map only supported semantic pilot artworks.");
 assert(catalogueJs.includes('"mona-lisa": "ld01"'), "Catalogue semantic mapping must include Mona Lisa.");
 assert(catalogueJs.includes('"vermeer-girl-with-a-pearl-earring": "ve01"'), "Catalogue semantic mapping must include Girl with a Pearl Earring.");

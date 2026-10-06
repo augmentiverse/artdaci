@@ -780,7 +780,12 @@ The same guide control is now available on AR, VR, GEO remote exploration, and M
 
 ## Main-site entry points
 
-The semantic layer is now discoverable from the three ARTDACI homepages (FR / EN / AR) through a global ARTDACI Semantic action.
+The three ARTDACI homepages (FR / EN / AR) now expose two first-class immersive knowledge destinations in the primary action menu:
+
+- **ARTDACI Semantic** — the knowledge graph, IIIF regions, pedagogy, search, and cross-media semantic navigation;
+- **ARTDACI Masters Hub** — the four-master virtual gallery and its semantic-aware guides.
+
+Both destinations preserve the homepage language.
 
 The catalogue also exposes contextual semantic links only for the four artworks currently supported by the pilot graph:
 - Mona Lisa (`ld01`);
