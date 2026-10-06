@@ -3,155 +3,253 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#191512" />
+    <meta name="theme-color" content="#100d0b" />
     <meta name="application-name" content="ARTDACI" />
     <meta name="mobile-web-app-capable" content="yes" />
+    <meta
+      name="description"
+      content="يربط ARTDACI الكتاب الفني المطبوع بالمعرفة الدلالية والواقع المعزز والنماذج ثلاثية الأبعاد والواقع الافتراضي وGEO والتجارب الثقافية الغامرة."
+    />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" href="assets/app/artdaci-app-icon.svg" type="image/svg+xml" />
-    <title>ARTDACI - روائع فنية حية</title>
+    <title>ARTDACI — روائع فنية حية</title>
     <link rel="stylesheet" href="styles/site.css" />
     <link rel="stylesheet" href="styles/visitor-guide.css?v=1" />
+    <link rel="stylesheet" href="styles/home-v2.css?v=1" />
+    <link rel="stylesheet" href="styles/home-v2-adjustments.css?v=1" />
   </head>
-  <body>
-    <main class="home-shell">
-      <section class="book-hero index-hero" aria-labelledby="book-title">
-        <article class="intro">
-          <img class="artdaci-logo index-logo" src="assets/varia/artdaci-logo.png" alt="ARTDACI" />
-          <p class="eyebrow">كتاب فني مطبوع مع تجارب رقمية اختيارية</p>
-          <h1 id="book-title">روائع فنية حية</h1>
-          <p class="dek">كتاب فني بأسلوب كتالوج المتاحف، يمكن قراءته والاستمتاع به من دون جهاز. وتضيف التجارب الرقمية طبقة اختيارية تشمل الصوت والفيديو والواقع المعزز والنماذج ثلاثية الأبعاد والواقع الافتراضي.</p>
-          <div class="actions home-actions" aria-label="الإجراءات الرئيسية">
-            <div class="home-experience-menu">
-              <a class="button primary" href="#painting-index">فتح فهرس اللوحات</a>
-              <a class="button primary" href="atlas.html?lang=ar">اكتشف مفهوم الأطلس</a>
-              <a class="button primary semantic-entry-link" href="semantic/?lang=ar">استكشف ARTDACI Semantic</a>
-              <a class="button primary" href="gallery-vr.html?lang=ar">زيارة المعرض الافتراضي</a>
-              <a class="button primary masters-hub-entry-link" href="geo/masters-hub.html?lang=ar">استكشف Masters Hub</a>
-              <a class="button primary" href="cinema-vr.html?lang=ar">دخول سينما الواقع الافتراضي</a>
-            </div>
-            <div class="home-language-actions">
-              <a class="button" href="index.html" lang="en" dir="ltr">English</a>
-              <a class="button" href="index-fr.html" lang="fr" dir="ltr">Français</a>
-            </div>
-          </div>
-          <dl class="facts">
-            <div><dt>الصيغة</dt><dd>كتالوج متحفي مطبوع فاخر</dd></div>
-            <div><dt>المحتوى</dt><dd>السياق والتحليل والتقنيات والتسلسل الزمني</dd></div>
-            <div><dt>الطبقة الرقمية</dt><dd>صوت وفيديو وواقع معزز ونماذج ثلاثية الأبعاد</dd></div>
-            <div><dt>المجموعة</dt><dd>فهرس قابل للتوسّع</dd></div>
-          </dl>
-        </article>
-      </section>
+  <body class="home-v2">
+    <header class="hv2-header" aria-label="التنقل في ARTDACI">
+      <a class="hv2-brand" href="index-ar.html" aria-label="الصفحة الرئيسية لـ ARTDACI">
+        <img src="assets/varia/artdaci-logo.png" alt="ARTDACI" />
+      </a>
 
-      <section class="leonardo-introduction" aria-labelledby="leonardo-introduction-title">
-        <div class="leonardo-introduction-copy">
-          <p class="eyebrow">ARTDACI · الفن والفضول والانغماس</p>
-          <h2 id="leonardo-introduction-title">كتاب مطبوع. متحف حي. تحية إلى ليوناردو.</h2>
-          <p>يحوّل ARTDACI كل صفحة مطبوعة إلى بوابة: يدرس القارئ تحفة فنية، ثم يواصل اكتشافها عبر الذكاء الاصطناعي والواقع المعزز والافتراضي والتجارب ثلاثية الأبعاد والصوت والفيديو والسرد الغامر والحوسبة المكانية.</p>
-          <p>المشروع مُهدى إلى ليوناردو دافنشي، لا باعتباره مخترع تقنيات عصرنا، بل صاحب رؤية تجسد أبحاثه في الفن والبصريات والتشريح والآلات والحركة والفضاء ذلك الفضول الذي يمنح هذه التقنيات معناها.</p>
-          <blockquote>«ماذا يمكننا أن نكتشف أيضاً؟»</blockquote>
-          <div class="actions">
-            <a class="button primary" href="print-leonardo-tribute.html?lang=ar">قراءة الإهداء الكامل</a>
-            <a class="button" href="book-3d.html?lang=ar">اكتشافه في الكتاب الحي</a>
+      <nav class="hv2-nav" aria-label="التنقل الرئيسي">
+        <a href="#painting-index">المجموعة</a>
+        <a href="#experiences">التجارب</a>
+        <a href="#masters">الفنانون</a>
+        <a href="#places">المتاحف</a>
+        <a href="semantic/?lang=ar">المعرفة</a>
+        <a class="hv2-nav-guide" href="atlas.html?lang=ar">الدليل</a>
+      </nav>
+
+      <nav class="hv2-language" aria-label="اللغات">
+        <a href="index.html" lang="en" dir="ltr">EN</a>
+        <a href="index-fr.html" lang="fr" dir="ltr">FR</a>
+        <a href="index-ar.html" aria-current="page">العربية</a>
+      </nav>
+    </header>
+
+    <main class="home-shell hv2-main">
+      <section class="hv2-hero" aria-labelledby="book-title">
+        <div class="hv2-hero-copy">
+          <p class="hv2-kicker">ARTDACI · الفن أبعد من الإطار</p>
+          <h1 id="book-title">روائع فنية <span>حية.</span></h1>
+          <p class="hv2-hero-lead">
+            من الصفحة المطبوعة إلى عوالم تنبض بالحياة. اكتشف روائع الفن عبر التاريخ الفني،
+            والمعرفة الدلالية، والواقع المعزز، والنماذج ثلاثية الأبعاد، والواقع الافتراضي والحوسبة المكانية.
+          </p>
+          <p class="hv2-tech-line">مطبوع · معرفة · دلالات · AR · 3D · VR · GEO</p>
+
+          <div class="hv2-hero-actions">
+            <a class="hv2-button hv2-button-primary" href="#painting-index">
+              استكشف المجموعة <span aria-hidden="true">←</span>
+            </a>
+            <a class="hv2-button" href="#experiences">
+              ادخل إلى ARTDACI <span aria-hidden="true">↙</span>
+            </a>
           </div>
         </div>
-        <figure>
-          <img src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/davinci-monalisa.png" alt="لقاء متخيّل بين ليوناردو دافنشي والموناليزا" />
-          <figcaption>أعمالك ملك للتاريخ. أفكارك ملك للمستقبل. وروحك ملك لنا جميعاً.</figcaption>
-        </figure>
+
+        <div class="hv2-art-wall" aria-label="أربع روائع من مجموعة ARTDACI">
+          <figure class="hv2-art-card hv2-art-leonardo">
+            <img src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg" alt="الموناليزا لليوناردو دافنشي" />
+            <figcaption>ليوناردو · الموناليزا</figcaption>
+          </figure>
+          <figure class="hv2-art-card hv2-art-vermeer">
+            <img src="assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg" alt="الفتاة ذات القرط اللؤلؤي ليوهانس فيرمير" />
+            <figcaption>فيرمير · الفتاة ذات القرط اللؤلؤي</figcaption>
+          </figure>
+          <figure class="hv2-art-card hv2-art-vangogh">
+            <img src="assets/artists/paintings_images/vangogh/vangogh_self-portrait.png" alt="بورتريه ذاتي لفنسنت فان غوخ، 1889" />
+            <figcaption>فان غوخ · بورتريه ذاتي 1889</figcaption>
+          </figure>
+          <figure class="hv2-art-card hv2-art-monet">
+            <img src="assets/artists/paintings_images/monet/monet_impression-sunrise.png" alt="انطباع، شروق الشمس لكلود مونيه" />
+            <figcaption>مونيه · انطباع، شروق الشمس</figcaption>
+          </figure>
+        </div>
       </section>
 
-      <section class="atlas-callout" aria-labelledby="arabic-intro">
-        <div>
-          <p class="eyebrow">من الصفحة إلى الفضاء</p>
-          <h2 id="arabic-intro">اقرأ اللوحة، ثم ادخل عالمها.</h2>
-          <p>يمكنك مسح الصفحات، الاستماع إلى الشروحات، مشاهدة المشاهد المعاد تخيلها، وضع النماذج في غرفتك أو زيارة المعرض وعوالمه الافتراضية بواسطة الهاتف أو جهاز الواقع الافتراضي.</p>
+      <section id="experiences" class="hv2-section hv2-experiences" aria-labelledby="experiences-title">
+        <div class="hv2-section-head">
+          <div>
+            <p class="hv2-section-kicker">استكشف ARTDACI</p>
+            <h2 id="experiences-title">ثماني طرق لتجربة المجموعة.</h2>
+          </div>
+          <p>
+            انتقل من الأعمال والمعرفة المترابطة إلى النماذج ثلاثية الأبعاد والكتاب الحي والمعارض الافتراضية
+            والعوالم الغامرة وتجارب كبار الفنانين وسينما الواقع الافتراضي.
+          </p>
         </div>
-        <div class="atlas-pillars">
-          <article><strong>اقرأ</strong><span>صفحات مطبوعة واضحة وغنية بالمعلومات.</span></article>
-          <article><strong>امسح</strong><span>اكتشف محتوى الواقع المعزز فوق اللوحة.</span></article>
-          <article><strong>استكشف</strong><span>حرّك النماذج ثلاثية الأبعاد وضعها في مساحتك.</span></article>
-          <article><strong>زُر</strong><span>تجوّل داخل المعرض والعوالم الافتراضية.</span></article>
+
+        <div class="hv2-experience-grid">
+          <a class="hv2-experience-card" href="#painting-index">
+            <span class="hv2-experience-no">01</span><span class="hv2-experience-type">المجموعة</span>
+            <h3>فهرس اللوحات</h3><p>ابحث في المجموعة وافتح الطبقات المطبوعة والرقمية والغامرة لكل عمل فني.</p>
+            <span class="hv2-arrow" aria-hidden="true">↖</span>
+          </a>
+          <a class="hv2-experience-card semantic-entry-link" href="semantic/?lang=ar">
+            <span class="hv2-experience-no">02</span><span class="hv2-experience-type">رسم المعرفة</span>
+            <h3>ARTDACI Semantic</h3><p>تنقّل بين الأعمال والفنانين والمتاحف والأماكن والموضوعات والتقنيات والعلاقات الثقافية.</p>
+            <span class="hv2-arrow" aria-hidden="true">↖</span>
+          </a>
+          <a class="hv2-experience-card" href="3d/?lang=ar">
+            <span class="hv2-experience-no">03</span><span class="hv2-experience-type">ثلاثي الأبعاد تفاعلي</span>
+            <h3>النماذج ثلاثية الأبعاد</h3><p>استكشف الأعمال والفنانين وعناصر ARTDACI وعمارة المتاحف كنماذج تفاعلية ثلاثية الأبعاد.</p>
+            <span class="hv2-arrow" aria-hidden="true">↖</span>
+          </a>
+          <a class="hv2-experience-card" href="book-3d.html?lang=ar">
+            <span class="hv2-experience-no">04</span><span class="hv2-experience-type">كتاب تفاعلي</span>
+            <h3>الكتاب الحي</h3><p>قلّب صفحات ARTDACI ثلاثية الأبعاد وافتح الوسائط والنماذج والتجارب الغامرة مباشرة من الكتاب.</p>
+            <span class="hv2-arrow" aria-hidden="true">↖</span>
+          </a>
+          <a class="hv2-experience-card" href="gallery-vr.html?lang=ar">
+            <span class="hv2-experience-no">05</span><span class="hv2-experience-type">معرض غامر</span>
+            <h3>معرض الواقع الافتراضي</h3><p>ادخل إلى معارض ومتاحف افتراضية وتجارب مكانية تتمحور حول الأعمال الفنية.</p>
+            <span class="hv2-arrow" aria-hidden="true">↖</span>
+          </a>
+          <a class="hv2-experience-card" href="worlds/?lang=ar">
+            <span class="hv2-experience-no">06</span><span class="hv2-experience-type">عوالم مولّدة</span>
+            <h3>العوالم الافتراضية</h3><p>ادخل إلى عوالم مستوحاة من اللوفر ومرسم ليوناردو وغرفة نوم فان غوخ.</p>
+            <span class="hv2-arrow" aria-hidden="true">↖</span>
+          </a>
+          <a class="hv2-experience-card masters-hub-entry-link" href="geo/masters-hub.html?lang=ar">
+            <span class="hv2-experience-no">07</span><span class="hv2-experience-type">كبار الفنانين</span>
+            <h3>Masters Hub</h3><p>التقِ بليوناردو وفيرمير وفان غوخ ومونيه عبر تجارب ثلاثية الأبعاد وسردية موجهة.</p>
+            <span class="hv2-arrow" aria-hidden="true">↖</span>
+          </a>
+          <a class="hv2-experience-card" href="cinema-vr.html?lang=ar">
+            <span class="hv2-experience-no">08</span><span class="hv2-experience-type">سينما</span>
+            <h3>سينما الواقع الافتراضي</h3><p>شاهد القصص الفنية والرسوم المتحركة والمحتويات التفسيرية داخل سينما غامرة مخصصة.</p>
+            <span class="hv2-arrow" aria-hidden="true">↖</span>
+          </a>
+        </div>
+
+        <aside class="hv2-guide-note" aria-label="دليل ARTDACI">
+          <div>
+            <span class="hv2-guide-label">هل هذه زيارتك الأولى؟</span>
+            <strong>اكتشف كيف يعمل الكتاب المطبوع مع طبقاته الرقمية المتعددة.</strong>
+          </div>
+          <a href="atlas.html?lang=ar">فتح دليل ARTDACI <span aria-hidden="true">←</span></a>
+        </aside>
+      </section>
+
+      <section id="masters" class="hv2-section hv2-masters" aria-labelledby="masters-title">
+        <div class="hv2-section-head">
+          <div><p class="hv2-section-kicker">كبار الفنانين</p><h2 id="masters-title">أربعة فنانين. أربع طرق للرؤية.</h2></div>
+          <p>يبدأ ARTDACI بأربع شخصيات كبرى تفتح أعمالها مسارات مختلفة نحو البورتريه والضوء والإدراك والعاطفة وتجربة الرسم الحديثة.</p>
+        </div>
+        <div class="hv2-master-grid">
+          <a class="hv2-master-card" href="geo/masters-hub.html?lang=ar"><img src="assets/artists/leonardo-da-vinci/profile/portrait.png" alt="ليوناردو دافنشي" loading="lazy" /><div class="hv2-master-copy"><span>عصر النهضة · إيطاليا</span><strong>ليوناردو دافنشي</strong></div></a>
+          <a class="hv2-master-card" href="geo/masters-hub.html?lang=ar"><img src="assets/artists/johannes-vermeer/profile/portrait.png" alt="يوهانس فيرمير" loading="lazy" /><div class="hv2-master-copy"><span>العصر الذهبي الهولندي</span><strong>يوهانس فيرمير</strong></div></a>
+          <a class="hv2-master-card" href="geo/masters-hub.html?lang=ar"><img src="assets/artists/vincent-van-gogh/profile/portrait.png" alt="فنسنت فان غوخ" loading="lazy" /><div class="hv2-master-copy"><span>ما بعد الانطباعية</span><strong>فنسنت فان غوخ</strong></div></a>
+          <a class="hv2-master-card" href="geo/masters-hub.html?lang=ar"><img src="assets/artists/claude-monet/profile/portrait.png" alt="كلود مونيه" loading="lazy" /><div class="hv2-master-copy"><span>الانطباعية</span><strong>كلود مونيه</strong></div></a>
+        </div>
+      </section>
+
+      <section class="hv2-continuum-wrap" aria-labelledby="continuum-title">
+        <div class="hv2-continuum">
+          <p class="hv2-section-kicker">من الصفحة إلى الفضاء</p>
+          <h2 id="continuum-title">عمل واحد. أبعاد متعددة للاكتشاف.</h2>
+          <p class="hv2-continuum-lead">يربط ARTDACI ثبات الصفحة المطبوعة بفضاء دلالي ومكاني متنامٍ، مع بقاء العمل الفني نقطة المرجع الأساسية.</p>
+          <div class="hv2-continuum-track" aria-label="استمرارية محتوى ARTDACI">
+            <div class="hv2-continuum-step"><span>01</span><strong>مطبوع</strong></div>
+            <div class="hv2-continuum-step"><span>02</span><strong>معرفة</strong></div>
+            <div class="hv2-continuum-step"><span>03</span><strong>دلالات</strong></div>
+            <div class="hv2-continuum-step"><span>04</span><strong>AR</strong></div>
+            <a class="hv2-continuum-step hv2-continuum-link" href="3d/?lang=ar"><span>05</span><strong>3D</strong></a>
+            <div class="hv2-continuum-step"><span>06</span><strong>VR</strong></div>
+            <div class="hv2-continuum-step"><span>07</span><strong>GEO</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="hv2-section" aria-labelledby="featured-title">
+        <div class="hv2-section-head">
+          <div><p class="hv2-section-kicker">روائع مختارة</p><h2 id="featured-title">ابدأ بعمل فني.</h2></div>
+          <p>يمكن لكل تحفة أن تصبح عقدة دلالية أو هدفاً للواقع المعزز أو نموذجاً ثلاثي الأبعاد أو قصة مسموعة أو مدخلاً إلى بيئة غامرة.</p>
+        </div>
+        <div class="hv2-featured-grid">
+          <a class="hv2-work" href="print-ar.html?painting=mona-lisa"><img src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg" alt="الموناليزا" loading="lazy" /><div class="hv2-work-copy"><span>ليوناردو دافنشي · نحو 1503–1519</span><strong>الموناليزا</strong><small>مطبوع · دلالات · AR · 3D · VR</small></div></a>
+          <a class="hv2-work" href="print-ar.html?painting=vermeer-girl-with-a-pearl-earring"><img src="assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg" alt="الفتاة ذات القرط اللؤلؤي" loading="lazy" /><div class="hv2-work-copy"><span>يوهانس فيرمير · نحو 1665</span><strong>الفتاة ذات القرط اللؤلؤي</strong><small>مطبوع · دلالات · AR · 3D</small></div></a>
+          <a class="hv2-work" href="print-ar.html?painting=van-gogh"><img src="assets/artists/paintings_images/vangogh/vangogh_self-portrait.png" alt="بورتريه ذاتي لفنسنت فان غوخ، 1889" loading="lazy" /><div class="hv2-work-copy"><span>فنسنت فان غوخ · 1889</span><strong>بورتريه ذاتي</strong><small>مطبوع · دلالات · 3D · دليل غامر</small></div></a>
+          <a class="hv2-work" href="print-ar.html?painting=monet-impression-sunrise"><img src="assets/artists/paintings_images/monet/monet_impression-sunrise.png" alt="انطباع، شروق الشمس لكلود مونيه" loading="lazy" /><div class="hv2-work-copy"><span>كلود مونيه · 1872</span><strong>انطباع، شروق الشمس</strong><small>مطبوع · تفسير · وسائط متعددة · استكشاف مكاني</small></div></a>
+        </div>
+      </section>
+
+      <section id="places" class="hv2-section" aria-labelledby="places-title">
+        <div class="hv2-section-head">
+          <div><p class="hv2-section-kicker">المتاحف والأماكن</p><h2 id="places-title">للفن أيضاً أمكنته.</h2></div>
+          <p>يربط ARTDACI اللوحات بالمتاحف والقاعات والسياقات الجغرافية التي تشكّل طريقة لقائنا بها في العالم الحقيقي.</p>
+        </div>
+        <div class="hv2-places">
+          <a class="hv2-place-primary" href="gallery-vr.html?lang=ar"><p class="hv2-section-kicker">متاحف افتراضية</p><h3>ادخل إلى معارض مبنية حول المجموعة.</h3><p>استكشف بيئات متحفية وقاعات مخصصة وتجارب تربط بين عدة متاحف في الواقع الافتراضي.</p><span class="hv2-place-cta">زيارة معرض VR ←</span></a>
+          <a class="hv2-place-secondary" href="geo/index.html?lang=ar"><p class="hv2-section-kicker">ARTDACI GEO</p><h3>اربط الثقافة الرقمية بالأماكن الحقيقية.</h3><p>انتقل من الأعمال إلى مواقع المتاحف والتجارب المكانية المرتبطة بالمكان.</p><span class="hv2-place-cta">استكشاف GEO ←</span></a>
         </div>
       </section>
 
       <section id="painting-index" class="painting-index" aria-labelledby="index-title">
         <div class="section-heading">
-          <p class="eyebrow">الفهرس</p>
-          <h2 id="index-title">فهرس اللوحات</h2>
-          <p class="section-dek">ابحث في المجموعة وافتح تجارب الواقع المعزز والصوت والنماذج ثلاثية الأبعاد.</p>
+          <p class="eyebrow">المجموعة</p><h2 id="index-title">فهرس اللوحات</h2>
+          <p class="section-dek">ابحث في مجموعة ARTDACI، قارن بين الأعمال، وافتح الصفحات المطبوعة ثم تابع إلى التجارب الرقمية والغامرة المتاحة.</p>
         </div>
-        <div id="catalogue-app" class="catalogue-app"
+        <div
+          id="catalogue-app"
+          class="catalogue-app"
           data-lang="ar"
           data-manifests="content/paintings/mona-lisa.json,content/paintings/lady-with-an-ermine.json,content/paintings/vermeer-girl-with-a-pearl-earring.json,content/paintings/view-of-delft.json,content/paintings/van-gogh.json,content/paintings/van-gogh-bedroom.json,content/paintings/monet-impression-sunrise.json,content/paintings/pont-d-argenteuil.json,content/paintings/additional-16.json"
           data-museums="content/museums/louvre.json?v=3,content/museums/mauritshuis.json,content/museums/czartoryski.json?v=2,content/museums/orsay.json,content/museums/van-gogh-museum.json,content/museums/national-gallery-of-art-washington.json?v=1"
-          aria-live="polite"></div>
+          aria-live="polite">
+        </div>
+        <noscript><div class="section-heading"><p class="section-dek">يتطلب فهرس المجموعة تفعيل JavaScript.</p></div></noscript>
+      </section>
 
-        <div class="static-index">
-          <p class="section-dek">مجموعة مختارة من صفحات الأعمال القابلة للطباعة</p>
-          <div class="artwork-grid">
-            <article class="artwork-card">
-              <a class="artwork-image" href="print-ar.html?painting=mona-lisa">
-                <img src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg" alt="الموناليزا" loading="lazy" />
-              </a>
-              <div class="artwork-content">
-                <p class="eyebrow">العمل ٠٠١</p>
-                <h3>الموناليزا</h3>
-                <p class="card-meta">ليوناردو دافنشي، نحو 1503–1519</p>
-                <div class="card-actions">
-                  <a class="button primary" href="print-ar.html?painting=mona-lisa">فتح صفحة العمل القابلة للطباعة</a>
-                  <a class="button semantic-artwork-link" href="semantic/?artwork=ld01&amp;lang=ar">استكشف الرسم البياني الدلالي</a>
-                </div>
-              </div>
-            </article>
+      <section class="hv2-section hv2-tribute" aria-labelledby="tribute-title">
+        <div class="hv2-tribute-copy">
+          <p class="hv2-section-kicker">الروح وراء ARTDACI</p>
+          <h2 id="tribute-title">تحية إلى ليوناردو وإلى الفضول الذي يصل بين التخصصات.</h2>
+          <p>يُهدى ARTDACI إلى ليوناردو دافنشي، لا باعتباره مخترع تقنيات اليوم، بل باعتباره صاحب رؤية تجسد أبحاثه في الفن والبصريات والتشريح والآلات والحركة والفضاء ذلك الفضول الذي يمنح الاكتشاف الثقافي الجديد معناه.</p>
+          <blockquote class="hv2-tribute-quote">«ماذا يمكننا أن نكتشف أيضاً؟»</blockquote>
+          <div class="hv2-hero-actions">
+            <a class="hv2-button hv2-button-primary" href="print-leonardo-tribute.html?lang=ar">قراءة الإهداء</a>
+            <a class="hv2-button" href="book-3d.html?lang=ar">فتح الكتاب الحي</a>
+          </div>
+        </div>
+        <figure><img src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/davinci-monalisa.png" alt="لقاء متخيّل بين ليوناردو دافنشي والموناليزا" loading="lazy" /></figure>
+      </section>
 
-            <article class="artwork-card">
-              <a class="artwork-image" href="print-ar.html?painting=vermeer-girl-with-a-pearl-earring">
-                <img src="assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg" alt="الفتاة ذات القرط اللؤلؤي" loading="lazy" />
-              </a>
-              <div class="artwork-content">
-                <p class="eyebrow">العمل ٠٠٩</p>
-                <h3>الفتاة ذات القرط اللؤلؤي</h3>
-                <p class="card-meta">يوهانس فيرمير، نحو 1665</p>
-                <div class="card-actions">
-                  <a class="button primary" href="print-ar.html?painting=vermeer-girl-with-a-pearl-earring">فتح صفحة العمل القابلة للطباعة</a>
-                  <a class="button semantic-artwork-link" href="semantic/?artwork=ve01&amp;lang=ar">استكشف الرسم البياني الدلالي</a>
-                </div>
-              </div>
-            </article>
-
-            <article class="artwork-card">
-              <a class="artwork-image" href="print-ar.html?painting=van-gogh">
-                <img src="assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp" alt="بورتريه ذاتي" loading="lazy" />
-              </a>
-              <div class="artwork-content">
-                <p class="eyebrow">العمل ٠١٣</p>
-                <h3>بورتريه ذاتي</h3>
-                <p class="card-meta">فنسنت فان غوخ، 1889</p>
-                <div class="card-actions">
-                  <a class="button primary" href="print-ar.html?painting=van-gogh">فتح صفحة العمل القابلة للطباعة</a>
-                  <a class="button semantic-artwork-link" href="semantic/?artwork=vg01&amp;lang=ar">استكشف الرسم البياني الدلالي</a>
-                </div>
-              </div>
-            </article>
-
-            <article class="artwork-card">
-              <a class="artwork-image" href="print-ar.html?painting=van-gogh-bedroom">
-                <img src="assets/artists/vincent-van-gogh/artworks/the-bedroom/images/bed-van-gogh.jpeg" alt="غرفة النوم" loading="lazy" />
-              </a>
-              <div class="artwork-content">
-                <p class="eyebrow">العمل ٠١٥</p>
-                <h3>غرفة النوم</h3>
-                <p class="card-meta">فنسنت فان غوخ، أكتوبر 1888</p>
-                <div class="card-actions">
-                  <a class="button primary" href="print-ar.html?painting=van-gogh-bedroom">فتح صفحة العمل القابلة للطباعة</a>
-                </div>
-              </div>
-            </article>
+      <section class="hv2-section" aria-labelledby="book-bridge-title">
+        <div class="hv2-book-bridge">
+          <div>
+            <p class="hv2-section-kicker">تابع من الكتاب المطبوع</p>
+            <h2 id="book-bridge-title">الورق أولاً. والرقمي عندما تريد المزيد.</h2>
+            <p>امسح من كتاب ARTDACI لمواصلة التجربة على الإنترنت والوصول إلى طبقات الوسائط والانتقال من القراءة إلى التجارب المترابطة والغامرة.</p>
+            <div class="hv2-hero-actions"><a class="hv2-button" href="print-multimedia-qr.html">فتح صفحة رموز QR للوسائط</a></div>
+          </div>
+          <div class="hv2-qr-pair" aria-label="رموز QR الخاصة بـ ARTDACI">
+            <figure><img src="assets/qr/index-en.png" alt="رمز QR لنسخة ARTDACI الإنجليزية" loading="lazy" /><figcaption>English</figcaption></figure>
+            <figure><img src="assets/qr/index-fr.png" alt="رمز QR لنسخة ARTDACI الفرنسية" loading="lazy" /><figcaption>Français</figcaption></figure>
           </div>
         </div>
       </section>
     </main>
+
+    <footer class="hv2-footer">
+      <strong>ARTDACI</strong>
+      <span>فن · معرفة · مطبوع · AR · 3D · VR · GEO</span>
+    </footer>
+
     <script type="module" src="scripts/catalogue.js?v=17"></script>
     <script type="module" src="scripts/visitor-guide.js?v=1"></script>
     <script src="scripts/pwa.js?v=1" defer></script>
