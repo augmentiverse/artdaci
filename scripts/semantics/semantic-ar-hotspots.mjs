@@ -5,19 +5,22 @@ const DEFAULT_COLOR = 0xd4b77f;
 function labelTexture(label, rtl = false) {
   const canvas = document.createElement("canvas");
   canvas.width = 512;
-  canvas.height = 128;
+  canvas.height = 112;
   const ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "rgba(18,18,18,0.86)";
-  roundRect(ctx, 8, 14, 496, 100, 24);
+  ctx.fillStyle = "rgba(16,14,12,0.78)";
+  roundRect(ctx, 20, 12, 472, 88, 28);
   ctx.fill();
+  ctx.strokeStyle = "rgba(212,183,127,0.48)";
+  ctx.lineWidth = 2;
+  ctx.stroke();
   ctx.direction = rtl ? "rtl" : "ltr";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.fillStyle = "#fff7e8";
-  ctx.font = "700 38px system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
-  const text = String(label || "").length > 24 ? String(label).slice(0, 23) + "…" : String(label || "");
-  ctx.fillText(text, 256, 64, 450);
+  ctx.fillStyle = "#fff8eb";
+  ctx.font = "650 31px system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+  const text = String(label || "").length > 26 ? String(label).slice(0, 25) + "…" : String(label || "");
+  ctx.fillText(text, 256, 56, 430);
   const texture = new THREE.CanvasTexture(canvas);
   texture.encoding = THREE.sRGBEncoding;
   texture.minFilter = THREE.LinearFilter;
@@ -36,64 +39,91 @@ function roundRect(ctx, x, y, width, height, radius) {
   ctx.closePath();
 }
 
+function markerMaterial(opacity) {
+  return new THREE.MeshBasicMaterial({
+    color: DEFAULT_COLOR,
+    transparent: true,
+    opacity,
+    side: THREE.DoubleSide,
+    depthTest: false,
+    depthWrite: false,
+    toneMapped: false
+  });
+}
+
 function createRegionObject(hotspot, targetHeight, rtl) {
   const width = Math.max(0.035, hotspot.normalized.width);
   const height = Math.max(0.035, hotspot.normalized.height * targetHeight);
   const centerX = hotspot.normalized.x + hotspot.normalized.width / 2 - 0.5;
   const centerY = (0.5 - (hotspot.normalized.y + hotspot.normalized.height / 2)) * targetHeight;
+  const selected = Boolean(hotspot.selected);
 
   const region = new THREE.Group();
   region.name = `semantic-ar-hotspot-${hotspot.id}`;
   region.position.set(centerX, centerY, 0.025);
   region.userData.semanticHotspot = hotspot;
 
-  const geometry = new THREE.PlaneGeometry(width, height);
-  const fill = new THREE.Mesh(
-    geometry,
+  // Keep the full IIIF region as an invisible touch target.
+  const hit = new THREE.Mesh(
+    new THREE.PlaneGeometry(width, height),
     new THREE.MeshBasicMaterial({
       color: DEFAULT_COLOR,
       transparent: true,
-      opacity: hotspot.selected ? 0.18 : 0.07,
+      opacity: 0,
       side: THREE.DoubleSide,
       depthTest: false,
       depthWrite: false,
       toneMapped: false
     })
   );
-  fill.name = "semantic-hotspot-hit";
-  fill.renderOrder = 98;
-  fill.userData.semanticHotspot = hotspot;
-  region.add(fill);
+  hit.name = "semantic-hotspot-hit";
+  hit.renderOrder = 96;
+  hit.userData.semanticHotspot = hotspot;
+  region.add(hit);
 
-  const border = new THREE.LineSegments(
-    new THREE.EdgesGeometry(geometry),
-    new THREE.LineBasicMaterial({
-      color: DEFAULT_COLOR,
-      transparent: true,
-      opacity: hotspot.selected ? 1 : 0.86,
-      depthTest: false,
-      depthWrite: false,
-      toneMapped: false
-    })
+  const halo = new THREE.Mesh(
+    new THREE.CircleGeometry(0.030, 40),
+    markerMaterial(selected ? 0.16 : 0.055)
   );
-  border.position.z = 0.002;
-  border.renderOrder = 99;
-  region.add(border);
+  halo.name = "semantic-hotspot-halo";
+  halo.position.z = 0.003;
+  halo.renderOrder = 97;
+  region.add(halo);
+
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(0.014, 0.019, 48),
+    markerMaterial(selected ? 0.96 : 0.58)
+  );
+  ring.name = "semantic-hotspot-ring";
+  ring.position.z = 0.005;
+  ring.renderOrder = 98;
+  region.add(ring);
+
+  const dot = new THREE.Mesh(
+    new THREE.CircleGeometry(0.0052, 32),
+    markerMaterial(selected ? 1 : 0.78)
+  );
+  dot.name = "semantic-hotspot-dot";
+  dot.position.z = 0.006;
+  dot.renderOrder = 99;
+  region.add(dot);
 
   const texture = labelTexture(hotspot.label, rtl);
-  const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+  const label = new THREE.Sprite(new THREE.SpriteMaterial({
     map: texture,
     transparent: true,
+    opacity: 0.94,
     depthTest: false,
     depthWrite: false,
     toneMapped: false
   }));
-  sprite.name = "semantic-hotspot-label";
-  sprite.scale.set(Math.min(0.34, Math.max(0.19, width * 0.9)), 0.055, 1);
-  sprite.position.set(0, height / 2 + 0.04, 0.008);
-  sprite.renderOrder = 100;
-  sprite.userData.semanticHotspot = hotspot;
-  region.add(sprite);
+  label.name = "semantic-hotspot-label";
+  label.scale.set(0.22, 0.048, 1);
+  label.position.set(0, 0.052, 0.009);
+  label.renderOrder = 100;
+  label.visible = selected;
+  label.userData.semanticHotspot = hotspot;
+  region.add(label);
 
   return region;
 }
@@ -159,10 +189,15 @@ export function createSemanticArHotspots({
     select(id) {
       for (const [regionId, object] of regionObjects) {
         const selected = regionId === id;
-        const hit = object.getObjectByName("semantic-hotspot-hit");
-        const border = object.children.find((child) => child.isLineSegments);
-        if (hit?.material) hit.material.opacity = selected ? 0.2 : 0.07;
-        if (border?.material) border.material.opacity = selected ? 1 : 0.86;
+        const halo = object.getObjectByName("semantic-hotspot-halo");
+        const ring = object.getObjectByName("semantic-hotspot-ring");
+        const dot = object.getObjectByName("semantic-hotspot-dot");
+        const label = object.getObjectByName("semantic-hotspot-label");
+        if (halo?.material) halo.material.opacity = selected ? 0.16 : 0.055;
+        if (ring?.material) ring.material.opacity = selected ? 0.96 : 0.58;
+        if (dot?.material) dot.material.opacity = selected ? 1 : 0.78;
+        if (ring) ring.scale.setScalar(selected ? 1.18 : 1);
+        if (label) label.visible = selected;
       }
     },
     isVisible() {

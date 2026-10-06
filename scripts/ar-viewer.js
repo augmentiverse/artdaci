@@ -7,7 +7,7 @@ import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
 import { formatArtworkNumber } from "./artwork-numbering.js?v=1";
 import { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./immersive-routing.js?v=1";
 import { mountSemanticRuntimePanel, resolveSemanticRuntime } from "./semantics/semantic-runtime-client.mjs?v=2";
-import { createSemanticArHotspots } from "./semantics/semantic-ar-hotspots.mjs?v=1";
+import { createSemanticArHotspots } from "./semantics/semantic-ar-hotspots.mjs?v=2";
 
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath("vendor/draco/");

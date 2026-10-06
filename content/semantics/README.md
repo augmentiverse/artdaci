@@ -823,3 +823,13 @@ V2.12 fixes immersive Semantic Runtime delivery in Vercel Preview deployments.
 The serverless runtime now bundles the reviewed semantic JSON documents with the function through static CommonJS JSON imports instead of fetching those files back from its own deployment hostname. This removes the self-fetch dependency that can fail behind Preview deployment protection and silently suppress AR semantic hotspots, the shared Semantic button, and the VR `Parcours` constellation.
 
 Runtime failures are returned with `Cache-Control: no-store`, successful responses retain short edge caching, and the browser client adds `runtime=2.12` plus `cache: "no-store"` so phones and Quest browsers do not reuse a stale failed response.
+
+
+## Discreet immersive hotspots
+
+The immersive Semantic layer uses a low-clutter visual language while preserving generous interaction targets.
+
+- Image AR keeps each full IIIF rectangle as an invisible touch target, but renders only a compact gold ring and center dot. Region labels appear only after selection.
+- Individual VR uses small semantic ring markers with invisible controller hit volumes. Concept labels and the contextual information panel appear only after selection.
+- Learning portals remain visible, but their frames and labels use reduced scale and opacity.
+- The semantic geometry, relations, learning path, and tracking behavior are unchanged; this revision is visual/interaction refinement only.

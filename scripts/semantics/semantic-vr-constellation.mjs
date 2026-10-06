@@ -2,7 +2,7 @@ import * as THREE from "../../vendor/three.module.js";
 
 const NODE_COLOR = 0xd4b77f;
 const PORTAL_COLOR = 0x8ec5d6;
-const PANEL_COLOR = "rgba(20,18,16,0.92)";
+const PANEL_COLOR = "rgba(20,18,16,0.82)";
 
 function roundRect(ctx, x, y, width, height, radius) {
   const r = Math.min(radius, width / 2, height / 2);
@@ -89,11 +89,11 @@ function makeNode(concept, index, count, rtl) {
 
   const selection = { kind: "concept", item: concept };
   const hit = new THREE.Mesh(
-    new THREE.SphereGeometry(0.14, 24, 16),
+    new THREE.SphereGeometry(0.15, 24, 16),
     new THREE.MeshBasicMaterial({
       color: NODE_COLOR,
       transparent: true,
-      opacity: 0.16,
+      opacity: 0.001,
       depthWrite: false,
       toneMapped: false
     })
@@ -103,18 +103,33 @@ function makeNode(concept, index, count, rtl) {
   group.add(hit);
 
   const ring = new THREE.Mesh(
-    new THREE.RingGeometry(0.105, 0.125, 32),
+    new THREE.RingGeometry(0.048, 0.062, 40),
     new THREE.MeshBasicMaterial({
       color: NODE_COLOR,
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.95,
+      opacity: 0.58,
       depthWrite: false,
       toneMapped: false
     })
   );
+  ring.name = "semantic-vr-ring";
   ring.position.z = 0.005;
   group.add(ring);
+
+  const dot = new THREE.Mesh(
+    new THREE.CircleGeometry(0.015, 28),
+    new THREE.MeshBasicMaterial({
+      color: NODE_COLOR,
+      transparent: true,
+      opacity: 0.72,
+      depthWrite: false,
+      toneMapped: false
+    })
+  );
+  dot.name = "semantic-vr-dot";
+  dot.position.z = 0.008;
+  group.add(dot);
 
   const texture = makeTexture({
     title: concept.label,
@@ -130,8 +145,11 @@ function makeNode(concept, index, count, rtl) {
     depthWrite: false,
     toneMapped: false
   }));
-  label.scale.set(0.58, 0.17, 1);
-  label.position.set(0, 0.21, 0.02);
+  label.name = "semantic-vr-label";
+  label.scale.set(0.44, 0.128, 1);
+  label.position.set(0, 0.15, 0.02);
+  label.material.opacity = 0.92;
+  label.visible = false;
   label.userData.semanticSelection = selection;
   group.add(label);
 
@@ -151,7 +169,7 @@ function makePortal(step, index, count, rtl) {
     new THREE.MeshBasicMaterial({
       color: PORTAL_COLOR,
       transparent: true,
-      opacity: 0.09,
+      opacity: 0.001,
       side: THREE.DoubleSide,
       depthWrite: false,
       toneMapped: false
@@ -164,16 +182,16 @@ function makePortal(step, index, count, rtl) {
   const frameMaterial = new THREE.MeshBasicMaterial({
     color: PORTAL_COLOR,
     transparent: true,
-    opacity: 0.9,
+    opacity: 0.54,
     depthWrite: false,
     toneMapped: false
   });
-  const left = new THREE.Mesh(new THREE.BoxGeometry(0.025, 0.55, 0.025), frameMaterial.clone());
-  const right = new THREE.Mesh(new THREE.BoxGeometry(0.025, 0.55, 0.025), frameMaterial.clone());
-  const top = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.025, 0.025), frameMaterial.clone());
-  left.position.x = -0.2;
-  right.position.x = 0.2;
-  top.position.y = 0.275;
+  const left = new THREE.Mesh(new THREE.BoxGeometry(0.012, 0.48, 0.012), frameMaterial.clone());
+  const right = new THREE.Mesh(new THREE.BoxGeometry(0.012, 0.48, 0.012), frameMaterial.clone());
+  const top = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.012, 0.012), frameMaterial.clone());
+  left.position.x = -0.17;
+  right.position.x = 0.17;
+  top.position.y = 0.24;
   group.add(left, right, top);
 
   const texture = makeTexture({
@@ -190,8 +208,10 @@ function makePortal(step, index, count, rtl) {
     depthWrite: false,
     toneMapped: false
   }));
-  label.scale.set(0.5, 0.155, 1);
-  label.position.set(0, -0.39, 0.02);
+  label.name = "semantic-vr-portal-label";
+  label.scale.set(0.40, 0.124, 1);
+  label.position.set(0, -0.34, 0.02);
+  label.material.opacity = 0.78;
   label.userData.semanticSelection = selection;
   group.add(label);
 
@@ -258,8 +278,9 @@ export function createSemanticVrConstellation({
   });
   const panel = new THREE.Sprite(panelMaterial);
   panel.name = "semantic-vr-info";
-  panel.scale.set(1.05, 0.41, 1);
-  panel.position.set(0, 1.72, 0.28);
+  panel.scale.set(0.88, 0.34, 1);
+  panel.position.set(0, 1.62, 0.28);
+  panel.visible = false;
   group.add(panel);
 
   let selectedKey = null;
@@ -308,10 +329,18 @@ export function createSemanticVrConstellation({
       const conceptHit = object.getObjectByName("semantic-vr-hit");
       const portalHit = object.getObjectByName("semantic-vr-portal-hit");
       const selected = id === key;
-      if (conceptHit?.material) conceptHit.material.opacity = selected ? 0.42 : 0.16;
-      if (portalHit?.material) portalHit.material.opacity = selected ? 0.28 : 0.09;
+      if (conceptHit?.material) conceptHit.material.opacity = 0.001;
+      if (portalHit?.material) portalHit.material.opacity = 0.001;
+      const ring = object.getObjectByName("semantic-vr-ring");
+      const dot = object.getObjectByName("semantic-vr-dot");
+      const label = object.getObjectByName("semantic-vr-label");
+      if (ring?.material) ring.material.opacity = selected ? 0.98 : 0.58;
+      if (ring) ring.scale.setScalar(selected ? 1.22 : 1);
+      if (dot?.material) dot.material.opacity = selected ? 1 : 0.72;
+      if (label) label.visible = selected;
     }
 
+    panel.visible = true;
     if (selection.kind === "portal") updatePortalPanel(selection.item);
     else updateConceptPanel(selection.item);
 
