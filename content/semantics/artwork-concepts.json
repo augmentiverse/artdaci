@@ -306,7 +306,7 @@
         "ar": "متحف أورسي، باريس"
       },
       "image": "../assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp",
-      "imageStatus": "pending-canonical-1889-asset",
+      "imageStatus": "canonical-1889-asset-linked",
       "assertions": [
         {
           "conceptId": "genre.self-portrait",

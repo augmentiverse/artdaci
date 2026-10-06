@@ -1,5 +1,5 @@
 {
-  "id": "vincent-van-gogh-self-portrait-1887",
+  "id": "vincent-van-gogh-self-portrait-1889",
   "slug": "van-gogh",
   "bookOrder": 13,
   "title": "Self-Portrait",
@@ -11,20 +11,22 @@
     "bioShort": "Vincent van Gogh was a Dutch Post-Impressionist painter whose intense color, expressive brushwork, and emotional directness transformed modern art.",
     "bioLong": "Vincent van Gogh developed his mature style during a short but astonishingly productive career. In Paris he absorbed Impressionist and Neo-Impressionist color, then transformed those lessons into a highly personal language of directional brushwork, complementary color, and psychological force."
   },
-  "date": "1887",
-  "movement": ["Post-Impressionism"],
+  "date": "1889",
+  "movement": [
+    "Post-Impressionism"
+  ],
   "medium": "Oil on canvas",
   "dimensions": {
-    "heightCm": 41,
-    "widthCm": 32
+    "heightCm": 65,
+    "widthCm": 54.2
   },
   "currentLocation": {
-    "museum": "Collection varies by reproduction source",
-    "city": "",
-    "country": "",
-    "latitude": null,
-    "longitude": null,
-    "galleryUrl": ""
+    "museum": "Musée d’Orsay",
+    "city": "Paris",
+    "country": "France",
+    "latitude": 48.86,
+    "longitude": 2.3266,
+    "galleryUrl": "https://www.musee-orsay.fr/en/artworks/portrait-de-lartiste-747"
   },
   "print": {
     "chapter": "Impressionism and Post-Impressionism",
@@ -34,20 +36,20 @@
     "qrUrl": "ar.html?painting=van-gogh"
   },
   "texts": {
-    "historicalContext": "Painted during Van Gogh's Paris period, this self-portrait shows the artist experimenting with vivid color contrasts, broken brushwork, and the lessons of Impressionism and Neo-Impressionism.",
+    "historicalContext": "This 1889 self-portrait, now held by the Musée d’Orsay in Paris, belongs to the final phase of Van Gogh’s self-portraiture. Rather than presenting a social identity, the painting concentrates on self-examination through colour, brushwork, and the tension between a still pose and an intensely animated surface.",
     "artistBiography": "Van Gogh used self-portraits as a practical and psychological laboratory. Unable to afford models consistently, he painted himself repeatedly, studying expression, color, identity, and the physical energy of brushwork.",
-    "artisticAnalysis": "The face is built from short, directional strokes that alternate warm reds, oranges, greens, and yellows. The blue-green background vibrates against the red beard, making the portrait feel both intimate and electrically alive.",
-    "symbolism": "The portrait presents the artist as both observer and subject. His direct gaze, exposed forehead, and restless surface suggest concentration, vulnerability, and artistic self-scrutiny.",
-    "composition": "The head turns slightly in three-quarter view, while the shoulders form a dark base. The gaze anchors the image, and the surrounding marks move like a charged atmosphere around the face.",
-    "palette": "Van Gogh uses complementary contrasts: red-orange hair and beard against blue-green surroundings, with touches of yellow, rose, teal, and dark violet-brown.",
-    "perspectiveTechnique": "The portrait relies less on academic modeling than on color structure and directional brushwork. Form is shaped by strokes that follow cheekbones, brow, beard, jacket, and background rhythm.",
+    "artisticAnalysis": "Van Gogh places his head and upper body against a field of pale turquoise and green. The orange beard and hair act as complementary counterpoints, while the face remains comparatively still against the undulating strokes of the background. The suit gives the figure a formal stability that heightens the psychological intensity of the gaze.",
+    "symbolism": "The self-portrait becomes an act of scrutiny rather than simple likeness. The direct gaze, controlled posture, and turbulent surrounding strokes create a contrast between outward composure and inner intensity.",
+    "composition": "The bust-length figure is turned in three-quarter view. The face forms the visual anchor, while the background’s curved strokes echo the hair and beard and generate a continuous rhythm around the head.",
+    "palette": "Pale turquoise, absinthe green, blue-green, ochre, and orange dominate. The complementary opposition between the cool background and the fiery hair and beard creates the painting’s chromatic vibration.",
+    "perspectiveTechnique": "Van Gogh models the face with directional brushwork rather than smooth academic shading. Curved and rhythmic strokes in the background amplify movement around the relatively fixed head and torso.",
     "culturalSignificance": "Van Gogh's self-portraits became icons of modern artistic identity, linking visible brushwork with interior feeling and turning the artist's face into a record of perception itself.",
     "influence": "The work anticipates Expressionism and later modern portraiture by making color, touch, and psychological intensity as important as likeness.",
     "interestingFacts": [
-      "Van Gogh painted approximately 35–36 self-portraits, almost all between 1886 and 1889; more than twenty date from his Paris stay.",
-      "Van Gogh painted many self-portraits because he often could not pay models.",
-      "The red-green and orange-blue contrasts reflect his study of modern color theory in Paris.",
-      "The dense, short strokes show his transition toward the more expressive style of his later years."
+      "The Musée d’Orsay dates the work to 1889 and records its dimensions as 65 × 54.2 cm.",
+      "The painting is held by the Musée d’Orsay in Paris.",
+      "The Musée d’Orsay notes that Van Gogh produced more than 43 painted or drawn self-portraits over roughly ten years.",
+      "The cool green-turquoise background is set against the complementary orange of the hair and beard."
     ]
   },
   "timeline": [
@@ -63,7 +65,7 @@
     },
     {
       "year": 1887,
-      "label": "Van Gogh paints numerous self-portraits while experimenting with color and brushwork.",
+      "label": "Van Gogh continues an intensive sequence of self-portraits while developing his modern colour and brushwork.",
       "type": "artwork"
     },
     {
@@ -73,7 +75,7 @@
     },
     {
       "year": 1889,
-      "label": "The bandaged-ear portraits and the final Saint-Remy self-portraits turn the series into an increasingly introspective visual diary.",
+      "label": "Van Gogh paints the 1889 Self-Portrait now held by the Musée d’Orsay.",
       "type": "artwork"
     },
     {
@@ -86,32 +88,60 @@
     {
       "id": "eyes",
       "label": "Direct Gaze",
-      "position2D": [0.48, 0.34],
-      "position3D": [0, 0.22, 0.04],
+      "position2D": [
+        0.48,
+        0.34
+      ],
+      "position3D": [
+        0,
+        0.22,
+        0.04
+      ],
       "category": "psychology",
       "body": "The eyes create a tense direct encounter with the viewer, turning the self-portrait into an act of observation and self-observation."
     },
     {
       "id": "beard",
       "label": "Complementary Color",
-      "position2D": [0.47, 0.56],
-      "position3D": [0, -0.02, 0.04],
+      "position2D": [
+        0.47,
+        0.56
+      ],
+      "position3D": [
+        0,
+        -0.02,
+        0.04
+      ],
       "category": "color",
       "body": "The orange-red beard vibrates against the blue-green background, using complementary contrast to intensify the portrait."
     },
     {
       "id": "background",
       "label": "Broken Brushwork",
-      "position2D": [0.24, 0.22],
-      "position3D": [-0.2, 0.28, 0.03],
+      "position2D": [
+        0.24,
+        0.22
+      ],
+      "position3D": [
+        -0.2,
+        0.28,
+        0.03
+      ],
       "category": "brushstrokes",
       "body": "The background is not passive; its short marks create movement and emotional pressure around the figure."
     },
     {
       "id": "jacket",
       "label": "Dark Structure",
-      "position2D": [0.61, 0.78],
-      "position3D": [0.14, -0.28, 0.04],
+      "position2D": [
+        0.61,
+        0.78
+      ],
+      "position3D": [
+        0.14,
+        -0.28,
+        0.04
+      ],
       "category": "composition",
       "body": "The dark jacket stabilizes the lower part of the image while repeating the same broken, directional brushwork seen in the face and background."
     }
@@ -124,17 +154,26 @@
     "modelVariants": [
       {
         "id": "portrait",
-        "label": { "en": "Portrait", "fr": "Portrait" },
+        "label": {
+          "en": "Portrait",
+          "fr": "Portrait"
+        },
         "src": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh-portrait.glb"
       },
       {
         "id": "standing",
-        "label": { "en": "Standing figure", "fr": "Figure debout" },
+        "label": {
+          "en": "Standing figure",
+          "fr": "Figure debout"
+        },
         "src": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh-standing.glb"
       },
       {
         "id": "bedroom-standing",
-        "label": { "en": "Van Gogh in the Bedroom", "fr": "Van Gogh dans la chambre" },
+        "label": {
+          "en": "Van Gogh in the Bedroom",
+          "fr": "Van Gogh dans la chambre"
+        },
         "src": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh-in-bedroom-standing.glb"
       }
     ],
@@ -157,22 +196,31 @@
     ]
   },
   "media": {
-    "image": "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait.jpg",
+    "image": "assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp",
     "model": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh-portrait.glb",
     "modelVariants": [
       {
         "id": "portrait",
-        "label": { "en": "Portrait", "fr": "Portrait" },
+        "label": {
+          "en": "Portrait",
+          "fr": "Portrait"
+        },
         "src": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh-portrait.glb"
       },
       {
         "id": "standing",
-        "label": { "en": "Standing figure", "fr": "Figure debout" },
+        "label": {
+          "en": "Standing figure",
+          "fr": "Figure debout"
+        },
         "src": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh-standing.glb"
       },
       {
         "id": "bedroom-standing",
-        "label": { "en": "Van Gogh in the Bedroom", "fr": "Van Gogh dans la chambre" },
+        "label": {
+          "en": "Van Gogh in the Bedroom",
+          "fr": "Van Gogh dans la chambre"
+        },
         "src": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh-in-bedroom-standing.glb"
       }
     ],
@@ -226,7 +274,12 @@
     ]
   },
   "education": {
-    "ageBands": ["8-11", "12-15", "16-18", "university"],
+    "ageBands": [
+      "8-11",
+      "12-15",
+      "16-18",
+      "university"
+    ],
     "learningObjectives": [
       "Explain complementary color contrast.",
       "Describe Van Gogh's directional brushwork.",
@@ -236,11 +289,22 @@
     "quiz": [
       {
         "question": "Which contrast gives the portrait much of its visual energy?",
-        "answers": ["Red-orange against blue-green", "Black against white", "Purple against yellow only", "Gold against silver"],
+        "answers": [
+          "Red-orange against blue-green",
+          "Black against white",
+          "Purple against yellow only",
+          "Gold against silver"
+        ],
         "correctAnswer": "Red-orange against blue-green"
       }
     ],
-    "vocabulary": ["Post-Impressionism", "self-portrait", "complementary colors", "broken brushwork", "directional stroke"],
+    "vocabulary": [
+      "Post-Impressionism",
+      "self-portrait",
+      "complementary colors",
+      "broken brushwork",
+      "directional stroke"
+    ],
     "discussionPrompts": [
       "How does the brushwork change the emotional tone of the face?",
       "What is different about this portrait compared with the Mona Lisa?"
@@ -250,13 +314,11 @@
     "publicDomainStatus": "Artwork is public domain; reproduction and model rights must be verified for production use.",
     "imageLicense": "User-provided project asset",
     "assetRestrictions": "Confirm source and reproduction requirements before commercial publication.",
-    "creditLine": "Vincent van Gogh, Self-Portrait, 1887."
+    "creditLine": "Vincent van Gogh, Self-Portrait (Portrait de l’artiste), 1889, Musée d’Orsay, Paris."
   },
   "references": [
-    "Standard Vincent van Gogh and Post-Impressionism scholarship",
-    "Technical art history studies on Van Gogh's Paris-period color and brushwork",
-    "Rijksmuseum, Vincent van Gogh — Dutch Masters overview",
-    "The Metropolitan Museum of Art, Self-Portrait with a Straw Hat — collection entry",
-    "National Gallery of Art, Understanding Van Gogh Through One of His Final Self-Portraits"
+    "Musée d’Orsay, Portrait de l’artiste — Vincent van Gogh, 1889, RF 1949 17",
+    "Musée d’Orsay collection entry: https://www.musee-orsay.fr/en/artworks/portrait-de-lartiste-747",
+    "ARTDACI Semantic vg01 reviewed artwork record"
   ]
 }

@@ -27,6 +27,9 @@ const pedagogySchema = await readJson("schema/pedagogical-relations.schema.json"
 const queryHintsDoc = await readJson("content/semantics/query-aliases.json");
 const queryHintsSchema = await readJson("schema/semantic-query-aliases.schema.json");
 const runtimeContexts = await readJson("content/semantics/runtime-contexts.json");
+const vanGoghPainting = await readJson("content/paintings/van-gogh.json");
+const vg01MediaManifest = await readJson("content/media-manifests/artworks/vg01/manifest.json");
+const compileTargetHtml = await fs.readFile(path.join(root, "compile-target.html"), "utf8");
 const runtimeSchema = await readJson("schema/semantic-runtime-contexts.schema.json");
 const iiifCollection = await readJson("iiif/collection.json");
 const iiifIds = ["ld01", "ve01", "vg01", "mo01"];
@@ -235,6 +238,12 @@ const ld01 = artworksDoc.artworks.find((item) => item.id === "ld01");
 assert(ld01?.image === "../assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp", "ld01 must use the canonical portrait Mona Lisa asset.");
 const vg01Canonical = artworksDoc.artworks.find((item) => item.id === "vg01");
 assert(vg01Canonical?.image === "../assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp", "vg01 must use the canonical 1889 Van Gogh self-portrait asset.");
+assert(vanGoghPainting?.date === "1889", "Public Van Gogh manifest must be 1889.");
+assert(vanGoghPainting?.media?.image === "assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp", "Public Van Gogh display image must use the canonical 1889 asset.");
+assert(String(vanGoghPainting?.currentLocation?.museum || "").includes("Orsay"), "Public Van Gogh manifest must point to Musée d’Orsay.");
+assert(vg01MediaManifest?.artwork?.date === "1889", "Canonical vg01 media manifest metadata must be 1889.");
+assert(compileTargetHtml.includes("autoportrait-vangogh.webp"), "MindAR compiler must use the canonical 1889 Van Gogh image.");
+assert(compileTargetHtml.includes("van-gogh-1889.mind"), "MindAR compiler must produce a separate 1889 target file.");
 
 const sourceById = new Map(sourcesDoc.sources.map((source) => [source.id, source]));
 assert(sourceById.get("wikidata")?.status === "active", "Wikidata must remain active.");

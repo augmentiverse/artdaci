@@ -168,7 +168,7 @@ const AR_SUMMARIES = {
 
 const AR_METADATA = {
   "mona-lisa": { artist: "ليوناردو دافنشي", date: "نحو 1503–1519", location: "متحف اللوفر، باريس" },
-  "van-gogh": { artist: "فنسنت فان غوخ", date: "1887", location: "متحف فان غوخ، أمستردام" },
+  "van-gogh": { artist: "فنسنت فان غوخ", date: "1889", location: "متحف أورسي، باريس" },
   "van-gogh-bedroom": { artist: "فنسنت فان غوخ", date: "أكتوبر 1888", location: "متحف فان غوخ، أمستردام" },
   "vermeer-girl-with-a-pearl-earring": { artist: "يوهانس فيرمير", date: "نحو 1665", location: "موريتشهاوس، لاهاي" }
 };

@@ -803,3 +803,14 @@ Direct trilingual entry points are available from:
 - the Masters Hub header.
 
 Each link preserves the current FR / EN / AR language. The immersive surface remains independent: opening Semantic is an explicit navigation action, not a forced redirect.
+
+
+## Van Gogh 1889 alignment
+
+The user-facing ARTDACI record for `vg01` is aligned with the selected 1889 Self-Portrait held by the Musée d’Orsay:
+- canonical display asset: `assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp`;
+- date: 1889;
+- museum: Musée d’Orsay, Paris;
+- dimensions: 65 × 54.2 cm.
+
+The legacy MindAR binary is deliberately not overwritten in this commit. `compile-target.html?painting=van-gogh` is prepared to compile a new `van-gogh-1889.mind` from the canonical 1889 image. The AR target switch must happen only after that generated target has been tested, so the current tracking path cannot be broken by a display-only migration.
