@@ -179,21 +179,6 @@ function makePortal(step, index, count, rtl) {
   hit.userData.semanticSelection = selection;
   group.add(hit);
 
-  const frameMaterial = new THREE.MeshBasicMaterial({
-    color: PORTAL_COLOR,
-    transparent: true,
-    opacity: 0.54,
-    depthWrite: false,
-    toneMapped: false
-  });
-  const left = new THREE.Mesh(new THREE.BoxGeometry(0.012, 0.48, 0.012), frameMaterial.clone());
-  const right = new THREE.Mesh(new THREE.BoxGeometry(0.012, 0.48, 0.012), frameMaterial.clone());
-  const top = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.012, 0.012), frameMaterial.clone());
-  left.position.x = -0.17;
-  right.position.x = 0.17;
-  top.position.y = 0.24;
-  group.add(left, right, top);
-
   const texture = makeTexture({
     title: step.label,
     kicker: step.action || step.stage,

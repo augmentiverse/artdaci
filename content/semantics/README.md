@@ -831,5 +831,5 @@ The immersive Semantic layer uses a low-clutter visual language while preserving
 
 - Image AR keeps each full IIIF rectangle as an invisible touch target, but renders only a compact gold ring and center dot. Region labels appear only after selection.
 - Individual VR uses small semantic ring markers with invisible controller hit volumes. Concept labels and the contextual information panel appear only after selection.
-- Learning portals remain visible, but their frames and labels use reduced scale and opacity.
+- Learning portals keep their labels and invisible interaction areas, but no longer render a visible blue frame.
 - The semantic geometry, relations, learning path, and tracking behavior are unchanged; this revision is visual/interaction refinement only.
