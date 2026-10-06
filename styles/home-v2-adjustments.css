@@ -180,3 +180,132 @@
     aspect-ratio: 4 / 5;
   }
 }
+
+
+/* Eight primary experiences: balanced 4 × 2 layout on wide screens. */
+.home-v2 .hv2-experience-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* Header ergonomics:
+   keep navigation centered independently from the logo/language controls,
+   and preserve language access at normal browser zoom. */
+.home-v2 .hv2-header {
+  grid-template-columns: 132px minmax(0, 1fr) 132px;
+  gap: 16px;
+}
+
+.home-v2 .hv2-nav {
+  justify-content: center;
+  gap: clamp(10px, 1.35vw, 20px);
+  min-width: 0;
+}
+
+.home-v2 .hv2-nav a {
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.home-v2 .hv2-language {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+.home-v2 .hv2-language a {
+  font-size: 12px;
+}
+
+/* At narrower desktop widths, use a centered second navigation row
+   instead of hiding the language controls. */
+@media (max-width: 1180px) {
+  .home-v2 .hv2-header {
+    grid-template-columns: 132px minmax(0, 1fr) 132px;
+    grid-template-areas:
+      "brand spacer language"
+      "nav nav nav";
+    gap: 2px 16px;
+    min-height: 104px;
+    padding: 7px 0 9px;
+  }
+
+  .home-v2 .hv2-brand {
+    grid-area: brand;
+  }
+
+  .home-v2 .hv2-nav {
+    grid-area: nav;
+    justify-content: center;
+    gap: clamp(14px, 2.1vw, 24px);
+  }
+
+  .home-v2 .hv2-language {
+    grid-area: language;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 1100px) {
+  .home-v2 .hv2-experience-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 780px) {
+  .home-v2 .hv2-header {
+    width: min(100% - 24px, 1440px);
+    grid-template-columns: 105px minmax(0, 1fr) auto;
+    grid-template-areas:
+      "brand spacer language"
+      "nav nav nav";
+    min-height: 100px;
+  }
+
+  .home-v2 .hv2-brand img {
+    width: 92px;
+  }
+
+  .home-v2 .hv2-language {
+    display: flex;
+  }
+
+  .home-v2 .hv2-nav {
+    width: 100%;
+    overflow-x: auto;
+    justify-content: flex-start;
+    gap: 18px;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+  }
+
+  .home-v2 .hv2-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .home-v2 .hv2-nav a:nth-child(n) {
+    display: inline-flex;
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .home-v2 .hv2-experience-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .home-v2 .hv2-nav a:nth-child(n) {
+    display: inline-flex;
+  }
+
+  .home-v2 .hv2-language {
+    gap: 8px;
+  }
+
+  .home-v2 .hv2-language a {
+    font-size: 11px;
+  }
+}
