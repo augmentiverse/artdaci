@@ -5,7 +5,7 @@ import { fetchArtworkManifest } from "./artwork-media-manifest.js";
 import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
 import { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./catalogue.js";
 import { mountSemanticRuntimePanel, resolveSemanticRuntime } from "./semantics/semantic-runtime-client.mjs?v=2";
-import { createSemanticVrConstellation } from "./semantics/semantic-vr-constellation.mjs?v=4";
+import { createSemanticVrConstellation } from "./semantics/semantic-vr-constellation.mjs?v=5";
 
 const PAINTINGS = {
   "mona-lisa": "content/paintings/mona-lisa.json?v=5",

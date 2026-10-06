@@ -1,7 +1,6 @@
 import * as THREE from "../../vendor/three.module.js";
 
 const NODE_COLOR = 0xd4b77f;
-const PORTAL_COLOR = 0x8ec5d6;
 const PANEL_COLOR = "rgba(20,18,16,0.82)";
 
 function roundRect(ctx, x, y, width, height, radius) {
@@ -167,11 +166,12 @@ function makePortal(step, index, count, rtl) {
   const hit = new THREE.Mesh(
     new THREE.PlaneGeometry(0.4, 0.55),
     new THREE.MeshBasicMaterial({
-      color: PORTAL_COLOR,
       transparent: true,
-      opacity: 0.001,
+      opacity: 0,
       side: THREE.DoubleSide,
+      depthTest: false,
       depthWrite: false,
+      colorWrite: false,
       toneMapped: false
     })
   );
