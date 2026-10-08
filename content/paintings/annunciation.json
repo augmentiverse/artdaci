@@ -1,0 +1,25 @@
+{
+  "slug": "annunciation",
+  "bookOrder": 10,
+  "title": "The Annunciation",
+  "artist": { "name": "Leonardo da Vinci" },
+  "date": "c. 1472–1476",
+  "medium": "Tempera and oil on wood",
+  "dimensions": {},
+  "currentLocation": { "museum": "Uffizi Galleries", "city": "Florence" },
+  "movement": ["Renaissance"],
+  "media": { "image": "assets/artists/leonardo-da-vinci/collection/the-annunciation-davinci.webp" },
+  "print": { "chapter": "Renaissance", "imageTargetSource": "assets/artists/leonardo-da-vinci/collection/the-annunciation-davinci.webp" },
+  "texts": {
+    "historicalContext": "This early Florentine work presents Gabriel greeting Mary in an ordered garden.",
+    "artisticAnalysis": "Precise plants, delicate wings and distant atmospheric landscape unite close observation with sacred narrative.",
+    "composition": "The angel and Mary balance one another across the lectern and garden wall.",
+    "palette": "Cool landscape blues recede behind warm fabrics and dark evergreen trees.",
+    "perspectiveTechnique": "Linear construction and atmospheric distance open the enclosed garden toward mountains and water.",
+    "culturalSignificance": "The painting already reveals Leonardo's fascination with nature, optics and believable space."
+  },
+  "localizations": {
+    "fr": { "title": "L’Annonciation" },
+    "ar": { "title": "البشارة" }
+  }
+}

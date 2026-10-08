@@ -1,0 +1,26 @@
+{
+  "id": "claude-monet-poppies-1873",
+  "slug": "poppies",
+  "bookOrder": 23,
+  "title": "Poppies",
+  "artist": { "name": "Claude Monet" },
+  "date": "1873",
+  "medium": "Oil on canvas",
+  "dimensions": {},
+  "currentLocation": { "museum": "Musée d’Orsay", "city": "Paris" },
+  "movement": ["Impressionism"],
+  "media": { "image": "assets/artists/paintings_images/monet/monet_poppy.png" },
+  "print": { "chapter": "Impressionism" },
+  "texts": {
+    "historicalContext": "Monet painted this summer landscape near Argenteuil shortly before the first Impressionist exhibition.",
+    "artisticAnalysis": "Scattered red poppies animate a breezy field where figures seem absorbed by the weather and light.",
+    "composition": "Two pairs of figures echo one another across a diagonal slope.",
+    "palette": "Fresh green, pale blue and bright red are applied in direct, visible touches.",
+    "perspectiveTechnique": "Scale, diagonal movement and atmospheric softness create depth without academic finish.",
+    "culturalSignificance": "Poppies became an enduring image of Impressionism's attention to modern leisure and fleeting sensation."
+  },
+  "localizations": {
+    "fr": { "title": "Les Coquelicots" },
+    "ar": { "title": "شقائق النعمان" }
+  }
+}
