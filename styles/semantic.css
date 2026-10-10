@@ -2334,3 +2334,34 @@ html[dir="rtl"] .workspace-search input {
 .semantic-svg-node.is-center .semantic-svg-node-type {
   fill: #f0d5b3;
 }
+
+/* Semantic V3 pilot: a single compact, opt-in route panel below the existing graph.
+   No duplicate graph, search field, or knowledge inspector. */
+.semantic-cross-journeys{margin:14px 0;border:1px solid var(--semantic-line);border-radius:14px;background:var(--semantic-surface);box-shadow:var(--semantic-shadow)}
+.semantic-cross-journeys>summary{cursor:pointer;list-style:none;padding:15px 18px;color:var(--semantic-ink);display:flex;gap:7px;flex-wrap:wrap;align-items:baseline}
+.semantic-cross-journeys>summary::-webkit-details-marker{display:none}
+.semantic-cross-journeys>summary::before{content:"▸";margin-inline-end:5px;color:var(--semantic-accent);font-size:16px}
+.semantic-cross-journeys[open]>summary::before{content:"▾"}
+.semantic-cross-journeys>summary span{font-size:15px;font-weight:800}
+.semantic-cross-journeys>summary small{font-size:12px;color:var(--semantic-muted)}
+.semantic-cross-journeys>summary:focus-visible{outline:3px solid var(--semantic-accent);outline-offset:3px;border-radius:10px}
+.semantic-cross-journey-list{border-top:1px solid var(--semantic-line);padding:14px 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(310px,100%),1fr));gap:12px}
+.semantic-cross-journey{background:var(--semantic-surface-soft);border:1px solid var(--semantic-line);border-radius:12px;padding:13px;min-width:0}
+.semantic-cross-journey header h3{font-size:15px;margin:0 0 5px;color:var(--semantic-ink)}
+.semantic-cross-journey header p{font-size:12px;margin:0;color:var(--semantic-muted);line-height:1.55}
+.semantic-cross-journey-steps{list-style:none;margin:13px 0 0;padding:0;display:grid;gap:10px}
+.semantic-cross-journey-steps li{display:flex;gap:10px;padding:10px;border:1px solid var(--semantic-line);border-radius:10px;background:#fff;min-width:0}
+.semantic-cross-journey-steps li.is-current{border-color:#b99263;background:#fffaf2}
+.cross-journey-number{flex:0 0 25px;width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:#eadfce;color:#674925;font-size:12px;font-weight:850}
+.cross-journey-content{min-width:0}
+.cross-journey-content strong,.cross-journey-content small{display:block}
+.cross-journey-content strong{font-size:13px;color:var(--semantic-ink)}
+.cross-journey-content small{font-size:11px;color:var(--semantic-muted)}
+.cross-journey-content>p{font-size:12px;line-height:1.5;margin:7px 0;color:var(--semantic-ink)}
+.cross-journey-content .cross-journey-evidence{font-size:11px;color:#76522c;font-weight:650}
+.cross-journey-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.cross-journey-actions a{display:inline-flex;font-size:11px;font-weight:700;color:#6d4d28;border:1px solid #dfcdae;background:#fff8ed;padding:6px 9px;border-radius:7px;text-decoration:none}
+.cross-journey-actions a:hover{text-decoration:underline}
+.cross-journey-actions a:focus-visible{outline:3px solid #b48047;outline-offset:2px}
+.semantic-cross-disclaimer{font-size:11px;color:var(--semantic-muted);margin:0;padding:0 18px 14px}
+@media(max-width:540px){.semantic-cross-journey-list{padding:10px}.semantic-cross-journeys>summary{padding:13px}.semantic-cross-journey{padding:10px}}
