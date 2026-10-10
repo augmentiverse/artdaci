@@ -30,7 +30,6 @@ import {
   providersFromExternal
 } from "./external-sources.mjs";
 import { rerankWithNeuralEmbeddings } from "./embedding-client.mjs";
-import { initIntelligentExplorer } from "./semantic-explorer.mjs";
 
 const UI = {
   fr: {
@@ -530,6 +529,11 @@ const backLink = q("[data-back-link]");
 
 backLink.href = lang === "en" ? "../index.html" : lang === "ar" ? "../index-ar.html" : "../index-fr.html";
 backLink.textContent = t.back;
+const collectionLink = q("[data-collection-link]");
+if (collectionLink) {
+  collectionLink.href = lang === "en" ? "../index.html#painting-index" : lang === "ar" ? "../index-ar.html#painting-index" : "../index-fr.html#painting-index";
+  collectionLink.textContent = lang === "ar" ? "مجموعة الأعمال" : lang === "en" ? "Collection" : "Toutes les œuvres";
+}
 q("[data-eyebrow]").textContent = t.eyebrow;
 q("[data-page-title]").textContent = t.title;
 q("[data-intro]").textContent = t.intro;
@@ -2186,7 +2190,6 @@ try {
   );
   status.textContent = `${semanticData.concepts.length} concepts · ${semanticData.iconographySubjects.length} sujets iconographiques · ${semanticData.pedagogicalRelations.length} relations pédagogiques · ${semanticData.imageAnnotations.length} œuvres IIIF · FR / EN / AR`;
   status.dataset.state = "ready";
-  void initIntelligentExplorer(semanticData, lang, artwork.id);
 } catch (error) {
   console.error(error);
   status.textContent = t.error;
