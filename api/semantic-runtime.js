@@ -372,8 +372,11 @@ function guideQuestionForStep(step, lang) {
   return `Explain ${label} simply.`;
 }
 
-function guideFor({ focus, learningPath, concepts, pedagogy, experiences, lang }) {
+function guideFor({ focus, learningPath, concepts, pedagogy, experiences, journeyBridges = [], lang }) {
   const suggestedQuestions = [];
+  // Prefer a grounded cross-artwork inquiry when the reviewed graph supports one.
+  const firstBridge = journeyBridges.find((item) => item.question && item.sharedConcepts?.length);
+  if (firstBridge) suggestedQuestions.push(firstBridge.question);
   for (const step of learningPath?.steps || []) {
     const question = guideQuestionForStep(step, lang);
     if (question && !suggestedQuestions.includes(question)) suggestedQuestions.push(question);
@@ -551,12 +554,14 @@ module.exports = async function handler(req, res) {
       lang,
       environment
     });
+    const journeyBridgesOut = journeyBridgesFor(docs, maps, artworkId, lang);
     const guideOut = guideFor({
       focus,
       learningPath: learningPathOut,
       concepts: conceptsOut,
       pedagogy: pedagogyOut,
       experiences: experiencesOut,
+      journeyBridges: journeyBridgesOut,
       lang
     });
 
@@ -604,7 +609,7 @@ module.exports = async function handler(req, res) {
       experiences: experiencesOut,
       next: nextDestinations(pedagogyOut, experiencesOut, lang),
       learningPath: learningPathOut,
-      journeyBridges: journeyBridgesFor(docs, maps, artworkId, lang),
+      journeyBridges: journeyBridgesOut,
       guide: guideOut,
       links: {
         semantic: artworkId
