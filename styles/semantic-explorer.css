@@ -1,0 +1,51 @@
+/* V2.12 guided exploration: isolated styles, preserving the V2.11 SVG graph */
+.ike-sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.ikg-explorer{margin:15px 0 23px;padding:clamp(16px,2.5vw,27px);border:1px solid #d9dddf;border-radius:18px;background:linear-gradient(140deg,#fff,#faf6ef);box-shadow:0 10px 28px rgba(22,29,36,.05)}
+.ikg-explorer[hidden]{display:none}
+.ike-head{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:17px}
+.ike-head h2{font-size:clamp(21px,2.15vw,27px);color:#1e2931;margin:0 0 7px;line-height:1.18}
+.ike-head p{margin:0;color:#5e6b75}
+.ike-head .ike-kicker{font-size:11px;color:#92612b;font-weight:800;letter-spacing:.11em;margin-bottom:8px}
+.ike-counts{display:flex;gap:18px;flex-wrap:wrap}
+.ike-counts span{font-size:11px;color:#596873;white-space:nowrap}
+.ike-counts b{display:block;font-size:23px;color:#77502a;line-height:1.15}
+.ike-controls{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px}
+.ike-switch{display:flex;gap:3px;padding:4px;border-radius:11px;background:#e9edf0}
+.ike-switch button,.ike-filter button{font:inherit;font-size:12px;min-height:36px;padding:7px 10px;border:1px solid transparent;border-radius:8px;color:#4b5a65;background:transparent;cursor:pointer}
+.ike-switch button.is-current{background:#fff;color:#714a24;font-weight:750;box-shadow:0 2px 5px #0001}
+.ike-search{flex:0 1 370px}
+.ike-search input{box-sizing:border-box;min-height:42px;width:100%;padding:9px 12px;border:1px solid #ccd3d9;border-radius:10px;background:#fff;color:#17202a;font:inherit}
+.ike-filter{display:flex;gap:5px;flex-wrap:wrap}
+.ike-filter button{background:#fff;border-color:#d6dadd;min-height:33px}
+.ike-filter button.is-current{background:#f3e8d9;border-color:#9a6a35;color:#755027;font-weight:700}
+.ike-label{font-size:12px;font-weight:800;color:#576470;letter-spacing:.02em;margin:14px 0 7px}
+.ike-note{font-size:12px;color:#64717a;margin:11px 0 15px}
+.ike-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(270px,.85fr);gap:15px;align-items:start}
+.ike-list{min-width:0}
+.ike-total{font-size:12px;font-weight:650;color:#5d6872;margin:0 0 9px}
+.ike-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;max-height:475px;overflow:auto;padding:2px;scrollbar-color:#cdd1d4 transparent}
+.ike-item{min-height:102px;border:1px solid #dce0e4;border-radius:11px;background:#fff;color:#23303a;padding:11px 13px;text-align:start;display:flex;flex-direction:column;align-items:flex-start;gap:5px;cursor:pointer;font:inherit}
+.ike-item:hover{background:#fffaf3;border-color:#bb8d55}
+.ike-item.is-current{padding:10px 12px;border:2px solid #946231;background:#fdf8f1}
+.ike-item small{color:#61717b;font-size:11px}
+.ike-item strong{font-size:14px;line-height:1.3}
+.ike-tag{display:inline-block;font-size:10px;font-weight:750;line-height:1.4;background:#edf0f3;color:#62727e;border-radius:20px;padding:3px 8px}
+.ike-tag.ike-reviewed{background:#eee1cf;color:#714b23}
+.ike-detail{border:1px solid #dbe0e3;border-radius:14px;background:#fff;padding:16px;min-width:0}
+.ike-detail h3{font-size:21px;margin:6px 0 4px;line-height:1.2}
+.ike-artist,.ike-meta{font-size:12px;color:#61717c;margin:5px 0 10px}
+.ike-meta{line-height:1.5}
+.ike-image{display:block;max-width:100%;max-height:165px;object-fit:contain;margin:0 auto 12px;border-radius:7px}
+.ike-links{display:flex;flex-wrap:wrap;gap:6px}
+.ike-links a{font-size:12px;line-height:1.35;border-radius:8px;border:1px solid #e4dacc;background:#fff9ef;color:#765127;padding:6px 9px;text-decoration:none}
+.ike-links a:hover{text-decoration:underline}
+.ike-main-link{display:inline-block;margin-top:14px;background:#79532d;color:#fff!important;padding:9px 12px;border-radius:9px;font-size:13px;font-weight:750;text-decoration:none}
+.ike-main-link:hover{background:#5e3b1b}
+.ike-experiences{border-top:1px solid #e5e8eb;margin-top:16px;padding-top:7px}
+.ike-pending{font-size:13px;line-height:1.55;color:#6d7780}
+.ikg-explorer :is(button,a,input):focus-visible{outline:3px solid #d6a061;outline-offset:2px}
+html[dir="rtl"] .ike-item{text-align:right;align-items:flex-start}
+html[dir="rtl"] .ike-search input{text-align:right}
+@media(max-width:850px){.ike-head{align-items:flex-start;flex-direction:column}.ike-counts b{display:inline;font-size:18px}.ike-layout{grid-template-columns:1fr}}
+@media(max-width:560px){.ikg-explorer{padding:13px}.ike-controls{flex-direction:column;align-items:stretch}.ike-search{flex:auto;width:100%}.ike-grid{grid-template-columns:1fr;max-height:420px}}
+@media(prefers-reduced-motion:reduce){.ikg-explorer *{scroll-behavior:auto!important}}
