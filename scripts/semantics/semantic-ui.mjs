@@ -1590,7 +1590,7 @@ function journeysMarkup(data, artworkId) {
                       <small>${esc(localize(step.artwork.artist, lang))}</small>
                       <p>${esc(localize(step.prompt, lang))}</p>
                       ${shared.length ? `<p class="cross-journey-evidence">${esc(copy.evidence)} :
-                        ${shared.map((id) => esc(localize(data.conceptMap.get(id).labels, lang))).join(" · ")}</p>` : ""}
+                        ${shared.map((concept) => esc(localize(concept.labels, lang))).join(" · ")}</p>` : ""}
                       <div class="cross-journey-actions">
                         <a href="${esc(graphLink)}">${esc(copy.graph)} ↗</a>
                         ${immersive ? `<a href="${esc(immersive)}"${step.immersive.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${esc(copy.immersive)} ↗</a>` : ""}
@@ -1604,6 +1604,16 @@ function journeysMarkup(data, artworkId) {
       </div>
       <p class="semantic-cross-disclaimer">${esc(copy.status)}</p>
     </details>`;
+}
+
+function safeJourneysMarkup(data, artworkId) {
+  try {
+    return journeysMarkup(data, artworkId);
+  } catch (error) {
+    // Optional cross-artwork suggestions must not hide the canonical semantic graph.
+    console.warn("ARTDACI learning journeys unavailable; retaining core semantic experience.", error);
+    return "";
+  }
 }
 
 function relatedMarkup(data, artworkId) {
@@ -2201,7 +2211,7 @@ try {
 
   app.innerHTML = [
     renderWorkspace(semanticData, artwork.id),
-    journeysMarkup(semanticData, artwork.id),
+    safeJourneysMarkup(semanticData, artwork.id),
     relatedMarkup(semanticData, artwork.id),
     profileMarkup(semanticData, artwork.id),
     imageExplorerDialogMarkup(semanticData, artwork.id),
