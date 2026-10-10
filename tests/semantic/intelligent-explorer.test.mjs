@@ -34,11 +34,13 @@ test("the new explorer preserves the original Semantic graph and its URL model",
   assert(css.includes('prefers-reduced-motion'));
 });
 
-test("linked immersive experience URLs are site-relative in the source data", async () => {
+test("the explorer filters out external immersive links while preserving manifest data", async () => {
   const doc = await readJson("content/semantics/experience-links.json");
-  for (const node of doc.nodes) {
-    for (const experience of node.experiences) {
-      assert(experience.href.startsWith("/") && !experience.href.startsWith("//"), experience.id);
-    }
-  }
+  const links = doc.nodes.flatMap((node) => node.experiences);
+  assert(links.some((entry) => entry.href.startsWith("/")));
+  assert(links.some((entry) => entry.href.startsWith("https://")));
+  const explorer = await read("scripts/semantics/semantic-explorer.mjs");
+  assert(explorer.includes('!href.startsWith("/")'));
+  assert(explorer.includes('href.startsWith("//")'));
+  assert(explorer.includes('url.origin === location.origin'));
 });
