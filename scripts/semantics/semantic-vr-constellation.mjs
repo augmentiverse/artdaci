@@ -255,8 +255,8 @@ export function createSemanticVrConstellation({
 
 
   bridges.forEach((bridge, index) => {
-    const action = lang === "ar" ? "انتقل إلى عمل آخر" :
-      lang === "fr" ? "Vers une autre œuvre" : "Go to another artwork";
+    const action = bridge.title || (lang === "ar" ? "انتقل إلى عمل آخر" :
+      lang === "fr" ? "Vers une autre œuvre" : "Go to another artwork");
     const evidence = (bridge.sharedConcepts || []).map((item) => item.label).join(" · ");
     const step = {
       stage: "bridge",
