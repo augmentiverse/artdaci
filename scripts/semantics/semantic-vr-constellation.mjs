@@ -231,6 +231,11 @@ export function createSemanticVrConstellation({
 
   const concepts = runtime.concepts.slice(0, 5);
   const pathSteps = (runtime.learningPath?.steps || []).slice(0, 4);
+  // Curated cross-artwork VR doors supplement — not duplicate — the contextual path.
+  const bridges = (runtime.journeyBridges || [])
+    .filter((bridge) => typeof bridge.href === "string" && bridge.href.startsWith("/") &&
+      !bridge.href.startsWith("//") && bridge.toArtworkId !== runtime.focus?.id)
+    .slice(0, 3);
   const hitTargets = [];
   const interactiveGroups = new Map();
 
@@ -243,6 +248,30 @@ export function createSemanticVrConstellation({
 
   pathSteps.forEach((step, index) => {
     const portal = makePortal(step, index, pathSteps.length, rtl);
+    interactiveGroups.set(`portal:${step.stage}:${step.id}`, portal.group);
+    hitTargets.push(portal.hit, portal.label);
+    group.add(portal.group);
+  });
+
+
+  bridges.forEach((bridge, index) => {
+    const action = bridge.title || (lang === "ar" ? "انتقل إلى عمل آخر" :
+      lang === "fr" ? "Vers une autre œuvre" : "Go to another artwork");
+    const evidence = (bridge.sharedConcepts || []).map((item) => item.label).join(" · ");
+    const step = {
+      stage: "bridge",
+      id: `${bridge.id}:${bridge.toArtworkId}`,
+      label: bridge.toArtworkLabel,
+      action,
+      description: [bridge.title, evidence, bridge.question].filter(Boolean).join("\n"),
+      href: bridge.href,
+      channel: "vr"
+    };
+    const portal = makePortal(step, index, bridges.length, rtl);
+    portal.group.name = `semantic-vr-bridge-${step.id}`;
+    portal.group.position.y = -0.46;
+    portal.group.position.z = 0.69;
+    portal.label.material.opacity = 1;
     interactiveGroups.set(`portal:${step.stage}:${step.id}`, portal.group);
     hitTargets.push(portal.hit, portal.label);
     group.add(portal.group);
@@ -341,7 +370,8 @@ export function createSemanticVrConstellation({
   return {
     group,
     hitTargets,
-    hasPortals: pathSteps.length > 0,
+    hasPortals: pathSteps.length > 0 || bridges.length > 0,
+    hasCrossArtworkBridges: bridges.length > 0,
     intersect(raycaster) {
       const intersection = raycaster.intersectObjects(hitTargets, false)[0];
       return intersection?.object?.userData?.semanticSelection || null;

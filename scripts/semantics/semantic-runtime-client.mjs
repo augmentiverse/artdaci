@@ -41,6 +41,32 @@ function learningPathMarkup(runtime, lang) {
     </section>`;
 }
 
+function crossArtworkMarkup(runtime, lang) {
+  const labels = {
+    fr: { heading: "Passer à une autre œuvre", via: "Concepts communs" },
+    en: { heading: "Travel to another artwork", via: "Shared concepts" },
+    ar: { heading: "انتقل إلى عمل آخر", via: "مفاهيم مشتركة" }
+  }[lang] || { heading: "Related artwork", via: "Shared concepts" };
+  const seen = new Set();
+  const bridges = (runtime.journeyBridges || []).filter((item) => {
+    if (!item.href?.startsWith("/") || item.href.startsWith("//") || seen.has(item.toArtworkId)) return false;
+    seen.add(item.toArtworkId);
+    return true;
+  }).slice(0, 3);
+  if (!bridges.length) return "";
+  return `
+    <section class="semantic-runtime-cross-artwork">
+      <h3>${esc(labels.heading)}</h3>
+      <div class="semantic-runtime-next">
+        ${bridges.map((item) => `<a href="${esc(item.href)}">
+          <strong>${esc(item.toArtworkLabel)}</strong>
+          <small>${esc(item.title)} · ${esc(labels.via)} :
+            ${esc(item.sharedConcepts.map((entry) => entry.label).join(" · "))}</small>
+        </a>`).join("")}
+      </div>
+    </section>`;
+}
+
 function panelMarkup(runtime, lang) {
   const t=COPY[lang]||COPY.en;
   const question=runtime.pedagogy?.find(item=>item.prompt)?.prompt||"";
@@ -52,6 +78,7 @@ function panelMarkup(runtime, lang) {
     ${runtime.hotspots?.length?`<section><h3>${esc(t.hotspots)}</h3><div class="semantic-runtime-chips">${runtime.hotspots.map(item=>`<a href="/semantic/?artwork=${encodeURIComponent(runtime.focus.artworkId||runtime.focus.id)}&lang=${encodeURIComponent(lang)}&region=${encodeURIComponent(item.id)}">${esc(item.label)}</a>`).join("")}</div></section>`:""}
     ${runtime.concepts?.length?`<section><h3>${esc(t.concepts)}</h3><div class="semantic-runtime-chips">${runtime.concepts.slice(0,6).map(item=>`<span>${esc(item.label)}</span>`).join("")}</div></section>`:""}
     ${learningPathMarkup(runtime,lang)}
+    ${crossArtworkMarkup(runtime,lang)}
     ${question?`<section class="semantic-runtime-question"><h3>${esc(t.pedagogy)}</h3><p>${esc(question)}</p></section>`:""}
     ${runtime.next?.length?`<section><h3>${esc(t.next)}</h3><div class="semantic-runtime-next">${runtime.next.slice(0,4).map(item=>`<a href="${esc(item.href)}"${item.external?' target="_blank" rel="noopener noreferrer"':""}><strong>${esc(item.label)}</strong><small>${esc(item.reason)}</small></a>`).join("")}</div></section>`:""}
     <a class="semantic-runtime-open" href="${esc(runtime.links.semantic)}">${esc(t.open)} →</a>

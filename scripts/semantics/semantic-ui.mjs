@@ -12,6 +12,7 @@ import {
   getIconographyArtworks,
   getNodeExperiences,
   getImageRegion,
+  getLearningJourneys,
   getPedagogicalRelations,
   getRelatedArtworks,
   getRelatedConcepts,
@@ -488,6 +489,12 @@ const UI = {
     fromDetailToConcept: "من التفصيل إلى المفهوم",
     fromDetailToConceptIncoming: "يُفهم انطلاقًا من التفصيل"
   }
+};
+
+const JOURNEY_COPY = {
+  fr: { heading: "Parcours pédagogiques entre œuvres", intro: "Parcourez des chemins documentés reliant plusieurs peintres ; chaque transition est justifiée par un concept commun.", step: "Étape", evidence: "Relation fondée sur", graph: "Explorer dans le graphe", immersive: "Poursuivre en immersion", status: "Comparaison pédagogique ARTDACI, pas une preuve d’influence historique." },
+  en: { heading: "Cross-artwork learning journeys", intro: "Follow documented paths between artists; each transition is supported by a shared concept.", step: "Step", evidence: "Connected through", graph: "Explore in the graph", immersive: "Continue immersively", status: "ARTDACI educational comparison, not evidence of historical influence." },
+  ar: { heading: "مسارات تعليمية بين الأعمال", intro: "اتبع مسارات موثقة تربط الفنانين، وتستند كل خطوة إلى مفهوم مشترك.", step: "مرحلة", evidence: "الرابط المشترك", graph: "استكشاف في الرسم المعرفي", immersive: "المتابعة بشكل غامر", status: "مقارنة تعليمية من ARTDACI وليست دليلاً على تأثير تاريخي." }
 };
 
 const TYPE_LABELS = {
@@ -1553,6 +1560,62 @@ function pathMarkup(data, bridge) {
   return `<li><strong>${esc(localize(from.labels, lang))}</strong><span>→ ${esc(relationLabel(bridge.relationType))} →</span><strong>${esc(localize(to.labels, lang))}</strong></li>`;
 }
 
+
+function journeysMarkup(data, artworkId) {
+  const journeys = getLearningJourneys(data, artworkId);
+  if (!journeys.length) return "";
+  const copy = JOURNEY_COPY[lang];
+  return `
+    <details class="semantic-cross-journeys" data-semantic-cross-journeys>
+      <summary><span>${esc(copy.heading)}</span><small>${journeys.length} · ${esc(copy.intro)}</small></summary>
+      <div class="semantic-cross-journey-list">
+        ${journeys.map((journey) => `
+          <article class="semantic-cross-journey">
+            <header><h3>${esc(localize(journey.title, lang))}</h3><p>${esc(localize(journey.objective, lang))}</p></header>
+            <ol class="semantic-cross-journey-steps">
+              ${journey.steps.map((step, index) => {
+                const shared = step.sharedConceptIds.map((id) => data.conceptMap.get(id)).filter(Boolean);
+                const focusConcept = shared[0]?.id || journey.conceptIds.find((id) =>
+                  step.artwork.assertions?.some((assertion) => assertion.conceptId === id)
+                );
+                const graphLink = urlFor(step.artworkId) +
+                  (focusConcept ? `&node=${encodeURIComponent(focusConcept)}` : "");
+                const immersive = step.immersive ?
+                  experienceHref(step.immersive) : null;
+                return `
+                  <li${step.artworkId === artworkId ? ' class="is-current"' : ""}>
+                    <span class="cross-journey-number">${index + 1}</span>
+                    <div class="cross-journey-content">
+                      <strong>${esc(localize(step.artwork.title, lang))}</strong>
+                      <small>${esc(localize(step.artwork.artist, lang))}</small>
+                      <p>${esc(localize(step.prompt, lang))}</p>
+                      ${shared.length ? `<p class="cross-journey-evidence">${esc(copy.evidence)} :
+                        ${shared.map((concept) => esc(localize(concept.labels, lang))).join(" · ")}</p>` : ""}
+                      <div class="cross-journey-actions">
+                        <a href="${esc(graphLink)}">${esc(copy.graph)} ↗</a>
+                        ${immersive ? `<a href="${esc(immersive)}"${step.immersive.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${esc(copy.immersive)} ↗</a>` : ""}
+                      </div>
+                    </div>
+                  </li>`;
+              }).join("")}
+            </ol>
+          </article>
+        `).join("")}
+      </div>
+      <p class="semantic-cross-disclaimer">${esc(copy.status)}</p>
+    </details>`;
+}
+
+function safeJourneysMarkup(data, artworkId) {
+  try {
+    return journeysMarkup(data, artworkId);
+  } catch (error) {
+    // Optional cross-artwork suggestions must not hide the canonical semantic graph.
+    console.warn("ARTDACI learning journeys unavailable; retaining core semantic experience.", error);
+    return "";
+  }
+}
+
 function relatedMarkup(data, artworkId) {
   const related = getRelatedArtworks(data, artworkId);
   return `
@@ -2148,6 +2211,7 @@ try {
 
   app.innerHTML = [
     renderWorkspace(semanticData, artwork.id),
+    safeJourneysMarkup(semanticData, artwork.id),
     relatedMarkup(semanticData, artwork.id),
     profileMarkup(semanticData, artwork.id),
     imageExplorerDialogMarkup(semanticData, artwork.id),

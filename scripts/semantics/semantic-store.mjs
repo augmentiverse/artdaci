@@ -8,7 +8,8 @@ const DATA_URLS = {
   iconography: new URL("../../content/semantics/iconography.json", import.meta.url),
   experiences: new URL("../../content/semantics/experience-links.json", import.meta.url),
   pedagogy: new URL("../../content/semantics/pedagogical-relations.json", import.meta.url),
-  queryHints: new URL("../../content/semantics/query-aliases.json", import.meta.url)
+  queryHints: new URL("../../content/semantics/query-aliases.json", import.meta.url),
+  journeys: new URL("../../content/semantics/learning-journeys.json", import.meta.url)
 };
 
 const RELATION_WEIGHTS = Object.freeze({
@@ -37,14 +38,14 @@ export function localize(value, lang = "fr") {
 
 export async function loadSemanticData() {
   if (cache) return cache;
-  const [conceptsResponse, artworksResponse, sourcesResponse, culturalResponse, imageAnnotationsResponse, iconographyResponse, experiencesResponse, pedagogyResponse, queryHintsResponse] = await Promise.all(
+  const [conceptsResponse, artworksResponse, sourcesResponse, culturalResponse, imageAnnotationsResponse, iconographyResponse, experiencesResponse, pedagogyResponse, queryHintsResponse, journeysResponse] = await Promise.all(
     Object.values(DATA_URLS).map((url) => fetch(url, { cache: "no-store" }))
   );
-  const responses = [conceptsResponse, artworksResponse, sourcesResponse, culturalResponse, imageAnnotationsResponse, iconographyResponse, experiencesResponse, pedagogyResponse, queryHintsResponse];
+  const responses = [conceptsResponse, artworksResponse, sourcesResponse, culturalResponse, imageAnnotationsResponse, iconographyResponse, experiencesResponse, pedagogyResponse, queryHintsResponse, journeysResponse];
   const failed = responses.find((response) => !response.ok);
   if (failed) throw new Error(`Semantic data could not be loaded (${failed.status}).`);
 
-  const [conceptsDoc, artworksDoc, sourcesDoc, culturalDoc, imageAnnotationsDoc, iconographyDoc, experiencesDoc, pedagogyDoc, queryHintsDoc] = await Promise.all(responses.map((response) => response.json()));
+  const [conceptsDoc, artworksDoc, sourcesDoc, culturalDoc, imageAnnotationsDoc, iconographyDoc, experiencesDoc, pedagogyDoc, queryHintsDoc, journeysDoc] = await Promise.all(responses.map((response) => response.json()));
   const conceptMap = new Map(conceptsDoc.concepts.map((concept) => [concept.id, concept]));
   const artworkMap = new Map(artworksDoc.artworks.map((artwork) => [artwork.id, artwork]));
   const entityMap = new Map(culturalDoc.entities.map((entity) => [entity.id, entity]));
@@ -86,6 +87,7 @@ export async function loadSemanticData() {
     queryNodeAliases: queryHintsDoc.nodeAliases || [],
     queryChannelAliases: queryHintsDoc.channelAliases || {},
     queryExamples: queryHintsDoc.examples || {},
+    learningJourneys: journeysDoc.journeys || [],
     regionMap
   };
   return cache;
@@ -807,4 +809,30 @@ export function searchSemantic(data, query, lang = "fr") {
 
 export function clearSemanticCache() {
   cache = null;
+}
+
+/** Evidence-gated editorial journeys; catalogue-only artworks cannot appear here. */
+export function getLearningJourneys(data, focusArtworkId = null) {
+  return (data.learningJourneys || []).map((journey) => {
+    const steps = (journey.steps || []).map((entry, index, all) => {
+      const artwork = getArtwork(data, entry.artworkId);
+      const previous = index > 0 ? getArtwork(data, all[index - 1].artworkId) : null;
+      if (!artwork) return null;
+      const shared = previous ? (journey.conceptIds || []).filter((id) =>
+        previous.assertions?.some((a) => a.conceptId === id) &&
+        artwork.assertions?.some((a) => a.conceptId === id) &&
+        data.conceptMap.has(id)
+      ) : [];
+      if (previous && shared.length === 0) return null;
+      const experiences = getNodeExperiences(data, artwork.id);
+      const immersive = experiences.find((item) => item.channel === "vr" &&
+        String(item.href || "").startsWith("/vr.html?")) ||
+        experiences.find((item) => item.channel === "vr" &&
+          String(item.href || "").startsWith("/"));
+      return { ...entry, artwork, sharedConceptIds: shared, immersive: immersive || null };
+    });
+    if (!steps.length || steps.some((step) => !step)) return null;
+    return { ...journey, steps };
+  }).filter((journey) => journey &&
+    (!focusArtworkId || journey.steps.some((step) => step.artworkId === focusArtworkId)));
 }
