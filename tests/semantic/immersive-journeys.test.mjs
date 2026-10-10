@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import { createRequire } from "node:module";
 import { test } from "node:test";
-import { getLearningJourneys } from "../../scripts/semantics/semantic-store.mjs";
+import { getLearningJourneys, localize } from "../../scripts/semantics/semantic-store.mjs";
 
 const require = createRequire(import.meta.url);
 const runtime = require("../../api/semantic-runtime.js");
@@ -102,4 +102,47 @@ test("immersion augments existing graph rather than creating a second explorer",
   assert(three.includes("makePortal(step"));
   assert(vr.includes("currentSession.end().then(navigate, navigate)"));
   assert(panel.includes("crossArtworkMarkup(runtime,lang)"));
+});
+
+test("regression: render every trilingual journey without hiding the graph", async () => {
+  const data = await fixtures();
+  const ui = await text("scripts/semantics/semantic-ui.mjs");
+  const start = ui.indexOf("function journeysMarkup(data, artworkId) {");
+  const end = ui.indexOf("function relatedMarkup(data, artworkId) {", start);
+  assert(start >= 0 && end > start, "Both journey renderers must exist");
+  const source = ui.slice(start, end);
+  const compile = new Function(
+    "getLearningJourneys", "JOURNEY_COPY", "lang", "esc", "localize",
+    "urlFor", "experienceHref", "console",
+    source + "\nreturn { journeysMarkup, safeJourneysMarkup };"
+  );
+  const esc = (value) => String(value ?? "")
+    .replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
+  const copy = {
+    fr: { heading:"Parcours", intro:"Découvrir", evidence:"Relation fondée sur", graph:"Graphe", immersive:"Immersion", status:"Éditorial" },
+    en: { heading:"Journeys", intro:"Discover", evidence:"Connected through", graph:"Graph", immersive:"Immersive", status:"Editorial" },
+    ar: { heading:"مسارات", intro:"استكشف", evidence:"مفاهيم", graph:"الرسم", immersive:"غامر", status:"تعليمي" }
+  };
+  for (const lang of ["fr", "en", "ar"]) {
+    const render = compile(getLearningJourneys,copy,lang,esc,localize,
+      (id) => "?artwork=" + encodeURIComponent(id) + "&lang=" + lang,
+      (entry) => String(entry.href || "").replaceAll("{lang}",lang),console);
+    for (const artworkId of ["ld01", "ve01", "vg01", "mo01"]) {
+      const markup = render.journeysMarkup(data, artworkId);
+      assert(markup.includes("semantic-cross-journeys"), artworkId+" "+lang);
+      assert(markup.includes("cross-journey-evidence"), artworkId+" "+lang);
+      assert(markup.includes("cross-journey-actions"), artworkId+" "+lang);
+      assert.equal(render.safeJourneysMarkup(data, artworkId), markup);
+    }
+  }
+});
+
+test("regression: optional journey failure cannot prevent the original graph", async () => {
+  const ui = await text("scripts/semantics/semantic-ui.mjs");
+  assert(ui.includes("safeJourneysMarkup(semanticData, artwork.id)"));
+  assert(ui.includes("renderWorkspace(semanticData, artwork.id)"));
+  assert(ui.indexOf("renderWorkspace(semanticData, artwork.id)") < ui.indexOf("safeJourneysMarkup(semanticData, artwork.id)"));
+  assert(ui.includes("console.warn(\"ARTDACI learning journeys unavailable; retaining core semantic experience.\""));
+  assert(!ui.includes("data.conceptMap.get(id).labels, lang))).join"));
 });
