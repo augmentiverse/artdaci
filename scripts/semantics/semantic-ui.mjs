@@ -30,6 +30,7 @@ import {
   providersFromExternal
 } from "./external-sources.mjs";
 import { rerankWithNeuralEmbeddings } from "./embedding-client.mjs";
+import { initIntelligentExplorer } from "./semantic-explorer.mjs";
 
 const UI = {
   fr: {
@@ -2185,6 +2186,7 @@ try {
   );
   status.textContent = `${semanticData.concepts.length} concepts · ${semanticData.iconographySubjects.length} sujets iconographiques · ${semanticData.pedagogicalRelations.length} relations pédagogiques · ${semanticData.imageAnnotations.length} œuvres IIIF · FR / EN / AR`;
   status.dataset.state = "ready";
+  void initIntelligentExplorer(semanticData, lang, artwork.id);
 } catch (error) {
   console.error(error);
   status.textContent = t.error;
