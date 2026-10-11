@@ -45,6 +45,37 @@ The app's existing CDN, cache and CORS settings should be checked after upload. 
 
 **No R2 credentials are embedded in the repository or log output.**
 
+
+## New: View of Delft MindAR image target — waiting for authored assets
+
+The author has specified these exact paths:
+
+- Image target: \`assets/targets/view-of-delft.mind\`.
+- Tracking image: \`assets/artists/johannes-vermeer/artworks/view_of_delft/images/ve02-view-of-delft-web.webp\`.
+- AR model: \`assets/artists/johannes-vermeer/artworks/view_of_delft/models/view-of-delft.glb\` (already present).
+
+**At the time of the change, neither the .mind nor this .webp was present in the Git tree.** Do not fabricate a .mind file, substitute a different tracking target, or claim that an unverified Cloudflare image is the exact image used for target generation.
+
+The painting manifest \`content/paintings/view-of-delft.json\` now declares \`ar.compiledTarget\`, \`ar.imageTarget\`, \`ar.primaryModel\`, \`ar.modelVariants\` and a conservative viewer transform. The existing collection image is used only as a preliminary **visual fallback**; it is **not** asserted to be identical to the tracked reference. The remote \`ve02\` manifest has \`media.ar.target\` and \`media.images.tracking-source\` entries with \`available:false\`, \`migrationStatus:"planned"\`. The image's existing Cloudflare location has not been independently verified or mapped to this canonical key.
+
+The AR viewer and \`ar.html\` recognize the canonical \`ve02\` manifest and its target/image/model keys. The publicly advertised image-tracking route \`resolveImmersiveArtworkRoute("ve02","ar")\` intentionally remains **disabled** pending the real binary assets. Space AR already supports the model, and its Image AR link will appear automatically once the route is enabled.
+
+### Publish the missing files and activate
+
+1. Place the genuine authored \`.mind\` and the exact source \`.webp\` at the two paths above in this **feature branch**. Do not commit placeholders.
+2. From a working Cloudflare rclone installation, execute the dry run:
+   \`\`\`powershell
+   pwsh ./scripts/publish-view-of-delft-ar-r2.ps1 -RemotePrefix "YOUR_REMOTE:YOUR_BUCKET"
+   \`\`\`
+   Then execute with \`-Publish\`. The script uploads only the two canonical new keys, checks remote bytes and SHA-256 against local files, then merges/rechecks the R2 manifest and stages the verified local manifest values. If the image is already present under another R2 key, identify that precise key and compare the actual SHA-256 before deciding to copy it or to reference it. No speculative URL or published status should be inserted.
+3. Change \`ve02\` to \`ar:true\` in \`scripts/immersive-routing.js\`, **only after target/image availability and a positive MindAR recognition test**. Refresh its import version if necessary.
+4. Replace \`print.imageTargetSource\` and \`media.image\` by the verified image as appropriate for the tracking instructions/printed page, after confirming that it is the image used to compile \`view-of-delft.mind\`. Avoid showing a different edition of the painting as the scanned target.
+5. Verify \`ar.html?painting=view-of-delft&lang=fr\` on a camera-capable phone, with target acquisition, stable anchoring, 3D loading and fallback/permissions handling. Repeat EN and AR.
+6. Re-run \`node --test tests/four-models-integration.test.mjs\` and amend the staging guard tests as part of activation. Test the user-visible catalogue, print page, Space AR and Masters Hub entry points. Keep Vercel Preview until validated.
+
+**Note:** \`view-of-delft.mind\` is a **compiled tracking asset**, not a geometric model. The GLB is the 3D representation that the tracker reveals. The matching source image is essential to recognizing the painting reliably.
+
+
 ## Verification checklist before production
 
 1. Run `node --test tests/four-models-integration.test.mjs`.
