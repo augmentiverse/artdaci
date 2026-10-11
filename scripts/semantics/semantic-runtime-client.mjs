@@ -10,12 +10,14 @@ function esc(value) {
     .replaceAll('"',"&quot;").replaceAll("'","&#039;");
 }
 
-export async function resolveSemanticRuntime({ nodeId, slug, resourceType="painting", regionId, environment="web", lang="fr" } = {}) {
+export async function resolveSemanticRuntime({ nodeId, slug, resourceType="painting", regionId, environment="web", lang="fr", journeyId, journeyStep } = {}) {
   const params = new URLSearchParams({ environment, lang });
   if (nodeId) params.set("nodeId", nodeId);
   if (slug) params.set("slug", slug);
   if (resourceType) params.set("resourceType", resourceType);
   if (regionId) params.set("regionId", regionId);
+  if (journeyId) params.set("journey", journeyId);
+  if (journeyStep != null && journeyStep !== "") params.set("step", String(journeyStep));
   params.set("runtime", "2.12");
   const response = await fetch(`/api/semantic-runtime?${params.toString()}`, {
     headers:{ Accept:"application/json" },
@@ -43,20 +45,29 @@ function learningPathMarkup(runtime, lang) {
 
 function crossArtworkMarkup(runtime, lang) {
   const labels = {
-    fr: { heading: "Passer à une autre œuvre", via: "Concepts communs" },
-    en: { heading: "Travel to another artwork", via: "Shared concepts" },
-    ar: { heading: "انتقل إلى عمل آخر", via: "مفاهيم مشتركة" }
-  }[lang] || { heading: "Related artwork", via: "Shared concepts" };
+    fr: { heading: "Passer à une autre œuvre", via: "Concepts communs", stage: "Étape", finished: "Parcours terminé", back: "Revoir le parcours" },
+    en: { heading: "Travel to another artwork", via: "Shared concepts", stage: "Step", finished: "Journey completed", back: "Review the journey" },
+    ar: { heading: "انتقل إلى عمل آخر", via: "مفاهيم مشتركة", stage: "المرحلة", finished: "اكتمل المسار", back: "مراجعة المسار" }
+  }[lang] || { heading: "Related artwork", via: "Shared concepts", stage: "Step", finished: "Journey completed", back: "Review" };
   const seen = new Set();
   const bridges = (runtime.journeyBridges || []).filter((item) => {
     if (!item.href?.startsWith("/") || item.href.startsWith("//") || seen.has(item.toArtworkId)) return false;
     seen.add(item.toArtworkId);
     return true;
   }).slice(0, 3);
-  if (!bridges.length) return "";
+  const active = runtime.activeJourney;
+  if (!bridges.length && !active) return "";
+  const returnParams = new URLSearchParams({ artwork:runtime.focus.artworkId || runtime.focus.id, lang });
+  if (active) {
+    returnParams.set("journey",active.id);
+    returnParams.set("step",String(active.stepIndex));
+  }
   return `
     <section class="semantic-runtime-cross-artwork">
-      <h3>${esc(labels.heading)}</h3>
+      <h3>${esc(active ? active.title : labels.heading)}</h3>
+      ${active ? `<p class="semantic-runtime-journey-progress">${esc(labels.stage)} ${active.stepIndex+1}/${active.totalSteps} · ${esc(active.question)}</p>` : ""}
+      ${active?.complete ? `<p class="semantic-runtime-journey-progress">${esc(labels.finished)}</p>
+        <a href="/semantic/?${esc(returnParams.toString())}">${esc(labels.back)} →</a>` : ""}
       <div class="semantic-runtime-next">
         ${bridges.map((item) => `<a href="${esc(item.href)}">
           <strong>${esc(item.toArtworkLabel)}</strong>
@@ -89,7 +100,12 @@ export async function mountSemanticRuntimePanel({ anchor, nodeId, slug, resource
   const anchorElement=typeof anchor==="string"?document.querySelector(anchor):anchor;
   if(!anchorElement) return null;
   try{
-    const runtime=await resolveSemanticRuntime({nodeId,slug,resourceType,environment,lang});
+    const locationParams = new URLSearchParams(location.search);
+    const runtime=await resolveSemanticRuntime({
+      nodeId,slug,resourceType,environment,lang,
+      journeyId:locationParams.get("journey"),
+      journeyStep:locationParams.get("step")
+    });
     const t=COPY[lang]||COPY.en;
     const button=document.createElement("button");
     button.type="button";
