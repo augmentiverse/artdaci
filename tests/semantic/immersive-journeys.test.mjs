@@ -339,7 +339,7 @@ test("the final Van Gogh step has one meaningful return in FR EN AR", async () =
   assert.match(viewer,/runtime\.journeyCompletion\?\.reviewHref/);
   assert.match(viewer,/getElementById\("vr-back"\)/);
   assert(!viewer.includes('galleryLink.href = runtime.journeyCompletion.exploreHref'));
-  assert.match(viewer,/semantic-vr-constellation\.mjs\?v=9/);
+  assert.match(viewer,/semantic-vr-constellation\.mjs\?v=10/);
   assert.match(vrHtml,/vr-viewer\.js\?v=18/);
   assert.match(semanticUi,/params\.get\("explore"\) === "journeys"/);
   assert.match(semanticHtml,/semantic-ui\.mjs\?v=22/);
