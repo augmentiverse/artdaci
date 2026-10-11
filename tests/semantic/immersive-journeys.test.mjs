@@ -279,7 +279,7 @@ test("Monet return signs appear inside WebXR and navigate through the existing e
 });
 
 
-test("final Van Gogh journey returns to Semantic with two verified destinations in FR EN AR", async () => {
+test("the final Van Gogh step has one meaningful return in FR EN AR", async () => {
   const [constellation, viewer, vrHtml, semanticUi, semanticHtml] = await Promise.all([
     text("scripts/semantics/semantic-vr-constellation.mjs"),
     text("scripts/vr-viewer.js"),
@@ -303,8 +303,8 @@ test("final Van Gogh journey returns to Semantic with two verified destinations 
     assert.equal(terminal.journeyBridges.length, 0, "No false next artwork at the end");
     assert.equal(terminal.journeyCompletion?.reviewHref,
       "/semantic/?artwork=vg01&lang=" + lang + "&journey=gaze-presence&step=2");
-    assert.equal(terminal.journeyCompletion?.exploreHref,
-      "/semantic/?artwork=vg01&lang=" + lang + "&explore=journeys");
+    assert.equal(Object.keys(terminal.journeyCompletion).length, 1,
+      "Only one contextual destination is necessary at the journey end");
 
     const objects = [];
     const interactives = new Map(), hitTargets = [];
@@ -320,13 +320,13 @@ test("final Van Gogh journey returns to Semantic with two verified destinations 
       interactives,hitTargets,{add:(v) => objects.push(v)}
     );
     assert(result.finished);
-    assert.equal(result.endingPortals.length, 2);
-    assert.equal(objects.length, 2);
-    assert.equal(hitTargets.length, 4);
+    assert.equal(result.endingPortals.length, 1);
+    assert.equal(objects.length, 1);
+    assert.equal(hitTargets.length, 2);
     assert.deepEqual(result.endingPortals.map((p) => p.href),
-      [terminal.journeyCompletion.reviewHref,terminal.journeyCompletion.exploreHref]);
+      [terminal.journeyCompletion.reviewHref]);
     assert(interactives.has("portal:journey-end:review"));
-    assert(interactives.has("portal:journey-end:explore"));
+    assert.equal(interactives.has("portal:journey-end:explore"), false);
   }
 
   const neutral = await invoke({nodeId:"vg01",environment:"vr",lang:"fr"});
@@ -338,7 +338,7 @@ test("final Van Gogh journey returns to Semantic with two verified destinations 
   assert.equal(first.journeyCompletion,null);
   assert.match(viewer,/runtime\.journeyCompletion\?\.reviewHref/);
   assert.match(viewer,/getElementById\("vr-back"\)/);
-  assert.match(viewer,/getElementById\("gallery-link"\)/);
+  assert(!viewer.includes('galleryLink.href = runtime.journeyCompletion.exploreHref'));
   assert.match(viewer,/semantic-vr-constellation\.mjs\?v=9/);
   assert.match(vrHtml,/vr-viewer\.js\?v=18/);
   assert.match(semanticUi,/params\.get\("explore"\) === "journeys"/);
