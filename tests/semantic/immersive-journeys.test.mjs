@@ -277,3 +277,70 @@ test("Monet return signs appear inside WebXR and navigate through the existing e
   assert(gallery.includes("exitGallery(hit.object.userData.exitUrl)"));
   assert(html.includes("gallery-vr.js?v=180"));
 });
+
+
+test("final Van Gogh journey returns to Semantic with two verified destinations in FR EN AR", async () => {
+  const [constellation, viewer, vrHtml, semanticUi, semanticHtml] = await Promise.all([
+    text("scripts/semantics/semantic-vr-constellation.mjs"),
+    text("scripts/vr-viewer.js"),
+    text("vr.html"),
+    text("scripts/semantics/semantic-ui.mjs"),
+    text("semantic/index.html")
+  ]);
+  const start = constellation.indexOf("  const finished = runtime.activeJourney?.complete");
+  const end = constellation.indexOf("  const panelTexture = makeTexture({", start);
+  assert(start >= 0 && end > start, "In-world final portals must precede info-panel initialization");
+  const build = new Function(
+    "runtime", "lang", "rtl", "makePortal", "interactiveGroups", "hitTargets", "group",
+    constellation.slice(start, end) + "\nreturn { finished, endingPortals };"
+  );
+
+  for (const lang of ["fr", "en", "ar"]) {
+    const terminal = await invoke({
+      nodeId: "vg01", environment: "vr", lang, journey: "gaze-presence", step: "2"
+    });
+    assert.equal(terminal.activeJourney?.complete, true);
+    assert.equal(terminal.journeyBridges.length, 0, "No false next artwork at the end");
+    assert.equal(terminal.journeyCompletion?.reviewHref,
+      "/semantic/?artwork=vg01&lang=" + lang + "&journey=gaze-presence&step=2");
+    assert.equal(terminal.journeyCompletion?.exploreHref,
+      "/semantic/?artwork=vg01&lang=" + lang + "&explore=journeys");
+
+    const objects = [];
+    const interactives = new Map(), hitTargets = [];
+    const result = build(terminal,lang,lang === "ar",
+      (step) => {
+        const part = {
+          group:{position:{y:0,z:0}},
+          label:{material:{opacity:0},scale:{set(){}}},
+          hit:{userData:{semanticSelection:{kind:"portal",item:step}}}
+        };
+        return part;
+      },
+      interactives,hitTargets,{add:(v) => objects.push(v)}
+    );
+    assert(result.finished);
+    assert.equal(result.endingPortals.length, 2);
+    assert.equal(objects.length, 2);
+    assert.equal(hitTargets.length, 4);
+    assert.deepEqual(result.endingPortals.map((p) => p.href),
+      [terminal.journeyCompletion.reviewHref,terminal.journeyCompletion.exploreHref]);
+    assert(interactives.has("portal:journey-end:review"));
+    assert(interactives.has("portal:journey-end:explore"));
+  }
+
+  const neutral = await invoke({nodeId:"vg01",environment:"vr",lang:"fr"});
+  assert.equal(neutral.activeJourney, null);
+  assert.equal(neutral.journeyCompletion,null);
+  const first = await invoke({
+    nodeId:"ld01",environment:"vr",lang:"fr",journey:"gaze-presence",step:"0"
+  });
+  assert.equal(first.journeyCompletion,null);
+  assert.match(viewer,/runtime\.journeyCompletion\?\.reviewHref/);
+  assert.match(viewer,/getElementById\("vr-back"\)/);
+  assert.match(viewer,/getElementById\("gallery-link"\)/);
+  assert.match(viewer,/semantic-vr-constellation\.mjs\?v=9/);
+  assert.match(vrHtml,/vr-viewer\.js\?v=18/);
+  assert.match(semanticUi,/params\.get\("explore"\) === "journeys"/);
+  assert.match(semanticHtml,/semantic-ui\.mjs\?v=22/);
+});
