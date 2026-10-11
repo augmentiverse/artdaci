@@ -279,31 +279,24 @@ export function createSemanticVrConstellation({
     group.add(portal.group);
   });
 
-  // At a journey's last artwork there is no forward bridge; keep the visitor
-  // in control through in-world portals using the same two-select UX as bridges.
+  // One meaningful exit at the final artwork. The existing Semantic page
+  // opens the completed learning path and also lists alternatives; a second
+  // portal to the same knowledge graph would be redundant.
   const finished = runtime.activeJourney?.complete === true &&
     runtime.activeJourney.artworkId === runtime.focus?.artworkId &&
     runtime.activeJourney.totalSteps > 1 &&
     runtime.activeJourney.stepIndex === runtime.activeJourney.totalSteps - 1;
-  const endingPortals = finished && runtime.journeyCompletion?.reviewHref &&
-    runtime.journeyCompletion?.exploreHref ? [
+  const endingPortals = finished && runtime.journeyCompletion?.reviewHref ? [
     {
       stage: "journey-end",
       id: "review",
-      label: lang === "ar" ? "مراجعة المسار" : lang === "fr" ? "Revoir le parcours" : "Review journey",
+      label: lang === "ar" ? "العودة إلى المسارات التعليمية" :
+        lang === "fr" ? "Retour aux parcours pédagogiques" : "Back to learning journeys",
       action: lang === "ar" ? "اكتمل المسار" : lang === "fr" ? "Parcours terminé" : "Journey complete",
-      description: runtime.activeJourney.title,
+      description: lang === "ar" ? "راجع المسار المنجز واختر مساراً آخر إذا رغبت." :
+        lang === "fr" ? "Revoir ce parcours, ou en choisir un autre dans le graphe." :
+        "Review this journey or choose another in the graph.",
       href: runtime.journeyCompletion.reviewHref
-    },
-    {
-      stage: "journey-end",
-      id: "explore",
-      label: lang === "ar" ? "مسارات أخرى" : lang === "fr" ? "Autres parcours" : "Other journeys",
-      action: lang === "ar" ? "متابعة الاستكشاف" : lang === "fr" ? "Continuer l'exploration" : "Continue exploring",
-      description: lang === "ar" ? "العودة إلى الشبكة المعرفية واختيار مسار آخر" :
-        lang === "fr" ? "Revenir au graphe et choisir un autre parcours." :
-        "Return to the knowledge graph and choose another journey.",
-      href: runtime.journeyCompletion.exploreHref
     }
   ] : [];
 
@@ -419,7 +412,7 @@ export function createSemanticVrConstellation({
     hitTargets,
     hasPortals: pathSteps.length > 0 || bridges.length > 0 || endingPortals.length > 0,
     hasCrossArtworkBridges: bridges.length > 0,
-    hasJourneyEndPortals: endingPortals.length === 2,
+    hasJourneyEndPortals: endingPortals.length === 1,
     intersect(raycaster) {
       const intersection = raycaster.intersectObjects(hitTargets, false)[0];
       return intersection?.object?.userData?.semanticSelection || null;
