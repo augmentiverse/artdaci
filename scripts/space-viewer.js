@@ -6,13 +6,15 @@ const PAINTINGS = {
   "mona-lisa": "content/paintings/mona-lisa.json?v=5",
   "van-gogh": "content/paintings/van-gogh.json",
   "van-gogh-bedroom": "content/paintings/van-gogh-bedroom.json",
-  "vermeer-girl-with-a-pearl-earring": "content/paintings/vermeer-girl-with-a-pearl-earring.json"
+  "vermeer-girl-with-a-pearl-earring": "content/paintings/vermeer-girl-with-a-pearl-earring.json",
+  "view-of-delft": "content/paintings/view-of-delft.json"
 };
 const AUDIO_ARTWORK_IDS = {
   "mona-lisa": "ld01",
   "van-gogh": "vg01",
   "van-gogh-bedroom": "vg02",
-  "vermeer-girl-with-a-pearl-earring": "ve01"
+  "vermeer-girl-with-a-pearl-earring": "ve01",
+  "view-of-delft": "ve02"
 };
 const MUSEUMS = {
   "louvre": "content/museums/louvre.json?v=3",
@@ -115,25 +117,29 @@ const PRINT_PAGES = {
     "mona-lisa": "print-target.html",
     "van-gogh": "print-van-gogh.html",
     "van-gogh-bedroom": "print-van-gogh-bedroom.html",
-    "vermeer-girl-with-a-pearl-earring": "print-vermeer-girl-with-a-pearl-earring.html"
+    "vermeer-girl-with-a-pearl-earring": "print-vermeer-girl-with-a-pearl-earring.html",
+    "view-of-delft": "print-artwork.html?painting=view-of-delft&lang=en"
   },
   fr: {
     "mona-lisa": "print-target-fr.html",
     "van-gogh": "print-van-gogh-fr.html",
     "van-gogh-bedroom": "print-van-gogh-bedroom-fr.html",
-    "vermeer-girl-with-a-pearl-earring": "print-vermeer-girl-with-a-pearl-earring-fr.html"
+    "vermeer-girl-with-a-pearl-earring": "print-vermeer-girl-with-a-pearl-earring-fr.html",
+    "view-of-delft": "print-artwork.html?painting=view-of-delft&lang=fr"
   },
   ar: {
     "mona-lisa": "print-ar.html?painting=mona-lisa",
     "van-gogh": "print-ar.html?painting=van-gogh",
     "van-gogh-bedroom": "print-ar.html?painting=van-gogh-bedroom",
-    "vermeer-girl-with-a-pearl-earring": "print-ar.html?painting=vermeer-girl-with-a-pearl-earring"
+    "vermeer-girl-with-a-pearl-earring": "print-ar.html?painting=vermeer-girl-with-a-pearl-earring",
+    "view-of-delft": "print-artwork.html?painting=view-of-delft&lang=ar"
   }
 };
 
 const FR_TITLES = {
   "van-gogh-bedroom": "La Chambre",
-  "vermeer-girl-with-a-pearl-earring": "La Jeune Fille à la perle"
+  "vermeer-girl-with-a-pearl-earring": "La Jeune Fille à la perle",
+  "view-of-delft": "Vue de Delft"
 };
 
 const params = new URLSearchParams(window.location.search);
@@ -213,7 +219,8 @@ async function configureViewer(manifest, mediaContext) {
     "mona-lisa": "الموناليزا",
     "van-gogh": "بورتريه ذاتي",
     "van-gogh-bedroom": "غرفة النوم",
-    "vermeer-girl-with-a-pearl-earring": "الفتاة ذات القرط اللؤلؤي"
+    "vermeer-girl-with-a-pearl-earring": "الفتاة ذات القرط اللؤلؤي",
+    "view-of-delft": "منظر دلفت"
   };
   const title = lang === "ar" ? arTitles[slug] || defaultTitle : lang === "fr" ? FR_TITLES[slug] || defaultTitle : defaultTitle;
   const modelVariants = getModelVariants(manifest);
