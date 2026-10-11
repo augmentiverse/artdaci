@@ -279,6 +279,51 @@ export function createSemanticVrConstellation({
     group.add(portal.group);
   });
 
+  // At a journey's last artwork there is no forward bridge; keep the visitor
+  // in control through in-world portals using the same two-select UX as bridges.
+  const finished = runtime.activeJourney?.complete === true &&
+    runtime.activeJourney.artworkId === runtime.focus?.artworkId &&
+    runtime.activeJourney.totalSteps > 1 &&
+    runtime.activeJourney.stepIndex === runtime.activeJourney.totalSteps - 1;
+  const endingPortals = finished ? [
+    {
+      stage: "journey-end",
+      id: "review",
+      label: lang === "ar" ? "مراجعة المسار" : lang === "fr" ? "Revoir le parcours" : "Review journey",
+      action: lang === "ar" ? "اكتمل المسار" : lang === "fr" ? "Parcours terminé" : "Journey complete",
+      description: runtime.activeJourney.title,
+      href: "/semantic/?" + new URLSearchParams({
+        artwork: runtime.activeJourney.artworkId, lang,
+        journey: runtime.activeJourney.id,
+        step: String(runtime.activeJourney.stepIndex)
+      }).toString()
+    },
+    {
+      stage: "journey-end",
+      id: "explore",
+      label: lang === "ar" ? "مسارات أخرى" : lang === "fr" ? "Autres parcours" : "Other journeys",
+      action: lang === "ar" ? "متابعة الاستكشاف" : lang === "fr" ? "Continuer l'exploration" : "Continue exploring",
+      description: lang === "ar" ? "العودة إلى الشبكة المعرفية واختيار مسار آخر" :
+        lang === "fr" ? "Revenir au graphe et choisir un autre parcours." :
+        "Return to the knowledge graph and choose another journey.",
+      href: "/semantic/?" + new URLSearchParams({
+        artwork: runtime.activeJourney.artworkId, lang, explore: "journeys"
+      }).toString()
+    }
+  ] : [];
+
+  endingPortals.forEach((step, index) => {
+    const portal = makePortal(step, index, endingPortals.length, rtl);
+    portal.group.name = "semantic-vr-journey-end-" + step.id;
+    portal.group.position.y = -0.46;
+    portal.group.position.z = 0.69;
+    portal.label.material.opacity = 1;
+    portal.label.scale.set(0.48, 0.15, 1);
+    interactiveGroups.set("portal:" + step.stage + ":" + step.id, portal.group);
+    hitTargets.push(portal.hit, portal.label);
+    group.add(portal.group);
+  });
+
   const panelTexture = makeTexture({
     title: runtime.activeJourney?.title || runtime.focus?.label || "ARTDACI",
     body: runtime.activeJourney
@@ -377,8 +422,9 @@ export function createSemanticVrConstellation({
   return {
     group,
     hitTargets,
-    hasPortals: pathSteps.length > 0 || bridges.length > 0,
+    hasPortals: pathSteps.length > 0 || bridges.length > 0 || endingPortals.length > 0,
     hasCrossArtworkBridges: bridges.length > 0,
+    hasJourneyEndPortals: endingPortals.length === 2,
     intersect(raycaster) {
       const intersection = raycaster.intersectObjects(hitTargets, false)[0];
       return intersection?.object?.userData?.semanticSelection || null;
