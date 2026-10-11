@@ -160,6 +160,14 @@
         "migrationStatus": "published",
         "bytes": 8916276,
         "sha256": "e3171f1557f83d5ae940d5d6a5bf11786f40fd30acb19bdfda3e9c1b4b1b0cf9"
+      },
+      "standing-2026": {
+        "scope": "artwork",
+        "path": "models/girl-pearl_standing.glb",
+        "mimeType": "model/gltf-binary",
+        "available": false,
+        "migrationStatus": "planned",
+        "bytes": 3032692
       }
     },
     "ar": {
