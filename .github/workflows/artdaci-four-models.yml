@@ -1,0 +1,65 @@
+name: ARTDACI four-model integration
+
+on:
+  pull_request:
+    paths:
+      - 'assets/artists/vincent-van-gogh/artworks/self-portrait/models/**'
+      - 'assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/**'
+      - 'assets/artists/johannes-vermeer/artworks/view_of_delft/models/**'
+      - 'content/paintings/**'
+      - 'content/media-manifests/**'
+      - 'scripts/immersive-routing.js'
+      - 'scripts/gallery-vr.js'
+      - 'scripts/space-viewer.js'
+      - 'scripts/3d-collection.js'
+      - 'geo/data/guides/vangogh-hub-guide.json'
+      - '3d/index.html'
+      - 'space.html'
+      - 'ar.html'
+      - 'vr.html'
+      - 'gallery-vr.html'
+      - 'tests/four-models-integration.test.mjs'
+      - '.github/workflows/artdaci-four-models.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  models:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout only test inputs and four GLBs
+        uses: actions/checkout@v4
+        with:
+          filter: blob:none
+          sparse-checkout: |
+            /assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh_self-portrait.glb
+            /assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh_standing.glb
+            /assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/girl-pearl_standing.glb
+            /assets/artists/johannes-vermeer/artworks/view_of_delft/models/view-of-delft.glb
+            /content/paintings/van-gogh.json
+            /content/paintings/vermeer-girl-with-a-pearl-earring.json
+            /content/paintings/view-of-delft.json
+            /content/media-manifests/artworks/vg01/manifest.json
+            /content/media-manifests/artworks/ve01/manifest.json
+            /content/media-manifests/artworks/ve02/manifest.json
+            /geo/data/guides/vangogh-hub-guide.json
+            /scripts/immersive-routing.js
+            /scripts/gallery-vr.js
+            /scripts/space-viewer.js
+            /scripts/3d-collection.js
+            /3d/index.html
+            /space.html
+            /ar.html
+            /vr.html
+            /gallery-vr.html
+            /tests/four-models-integration.test.mjs
+          sparse-checkout-cone-mode: false
+      - name: Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate GLB binaries, three languages and media manifests
+        run: node --test tests/four-models-integration.test.mjs
