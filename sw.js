@@ -1,9 +1,10 @@
-const VERSION = "artdaci-pwa-v6";
+const VERSION = "artdaci-pwa-v7";
 const SHELL = [
   "./",
   "./index.html",
   "./index-fr.html",
   "./index-ar.html",
+  "./offline.html",
   "./gallery-vr.html",
   "./cinema-vr.html",
   "./styles/site.css",
@@ -49,7 +50,7 @@ self.addEventListener("fetch", (event) => {
           caches.open(VERSION).then((cache) => cache.put(request, copy));
           return response;
         })
-        .catch(async () => (await caches.match(request)) || caches.match("./index.html"))
+        .catch(async () => (await caches.match(request)) || caches.match("./offline.html"))
     );
     return;
   }
