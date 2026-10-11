@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/a/:id",
+      "destination": "/api/artwork-redirect?id=:id"
+    }
+  ]
+}
