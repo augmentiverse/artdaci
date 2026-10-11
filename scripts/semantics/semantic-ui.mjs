@@ -1577,7 +1577,8 @@ function journeysMarkup(data, artworkId) {
   const journeys = getLearningJourneys(data, artworkId);
   if (!journeys.length) return "";
   const copy = JOURNEY_COPY[lang];
-  const selectedJourney = journeys.some((item) => item.id === params.get("journey"));
+  const selectedJourney = journeys.some((item) => item.id === params.get("journey")) ||
+    params.get("explore") === "journeys";
   return `
     <details class="semantic-cross-journeys" data-semantic-cross-journeys${selectedJourney ? " open" : ""}>
       <summary><span>${esc(copy.heading)}</span><small>${journeys.length} · ${esc(copy.intro)}</small></summary>
