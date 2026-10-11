@@ -46,7 +46,38 @@ The app's existing CDN, cache and CORS settings should be checked after upload. 
 **No R2 credentials are embedded in the repository or log output.**
 
 
-## New: View of Delft MindAR image target — waiting for authored assets
+## New: View of Delft MindAR image target — supplied, pending Git staging
+
+Both exact authored files have now been supplied as attachments and validated in
+the working environment (11 October 2026), but they have **not yet been
+committed as binary files to GitHub**, and **have not been uploaded to R2**.
+
+- `view-of-delft.mind` — 561,730 bytes, SHA-256 `112684ff6ceb17b075d51daa48e48ec21cc9d0b2a362f0da267f7b11364f6dcb`;
+  MindAR version **2**, **one target**, target dimensions **1374 × 1145**.
+- `ve02-view-of-delft-web.webp` — 98,008 bytes, SHA-256 `828ddd6ee4612320978c3d485a4002f749634ab3b9951917405af2c829a46d50`;
+  valid WebP, actual image dimensions **1374 × 1145**.
+
+The dimensions match exactly. Target recognition and 3D orientation still require
+an actual phone test. A downloadable ZIP with both assets was prepared in the
+conversation, keeping the required Git paths. After installing these files
+into this feature branch, run:
+
+```powershell
+.\scripts\activate-view-of-delft-mindar.ps1
+node --test tests/four-models-integration.test.mjs tests/immersive-routing.test.mjs
+git add assets/targets/view-of-delft.mind assets/artists/johannes-vermeer/artworks/view_of_delft/images/ve02-view-of-delft-web.webp scripts/immersive-routing.js scripts/ar-viewer.js content/paintings/view-of-delft.json tests/four-models-integration.test.mjs tests/immersive-routing.test.mjs
+git commit -m "feat(ve02): activate verified Delft MindAR tracking"
+git push origin feature/artdaci-four-models-20261011
+```
+
+The activation verifies both files' SHA-256 hashes, enables AR image tracking,
+updates the print/reference image to the genuine matching WebP, and
+adjusts the regression assertions. Once the Preview confirms image recognition,
+publish the two canonical keys to R2 using
+`scripts/publish-view-of-delft-ar-r2.ps1` with verified rclone credentials.
+There is no direct R2 upload or binary GitHub upload capability in the current connection.
+
+## Previous staging status
 
 The author has specified these exact paths:
 
