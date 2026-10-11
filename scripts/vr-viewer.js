@@ -515,21 +515,15 @@ async function setupSemanticVrConstellation() {
   try {
     const runtime = await semanticRuntimePromise;
     if (!runtime?.concepts?.length) return;
-    if (runtime.journeyCompletion?.reviewHref && runtime.journeyCompletion?.exploreHref &&
+    if (runtime.journeyCompletion?.reviewHref &&
         runtime.activeJourney?.complete && runtime.activeJourney.artworkId === runtime.focus?.artworkId) {
-      // Reuse the existing toolbar links as 2D fallbacks; the same destinations
-      // are in selectable portals inside WebXR.
+      // One contextual return to Semantic on desktop; the existing VR Gallery
+      // link remains unchanged, because it leads to a genuinely different place.
       const backLink = document.getElementById("vr-back");
-      const galleryLink = document.getElementById("gallery-link");
       if (backLink) {
         backLink.href = runtime.journeyCompletion.reviewHref;
-        backLink.textContent = lang === "ar" ? "مراجعة المسار" :
-          lang === "fr" ? "Revoir le parcours" : "Review journey";
-      }
-      if (galleryLink) {
-        galleryLink.href = runtime.journeyCompletion.exploreHref;
-        galleryLink.textContent = lang === "ar" ? "مسارات أخرى" :
-          lang === "fr" ? "Autres parcours" : "Other journeys";
+        backLink.textContent = lang === "ar" ? "العودة إلى المسارات التعليمية" :
+          lang === "fr" ? "Retour aux parcours pédagogiques" : "Back to learning journeys";
       }
     }
     semanticConstellation?.dispose?.();
