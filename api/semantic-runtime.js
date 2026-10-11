@@ -595,6 +595,14 @@ module.exports = async function handler(req, res) {
       docs, artworkId, req.query?.journey, req.query?.step, lang
     );
     const journeyBridgesOut = journeyBridgesFor(docs, maps, artworkId, lang, activeJourneyOut);
+    const journeyCompletionOut = activeJourneyOut?.complete ? {
+      reviewHref: "/semantic/?artwork=" + encodeURIComponent(artworkId) +
+        "&lang=" + encodeURIComponent(lang) + "&journey=" +
+        encodeURIComponent(activeJourneyOut.id) +
+        "&step=" + activeJourneyOut.stepIndex,
+      exploreHref: "/semantic/?artwork=" + encodeURIComponent(artworkId) +
+        "&lang=" + encodeURIComponent(lang) + "&explore=journeys"
+    } : null;
     const guideOut = guideFor({
       focus,
       learningPath: learningPathOut,
@@ -651,6 +659,7 @@ module.exports = async function handler(req, res) {
       learningPath: learningPathOut,
       journeyBridges: journeyBridgesOut,
       activeJourney: activeJourneyOut,
+      journeyCompletion: journeyCompletionOut,
       guide: guideOut,
       links: {
         semantic: artworkId
