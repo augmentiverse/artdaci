@@ -2365,3 +2365,6 @@ html[dir="rtl"] .workspace-search input {
 .cross-journey-actions a:focus-visible{outline:3px solid #b48047;outline-offset:2px}
 .semantic-cross-disclaimer{font-size:11px;color:var(--semantic-muted);margin:0;padding:0 18px 14px}
 @media(max-width:540px){.semantic-cross-journey-list{padding:10px}.semantic-cross-journeys>summary{padding:13px}.semantic-cross-journey{padding:10px}}
+
+/* Highlight only the learner's chosen pathway when returning from an immersive stop. */
+.semantic-cross-journey[data-selected-journey="true"]{border-color:#b48b54;box-shadow:inset 0 0 0 1px #b48b54}
