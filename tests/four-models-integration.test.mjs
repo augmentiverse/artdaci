@@ -67,7 +67,7 @@ test("View of Delft has a 3D model and Space AR route but does not claim image A
   assert.equal(resolveImmersiveArtworkRoute("ve02","ar"),null);
   assert.equal(resolveImmersiveArtworkRoute("ve02","vr"),null);
   const space=await read("scripts/space-viewer.js");
-  assert(space.includes('"view-of-delft": "content/paintings/view-of-delft.json"'));
+  assert(space.includes('"view-of-delft": "content/paintings/view-of-delft.json?v=2"'));
   assert(space.includes('if (slug === "view-of-delft") {'));
   assert(space.includes("imageArLink.style.display = \"none\""));
   assert(space.includes("individualVrLink.style.display = \"none\""));
@@ -134,9 +134,48 @@ test("new 3D/AR/VR entries are activated through versioned UI resources",async()
   const [space,vr,ar,gallery,modelPage]=await Promise.all([
     read("space.html"),read("vr.html"),read("ar.html"),read("gallery-vr.html"),read("3d/index.html")
   ]);
-  assert(space.includes('space-viewer.js?v=37'));
+  assert(space.includes('space-viewer.js?v=38'));
   assert(vr.includes('vr-viewer.js?v=17'));
-  assert(ar.includes('ar-viewer.js?v=60'));
+  assert(ar.includes('ar-viewer.js?v=61'));
   assert(gallery.includes('gallery-vr.js?v=179'));
   assert(modelPage.includes('3d-collection.js?v=2'));
+});
+
+
+test("View of Delft MindAR configuration stages the exact requested target and image without advertising missing binaries",async()=>{
+  const artwork=await json("content/paintings/view-of-delft.json");
+  const manifest=await json("content/media-manifests/artworks/ve02/manifest.json");
+  const [arPage,arViewer,spacePage,spaceViewer] = await Promise.all([
+    read("ar.html"),read("scripts/ar-viewer.js"),read("space.html"),read("scripts/space-viewer.js")
+  ]);
+  const compiledTarget="assets/targets/view-of-delft.mind";
+  const targetImage="assets/artists/johannes-vermeer/artworks/view_of_delft/images/ve02-view-of-delft-web.webp";
+  assert.equal(artwork.ar.compiledTarget,compiledTarget);
+  assert.equal(artwork.ar.imageTarget,targetImage);
+  assert.equal(artwork.print.compiledMindTarget,compiledTarget);
+  assert.equal(artwork.ar.primaryModel,MODELS.delft);
+  assert(artwork.ar.modelVariants.some(model=>model.src===MODELS.delft));
+  assert.equal(artwork.ar.fallbackImage,"assets/artists/johannes-vermeer/collection/view-of-delft-vermeer.webp");
+  assert.equal(manifest.media.ar.target.path,"ar/view-of-delft.mind");
+  assert.equal(manifest.media.images["tracking-source"].path,"images/ve02-view-of-delft-web.webp");
+  for(const asset of [manifest.media.ar.target,manifest.media.images["tracking-source"]]){
+    // A Cloudflare image may exist at another key, but no unverified canonical
+    // R2 object should be marked published before its actual URL is verified.
+    if(!asset.available)assert.equal(asset.migrationStatus,"planned");
+    else {
+      assert.equal(asset.migrationStatus,"published");
+      assert.match(asset.sha256,/^[a-f0-9]{64}$/);
+    }
+  }
+  assert(arViewer.includes('"view-of-delft": "content/paintings/view-of-delft.json?v=2"'));
+  assert(arPage.includes('data-artwork-media-for="view-of-delft"'));
+  assert(arPage.includes('data-artwork-media-target-key="ar.target"'));
+  assert(arPage.includes('data-artwork-media-image-key="images.tracking-source"'));
+  assert(arPage.includes('"delft":"models.delft-2026"'));
+  assert(arPage.includes('ar-viewer.js?v=61'));
+  assert(spacePage.includes('space-viewer.js?v=38'));
+  assert(spaceViewer.includes('!resolveImmersiveArtworkRoute(slug, "ar")'));
+  // The direct AR route will be enabled after both exact authored binaries are
+  // provided and match each other. Do not offer it as usable prematurely.
+  assert.equal(resolveImmersiveArtworkRoute("ve02","ar"),null);
 });
