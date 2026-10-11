@@ -515,6 +515,23 @@ async function setupSemanticVrConstellation() {
   try {
     const runtime = await semanticRuntimePromise;
     if (!runtime?.concepts?.length) return;
+    if (runtime.journeyCompletion?.reviewHref && runtime.journeyCompletion?.exploreHref &&
+        runtime.activeJourney?.complete && runtime.activeJourney.artworkId === runtime.focus?.artworkId) {
+      // Reuse the existing toolbar links as 2D fallbacks; the same destinations
+      // are in selectable portals inside WebXR.
+      const backLink = document.getElementById("vr-back");
+      const galleryLink = document.getElementById("gallery-link");
+      if (backLink) {
+        backLink.href = runtime.journeyCompletion.reviewHref;
+        backLink.textContent = lang === "ar" ? "مراجعة المسار" :
+          lang === "fr" ? "Revoir le parcours" : "Review journey";
+      }
+      if (galleryLink) {
+        galleryLink.href = runtime.journeyCompletion.exploreHref;
+        galleryLink.textContent = lang === "ar" ? "مسارات أخرى" :
+          lang === "fr" ? "Autres parcours" : "Other journeys";
+      }
+    }
     semanticConstellation?.dispose?.();
     semanticConstellation = createSemanticVrConstellation({
       parent: modelRoot,
