@@ -269,8 +269,8 @@ for (const mapping of externalMappings.conceptMappings) {
 }
 
 assert(semanticHtml.includes("POC V2.11"), "Semantic page must expose V2.11.");
-assert(semanticHtml.includes("semantic.css?v=18"), "Semantic page must load the updated V3 pilot CSS.");
-assert(semanticHtml.includes("semantic-ui.mjs?v=20"), "Semantic page must load the fixed V3 pilot UI.");
+assert(semanticHtml.includes("semantic.css?v=19"), "Semantic page must load the updated V3 pilot CSS.");
+assert(semanticHtml.includes("semantic-ui.mjs?v=21"), "Semantic page must load the fixed V3 pilot UI.");
 assert(semanticUi.includes("graphWithExternalSuggestions"), "External graph exploration must remain available.");
 assert(semanticUi.includes("graphDataForEntity"), "Cultural entities must be graph centers.");
 assert(semanticUi.includes("graphDataForIconography"), "Iconographic subjects must be graph centers.");
@@ -356,7 +356,7 @@ assert(arViewer.includes("semantic-runtime-client.mjs?v=2"), "AR viewer must loa
 assert(arViewer.includes("semantic-ar-hotspots.mjs?v=2"), "AR viewer must load the discreet hotspot renderer.");
 assert(semanticArHotspots.includes("semantic-hotspot-ring"), "AR semantic hotspots must use compact ring markers.");
 assert(semanticArHotspots.includes("label.visible = selected"), "AR semantic hotspot labels must appear only on selection.");
-assert(vrViewer.includes("semantic-runtime-client.mjs?v=2"), "VR viewer must load the V2.10 shared semantic client.");
+assert(vrViewer.includes("semantic-runtime-client.mjs?v=3"), "VR viewer must load the V2.10 shared semantic client.");
 assert(geoRemoteViewer.includes("semantic-runtime-client.mjs?v=2"), "GEO viewer must load the V2.10 shared semantic client.");
 assert(mastersHubViewer.includes("semantic-runtime-client.mjs?v=2"), "Masters Hub must load the V2.10 shared semantic client.");
 assert(visitorGuide.includes("resolveSemanticRuntime"), "Visitor guide must resolve the current ARTDACI semantic context.");
@@ -399,7 +399,7 @@ assert(semanticVrConstellation.includes("portalInstruction"), "Semantic portals 
 assert(semanticVrConstellation.includes("activate"), "Semantic portal selection must distinguish focus from activation.");
 assert(vrViewer.includes("activateSemanticPortal"), "VR viewer must safely activate a selected semantic portal.");
 assert(vrViewer.includes("currentSession.end().then(navigate, navigate)"), "VR portal navigation must end the active XR session before changing destination.");
-assert(vrViewer.includes('semantic-vr-constellation.mjs?v=7'), "VR viewer must load detailed semantic intersections for adaptive controller pointers.");
+assert(vrViewer.includes('semantic-vr-constellation.mjs?v=8'), "VR viewer must load detailed semantic intersections for adaptive controller pointers.");
 assert(semanticVrConstellation.includes('label.visible = false'), "VR semantic concept labels must remain hidden until selection.");
 assert(semanticVrConstellation.includes('panel.visible = false'), "VR semantic detail panel must remain hidden until selection.");
 assert(!semanticVrConstellation.includes("frameMaterial"), "VR learning portals must not render visible blue frames.");
