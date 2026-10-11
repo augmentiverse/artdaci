@@ -41,6 +41,8 @@ function Replace-Exact([string]$relative,[string]$before,[string]$after,[int]$ti
 Replace-Exact 'scripts/immersive-routing.js' 'slug: "view-of-delft", runtimeSlug: "view-of-delft", aliases: [], ar: false, space: true, vr: false' 'slug: "view-of-delft", runtimeSlug: "view-of-delft", aliases: [], ar: true, space: true, vr: false'
 Replace-Exact 'tests/immersive-routing.test.mjs' 'assert.equal(resolveImmersiveArtworkRoute("ve02", "ar"), null);' 'assert.equal(resolveImmersiveArtworkRoute("ve02", "ar")?.artworkId, "ve02");'
 Replace-Exact 'tests/four-models-integration.test.mjs' 'assert.equal(resolveImmersiveArtworkRoute("ve02","ar"),null);' 'assert.equal(resolveImmersiveArtworkRoute("ve02","ar")?.artworkId,"ve02");' 2
+Replace-Exact 'content/paintings/view-of-delft.json' '"imageTargetSource": "assets/artists/johannes-vermeer/collection/view-of-delft-vermeer.webp"' '"imageTargetSource": "assets/artists/johannes-vermeer/artworks/view_of_delft/images/ve02-view-of-delft-web.webp"'
+Replace-Exact 'content/paintings/view-of-delft.json' '"image": "assets/artists/johannes-vermeer/collection/view-of-delft-vermeer.webp"' '"image": "assets/artists/johannes-vermeer/artworks/view_of_delft/images/ve02-view-of-delft-web.webp"'
 Replace-Exact 'scripts/ar-viewer.js' '"./immersive-routing.js?v=1"' '"./immersive-routing.js?v=2"'
 
 # The image-tracking target is hosted locally and confirmed; do not set any
@@ -49,7 +51,7 @@ Write-Host 'Local AR route activated, pending preview/device verification.' -For
 Write-Host 'Run: node --test tests/four-models-integration.test.mjs tests/immersive-routing.test.mjs'
 if ($Commit) {
   if (-not (Get-Command git -ErrorAction SilentlyContinue)) { throw 'git not installed' }
-  & git -C $root add -- $mindRel $imageRel 'scripts/immersive-routing.js' 'scripts/ar-viewer.js' 'tests/four-models-integration.test.mjs' 'tests/immersive-routing.test.mjs'
+  & git -C $root add -- $mindRel $imageRel 'scripts/immersive-routing.js' 'scripts/ar-viewer.js' 'tests/four-models-integration.test.mjs' 'tests/immersive-routing.test.mjs' 'content/paintings/view-of-delft.json'
   if ($LASTEXITCODE -ne 0) { throw 'git add failed' }
   & git -C $root commit -m 'feat(ve02): activate verified Delft MindAR tracking with real authored files'
   if ($LASTEXITCODE -ne 0) { throw 'git commit failed' }
