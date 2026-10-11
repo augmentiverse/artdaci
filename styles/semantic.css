@@ -2334,3 +2334,8 @@ html[dir="rtl"] .workspace-search input {
 .semantic-svg-node.is-center .semantic-svg-node-type {
   fill: #f0d5b3;
 }
+
+/* Single-workspace navigation: a link to the existing artwork catalogue. */
+.semantic-collection-link{display:inline-flex;align-items:center;min-height:32px;padding:5px 10px;border:1px solid rgba(255,255,255,.26);border-radius:8px;color:#f5e9d9;text-decoration:none;font-size:12px;font-weight:650;white-space:nowrap}
+.semantic-collection-link:hover,.semantic-collection-link:focus-visible{background:rgba(255,255,255,.12);color:#fff;outline-offset:3px}
+@media(max-width:390px){.semantic-collection-link{font-size:11px;padding:4px 7px}}
