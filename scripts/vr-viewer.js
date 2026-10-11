@@ -162,7 +162,9 @@ async function init() {
     slug,
     resourceType: "painting",
     environment: "vr",
-    lang
+    lang,
+    journeyId: params.get("journey"),
+    journeyStep: params.get("step")
   }).catch((error) => {
     console.warn("Semantic VR runtime unavailable; viewer continues normally.", error);
     return null;
