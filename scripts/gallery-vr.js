@@ -1478,6 +1478,20 @@ function applyCopy() {
       link.href = href;
     }
   });
+  // Only a completed, curated Monet journey can return to its semantic review.
+  // The gallery itself remains the existing gallery, not a duplicate guide.
+  const journeyParams = new URLSearchParams(location.search);
+  const selectedJourney = journeyParams.get("journey");
+  if (journeyParams.get("artist") === "monet" &&
+      journeyParams.get("step") === "2" &&
+      ["light-perception", "color-gesture"].includes(selectedJourney)) {
+    const returnLink = document.getElementById("gallery-semantic-link");
+    if (returnLink) {
+      returnLink.href = `semantic/?artwork=mo01&lang=${lang}&journey=${encodeURIComponent(selectedJourney)}&step=2`;
+      returnLink.textContent = lang === "fr" ? "Revoir le parcours" :
+        lang === "ar" ? "مراجعة المسار" : "Review learning journey";
+    }
+  }
   document.querySelectorAll(".artist-room-link").forEach((link) => {
     const url = new URL(link.href);
     url.searchParams.set("lang", lang);
