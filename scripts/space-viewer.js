@@ -7,7 +7,7 @@ const PAINTINGS = {
   "van-gogh": "content/paintings/van-gogh.json",
   "van-gogh-bedroom": "content/paintings/van-gogh-bedroom.json",
   "vermeer-girl-with-a-pearl-earring": "content/paintings/vermeer-girl-with-a-pearl-earring.json",
-  "view-of-delft": "content/paintings/view-of-delft.json"
+  "view-of-delft": "content/paintings/view-of-delft.json?v=2"
 };
 const AUDIO_ARTWORK_IDS = {
   "mona-lisa": "ld01",
@@ -276,12 +276,16 @@ async function configureViewer(manifest, mediaContext) {
   imageArLink.href = `ar.html?${resourceType}=${slug}&lang=${lang}`;
   updateVrLink(0);
   if (slug === "view-of-delft") {
-    // This artwork has a verified 3D model for Space AR, but no image
-    // tracking target or individual VR route. Do not offer broken actions.
-    imageArLink.hidden = true;
-    imageArLink.style.display = "none";
-    individualVrLink.hidden = true;
-    individualVrLink.style.display = "none";
+    // Enable the Image AR button only after the compiled .mind target is committed
+    // and the corresponding public route is switched on.
+    if (!resolveImmersiveArtworkRoute(slug, "ar")) {
+      imageArLink.hidden = true;
+      imageArLink.style.display = "none";
+    }
+    if (!resolveImmersiveArtworkRoute(slug, "vr")) {
+      individualVrLink.hidden = true;
+      individualVrLink.style.display = "none";
+    }
     document.getElementById("vr-gallery-link").href = `gallery-vr.html?artist=vermeer&lang=${lang}`;
   }
   document.getElementById("print-link").href = PRINT_PAGES[lang]?.[slug] || "index.html";

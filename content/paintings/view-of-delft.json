@@ -21,7 +21,8 @@
   },
   "print": {
     "chapter": "Dutch Golden Age",
-    "imageTargetSource": "assets/artists/johannes-vermeer/collection/view-of-delft-vermeer.webp"
+    "imageTargetSource": "assets/artists/johannes-vermeer/collection/view-of-delft-vermeer.webp",
+    "compiledMindTarget": "assets/targets/view-of-delft.mind"
   },
   "media": {
     "image": "assets/artists/johannes-vermeer/collection/view-of-delft-vermeer.webp",
@@ -55,5 +56,40 @@
     "ar": {
       "title": "منظر دلفت"
     }
+  },
+  "ar": {
+    "startMode": "painting-emergence",
+    "imageTarget": "assets/artists/johannes-vermeer/artworks/view_of_delft/images/ve02-view-of-delft-web.webp",
+    "compiledTarget": "assets/targets/view-of-delft.mind",
+    "primaryModel": "assets/artists/johannes-vermeer/artworks/view_of_delft/models/view-of-delft.glb",
+    "modelVariants": [
+      {
+        "id": "delft",
+        "label": {
+          "en": "View of Delft — 3D",
+          "fr": "Vue de Delft — 3D",
+          "ar": "منظر دلفت — ثلاثي الأبعاد"
+        },
+        "src": "assets/artists/johannes-vermeer/artworks/view_of_delft/models/view-of-delft.glb"
+      }
+    ],
+    "viewer": {
+      "initialScale": 0.32,
+      "initialRise": 0.14,
+      "modelRotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "fallbackImage": "assets/artists/johannes-vermeer/collection/view-of-delft-vermeer.webp",
+    "availableModes": [
+      "painting-emergence",
+      "artist",
+      "history",
+      "hidden-details",
+      "brushstrokes",
+      "ask-guide"
+    ]
   }
 }
