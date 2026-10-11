@@ -417,7 +417,7 @@ assert(arHtml.includes("semantic-runtime.css?v=2"), "AR page must load Semantic 
 assert(arHtml.includes("ar-viewer.js?v=59"), "AR page must load the discreet hotspot viewer cache version.");
 assert(arHtml.includes("styles/ar.css?v=40"), "AR page must load the V2.10 AR stylesheet cache version.");
 assert(vrHtml.includes("semantic-runtime.css?v=2"), "VR page must load Semantic Runtime styles.");
-assert(vrHtml.includes("vr-viewer.js?v=16"), "VR page must load the adaptive controller-pointer build.");
+assert(vrHtml.includes("vr-viewer.js?v=19"), "VR page must load the adaptive controller-pointer build.");
 assert(geoRemoteHtml.includes("../styles/semantic-runtime.css?v=2"), "GEO page must load Semantic Runtime styles.");
 assert(mastersHubHtml.includes("../styles/semantic-runtime.css?v=2"), "Masters Hub must load Semantic Runtime styles.");
 assert(semanticUi.includes('params.get("node")'), "Semantic reader must support node deep links from the runtime.");
