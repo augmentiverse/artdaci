@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#191512" />
+  <title>ARTDACI — Hors connexion</title>
+  <style>
+    :root{color-scheme:dark}*{box-sizing:border-box}
+    body{margin:0;min-height:100vh;background:#181612;color:#f7f2e9;font:16px/1.65 system-ui,sans-serif;display:grid;place-items:center;padding:24px}
+    main{max-width:540px;padding:32px;border:1px solid #6d604a;border-radius:18px;background:#252119}
+    h1{font:500 clamp(1.6rem,5vw,2.6rem) Georgia,serif;margin:0 0 16px}
+    p{color:#ded5c4}a{color:#f2d093}
+    a:focus-visible{outline:3px solid #f2d093;outline-offset:5px}
+  </style>
+</head>
+<body>
+  <main>
+    <h1 id="offline-title">Connexion indisponible</h1>
+    <p id="offline-message">Cette page nécessite une connexion Internet. Les modèles 3D, vidéos et expériences immersives ne sont pas disponibles hors ligne.</p>
+    <p><a href="./index-fr.html" id="offline-home">Retour à l'accueil ARTDACI</a></p>
+  </main>
+  <script>
+    (() => {
+      const language = (navigator.language || "fr").toLowerCase().split("-")[0];
+      const copy = {
+        fr: ["Connexion indisponible", "Cette page nécessite une connexion Internet. Les modèles 3D, vidéos et expériences immersives ne sont pas disponibles hors ligne.", "Retour à l'accueil ARTDACI", "./index-fr.html"],
+        en: ["You are offline", "This page requires an internet connection. 3D models, video and immersive experiences are not available offline.", "Back to ARTDACI home", "./index.html"],
+        ar: ["الاتصال غير متاح", "تتطلب هذه الصفحة اتصالاً بالإنترنت. النماذج ثلاثية الأبعاد والفيديو والتجارب الغامرة غير متاحة دون اتصال.", "العودة إلى صفحة ARTDACI الرئيسية", "./index-ar.html"]
+      };
+      const entry = copy[language] || copy.fr;
+      document.documentElement.lang = copy[language] ? language : "fr";
+      document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
+      document.getElementById("offline-title").textContent = entry[0];
+      document.getElementById("offline-message").textContent = entry[1];
+      const link = document.getElementById("offline-home"); link.textContent = entry[2]; link.href = entry[3];
+      document.title = "ARTDACI — " + entry[0];
+    })();
+  </script>
+</body>
+</html>
