@@ -75,9 +75,9 @@ try {
   foreach ($id in @('vg01','ve01','ve02')) {
     $remoteManifest = "$remote/artworks/$id/manifest.json"
     $out = Join-Path $temporary "$id-original.json"
-    Run-Rclone @('copyto',$remoteManifest,$out)
+    Run-Rclone -Arguments @('copyto',$remoteManifest,$out)
     $doc = Get-Content -LiteralPath $out -Raw | ConvertFrom-Json -AsHashtable -Depth 64
-    if ($doc.id -ne $id -or -not $doc.media -or -not $doc.media.models) {
+    if ($doc.id -ne $id -or -not $doc.Contains('media') -or -not $doc.media.Contains('models')) {
       throw "Refusing to update a remote manifest with unexpected identity/schema: $id"
     }
     $remoteDocs[$id] = $doc
@@ -85,9 +85,9 @@ try {
 
   # Upload four new keys and verify a *downloaded byte-for-byte* SHA-256.
   foreach ($record in $checks) {
-    Run-Rclone @('copyto',$record.local,$record.remote,'--retries','3')
+    Run-Rclone -Arguments @('copyto',$record.local,$record.remote,'--retries','3')
     $download = Join-Path $temporary ("verify-" + $record.id + "-" + $record.name + ".glb")
-    Run-Rclone @('copyto',$record.remote,$download,'--retries','3')
+    Run-Rclone -Arguments @('copyto',$record.remote,$download,'--retries','3')
     if ((Get-Item -LiteralPath $download).Length -ne $record.size -or
         (SHA256 $download) -ne $record.sha256) {
       throw "R2 SHA-256 verification failed for $($record.remote). Manifests were NOT updated."
@@ -108,10 +108,10 @@ try {
     $doc.updatedAt = (Get-Date).ToString('yyyy-MM-dd')
     $merged = Join-Path $temporary "$id-published.json"
     $doc | ConvertTo-Json -Depth 64 | Set-Content -LiteralPath $merged -Encoding utf8
-    Run-Rclone @('copyto',$merged,"$remote/artworks/$id/manifest.json",'--retries','3')
+    Run-Rclone -Arguments @('copyto',$merged,"$remote/artworks/$id/manifest.json",'--retries','3')
     # Read back the manifest for confirmation, not just a successful upload code.
     $confirmed = Join-Path $temporary "$id-confirmed.json"
-    Run-Rclone @('copyto',"$remote/artworks/$id/manifest.json",$confirmed)
+    Run-Rclone -Arguments @('copyto',"$remote/artworks/$id/manifest.json",$confirmed)
     $verified = Get-Content -LiteralPath $confirmed -Raw | ConvertFrom-Json -AsHashtable -Depth 64
     foreach ($record in $entries) {
       $node = $verified.media.models[$record.name]
