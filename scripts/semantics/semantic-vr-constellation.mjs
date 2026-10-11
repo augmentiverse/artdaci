@@ -258,12 +258,14 @@ export function createSemanticVrConstellation({
     const action = bridge.title || (lang === "ar" ? "انتقل إلى عمل آخر" :
       lang === "fr" ? "Vers une autre œuvre" : "Go to another artwork");
     const evidence = (bridge.sharedConcepts || []).map((item) => item.label).join(" · ");
+    const progress = bridge.destinationStepIndex != null
+      ? `${lang === "fr" ? "Étape" : lang === "ar" ? "المرحلة" : "Step"} ${bridge.destinationStepIndex+1}/${bridge.totalSteps}` : "";
     const step = {
       stage: "bridge",
       id: `${bridge.id}:${bridge.toArtworkId}`,
       label: bridge.toArtworkLabel,
       action,
-      description: [bridge.title, evidence, bridge.question].filter(Boolean).join("\n"),
+      description: [progress, bridge.title, evidence, bridge.question].filter(Boolean).join("\n"),
       href: bridge.href,
       channel: "vr"
     };
@@ -278,9 +280,14 @@ export function createSemanticVrConstellation({
   });
 
   const panelTexture = makeTexture({
-    title: runtime.focus?.label || "ARTDACI",
-    body: (runtime.pedagogy || []).find((item) => item.prompt)?.prompt || "",
-    kicker: rtl ? "السياق الدلالي" : lang === "fr" ? "Contexte sémantique" : "Semantic context",
+    title: runtime.activeJourney?.title || runtime.focus?.label || "ARTDACI",
+    body: runtime.activeJourney
+      ? [`${rtl ? "المرحلة" : lang === "fr" ? "Étape" : "Step"} ${runtime.activeJourney.stepIndex+1}/${runtime.activeJourney.totalSteps}`,
+         runtime.activeJourney.question].filter(Boolean).join("\n")
+      : (runtime.pedagogy || []).find((item) => item.prompt)?.prompt || "",
+    kicker: runtime.activeJourney
+      ? (rtl ? "مسار تعليمي" : lang === "fr" ? "Parcours pédagogique" : "Learning journey")
+      : (rtl ? "السياق الدلالي" : lang === "fr" ? "Contexte sémantique" : "Semantic context"),
     rtl
   });
   const panelMaterial = new THREE.SpriteMaterial({
