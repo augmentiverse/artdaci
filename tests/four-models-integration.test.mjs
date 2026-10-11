@@ -94,9 +94,13 @@ test("all four new R2 keys are tracked but are NOT claimed to be published befor
     assert.equal(asset.path,item.path);
     assert.equal(asset.bytes,item.bytes);
     assert.equal(asset.mimeType,"model/gltf-binary");
-    assert.equal(asset.available,false);
-    assert.equal(asset.migrationStatus,"planned");
-    assert(!asset.sha256,"Hash must only be recorded after actual byte verification");
+    if (asset.available) {
+      assert.equal(asset.migrationStatus,"published");
+      assert.match(asset.sha256,/^[a-f0-9]{64}$/,"Only verified objects can be published");
+    } else {
+      assert.equal(asset.migrationStatus,"planned");
+      assert(!asset.sha256,"Hash must only be recorded after actual byte verification");
+    }
   }
   const [ar,space,vr]=await Promise.all(["ar.html","space.html","vr.html"].map(read));
   for(const html of [ar,space,vr]){
