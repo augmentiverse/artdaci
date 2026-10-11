@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/a/:id",
-      "destination": "/api/artwork-redirect?id=:id"
+      "destination": "/api/artwork-redirect"
     }
   ]
 }
