@@ -30,7 +30,7 @@ test("persistent /a/:id links resolve to known print pages without open redirect
     read("scripts/print-artwork.js")
   ]);
   assert.deepEqual(redirectConfig.rewrites, [
-    {source:"/a/:id",destination:"/api/artwork-redirect?id=:id"}
+    {source:"/a/:id",destination:"/api/artwork-redirect"}
   ]);
   const records = catalog.artworks.filter((item)=>item.status==="active");
   assert.equal(records.length,24);
