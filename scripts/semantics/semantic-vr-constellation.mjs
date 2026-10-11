@@ -285,18 +285,15 @@ export function createSemanticVrConstellation({
     runtime.activeJourney.artworkId === runtime.focus?.artworkId &&
     runtime.activeJourney.totalSteps > 1 &&
     runtime.activeJourney.stepIndex === runtime.activeJourney.totalSteps - 1;
-  const endingPortals = finished ? [
+  const endingPortals = finished && runtime.journeyCompletion?.reviewHref &&
+    runtime.journeyCompletion?.exploreHref ? [
     {
       stage: "journey-end",
       id: "review",
       label: lang === "ar" ? "مراجعة المسار" : lang === "fr" ? "Revoir le parcours" : "Review journey",
       action: lang === "ar" ? "اكتمل المسار" : lang === "fr" ? "Parcours terminé" : "Journey complete",
       description: runtime.activeJourney.title,
-      href: "/semantic/?" + new URLSearchParams({
-        artwork: runtime.activeJourney.artworkId, lang,
-        journey: runtime.activeJourney.id,
-        step: String(runtime.activeJourney.stepIndex)
-      }).toString()
+      href: runtime.journeyCompletion.reviewHref
     },
     {
       stage: "journey-end",
@@ -306,9 +303,7 @@ export function createSemanticVrConstellation({
       description: lang === "ar" ? "العودة إلى الشبكة المعرفية واختيار مسار آخر" :
         lang === "fr" ? "Revenir au graphe et choisir un autre parcours." :
         "Return to the knowledge graph and choose another journey.",
-      href: "/semantic/?" + new URLSearchParams({
-        artwork: runtime.activeJourney.artworkId, lang, explore: "journeys"
-      }).toString()
+      href: runtime.journeyCompletion.exploreHref
     }
   ] : [];
 
