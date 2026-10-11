@@ -82,7 +82,7 @@
         "z": 0
       }
     },
-    "fallbackImage": "assets/artists/johannes-vermeer/collection/view-of-delft-vermeer.webp",
+    "fallbackImage": "assets/artists/johannes-vermeer/artworks/view_of_delft/images/ve02-view-of-delft-web.webp",
     "availableModes": [
       "painting-emergence",
       "artist",
