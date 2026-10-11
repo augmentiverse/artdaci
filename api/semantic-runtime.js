@@ -415,15 +415,53 @@ function guideFor({ focus, learningPath, concepts, pedagogy, experiences, journe
  * Only reviewed artwork assertions, curated questions and manifest routes are used.
  * This does not assert historical influence or invent a destination.
  */
-function journeyBridgesFor(docs, maps, artworkId, lang) {
+
+function activeLearningJourney(docs, artworkId, id, rawStep, lang) {
+  if (!artworkId || !id || typeof id !== "string") return null;
+  const journey = (docs.journeys.journeys || []).find((item) => item.id === id);
+  if (!journey) return null;
+  const stepIndex = journey.steps.findIndex((step) => step.artworkId === artworkId);
+  if (stepIndex < 0) return null;
+  // Never trust an arbitrary URL step number: it must match the requested artwork.
+  if (rawStep != null && rawStep !== "" &&
+      (!/^(0|[1-9][0-9]{0,2})$/.test(String(rawStep)) ||
+        Number(rawStep) !== stepIndex)) return null;
+  return {
+    id: journey.id,
+    title: localize(journey.title, lang),
+    artworkId,
+    stepIndex,
+    totalSteps: journey.steps.length,
+    complete: stepIndex === journey.steps.length - 1,
+    question: localize(journey.steps[stepIndex].prompt, lang)
+  };
+}
+
+function contextualVrHref(href, journeyId, destinationIndex) {
+  if (typeof href !== "string" || !href.startsWith("/") || href.startsWith("//")) return href;
+  try {
+    const url = new URL(href, "https://artdaci.com");
+    if (url.pathname !== "/vr.html" && url.pathname !== "/gallery-vr.html") return href;
+    url.searchParams.set("journey", journeyId);
+    url.searchParams.set("step", String(destinationIndex));
+    return url.pathname + url.search + url.hash;
+  } catch {
+    return href;
+  }
+}
+
+function journeyBridgesFor(docs, maps, artworkId, lang, activeJourney = null) {
   if (!artworkId) return [];
   const results = [];
   const assertions = (id) => new Set((maps.artworkMap.get(id)?.assertions || [])
     .map((entry) => entry.conceptId));
   for (const journey of docs.journeys.journeys || []) {
+    if (activeJourney && journey.id !== activeJourney.id) continue;
     const index = (journey.steps || []).findIndex((step) => step.artworkId === artworkId);
     if (index < 0 || journey.steps.length < 2) continue;
-    const destination = journey.steps[(index + 1) % journey.steps.length];
+    const destinationIndex = activeJourney ? index + 1 : (index + 1) % journey.steps.length;
+    if (destinationIndex >= journey.steps.length) continue; // A guided sequence has a genuine finish.
+    const destination = journey.steps[destinationIndex];
     const target = maps.artworkMap.get(destination.artworkId);
     if (!target || target.id === artworkId) continue;
     const fromConcepts = assertions(artworkId);
@@ -448,8 +486,10 @@ function journeyBridgesFor(docs, maps, artworkId, lang) {
       question: localize(destination.prompt, lang),
       sharedConcepts: concepts,
       experienceId: experience.id,
-      href: normalizeExperienceHref(experience.href, lang),
+      href: contextualVrHref(normalizeExperienceHref(experience.href, lang), journey.id, destinationIndex),
       channel: experience.channel,
+      destinationStepIndex: destinationIndex,
+      totalSteps: journey.steps.length,
       grounding: "reviewed-artwork-assertions + editorial-learning-journey"
     });
   }
@@ -554,7 +594,10 @@ module.exports = async function handler(req, res) {
       lang,
       environment
     });
-    const journeyBridgesOut = journeyBridgesFor(docs, maps, artworkId, lang);
+    const activeJourneyOut = activeLearningJourney(
+      docs, artworkId, req.query?.journey, req.query?.step, lang
+    );
+    const journeyBridgesOut = journeyBridgesFor(docs, maps, artworkId, lang, activeJourneyOut);
     const guideOut = guideFor({
       focus,
       learningPath: learningPathOut,
@@ -610,6 +653,7 @@ module.exports = async function handler(req, res) {
       next: nextDestinations(pedagogyOut, experiencesOut, lang),
       learningPath: learningPathOut,
       journeyBridges: journeyBridgesOut,
+      activeJourney: activeJourneyOut,
       guide: guideOut,
       links: {
         semantic: artworkId
