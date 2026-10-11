@@ -121,7 +121,7 @@ test("3D collection exposes fifteen choices including the new artworks and stand
     assert.equal(matches.length,1,"3D collection must use "+src);
   }
   assert(html.includes("3d-collection.js?v=2"));
-  assert.equal(count(js,"copy.categoryArtwork"),6);
+  assert.equal(count(js,"copy.categoryArtwork"),5); // five artwork interpretations + one environment
   assert(js.includes('counts: ["6 models"'));
   assert(js.includes('counts: ["6 modèles"'));
   assert(js.includes('counts: ["6 نماذج"'));
