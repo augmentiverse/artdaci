@@ -1564,16 +1564,13 @@ function pathMarkup(data, bridge) {
 
 /** Preserve the selected learning path in existing immersive destinations only. */
 function journeyImmersiveHref(href, journeyId, stepIndex) {
-  if (typeof href !== "string" || !href.startsWith("/") || href.startsWith("//")) return href;
-  try {
-    const url = new URL(href, "https://artdaci.com");
-    if (url.pathname !== "/vr.html" && url.pathname !== "/gallery-vr.html") return href;
-    url.searchParams.set("journey", journeyId);
-    url.searchParams.set("step", String(stepIndex));
-    return url.pathname + url.search + url.hash;
-  } catch {
-    return href;
-  }
+  if (typeof href !== "string" || !/^\/(?:vr|gallery-vr)\.html(?:\?|#|$)/.test(href)) return href;
+  const hashPosition = href.indexOf("#");
+  const head = hashPosition === -1 ? href : href.slice(0, hashPosition);
+  const hash = hashPosition === -1 ? "" : href.slice(hashPosition);
+  const join = head.includes("?") ? "&" : "?";
+  return head + join + "journey=" + encodeURIComponent(journeyId) +
+    "&step=" + stepIndex + hash;
 }
 
 function journeysMarkup(data, artworkId) {
