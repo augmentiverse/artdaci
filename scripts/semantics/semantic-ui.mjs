@@ -1561,16 +1561,32 @@ function pathMarkup(data, bridge) {
 }
 
 
+
+/** Preserve the selected learning path in existing immersive destinations only. */
+function journeyImmersiveHref(href, journeyId, stepIndex) {
+  if (typeof href !== "string" || !href.startsWith("/") || href.startsWith("//")) return href;
+  try {
+    const url = new URL(href, "https://artdaci.com");
+    if (url.pathname !== "/vr.html" && url.pathname !== "/gallery-vr.html") return href;
+    url.searchParams.set("journey", journeyId);
+    url.searchParams.set("step", String(stepIndex));
+    return url.pathname + url.search + url.hash;
+  } catch {
+    return href;
+  }
+}
+
 function journeysMarkup(data, artworkId) {
   const journeys = getLearningJourneys(data, artworkId);
   if (!journeys.length) return "";
   const copy = JOURNEY_COPY[lang];
+  const selectedJourney = journeys.some((item) => item.id === params.get("journey"));
   return `
-    <details class="semantic-cross-journeys" data-semantic-cross-journeys>
+    <details class="semantic-cross-journeys" data-semantic-cross-journeys${selectedJourney ? " open" : ""}>
       <summary><span>${esc(copy.heading)}</span><small>${journeys.length} · ${esc(copy.intro)}</small></summary>
       <div class="semantic-cross-journey-list">
         ${journeys.map((journey) => `
-          <article class="semantic-cross-journey">
+          <article class="semantic-cross-journey"${journey.id === params.get("journey") ? ' data-selected-journey="true"' : ""}>
             <header><h3>${esc(localize(journey.title, lang))}</h3><p>${esc(localize(journey.objective, lang))}</p></header>
             <ol class="semantic-cross-journey-steps">
               ${journey.steps.map((step, index) => {
@@ -1581,7 +1597,7 @@ function journeysMarkup(data, artworkId) {
                 const graphLink = urlFor(step.artworkId) +
                   (focusConcept ? `&node=${encodeURIComponent(focusConcept)}` : "");
                 const immersive = step.immersive ?
-                  experienceHref(step.immersive) : null;
+                  journeyImmersiveHref(experienceHref(step.immersive), journey.id, index) : null;
                 return `
                   <li${step.artworkId === artworkId ? ' class="is-current"' : ""}>
                     <span class="cross-journey-number">${index + 1}</span>
