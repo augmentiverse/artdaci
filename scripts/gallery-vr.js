@@ -1478,19 +1478,13 @@ function applyCopy() {
       link.href = href;
     }
   });
-  // Only a completed, curated Monet journey can return to its semantic review.
-  // The gallery itself remains the existing gallery, not a duplicate guide.
-  const journeyParams = new URLSearchParams(location.search);
-  const selectedJourney = journeyParams.get("journey");
-  if (journeyParams.get("artist") === "monet" &&
-      journeyParams.get("step") === "2" &&
-      ["light-perception", "color-gesture"].includes(selectedJourney)) {
-    const returnLink = document.getElementById("gallery-semantic-link");
-    if (returnLink) {
-      returnLink.href = `semantic/?artwork=mo01&lang=${lang}&journey=${encodeURIComponent(selectedJourney)}&step=2`;
-      returnLink.textContent = lang === "fr" ? "Revoir le parcours" :
-        lang === "ar" ? "مراجعة المسار" : "Review learning journey";
-    }
+  // The screen menu and the in-world signs share the same validated return URL.
+  const returnLink = document.getElementById("gallery-semantic-link");
+  const returnHref = monetLearningJourneyReturnHref();
+  if (returnHref && returnLink) {
+    returnLink.href = returnHref;
+    returnLink.textContent = lang === "fr" ? "Revoir le parcours" :
+      lang === "ar" ? "مراجعة المسار" : "Review learning journey";
   }
   document.querySelectorAll(".artist-room-link").forEach((link) => {
     const url = new URL(link.href);
@@ -4474,6 +4468,16 @@ async function ensureLouvreMonaLisaWallModel() {
   }
 }
 
+// The gallery's HTML menu is not visible inside an immersive WebXR session.
+// Keep the return destination narrowly scoped to two curated Monet finales.
+function monetLearningJourneyReturnHref() {
+  const journey = params.get("journey");
+  if (!isConnectedMuseum || artistRoomId !== "monet" ||
+      params.get("step") !== "2" ||
+      !["light-perception", "color-gesture"].includes(journey)) return null;
+  return `semantic/?artwork=mo01&lang=${lang}&journey=${encodeURIComponent(journey)}&step=2`;
+}
+
 function addConnectedRoomNavigation(currentId, centerZ) {
   const others = ARTIST_ROOM_ORDER.filter((id) => id !== currentId);
   const signZ = centerZ + 7.86;
@@ -4516,6 +4520,26 @@ function addConnectedRoomNavigation(currentId, centerZ) {
       compact: true
     });
   });
+
+  const returnHref = currentId === "monet" ? monetLearningJourneyReturnHref() : null;
+  if (returnHref) {
+    const returnLabel = lang === "fr" ? "REVOIR LE PARCOURS" :
+      lang === "ar" ? "مراجعة المسار التعليمي" : "REVIEW LEARNING JOURNEY";
+    // Exit panel below the existing left-side room-navigation signs.
+    // It is a normal createWallSign exit target, so controller, pinch, gaze
+    // and desktop selection use the already-tested WebXR-safe exitGallery().
+    const finalSign = createWallSign(returnLabel, [-4.5, 1.23, signZ - 0.035], Math.PI, {
+      width: 3.2, height: 0.49, exitUrl: returnHref, compact: true
+    });
+    finalSign.name = "semantic-monet-journey-return-final";
+
+    // Second access point close to the Monet room entrance; high on the wall
+    // to avoid hiding the first side-wall painting and the walking passage.
+    const entrySign = createWallSign(returnLabel, [-6.80, 3.55, centerZ - 5.95], Math.PI / 2, {
+      width: 2.7, height: 0.42, exitUrl: returnHref, compact: true
+    });
+    entrySign.name = "semantic-monet-journey-return-entry";
+  }
 }
 
 function addDaVinciDecor(centerZ, material) {
