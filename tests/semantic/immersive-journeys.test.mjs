@@ -107,13 +107,13 @@ test("immersion augments existing graph rather than creating a second explorer",
 test("regression: render every trilingual journey without hiding the graph", async () => {
   const data = await fixtures();
   const ui = await text("scripts/semantics/semantic-ui.mjs");
-  const start = ui.indexOf("function journeysMarkup(data, artworkId) {");
+  const start = ui.indexOf("function journeyImmersiveHref(href, journeyId, stepIndex) {");
   const end = ui.indexOf("function relatedMarkup(data, artworkId) {", start);
   assert(start >= 0 && end > start, "Both journey renderers must exist");
   const source = ui.slice(start, end);
   const compile = new Function(
     "getLearningJourneys", "JOURNEY_COPY", "lang", "esc", "localize",
-    "urlFor", "experienceHref", "console",
+    "urlFor", "experienceHref", "console", "params",
     source + "\nreturn { journeysMarkup, safeJourneysMarkup };"
   );
   const esc = (value) => String(value ?? "")
@@ -127,7 +127,8 @@ test("regression: render every trilingual journey without hiding the graph", asy
   for (const lang of ["fr", "en", "ar"]) {
     const render = compile(getLearningJourneys,copy,lang,esc,localize,
       (id) => "?artwork=" + encodeURIComponent(id) + "&lang=" + lang,
-      (entry) => String(entry.href || "").replaceAll("{lang}",lang),console);
+      (entry) => String(entry.href || "").replaceAll("{lang}",lang),console,
+      new URLSearchParams());
     for (const artworkId of ["ld01", "ve01", "vg01", "mo01"]) {
       const markup = render.journeysMarkup(data, artworkId);
       assert(markup.includes("semantic-cross-journeys"), artworkId+" "+lang);
@@ -145,4 +146,67 @@ test("regression: optional journey failure cannot prevent the original graph", a
   assert(ui.indexOf("renderWorkspace(semanticData, artwork.id)") < ui.indexOf("safeJourneysMarkup(semanticData, artwork.id)"));
   assert(ui.includes("console.warn(\"ARTDACI learning journeys unavailable; retaining core semantic experience.\""));
   assert(!ui.includes("data.conceptMap.get(id).labels, lang))).join"));
+});
+
+
+test("a selected learning journey preserves stage, evidence, destination, and completion", async () => {
+  for (const lang of ["fr","en","ar"]) {
+    const first = await invoke({
+      nodeId:"ld01", environment:"vr", lang, journey:"light-perception",step:"0"
+    });
+    assert.equal(first.activeJourney?.stepIndex,0);
+    assert.equal(first.activeJourney?.totalSteps,3);
+    assert.equal(first.journeyBridges.length,1);
+    assert.equal(first.journeyBridges[0].toArtworkId,"ve01");
+    assert(first.journeyBridges[0].href.includes("journey=light-perception"));
+    assert(first.journeyBridges[0].href.includes("step=1"));
+    const second = await invoke({
+      nodeId:"ve01", environment:"vr", lang, journey:"light-perception",step:"1"
+    });
+    assert.equal(second.activeJourney?.stepIndex,1);
+    assert.equal(second.journeyBridges.length,1);
+    assert.equal(second.journeyBridges[0].toArtworkId,"mo01");
+    assert(second.journeyBridges[0].href.startsWith("/gallery-vr.html?"));
+    assert(second.journeyBridges[0].href.includes("journey=light-perception"));
+    assert(second.journeyBridges[0].href.includes("step=2"));
+    const final = await invoke({
+      nodeId:"mo01", environment:"vr", lang, journey:"light-perception",step:"2"
+    });
+    assert.equal(final.activeJourney?.complete,true);
+    assert.equal(final.journeyBridges.length,0);
+  }
+});
+
+test("journey parameters never authorize an unrelated or invented path", async () => {
+  const wrongStep = await invoke({nodeId:"ld01",lang:"fr",environment:"vr",journey:"light-perception",step:"2"});
+  assert.equal(wrongStep.activeJourney,null);
+  const unknown = await invoke({nodeId:"ld01",lang:"fr",environment:"vr",journey:"invented",step:"0"});
+  assert.equal(unknown.activeJourney,null);
+  const unrelated = await invoke({nodeId:"mo01",lang:"fr",environment:"vr",journey:"gaze-presence",step:"2"});
+  assert.equal(unrelated.activeJourney,null);
+  const special = await invoke({nodeId:"ve01",lang:"fr",environment:"vr",journey:"color-gesture",step:"0"});
+  assert.equal(special.journeyBridges.length,1);
+  assert.equal(special.journeyBridges[0].toArtworkId,"vg01");
+  assert(special.journeyBridges[0].sharedConcepts.some(x=>x.id==="concept.color"));
+});
+
+test("the existing UI and immersive viewers carry the journey without duplicate controls", async () => {
+  const [ui,vr,html,viewer,client,gallery] = await Promise.all([
+    text("scripts/semantics/semantic-ui.mjs"),
+    text("scripts/semantics/semantic-vr-constellation.mjs"),
+    text("vr.html"),
+    text("scripts/vr-viewer.js"),
+    text("scripts/semantics/semantic-runtime-client.mjs"),
+    text("scripts/gallery-vr.js")
+  ]);
+  assert(ui.includes("journeyImmersiveHref(experienceHref(step.immersive), journey.id, index)"));
+  assert(ui.includes("selectedJourney ?"));
+  assert(vr.includes("runtime.activeJourney?.title"));
+  assert(vr.includes("bridge.destinationStepIndex"));
+  assert(viewer.includes('journeyId: params.get("journey")'));
+  assert(viewer.includes('journeyStep: params.get("step")'));
+  assert(client.includes("runtime.activeJourney"));
+  assert(client.includes('journeyId:locationParams.get("journey")'));
+  assert(gallery.includes("returnLink.href ="));
+  assert(html.includes("vr-viewer.js?v=17"));
 });
