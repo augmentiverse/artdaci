@@ -1,0 +1,26 @@
+{
+  "id": "vincent-van-gogh-cafe-terrace-1888",
+  "slug": "cafe-terrace",
+  "bookOrder": 19,
+  "title": "Café Terrace at Night",
+  "artist": { "name": "Vincent van Gogh" },
+  "date": "1888",
+  "medium": "Oil on canvas",
+  "dimensions": {},
+  "currentLocation": { "museum": "Kröller-Müller Museum", "city": "Otterlo" },
+  "movement": ["Post-Impressionism"],
+  "media": { "image": "assets/artists/paintings_images/vangogh/vangogh_café-terrace.png" },
+  "print": { "chapter": "Post-Impressionism" },
+  "texts": {
+    "historicalContext": "Van Gogh painted an Arles café at night without relying on black to describe darkness.",
+    "artisticAnalysis": "The yellow terrace advances against the blue street and starry sky, making colour itself the subject.",
+    "composition": "A steep perspective draws the viewer past café tables into the narrow street.",
+    "palette": "Complementary yellow and blue create luminosity and nocturnal depth.",
+    "perspectiveTechnique": "Converging paving lines and flattened colour hold observation and expression together.",
+    "culturalSignificance": "The scene announces Van Gogh's distinctive vision of the night as vivid, inhabited and alive."
+  },
+  "localizations": {
+    "fr": { "title": "Terrasse du café le soir" },
+    "ar": { "title": "شرفة المقهى ليلاً" }
+  }
+}

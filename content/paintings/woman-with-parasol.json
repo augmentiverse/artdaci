@@ -1,0 +1,26 @@
+{
+  "id": "claude-monet-woman-with-parasol-1875",
+  "slug": "woman-with-parasol",
+  "bookOrder": 24,
+  "title": "Woman with a Parasol",
+  "artist": { "name": "Claude Monet" },
+  "date": "1875",
+  "medium": "Oil on canvas",
+  "dimensions": {},
+  "currentLocation": { "museum": "National Gallery of Art", "city": "Washington" },
+  "movement": ["Impressionism"],
+  "media": { "image": "assets/artists/paintings_images/monet/monet_woman-parasol.png" },
+  "print": { "chapter": "Impressionism" },
+  "texts": {
+    "historicalContext": "Monet painted Camille and their son Jean outdoors during a walk at Argenteuil.",
+    "artisticAnalysis": "The low viewpoint, moving veil and tilted parasol make the encounter feel immediate and windblown.",
+    "composition": "The standing figure rises against the sky while the child and sloping grass stabilize the lower field.",
+    "palette": "White fabric reflects blue, green and lavender shadows under a luminous clouded sky.",
+    "perspectiveTechnique": "Rapid brushwork and the low horizon preserve the sensation of a passing instant.",
+    "culturalSignificance": "The portrait-landscape unites family memory with Impressionism's commitment to outdoor light."
+  },
+  "localizations": {
+    "fr": { "title": "La Femme à l’ombrelle" },
+    "ar": { "title": "امرأة تحمل مظلة" }
+  }
+}
