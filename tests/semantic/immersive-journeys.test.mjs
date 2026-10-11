@@ -210,3 +210,70 @@ test("the existing UI and immersive viewers carry the journey without duplicate 
   assert(gallery.includes("returnLink.href ="));
   assert(html.includes("vr-viewer.js?v=17"));
 });
+
+
+test("Monet return signs appear inside WebXR and navigate through the existing exit targets", async () => {
+  const [gallery, html] = await Promise.all([
+    text("scripts/gallery-vr.js"), text("gallery-vr.html")
+  ]);
+  const begin = gallery.indexOf("function monetLearningJourneyReturnHref() {");
+  const end = gallery.indexOf("function addDaVinciDecor(", begin);
+  assert(begin >= 0 && end > begin);
+  const create = new Function(
+    "params", "isConnectedMuseum", "artistRoomId", "lang",
+    "ARTIST_ROOM_ORDER", "ARTIST_ROOMS", "text", "createWallSign", "makeVirtualGuideUrl",
+    gallery.slice(begin,end) +
+      "\nreturn { monetLearningJourneyReturnHref, addConnectedRoomNavigation };"
+  );
+  const rooms = ["da-vinci","vermeer","van-gogh","monet"];
+  const roomNames = Object.fromEntries(rooms.map((name) => [name,{name}]));
+  const copy = {
+    livingBook:"Book", cinemaEnter:"Cinema", modelsRoom:"Models", bedroomRoom:"Bedroom",
+    reimaginedRoom:"Reimagined", exitGallery:"Exit"
+  };
+  for (const lang of ["fr","en","ar"]) {
+    for (const journey of ["light-perception","color-gesture"]) {
+      const signs = [];
+      const controls = create(
+        { get:(key) => ({journey,step:"2"})[key] }, true, "monet", lang,
+        rooms,roomNames,copy,(label,pos,rotation,options) => {
+          const target = {label,position:pos,rotation,options};
+          signs.push(target);
+          return target;
+        },()=>"guide.html"
+      );
+      const url = controls.monetLearningJourneyReturnHref();
+      assert(url?.startsWith("semantic/?artwork=mo01&lang="+lang));
+      controls.addConnectedRoomNavigation("monet",48);
+      const returns = signs.filter((sign) =>
+        sign.name?.startsWith("semantic-monet-journey-return-"));
+      assert.equal(returns.length,2, lang+" "+journey);
+      assert(returns.every((sign) => sign.options.exitUrl === url));
+      assert(returns.some((sign) => sign.name.endsWith("-entry")));
+      assert(returns.some((sign) => sign.name.endsWith("-final")));
+      assert(returns.every((sign) => sign.options.width >= 2.7));
+    }
+  }
+  for (const [journey,step,artist,isConnectedMuseum] of [
+    ["light-perception","1","monet",true],
+    ["gaze-presence","2","monet",true],
+    ["light-perception","2","vermeer",true],
+    ["light-perception","2","monet",false]
+  ]) {
+    const signs = [];
+    const controls = create(
+      {get:(key) => ({journey,step})[key]},isConnectedMuseum,artist,"fr",
+      rooms,roomNames,copy,(label,pos,rotation,options) => {
+        const sign={label,position:pos,rotation,options};
+        signs.push(sign);
+        return sign;
+      },()=>"guide.html"
+    );
+    assert.equal(controls.monetLearningJourneyReturnHref(),null);
+    controls.addConnectedRoomNavigation("monet",48);
+    assert.equal(signs.filter((s) => s.name?.startsWith("semantic-monet-journey-return")).length,0);
+  }
+  assert(gallery.includes("teleportTargets.push(sign);"));
+  assert(gallery.includes("exitGallery(hit.object.userData.exitUrl)"));
+  assert(html.includes("gallery-vr.js?v=180"));
+});
