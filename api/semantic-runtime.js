@@ -599,9 +599,7 @@ module.exports = async function handler(req, res) {
       reviewHref: "/semantic/?artwork=" + encodeURIComponent(artworkId) +
         "&lang=" + encodeURIComponent(lang) + "&journey=" +
         encodeURIComponent(activeJourneyOut.id) +
-        "&step=" + activeJourneyOut.stepIndex,
-      exploreHref: "/semantic/?artwork=" + encodeURIComponent(artworkId) +
-        "&lang=" + encodeURIComponent(lang) + "&explore=journeys"
+        "&step=" + activeJourneyOut.stepIndex
     } : null;
     const guideOut = guideFor({
       focus,
