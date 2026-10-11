@@ -155,7 +155,7 @@ test("View of Delft MindAR configuration stages the exact requested target and i
   assert.equal(artwork.print.compiledMindTarget,compiledTarget);
   assert.equal(artwork.ar.primaryModel,MODELS.delft);
   assert(artwork.ar.modelVariants.some(model=>model.src===MODELS.delft));
-  assert.equal(artwork.ar.fallbackImage,"assets/artists/johannes-vermeer/collection/view-of-delft-vermeer.webp");
+  assert.equal(artwork.ar.fallbackImage,targetImage);
   assert.equal(manifest.media.ar.target.path,"ar/view-of-delft.mind");
   assert.equal(manifest.media.images["tracking-source"].path,"images/ve02-view-of-delft-web.webp");
   for(const asset of [manifest.media.ar.target,manifest.media.images["tracking-source"]]){
