@@ -271,8 +271,19 @@ async function configureViewer(manifest, mediaContext) {
     document.getElementById("ios-note").hidden = false;
   }
 
-  document.getElementById("image-ar-link").href = `ar.html?${resourceType}=${slug}&lang=${lang}`;
+  const imageArLink = document.getElementById("image-ar-link");
+  const individualVrLink = document.getElementById("vr-link");
+  imageArLink.href = `ar.html?${resourceType}=${slug}&lang=${lang}`;
   updateVrLink(0);
+  if (slug === "view-of-delft") {
+    // This artwork has a verified 3D model for Space AR, but no image
+    // tracking target or individual VR route. Do not offer broken actions.
+    imageArLink.hidden = true;
+    imageArLink.style.display = "none";
+    individualVrLink.hidden = true;
+    individualVrLink.style.display = "none";
+    document.getElementById("vr-gallery-link").href = `gallery-vr.html?artist=vermeer&lang=${lang}`;
+  }
   document.getElementById("print-link").href = PRINT_PAGES[lang]?.[slug] || "index.html";
   renderModelVariantControls(model, modelVariants, usdz, mediaContext);
   renderExperienceActions(audioOverviewUrl);
