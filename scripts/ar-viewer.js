@@ -48,7 +48,8 @@ const PAINTINGS = {
   "van-gogh": "content/paintings/van-gogh.json?v=3",
   "van-gogh-jo": "content/people/van-gogh-jo.json?v=1",
   "van-gogh-bedroom": "content/paintings/van-gogh-bedroom.json",
-  "vermeer-girl-with-a-pearl-earring": "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=3"
+  "vermeer-girl-with-a-pearl-earring": "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=3",
+  "view-of-delft": "content/paintings/view-of-delft.json?v=2"
 };
 
 const MUSEUMS = {

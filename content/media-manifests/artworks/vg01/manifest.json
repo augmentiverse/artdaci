@@ -166,6 +166,22 @@
         "migrationStatus": "published",
         "bytes": 26303316,
         "sha256": "2ddc4e7903a02bb9e26db176921b1bfb2ed2413426451e83f03b50cd3da7f2ff"
+      },
+      "portrait-2026": {
+        "scope": "artwork",
+        "path": "models/van-gogh_self-portrait.glb",
+        "mimeType": "model/gltf-binary",
+        "available": false,
+        "migrationStatus": "planned",
+        "bytes": 2782692
+      },
+      "standing-2026": {
+        "scope": "artwork",
+        "path": "models/van-gogh_standing.glb",
+        "mimeType": "model/gltf-binary",
+        "available": false,
+        "migrationStatus": "planned",
+        "bytes": 4562864
       }
     },
     "ar": {

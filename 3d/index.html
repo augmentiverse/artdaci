@@ -94,7 +94,7 @@
         <section class="d3-group" aria-labelledby="d3-artworks-title">
           <div class="d3-group-head">
             <h3 id="d3-artworks-title">Artworks & interpretations</h3>
-            <span>3 models</span>
+            <span>6 models</span>
           </div>
           <div class="d3-grid">
             <button
@@ -131,6 +131,26 @@
               <span>Vincent van Gogh</span>
               <strong>The Bedroom</strong>
               <small>Spatial reconstruction inspired by Van Gogh's Arles bedroom.</small>
+            </button>
+            <button class="d3-model-choice" type="button" aria-current="false"
+              data-category="Artwork interpretation" data-title="Self-Portrait — 3D interpretation"
+              data-src="../assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh_self-portrait.glb">
+              <span>Vincent van Gogh</span><strong>Self-Portrait</strong>
+              <small>The 1889 self-portrait as a 3D model.</small>
+            </button>
+
+            <button class="d3-model-choice" type="button" aria-current="false"
+              data-category="Artwork interpretation" data-title="Girl with a Pearl Earring — standing figure"
+              data-src="../assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/girl-pearl_standing.glb">
+              <span>Johannes Vermeer</span><strong>Girl with a Pearl Earring — standing</strong>
+              <small>Full standing-figure interpretation for spatial placement.</small>
+            </button>
+
+            <button class="d3-model-choice" type="button" aria-current="false"
+              data-category="Artwork interpretation" data-title="View of Delft — 3D interpretation"
+              data-src="../assets/artists/johannes-vermeer/artworks/view_of_delft/models/view-of-delft.glb">
+              <span>Johannes Vermeer</span><strong>View of Delft</strong>
+              <small>Three-dimensional interpretation of the Delft cityscape.</small>
             </button>
           </div>
         </section>
@@ -171,7 +191,7 @@
               aria-current="false"
               data-category="Master figure"
               data-title="Vincent van Gogh — standing figure"
-              data-src="../assets/artists/vincent-van-gogh/profile/models/standing.glb">
+              data-src="../assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh_standing.glb">
               <span>Master figure</span>
               <strong>Vincent van Gogh</strong>
               <small>Lightweight standing model for spatial experiences.</small>
@@ -280,6 +300,6 @@
       </footer>
     </main>
 
-    <script type="module" src="../scripts/3d-collection.js?v=1"></script>
+    <script type="module" src="../scripts/3d-collection.js?v=2"></script>
   </body>
 </html>

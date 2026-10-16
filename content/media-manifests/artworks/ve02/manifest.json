@@ -29,7 +29,15 @@
   "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
   "cachePolicy": "no-store",
   "media": {
-    "images": {},
+    "images": {
+      "tracking-source": {
+        "scope": "artwork",
+        "path": "images/ve02-view-of-delft-web.webp",
+        "mimeType": "image/webp",
+        "available": false,
+        "migrationStatus": "planned"
+      }
+    },
     "audio": {
       "overview": {
         "en": {
@@ -65,8 +73,25 @@
       }
     },
     "videos": {},
-    "models": {},
-    "ar": {}
+    "models": {
+      "delft-2026": {
+        "scope": "artwork",
+        "path": "models/view-of-delft.glb",
+        "mimeType": "model/gltf-binary",
+        "available": false,
+        "migrationStatus": "planned",
+        "bytes": 3118640
+      }
+    },
+    "ar": {
+      "target": {
+        "scope": "artwork",
+        "path": "ar/view-of-delft.mind",
+        "mimeType": "application/octet-stream",
+        "available": false,
+        "migrationStatus": "planned"
+      }
+    }
   },
   "updatedAt": "2026-09-23"
 }

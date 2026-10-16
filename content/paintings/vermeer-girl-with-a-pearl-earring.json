@@ -12,9 +12,15 @@
     "bioLong": "Working in Delft during the Dutch Golden Age, Vermeer produced a small body of paintings distinguished by controlled composition, optical subtlety, and costly pigments. His reputation was revived in the nineteenth century, and his enigmatic figures are now central to the history of European painting."
   },
   "date": "c. 1665",
-  "movement": ["Dutch Golden Age", "Baroque"],
+  "movement": [
+    "Dutch Golden Age",
+    "Baroque"
+  ],
   "medium": "Oil on canvas",
-  "dimensions": { "heightCm": 44.5, "widthCm": 39 },
+  "dimensions": {
+    "heightCm": 44.5,
+    "widthCm": 39
+  },
   "currentLocation": {
     "museum": "Mauritshuis",
     "city": "The Hague",
@@ -55,22 +61,128 @@
     ]
   },
   "timeline": [
-    { "year": 1632, "label": "Johannes Vermeer is born in Delft.", "type": "artist" },
-    { "year": 1653, "label": "Vermeer joins the Guild of Saint Luke and begins his career as a master painter.", "type": "artist" },
-    { "year": 1665, "label": "Around this year, Vermeer paints Girl with a Pearl Earring.", "type": "artwork" },
-    { "year": 1675, "label": "Vermeer dies in Delft at age 43.", "type": "artist" },
-    { "year": 1881, "label": "The neglected painting is purchased at auction for two guilders and thirty cents.", "type": "artwork" },
-    { "year": 1902, "label": "The painting enters the Mauritshuis collection in The Hague.", "type": "artwork" },
-    { "year": 1994, "label": "A major restoration is conducted in public view during Vermeer Illuminated.", "type": "conservation" },
-    { "year": 2018, "label": "The Girl in the Spotlight project examines the painting with non-invasive scientific imaging.", "type": "conservation" },
-    { "year": 1999, "label": "Tracy Chevalier publishes the novel Girl with a Pearl Earring.", "type": "legacy" }
+    {
+      "year": 1632,
+      "label": "Johannes Vermeer is born in Delft.",
+      "type": "artist"
+    },
+    {
+      "year": 1653,
+      "label": "Vermeer joins the Guild of Saint Luke and begins his career as a master painter.",
+      "type": "artist"
+    },
+    {
+      "year": 1665,
+      "label": "Around this year, Vermeer paints Girl with a Pearl Earring.",
+      "type": "artwork"
+    },
+    {
+      "year": 1675,
+      "label": "Vermeer dies in Delft at age 43.",
+      "type": "artist"
+    },
+    {
+      "year": 1881,
+      "label": "The neglected painting is purchased at auction for two guilders and thirty cents.",
+      "type": "artwork"
+    },
+    {
+      "year": 1902,
+      "label": "The painting enters the Mauritshuis collection in The Hague.",
+      "type": "artwork"
+    },
+    {
+      "year": 1994,
+      "label": "A major restoration is conducted in public view during Vermeer Illuminated.",
+      "type": "conservation"
+    },
+    {
+      "year": 2018,
+      "label": "The Girl in the Spotlight project examines the painting with non-invasive scientific imaging.",
+      "type": "conservation"
+    },
+    {
+      "year": 1999,
+      "label": "Tracy Chevalier publishes the novel Girl with a Pearl Earring.",
+      "type": "legacy"
+    }
   ],
   "hotspots": [
-    { "id": "gaze", "label": "The Gaze", "position2D": [0.42, 0.37], "position3D": [-0.08, 0.16, 0.05], "category": "observation", "body": "The eyes meet the viewer at the moment the girl turns, creating an encounter that feels intimate but never explains itself." },
-    { "id": "pearl", "label": "The Earring", "position2D": [0.58, 0.57], "position3D": [0.12, -0.02, 0.06], "category": "technique", "body": "A few light strokes suggest the entire earring. It has no contour or visible hook; reflected light and the dark surrounding tone make it appear round. Its size and metallic reflection have led some researchers to suggest polished tin rather than a real pearl." },
-    { "id": "turban", "label": "Blue and Yellow Turban", "position2D": [0.48, 0.2], "position3D": [0, 0.3, 0.04], "category": "palette", "body": "The fanciful headcloth identifies the work as a tronie. Its ultramarine blue and yellow folds create the painting's strongest color contrast." },
-    { "id": "lips", "label": "Parted Lips", "position2D": [0.4, 0.48], "position3D": [-0.08, 0.04, 0.06], "category": "technique", "body": "Moist highlights and softened edges make the lips seem about to speak, intensifying the sense of a fleeting moment." },
-    { "id": "background", "label": "The Hidden Green Curtain", "position2D": [0.16, 0.3], "position3D": [-0.28, 0.16, 0.01], "category": "conservation", "body": "The background now appears almost black, but technical study detected a once-visible translucent green curtain whose pigments and glaze have altered over time." }
+    {
+      "id": "gaze",
+      "label": "The Gaze",
+      "position2D": [
+        0.42,
+        0.37
+      ],
+      "position3D": [
+        -0.08,
+        0.16,
+        0.05
+      ],
+      "category": "observation",
+      "body": "The eyes meet the viewer at the moment the girl turns, creating an encounter that feels intimate but never explains itself."
+    },
+    {
+      "id": "pearl",
+      "label": "The Earring",
+      "position2D": [
+        0.58,
+        0.57
+      ],
+      "position3D": [
+        0.12,
+        -0.02,
+        0.06
+      ],
+      "category": "technique",
+      "body": "A few light strokes suggest the entire earring. It has no contour or visible hook; reflected light and the dark surrounding tone make it appear round. Its size and metallic reflection have led some researchers to suggest polished tin rather than a real pearl."
+    },
+    {
+      "id": "turban",
+      "label": "Blue and Yellow Turban",
+      "position2D": [
+        0.48,
+        0.2
+      ],
+      "position3D": [
+        0,
+        0.3,
+        0.04
+      ],
+      "category": "palette",
+      "body": "The fanciful headcloth identifies the work as a tronie. Its ultramarine blue and yellow folds create the painting's strongest color contrast."
+    },
+    {
+      "id": "lips",
+      "label": "Parted Lips",
+      "position2D": [
+        0.4,
+        0.48
+      ],
+      "position3D": [
+        -0.08,
+        0.04,
+        0.06
+      ],
+      "category": "technique",
+      "body": "Moist highlights and softened edges make the lips seem about to speak, intensifying the sense of a fleeting moment."
+    },
+    {
+      "id": "background",
+      "label": "The Hidden Green Curtain",
+      "position2D": [
+        0.16,
+        0.3
+      ],
+      "position3D": [
+        -0.28,
+        0.16,
+        0.01
+      ],
+      "category": "conservation",
+      "body": "The background now appears almost black, but technical study detected a once-visible translucent green curtain whose pigments and glaze have altered over time."
+    }
   ],
   "ar": {
     "startMode": "painting-emergence",
@@ -78,41 +190,179 @@
     "compiledTarget": "assets/targets/vermeer_Girl-with-a-Pearl-Earring.mind",
     "primaryModel": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring.glb",
     "modelVariants": [
-      { "id": "portrait", "label": { "en": "Portrait", "fr": "Portrait" }, "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring.glb" },
-      { "id": "sitting", "label": { "en": "Sitting figure", "fr": "Figure assise" }, "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring-sitting-c.glb" }
+      {
+        "id": "portrait",
+        "label": {
+          "en": "Portrait",
+          "fr": "Portrait"
+        },
+        "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring.glb"
+      },
+      {
+        "id": "sitting",
+        "label": {
+          "en": "Sitting figure",
+          "fr": "Figure assise"
+        },
+        "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring-sitting-c.glb"
+      },
+      {
+        "id": "standing",
+        "label": {
+          "en": "Standing figure",
+          "fr": "Figure debout",
+          "ar": "شخصية واقفة"
+        },
+        "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/girl-pearl_standing.glb"
+      }
     ],
-    "viewer": { "initialScale": 0.34, "initialRise": 0.14, "modelRotation": { "x": 0, "y": 0, "z": 0 } },
-    "availableModes": ["painting-emergence", "artist", "history", "hidden-details", "brushstrokes", "ask-guide"]
+    "viewer": {
+      "initialScale": 0.34,
+      "initialRise": 0.14,
+      "modelRotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    "availableModes": [
+      "painting-emergence",
+      "artist",
+      "history",
+      "hidden-details",
+      "brushstrokes",
+      "ask-guide"
+    ]
   },
   "media": {
     "image": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg",
     "model": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring.glb",
     "modelVariants": [
-      { "id": "portrait", "label": { "en": "Portrait", "fr": "Portrait" }, "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring.glb" },
-      { "id": "sitting", "label": { "en": "Sitting figure", "fr": "Figure assise" }, "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring-sitting-c.glb" }
+      {
+        "id": "portrait",
+        "label": {
+          "en": "Portrait",
+          "fr": "Portrait"
+        },
+        "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring.glb"
+      },
+      {
+        "id": "sitting",
+        "label": {
+          "en": "Sitting figure",
+          "fr": "Figure assise"
+        },
+        "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring-sitting-c.glb"
+      },
+      {
+        "id": "standing",
+        "label": {
+          "en": "Standing figure",
+          "fr": "Figure debout",
+          "ar": "شخصية واقفة"
+        },
+        "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/girl-pearl_standing.glb"
+      }
     ],
     "audioGuides": [
-      { "id": "vermeer-pearl-audio-en", "lang": "en", "title": "Girl with a Pearl Earring", "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/media/vermeer-girl-with-a-pearl-earring-en.mp3", "type": "audio/mpeg", "description": "English audio guide for the image AR experience." },
-      { "id": "vermeer-pearl-audio-fr", "lang": "fr", "title": "La Jeune Fille à la perle", "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/media/vermeer-girl-with-a-pearl-earring-1m54-fr.m4a", "type": "audio/mp4", "description": "Présentation audio brève en français pour l’expérience AR sur image." }
+      {
+        "id": "vermeer-pearl-audio-en",
+        "lang": "en",
+        "title": "Girl with a Pearl Earring",
+        "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/media/vermeer-girl-with-a-pearl-earring-en.mp3",
+        "type": "audio/mpeg",
+        "description": "English audio guide for the image AR experience."
+      },
+      {
+        "id": "vermeer-pearl-audio-fr",
+        "lang": "fr",
+        "title": "La Jeune Fille à la perle",
+        "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/media/vermeer-girl-with-a-pearl-earring-1m54-fr.m4a",
+        "type": "audio/mp4",
+        "description": "Présentation audio brève en français pour l’expérience AR sur image."
+      }
     ],
     "videos": [
-      { "id": "vermeer-pearl-animation", "title": "Girl with a Pearl Earring Animation", "src": "assets/animations/artdaci-girl-pearl-earring_animation.mp4", "type": "video/mp4", "description": "Animation displayed beneath the 3D model when the printed painting is recognized." }
+      {
+        "id": "vermeer-pearl-animation",
+        "title": "Girl with a Pearl Earring Animation",
+        "src": "assets/animations/artdaci-girl-pearl-earring_animation.mp4",
+        "type": "video/mp4",
+        "description": "Animation displayed beneath the 3D model when the printed painting is recognized."
+      }
     ],
-    "subtitles": [], "signLanguage": [], "imageCredits": [],
+    "subtitles": [],
+    "signLanguage": [],
+    "imageCredits": [],
     "audioOverviews": [
-      { "id": "vermeer-pearl-overview-en", "lang": "en", "title": "Girl with a Pearl Earring audio overview", "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/media/vermeer-girl-with-a-pearl-earring-en.mp3", "type": "audio/mpeg", "description": "English audio overview." },
-      { "id": "vermeer-pearl-overview-fr", "lang": "fr", "title": "Aperçu audio de La Jeune Fille à la perle", "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/media/vermeer-girl-with-a-pearl-earring-fr.mp3", "type": "audio/mpeg", "description": "Présentation audio en français." }
+      {
+        "id": "vermeer-pearl-overview-en",
+        "lang": "en",
+        "title": "Girl with a Pearl Earring audio overview",
+        "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/media/vermeer-girl-with-a-pearl-earring-en.mp3",
+        "type": "audio/mpeg",
+        "description": "English audio overview."
+      },
+      {
+        "id": "vermeer-pearl-overview-fr",
+        "lang": "fr",
+        "title": "Aperçu audio de La Jeune Fille à la perle",
+        "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/media/vermeer-girl-with-a-pearl-earring-fr.mp3",
+        "type": "audio/mpeg",
+        "description": "Présentation audio en français."
+      }
     ]
   },
   "education": {
-    "ageBands": ["8-11", "12-15", "16-18", "university"],
-    "learningObjectives": ["Explain what a tronie is.", "Analyze how Vermeer creates an encounter through gaze and pose.", "Describe how highlights suggest the pearl.", "Connect pigment choice and conservation to the painting's changing appearance."],
-    "quiz": [
-      { "question": "What type of painting is Girl with a Pearl Earring?", "answers": ["A tronie", "A landscape", "A history painting", "A group portrait"], "correctAnswer": "A tronie" },
-      { "question": "Which costly blue pigment did Vermeer use?", "answers": ["Natural ultramarine", "Prussian blue", "Cobalt blue", "Cerulean blue"], "correctAnswer": "Natural ultramarine" }
+    "ageBands": [
+      "8-11",
+      "12-15",
+      "16-18",
+      "university"
     ],
-    "vocabulary": ["tronie", "Dutch Golden Age", "ultramarine", "glaze", "highlight", "camera obscura", "conservation imaging"],
-    "discussionPrompts": ["How does the turned pose change your relationship to the figure?", "Why can a few strokes look like a pearl?", "Does not knowing the sitter's identity make the painting more or less powerful?", "How should scientific discoveries change the way a museum presents an old painting?"]
+    "learningObjectives": [
+      "Explain what a tronie is.",
+      "Analyze how Vermeer creates an encounter through gaze and pose.",
+      "Describe how highlights suggest the pearl.",
+      "Connect pigment choice and conservation to the painting's changing appearance."
+    ],
+    "quiz": [
+      {
+        "question": "What type of painting is Girl with a Pearl Earring?",
+        "answers": [
+          "A tronie",
+          "A landscape",
+          "A history painting",
+          "A group portrait"
+        ],
+        "correctAnswer": "A tronie"
+      },
+      {
+        "question": "Which costly blue pigment did Vermeer use?",
+        "answers": [
+          "Natural ultramarine",
+          "Prussian blue",
+          "Cobalt blue",
+          "Cerulean blue"
+        ],
+        "correctAnswer": "Natural ultramarine"
+      }
+    ],
+    "vocabulary": [
+      "tronie",
+      "Dutch Golden Age",
+      "ultramarine",
+      "glaze",
+      "highlight",
+      "camera obscura",
+      "conservation imaging"
+    ],
+    "discussionPrompts": [
+      "How does the turned pose change your relationship to the figure?",
+      "Why can a few strokes look like a pearl?",
+      "Does not knowing the sitter's identity make the painting more or less powerful?",
+      "How should scientific discoveries change the way a museum presents an old painting?"
+    ]
   },
   "rights": {
     "publicDomainStatus": "Artwork is public domain; reproduction and model rights must be verified for production use.",
@@ -120,5 +370,9 @@
     "assetRestrictions": "Confirm source and reproduction requirements before commercial publication.",
     "creditLine": "Johannes Vermeer, Girl with a Pearl Earring, c. 1665."
   },
-  "references": ["Mauritshuis collection materials", "Technical research from the Girl in the Spotlight project", "Standard Vermeer and Dutch Golden Age scholarship"]
+  "references": [
+    "Mauritshuis collection materials",
+    "Technical research from the Girl in the Spotlight project",
+    "Standard Vermeer and Dutch Golden Age scholarship"
+  ]
 }

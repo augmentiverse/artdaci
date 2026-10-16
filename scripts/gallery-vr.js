@@ -81,7 +81,8 @@ const GALLERY_IMAGES = {
 };
 
 const GALLERY_MODEL_OVERRIDES = {
-  "van-gogh-bedroom": "assets/artists/vincent-van-gogh/artworks/the-bedroom/models/bed.glb"
+  "van-gogh-bedroom": "assets/artists/vincent-van-gogh/artworks/the-bedroom/models/bed.glb",
+  "view-of-delft": "assets/artists/johannes-vermeer/artworks/view_of_delft/models/view-of-delft.glb"
 };
 
 // Optional furniture exhibits can be restored here when their GLB assets are present.
@@ -111,7 +112,7 @@ const MODEL_ARTIST_EXHIBITS = {
     { title: { en: "Leonardo and Francis I", fr: "Léonard et François Ier", ar: "ليوناردو وفرنسوا الأول" }, src: "assets/artists/leonardo-da-vinci/reimagined/models/davinci-françois1er.glb", rotationY: Math.PI }
   ],
   "van-gogh": [
-    { title: { en: "Vincent van Gogh", fr: "Vincent van Gogh" }, src: "assets/artists/vincent-van-gogh/profile/models/standing.glb", rotationY: Math.PI },
+    { title: { en: "Vincent van Gogh", fr: "Vincent van Gogh" }, src: "assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh_standing.glb", rotationY: Math.PI },
     { title: { en: "Jo van Gogh-Bonger", fr: "Jo van Gogh-Bonger", ar: "جو فان غوخ-بونغر" }, src: "assets/artists/vincent-van-gogh/supporters/models/van-gogh-jo-c.glb", rotationY: Math.PI }
   ],
   vermeer: [
@@ -126,7 +127,7 @@ const MODEL_ARTIST_EXHIBITS = {
   ]
 };
 
-const STANDING_VAN_GOGH_MODEL = "assets/artists/vincent-van-gogh/artworks/self-portrait/models/vangogh-istanding.glb";
+const STANDING_VAN_GOGH_MODEL = "assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh_standing.glb";
 const PAINTINGS_MODELS_GATEWAY = null;
 const LOUVRE_MONA_LISA_TABLEAU_MODEL = "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/monalisa-tableau-c.glb";
 const CINEMA_SOFA_MODEL = "assets/environments/gallery/models/sofa_c.glb";
@@ -6339,7 +6340,7 @@ async function addCinemaAudienceModels(cinema) {
       rotationY: Math.atan2(2.05, 6.55)
     },
     {
-      src: "assets/artists/vincent-van-gogh/profile/models/standing.glb",
+      src: "assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh_standing.glb",
       name: "cinema-sofa-right-van-gogh",
       x: 2.65,
       y: 0,

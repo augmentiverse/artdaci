@@ -25,7 +25,7 @@ test('all four artist guides are available with intact validated GLBs and exactl
   assert.equal(vermeer.model.status,'available');assert.equal(vermeerModelPath,'assets/artists/johannes-vermeer/reimagined/models/vermeer_standing.glb');
   assert.equal(createHash('sha256').update(readFileSync(new URL(vermeerModelPath,root))).digest('hex'),'0aec3f317abeb2078330cdab4d6e5b064ff20de0a752d96b8ac4ec85f1e60945');
   assert.deepEqual(vermeer.works,['ve01','ve05','ve02']);
-  assert.equal(vangogh.model.status,'available');assert.equal(vangoghModelPath,'assets/artists/vincent-van-gogh/profile/models/standing.glb');
+  assert.equal(vangogh.model.status,'available');assert.equal(vangoghModelPath,'assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh_standing.glb');
   assert.equal(createHash('sha256').update(readFileSync(new URL(vangoghModelPath,root))).digest('hex'),'e3591f493ad1f6fdc99c56fc2e39d38e5b936deb162ce10acd61f2529fa25e1f');
   assert.deepEqual(vangogh.works,['vg01','vg02','vg03']);
   assert.equal(monet.model.status,'available');assert.equal(monetModelPath,'assets/artists/claude-monet/reimagined/models/claude-monet-standing-c.glb');
