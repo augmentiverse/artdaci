@@ -8,8 +8,26 @@
   "medium": "Oil on canvas",
   "dimensions": { "heightCm": 96.5, "widthCm": 115.7 },
   "currentLocation": { "museum": "Mauritshuis", "city": "The Hague", "country": "Netherlands" },
-  "print": { "chapter": "Dutch Golden Age", "imageTargetSource": "assets/artists/johannes-vermeer/collection/view-of-delft-vermeer.webp" },
-  "media": { "image": "assets/artists/johannes-vermeer/collection/view-of-delft-vermeer.webp" },
+  "print": {
+    "chapter": "Dutch Golden Age",
+    "imageTargetSource": "assets/artists/johannes-vermeer/artworks/view_of_delft/images/ve02-view-of-delft-web.webp",
+    "compiledMindTarget": "assets/targets/view-of-delft.mind"
+  },
+  "media": {
+    "image": "assets/artists/johannes-vermeer/artworks/view_of_delft/images/ve02-view-of-delft-web.webp",
+    "model": "assets/artists/johannes-vermeer/artworks/view_of_delft/models/view-of-delft.glb",
+    "modelVariants": [
+      {
+        "id": "delft",
+        "label": {
+          "en": "View of Delft — 3D",
+          "fr": "Vue de Delft — 3D",
+          "ar": "منظر دلفت — ثلاثي الأبعاد"
+        },
+        "src": "assets/artists/johannes-vermeer/artworks/view_of_delft/models/view-of-delft.glb"
+      }
+    ]
+  },
   "texts": {
     "historicalContext": "Vermeer painted Delft around 1660–1661, looking toward the city from the south. He turned a familiar urban prospect into a carefully ordered meditation on light, weather and civic identity.",
     "artistBiography": "Johannes Vermeer worked in Delft and produced a small body of paintings renowned for controlled composition, luminous colour and optical subtlety.",
@@ -23,5 +41,36 @@
   "localizations": {
     "fr": { "title": "Vue de Delft" },
     "ar": { "title": "منظر دلفت" }
+  },
+  "ar": {
+    "startMode": "painting-emergence",
+    "imageTarget": "assets/artists/johannes-vermeer/artworks/view_of_delft/images/ve02-view-of-delft-web.webp",
+    "compiledTarget": "assets/targets/view-of-delft.mind",
+    "primaryModel": "assets/artists/johannes-vermeer/artworks/view_of_delft/models/view-of-delft.glb",
+    "modelVariants": [
+      {
+        "id": "delft",
+        "label": {
+          "en": "View of Delft — 3D",
+          "fr": "Vue de Delft — 3D",
+          "ar": "منظر دلفت — ثلاثي الأبعاد"
+        },
+        "src": "assets/artists/johannes-vermeer/artworks/view_of_delft/models/view-of-delft.glb"
+      }
+    ],
+    "viewer": {
+      "initialScale": 0.32,
+      "initialRise": 0.14,
+      "modelRotation": { "x": 0, "y": 0, "z": 0 }
+    },
+    "fallbackImage": "assets/artists/johannes-vermeer/artworks/view_of_delft/images/ve02-view-of-delft-web.webp",
+    "availableModes": [
+      "painting-emergence",
+      "artist",
+      "history",
+      "hidden-details",
+      "brushstrokes",
+      "ask-guide"
+    ]
   }
 }

@@ -57,6 +57,12 @@ test("known unsupported canonical artwork and unknown slug are distinguished wit
   assert.equal(await classifyUnresolvedArtworkRoute("anything", async () => { throw new TypeError("network"); }), "unknown");
 });
 
+test("View of Delft supports Image AR and Space AR without claiming an individual VR viewer", () => {
+  assert.equal(resolveImmersiveArtworkRoute("ve02", "ar")?.runtimeSlug, "view-of-delft");
+  assert.equal(resolveImmersiveArtworkRoute("view-of-delft", "space")?.artworkId, "ve02");
+  assert.equal(resolveImmersiveArtworkRoute("ve02", "vr"), null);
+});
+
 test("catalogue exposes immersive actions only for supported artworks in EN, FR and AR", () => {
   const labels = {
     en: { ar: "Image AR", space: "Room AR" },
@@ -107,7 +113,7 @@ test("AR unavailable routes leave the localized Back link above a non-interactiv
   assert.match(iconLink, /pointer-events:\s*auto;/);
   assert.doesNotMatch(loadingScreen, /pointer-events:\s*none;/);
   assert.match(html, /<button id="start-ar"(?![^>]*\bdisabled\b)/);
-  assert.match(html, /<script type="module" src="scripts\/ar-viewer\.js\?v=55"><\/script>/);
+  assert.match(html, /<script type="module" src="scripts\/ar-viewer\.js\?v=60"><\/script>/);
 });
 
 test("AR artwork numbers use canonical bookOrder with localized three-digit labels", () => {

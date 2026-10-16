@@ -1,6 +1,7 @@
 export const IMMERSIVE_ARTWORKS = Object.freeze([
   Object.freeze({ id: "ld01", slug: "mona-lisa", runtimeSlug: "mona-lisa", aliases: [], ar: true, space: true, vr: true }),
   Object.freeze({ id: "ve01", slug: "girl-with-a-pearl-earring", runtimeSlug: "vermeer-girl-with-a-pearl-earring", aliases: ["vermeer-girl-with-a-pearl-earring"], ar: true, space: true, vr: true }),
+  Object.freeze({ id: "ve02", slug: "view-of-delft", runtimeSlug: "view-of-delft", aliases: [], ar: true, space: true, vr: false }),
   Object.freeze({ id: "vg01", slug: "self-portrait", runtimeSlug: "van-gogh", aliases: ["van-gogh"], ar: true, space: true, vr: true }),
   Object.freeze({ id: "vg02", slug: "bedroom-in-arles", runtimeSlug: "van-gogh-bedroom", aliases: ["van-gogh-bedroom"], ar: true, space: true, vr: true })
 ]);

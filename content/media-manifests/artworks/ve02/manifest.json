@@ -29,7 +29,17 @@
   "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
   "cachePolicy": "no-store",
   "media": {
-    "images": {},
+    "images": {
+      "tracking-source": {
+        "scope": "artwork",
+        "path": "images/ve02-view-of-delft-web.webp",
+        "mimeType": "image/webp",
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 98008,
+        "sha256": "828ddd6ee4612320978c3d485a4002f749634ab3b9951917405af2c829a46d50"
+      }
+    },
     "audio": {
       "overview": {
         "en": {
@@ -65,8 +75,28 @@
       }
     },
     "videos": {},
-    "models": {},
-    "ar": {}
+    "models": {
+      "delft-2026": {
+        "scope": "artwork",
+        "path": "models/view-of-delft.glb",
+        "mimeType": "model/gltf-binary",
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 3118640,
+        "sha256": "2a43492d2968d1371ac606714ebb17602bdb2e38a2913041c553d818b71ebe2f"
+      }
+    },
+    "ar": {
+      "target": {
+        "scope": "artwork",
+        "path": "ar/view-of-delft.mind",
+        "mimeType": "application/octet-stream",
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 561730,
+        "sha256": "112684ff6ceb17b075d51daa48e48ec21cc9d0b2a362f0da267f7b11364f6dcb"
+      }
+    }
   },
-  "updatedAt": "2026-09-23"
+  "updatedAt": "2026-10-16"
 }
