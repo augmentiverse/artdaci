@@ -19,7 +19,28 @@ test("homepage hero exposes the local ARTDACI 3D book in every language", async 
     assert.match(html, /vendor\/model-viewer\.min\.js\?v=3\.5\.0/);
     assert.match(html, new RegExp(`<model-viewer[\\s\\S]*?src="${modelPath}"[\\s\\S]*?auto-rotate`));
     assert.match(html, /class="hv2-book-model"/);
+    assert.match(html, /rotation-per-second="6deg"/);
+    assert.match(html, /loading="lazy"/);
     assert.doesNotMatch(html, /class="hv2-art-wall"/);
+  }
+});
+
+test("homepage uses the blue theme and a compact responsive 3D hero", async () => {
+  const css = await read("styles/home-v2-adjustments.css");
+
+  assert.match(css, /--hv2-bg:\s*#06192b/);
+  assert.match(css, /--hv2-gold:\s*#70c5ef/);
+  assert.match(css, /\.home-v2 \.hv2-book-hero\s*\{[\s\S]*?width:\s*min\(100%, 410px\);[\s\S]*?min-height:\s*360px/);
+  assert.match(css, /\.home-v2 \.hv2-book-model\s*\{[\s\S]*?height:\s*330px/);
+  assert.match(css, /@media \(max-width: 420px\)[\s\S]*?font-size:\s*clamp\(36px, 11\.6vw, 48px\)/);
+  assert.match(css, /\.home-v2 \.hv2-hero-copy\s*\{[\s\S]*?min-width:\s*0;[\s\S]*?max-width:\s*100%/);
+  assert.match(css, /@media \(max-width: 780px\)[\s\S]*?grid-template-columns:\s*minmax\(0, 1fr\)/);
+  assert.match(css, /width:\s*calc\(100% - 24px\);[\s\S]*?max-width:\s*1440px/);
+
+  for (const file of pages) {
+    const html = await read(file);
+    assert.match(html, /<meta name="theme-color" content="#06192b" \/>/);
+    assert.match(html, /styles\/home-v2-adjustments\.css\?v=4/);
   }
 });
 

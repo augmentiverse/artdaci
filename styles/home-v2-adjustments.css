@@ -690,3 +690,300 @@ html[lang="ar"] .home-v2 .hv2-continuum-step::after {
     content: "←";
   }
 }
+
+/* Blue editorial theme and a quieter 3D hero.
+   This layer intentionally keeps the existing layout and content architecture. */
+.home-v2 {
+  --hv2-bg: #06192b;
+  --hv2-bg-soft: #0b2742;
+  --hv2-panel: #103552;
+  --hv2-paper: #edf7fc;
+  --hv2-paper-soft: #dceef7;
+  --hv2-ink: #09243b;
+  --hv2-text: #f4faff;
+  --hv2-muted: #abc5d8;
+  --hv2-gold: #70c5ef;
+  --hv2-gold-soft: #3d94c8;
+  --hv2-wine: #176da7;
+  --hv2-line: rgba(125, 202, 239, 0.22);
+  --hv2-shadow: 0 28px 72px rgba(2, 20, 35, 0.38);
+  background:
+    radial-gradient(circle at 76% -8%, rgba(42, 145, 205, 0.3), transparent 34rem),
+    radial-gradient(circle at 12% 28%, rgba(23, 92, 143, 0.2), transparent 28rem),
+    linear-gradient(180deg, #071b2e 0%, #0a2741 52%, #06192b 100%);
+}
+
+.home-v2 .hv2-header {
+  border-color: rgba(125, 202, 239, 0.2);
+  background: rgba(5, 24, 42, 0.82);
+  box-shadow: 0 12px 34px rgba(2, 20, 35, 0.2);
+}
+
+.home-v2 .hv2-nav a,
+.home-v2 .hv2-language a,
+.home-v2 .hv2-hero-lead {
+  color: #dbeaf4;
+}
+
+.home-v2 .hv2-nav-guide,
+.home-v2 .hv2-tech-line,
+.home-v2 .hv2-guide-label,
+.home-v2 .hv2-experience-type,
+.home-v2 .hv2-footer {
+  color: #86a9c0;
+}
+
+.home-v2 .hv2-hero::before {
+  left: 62%;
+  width: 27rem;
+  height: 27rem;
+  background: radial-gradient(circle, rgba(87, 183, 230, 0.18), transparent 68%);
+}
+
+.home-v2 .hv2-hero h1,
+.home-v2 .hv2-section h2,
+.home-v2 .hv2-tribute-copy h2,
+.home-v2 .hv2-book-bridge h2 {
+  color: #f5fbff;
+}
+
+.home-v2 .hv2-button {
+  border-color: rgba(112, 197, 239, 0.52);
+  color: #edf8ff;
+  background: rgba(112, 197, 239, 0.04);
+}
+
+.home-v2 .hv2-button:hover,
+.home-v2 .hv2-button:focus-visible {
+  background: rgba(112, 197, 239, 0.12);
+}
+
+.home-v2 .hv2-button-primary {
+  color: #06233a;
+  background: #70c5ef;
+}
+
+.home-v2 .hv2-button-primary:hover,
+.home-v2 .hv2-button-primary:focus-visible {
+  color: #041a2c;
+  background: #9bdcff;
+}
+
+.home-v2 .hv2-guide-note {
+  border-color: rgba(125, 202, 239, 0.14);
+}
+
+.home-v2 .hv2-guide-note strong,
+.home-v2 .hv2-master-copy strong,
+.home-v2 .hv2-experience-card h3,
+.home-v2 .hv2-work-copy strong,
+.home-v2 .hv2-place-primary h3,
+.home-v2 .hv2-place-secondary h3,
+.home-v2 .hv2-footer strong {
+  color: #f1f8fd;
+}
+
+.home-v2 .hv2-experience-card,
+.home-v2 .hv2-book-bridge {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(83, 178, 225, 0.13), transparent 43%),
+    rgba(17, 57, 87, 0.34);
+}
+
+.home-v2 .hv2-experience-card:hover,
+.home-v2 .hv2-experience-card:focus-visible {
+  background:
+    radial-gradient(circle at 100% 0%, rgba(96, 193, 238, 0.24), transparent 43%),
+    rgba(22, 71, 106, 0.46);
+}
+
+.home-v2 .hv2-master-card {
+  border-color: rgba(125, 202, 239, 0.17);
+  background:
+    radial-gradient(circle at 50% 35%, rgba(83, 178, 225, 0.16), transparent 35%),
+    linear-gradient(160deg, rgba(15, 57, 89, 0.86), rgba(6, 29, 50, 0.82));
+  box-shadow:
+    inset 0 1px 0 rgba(214, 241, 255, 0.06),
+    0 20px 48px rgba(2, 20, 35, 0.25);
+}
+
+.home-v2 .hv2-master-card::before {
+  border-color: rgba(139, 211, 244, 0.23);
+  background: radial-gradient(circle, rgba(95, 190, 234, 0.13), transparent 68%);
+  box-shadow: 0 0 45px rgba(60, 159, 207, 0.13);
+}
+
+.home-v2 .hv2-work {
+  border-color: rgba(125, 202, 239, 0.14);
+  background:
+    radial-gradient(circle at 50% 37%, rgba(83, 178, 225, 0.13), transparent 42%),
+    rgba(13, 48, 75, 0.42);
+}
+
+.home-v2 .hv2-place-primary {
+  background:
+    radial-gradient(circle at 88% 18%, rgba(123, 207, 245, 0.23), transparent 34%),
+    linear-gradient(135deg, #0b3152, #135f93 63%, #08263f);
+}
+
+.home-v2 .hv2-place-secondary {
+  background:
+    linear-gradient(rgba(7, 32, 53, 0.7), rgba(7, 32, 53, 0.7)),
+    radial-gradient(circle at 20% 20%, rgba(112, 197, 239, 0.22), transparent 34%),
+    #0d3553;
+}
+
+.home-v2 .hv2-place-primary p,
+.home-v2 .hv2-place-secondary p,
+.home-v2 .hv2-work-copy small,
+.home-v2 .hv2-qr-pair figcaption {
+  color: #c8dce8;
+}
+
+.home-v2 .hv2-continuum-wrap,
+.home-v2 .painting-index,
+.home-v2 .painting-index .section-heading {
+  color: var(--hv2-ink);
+  background:
+    radial-gradient(circle at 18% 30%, rgba(92, 176, 216, 0.2), transparent 30rem),
+    #e7f3f9;
+}
+
+.home-v2 .hv2-continuum h2,
+.home-v2 .painting-index .section-heading h2 {
+  color: #09243b;
+}
+
+.home-v2 .hv2-continuum-lead,
+.home-v2 .painting-index .section-dek {
+  color: #47677d;
+}
+
+.home-v2 .hv2-continuum-track,
+.home-v2 .hv2-continuum-step {
+  border-color: rgba(25, 91, 132, 0.24);
+}
+
+/* The book remains an invitation, not the dominant content block. */
+.home-v2 .hv2-book-hero {
+  width: min(100%, 410px);
+  min-height: 360px;
+  border-color: rgba(125, 202, 239, 0.2);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(103, 198, 240, 0.17), transparent 31%),
+    radial-gradient(circle at 50% 55%, rgba(24, 104, 154, 0.2), transparent 58%),
+    linear-gradient(145deg, rgba(15, 56, 86, 0.78), rgba(5, 27, 46, 0.72));
+  box-shadow:
+    inset 0 1px 0 rgba(218, 242, 255, 0.07),
+    0 20px 52px rgba(2, 20, 35, 0.28);
+}
+
+.home-v2 .hv2-book-hero::before {
+  width: min(72%, 330px);
+  border-color: rgba(133, 211, 246, 0.27);
+  box-shadow:
+    0 0 0 18px rgba(92, 186, 230, 0.035),
+    0 0 70px rgba(68, 173, 222, 0.2);
+}
+
+.home-v2 .hv2-book-hero::after {
+  width: min(56%, 270px);
+  background: radial-gradient(circle, rgba(139, 215, 248, 0.13), transparent 68%);
+}
+
+.home-v2 .hv2-book-aura {
+  background: rgba(85, 185, 231, 0.15);
+}
+
+.home-v2 .hv2-book-model {
+  height: 330px;
+}
+
+.home-v2 .hv2-book-signature {
+  color: rgba(210, 237, 251, 0.78);
+}
+
+@media (min-width: 1081px) {
+  .home-v2 .hv2-hero {
+    grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.68fr);
+  }
+
+  .home-v2 .hv2-book-hero {
+    width: min(100%, 410px);
+  }
+}
+
+@media (max-width: 1080px) {
+  .home-v2 .hv2-book-hero {
+    width: min(100%, 440px);
+    min-height: 350px;
+  }
+
+  .home-v2 .hv2-book-model {
+    height: 320px;
+  }
+}
+
+@media (max-width: 780px) {
+  .home-v2 {
+    overflow-x: hidden;
+  }
+
+  .home-v2 .hv2-header,
+  .home-v2 .hv2-hero,
+  .home-v2 .hv2-section,
+  .home-v2 .hv2-continuum,
+  .home-v2 .painting-index,
+  .home-v2 .hv2-footer {
+    width: calc(100% - 24px);
+    max-width: 1440px;
+  }
+
+  .home-v2 .hv2-hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 30px;
+    padding-top: 36px;
+  }
+
+  .home-v2 .hv2-hero-copy {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .home-v2 .hv2-hero h1 {
+    font-size: clamp(42px, 14vw, 70px);
+    line-height: 0.92;
+  }
+
+  .home-v2 .hv2-hero-lead {
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
+
+  .home-v2 .hv2-book-hero {
+    width: min(100%, 350px);
+    min-height: 285px;
+    justify-self: center;
+  }
+
+  .home-v2 .hv2-book-model {
+    height: 260px;
+  }
+}
+
+@media (max-width: 420px) {
+  .home-v2 .hv2-hero h1 {
+    font-size: clamp(36px, 11.6vw, 48px);
+    letter-spacing: -0.05em;
+  }
+
+  .home-v2 .hv2-book-hero {
+    width: min(100%, 310px);
+    min-height: 255px;
+  }
+
+  .home-v2 .hv2-book-model {
+    height: 232px;
+  }
+}
