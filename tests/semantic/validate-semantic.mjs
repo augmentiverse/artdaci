@@ -290,7 +290,7 @@ for (const mapping of externalMappings.conceptMappings) {
 }
 
 assert(semanticHtml.includes("POC V2.11"), "Semantic page must expose V2.11.");
-assert(semanticHtml.includes("semantic.css?v=17"), "Semantic page must load V2.10 CSS.");
+assert(semanticHtml.includes("semantic.css?v=18"), "Semantic page must load refreshed navigation CSS.");
 assert(semanticHtml.includes("semantic-ui.mjs?v=19"), "Semantic page must load V2.10 UI.");
 assert(semanticUi.includes("graphWithExternalSuggestions"), "External graph exploration must remain available.");
 assert(semanticUi.includes("graphDataForEntity"), "Cultural entities must be graph centers.");
