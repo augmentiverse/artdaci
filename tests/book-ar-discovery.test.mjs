@@ -39,11 +39,26 @@ test("discovery UI connected to 3D display; old scan workflow preserved",()=>{
  const html=read("book-ar.html"),src=read("scripts/book-ar.js"),ui=read("scripts/book-ar-discovery.mjs"),css=read("styles/book-ar.css");
  assert.match(html,/id="discovery-panel"/);
  assert.match(html,/data-explore-tab="works"/);
- assert.match(html,/scripts\/book-ar\.js\?v=3/);
+ assert.match(html,/scripts\/book-ar\.js\?v=4/);
  assert.match(ui,/onArtwork\(work\)/);
  assert.match(src,/state\.discovery=setupBookDiscovery\(lang,selectWork\)/);
  assert.match(src,/refreshThumbs\(id\)/);
  assert.match(src,/state\.screen\.scale\.set\(w, w\/ratio\/\.56, 1\)/);
  assert.match(src,/new MindARThree\(/);
  assert.match(css,/\.discovery-gallery/);
+});
+
+test("Book AR V1.3 keeps the tracked artwork visible when selecting painter or artwork",()=>{
+ const html=read("book-ar.html"),ui=read("scripts/book-ar-discovery.mjs"),css=read("styles/book-ar.css");
+ assert.ok(html.includes('id="discovery-summary"'));
+ assert.ok(html.indexOf('id="discovery-summary"') < html.indexOf('id="discovery-panel"'));
+ assert.ok(html.indexOf('id="discovery-current"') < html.indexOf('id="discovery-panel"'));
+ assert.match(html,/aria-expanded="false"/);
+ assert.ok(ui.includes('setOpen(false);\n  setTab("about");'),"Choosing painter must close the details");
+ assert.ok(ui.includes('onArtwork(work);\n        \/\/ Returning automatically'),"Choosing work returns to AR");
+ assert.ok(ui.includes('toggle.addEventListener("click",()=>setOpen(panel.hidden))'),"Details open only on direct tap");
+ assert.match(css,/controls:has\(\.discovery-panel:not\(\[hidden\]\)\)/);
+ assert.match(css,/flex-wrap:nowrap/);
+ assert.match(css,/max-height:min\(42dvh,278px\)/);
+ assert.match(css,/\.discovery-summary/);
 });
