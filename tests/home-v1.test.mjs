@@ -40,7 +40,7 @@ test("homepage uses the blue theme and a compact responsive 3D hero", async () =
   for (const file of pages) {
     const html = await read(file);
     assert.match(html, /<meta name="theme-color" content="#06192b" \/>/);
-    assert.match(html, /styles\/home-v2-adjustments\.css\?v=4/);
+    assert.match(html, /styles\/home-v2-adjustments\.css\?v=5/);
   }
 });
 
@@ -56,11 +56,30 @@ test("featured artworks use one shared medallion layout", async () => {
   }
 });
 
-test("Masters portraits use the compact luminous portal treatment", async () => {
+test("Masters portraits fill frameless cropped windows across FR EN AR", async () => {
   const css = await read("styles/home-v2-adjustments.css");
-  assert.match(css, /Masters: compact luminous portraits/);
-  assert.match(css, /\.home-v2 \.hv2-master-card::before/);
-  assert.match(css, /\.home-v2 \.hv2-master-card img\s*\{[\s\S]*?width:\s*min\(72%, 205px\)/);
+  assert.match(css, /\.home-v2 \.hv2-master-photo\s*\{[\s\S]*?overflow:\s*hidden/);
+  assert.match(css, /\.home-v2 \.hv2-master-card \.hv2-master-photo img\s*\{[\s\S]*?object-fit:\s*cover/);
+  assert.match(css, /\.home-v2 \.hv2-master-card::before\s*\{\s*display:\s*none/);
+  for (const file of pages) {
+    const html = await read(file);
+    assert.equal((html.match(/class="hv2-master-photo"/g) ?? []).length, 4, file);
+    assert.equal((html.match(/assets\/artists\/[^"]+\/profile\/portrait\.png/g) ?? []).length, 4, file);
+  }
+});
+
+test("Book AR scan button follows rather than overlaps the hero caption", async () => {
+  const css = await read("styles/home-v2-adjustments.css");
+  assert.match(css, /\.home-v2 \.hv2-book-hero \.hv2-book-signature\s*\{[\s\S]*?position:\s*static/);
+  assert.match(css, /\.home-v2 \.hv2-book-hero \.hv2-book-scan\s*\{[\s\S]*?position:\s*relative/);
+  for (const file of pages) {
+    const html = await read(file);
+    const captionAt = html.indexOf('class="hv2-book-signature"');
+    const scanAt = html.indexOf('class="hv2-button hv2-book-scan"');
+    assert.ok(captionAt > 0 && scanAt > captionAt, file + " must put scan below caption");
+    assert.match(html, /data-book-ar-v1="1"/);
+    assert.doesNotMatch(html, /data-book-ar-v1="1"[^>]*style=/);
+  }
 });
 
 test("French and Arabic experience labels are localized", async () => {
