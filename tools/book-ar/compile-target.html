@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>ARTDACI Book AR — compilateur de couverture</title>
+<style>:root{font-family:system-ui,sans-serif;background:#132132;color:#f8ede0}main{max-width:760px;margin:auto;padding:30px 16px}h1{color:#ecc28b;font-family:Georgia,serif}p,li{line-height:1.6}label{display:block;padding:15px;border:1px solid #b18e62;border-radius:10px}input{display:block;margin-top:10px}button{margin:18px 0;background:#e8bf86;color:#171e25;padding:12px 17px;border:0;border-radius:9px}button:disabled{opacity:.5}img{display:block;max-width:100%;max-height:360px;margin:18px auto}code{color:#f1d39d}</style>
+</head>
+<body><main>
+<h1>ARTDACI — Générer le marqueur Book AR</h1>
+<p>Choisissez une image nette et <strong>à plat du recto exact</strong> de la couverture utilisée sur le livre imprimé et le modèle 3D. Évitez une capture perspective du GLB, les ombres et les cadres. L'image est traitée localement dans ce navigateur.</p>
+<label>Couverture recto (JPEG, PNG ou WebP)<input type="file" id="input" accept="image/jpeg,image/png,image/webp"/></label>
+<img id="preview" alt="Aperçu de la couverture choisie" hidden/>
+<p id="resolution"></p>
+<button type="button" id="compile" disabled>Générer artdaci-book-cover.mind</button>
+<p role="status" aria-live="polite" id="status">Prêt.</p>
+<h2>Après génération</h2>
+<ol><li>Enregistrez le fichier téléchargé dans <code>assets/targets/artdaci-book-cover.mind</code> du dépôt ARTDACI.</li><li>Ouvrez <code>book-ar.html?lang=fr</code> en HTTPS.</li><li>Testez avec le livre imprimé et un deuxième appareil visant la couverture du livre 3D.</li></ol>
+<p>Le marqueur ne peut être validé qu'après vérification réelle sur appareil mobile. Privilégiez une couverture avec des détails distinctifs et une bonne luminosité.</p>
+<a href="../../book-ar.html?lang=fr">Retour à Book AR</a>
+</main>
+<script type="module">
+import {Compiler} from "../../vendor/mindar-image.prod.js";
+const input=document.getElementById("input"),button=document.getElementById("compile"),status=document.getElementById("status"),image=document.getElementById("preview"),resolution=document.getElementById("resolution");
+let selected=null,objectUrl=null;
+input.addEventListener("change",async()=>{
+ button.disabled=true;selected=null;
+ if(objectUrl)URL.revokeObjectURL(objectUrl);
+ const f=input.files?.[0];if(!f)return;objectUrl=URL.createObjectURL(f);
+ const img=new Image();
+ try{
+  await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=()=>reject(new Error("Impossible d'ouvrir l'image"));img.src=objectUrl;});
+  image.src=objectUrl;image.hidden=false;
+  resolution.textContent=img.naturalWidth+" × "+img.naturalHeight+" pixels";
+  if(img.naturalWidth<500||img.naturalHeight<500)throw new Error("Utilisez au moins 500 pixels de chaque côté.");
+  selected=img;button.disabled=false;status.textContent="Image prête.";
+ }catch(err){status.textContent=err.message;}
+});
+button.addEventListener("click",async()=>{
+ if(!selected)return;button.disabled=true;
+ try{
+  const compiler=new Compiler();
+  await compiler.compileImageTargets([selected],progress=>{status.textContent="Compilation : "+Math.round(progress*100)+"%";});
+  const url=URL.createObjectURL(new Blob([compiler.exportData()],{type:"application/octet-stream"}));
+  const link=document.createElement("a");link.href=url;link.download="artdaci-book-cover.mind";
+  document.body.append(link);link.click();link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),10000);
+  status.textContent="Marqueur téléchargé. Placez-le dans assets/targets/.";
+ }catch(err){status.textContent="Erreur : "+err.message;}finally{button.disabled=false;}
+});
+</script>
+</body></html>
