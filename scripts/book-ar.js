@@ -4,6 +4,7 @@ import { MindARThree } from "../vendor/mindar-image-three.prod.js";
 import {targetPath, introVideo, artists, copy, language, homepage, localizedRoute} from "./book-ar-data.mjs";
 import {discovery, exploreCopy, local} from "./book-ar-enrichment.mjs";
 import {setupBookDiscovery} from "./book-ar-discovery.mjs";
+import {semanticWorkHref} from "./book-ar-semantic.mjs";
 const lang=language(new URLSearchParams(location.search).get("lang")), t=copy[lang];
 const $=id=>document.getElementById(id);
 const el={stage:$("ar-stage"), gate:$("intro"),start:$("start"),warning:$("target-warning"),coverChoice:$("cover-choice"),cover:$("cover-file"),status:$("status"),progress:$("progress"),error:$("error"),controls:$("controls"),buttons:$("artist-buttons"),play:$("play"),listen:$("listen"),media:$("media")};
@@ -19,6 +20,13 @@ function localize(){
   $("semantic").href=localizedRoute("semantic/",lang);
   $("living").href=localizedRoute("book-3d.html",lang);
   for(const artist of artists){const btn=el.buttons.querySelector('[data-artist="'+artist.id+'"]');if(btn)btn.textContent=artist.title[lang];}
+}
+function updateSemanticLink(){
+ const active=state.selectedWork?semanticWorkHref(state.selection,state.selectedWork.id,lang):null;
+ const link=$("semantic");
+ // No work chosen: keep generic Semantic home. Never substitute the Mona Lisa
+ // for a known painting. Every Book AR work has a dedicated Semantic profile.
+ link.href=active||localizedRoute("semantic/",lang);
 }
 function message(v){el.status.textContent=v;}
 function progress(v){el.progress.textContent=v;}
@@ -125,6 +133,7 @@ function refreshThumbs(id){
 function selectWork(work){
  if(!work || !state.started)return;
  state.selectedWork=work;
+ updateSemanticLink();
  el.media.pause();el.media.removeAttribute("src");el.media.load();
  el.play.textContent=t.video;stopSpeech();
  void showPoster();
@@ -152,6 +161,7 @@ function selectArtist(id){
  el.media.pause();el.media.removeAttribute("src");el.media.load();el.play.textContent=t.video;stopSpeech();
  const artist=artists.find(a=>a.id===id);
  state.selectedWork=state.discovery?.setArtist(id,artist?.title[lang])||null;
+ updateSemanticLink();
  refreshThumbs(id);
  void showPoster();
 }
