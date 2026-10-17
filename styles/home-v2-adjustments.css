@@ -1026,6 +1026,17 @@ html[lang="ar"] .home-v2 .hv2-continuum-step::after {
   text-align: center;
 }
 
+/* Mona Lisa: the full portrait should fit INSIDE the circular medallion.
+   Unlike cover, contain preserves the top of the head and both hands.
+   Vertical inset makes the entire portrait rectangle fit inside the circle. */
+.home-v2 .hv2-featured-grid .hv2-work:nth-child(1) img {
+  box-sizing: border-box;
+  object-fit: contain;
+  object-position: center center;
+  padding: clamp(18px, 2vw, 23px) 0;
+  background: radial-gradient(circle at 50% 42%, #363329, #17191c 76%);
+}
+
 /* User-selected painter portraits, already optimized and pre-cropped to 4:5.
    Keep the entire face and bust visible; do not crop twice by applying another scale. */
 .home-v2 .hv2-master-card::before { display: none; }
