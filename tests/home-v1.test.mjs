@@ -40,7 +40,7 @@ test("homepage uses the blue theme and a compact responsive 3D hero", async () =
   for (const file of pages) {
     const html = await read(file);
     assert.match(html, /<meta name="theme-color" content="#06192b" \/>/);
-    assert.match(html, /styles\/home-v2-adjustments\.css\?v=5/);
+    assert.match(html, /styles\/home-v2-adjustments\.css\?v=6/);
   }
 });
 
@@ -61,10 +61,17 @@ test("Masters portraits fill frameless cropped windows across FR EN AR", async (
   assert.match(css, /\.home-v2 \.hv2-master-photo\s*\{[\s\S]*?overflow:\s*hidden/);
   assert.match(css, /\.home-v2 \.hv2-master-card \.hv2-master-photo img\s*\{[\s\S]*?object-fit:\s*cover/);
   assert.match(css, /\.home-v2 \.hv2-master-card::before\s*\{\s*display:\s*none/);
+  assert.match(css, /\.home-v2 \.hv2-master-card \.hv2-master-photo img\s*\{[\s\S]*?transform:\s*none/);
   for (const file of pages) {
     const html = await read(file);
     assert.equal((html.match(/class="hv2-master-photo"/g) ?? []).length, 4, file);
-    assert.equal((html.match(/assets\/artists\/[^"]+\/profile\/portrait\.png/g) ?? []).length, 4, file);
+    assert.equal((html.match(/assets\/artists\/[^"]+\/profile\/home-portrait\.webp/g) ?? []).length, 4, file);
+    assert.doesNotMatch(html, /src="assets\/artists\/[^"]+\/profile\/portrait\.png"/);
+    for (const artist of ["leonardo-da-vinci","johannes-vermeer","vincent-van-gogh","claude-monet"]) {
+      const asset = path.join(root,"assets/artists",artist,"profile/home-portrait.webp");
+      assert.ok((await stat(asset)).size > 1000, artist + " photo must be present and nonempty");
+      assert.ok((await stat(asset)).size < 100000, artist + " homepage photo must remain lightweight");
+    }
   }
 });
 
