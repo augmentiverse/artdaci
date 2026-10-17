@@ -39,7 +39,7 @@ test("discovery UI connected to 3D display; old scan workflow preserved",()=>{
  const html=read("book-ar.html"),src=read("scripts/book-ar.js"),ui=read("scripts/book-ar-discovery.mjs"),css=read("styles/book-ar.css");
  assert.match(html,/id="discovery-panel"/);
  assert.match(html,/data-explore-tab="works"/);
- assert.match(html,/scripts\/book-ar\.js\?v=4/);
+ assert.match(html,/scripts\/book-ar\.js\?v=5/);
  assert.match(ui,/onArtwork\(work\)/);
  assert.match(src,/state\.discovery=setupBookDiscovery\(lang,selectWork\)/);
  assert.match(src,/refreshThumbs\(id\)/);
