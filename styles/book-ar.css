@@ -60,3 +60,111 @@ html[dir="rtl"] .controls{direction:rtl}
 .discovery-work-copy small{font-size:.7rem;line-height:1.25;color:#e2e9ed}
 @media(max-width:430px){.controls{max-height:77dvh}.discovery-body{max-height:26dvh}.discovery-work{min-height:79px}.discovery-work img{width:46px;height:60px}.discovery-work-copy strong{font-size:.74rem}}
 @media(max-height:630px){.controls{max-height:65dvh}.discovery-body{max-height:18dvh}}
+
+/* Book AR V1.3 — AR-first compact controls. Keep the tracked art visible. */
+.controls{
+  width:min(96vw,760px);
+  max-height:min(45dvh,320px);
+  padding:8px 10px;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+.controls:has(.discovery-panel:not([hidden])){
+  max-height:min(59dvh,470px);
+}
+.choices,.actions{
+  flex-wrap:nowrap;
+  justify-content:flex-start;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scrollbar-width:thin;
+  overscroll-behavior-x:contain;
+  -webkit-overflow-scrolling:touch;
+  white-space:nowrap;
+  padding-bottom:4px;
+  gap:6px;
+}
+.choices{margin-bottom:5px}
+.choices button,.actions button,.actions a{
+  flex:0 0 auto;
+  padding:7px 10px;
+  min-height:38px;
+}
+.discovery{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+  column-gap:8px;
+  row-gap:4px;
+  margin:3px 0 5px;
+  padding:5px 0;
+}
+.discovery-summary{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  font-size:.82rem;
+  text-align:start;
+}
+.discovery-summary strong{
+  color:#f5d29e;
+  font-weight:750;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.discovery-summary span{
+  color:#e6ecf2;
+  font-size:.74rem;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.discovery-toggle{
+  width:auto;
+  min-height:36px;
+  padding:6px 9px;
+  border:1px solid #907251;
+  border-radius:9px;
+  font-size:.78rem;
+  white-space:nowrap;
+  background:#263c51;
+}
+.discovery-panel{
+  grid-column:1 / -1;
+  padding:7px;
+  margin:3px 0;
+}
+.discovery-heading p{margin:0 0 4px;font-size:.78rem}
+.discovery-body{max-height:min(19dvh,175px)}
+.controls>small{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  clip-path:inset(50%);
+  white-space:nowrap;
+}
+@media (max-width:460px){
+  .controls{
+    width:calc(100vw - 12px);
+    bottom:max(6px,env(safe-area-inset-bottom));
+    max-height:min(42dvh,278px);
+    padding:6px 8px;
+  }
+  .controls:has(.discovery-panel:not([hidden])){max-height:min(57dvh,430px)}
+  .choices button,.actions button,.actions a{
+    min-height:36px;
+    padding:7px 9px;
+  }
+  .discovery-body{max-height:min(17dvh,138px)}
+}
+@media(max-height:630px){
+  .controls{max-height:41dvh}
+  .controls:has(.discovery-panel:not([hidden])){max-height:59dvh}
+  .discovery-body{max-height:16dvh}
+}
