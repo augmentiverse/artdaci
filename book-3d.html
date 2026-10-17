@@ -11,6 +11,7 @@
   <body>
     <header class="book-toolbar">
       <a class="book-back" href="index.html">Back to collection</a>
+      <a class="book-back" data-book-ar-v1="1" href="book-ar.html?lang=en" id="book-ar-link">Scan the book · AR</a>
       <a id="book-semantic-link" class="book-back" href="semantic/?lang=en">ARTDACI Semantic</a>
       <img class="book-logo" src="assets/varia/artdaci-logo.png" alt="ARTDACI" />
       <div>
@@ -46,6 +47,15 @@
       <div id="experience-body" class="experience-body"></div>
     </dialog>
 
+    <script>
+      (() => {
+        const selected = new URLSearchParams(location.search).get("lang");
+        const language = ["fr", "en", "ar"].includes(selected) ? selected : "en";
+        const labels = {fr:"Scanner le livre · AR",en:"Scan the book · AR",ar:"مسح غلاف الكتاب · AR"};
+        const link = document.getElementById("book-ar-link");
+        if(link){link.href = "book-ar.html?lang=" + language; link.textContent = labels[language];}
+      })();
+    </script>
     <script type="module" src="scripts/book-3d.js?v=36"></script>
     <script type="module" src="scripts/visitor-guide.js?v=2"></script>
   </body>
