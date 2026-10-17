@@ -148,6 +148,273 @@
       ]
     },
     {
+      "id": "ld02",
+      "title": {
+        "fr": "La Dame à l'hermine",
+        "en": "Lady with an Ermine",
+        "ar": "السيدة ذات القاقم"
+      },
+      "artist": {
+        "fr": "Léonard de Vinci",
+        "en": "Leonardo da Vinci",
+        "ar": "ليوناردو دا فينشي"
+      },
+      "date": {
+        "fr": "vers 1489–1490",
+        "en": "c. 1489–1490",
+        "ar": "vers 1489–1490"
+      },
+      "museum": {
+        "fr": "Musée Czartoryski · Cracovie",
+        "en": "Czartoryski Museum · Kraków",
+        "ar": "متحف تشارتوريسكي · كراكوف"
+      },
+      "image": "../assets/artists/leonardo-da-vinci/collection/the-lady-with-an-ermine-davinci.webp",
+      "imageStatus": "artdaci-book-ar-editorial-provisional",
+      "assertions": [
+        {
+          "conceptId": "genre.portrait",
+          "weight": 1,
+          "role": "core"
+        },
+        {
+          "conceptId": "period.renaissance",
+          "weight": 0.97,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.gaze",
+          "weight": 0.94,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.psychological-presence",
+          "weight": 0.88,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.light",
+          "weight": 0.84,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.identity",
+          "weight": 0.8,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "technique.soft-edges",
+          "weight": 0.75,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.volume",
+          "weight": 0.7,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "medium.oil-painting",
+          "weight": 0.52,
+          "role": "contextual"
+        },
+        {
+          "conceptId": "support.panel",
+          "weight": 0.4,
+          "role": "contextual"
+        }
+      ],
+      "concepts": [
+        "genre.portrait",
+        "period.renaissance",
+        "concept.gaze",
+        "concept.psychological-presence",
+        "concept.light",
+        "concept.identity",
+        "technique.soft-edges",
+        "concept.volume",
+        "medium.oil-painting",
+        "support.panel"
+      ]
+    },
+    {
+      "id": "ld03",
+      "title": {
+        "fr": "Ginevra de' Benci",
+        "en": "Ginevra de' Benci",
+        "ar": "جينيفرا دي بينتشي"
+      },
+      "artist": {
+        "fr": "Léonard de Vinci",
+        "en": "Leonardo da Vinci",
+        "ar": "ليوناردو دا فينشي"
+      },
+      "date": {
+        "fr": "vers 1474–1478",
+        "en": "c. 1474–1478",
+        "ar": "vers 1474–1478"
+      },
+      "museum": {
+        "fr": "National Gallery of Art · Washington",
+        "en": "National Gallery of Art · Washington",
+        "ar": "المعرض الوطني للفنون · واشنطن"
+      },
+      "image": "../assets/artists/leonardo-da-vinci/collection/ginevra-de-benci.webp",
+      "imageStatus": "artdaci-book-ar-editorial-provisional",
+      "assertions": [
+        {
+          "conceptId": "genre.portrait",
+          "weight": 1,
+          "role": "core"
+        },
+        {
+          "conceptId": "period.renaissance",
+          "weight": 0.97,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.identity",
+          "weight": 0.94,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.gaze",
+          "weight": 0.88,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.nature-human-continuity",
+          "weight": 0.84,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.light",
+          "weight": 0.8,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.contour",
+          "weight": 0.75,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.shadow",
+          "weight": 0.7,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "medium.oil-painting",
+          "weight": 0.52,
+          "role": "contextual"
+        },
+        {
+          "conceptId": "support.panel",
+          "weight": 0.4,
+          "role": "contextual"
+        }
+      ],
+      "concepts": [
+        "genre.portrait",
+        "period.renaissance",
+        "concept.identity",
+        "concept.gaze",
+        "concept.nature-human-continuity",
+        "concept.light",
+        "concept.contour",
+        "concept.shadow",
+        "medium.oil-painting",
+        "support.panel"
+      ]
+    },
+    {
+      "id": "ld04",
+      "title": {
+        "fr": "La Belle Ferronnière",
+        "en": "La Belle Ferronnière",
+        "ar": "لا بيل فيرونيير"
+      },
+      "artist": {
+        "fr": "Léonard de Vinci",
+        "en": "Leonardo da Vinci",
+        "ar": "ليوناردو دا فينشي"
+      },
+      "date": {
+        "fr": "vers 1490–1497",
+        "en": "c. 1490–1497",
+        "ar": "vers 1490–1497"
+      },
+      "museum": {
+        "fr": "Musée du Louvre · Paris",
+        "en": "Musée du Louvre · Paris",
+        "ar": "متحف اللوفر · باريس"
+      },
+      "image": "../assets/artists/leonardo-da-vinci/collection/la-belle-ferronnière-davinci.webp",
+      "imageStatus": "artdaci-book-ar-editorial-provisional",
+      "assertions": [
+        {
+          "conceptId": "genre.portrait",
+          "weight": 1,
+          "role": "core"
+        },
+        {
+          "conceptId": "period.renaissance",
+          "weight": 0.97,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.gaze",
+          "weight": 0.94,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.light",
+          "weight": 0.88,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.psychological-presence",
+          "weight": 0.84,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "technique.sfumato",
+          "weight": 0.8,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.shadow",
+          "weight": 0.75,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.volume",
+          "weight": 0.7,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "medium.oil-painting",
+          "weight": 0.52,
+          "role": "contextual"
+        },
+        {
+          "conceptId": "support.panel",
+          "weight": 0.4,
+          "role": "contextual"
+        }
+      ],
+      "concepts": [
+        "genre.portrait",
+        "period.renaissance",
+        "concept.gaze",
+        "concept.light",
+        "concept.psychological-presence",
+        "technique.sfumato",
+        "concept.shadow",
+        "concept.volume",
+        "medium.oil-painting",
+        "support.panel"
+      ]
+    },
+    {
       "id": "ve01",
       "title": {
         "fr": "La Jeune Fille à la perle",
@@ -279,6 +546,273 @@
         "technique.glazing",
         "concept.volume",
         "concept.spatial-ambiguity",
+        "medium.oil-painting",
+        "support.canvas"
+      ]
+    },
+    {
+      "id": "ve03",
+      "title": {
+        "fr": "La Laitière",
+        "en": "The Milkmaid",
+        "ar": "بائعة الحليب"
+      },
+      "artist": {
+        "fr": "Johannes Vermeer",
+        "en": "Johannes Vermeer",
+        "ar": "يوهانس فيرمير"
+      },
+      "date": {
+        "fr": "vers 1658–1660",
+        "en": "c. 1658–1660",
+        "ar": "vers 1658–1660"
+      },
+      "museum": {
+        "fr": "Rijksmuseum · Amsterdam",
+        "en": "Rijksmuseum · Amsterdam",
+        "ar": "متحف ريكز · أمستردام"
+      },
+      "image": "../assets/artists/johannes-vermeer/collection/the-milkmaid-vermeer.webp",
+      "imageStatus": "artdaci-book-ar-editorial-provisional",
+      "assertions": [
+        {
+          "conceptId": "period.dutch-golden-age",
+          "weight": 1,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.light",
+          "weight": 0.97,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.stillness",
+          "weight": 0.94,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.intimacy",
+          "weight": 0.88,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.volume",
+          "weight": 0.84,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.color",
+          "weight": 0.8,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.materiality",
+          "weight": 0.75,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.shadow",
+          "weight": 0.7,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "medium.oil-painting",
+          "weight": 0.52,
+          "role": "contextual"
+        },
+        {
+          "conceptId": "support.canvas",
+          "weight": 0.4,
+          "role": "contextual"
+        }
+      ],
+      "concepts": [
+        "period.dutch-golden-age",
+        "concept.light",
+        "concept.stillness",
+        "concept.intimacy",
+        "concept.volume",
+        "concept.color",
+        "concept.materiality",
+        "concept.shadow",
+        "medium.oil-painting",
+        "support.canvas"
+      ]
+    },
+    {
+      "id": "ve02",
+      "title": {
+        "fr": "Vue de Delft",
+        "en": "View of Delft",
+        "ar": "منظر دلفت"
+      },
+      "artist": {
+        "fr": "Johannes Vermeer",
+        "en": "Johannes Vermeer",
+        "ar": "يوهانس فيرمير"
+      },
+      "date": {
+        "fr": "vers 1660–1661",
+        "en": "c. 1660–1661",
+        "ar": "vers 1660–1661"
+      },
+      "museum": {
+        "fr": "Mauritshuis · La Haye",
+        "en": "Mauritshuis · The Hague",
+        "ar": "موريتشهاوس · لاهاي"
+      },
+      "image": "../assets/artists/johannes-vermeer/collection/view-of-delft-vermeer.webp",
+      "imageStatus": "artdaci-book-ar-editorial-provisional",
+      "assertions": [
+        {
+          "conceptId": "period.dutch-golden-age",
+          "weight": 1,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.light",
+          "weight": 0.97,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.atmosphere",
+          "weight": 0.94,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.depth",
+          "weight": 0.88,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.optical-perception",
+          "weight": 0.84,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.color",
+          "weight": 0.8,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.stillness",
+          "weight": 0.75,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.temporality",
+          "weight": 0.7,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "medium.oil-painting",
+          "weight": 0.52,
+          "role": "contextual"
+        },
+        {
+          "conceptId": "support.canvas",
+          "weight": 0.4,
+          "role": "contextual"
+        }
+      ],
+      "concepts": [
+        "period.dutch-golden-age",
+        "concept.light",
+        "concept.atmosphere",
+        "concept.depth",
+        "concept.optical-perception",
+        "concept.color",
+        "concept.stillness",
+        "concept.temporality",
+        "medium.oil-painting",
+        "support.canvas"
+      ]
+    },
+    {
+      "id": "ve04",
+      "title": {
+        "fr": "La Femme à la balance",
+        "en": "Woman Holding a Balance",
+        "ar": "امرأة تحمل ميزانًا"
+      },
+      "artist": {
+        "fr": "Johannes Vermeer",
+        "en": "Johannes Vermeer",
+        "ar": "يوهانس فيرمير"
+      },
+      "date": {
+        "fr": "vers 1662–1664",
+        "en": "c. 1662–1664",
+        "ar": "vers 1662–1664"
+      },
+      "museum": {
+        "fr": "National Gallery of Art · Washington",
+        "en": "National Gallery of Art · Washington",
+        "ar": "المعرض الوطني للفنون · واشنطن"
+      },
+      "image": "../assets/artists/johannes-vermeer/collection/woman-holding-a-balance-vermeer.webp",
+      "imageStatus": "artdaci-book-ar-editorial-provisional",
+      "assertions": [
+        {
+          "conceptId": "period.dutch-golden-age",
+          "weight": 1,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.stillness",
+          "weight": 0.97,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.light",
+          "weight": 0.94,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.intimacy",
+          "weight": 0.88,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.visual-ambiguity",
+          "weight": 0.84,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.psychological-presence",
+          "weight": 0.8,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.shadow",
+          "weight": 0.75,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.optical-perception",
+          "weight": 0.7,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "medium.oil-painting",
+          "weight": 0.52,
+          "role": "contextual"
+        },
+        {
+          "conceptId": "support.canvas",
+          "weight": 0.4,
+          "role": "contextual"
+        }
+      ],
+      "concepts": [
+        "period.dutch-golden-age",
+        "concept.stillness",
+        "concept.light",
+        "concept.intimacy",
+        "concept.visual-ambiguity",
+        "concept.psychological-presence",
+        "concept.shadow",
+        "concept.optical-perception",
         "medium.oil-painting",
         "support.canvas"
       ]
@@ -433,6 +967,273 @@
       ]
     },
     {
+      "id": "vg02",
+      "title": {
+        "fr": "La Chambre",
+        "en": "The Bedroom",
+        "ar": "غرفة النوم"
+      },
+      "artist": {
+        "fr": "Vincent van Gogh",
+        "en": "Vincent van Gogh",
+        "ar": "فنسنت فان غوخ"
+      },
+      "date": {
+        "fr": "1888",
+        "en": "1888",
+        "ar": "1888"
+      },
+      "museum": {
+        "fr": "Van Gogh Museum · Amsterdam",
+        "en": "Van Gogh Museum · Amsterdam",
+        "ar": "متحف فان غوخ · أمستردام"
+      },
+      "image": "../assets/artists/vincent-van-gogh/collection/the-bedroom-vangogh.webp",
+      "imageStatus": "artdaci-book-ar-editorial-provisional",
+      "assertions": [
+        {
+          "conceptId": "movement.post-impressionism",
+          "weight": 1,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.color",
+          "weight": 0.97,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.spatial-ambiguity",
+          "weight": 0.94,
+          "role": "core"
+        },
+        {
+          "conceptId": "technique.directional-brushwork",
+          "weight": 0.88,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.expression",
+          "weight": 0.84,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.depth",
+          "weight": 0.8,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.contour",
+          "weight": 0.75,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.materiality",
+          "weight": 0.7,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "medium.oil-painting",
+          "weight": 0.52,
+          "role": "contextual"
+        },
+        {
+          "conceptId": "support.canvas",
+          "weight": 0.4,
+          "role": "contextual"
+        }
+      ],
+      "concepts": [
+        "movement.post-impressionism",
+        "concept.color",
+        "concept.spatial-ambiguity",
+        "technique.directional-brushwork",
+        "concept.expression",
+        "concept.depth",
+        "concept.contour",
+        "concept.materiality",
+        "medium.oil-painting",
+        "support.canvas"
+      ]
+    },
+    {
+      "id": "vg03",
+      "title": {
+        "fr": "La Nuit étoilée",
+        "en": "The Starry Night",
+        "ar": "ليلة النجوم"
+      },
+      "artist": {
+        "fr": "Vincent van Gogh",
+        "en": "Vincent van Gogh",
+        "ar": "فنسنت فان غوخ"
+      },
+      "date": {
+        "fr": "1889",
+        "en": "1889",
+        "ar": "1889"
+      },
+      "museum": {
+        "fr": "MoMA · New York",
+        "en": "MoMA · New York",
+        "ar": "متحف الفن الحديث · نيويورك"
+      },
+      "image": "../assets/artists/vincent-van-gogh/collection/the-starry-night-vangogh.webp",
+      "imageStatus": "artdaci-book-ar-editorial-provisional",
+      "assertions": [
+        {
+          "conceptId": "movement.post-impressionism",
+          "weight": 1,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.movement",
+          "weight": 0.97,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.chromatic-vibration",
+          "weight": 0.94,
+          "role": "core"
+        },
+        {
+          "conceptId": "technique.directional-brushwork",
+          "weight": 0.88,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.color",
+          "weight": 0.84,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.surface-rhythm",
+          "weight": 0.8,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.atmosphere",
+          "weight": 0.75,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.light",
+          "weight": 0.7,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "medium.oil-painting",
+          "weight": 0.52,
+          "role": "contextual"
+        },
+        {
+          "conceptId": "support.canvas",
+          "weight": 0.4,
+          "role": "contextual"
+        }
+      ],
+      "concepts": [
+        "movement.post-impressionism",
+        "concept.movement",
+        "concept.chromatic-vibration",
+        "technique.directional-brushwork",
+        "concept.color",
+        "concept.surface-rhythm",
+        "concept.atmosphere",
+        "concept.light",
+        "medium.oil-painting",
+        "support.canvas"
+      ]
+    },
+    {
+      "id": "vg04",
+      "title": {
+        "fr": "Terrasse du café le soir",
+        "en": "Café Terrace at Night",
+        "ar": "شرفة المقهى ليلًا"
+      },
+      "artist": {
+        "fr": "Vincent van Gogh",
+        "en": "Vincent van Gogh",
+        "ar": "فنسنت فان غوخ"
+      },
+      "date": {
+        "fr": "1888",
+        "en": "1888",
+        "ar": "1888"
+      },
+      "museum": {
+        "fr": "Kröller-Müller Museum · Otterlo",
+        "en": "Kröller-Müller Museum · Otterlo",
+        "ar": "متحف كرولر مولر · أوترلو"
+      },
+      "image": "../assets/artists/vincent-van-gogh/collection/café-terrasse-at-night-vangogh.webp",
+      "imageStatus": "artdaci-book-ar-editorial-provisional",
+      "assertions": [
+        {
+          "conceptId": "movement.post-impressionism",
+          "weight": 1,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.light",
+          "weight": 0.97,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.color",
+          "weight": 0.94,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.atmosphere",
+          "weight": 0.88,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.modernity",
+          "weight": 0.84,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.shadow",
+          "weight": 0.8,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "technique.complementary-contrast",
+          "weight": 0.75,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.temporality",
+          "weight": 0.7,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "medium.oil-painting",
+          "weight": 0.52,
+          "role": "contextual"
+        },
+        {
+          "conceptId": "support.canvas",
+          "weight": 0.4,
+          "role": "contextual"
+        }
+      ],
+      "concepts": [
+        "movement.post-impressionism",
+        "concept.light",
+        "concept.color",
+        "concept.atmosphere",
+        "concept.modernity",
+        "concept.shadow",
+        "technique.complementary-contrast",
+        "concept.temporality",
+        "medium.oil-painting",
+        "support.canvas"
+      ]
+    },
+    {
       "id": "mo01",
       "title": {
         "fr": "Impression, soleil levant",
@@ -576,6 +1377,273 @@
         "concept.brushwork",
         "concept.movement",
         "concept.depth",
+        "medium.oil-painting",
+        "support.canvas"
+      ]
+    },
+    {
+      "id": "mo02",
+      "title": {
+        "fr": "Femme à l'ombrelle",
+        "en": "Woman with a Parasol",
+        "ar": "امرأة تحمل مظلة"
+      },
+      "artist": {
+        "fr": "Claude Monet",
+        "en": "Claude Monet",
+        "ar": "كلود مونيه"
+      },
+      "date": {
+        "fr": "1875",
+        "en": "1875",
+        "ar": "1875"
+      },
+      "museum": {
+        "fr": "National Gallery of Art · Washington",
+        "en": "National Gallery of Art · Washington",
+        "ar": "المعرض الوطني للفنون · واشنطن"
+      },
+      "image": "../assets/artists/claude-monet/artworks/the-woman-with-a-parasol/images/woman-with-a-parasol.webp",
+      "imageStatus": "artdaci-book-ar-editorial-provisional",
+      "assertions": [
+        {
+          "conceptId": "movement.impressionism",
+          "weight": 1,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.light",
+          "weight": 0.97,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.movement",
+          "weight": 0.94,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.immediacy",
+          "weight": 0.88,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.atmosphere",
+          "weight": 0.84,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "technique.visible-brushwork",
+          "weight": 0.8,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.color",
+          "weight": 0.75,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.nature-human-continuity",
+          "weight": 0.7,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "medium.oil-painting",
+          "weight": 0.52,
+          "role": "contextual"
+        },
+        {
+          "conceptId": "support.canvas",
+          "weight": 0.4,
+          "role": "contextual"
+        }
+      ],
+      "concepts": [
+        "movement.impressionism",
+        "concept.light",
+        "concept.movement",
+        "concept.immediacy",
+        "concept.atmosphere",
+        "technique.visible-brushwork",
+        "concept.color",
+        "concept.nature-human-continuity",
+        "medium.oil-painting",
+        "support.canvas"
+      ]
+    },
+    {
+      "id": "mo03",
+      "title": {
+        "fr": "Les Coquelicots",
+        "en": "Poppies",
+        "ar": "حقل الخشخاش"
+      },
+      "artist": {
+        "fr": "Claude Monet",
+        "en": "Claude Monet",
+        "ar": "كلود مونيه"
+      },
+      "date": {
+        "fr": "1873",
+        "en": "1873",
+        "ar": "1873"
+      },
+      "museum": {
+        "fr": "Musée d'Orsay · Paris",
+        "en": "Musée d'Orsay · Paris",
+        "ar": "متحف أورسي · باريس"
+      },
+      "image": "../assets/artists/claude-monet/collection/poppies-monet.webp",
+      "imageStatus": "artdaci-book-ar-editorial-provisional",
+      "assertions": [
+        {
+          "conceptId": "movement.impressionism",
+          "weight": 1,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.color",
+          "weight": 0.97,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.atmosphere",
+          "weight": 0.94,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.depth",
+          "weight": 0.88,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "technique.broken-color",
+          "weight": 0.84,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.movement",
+          "weight": 0.8,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.immediacy",
+          "weight": 0.75,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.light",
+          "weight": 0.7,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "medium.oil-painting",
+          "weight": 0.52,
+          "role": "contextual"
+        },
+        {
+          "conceptId": "support.canvas",
+          "weight": 0.4,
+          "role": "contextual"
+        }
+      ],
+      "concepts": [
+        "movement.impressionism",
+        "concept.color",
+        "concept.atmosphere",
+        "concept.depth",
+        "technique.broken-color",
+        "concept.movement",
+        "concept.immediacy",
+        "concept.light",
+        "medium.oil-painting",
+        "support.canvas"
+      ]
+    },
+    {
+      "id": "mo04",
+      "title": {
+        "fr": "Les Nymphéas (série)",
+        "en": "Water Lilies (series)",
+        "ar": "زنابق الماء (سلسلة)"
+      },
+      "artist": {
+        "fr": "Claude Monet",
+        "en": "Claude Monet",
+        "ar": "كلود مونيه"
+      },
+      "date": {
+        "fr": "vers 1897–1926",
+        "en": "c. 1897–1926",
+        "ar": "vers 1897–1926"
+      },
+      "museum": {
+        "fr": "Œuvres réparties entre plusieurs musées",
+        "en": "Works in multiple collections",
+        "ar": "أعمال موزعة بين متاحف عدة"
+      },
+      "image": "../assets/artists/claude-monet/collection/water-lilies-monet.webp",
+      "imageStatus": "artdaci-book-ar-editorial-provisional",
+      "assertions": [
+        {
+          "conceptId": "movement.impressionism",
+          "weight": 1,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.optical-perception",
+          "weight": 0.97,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.color",
+          "weight": 0.94,
+          "role": "core"
+        },
+        {
+          "conceptId": "concept.light",
+          "weight": 0.88,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.chromatic-vibration",
+          "weight": 0.84,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.spatial-ambiguity",
+          "weight": 0.8,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "concept.stillness",
+          "weight": 0.75,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "technique.broken-color",
+          "weight": 0.7,
+          "role": "supporting"
+        },
+        {
+          "conceptId": "medium.oil-painting",
+          "weight": 0.52,
+          "role": "contextual"
+        },
+        {
+          "conceptId": "support.canvas",
+          "weight": 0.4,
+          "role": "contextual"
+        }
+      ],
+      "concepts": [
+        "movement.impressionism",
+        "concept.optical-perception",
+        "concept.color",
+        "concept.light",
+        "concept.chromatic-vibration",
+        "concept.spatial-ambiguity",
+        "concept.stillness",
+        "technique.broken-color",
         "medium.oil-painting",
         "support.canvas"
       ]
