@@ -40,7 +40,7 @@ test("homepage uses the blue theme and a compact responsive 3D hero", async () =
   for (const file of pages) {
     const html = await read(file);
     assert.match(html, /<meta name="theme-color" content="#06192b" \/>/);
-    assert.match(html, /styles\/home-v2-adjustments\.css\?v=6/);
+    assert.match(html, /styles\/home-v2-adjustments\.css\?v=7/);
   }
 });
 
@@ -53,6 +53,22 @@ test("featured artworks use one shared medallion layout", async () => {
     const html = await read(file);
     const featured = html.match(/<div class="hv2-featured-grid">([\s\S]*?)<\/div>\s*<\/section>/)?.[1] ?? "";
     assert.equal((featured.match(/class="hv2-work"/g) ?? []).length, 4, `${file} must expose four artworks`);
+  }
+});
+
+test("Mona Lisa shows her full portrait, including head and hands, inside the medallion", async () => {
+  const css = await read("styles/home-v2-adjustments.css");
+  const base = await read("styles/home-v2.css");
+  const art = "assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp";
+  await access(path.join(root, art));
+  assert.match(css, /\.home-v2 \.hv2-featured-grid \.hv2-work:nth-child\(1\) img\s*\{[\s\S]*?object-fit:\s*contain/);
+  assert.match(css, /\.home-v2 \.hv2-work img,[\s\S]*?border-radius:\s*50%/);
+  assert.match(css, /padding:\s*clamp\(18px, 2vw, 23px\) 0/);
+  for (const file of pages) {
+    const html = await read(file);
+    const featured = html.match(/<div class="hv2-featured-grid">([\s\S]*?)<\/div>\s*<\/section>/)?.[1] ?? "";
+    assert.ok(featured.includes('src="' + art + '"'), file + " must load portrait-format Mona Lisa");
+    assert.ok(!featured.includes("mona-lisa/images/mona-lisa.jpg"), file + " must not load old image");
   }
 });
 
