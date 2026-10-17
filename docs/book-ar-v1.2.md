@@ -30,3 +30,17 @@ Chaque notice et titre dispose d'une version **FR, EN et AR**. Les images vienne
 Exécuter localement ou dans CI : `node --test tests/book-ar.test.mjs tests/book-ar-discovery.test.mjs`.
 
 **Ne modifier ni `main` ni le marqueur officiel de couverture à cette étape.** La mise en production ne doit avoir lieu qu'après validation.
+
+## V1.3 — Privilégier la visibilité du contenu AR
+
+La sélection d'un peintre n'ouvre **plus automatiquement** la grande fiche. Un bandeau compact indique le peintre et l'œuvre courante, en permanence dans la barre des commandes. **Explorer davantage** reste disponible : une ouverture volontaire donne accès à la biographie, à la galerie et à l'anecdote. Choisir une œuvre dans la galerie referme la fiche pour montrer aussitôt le nouveau tableau flottant.
+
+Sur smartphone, les boutons des peintres et les commandes se parcourent horizontalement. Le panneau de détails a sa propre zone de défilement et sa hauteur maximale est réduite pour préserver la vue caméra. Tous les médias et traductions FR/EN/AR de V1.2 restent disponibles.
+
+### Non-régression à vérifier sur smartphone
+1. Scanner la couverture et choisir chacun des quatre peintres : **le panneau doit rester fermé**.
+2. Voir le nom du peintre et de l'œuvre dans le bandeau compact, sans masquer le tableau flottant.
+3. Ouvrir volontairement **Explorer davantage**, consulter les trois rubriques ; les informations restent défilables.
+4. Cliquer sur une nouvelle œuvre : le panneau se ferme et l'œuvre AR change correctement.
+5. Faire glisser horizontalement les choix de peintres et de navigation ; tester les petits écrans et les langues FR/EN/AR.
+6. Tester vidéo, narration et perte/reprise du suivi comme en V1.2. Ne pas fusionner avant validation visuelle.
