@@ -61,6 +61,8 @@ export function setupBookDiscovery(lang, onArtwork) {
         currentArtwork=work.id;
         render();
         onArtwork(work);
+        // Returning automatically to the floating art leaves the camera unobstructed.
+        setOpen(false);
       });
       grid.append(button);
     }
@@ -73,7 +75,9 @@ export function setupBookDiscovery(lang, onArtwork) {
   if(profile){profile.name={fr:artistName,en:artistName,ar:artistName};}
   currentArtwork=profile?.artworks[0]?.id??null;
   for(const btn of tabs)btn.disabled=!profile;
-  setOpen(!!profile);
+  // A painter selection must never open a large panel over the AR artwork.
+  // Details are only exposed when the visitor explicitly taps the toggle.
+  setOpen(false);
   setTab("about");
   return profile?.artworks[0]??null;
  }
