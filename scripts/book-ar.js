@@ -150,6 +150,9 @@ function selectArtist(id){
  state.selection=id;
  el.buttons.querySelectorAll("[data-artist]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.artist===id)));
  el.media.pause();el.media.removeAttribute("src");el.media.load();el.play.textContent=t.video;stopSpeech();
+ const artist=artists.find(a=>a.id===id);
+ state.selectedWork=state.discovery?.setArtist(id,artist?.title[lang])||null;
+ refreshThumbs(id);
  void showPoster();
 }
 async function play(){
@@ -169,7 +172,7 @@ function listen(){
  if(state.speaking){stopSpeech();return;}
  el.media.pause();el.play.textContent=t.video;
  const artist=artists.find(a=>a.id===state.selection);
- const phrase=(artist?artist.title[lang]+". ":"")+t.narr;
+ const phrase=state.discovery?.narration()||((artist?artist.title[lang]+". ":"")+t.narr);
  const speech=new SpeechSynthesisUtterance(phrase);
  speech.lang={fr:"fr-FR",en:"en-US",ar:"ar"}[lang];speech.rate=.92;
  speech.onend=speech.onerror=()=>{state.speaking=false;el.listen.textContent=t.listen;};
@@ -203,6 +206,7 @@ async function start(){
 }
 async function init(){
  localize();
+ state.discovery=setupBookDiscovery(lang,selectWork);
  // Register interactions before waiting for the target download. Otherwise the
  // start button seems inert on slow mobile networks.
  el.start.disabled=true;
