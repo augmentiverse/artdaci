@@ -28,6 +28,14 @@ test("WebAR page, user action media, and optional target workflow",()=>{
   assert.match(html,/id="cover-file"/);
   assert.match(html,/id="play"/);
   assert.match(html,/scripts\/book-ar\.js/);
+  // MindAR's vendored bundle uses a bare import from "three".
+  // Without an import map the module fails *before* event handlers are bound.
+  assert.match(html, /<script type="importmap">/);
+  assert.match(html, /"three":"\.\/vendor\/three\.module\.js"/);
+  assert.ok(html.indexOf('type="importmap"') < html.indexOf('scripts/book-ar.js'));
+  // The camera button should be wired before waiting for the marker to load.
+  assert.ok(js.indexOf('el.start.addEventListener') < js.indexOf('state.targetInstalled=await installedTarget()'));
+
   assert.match(js,/new MindARThree\(/);
   assert.match(js,/state\.anchor\.onTargetFound/);
   assert.match(js,/await el\.media\.play\(\)/);
