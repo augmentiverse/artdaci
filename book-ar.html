@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#111f2b"/>
 <meta name="description" content="ARTDACI Book AR — scanner la couverture pour découvrir des médias en réalité augmentée."/>
 <title>ARTDACI — Book AR</title>
-<link rel="stylesheet" href="styles/book-ar.css?v=2"/>
+<link rel="stylesheet" href="styles/book-ar.css?v=3"/>
 <script type="importmap">
 {"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/three-addons/"}}
 </script>
@@ -49,12 +49,14 @@
       <button data-artist="monet">Monet</button>
     </div>
     <section id="discovery" class="discovery" aria-label="ARTDACI painter discovery">
+      <div class="discovery-summary" id="discovery-summary" aria-live="polite" aria-atomic="true">
+        <strong id="discovery-name"></strong>
+        <span id="discovery-current"></span>
+      </div>
       <button type="button" id="discovery-toggle" class="discovery-toggle" aria-expanded="false" aria-controls="discovery-panel">▸ Explorer davantage</button>
       <div id="discovery-panel" class="discovery-panel" hidden>
         <div class="discovery-heading">
-          <h2 id="discovery-name"></h2>
           <p id="discovery-meta"></p>
-          <p id="discovery-current" aria-live="polite"></p>
         </div>
         <div class="discovery-tabs" role="group" aria-label="Explore">
           <button type="button" data-explore-tab="about" aria-pressed="true"></button>
@@ -75,6 +77,6 @@
   </section>
   <video id="media" playsinline webkit-playsinline preload="none" hidden></video>
 </main>
-<script type="module" src="scripts/book-ar.js?v=3"></script>
+<script type="module" src="scripts/book-ar.js?v=4"></script>
 </body>
 </html>
