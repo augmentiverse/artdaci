@@ -31,3 +31,32 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #ffe2
 html[dir="rtl"] .controls{direction:rtl}
 @media(max-width:460px){.bar strong{font-size:.9rem}.bar small{font-size:.51rem}.bar{min-height:58px}.controls{padding:8px}.choices button,.actions a,.actions button{padding:8px;font-size:.75rem}.controls small{font-size:.69rem}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+
+
+/* V1.2: lightweight accessible museum information that does not obscure the AR canvas. */
+.controls{max-height:min(74dvh,610px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.discovery{text-align:start;border-top:1px solid #887154;border-bottom:1px solid #887154;padding:6px 0;margin:5px 0 10px}
+.discovery-toggle{width:100%;color:#f9dfb7;border:0;background:transparent;padding:7px 12px;font-weight:700;font-size:.89rem;cursor:pointer;text-align:start}
+.discovery-panel{background:#15283be8;border:1px solid #765d43;border-radius:12px;margin:4px 1px 8px;padding:10px}
+.discovery-panel[hidden]{display:none!important}
+.discovery-heading h2{font:600 1.15rem Georgia,serif;color:#f1c88f;margin:1px 0 3px}
+.discovery-heading p{margin:2px 0 6px;line-height:1.35;font-size:.82rem;color:#e7dcd2}
+#discovery-current{color:#e5ba82;font-weight:650}
+.discovery-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:8px 0}
+.discovery-tabs button{border:1px solid #8c7559;border-radius:9px;background:#213a51;color:#f9eddf;padding:8px 6px;font-size:.81rem;min-height:40px}
+.discovery-tabs button[aria-pressed="true"]{background:#e0b780;border-color:#e0b780;color:#172336;font-weight:700}
+.discovery-tabs button:disabled{opacity:.46;cursor:not-allowed}
+.discovery-body{max-height:min(34dvh,270px);overflow-y:auto;overscroll-behavior:contain;padding:2px 3px;text-align:start;scrollbar-width:thin}
+.discovery-text{line-height:1.5;margin:8px 2px;font-size:.89rem}
+.discovery-hint{font-size:.8rem;color:#f3c993;padding:6px 8px;border-inline-start:3px solid #b98b5b;margin:7px 1px;background:#24384b}
+.discovery-question{font-size:.84rem;line-height:1.45;color:#f7dfae;padding:9px;background:#284057;border-radius:9px}
+.discovery-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.discovery-work{display:flex;align-items:center;gap:8px;text-align:start;border:1px solid #687688;background:#203248;border-radius:10px;padding:5px;color:#fff2df;min-width:0;cursor:pointer;min-height:82px}
+.discovery-work[aria-pressed="true"]{border:2px solid #edc78e;background:#354764}
+.discovery-work img{width:58px;height:72px;max-width:35%;border-radius:5px;object-fit:contain;background:#0b1522;flex-shrink:0}
+.discovery-work-copy{display:flex;flex-direction:column;gap:3px;min-width:0}
+.discovery-work-copy strong{font-size:.79rem;line-height:1.24}
+.discovery-work-copy span{font-size:.72rem;color:#f5d5ac}
+.discovery-work-copy small{font-size:.7rem;line-height:1.25;color:#e2e9ed}
+@media(max-width:430px){.controls{max-height:77dvh}.discovery-body{max-height:26dvh}.discovery-work{min-height:79px}.discovery-work img{width:46px;height:60px}.discovery-work-copy strong{font-size:.74rem}}
+@media(max-height:630px){.controls{max-height:65dvh}.discovery-body{max-height:18dvh}}
