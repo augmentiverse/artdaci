@@ -1034,7 +1034,7 @@ html[lang="ar"] .home-v2 .hv2-continuum-step::after {
   object-fit: contain;
   object-position: center center;
   padding: clamp(18px, 2vw, 23px) 0;
-  background: radial-gradient(circle at 50% 42%, #363329, #17191c 76%);
+  background: radial-gradient(circle at 50% 42%, #444333, #17191c 76%);
 }
 
 /* User-selected painter portraits, already optimized and pre-cropped to 4:5.
