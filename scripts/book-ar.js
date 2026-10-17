@@ -2,10 +2,12 @@
 import * as THREE from "../vendor/three.module.js";
 import { MindARThree } from "../vendor/mindar-image-three.prod.js";
 import {targetPath, introVideo, artists, copy, language, homepage, localizedRoute} from "./book-ar-data.mjs";
+import {discovery, exploreCopy, local} from "./book-ar-enrichment.mjs";
+import {setupBookDiscovery} from "./book-ar-discovery.mjs";
 const lang=language(new URLSearchParams(location.search).get("lang")), t=copy[lang];
 const $=id=>document.getElementById(id);
 const el={stage:$("ar-stage"), gate:$("intro"),start:$("start"),warning:$("target-warning"),coverChoice:$("cover-choice"),cover:$("cover-file"),status:$("status"),progress:$("progress"),error:$("error"),controls:$("controls"),buttons:$("artist-buttons"),play:$("play"),listen:$("listen"),media:$("media")};
-const state={engine:null,anchor:null,group:null,screen:null,screenMaterial:null,videoTexture:null,selection:"intro",targetInstalled:false,tracked:false,started:false,blob:null,speaking:false,posterCache:new Map()};
+const state={engine:null,anchor:null,group:null,screen:null,screenMaterial:null,videoTexture:null,selection:"intro",targetInstalled:false,tracked:false,started:false,blob:null,speaking:false,posterCache:new Map(),discovery:null,selectedWork:null,thumbs:[],thumbToken:0,posterToken:0,captionMaterial:null};
 function localize(){
   document.documentElement.lang=lang;
   document.documentElement.dir=lang==="ar"?"rtl":"ltr";
@@ -62,6 +64,19 @@ function drawLabel(label){
  c.font="32px sans-serif";c.fillText("Leonardo · Vermeer · Van Gogh · Monet",512,404,960);
  const texture=new THREE.CanvasTexture(canvas);texture.encoding=THREE.sRGBEncoding;return texture;
 }
+function captionTexture(title){
+ const canvas=document.createElement("canvas");canvas.width=1024;canvas.height=150;
+ const c=canvas.getContext("2d");c.fillStyle="#142b40";c.fillRect(0,0,1024,150);
+ c.strokeStyle="#dfb880";c.lineWidth=6;c.strokeRect(5,5,1014,140);
+ c.fillStyle="#fff1cf";c.textAlign="center";c.textBaseline="middle";
+ c.font="bold 49px system-ui, sans-serif";c.fillText(title,512,75,950);
+ const texture=new THREE.CanvasTexture(canvas);texture.encoding=THREE.sRGBEncoding;return texture;
+}
+function caption(title){
+ if(!state.captionMaterial)return;
+ if(state.captionMaterial.map)state.captionMaterial.map.dispose();
+ state.captionMaterial.map=captionTexture(title);state.captionMaterial.needsUpdate=true;
+}
 function createPanel(){
  const group=new THREE.Group();group.position.set(0,0,.04);
  const panel=new THREE.Group();panel.position.set(0,.13,.35);
@@ -69,29 +84,65 @@ function createPanel(){
  back.position.z=-.006;panel.add(back);
  state.screenMaterial=new THREE.MeshBasicMaterial({map:drawLabel(t.intro),side:THREE.DoubleSide});
  state.screen=new THREE.Mesh(new THREE.PlaneGeometry(1,.56),state.screenMaterial);panel.add(state.screen);group.add(panel);
+ state.captionMaterial=new THREE.MeshBasicMaterial({map:captionTexture("ARTDACI · MASTERPIECES ALIVE"),side:THREE.DoubleSide});
+ const captionMesh=new THREE.Mesh(new THREE.PlaneGeometry(1.04,.15),state.captionMaterial);
+ captionMesh.position.set(0,.525,.36);group.add(captionMesh);
  const thumbGroup=new THREE.Group();thumbGroup.position.set(0,-.32,.18);
  artists.forEach((artist,index)=>{
    const x=(index-1.5)*.256;
    const back=new THREE.Mesh(new THREE.PlaneGeometry(.237,.19),new THREE.MeshBasicMaterial({color:0xd4af79,side:THREE.DoubleSide}));
    back.position.set(x,0,-.003);thumbGroup.add(back);
    const front=new THREE.Mesh(new THREE.PlaneGeometry(.224,.177),new THREE.MeshBasicMaterial({color:0x24354b,side:THREE.DoubleSide}));
-   front.position.set(x,0,0);thumbGroup.add(front);
+   front.position.set(x,0,0);thumbGroup.add(front);state.thumbs.push(front);
    new THREE.TextureLoader().load(artist.image,texture=>{texture.encoding=THREE.sRGBEncoding;front.material.map=texture;front.material.needsUpdate=true;},undefined,()=>{});
  });
  group.add(thumbGroup);
  return group;
 }
 function display(texture){
- if(state.screenMaterial){state.screenMaterial.map=texture;state.screenMaterial.needsUpdate=true;}
+ if(!state.screenMaterial)return;
+ state.screenMaterial.map=texture;state.screenMaterial.needsUpdate=true;
+ const img=texture?.image;
+ const width=img?.videoWidth||img?.naturalWidth||img?.width||16;
+ const height=img?.videoHeight||img?.naturalHeight||img?.height||9;
+ const ratio=Math.max(.05,width/height);
+ const w=Math.min(1,.56*ratio);
+ state.screen.scale.set(w, w/ratio/.56, 1);
+}
+function refreshThumbs(id){
+ const sources=discovery[id]?.artworks.map(w=>w.image)||artists.map(a=>a.image);
+ const token=++state.thumbToken;
+ sources.forEach((src,index)=>{
+  const mesh=state.thumbs[index];if(!mesh)return;
+  new THREE.TextureLoader().load(src,texture=>{
+   if(token!==state.thumbToken){texture.dispose();return;}
+   texture.encoding=THREE.sRGBEncoding;
+   if(mesh.material.map)mesh.material.map.dispose();
+   mesh.material.map=texture;mesh.material.needsUpdate=true;
+  },undefined,()=>{});
+ });
+}
+function selectWork(work){
+ if(!work || !state.started)return;
+ state.selectedWork=work;
+ el.media.pause();el.media.removeAttribute("src");el.media.load();
+ el.play.textContent=t.video;stopSpeech();
+ void showPoster();
+ const x=exploreCopy[lang];
+ message(x.workSelection+": "+local(work.title,lang)+(state.tracked?"":" · "+x.scanHint));
 }
 async function showPoster(){
  const selected=state.selection,artist=artists.find(a=>a.id===selected);
- if(!artist){display(drawLabel(t.intro));return;}
+ const token=++state.posterToken,work=state.selectedWork;
+ if(!artist){display(drawLabel(t.intro));caption("ARTDACI · MASTERPIECES ALIVE");return;}
+ const source=work?.image||artist.image,title=work?local(work.title,lang):artist.title[lang];
  try{
-  let texture=state.posterCache.get(artist.id);
-  if(!texture){texture=await new THREE.TextureLoader().loadAsync(artist.image);texture.encoding=THREE.sRGBEncoding;state.posterCache.set(artist.id,texture);}
-  if(state.selection===selected)display(texture);
- }catch{if(state.selection===selected)display(drawLabel(artist.title[lang]));}
+  let texture=state.posterCache.get(source);
+  if(!texture){texture=await new THREE.TextureLoader().loadAsync(source);texture.encoding=THREE.sRGBEncoding;state.posterCache.set(source,texture);}
+  if(state.selection===selected && state.posterToken===token){display(texture);caption(title);}
+ }catch{
+  if(state.selection===selected && state.posterToken===token){display(drawLabel(title));caption(title);}
+ }
 }
 function stopSpeech(){if("speechSynthesis" in window)window.speechSynthesis.cancel();state.speaking=false;el.listen.textContent=t.listen;}
 function selectArtist(id){
