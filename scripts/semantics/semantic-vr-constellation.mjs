@@ -231,6 +231,11 @@ export function createSemanticVrConstellation({
 
   const concepts = runtime.concepts.slice(0, 5);
   const pathSteps = (runtime.learningPath?.steps || []).slice(0, 4);
+  // Curated cross-artwork VR doors supplement — not duplicate — the contextual path.
+  const bridges = (runtime.journeyBridges || [])
+    .filter((bridge) => typeof bridge.href === "string" && bridge.href.startsWith("/") &&
+      !bridge.href.startsWith("//") && bridge.toArtworkId !== runtime.focus?.id)
+    .slice(0, 3);
   const hitTargets = [];
   const interactiveGroups = new Map();
 
@@ -248,10 +253,74 @@ export function createSemanticVrConstellation({
     group.add(portal.group);
   });
 
+
+  bridges.forEach((bridge, index) => {
+    const action = bridge.title || (lang === "ar" ? "انتقل إلى عمل آخر" :
+      lang === "fr" ? "Vers une autre œuvre" : "Go to another artwork");
+    const evidence = (bridge.sharedConcepts || []).map((item) => item.label).join(" · ");
+    const progress = bridge.destinationStepIndex != null
+      ? `${lang === "fr" ? "Étape" : lang === "ar" ? "المرحلة" : "Step"} ${bridge.destinationStepIndex+1}/${bridge.totalSteps}` : "";
+    const step = {
+      stage: "bridge",
+      id: `${bridge.id}:${bridge.toArtworkId}`,
+      label: bridge.toArtworkLabel,
+      action,
+      description: [progress, bridge.title, evidence, bridge.question].filter(Boolean).join("\n"),
+      href: bridge.href,
+      channel: "vr"
+    };
+    const portal = makePortal(step, index, bridges.length, rtl);
+    portal.group.name = `semantic-vr-bridge-${step.id}`;
+    portal.group.position.y = -0.46;
+    portal.group.position.z = 0.69;
+    portal.label.material.opacity = 1;
+    interactiveGroups.set(`portal:${step.stage}:${step.id}`, portal.group);
+    hitTargets.push(portal.hit, portal.label);
+    group.add(portal.group);
+  });
+
+  // One meaningful exit at the final artwork. The existing Semantic page
+  // opens the completed learning path and also lists alternatives; a second
+  // portal to the same knowledge graph would be redundant.
+  const finished = runtime.activeJourney?.complete === true &&
+    runtime.activeJourney.artworkId === runtime.focus?.artworkId &&
+    runtime.activeJourney.totalSteps > 1 &&
+    runtime.activeJourney.stepIndex === runtime.activeJourney.totalSteps - 1;
+  const endingPortals = finished && runtime.journeyCompletion?.reviewHref ? [
+    {
+      stage: "journey-end",
+      id: "review",
+      label: lang === "ar" ? "العودة إلى المسارات التعليمية" :
+        lang === "fr" ? "Retour aux parcours pédagogiques" : "Back to learning journeys",
+      action: lang === "ar" ? "اكتمل المسار" : lang === "fr" ? "Parcours terminé" : "Journey complete",
+      description: lang === "ar" ? "راجع المسار المنجز واختر مساراً آخر إذا رغبت." :
+        lang === "fr" ? "Revoir ce parcours, ou en choisir un autre dans le graphe." :
+        "Review this journey or choose another in the graph.",
+      href: runtime.journeyCompletion.reviewHref
+    }
+  ] : [];
+
+  endingPortals.forEach((step, index) => {
+    const portal = makePortal(step, index, endingPortals.length, rtl);
+    portal.group.name = "semantic-vr-journey-end-" + step.id;
+    portal.group.position.y = -0.46;
+    portal.group.position.z = 0.69;
+    portal.label.material.opacity = 1;
+    portal.label.scale.set(0.48, 0.15, 1);
+    interactiveGroups.set("portal:" + step.stage + ":" + step.id, portal.group);
+    hitTargets.push(portal.hit, portal.label);
+    group.add(portal.group);
+  });
+
   const panelTexture = makeTexture({
-    title: runtime.focus?.label || "ARTDACI",
-    body: (runtime.pedagogy || []).find((item) => item.prompt)?.prompt || "",
-    kicker: rtl ? "السياق الدلالي" : lang === "fr" ? "Contexte sémantique" : "Semantic context",
+    title: runtime.activeJourney?.title || runtime.focus?.label || "ARTDACI",
+    body: runtime.activeJourney
+      ? [`${rtl ? "المرحلة" : lang === "fr" ? "Étape" : "Step"} ${runtime.activeJourney.stepIndex+1}/${runtime.activeJourney.totalSteps}`,
+         runtime.activeJourney.question].filter(Boolean).join("\n")
+      : (runtime.pedagogy || []).find((item) => item.prompt)?.prompt || "",
+    kicker: runtime.activeJourney
+      ? (rtl ? "مسار تعليمي" : lang === "fr" ? "Parcours pédagogique" : "Learning journey")
+      : (rtl ? "السياق الدلالي" : lang === "fr" ? "Contexte sémantique" : "Semantic context"),
     rtl
   });
   const panelMaterial = new THREE.SpriteMaterial({
@@ -341,7 +410,9 @@ export function createSemanticVrConstellation({
   return {
     group,
     hitTargets,
-    hasPortals: pathSteps.length > 0,
+    hasPortals: pathSteps.length > 0 || bridges.length > 0 || endingPortals.length > 0,
+    hasCrossArtworkBridges: bridges.length > 0,
+    hasJourneyEndPortals: endingPortals.length === 1,
     intersect(raycaster) {
       const intersection = raycaster.intersectObjects(hitTargets, false)[0];
       return intersection?.object?.userData?.semanticSelection || null;

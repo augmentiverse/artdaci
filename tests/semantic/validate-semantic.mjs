@@ -269,8 +269,8 @@ for (const mapping of externalMappings.conceptMappings) {
 }
 
 assert(semanticHtml.includes("POC V2.11"), "Semantic page must expose V2.11.");
-assert(semanticHtml.includes("semantic.css?v=17"), "Semantic page must load V2.10 CSS.");
-assert(semanticHtml.includes("semantic-ui.mjs?v=19"), "Semantic page must load V2.10 UI.");
+assert(semanticHtml.includes("semantic.css?v=19"), "Semantic page must load the updated V3 pilot CSS.");
+assert(semanticHtml.includes("semantic-ui.mjs?v=22"), "Semantic page must load the fixed V3 pilot UI.");
 assert(semanticUi.includes("graphWithExternalSuggestions"), "External graph exploration must remain available.");
 assert(semanticUi.includes("graphDataForEntity"), "Cultural entities must be graph centers.");
 assert(semanticUi.includes("graphDataForIconography"), "Iconographic subjects must be graph centers.");
@@ -356,7 +356,7 @@ assert(arViewer.includes("semantic-runtime-client.mjs?v=2"), "AR viewer must loa
 assert(arViewer.includes("semantic-ar-hotspots.mjs?v=2"), "AR viewer must load the discreet hotspot renderer.");
 assert(semanticArHotspots.includes("semantic-hotspot-ring"), "AR semantic hotspots must use compact ring markers.");
 assert(semanticArHotspots.includes("label.visible = selected"), "AR semantic hotspot labels must appear only on selection.");
-assert(vrViewer.includes("semantic-runtime-client.mjs?v=2"), "VR viewer must load the V2.10 shared semantic client.");
+assert(vrViewer.includes("semantic-runtime-client.mjs?v=3"), "VR viewer must load the V2.10 shared semantic client.");
 assert(geoRemoteViewer.includes("semantic-runtime-client.mjs?v=2"), "GEO viewer must load the V2.10 shared semantic client.");
 assert(mastersHubViewer.includes("semantic-runtime-client.mjs?v=2"), "Masters Hub must load the V2.10 shared semantic client.");
 assert(visitorGuide.includes("resolveSemanticRuntime"), "Visitor guide must resolve the current ARTDACI semantic context.");
@@ -399,7 +399,7 @@ assert(semanticVrConstellation.includes("portalInstruction"), "Semantic portals 
 assert(semanticVrConstellation.includes("activate"), "Semantic portal selection must distinguish focus from activation.");
 assert(vrViewer.includes("activateSemanticPortal"), "VR viewer must safely activate a selected semantic portal.");
 assert(vrViewer.includes("currentSession.end().then(navigate, navigate)"), "VR portal navigation must end the active XR session before changing destination.");
-assert(vrViewer.includes('semantic-vr-constellation.mjs?v=7'), "VR viewer must load detailed semantic intersections for adaptive controller pointers.");
+assert(vrViewer.includes('semantic-vr-constellation.mjs?v=10'), "VR viewer must load detailed semantic intersections for adaptive controller pointers.");
 assert(semanticVrConstellation.includes('label.visible = false'), "VR semantic concept labels must remain hidden until selection.");
 assert(semanticVrConstellation.includes('panel.visible = false'), "VR semantic detail panel must remain hidden until selection.");
 assert(!semanticVrConstellation.includes("frameMaterial"), "VR learning portals must not render visible blue frames.");
@@ -417,7 +417,7 @@ assert(arHtml.includes("semantic-runtime.css?v=2"), "AR page must load Semantic 
 assert(arHtml.includes("ar-viewer.js?v=60"), "AR page must load the discreet hotspot viewer cache version.");
 assert(arHtml.includes("styles/ar.css?v=40"), "AR page must load the V2.10 AR stylesheet cache version.");
 assert(vrHtml.includes("semantic-runtime.css?v=2"), "VR page must load Semantic Runtime styles.");
-assert(vrHtml.includes("vr-viewer.js?v=16"), "VR page must load the adaptive controller-pointer build.");
+assert(vrHtml.includes("vr-viewer.js?v=19"), "VR page must load the adaptive controller-pointer build.");
 assert(geoRemoteHtml.includes("../styles/semantic-runtime.css?v=2"), "GEO page must load Semantic Runtime styles.");
 assert(mastersHubHtml.includes("../styles/semantic-runtime.css?v=2"), "Masters Hub must load Semantic Runtime styles.");
 assert(semanticUi.includes('params.get("node")'), "Semantic reader must support node deep links from the runtime.");

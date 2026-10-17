@@ -4,8 +4,8 @@ import { DRACOLoader } from "../vendor/DRACOLoader.module.js";
 import { fetchArtworkManifest } from "./artwork-media-manifest.js";
 import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
 import { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./catalogue.js";
-import { mountSemanticRuntimePanel, resolveSemanticRuntime } from "./semantics/semantic-runtime-client.mjs?v=2";
-import { createSemanticVrConstellation } from "./semantics/semantic-vr-constellation.mjs?v=7";
+import { mountSemanticRuntimePanel, resolveSemanticRuntime } from "./semantics/semantic-runtime-client.mjs?v=3";
+import { createSemanticVrConstellation } from "./semantics/semantic-vr-constellation.mjs?v=10";
 
 const PAINTINGS = {
   "mona-lisa": "content/paintings/mona-lisa.json?v=5",
@@ -162,7 +162,9 @@ async function init() {
     slug,
     resourceType: "painting",
     environment: "vr",
-    lang
+    lang,
+    journeyId: params.get("journey"),
+    journeyStep: params.get("step")
   }).catch((error) => {
     console.warn("Semantic VR runtime unavailable; viewer continues normally.", error);
     return null;
@@ -513,6 +515,17 @@ async function setupSemanticVrConstellation() {
   try {
     const runtime = await semanticRuntimePromise;
     if (!runtime?.concepts?.length) return;
+    if (runtime.journeyCompletion?.reviewHref &&
+        runtime.activeJourney?.complete && runtime.activeJourney.artworkId === runtime.focus?.artworkId) {
+      // One contextual return to Semantic on desktop; the existing VR Gallery
+      // link remains unchanged, because it leads to a genuinely different place.
+      const backLink = document.getElementById("vr-back");
+      if (backLink) {
+        backLink.href = runtime.journeyCompletion.reviewHref;
+        backLink.textContent = lang === "ar" ? "العودة إلى المسارات التعليمية" :
+          lang === "fr" ? "Retour aux parcours pédagogiques" : "Back to learning journeys";
+      }
+    }
     semanticConstellation?.dispose?.();
     semanticConstellation = createSemanticVrConstellation({
       parent: modelRoot,

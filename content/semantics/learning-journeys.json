@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "1.0",
+  "editorialStatus": "artdaci-pedagogical-proposal",
+  "evidencePolicy": "A transition is displayed only if adjacent reviewed artwork profiles have an asserted concept in the journey conceptIds; these links support pedagogical comparison, not historical influence.",
+  "journeys": [
+    {
+      "id": "light-perception",
+      "title": {
+        "fr": "Lumière et perception",
+        "en": "Light and perception",
+        "ar": "الضوء والإدراك البصري"
+      },
+      "objective": {
+        "fr": "Comparer les manières de suggérer lumière et profondeur, sans supposer une influence historique directe.",
+        "en": "Compare how painters suggest light and depth without assuming direct historical influence.",
+        "ar": "قارن طرق تصوير الضوء والعمق دون افتراض تأثير تاريخي مباشر."
+      },
+      "conceptIds": [
+        "concept.light",
+        "concept.optical-perception"
+      ],
+      "steps": [
+        {
+          "artworkId": "ld01",
+          "prompt": {
+            "fr": "Comment les transitions de lumière construisent-elles la profondeur du visage et du paysage ?",
+            "en": "How do light transitions construct depth in the face and landscape?",
+            "ar": "كيف تبني انتقالات الضوء العمق في الوجه والمنظر؟"
+          }
+        },
+        {
+          "artworkId": "ve01",
+          "prompt": {
+            "fr": "Comment le contraste lumineux attire-t-il le regard vers le visage et la perle ?",
+            "en": "How does the lighting contrast draw attention to the face and the pearl?",
+            "ar": "كيف يجذب التباين الضوئي النظر إلى الوجه واللؤلؤة؟"
+          }
+        },
+        {
+          "artworkId": "mo01",
+          "prompt": {
+            "fr": "Comment la lumière et l'atmosphère transforment-elles la perception du paysage ?",
+            "en": "How do light and atmosphere change the perception of the landscape?",
+            "ar": "كيف يغير الضوء والجو إدراك المشهد الطبيعي؟"
+          }
+        }
+      ]
+    },
+    {
+      "id": "gaze-presence",
+      "title": {
+        "fr": "Regard et présence",
+        "en": "Gaze and presence",
+        "ar": "النظرة والحضور"
+      },
+      "objective": {
+        "fr": "Observer comment regard, identité et présence psychologique sont construits dans trois œuvres.",
+        "en": "Observe how gaze, identity and psychological presence are constructed across three artworks.",
+        "ar": "لاحظ كيف تتشكل النظرة والهوية والحضور النفسي في ثلاثة أعمال."
+      },
+      "conceptIds": [
+        "concept.gaze",
+        "concept.psychological-presence",
+        "concept.optical-perception"
+      ],
+      "steps": [
+        {
+          "artworkId": "ld01",
+          "prompt": {
+            "fr": "Quels éléments rendent la présence du modèle ambiguë ?",
+            "en": "Which features make the sitter's presence ambiguous?",
+            "ar": "ما العناصر التي تجعل حضور الشخصية غامضاً؟"
+          }
+        },
+        {
+          "artworkId": "ve01",
+          "prompt": {
+            "fr": "Comment le regard direct modifie-t-il notre relation au personnage ?",
+            "en": "How does a direct gaze change our relationship with the figure?",
+            "ar": "كيف تغير النظرة المباشرة علاقتنا بالشخصية؟"
+          }
+        },
+        {
+          "artworkId": "vg01",
+          "prompt": {
+            "fr": "Que révèle le traitement du regard dans cet autoportrait de 1889 ?",
+            "en": "What does the treatment of gaze reveal in this 1889 self-portrait?",
+            "ar": "ماذا تكشف معالجة النظرة في هذا البورتريه الذاتي لعام 1889؟"
+          }
+        }
+      ]
+    },
+    {
+      "id": "color-gesture",
+      "title": {
+        "fr": "Couleur et geste pictural",
+        "en": "Color and painterly gesture",
+        "ar": "اللون وحركة الفرشاة"
+      },
+      "objective": {
+        "fr": "Comparer la fonction de la couleur et, lorsque documenté, des touches visibles.",
+        "en": "Compare the role of color and, where documented, visible brushwork.",
+        "ar": "قارن دور اللون ولمسات الفرشاة الظاهرة حيث وُثقت."
+      },
+      "conceptIds": [
+        "concept.color",
+        "technique.visible-brushwork",
+        "concept.chromatic-vibration"
+      ],
+      "steps": [
+        {
+          "artworkId": "ve01",
+          "prompt": {
+            "fr": "Comment les zones colorées orientent-elles l'attention ?",
+            "en": "How do areas of color guide attention?",
+            "ar": "كيف توجه المناطق الملونة الانتباه؟"
+          }
+        },
+        {
+          "artworkId": "vg01",
+          "prompt": {
+            "fr": "Comment la couleur et les touches renforcent-elles l'expression du visage ?",
+            "en": "How do color and brushstrokes strengthen the expression of the face?",
+            "ar": "كيف تعزز الألوان وضربات الفرشاة تعبير الوجه؟"
+          }
+        },
+        {
+          "artworkId": "mo01",
+          "prompt": {
+            "fr": "Comment les touches et la couleur suggèrent-elles une impression fugitive ?",
+            "en": "How do brushstrokes and color suggest a fleeting impression?",
+            "ar": "كيف توحي ضربات الفرشاة والألوان بانطباع عابر؟"
+          }
+        }
+      ]
+    }
+  ]
+}

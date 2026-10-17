@@ -6,6 +6,7 @@ const iconographyDoc = require("../content/semantics/iconography.json");
 const imageAnnotationsDoc = require("../content/semantics/image-annotations.json");
 const pedagogyDoc = require("../content/semantics/pedagogical-relations.json");
 const experiencesDoc = require("../content/semantics/experience-links.json");
+const journeysDoc = require("../content/semantics/learning-journeys.json");
 
 const SUPPORTED_LANGS = new Set(["fr", "en", "ar"]);
 const SUPPORTED_ENVIRONMENTS = new Set(["web", "book", "ar", "vr", "geo", "3d"]);
@@ -371,8 +372,11 @@ function guideQuestionForStep(step, lang) {
   return `Explain ${label} simply.`;
 }
 
-function guideFor({ focus, learningPath, concepts, pedagogy, experiences, lang }) {
+function guideFor({ focus, learningPath, concepts, pedagogy, experiences, journeyBridges = [], lang }) {
   const suggestedQuestions = [];
+  // Prefer a grounded cross-artwork inquiry when the reviewed graph supports one.
+  const firstBridge = journeyBridges.find((item) => item.question && item.sharedConcepts?.length);
+  if (firstBridge) suggestedQuestions.push(firstBridge.question);
   for (const step of learningPath?.steps || []) {
     const question = guideQuestionForStep(step, lang);
     if (question && !suggestedQuestions.includes(question)) suggestedQuestions.push(question);
@@ -403,6 +407,90 @@ function guideFor({ focus, learningPath, concepts, pedagogy, experiences, lang }
       experiences: experiences?.length || 0
     }
   };
+}
+
+
+/**
+ * Evidence-based transitions to a *different* artwork in an existing VR scene.
+ * Only reviewed artwork assertions, curated questions and manifest routes are used.
+ * This does not assert historical influence or invent a destination.
+ */
+
+function activeLearningJourney(docs, artworkId, id, rawStep, lang) {
+  if (!artworkId || !id || typeof id !== "string") return null;
+  const journey = (docs.journeys.journeys || []).find((item) => item.id === id);
+  if (!journey) return null;
+  const stepIndex = journey.steps.findIndex((step) => step.artworkId === artworkId);
+  if (stepIndex < 0) return null;
+  // Never trust an arbitrary URL step number: it must match the requested artwork.
+  if (rawStep != null && rawStep !== "" &&
+      (!/^(0|[1-9][0-9]{0,2})$/.test(String(rawStep)) ||
+        Number(rawStep) !== stepIndex)) return null;
+  return {
+    id: journey.id,
+    title: localize(journey.title, lang),
+    artworkId,
+    stepIndex,
+    totalSteps: journey.steps.length,
+    complete: stepIndex === journey.steps.length - 1,
+    question: localize(journey.steps[stepIndex].prompt, lang)
+  };
+}
+
+function contextualVrHref(href, journeyId, destinationIndex) {
+  if (typeof href !== "string" || !/^\/(?:vr|gallery-vr)\.html(?:\?|#|$)/.test(href)) return href;
+  const hashPosition = href.indexOf("#");
+  const head = hashPosition === -1 ? href : href.slice(0, hashPosition);
+  const hash = hashPosition === -1 ? "" : href.slice(hashPosition);
+  const join = head.includes("?") ? "&" : "?";
+  return head + join + "journey=" + encodeURIComponent(journeyId) +
+    "&step=" + destinationIndex + hash;
+}
+
+function journeyBridgesFor(docs, maps, artworkId, lang, activeJourney = null) {
+  if (!artworkId) return [];
+  const results = [];
+  const assertions = (id) => new Set((maps.artworkMap.get(id)?.assertions || [])
+    .map((entry) => entry.conceptId));
+  for (const journey of docs.journeys.journeys || []) {
+    if (activeJourney && journey.id !== activeJourney.id) continue;
+    const index = (journey.steps || []).findIndex((step) => step.artworkId === artworkId);
+    if (index < 0 || journey.steps.length < 2) continue;
+    const destinationIndex = activeJourney ? index + 1 : (index + 1) % journey.steps.length;
+    if (destinationIndex >= journey.steps.length) continue; // A guided sequence has a genuine finish.
+    const destination = journey.steps[destinationIndex];
+    const target = maps.artworkMap.get(destination.artworkId);
+    if (!target || target.id === artworkId) continue;
+    const fromConcepts = assertions(artworkId);
+    const toConcepts = assertions(destination.artworkId);
+    const concepts = (journey.conceptIds || [])
+      .filter((id) => fromConcepts.has(id) && toConcepts.has(id) && maps.conceptMap.has(id))
+      .map((id) => ({ id, label: localize(maps.conceptMap.get(id).labels, lang) }));
+    if (!concepts.length) continue;
+    const candidates = (maps.experienceMap.get(destination.artworkId) || [])
+      .filter((entry) => entry.channel === "vr" && String(entry.href || "").startsWith("/"));
+    const experience = candidates.find((entry) =>
+      String(entry.href || "").startsWith("/vr.html?")) || candidates[0];
+    if (!experience) continue;
+    results.push({
+      id: journey.id,
+      title: localize(journey.title, lang),
+      objective: localize(journey.objective, lang),
+      fromArtworkId: artworkId,
+      toArtworkId: target.id,
+      toArtworkLabel: localize(target.title, lang),
+      toArtworkArtist: localize(target.artist, lang),
+      question: localize(destination.prompt, lang),
+      sharedConcepts: concepts,
+      experienceId: experience.id,
+      href: contextualVrHref(normalizeExperienceHref(experience.href, lang), journey.id, destinationIndex),
+      channel: experience.channel,
+      destinationStepIndex: destinationIndex,
+      totalSteps: journey.steps.length,
+      grounding: "reviewed-artwork-assertions + editorial-learning-journey"
+    });
+  }
+  return results;
 }
 
 function nextDestinations(pedagogy, experiences, lang) {
@@ -451,7 +539,8 @@ module.exports = async function handler(req, res) {
       iconography: iconographyDoc,
       images: imageAnnotationsDoc,
       pedagogy: pedagogyDoc,
-      experiences: experiencesDoc
+      experiences: experiencesDoc,
+      journeys: journeysDoc
     };
     const { runtime } = docs;
     const maps = buildMaps(docs);
@@ -502,12 +591,23 @@ module.exports = async function handler(req, res) {
       lang,
       environment
     });
+    const activeJourneyOut = activeLearningJourney(
+      docs, artworkId, req.query?.journey, req.query?.step, lang
+    );
+    const journeyBridgesOut = journeyBridgesFor(docs, maps, artworkId, lang, activeJourneyOut);
+    const journeyCompletionOut = activeJourneyOut?.complete ? {
+      reviewHref: "/semantic/?artwork=" + encodeURIComponent(artworkId) +
+        "&lang=" + encodeURIComponent(lang) + "&journey=" +
+        encodeURIComponent(activeJourneyOut.id) +
+        "&step=" + activeJourneyOut.stepIndex
+    } : null;
     const guideOut = guideFor({
       focus,
       learningPath: learningPathOut,
       concepts: conceptsOut,
       pedagogy: pedagogyOut,
       experiences: experiencesOut,
+      journeyBridges: journeyBridgesOut,
       lang
     });
 
@@ -555,6 +655,9 @@ module.exports = async function handler(req, res) {
       experiences: experiencesOut,
       next: nextDestinations(pedagogyOut, experiencesOut, lang),
       learningPath: learningPathOut,
+      journeyBridges: journeyBridgesOut,
+      activeJourney: activeJourneyOut,
+      journeyCompletion: journeyCompletionOut,
       guide: guideOut,
       links: {
         semantic: artworkId
