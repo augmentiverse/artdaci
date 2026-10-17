@@ -152,8 +152,10 @@ async function start(){
 }
 async function init(){
  localize();
- state.targetInstalled=await installedTarget();
- if(!state.targetInstalled){el.warning.hidden=false;el.warning.textContent=t.pending;el.coverChoice.hidden=false;}
+ // Register interactions before waiting for the target download. Otherwise the
+ // start button seems inert on slow mobile networks.
+ el.start.disabled=true;
+ progress(t.loading);
  el.start.addEventListener("click",()=>void start());
  el.buttons.addEventListener("click",ev=>{const button=ev.target.closest("button[data-artist]");if(button)selectArtist(button.dataset.artist);});
  el.play.addEventListener("click",()=>void play());
@@ -161,5 +163,14 @@ async function init(){
  el.media.addEventListener("ended",()=>{el.play.textContent=t.video;void showPoster();});
  document.addEventListener("visibilitychange",()=>{if(document.hidden){el.media.pause();stopSpeech();}});
  window.addEventListener("pagehide",()=>{el.media.pause();stopSpeech();if(state.engine)void state.engine.stop();if(state.blob)URL.revokeObjectURL(state.blob);});
+ try {
+   state.targetInstalled=await installedTarget();
+   if(!state.targetInstalled){el.warning.hidden=false;el.warning.textContent=t.pending;el.coverChoice.hidden=false;}
+ } catch(error) {
+   fail(error);
+ } finally {
+   progress("");
+   el.start.disabled=false;
+ }
 }
-void init();
+void init().catch(fail);
