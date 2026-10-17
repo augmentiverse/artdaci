@@ -1,0 +1,170 @@
+:root{color-scheme:dark;--gold:#d9b37c;--paper:#f4eadc;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#0b1420;color:var(--paper)}
+button,input,a{font:inherit}a{color:inherit}button{cursor:pointer}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #ffe2ad;outline-offset:3px}
+#book-ar{min-height:100dvh;position:relative;overflow:hidden;background:radial-gradient(circle at 50% 30%,#273b56,#0b1420 68%)}
+#ar-stage{position:fixed;inset:0;overflow:hidden}#ar-stage canvas,#ar-stage video{max-width:none}
+.bar{z-index:8;position:fixed;inset:0 0 auto;min-height:66px;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px max(12px,env(safe-area-inset-right)) 10px max(12px,env(safe-area-inset-left));background:linear-gradient(#07131ef8,#07131ec9);backdrop-filter:blur(12px)}
+.bar>a{font-size:.85rem;text-decoration:none;border:1px solid #887256;border-radius:11px;padding:9px;background:#243445}
+.bar strong{font:600 1.15rem Georgia,serif;letter-spacing:.09em;color:#f4c990;display:flex;align-items:center;flex-direction:column}
+.bar small{font:600 .6rem sans-serif;letter-spacing:.14em;color:#ddd}
+.languages{display:flex;gap:4px}.languages a{border:1px solid #697584;padding:8px;border-radius:9px;text-decoration:none;font-size:.78rem}
+.languages a[aria-current="page"]{background:#9c7851;color:#fff;border-color:#e0c199}
+#status{z-index:8;position:fixed;top:74px;left:50%;transform:translateX(-50%);background:#0c1e2ce9;border:1px solid #a48867;border-radius:12px;padding:9px 13px;max-width:90vw;width:max-content;text-align:center;font-size:.84rem}
+#status:empty{display:none}
+.gate{position:relative;z-index:6;min-height:100dvh;display:grid;place-items:center;padding:86px 12px 22px;background:#09121ddd}
+.gate-body{width:min(100%,560px);max-height:calc(100dvh - 108px);overflow-y:auto;text-align:center;background:linear-gradient(155deg,#21364d,#111c2b);border:1px solid #b18b62;border-radius:20px;box-shadow:0 20px 70px #0009;padding:clamp(18px,3vw,30px)}
+.gate-body h1{font:600 clamp(1.35rem,4vw,2.1rem) Georgia,serif;margin:10px 0}
+.gate-body p{line-height:1.45;margin:10px auto}.gate-body small{color:#ddd}
+.kicker{font-size:.72rem;letter-spacing:.2em;color:var(--gold);font-weight:750}
+.gate model-viewer{display:block;width:100%;height:clamp(125px,23vh,220px)}
+.notice{border:1px solid #b18b62;background:#6b491f4a;border-radius:10px;padding:10px;font-size:.84rem}
+.cover-choice{display:block;border:1px dashed #d7b381;border-radius:10px;padding:9px;margin:12px 0}.cover-choice input{display:block;max-width:100%;margin:8px auto}
+.primary{width:100%;padding:13px;background:linear-gradient(110deg,#c79554,#e6bd82);border:0;color:#1c2027;font-weight:800;border-radius:12px}
+.primary:disabled{opacity:.5;cursor:wait}#error{color:#ffb5b5;font-size:.85rem;white-space:pre-line}
+#progress{font-size:.86rem;color:#ffe0b2}.controls{position:fixed;z-index:7;bottom:max(10px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:min(96vw,810px);padding:11px;background:#0b1b2de9;backdrop-filter:blur(12px);border:1px solid #a58865;border-radius:16px;box-shadow:0 10px 24px #000a;text-align:center}
+.choices,.actions{display:flex;flex-wrap:wrap;justify-content:center;gap:7px}.choices{margin-bottom:10px}
+.choices button,.actions a,.actions button{color:#f9e7ce;border:1px solid #978064;border-radius:9px;background:#2a4056;padding:9px 11px;font-size:.82rem;text-decoration:none}
+.choices button[aria-pressed="true"]{color:#191b1e;background:#e0b780;font-weight:700}.actions a{background:#1d3549}
+.controls small{display:block;margin-top:9px;color:#ddd;font-size:.75rem}
+.gate[hidden],.controls[hidden],.cover-choice[hidden],.notice[hidden],#error[hidden]{display:none!important}
+html[dir="rtl"] .controls{direction:rtl}
+@media(max-width:460px){.bar strong{font-size:.9rem}.bar small{font-size:.51rem}.bar{min-height:58px}.controls{padding:8px}.choices button,.actions a,.actions button{padding:8px;font-size:.75rem}.controls small{font-size:.69rem}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+
+
+/* V1.2: lightweight accessible museum information that does not obscure the AR canvas. */
+.controls{max-height:min(74dvh,610px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.discovery{text-align:start;border-top:1px solid #887154;border-bottom:1px solid #887154;padding:6px 0;margin:5px 0 10px}
+.discovery-toggle{width:100%;color:#f9dfb7;border:0;background:transparent;padding:7px 12px;font-weight:700;font-size:.89rem;cursor:pointer;text-align:start}
+.discovery-panel{background:#15283be8;border:1px solid #765d43;border-radius:12px;margin:4px 1px 8px;padding:10px}
+.discovery-panel[hidden]{display:none!important}
+.discovery-heading h2{font:600 1.15rem Georgia,serif;color:#f1c88f;margin:1px 0 3px}
+.discovery-heading p{margin:2px 0 6px;line-height:1.35;font-size:.82rem;color:#e7dcd2}
+#discovery-current{color:#e5ba82;font-weight:650}
+.discovery-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:8px 0}
+.discovery-tabs button{border:1px solid #8c7559;border-radius:9px;background:#213a51;color:#f9eddf;padding:8px 6px;font-size:.81rem;min-height:40px}
+.discovery-tabs button[aria-pressed="true"]{background:#e0b780;border-color:#e0b780;color:#172336;font-weight:700}
+.discovery-tabs button:disabled{opacity:.46;cursor:not-allowed}
+.discovery-body{max-height:min(34dvh,270px);overflow-y:auto;overscroll-behavior:contain;padding:2px 3px;text-align:start;scrollbar-width:thin}
+.discovery-text{line-height:1.5;margin:8px 2px;font-size:.89rem}
+.discovery-hint{font-size:.8rem;color:#f3c993;padding:6px 8px;border-inline-start:3px solid #b98b5b;margin:7px 1px;background:#24384b}
+.discovery-question{font-size:.84rem;line-height:1.45;color:#f7dfae;padding:9px;background:#284057;border-radius:9px}
+.discovery-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.discovery-work{display:flex;align-items:center;gap:8px;text-align:start;border:1px solid #687688;background:#203248;border-radius:10px;padding:5px;color:#fff2df;min-width:0;cursor:pointer;min-height:82px}
+.discovery-work[aria-pressed="true"]{border:2px solid #edc78e;background:#354764}
+.discovery-work img{width:58px;height:72px;max-width:35%;border-radius:5px;object-fit:contain;background:#0b1522;flex-shrink:0}
+.discovery-work-copy{display:flex;flex-direction:column;gap:3px;min-width:0}
+.discovery-work-copy strong{font-size:.79rem;line-height:1.24}
+.discovery-work-copy span{font-size:.72rem;color:#f5d5ac}
+.discovery-work-copy small{font-size:.7rem;line-height:1.25;color:#e2e9ed}
+@media(max-width:430px){.controls{max-height:77dvh}.discovery-body{max-height:26dvh}.discovery-work{min-height:79px}.discovery-work img{width:46px;height:60px}.discovery-work-copy strong{font-size:.74rem}}
+@media(max-height:630px){.controls{max-height:65dvh}.discovery-body{max-height:18dvh}}
+
+/* Book AR V1.3 — AR-first compact controls. Keep the tracked art visible. */
+.controls{
+  width:min(96vw,760px);
+  max-height:min(45dvh,320px);
+  padding:8px 10px;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+.controls:has(.discovery-panel:not([hidden])){
+  max-height:min(59dvh,470px);
+}
+.choices,.actions{
+  flex-wrap:nowrap;
+  justify-content:flex-start;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scrollbar-width:thin;
+  overscroll-behavior-x:contain;
+  -webkit-overflow-scrolling:touch;
+  white-space:nowrap;
+  padding-bottom:4px;
+  gap:6px;
+}
+.choices{margin-bottom:5px}
+.choices button,.actions button,.actions a{
+  flex:0 0 auto;
+  padding:7px 10px;
+  min-height:38px;
+}
+.discovery{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+  column-gap:8px;
+  row-gap:4px;
+  margin:3px 0 5px;
+  padding:5px 0;
+}
+.discovery-summary{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  font-size:.82rem;
+  text-align:start;
+}
+.discovery-summary strong{
+  color:#f5d29e;
+  font-weight:750;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.discovery-summary span{
+  color:#e6ecf2;
+  font-size:.74rem;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.discovery-toggle{
+  width:auto;
+  min-height:36px;
+  padding:6px 9px;
+  border:1px solid #907251;
+  border-radius:9px;
+  font-size:.78rem;
+  white-space:nowrap;
+  background:#263c51;
+}
+.discovery-panel{
+  grid-column:1 / -1;
+  padding:7px;
+  margin:3px 0;
+}
+.discovery-heading p{margin:0 0 4px;font-size:.78rem}
+.discovery-body{max-height:min(19dvh,175px)}
+.controls>small{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  clip-path:inset(50%);
+  white-space:nowrap;
+}
+@media (max-width:460px){
+  .controls{
+    width:calc(100vw - 12px);
+    bottom:max(6px,env(safe-area-inset-bottom));
+    max-height:min(42dvh,278px);
+    padding:6px 8px;
+  }
+  .controls:has(.discovery-panel:not([hidden])){max-height:min(57dvh,430px)}
+  .choices button,.actions button,.actions a{
+    min-height:36px;
+    padding:7px 9px;
+  }
+  .discovery-body{max-height:min(17dvh,138px)}
+}
+@media(max-height:630px){
+  .controls{max-height:41dvh}
+  .controls:has(.discovery-panel:not([hidden])){max-height:59dvh}
+  .discovery-body{max-height:16dvh}
+}

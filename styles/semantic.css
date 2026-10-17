@@ -2334,3 +2334,25 @@ html[dir="rtl"] .workspace-search input {
 .semantic-svg-node.is-center .semantic-svg-node-type {
   fill: #f0d5b3;
 }
+
+/* Book AR → Semantic: keep 16 painting choices accessible without pushing
+   the actual knowledge graph below several rows of navigation. */
+.artwork-switcher{
+  display:flex;
+  overflow-x:auto;
+  overflow-y:hidden;
+  grid-template-columns:none;
+  scroll-snap-type:x proximity;
+  overscroll-behavior-x:contain;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+  padding:2px 2px 8px;
+  gap:7px;
+}
+.artwork-switcher .artwork-switch{
+  flex:0 0 clamp(134px,22vw,190px);
+  scroll-snap-align:start;
+}
+@media(max-width:600px){
+ .artwork-switcher .artwork-switch{flex-basis:min(44vw,165px)}
+}

@@ -92,7 +92,7 @@ const artworkSet = new Set(artworkIds);
 
 assert(conceptIds.length === 50, "V2.10 must contain 50 concepts.");
 assert(conceptSet.size === conceptIds.length, "Concept IDs must be unique.");
-assert(artworkIds.length === 4, "V2.10 must contain four pilot artworks.");
+assert(artworkIds.length === 16, "Book AR Semantic must contain sixteen artworks (four initial, twelve new).");
 assert(artworkSet.size === artworkIds.length, "Artwork IDs must be unique.");
 assert(culturalDoc.entities.length === 20, "V2.10 must contain 20 cultural entities.");
 assert(culturalDoc.relations.length === 31, "V2.10 must contain 31 cultural relations.");
@@ -228,7 +228,28 @@ for (const artwork of artworksDoc.artworks) {
     assert(conceptSet.has(assertion.conceptId), `${artwork.id}: unknown concept ${assertion.conceptId}`);
   }
 }
-assert(assertionCount === 77, `Expected 77 weighted assertions, got ${assertionCount}.`);
+assert(assertionCount === 197, `Expected 197 weighted assertions across 16 artworks, got ${assertionCount}.`);
+
+
+// The four IIIF-annotated pilot artworks remain unchanged; Book AR adds
+// twelve concept-only profiles without claiming to have new IIIF annotations.
+const bookArSemanticIdGroups = {
+  leonardo: { "mona-lisa": "ld01", ermine: "ld02", ginevra: "ld03", ferronniere: "ld04" },
+  vermeer: { pearl: "ve01", milkmaid: "ve03", delft: "ve02", balance: "ve04" },
+  vangogh: { "self-portrait-1889": "vg01", bedroom: "vg02", "starry-night": "vg03", "cafe-terrace": "vg04" },
+  monet: { sunrise: "mo01", parasol: "mo02", poppies: "mo03", "water-lilies": "mo04" }
+};
+assert(new Set(Object.values(bookArSemanticIdGroups).flatMap(item => Object.values(item))).size === 16,
+  "Book AR semantic links must map to sixteen distinct artworks.");
+for (const id of Object.values(bookArSemanticIdGroups).flatMap(item => Object.values(item))) {
+  assert(artworkSet.has(id), `Missing Book AR semantic artwork: ${id}.`);
+  const record = artworksDoc.artworks.find(art => art.id === id);
+  assert(record?.assertions?.length >= 8, `${id}: semantic graph needs a meaningful concept neighborhood.`);
+  for (const language of ["fr", "en", "ar"]) {
+    assert(Boolean(record?.title?.[language]), `${id}: missing ${language} title.`);
+    assert(Boolean(record?.artist?.[language]), `${id}: missing ${language} artist.`);
+  }
+}
 
 const vg01 = artworksDoc.artworks.find((item) => item.id === "vg01");
 assert(vg01?.date?.en === "1889", "vg01 must remain the 1889 Self-Portrait.");
@@ -269,7 +290,7 @@ for (const mapping of externalMappings.conceptMappings) {
 }
 
 assert(semanticHtml.includes("POC V2.11"), "Semantic page must expose V2.11.");
-assert(semanticHtml.includes("semantic.css?v=17"), "Semantic page must load V2.10 CSS.");
+assert(semanticHtml.includes("semantic.css?v=18"), "Semantic page must load refreshed navigation CSS.");
 assert(semanticHtml.includes("semantic-ui.mjs?v=19"), "Semantic page must load V2.10 UI.");
 assert(semanticUi.includes("graphWithExternalSuggestions"), "External graph exploration must remain available.");
 assert(semanticUi.includes("graphDataForEntity"), "Cultural entities must be graph centers.");
