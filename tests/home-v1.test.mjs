@@ -40,36 +40,40 @@ test("homepage uses the blue theme and a compact responsive 3D hero", async () =
   for (const file of pages) {
     const html = await read(file);
     assert.match(html, /<meta name="theme-color" content="#06192b" \/>/);
-    assert.match(html, /styles\/home-v2-adjustments\.css\?v=8/);
+    assert.match(html, /styles\/home-v2-adjustments\.css\?v=9/);
   }
 });
 
-test("featured artworks use one shared medallion layout", async () => {
+test("featured artworks have natural proportions: portraits and Monet landscape", async () => {
   const css = await read("styles/home-v2-adjustments.css");
   assert.match(css, /\.home-v2 \.hv2-featured-grid\s*\{[\s\S]*?repeat\(4, minmax\(0, 1fr\)\)/);
-  assert.match(css, /\.home-v2 \.hv2-work img,[\s\S]*?aspect-ratio:\s*1;[\s\S]*?border-radius:\s*50%/);
-
+  assert.match(css, /\.home-v2 \.hv2-work-visual\s*\{[\s\S]*?height:\s*clamp\(/);
+  assert.match(css, /\.home-v2 \.hv2-work \.hv2-work-visual img,[\s\S]*?width:\s*auto;[\s\S]*?height:\s*auto;[\s\S]*?max-width:\s*100%;[\s\S]*?max-height:\s*100%;[\s\S]*?aspect-ratio:\s*auto;[\s\S]*?object-fit:\s*contain/);
+  assert.match(css, /\.home-v2 \.hv2-work-copy\s*\{[\s\S]*?margin-top:\s*auto/);
+  assert.doesNotMatch(css, /border-radius:\s*50%/);
   for (const file of pages) {
     const html = await read(file);
     const featured = html.match(/<div class="hv2-featured-grid">([\s\S]*?)<\/div>\s*<\/section>/)?.[1] ?? "";
-    assert.equal((featured.match(/class="hv2-work"/g) ?? []).length, 4, `${file} must expose four artworks`);
+    assert.equal((featured.match(/class="hv2-work"/g) ?? []).length, 4, file);
+    assert.equal((featured.match(/class="hv2-work-visual"/g) ?? []).length, 4, file);
+    const workImages = [...featured.matchAll(/<span class="hv2-work-visual"><img src="([^"]+)"/g)];
+    assert.equal(workImages.length, 4, file);
+    for (const match of workImages) await access(path.join(root,match[1]));
   }
 });
 
-test("Mona Lisa shows her full portrait, including head and hands, inside the medallion", async () => {
+test("Mona Lisa uses the user's image with no circular crop or internal padding", async () => {
   const css = await read("styles/home-v2-adjustments.css");
-  const base = await read("styles/home-v2.css");
   const art = "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa-home-medallion.webp";
-  await access(path.join(root, art));
-  assert.ok((await stat(path.join(root, art))).size > 5000, "Selected image should not be empty");
-  assert.match(css, /\.home-v2 \.hv2-featured-grid \.hv2-work:nth-child\(1\) img\s*\{[\s\S]*?object-fit:\s*contain/);
-  assert.match(css, /\.home-v2 \.hv2-work img,[\s\S]*?border-radius:\s*50%/);
-  assert.match(css, /padding:\s*clamp\(18px, 2vw, 23px\) 0/);
+  await access(path.join(root,art));
+  assert.ok((await stat(path.join(root,art))).size > 5000);
+  assert.match(css, /\.home-v2 \.hv2-work \.hv2-work-visual img,[\s\S]*?object-fit:\s*contain/);
+  assert.match(css, /\.home-v2 \.hv2-work \.hv2-work-visual img,[\s\S]*?padding:\s*0/);
   for (const file of pages) {
     const html = await read(file);
     const featured = html.match(/<div class="hv2-featured-grid">([\s\S]*?)<\/div>\s*<\/section>/)?.[1] ?? "";
-    assert.ok(featured.includes('src="' + art + '"'), file + " must load portrait-format Mona Lisa");
-    assert.ok(!featured.includes("mona-lisa/images/mona-lisa.jpg"), file + " must not load old image");
+    assert.ok(featured.includes('src="' + art + '"'));
+    assert.ok(!featured.includes('mona-lisa/images/mona-lisa.jpg'));
   }
 });
 
