@@ -1,0 +1,48 @@
+name: ARTDACI consolidation quality
+
+on:
+  pull_request:
+    paths:
+      - 'api/artwork-redirect.js'
+      - 'content/editorial/**'
+      - 'content/media-manifests/**'
+      - 'content/paintings/**'
+      - 'scripts/gallery-vr.js'
+      - 'gallery-vr.html'
+      - 'sw.js'
+      - 'offline.html'
+      - 'print-*.html'
+      - 'vercel.json'
+      - 'tests/artdaci-consolidation-phase1.test.mjs'
+      - '.github/workflows/artdaci-quality.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  consolidation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout code without massive 3D and video assets
+        uses: actions/checkout@v4
+        with:
+          filter: blob:none
+          sparse-checkout: |
+            /api/
+            /content/
+            /scripts/
+            /tests/
+            /*.html
+            /vercel.json
+            /sw.js
+          sparse-checkout-cone-mode: false
+      - name: Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Consolidation regression checks
+        run: node --test tests/artdaci-consolidation-phase1.test.mjs
+      - name: Manifest media resolver checks
+        run: node --test tests/artwork-media-manifest-core.test.mjs
