@@ -35,8 +35,8 @@
         "scope": "artwork",
         "path": "images/main-orsay-1889-v1.webp",
         "mimeType": "image/webp",
-        "available": false,
-        "migrationStatus": "planned",
+        "available": true,
+        "migrationStatus": "published",
         "bytes": 267520,
         "sha256": "65b10b377b341e2837768a2a1c748b53546e0e8e5ac72d2cfe994dbf486844fa"
       },
@@ -140,8 +140,8 @@
         "scope": "artwork",
         "path": "models/portrait-orsay-1889-v2.glb",
         "mimeType": "model/gltf-binary",
-        "available": false,
-        "migrationStatus": "planned",
+        "available": true,
+        "migrationStatus": "published",
         "bytes": 3198048,
         "sha256": "1178d84ef3884c6b9585a80bb7e053cc8a359749f6816f5c2fc209e2dbb89126"
       },
@@ -178,12 +178,12 @@
         "scope": "artwork",
         "path": "ar/target-orsay-1889-v1.mind",
         "mimeType": "application/octet-stream",
-        "available": false,
-        "migrationStatus": "planned",
+        "available": true,
+        "migrationStatus": "published",
         "bytes": 980862,
         "sha256": "2cd573741ed98fab27e53bdffdfd17430a8c2dc65e3e32e210950e2f3bcabc1b"
       }
     }
   },
-  "updatedAt": "2026-10-17"
+  "updatedAt": "2026-10-18"
 }

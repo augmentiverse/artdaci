@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "status": "planned",
+  "status": "r2-verified",
   "artworkId": "vg01",
   "releaseIdentity": {
     "title": "Self-Portrait",
@@ -17,8 +17,8 @@
       "bytes": 267520,
       "sha256": "65b10b377b341e2837768a2a1c748b53546e0e8e5ac72d2cfe994dbf486844fa",
       "mimeType": "image/webp",
-      "available": false,
-      "migrationStatus": "planned"
+      "available": true,
+      "migrationStatus": "published"
     },
     {
       "key": "models.portrait",
@@ -27,8 +27,8 @@
       "bytes": 3198048,
       "sha256": "1178d84ef3884c6b9585a80bb7e053cc8a359749f6816f5c2fc209e2dbb89126",
       "mimeType": "model/gltf-binary",
-      "available": false,
-      "migrationStatus": "planned"
+      "available": true,
+      "migrationStatus": "published"
     },
     {
       "key": "ar.target",
@@ -37,8 +37,8 @@
       "bytes": 980862,
       "sha256": "2cd573741ed98fab27e53bdffdfd17430a8c2dc65e3e32e210950e2f3bcabc1b",
       "mimeType": "application/octet-stream",
-      "available": false,
-      "migrationStatus": "planned",
+      "available": true,
+      "migrationStatus": "published",
       "targetIndex": 0,
       "hardwareValidationStatus": "pending"
     }

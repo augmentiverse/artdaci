@@ -36,7 +36,7 @@ test("vg01 metadata and immersive fallbacks all select the Orsay 1889 release", 
   assert.deepEqual(painting.media.modelVariants.map(({ id }) => id), ["portrait"]);
 });
 
-test("the manifest stages only versioned Orsay media and quarantines the 1887 release", async () => {
+test("the manifest publishes only verified versioned Orsay media and quarantines the 1887 release", async () => {
   const manifest = JSON.parse(await readFile(new URL("content/media-manifests/artworks/vg01/manifest.json", root), "utf8"));
   assert.equal(manifest.artwork.date, "September 1889");
   assert.equal(manifest.artwork.museum, "Musée d’Orsay");
@@ -45,8 +45,8 @@ test("the manifest stages only versioned Orsay media and quarantines the 1887 re
     ["images/main-orsay-1889-v1.webp", "models/portrait-orsay-1889-v2.glb", "ar/target-orsay-1889-v1.mind"],
   );
   for (const entry of [manifest.media.images.main, manifest.media.models.portrait, manifest.media.ar.target]) {
-    assert.equal(entry.available, false);
-    assert.equal(entry.migrationStatus, "planned");
+    assert.equal(entry.available, true);
+    assert.equal(entry.migrationStatus, "published");
   }
   for (const entry of [
     manifest.media.images["out-of-frame"],
@@ -91,5 +91,13 @@ test("vg01 immersive declarations expose only the Orsay portrait role", async ()
     assert.match(declaration, /data-artwork-media-model-keys='{"portrait":"models\.portrait"}'/, page);
     assert.doesNotMatch(declaration, /models\.(?:standing|bedroom-standing)/, page);
     assert.doesNotMatch(declaration, /data-artwork-media-(?:audio-keys|video-key)/, page);
+  }
+});
+
+test("the integration preview reads the reviewed Git manifest without changing the public R2 manifest", async () => {
+  for (const page of ["ar.html", "space.html", "vr.html", "gallery-vr.html", "print-van-gogh.html", "print-van-gogh-fr.html"]) {
+    const source = await readFile(new URL(`../${page}`, import.meta.url), "utf8");
+    assert.match(source, /\/content\/media-manifests\/artworks\/vg01\/manifest\.json/, page);
+    assert.doesNotMatch(source, /https:\/\/media\.artdaci\.com\/artworks\/vg01\/manifest\.json/, page);
   }
 });
