@@ -1,8 +1,8 @@
 const LANGUAGES=['fr','en','ar'];
 const COPY={
-  fr:{more:'Fiche imprimée · détails',english:'Fiche imprimée · texte EN',other:'Autre autoportrait · 1887'},
-  en:{more:'Printed spread · details',english:'Printed spread · English text',other:'Other self-portrait · 1887'},
-  ar:{more:'الصفحة المطبوعة · التفاصيل',english:'الصفحة المطبوعة · النص بالإنجليزية',other:'صورة ذاتية أخرى · 1887'}
+  fr:{more:'Fiche imprimée · détails',english:'Fiche imprimée · texte EN',other:'Autre version'},
+  en:{more:'Printed spread · details',english:'Printed spread · English text',other:'Other version'},
+  ar:{more:'الصفحة المطبوعة · التفاصيل',english:'الصفحة المطبوعة · النص بالإنجليزية',other:'نسخة أخرى'}
 };
 export function validatePrintedNotices(data,ids){
   const errors=[];

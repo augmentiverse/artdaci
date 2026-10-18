@@ -47,7 +47,7 @@ const cases = [
 const imagePaths = [
   "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg",
   "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg",
-  "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait.jpg",
+  "assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp",
   "assets/artists/vincent-van-gogh/artworks/the-bedroom/images/bed-van-gogh.jpeg",
 ];
 

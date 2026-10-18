@@ -116,13 +116,12 @@ test("planned, missing, invalid and failed manifests never expose audio", async 
   assert.equal(await resolveArtworkAudioOverview({ language: "en" }), null);
 });
 
-test("all twenty-one exact-language overviews resolve after publication", async () => {
+test("all nineteen current-release exact-language overviews resolve after publication", async () => {
   const published = [
     ["ld01", "en"], ["ld01", "fr"], ["ld01", "ar"],
     ["ld02", "en"], ["ld02", "fr"], ["ld02", "ar"],
     ["ve05", "en"], ["ve05", "fr"], ["ve05", "ar"],
     ["ve01", "en"], ["ve01", "fr"],
-    ["vg01", "en"], ["vg01", "fr"],
     ["vg02", "en"], ["vg02", "fr"],
     ["mo02", "en"], ["mo02", "fr"], ["mo02", "ar"],
     ["mo01", "en"], ["mo01", "fr"], ["mo01", "ar"],
@@ -135,6 +134,14 @@ test("all twenty-one exact-language overviews resolve after publication", async 
       fetchManifest: async () => manifests.get(id),
     });
     assert.equal(result, `https://media.artdaci.com/artworks/${id}/audio/${language}/overview.mp3`);
+  }
+
+  for (const language of ["en", "fr", "ar"]) {
+    assert.equal(await resolveArtworkAudioOverview({
+      artworkId: "vg01",
+      language,
+      fetchManifest: async () => manifests.get("vg01"),
+    }), null);
   }
 
   assert.equal(migration.status, "published");
@@ -226,6 +233,7 @@ test("AR keeps Guide and Overview roles separate without autoplay", () => {
   assert.match(ar, /CONFIG\.audioSequence = false/);
   assert.match(ar, /audio\.preload = "none"/);
   assert.doesNotMatch(ar, /if \(!CONFIG\.audioSequence\) playNativeAudioGuide\(true\)/);
-  assert.match(arHtml, /data-artwork-media-audio-keys='\{"en":"audio\.guide\.en","fr":"audio\.guide\.fr"\}'/);
-  assert.doesNotMatch(arHtml, /data-artwork-media-audio-keys='[^']*audio\.overview/);
+  const vg01Declaration = arHtml.match(/<div\s+hidden\s+data-artwork-media-for="van-gogh"[\s\S]*?<\/div>/)?.[0] || "";
+  assert.doesNotMatch(vg01Declaration, /data-artwork-media-audio-keys/);
+  assert.match(arHtml, /data-artwork-media-for="view-of-delft"[\s\S]*?data-artwork-media-audio-keys='[^']*audio\.overview\.en/);
 });

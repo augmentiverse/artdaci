@@ -90,8 +90,14 @@ test('the twelve capability maps use canonical manifests and exact-language over
       assert.ok(Object.values(caps).every(value=>CAPABILITY_STATES.includes(value.status)));
       assert.equal(caps.info.status,'available');
       assert.ok(['available','local-fallback'].includes(caps.image.status));
-      assert.equal(caps.audio.status,work.artworkId==='vg02'&&language==='ar'?'local-fallback':'available');
+      const expectedAudioStatus = work.artworkId === 'vg01'
+        ? 'missing'
+        : work.artworkId === 'vg02' && language === 'ar'
+          ? 'local-fallback'
+          : 'available';
+      assert.equal(caps.audio.status, expectedAudioStatus);
       if(caps.audio.status==='local-fallback')assert.equal(caps.audio.url,work.audioPresentation[language].path);
+      else if(caps.audio.status==='missing')assert.equal(caps.audio.url,null);
       else if(caps.audio.url)assert.match(caps.audio.url,new RegExp(`/audio/${language}/overview\\.mp3$`));
       assert.equal(caps.museum.status,work.museumId?'available':'missing');
     }

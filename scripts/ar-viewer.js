@@ -45,7 +45,7 @@ const CONFIG = {
 
 const PAINTINGS = {
   "mona-lisa": "content/paintings/mona-lisa.json?v=5",
-  "van-gogh": "content/paintings/van-gogh.json?v=3",
+  "van-gogh": "content/paintings/van-gogh.json?v=4",
   "van-gogh-jo": "content/people/van-gogh-jo.json?v=1",
   "van-gogh-bedroom": "content/paintings/van-gogh-bedroom.json",
   "vermeer-girl-with-a-pearl-earring": "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=3",
@@ -275,7 +275,7 @@ const AR_TRANSLATIONS = {
     "van-gogh": {
       title: "Autoportrait",
       texts: {
-        historicalContext: "Peint pendant les années parisiennes de Van Gogh, cet autoportrait montre ses recherches sur les contrastes de couleur, la touche fragmentée et les leçons de l'impressionnisme et du néo-impressionnisme.",
+        historicalContext: "Peint à Saint-Rémy en septembre 1889, cet autoportrait aujourd’hui conservé au Musée d’Orsay appartient à la phase tardive de l’œuvre de Van Gogh et transforme couleur, touche et regard en un examen intense de soi.",
         artisticAnalysis: "Le visage est construit par de courtes touches directionnelles qui alternent rouges, oranges, verts et jaunes. Le fond bleu-vert vibre face à la barbe rousse et donne au portrait une intensité électrique.",
         composition: "La tête est légèrement tournée en trois quarts, tandis que le regard fixe le spectateur. Le veston sombre stabilise le bas de l'image et le fond actif fait pression autour de la figure.",
         palette: "Van Gogh utilise des contrastes complémentaires : cheveux et barbe rouge-orange contre un environnement bleu-vert, avec des touches de jaune, rose, turquoise et brun-violet.",

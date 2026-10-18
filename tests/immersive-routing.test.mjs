@@ -113,7 +113,7 @@ test("AR unavailable routes leave the localized Back link above a non-interactiv
   assert.match(iconLink, /pointer-events:\s*auto;/);
   assert.doesNotMatch(loadingScreen, /pointer-events:\s*none;/);
   assert.match(html, /<button id="start-ar"(?![^>]*\bdisabled\b)/);
-  assert.match(html, /<script type="module" src="scripts\/ar-viewer\.js\?v=60"><\/script>/);
+  assert.match(html, /<script type="module" src="scripts\/ar-viewer\.js\?v=61"><\/script>/);
 });
 
 test("AR artwork numbers use canonical bookOrder with localized three-digit labels", () => {

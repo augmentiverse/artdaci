@@ -40,7 +40,7 @@ The semantic layer is responsible for:
 - `vg01` — Self-Portrait, canonical ARTDACI target: 1889, Musée d’Orsay
 - `mo01` — Impression, Sunrise
 
-Important: the current `main` media/content files still contain an older 1887 Van Gogh self-portrait reference. This POC does not reuse that image and records `vg01` as the intended 1889 Musée d’Orsay version.
+The active `vg01` preparation now uses the September 1889 Musée d’Orsay self-portrait consistently; the former Chicago 1887 files remain only as inactive rollback assets.
 
 ## Files
 
