@@ -50,7 +50,8 @@ test("featured artworks have natural proportions: portraits and Monet landscape"
   assert.match(css, /\.home-v2 \.hv2-work-visual\s*\{[\s\S]*?height:\s*clamp\(/);
   assert.match(css, /\.home-v2 \.hv2-work \.hv2-work-visual img,[\s\S]*?width:\s*auto;[\s\S]*?height:\s*auto;[\s\S]*?max-width:\s*100%;[\s\S]*?max-height:\s*100%;[\s\S]*?aspect-ratio:\s*auto;[\s\S]*?object-fit:\s*contain/);
   assert.match(css, /\.home-v2 \.hv2-work-copy\s*\{[\s\S]*?margin-top:\s*auto/);
-  assert.doesNotMatch(css, /border-radius:\s*50%/);
+  const imageRule = css.match(/\.home-v2 \.hv2-work \.hv2-work-visual img,[\s\S]*?transition:[^}]+}/)?.[0] ?? "";
+  assert.doesNotMatch(imageRule, /border-radius:\s*50%/, "The paintings, unlike decorative page elements, must not be circular");
   for (const file of pages) {
     const html = await read(file);
     const featured = html.match(/<div class="hv2-featured-grid">([\s\S]*?)<\/div>\s*<\/section>/)?.[1] ?? "";
