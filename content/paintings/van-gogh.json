@@ -31,8 +31,8 @@
   "print": {
     "chapter": "Impressionism and Post-Impressionism",
     "imageTargetId": "target-002-van-gogh",
-    "imageTargetSource": "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait.jpg",
-    "compiledMindTarget": "assets/targets/van-gogh.mind",
+    "imageTargetSource": "assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp",
+    "compiledMindTarget": "assets/artists/vincent-van-gogh/artworks/self-portrait/ar/target-orsay-1889-v1.mind",
     "qrUrl": "ar.html?painting=van-gogh"
   },
   "texts": {
@@ -148,9 +148,9 @@
   ],
   "ar": {
     "startMode": "painting-emergence",
-    "imageTarget": "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait.jpg",
-    "compiledTarget": "assets/targets/van-gogh.mind",
-    "primaryModel": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh-portrait.glb",
+    "imageTarget": "assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp",
+    "compiledTarget": "assets/artists/vincent-van-gogh/artworks/self-portrait/ar/target-orsay-1889-v1.mind",
+    "primaryModel": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/portrait-orsay-1889-v2.glb",
     "modelVariants": [
       {
         "id": "portrait",
@@ -158,23 +158,7 @@
           "en": "Portrait",
           "fr": "Portrait"
         },
-        "src": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh-portrait.glb"
-      },
-      {
-        "id": "standing",
-        "label": {
-          "en": "Standing figure",
-          "fr": "Figure debout"
-        },
-        "src": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh-standing.glb"
-      },
-      {
-        "id": "bedroom-standing",
-        "label": {
-          "en": "Van Gogh in the Bedroom",
-          "fr": "Van Gogh dans la chambre"
-        },
-        "src": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh-in-bedroom-standing.glb"
+        "src": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/portrait-orsay-1889-v2.glb"
       }
     ],
     "viewer": {
@@ -196,8 +180,8 @@
     ]
   },
   "media": {
-    "image": "assets/artists/paintings_images/vangogh/vangogh_self-portrait.png",
-    "model": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh-portrait.glb",
+    "image": "assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp",
+    "model": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/portrait-orsay-1889-v2.glb",
     "modelVariants": [
       {
         "id": "portrait",
@@ -205,73 +189,15 @@
           "en": "Portrait",
           "fr": "Portrait"
         },
-        "src": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh-portrait.glb"
-      },
-      {
-        "id": "standing",
-        "label": {
-          "en": "Standing figure",
-          "fr": "Figure debout"
-        },
-        "src": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh-standing.glb"
-      },
-      {
-        "id": "bedroom-standing",
-        "label": {
-          "en": "Van Gogh in the Bedroom",
-          "fr": "Van Gogh dans la chambre"
-        },
-        "src": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh-in-bedroom-standing.glb"
+        "src": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/portrait-orsay-1889-v2.glb"
       }
     ],
-    "audioGuides": [
-      {
-        "id": "van-gogh-self-portrait-audio-en",
-        "lang": "en",
-        "title": "Van Gogh's Self-Portrait",
-        "src": "assets/artists/vincent-van-gogh/artworks/self-portrait/media/van-gogh-self-portrait-en-c.m4a",
-        "type": "audio/mp4",
-        "description": "Short English introduction for the image AR experience."
-      },
-      {
-        "id": "van-gogh-self-portrait-audio-fr",
-        "lang": "fr",
-        "title": "L'Autoportrait de Van Gogh",
-        "src": "assets/artists/vincent-van-gogh/artworks/self-portrait/media/van-gogh-self-portrait-fr-c.m4a",
-        "type": "audio/mp4",
-        "description": "Courte introduction française pour l'expérience AR sur image."
-      }
-    ],
-    "videos": [
-      {
-        "id": "van-gogh-self-portrait-animation",
-        "title": "Van Gogh Self-Portrait Animation",
-        "src": "assets/animations/artdaci-Van_Gogh_animation.mp4",
-        "type": "video/mp4",
-        "description": "Animation displayed beneath the 3D model when the printed self-portrait is recognized."
-      }
-    ],
+    "audioGuides": [],
+    "videos": [],
     "subtitles": [],
     "signLanguage": [],
     "imageCredits": [],
-    "audioOverviews": [
-      {
-        "id": "van-gogh-self-portrait-overview-en",
-        "lang": "en",
-        "title": "Van Gogh Self-Portrait audio overview",
-        "src": "assets/artists/vincent-van-gogh/artworks/self-portrait/media/van-gogh-self-portrait-en.mp3",
-        "type": "audio/mpeg",
-        "description": "Extended English audio overview of Van Gogh's Self-Portrait."
-      },
-      {
-        "id": "van-gogh-self-portrait-overview-fr",
-        "lang": "fr",
-        "title": "Aperçu audio de l'Autoportrait de Van Gogh",
-        "src": "assets/artists/vincent-van-gogh/artworks/self-portrait/media/van-gogh-self-portrait-fr.mp3",
-        "type": "audio/mpeg",
-        "description": "Présentation audio détaillée en français de l'Autoportrait de Van Gogh."
-      }
-    ]
+    "audioOverviews": []
   },
   "education": {
     "ageBands": [

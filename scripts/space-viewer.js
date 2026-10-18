@@ -4,7 +4,7 @@ import { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./
 
 const PAINTINGS = {
   "mona-lisa": "content/paintings/mona-lisa.json?v=5",
-  "van-gogh": "content/paintings/van-gogh.json",
+  "van-gogh": "content/paintings/van-gogh.json?v=4",
   "van-gogh-bedroom": "content/paintings/van-gogh-bedroom.json",
   "vermeer-girl-with-a-pearl-earring": "content/paintings/vermeer-girl-with-a-pearl-earring.json",
   "view-of-delft": "content/paintings/view-of-delft.json?v=2"

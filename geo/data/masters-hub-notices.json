@@ -131,7 +131,7 @@
       "source": "content/paintings/van-gogh.json",
       "sourceSlug": null,
       "printedSlug": "van-gogh",
-      "relation": "other-version",
+      "relation": "same-work",
       "routes": {
         "fr": "../print-van-gogh-fr.html?lang=fr",
         "en": "../print-van-gogh.html?lang=en",
@@ -143,9 +143,9 @@
         "ar": "ar"
       },
       "summary": {
-        "fr": "Van Gogh utilise ses autoportraits pour étudier expression, couleur et identité. Attention : le Hub montre l’Autoportrait de 1889 ; la fiche liée décrit celui de 1887.",
-        "en": "Van Gogh used self-portraits to study expression, colour and identity. Note: the Hub displays the 1889 Self-Portrait; the linked printed page describes the 1887 painting.",
-        "ar": "استخدم فان غوخ صوره الذاتية لدراسة التعبير واللون والهويّة. تنبيه: يعرض المعرض صورة 1889، بينما تتناول الصفحة المرتبطة صورة 1887."
+        "fr": "Van Gogh utilise cet autoportrait peint à Saint-Rémy en septembre 1889 pour étudier expression, couleur et identité. Le Hub et la fiche imprimée présentent désormais la même œuvre du Musée d’Orsay.",
+        "en": "Van Gogh used this self-portrait, painted at Saint-Rémy in September 1889, to study expression, colour, and identity. The Hub and printed page now present the same Musée d’Orsay painting.",
+        "ar": "استخدم فان غوخ هذا البورتريه الذاتي، الذي رسمه في سان ريمي في سبتمبر 1889، لدراسة التعبير واللون والهوية. يعرض المعرض والصفحة المطبوعة الآن العمل نفسه المحفوظ في متحف أورسيه."
       }
     },
     "vg02": {

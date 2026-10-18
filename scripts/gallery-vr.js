@@ -10,7 +10,7 @@ import { detectRuntimeProfile } from "./runtime-profile.js?v=1";
 
 const MANIFESTS = [
   "content/paintings/mona-lisa.json?v=4",
-  "content/paintings/van-gogh.json?v=3",
+  "content/paintings/van-gogh.json?v=4",
   "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=3",
   "content/paintings/van-gogh-bedroom.json?v=2"
 ];
@@ -19,7 +19,7 @@ const PRINTED_MANIFESTS = [
   "content/paintings/lady-with-an-ermine.json?v=1",
   "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=3",
   "content/paintings/additional-16.json?v=1",
-  "content/paintings/van-gogh.json?v=3",
+  "content/paintings/van-gogh.json?v=4",
   "content/paintings/van-gogh-bedroom.json?v=2",
   "content/paintings/monet-impression-sunrise.json?v=3",
   "content/paintings/pont-d-argenteuil.json?v=1"
@@ -369,7 +369,7 @@ const REIMAGINED_ARTWORKS = [
   { src: "assets/shared/reimagined-gallery/vermeer_Girl-with-a-Pearl-Earring_sitting.png", title: "Girl with a Pearl Earring — Seated", titleAr: "الفتاة ذات القرط اللؤلؤي — جالسة" },
   { src: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa-out-of-frame.png", title: "Mona Lisa — Out of the frame" },
   { src: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/davinci-monalisa.png", title: "Leonardo and Mona Lisa" },
-  { src: "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-out-of-frame.png", title: "Van Gogh — Out of the frame" },
+  { src: "assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp", title: "Van Gogh — Self-Portrait, Musée d’Orsay, 1889" },
   { src: "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-in-bedroom-standing.png", title: "Van Gogh in his bedroom" },
   { src: "assets/artists/vincent-van-gogh/artworks/the-bedroom/images/bed-van-gogh.jpeg", title: "The Bedroom — Spatial interpretation" },
   { src: "assets/artists/johannes-vermeer/reimagined/images/vermeer-pieter-van-ruijven-1.png", title: "Vermeer and his patrons I" },
@@ -561,19 +561,19 @@ const experienceStartYaw = isConnectedMuseum ? connectedStartYaw : isFiveMuseums
 const PAINTING_INFO = {
   en: {
     "mona-lisa": "Leonardo used delicate layers of sfumato to soften outlines and give the sitter a lifelike presence. Her expression and the imaginary landscape seem to change as we look.",
-    "van-gogh": "Van Gogh painted this self-portrait in Paris in 1887. Short, directional brushstrokes and complementary colours turn his face into an intense study of artistic identity.",
+    "van-gogh": "Van Gogh painted this self-portrait at Saint-Rémy in September 1889. The formal jacket, direct gaze, swirling turquoise background and orange beard turn his face into an intense study of identity.",
     "van-gogh-bedroom": "Van Gogh painted his room in the Yellow House at Arles as a place of rest. Tilted perspective, strong outlines and expressive colour make the familiar room feel deeply personal.",
     "vermeer-girl-with-a-pearl-earring": "This is a tronie: a character study rather than a formal portrait. Vermeer used ultramarine, soft light and a few bright highlights to create the girl’s direct, memorable presence."
   },
   fr: {
     "mona-lisa": "Léonard utilise de fines couches de sfumato pour adoucir les contours et donner vie au modèle. Son expression et le paysage imaginaire semblent changer au fil du regard.",
-    "van-gogh": "Van Gogh peint cet autoportrait à Paris en 1887. Les touches courtes et les couleurs complémentaires transforment son visage en une étude intense de l’identité artistique.",
+    "van-gogh": "Van Gogh peint cet autoportrait à Saint-Rémy en septembre 1889. La veste formelle, le regard direct, le fond turquoise tourbillonnant et la barbe orangée transforment son visage en étude intense de l’identité.",
     "van-gogh-bedroom": "Van Gogh représente sa chambre de la Maison jaune à Arles comme un lieu de repos. La perspective inclinée, les contours marqués et la couleur expressive rendent cet espace très personnel.",
     "vermeer-girl-with-a-pearl-earring": "Cette œuvre est une tronie, une étude de caractère plutôt qu’un portrait officiel. Vermeer associe outremer, lumière douce et quelques reflets pour créer une présence inoubliable."
   },
   ar: {
     "mona-lisa": "استخدم ليوناردو طبقات رقيقة من السفوماتو لتليين الحواف ومنح الجالسة حضوراً حياً. يتغير تعبيرها والمنظر الخيالي كلما أطلنا النظر.",
-    "van-gogh": "رسم فان غوخ هذا البورتريه الذاتي في باريس سنة 1887. تحول ضربات الفرشاة القصيرة والألوان المتكاملة الوجه إلى دراسة مكثفة لهوية الفنان.",
+    "van-gogh": "رسم فان غوخ هذا البورتريه الذاتي في سان ريمي في سبتمبر 1889. تحول السترة الرسمية والنظرة المباشرة والخلفية الفيروزية الدوامة واللحية البرتقالية الوجه إلى دراسة مكثفة للهوية.",
     "van-gogh-bedroom": "رسم فان غوخ غرفته في البيت الأصفر بآرل كمكان للراحة. تجعل الزوايا المائلة والخطوط القوية والألوان التعبيرية الغرفة شخصية وعاطفية.",
     "vermeer-girl-with-a-pearl-earring": "هذه اللوحة دراسة لشخصية وليست بورتريهاً رسمياً. جمع فيرمير بين الأزرق الثمين والضوء الناعم واللمعات الدقيقة ليخلق حضوراً لا يُنسى."
   }

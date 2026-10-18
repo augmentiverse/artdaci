@@ -5,7 +5,7 @@ const MANIFEST_URLS = [
   "content/paintings/mona-lisa.json?v=2",
   "content/paintings/lady-with-an-ermine.json?v=1",
   "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=2",
-  "content/paintings/van-gogh.json?v=2",
+  "content/paintings/van-gogh.json?v=4",
   "content/paintings/van-gogh-bedroom.json?v=2",
   "content/paintings/monet-impression-sunrise.json?v=3",
   "content/paintings/pont-d-argenteuil.json?v=1",
@@ -104,9 +104,9 @@ const BOOK_IMAGE_GALLERIES = {
     "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/monalisa-t.png"
   ],
   "van-gogh": [
-    "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-out-of-frame.png",
-    "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-in-bedroom-standing.png",
-    "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait.jpg"
+    "assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp",
+    "assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp",
+    "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait-p.png"
   ],
   "van-gogh-bedroom": [
     "assets/artists/vincent-van-gogh/artworks/the-bedroom/images/bed-van-gogh.jpeg",

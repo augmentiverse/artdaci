@@ -14,8 +14,8 @@ This repository is a GitHub Pages-ready augmented-reality art book for four mast
 - `scripts/catalogue.js` - manifest-driven catalogue UI with search, filtering, comparison, stats, and learning prompts.
 - `assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg` - printed target image.
 - `assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa.glb` - 3D model loaded in AR.
-- `assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait.jpg` - Van Gogh printed target image.
-- `assets/artists/vincent-van-gogh/artworks/self-portrait/models/van-gogh-portrait.glb` - Van Gogh 3D model loaded in AR.
+- `assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp` - canonical Van Gogh 1889 Musée d’Orsay print and tracking image.
+- `assets/artists/vincent-van-gogh/artworks/self-portrait/models/portrait-orsay-1889-v2.glb` - canonical Van Gogh 1889 portrait model used by immersive viewers.
 - `assets/targets/mona-lisa.mind` - compiled MindAR image target.
 - `content/paintings/mona-lisa.json` - structured painting data record.
 - `content/paintings/van-gogh.json` - structured Van Gogh painting data record.

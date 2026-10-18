@@ -239,11 +239,11 @@ assert(ld01?.image === "../assets/artists/leonardo-da-vinci/collection/mana-lisa
 const vg01Canonical = artworksDoc.artworks.find((item) => item.id === "vg01");
 assert(vg01Canonical?.image === "../assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp", "vg01 must use the canonical 1889 Van Gogh self-portrait asset.");
 assert(vanGoghPainting?.date === "1889", "Public Van Gogh manifest must be 1889.");
-assert(vanGoghPainting?.media?.image === "assets/artists/vincent-van-gogh/collection/autoportrait-vangogh.webp", "Public Van Gogh display image must use the canonical 1889 asset.");
+assert(vanGoghPainting?.media?.image === "assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp", "Public Van Gogh display image must use the canonical Orsay 1889 asset.");
 assert(String(vanGoghPainting?.currentLocation?.museum || "").includes("Orsay"), "Public Van Gogh manifest must point to Musée d’Orsay.");
-assert(vg01MediaManifest?.artwork?.date === "1889", "Canonical vg01 media manifest metadata must be 1889.");
-assert(compileTargetHtml.includes("autoportrait-vangogh.webp"), "MindAR compiler must use the canonical 1889 Van Gogh image.");
-assert(compileTargetHtml.includes("van-gogh-1889.mind"), "MindAR compiler must produce a separate 1889 target file.");
+assert(String(vg01MediaManifest?.artwork?.date || "").includes("1889"), "Canonical vg01 media manifest metadata must be 1889.");
+assert(compileTargetHtml.includes("self-portrait-orsay-1889-v1.webp"), "MindAR compiler must use the canonical Orsay 1889 Van Gogh image.");
+assert(compileTargetHtml.includes("target-orsay-1889-v1.mind"), "MindAR compiler must produce the versioned Orsay 1889 target file.");
 
 const sourceById = new Map(sourcesDoc.sources.map((source) => [source.id, source]));
 assert(sourceById.get("wikidata")?.status === "active", "Wikidata must remain active.");
@@ -414,10 +414,10 @@ assert(vrViewer.includes("updateControllerPointerVisuals"), "VR pointer visuals 
 assert(geoRemoteViewer.includes("mountSemanticRuntimePanel"), "Louvre GEO viewer must consume Semantic Runtime.");
 assert(mastersHubViewer.includes("mountSemanticRuntimePanel"), "Masters Hub must consume Semantic Runtime for deep-linked guides.");
 assert(arHtml.includes("semantic-runtime.css?v=2"), "AR page must load Semantic Runtime styles.");
-assert(arHtml.includes("ar-viewer.js?v=60"), "AR page must load the discreet hotspot viewer cache version.");
+assert(arHtml.includes("ar-viewer.js?v=61"), "AR page must load the discreet hotspot viewer cache version.");
 assert(arHtml.includes("styles/ar.css?v=40"), "AR page must load the V2.10 AR stylesheet cache version.");
 assert(vrHtml.includes("semantic-runtime.css?v=2"), "VR page must load Semantic Runtime styles.");
-assert(vrHtml.includes("vr-viewer.js?v=16"), "VR page must load the adaptive controller-pointer build.");
+assert(vrHtml.includes("vr-viewer.js?v=17"), "VR page must load the adaptive controller-pointer build.");
 assert(geoRemoteHtml.includes("../styles/semantic-runtime.css?v=2"), "GEO page must load Semantic Runtime styles.");
 assert(mastersHubHtml.includes("../styles/semantic-runtime.css?v=2"), "Masters Hub must load Semantic Runtime styles.");
 assert(semanticUi.includes('params.get("node")'), "Semantic reader must support node deep links from the runtime.");

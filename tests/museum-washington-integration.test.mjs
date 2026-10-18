@@ -77,11 +77,11 @@ test("Washington museum routes are assigned to the three matching ARTDACI artwor
 
 test("activation versions address every changed browser module", async () => {
   const expected = new Map([
-    ["ar.html", "scripts/ar-viewer.js?v=60"],
-    ["space.html", "scripts/space-viewer.js?v=37"],
-    ["book-3d.html", "scripts/book-3d.js?v=36"],
-    ["gallery-vr.html", "scripts/gallery-vr.js?v=178"],
-    ["cinema-vr.html", "scripts/gallery-vr.js?v=148"],
+    ["ar.html", "scripts/ar-viewer.js?v=61"],
+    ["space.html", "scripts/space-viewer.js?v=38"],
+    ["book-3d.html", "scripts/book-3d.js?v=37"],
+    ["gallery-vr.html", "scripts/gallery-vr.js?v=179"],
+    ["cinema-vr.html", "scripts/gallery-vr.js?v=149"],
     ["print-artwork.html", "scripts/print-artwork.js?v=9"],
   ]);
   for (const [file, scriptUrl] of expected) {

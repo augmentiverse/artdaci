@@ -122,17 +122,20 @@ test("existing print route inputs remain available without an Orsay 1889 draft r
     assert.match(catalogueSource, new RegExp(`"${slug}"\\s*:`));
   }
   const canonicalData = JSON.stringify({ sourceDocuments, mediaCatalog });
-  assert.doesNotMatch(canonicalData, /vg01-orsay-1889|orsay-1889|manifest-draft/i);
+  assert.doesNotMatch(canonicalData, /manifest-draft|retained-for-comparison-only/i);
 });
 
-test("the active vg01 media manifest remains Chicago 1887 with its Arabic overview", async () => {
-  const manifest = normalizeTextLineEndings(
-    await readFile(new URL("../content/media-manifests/artworks/vg01/manifest.json", import.meta.url)),
+test("the active vg01 preparation identifies Orsay 1889 and quarantines legacy audio", async () => {
+  const manifest = JSON.parse(
+    await readFile(new URL("../content/media-manifests/artworks/vg01/manifest.json", import.meta.url), "utf8"),
   );
-  assert.equal(manifest.byteLength, 5787);
-  assert.equal(
-    createHash("sha256").update(manifest).digest("hex"),
-    "ab662722bafe676cc342f5370d580a45168548425e16f73546a278bc7c554d23",
-  );
-  assert.match(manifest.toString("utf8"), /"path": "audio\/ar\/overview\.mp3"/);
+  assert.equal(manifest.artwork.date, "September 1889");
+  assert.equal(manifest.artwork.museum, "Musée d’Orsay");
+  assert.equal(manifest.media.images.main.path, "images/main-orsay-1889-v1.webp");
+  assert.equal(manifest.media.models.portrait.path, "models/portrait-orsay-1889-v2.glb");
+  assert.equal(manifest.media.ar.target.path, "ar/target-orsay-1889-v1.mind");
+  for (const entry of Object.values(manifest.media.audio.overview)) {
+    assert.equal(entry.available, false);
+    assert.equal(entry.migrationStatus, "quarantined-unused");
+  }
 });

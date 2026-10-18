@@ -57,7 +57,7 @@ const pages = [
     eyebrow: "Artwork 013 - Post-Impressionism",
     essentials: [
       "https://media.artdaci.com/artworks/vg01/manifest.json",
-      "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait.jpg",
+      "assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp",
       "ar.html?painting=van-gogh&amp;lang=en",
       "space.html?painting=van-gogh&amp;lang=en&amp;v=10",
       "scripts/artwork-media-manifest.js?v=3",
@@ -69,7 +69,7 @@ const pages = [
     eyebrow: "Œuvre 013 - Post-impressionnisme",
     essentials: [
       "https://media.artdaci.com/artworks/vg01/manifest.json",
-      "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait.jpg",
+      "assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp",
       "ar.html?painting=van-gogh&amp;lang=fr",
       "space.html?painting=van-gogh&amp;lang=fr&amp;v=10",
       "scripts/artwork-media-manifest.js?v=3",
@@ -155,21 +155,26 @@ test("historical print page routes, media fallbacks and script versions stay int
   }
 });
 
-test("active VG01 content remains the historical 1887 release", async () => {
+test("active VG01 preparation consistently identifies the September 1889 Orsay release", async () => {
   const [painting, manifest] = await Promise.all([
     readFile(new URL("../content/paintings/van-gogh.json", import.meta.url), "utf8").then(JSON.parse),
     readFile(new URL("../content/media-manifests/artworks/vg01/manifest.json", import.meta.url), "utf8").then(JSON.parse),
   ]);
 
-  assert.equal(painting.id, "vincent-van-gogh-self-portrait-1887");
-  assert.equal(painting.date, "1887");
+  assert.equal(painting.id, "vincent-van-gogh-self-portrait-1889");
+  assert.equal(painting.date, "1889");
   assert.equal(
     painting.print.imageTargetSource,
-    "assets/artists/vincent-van-gogh/artworks/self-portrait/images/van-gogh-portrait.jpg",
+    "assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp",
+  );
+  assert.equal(
+    painting.print.compiledMindTarget,
+    "assets/artists/vincent-van-gogh/artworks/self-portrait/ar/target-orsay-1889-v1.mind",
   );
   assert.equal(manifest.id, "vg01");
-  assert.equal(manifest.artwork.date, "1887");
-  assert.equal(manifest.media.images.main.path, "images/main.jpg");
-  assert.equal(manifest.media.images.main.available, true);
-  assert.equal(manifest.media.images.main.migrationStatus, "published");
+  assert.equal(manifest.artwork.date, "September 1889");
+  assert.equal(manifest.artwork.museum, "Musée d’Orsay");
+  assert.equal(manifest.media.images.main.path, "images/main-orsay-1889-v1.webp");
+  assert.equal(manifest.media.images.main.available, false);
+  assert.equal(manifest.media.images.main.migrationStatus, "planned");
 });

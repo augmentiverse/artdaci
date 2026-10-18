@@ -170,9 +170,9 @@ test("dynamic print labels are action-oriented without changing print routes", a
   assert.match(source, /print-artwork\.html\?painting=\$\{encodeURIComponent\(slug\)\}&lang=\$\{lang\}/);
 });
 
-test("canonical catalogue data never references the Orsay 1889 preparation branch", () => {
+test("canonical catalogue data never references a draft or comparison-only preparation", () => {
   assert.doesNotMatch(
     JSON.stringify({ sourceDocuments, mediaCatalog }),
-    /vg01-orsay-1889|orsay-1889|manifest-draft/i,
+    /manifest-draft|retained-for-comparison-only/i,
   );
 });
