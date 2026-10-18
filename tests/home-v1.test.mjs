@@ -40,27 +40,75 @@ test("homepage uses the blue theme and a compact responsive 3D hero", async () =
   for (const file of pages) {
     const html = await read(file);
     assert.match(html, /<meta name="theme-color" content="#06192b" \/>/);
-    assert.match(html, /styles\/home-v2-adjustments\.css\?v=4/);
+    assert.match(html, /styles\/home-v2-adjustments\.css\?v=9/);
   }
 });
 
-test("featured artworks use one shared medallion layout", async () => {
+test("featured artworks have natural proportions: portraits and Monet landscape", async () => {
   const css = await read("styles/home-v2-adjustments.css");
   assert.match(css, /\.home-v2 \.hv2-featured-grid\s*\{[\s\S]*?repeat\(4, minmax\(0, 1fr\)\)/);
-  assert.match(css, /\.home-v2 \.hv2-work img,[\s\S]*?aspect-ratio:\s*1;[\s\S]*?border-radius:\s*50%/);
-
+  assert.match(css, /\.home-v2 \.hv2-work-visual\s*\{[\s\S]*?height:\s*clamp\(/);
+  assert.match(css, /\.home-v2 \.hv2-work \.hv2-work-visual img,[\s\S]*?width:\s*auto;[\s\S]*?height:\s*auto;[\s\S]*?max-width:\s*100%;[\s\S]*?max-height:\s*100%;[\s\S]*?aspect-ratio:\s*auto;[\s\S]*?object-fit:\s*contain/);
+  assert.match(css, /\.home-v2 \.hv2-work-copy\s*\{[\s\S]*?margin-top:\s*auto/);
+  const imageRule = css.match(/\.home-v2 \.hv2-work \.hv2-work-visual img,[\s\S]*?transition:[^}]+}/)?.[0] ?? "";
+  assert.doesNotMatch(imageRule, /border-radius:\s*50%/, "The paintings, unlike decorative page elements, must not be circular");
   for (const file of pages) {
     const html = await read(file);
     const featured = html.match(/<div class="hv2-featured-grid">([\s\S]*?)<\/div>\s*<\/section>/)?.[1] ?? "";
-    assert.equal((featured.match(/class="hv2-work"/g) ?? []).length, 4, `${file} must expose four artworks`);
+    assert.equal((featured.match(/class="hv2-work"/g) ?? []).length, 4, file);
+    assert.equal((featured.match(/class="hv2-work-visual"/g) ?? []).length, 4, file);
+    const workImages = [...featured.matchAll(/<span class="hv2-work-visual"><img src="([^"]+)"/g)];
+    assert.equal(workImages.length, 4, file);
+    for (const match of workImages) await access(path.join(root,match[1]));
   }
 });
 
-test("Masters portraits use the compact luminous portal treatment", async () => {
+test("Mona Lisa uses the user's image with no circular crop or internal padding", async () => {
   const css = await read("styles/home-v2-adjustments.css");
-  assert.match(css, /Masters: compact luminous portraits/);
-  assert.match(css, /\.home-v2 \.hv2-master-card::before/);
-  assert.match(css, /\.home-v2 \.hv2-master-card img\s*\{[\s\S]*?width:\s*min\(72%, 205px\)/);
+  const art = "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa-home-medallion.webp";
+  await access(path.join(root,art));
+  assert.ok((await stat(path.join(root,art))).size > 5000);
+  assert.match(css, /\.home-v2 \.hv2-work \.hv2-work-visual img,[\s\S]*?object-fit:\s*contain/);
+  assert.match(css, /\.home-v2 \.hv2-work \.hv2-work-visual img,[\s\S]*?padding:\s*0/);
+  for (const file of pages) {
+    const html = await read(file);
+    const featured = html.match(/<div class="hv2-featured-grid">([\s\S]*?)<\/div>\s*<\/section>/)?.[1] ?? "";
+    assert.ok(featured.includes('src="' + art + '"'));
+    assert.ok(!featured.includes('mona-lisa/images/mona-lisa.jpg'));
+  }
+});
+
+test("Masters portraits fill frameless cropped windows across FR EN AR", async () => {
+  const css = await read("styles/home-v2-adjustments.css");
+  assert.match(css, /\.home-v2 \.hv2-master-photo\s*\{[\s\S]*?overflow:\s*hidden/);
+  assert.match(css, /\.home-v2 \.hv2-master-card \.hv2-master-photo img\s*\{[\s\S]*?object-fit:\s*cover/);
+  assert.match(css, /\.home-v2 \.hv2-master-card::before\s*\{\s*display:\s*none/);
+  assert.match(css, /\.home-v2 \.hv2-master-card \.hv2-master-photo img\s*\{[\s\S]*?transform:\s*none/);
+  for (const file of pages) {
+    const html = await read(file);
+    assert.equal((html.match(/class="hv2-master-photo"/g) ?? []).length, 4, file);
+    assert.equal((html.match(/assets\/artists\/[^"]+\/profile\/home-portrait\.webp/g) ?? []).length, 4, file);
+    assert.doesNotMatch(html, /src="assets\/artists\/[^"]+\/profile\/portrait\.png"/);
+    for (const artist of ["leonardo-da-vinci","johannes-vermeer","vincent-van-gogh","claude-monet"]) {
+      const asset = path.join(root,"assets/artists",artist,"profile/home-portrait.webp");
+      assert.ok((await stat(asset)).size > 1000, artist + " photo must be present and nonempty");
+      assert.ok((await stat(asset)).size < 100000, artist + " homepage photo must remain lightweight");
+    }
+  }
+});
+
+test("Book AR scan button follows rather than overlaps the hero caption", async () => {
+  const css = await read("styles/home-v2-adjustments.css");
+  assert.match(css, /\.home-v2 \.hv2-book-hero \.hv2-book-signature\s*\{[\s\S]*?position:\s*static/);
+  assert.match(css, /\.home-v2 \.hv2-book-hero \.hv2-book-scan\s*\{[\s\S]*?position:\s*relative/);
+  for (const file of pages) {
+    const html = await read(file);
+    const captionAt = html.indexOf('class="hv2-book-signature"');
+    const scanAt = html.indexOf('class="hv2-button hv2-book-scan"');
+    assert.ok(captionAt > 0 && scanAt > captionAt, file + " must put scan below caption");
+    assert.match(html, /data-book-ar-v1="1"/);
+    assert.doesNotMatch(html, /data-book-ar-v1="1"[^>]*style=/);
+  }
 });
 
 test("French and Arabic experience labels are localized", async () => {

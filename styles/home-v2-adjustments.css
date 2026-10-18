@@ -411,23 +411,24 @@
   text-transform: uppercase;
 }
 
-/* Featured artworks: four rigorously equal circular medallions. */
+/* Featured paintings: keep their ORIGINAL proportions rather than cropping
+   every work into a circle. Three are portraits; Monet's work is landscape. */
 .home-v2 .hv2-featured-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: stretch;
   gap: clamp(18px, 2.2vw, 34px);
 }
-
 .home-v2 .hv2-work:nth-child(n) {
   grid-column: auto;
   min-height: 0;
 }
-
 .home-v2 .hv2-work {
   min-width: 0;
-  display: grid;
-  align-content: start;
-  justify-items: center;
-  gap: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 18px;
   overflow: visible;
   padding: clamp(22px, 2.5vw, 34px) 16px 26px;
   border: 1px solid rgba(224, 194, 137, 0.12);
@@ -438,29 +439,38 @@
   box-shadow: inset 0 1px 0 rgba(255, 246, 225, 0.035);
   transition: transform 240ms ease, border-color 240ms ease, background 240ms ease;
 }
+.home-v2 .hv2-work::after { display: none; }
 
-.home-v2 .hv2-work::after {
-  display: none;
+/* A common presentation zone keeps the four cards balanced. The picture itself
+   retains its natural width/height ratio, so neither head nor hands are cut. */
+.home-v2 .hv2-work-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: clamp(190px, 21vw, 290px);
+  min-width: 0;
+  flex: 0 0 auto;
 }
-
-.home-v2 .hv2-work img,
-.home-v2 .hv2-work:nth-child(4) img {
-  position: relative;
-  width: min(100%, 248px);
+.home-v2 .hv2-work .hv2-work-visual img,
+.home-v2 .hv2-work:nth-child(4) .hv2-work-visual img {
+  position: static;
+  display: block;
+  width: auto;
   height: auto;
-  aspect-ratio: 1;
-  border: 1px solid rgba(238, 210, 153, 0.7);
-  border-radius: 50%;
-  outline: 1px solid rgba(255, 241, 205, 0.11);
-  outline-offset: 7px;
-  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+  aspect-ratio: auto;
+  object-fit: contain;
   object-position: center;
-  box-shadow:
-    0 0 34px rgba(213, 166, 78, 0.14),
-    0 22px 46px rgba(0, 0, 0, 0.38);
+  padding: 0;
+  border: 1px solid rgba(238, 210, 153, 0.48);
+  border-radius: 6px;
+  outline: none;
+  background: transparent;
+  box-shadow: 0 15px 34px rgba(0, 0, 0, 0.38);
   transition: transform 320ms cubic-bezier(.2,.7,.2,1), box-shadow 320ms ease, filter 320ms ease;
 }
-
 .home-v2 .hv2-work:hover,
 .home-v2 .hv2-work:focus-visible {
   border-color: rgba(224, 194, 137, 0.27);
@@ -469,23 +479,19 @@
     rgba(255, 255, 255, 0.026);
   transform: translateY(-4px);
 }
-
-.home-v2 .hv2-work:hover img,
-.home-v2 .hv2-work:focus-visible img {
-  transform: scale(1.025);
+.home-v2 .hv2-work:hover .hv2-work-visual img,
+.home-v2 .hv2-work:focus-visible .hv2-work-visual img {
+  transform: scale(1.015);
   filter: saturate(1.04) contrast(1.025);
-  box-shadow:
-    0 0 44px rgba(213, 166, 78, 0.22),
-    0 26px 54px rgba(0, 0, 0, 0.44);
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.44);
 }
-
 .home-v2 .hv2-work-copy {
   position: static;
   width: 100%;
+  margin-top: auto;
   padding: 0 3px;
   text-align: center;
 }
-
 .home-v2 .hv2-work-copy strong {
   font-size: clamp(22px, 2vw, 31px);
 }
@@ -610,9 +616,8 @@
     grid-template-columns: 1fr;
   }
 
-  .home-v2 .hv2-work img,
-  .home-v2 .hv2-work:nth-child(4) img {
-    width: min(78vw, 260px);
+  .home-v2 .hv2-work-visual {
+    height: clamp(215px, 62vw, 325px);
   }
 
   .home-v2 .hv2-master-card img {
@@ -986,4 +991,97 @@ html[lang="ar"] .home-v2 .hv2-continuum-step::after {
   .home-v2 .hv2-book-model {
     height: 232px;
   }
+}
+
+/* Homepage refinement: prevent the Book AR CTA from colliding with its caption.
+   Keep the caption first and the scan action clearly BELOW it at every width. */
+.home-v2 .hv2-book-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  min-height: 425px;
+  padding: 14px 15px 19px;
+}
+.home-v2 .hv2-book-hero .hv2-book-model {
+  display: block;
+  flex: 0 0 290px;
+  width: 100%;
+  height: 290px;
+}
+.home-v2 .hv2-book-hero .hv2-book-signature {
+  position: static;
+  inset: auto;
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  text-wrap: balance;
+}
+.home-v2 .hv2-book-hero .hv2-book-scan {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  margin: 3px auto 0;
+  max-width: calc(100% - 12px);
+  text-align: center;
+}
+
+/* User-selected painter portraits, already optimized and pre-cropped to 4:5.
+   Keep the entire face and bust visible; do not crop twice by applying another scale. */
+.home-v2 .hv2-master-card::before { display: none; }
+.home-v2 .hv2-master-photo {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: min(100%, 238px);
+  aspect-ratio: 4 / 5;
+  flex: 0 0 auto;
+  overflow: hidden;
+  border: 0;
+  border-radius: 12px;
+  background: #173850;
+}
+.home-v2 .hv2-master-card .hv2-master-photo img {
+  display: block;
+  position: static;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-width: none;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  transform: none;
+  filter: saturate(.98) contrast(1.025);
+  transition: filter 220ms ease;
+}
+.home-v2 .hv2-master-card:hover .hv2-master-photo img,
+.home-v2 .hv2-master-card:focus-visible .hv2-master-photo img {
+  transform: none;
+  filter: saturate(1.05) contrast(1.04);
+}
+
+@media (max-width: 1080px) {
+  .home-v2 .hv2-book-hero {min-height: 403px}
+  .home-v2 .hv2-book-hero .hv2-book-model {height: 274px; flex-basis: 274px}
+}
+@media (max-width: 780px) {
+  .home-v2 .hv2-book-hero {min-height: 369px; padding: 10px 12px 16px}
+  .home-v2 .hv2-book-hero .hv2-book-model {height: 235px; flex-basis: 235px}
+}
+@media (max-width: 420px) {
+  .home-v2 .hv2-book-hero {min-height: 335px; padding: 8px 10px 15px;gap: 9px}
+  .home-v2 .hv2-book-hero .hv2-book-model {height: 200px; flex-basis: 200px}
+  .home-v2 .hv2-master-photo {width: min(100%, 235px)}
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-v2 .hv2-master-card .hv2-master-photo img {transition: none}
 }
