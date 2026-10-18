@@ -77,7 +77,7 @@ test("remote readiness requires 200, exact MIME, browser CORS, byte count and SH
   );
   await assert.rejects(
     verifyRemoteOrsayAsset(media, { fetchImpl: async () => response(new TextEncoder().encode("wrong")) }),
-    /bytes/,
+    /length mismatch|bytes/,
   );
   await assert.rejects(
     verifyRemoteOrsayAsset({ ...media, sha256: "f".repeat(64) }, { fetchImpl: async () => response() }),
