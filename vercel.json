@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/ar/:slug",
+      "destination": "/print-bridge.html"
+    },
+    {
+      "source": "/v/:slug",
+      "destination": "/print-bridge.html"
+    }
+  ]
+}
