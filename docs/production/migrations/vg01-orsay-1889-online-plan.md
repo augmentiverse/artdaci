@@ -1,6 +1,6 @@
 # VG01 — Basculement contrôlé vers l'Autoportrait du musée d'Orsay (1889)
 
-**État : préparation en ligne — NON PUBLIÉ.** Branche `prepare/vg01-orsay-1889-online`, issue du `main` après fusion de la PR #17. Cette préparation n'altère ni le site de production, ni son manifeste `vg01`, ni les objets Cloudflare R2.
+**État : PUBLIÉ le 19 octobre 2026.** La préparation initiale de la branche `prepare/vg01-orsay-1889-online` a été intégrée avec la migration locale, vérifiée en Preview puis publiée. Le manifeste canonique est `https://media.artdaci.com/artworks/vg01/manifest.json` (6 236 octets, SHA-256 `979901a1de364eedfd5d944c8d8fd2012019d4a7a367bc001316166f173520c3`).
 
 ## Situation constatée au 18 octobre 2026
 
@@ -20,7 +20,7 @@ Le fichier `docs/production/migrations/vg01-orsay-1889-readiness.json` définit 
 | models.portrait | `models/portrait-orsay-1889-v2.glb` | 3 198 048 | `1178d84ef3884c6b9585a80bb7e053cc8a359749f6816f5c2fc209e2dbb89126` |
 | ar.target | `ar/target-orsay-1889-v1.mind` | 980 862 | `2cd573741ed98fab27e53bdffdfd17430a8c2dc65e3e32e210950e2f3bcabc1b` |
 
-**Ces trois éléments sont explicitement `available: false`, `migrationStatus: planned` dans le document préparatoire.** Le document préparatoire n'est pas un manifeste média et n'est pas lu par les pages du site. Il ne doit pas être publié comme `artworks/vg01/manifest.json`.
+**Ces trois éléments sont désormais `available: true`, `migrationStatus: published` dans le registre final.** Le registre reste distinct du manifeste média canonique et n'est pas lu par les pages du site.
 
 ## Vérification en ligne, sans identifiants Cloudflare
 

@@ -28,7 +28,7 @@ function ensure(condition, description) {
 
 export function validateOrsayReadiness(plan) {
   ensure(plan?.schemaVersion === "1.0" && plan.artworkId === "vg01", "Not a VG01 1889 readiness plan");
-  ensure(plan.status === "awaiting-r2-verification", "Preparation status changed; review this gate before continuing");
+  ensure(plan.status === "published", "Expected the final published VG01 release record");
   ensure(plan.mediaBaseUrl === "https://media.artdaci.com/artworks/vg01/", "Unexpected R2 host or artwork path");
   ensure(Array.isArray(plan.media) && plan.media.length === 3, "Expected exactly three Orsay media");
   const usedRoles = new Set(), usedPaths = new Set(), out = [];
@@ -36,8 +36,8 @@ export function validateOrsayReadiness(plan) {
     const rule = expected.get(asset.role);
     ensure(rule && !usedRoles.has(asset.role), "Unexpected or duplicate media role: " + asset.role);
     ensure(!usedPaths.has(asset.path), "Duplicate R2 object key: " + asset.path);
-    ensure(asset.available === false && asset.migrationStatus === "planned",
-      "Unverified media MUST stay available:false and planned");
+    ensure(asset.available === true && asset.migrationStatus === "published",
+      "Verified media MUST be available:true and published");
     ensure(typeof asset.sourceFilename === "string" && asset.sourceFilename.endsWith(rule.extension),
       "Invalid local filename for " + asset.role);
     ensure(asset.mimeType === rule.mimeType, "Wrong expected MIME for " + asset.role);
@@ -91,7 +91,7 @@ export async function runReadiness(args = process.argv.slice(2)) {
   ensure(args.every(arg => arg === "--remote"), "Only the optional --remote flag is supported");
   const plan = JSON.parse(await readFile(readinessPath, "utf8"));
   const assets = validateOrsayReadiness(plan);
-  console.log("VG01 Orsay 1889: 3 proposed immutable assets; none is activated in a live manifest.");
+  console.log("VG01 Orsay 1889: 3 published immutable assets in the canonical release record.");
   for (const asset of assets) console.log(asset.role + " " + asset.bytes + " B " + asset.url);
   if (args.includes("--remote")) {
     const verified = [];
@@ -99,9 +99,9 @@ export async function runReadiness(args = process.argv.slice(2)) {
       verified.push(await verifyRemoteOrsayAsset(asset));
       console.log("Verified R2: " + asset.role);
     }
-    console.log("Remote verification passed: " + verified.length + "/3. Manual approval is STILL required.");
+    console.log("Publication verification passed: " + verified.length + "/3.");
   } else {
-    console.log("Offline preparation passed. Remote R2 media NOT checked.");
+    console.log("Offline publication record passed. Remote R2 media NOT checked.");
   }
 }
 

@@ -1,6 +1,12 @@
 {
   "schemaVersion": "1.0",
-  "status": "r2-verified",
+  "status": "published",
+  "publishedAt": "2026-10-19",
+  "publicManifest": {
+    "url": "https://media.artdaci.com/artworks/vg01/manifest.json",
+    "bytes": 6236,
+    "sha256": "979901a1de364eedfd5d944c8d8fd2012019d4a7a367bc001316166f173520c3"
+  },
   "artworkId": "vg01",
   "releaseIdentity": {
     "title": "Self-Portrait",

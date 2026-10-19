@@ -56,7 +56,7 @@ const pages = [
     title: "Van Gogh Self-Portrait - Printable Artwork Page",
     eyebrow: "Artwork 013 - Post-Impressionism",
     essentials: [
-      "/content/media-manifests/artworks/vg01/manifest.json",
+      "https://media.artdaci.com/artworks/vg01/manifest.json",
       "assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp",
       "ar.html?painting=van-gogh&amp;lang=en",
       "space.html?painting=van-gogh&amp;lang=en&amp;v=10",
@@ -68,7 +68,7 @@ const pages = [
     title: "Autoportrait de Van Gogh - Page imprimable de l’œuvre",
     eyebrow: "Œuvre 013 - Post-impressionnisme",
     essentials: [
-      "/content/media-manifests/artworks/vg01/manifest.json",
+      "https://media.artdaci.com/artworks/vg01/manifest.json",
       "assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp",
       "ar.html?painting=van-gogh&amp;lang=fr",
       "space.html?painting=van-gogh&amp;lang=fr&amp;v=10",

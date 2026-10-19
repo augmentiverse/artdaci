@@ -11,24 +11,24 @@ import {
 const plan = JSON.parse(await readFile(readinessPath, "utf8"));
 const clone = () => structuredClone(plan);
 
-test("VG01 1889 preparation requires three immutable unpublished R2 objects", () => {
+test("VG01 1889 publication record contains three immutable published R2 objects", () => {
   const assets = validateOrsayReadiness(plan);
   assert.deepEqual(assets.map(a => a.role), ["images.main", "models.portrait", "ar.target"]);
   assert.deepEqual(assets.map(a => a.bytes), [267520, 3198048, 980862]);
   assert.equal(assets.reduce((sum, a) => sum + a.bytes, 0), 4446430);
   for (const asset of assets) {
-    assert.equal(asset.available, false);
-    assert.equal(asset.migrationStatus, "planned");
+    assert.equal(asset.available, true);
+    assert.equal(asset.migrationStatus, "published");
     assert.match(asset.url, /^https:\/\/media\.artdaci\.com\/artworks\/vg01\//);
     assert.match(asset.path, /orsay-1889/);
   }
 });
 
-test("publishing flags must not be enabled before remote byte-level verification", () => {
+test("published flags are required after final byte-level verification", () => {
   const altered = clone();
-  altered.media[0].available = true;
-  altered.media[0].migrationStatus = "published";
-  assert.throws(() => validateOrsayReadiness(altered), /available:false/);
+  altered.media[0].available = false;
+  altered.media[0].migrationStatus = "planned";
+  assert.throws(() => validateOrsayReadiness(altered), /available:true/);
 });
 
 test("reject mismatched, duplicate and unsafe R2 keys", () => {

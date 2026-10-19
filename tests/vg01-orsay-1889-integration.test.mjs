@@ -94,10 +94,10 @@ test("vg01 immersive declarations expose only the Orsay portrait role", async ()
   }
 });
 
-test("the integration preview reads the reviewed Git manifest without changing the public R2 manifest", async () => {
+test("published VG01 surfaces read the canonical R2 manifest", async () => {
   for (const page of ["ar.html", "space.html", "vr.html", "gallery-vr.html", "print-van-gogh.html", "print-van-gogh-fr.html"]) {
     const source = await readFile(new URL(`../${page}`, import.meta.url), "utf8");
-    assert.match(source, /\/content\/media-manifests\/artworks\/vg01\/manifest\.json/, page);
-    assert.doesNotMatch(source, /https:\/\/media\.artdaci\.com\/artworks\/vg01\/manifest\.json/, page);
+    assert.match(source, /https:\/\/media\.artdaci\.com\/artworks\/vg01\/manifest\.json/, page);
+    assert.doesNotMatch(source, /\/content\/media-manifests\/artworks\/vg01\/manifest\.json/, page);
   }
 });
