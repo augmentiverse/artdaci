@@ -33,11 +33,11 @@ test('all twelve printed notices have real editorial sources, translated summari
   assert.ok(validatePrintedNotices(invalid,ids).length);
 });
 
-test('the user-authorized vg01 link remains explicit about 1887 versus the unchanged 1889 image',()=>{
-  assert.equal(notices.artworks.vg01.relation,'other-version');
-  assert.equal(json(notices.artworks.vg01.source).date,'1887');
+test('the vg01 Hub and printed page identify the same Orsay 1889 self-portrait',()=>{
+  assert.equal(notices.artworks.vg01.relation,'same-work');
+  assert.equal(json(notices.artworks.vg01.source).date,'1889');
   const work=hub.artists.flatMap(a=>a.works).find(w=>w.artworkId==='vg01');assert.equal(work.imagePresentation.date,'1889');
-  for(const language of ['fr','en','ar']){const notice=printedNotice(notices,'vg01',language);assert.match(notice.description,/1889/);assert.match(notice.description,/1887/);assert.match(notice.label,/1887/);}
+  for(const language of ['fr','en','ar']){const notice=printedNotice(notices,'vg01',language);assert.match(notice.description,/1889/);assert.doesNotMatch(notice.description,/1887/);assert.doesNotMatch(notice.label,/1887/);}
 });
 
 test('printed page language limitations are disclosed and all panels retain their media actions',()=>{

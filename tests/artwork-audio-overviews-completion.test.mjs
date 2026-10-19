@@ -36,10 +36,20 @@ test("the completion map publishes 44 unique exact-language audio overviews", ()
   assert.equal(migration.resources.reduce((sum, { bytes }) => sum + bytes, 0), 82101991);
 });
 
-test("every migrated overview is published and resolves to its canonical R2 URL", async () => {
+test("migrated overviews remain published except the retired vg01 Chicago narration", async () => {
   for (const resource of migration.resources) {
     const manifest = manifests.get(resource.artworkId);
     const asset = manifest.media.audio.overview[resource.language];
+    if (resource.artworkId === "vg01") {
+      assert.equal(asset.available, false, resource.destination);
+      assert.equal(asset.migrationStatus, "quarantined-unused", resource.destination);
+      assert.equal(await resolveArtworkAudioOverview({
+        artworkId: resource.artworkId,
+        language: resource.language,
+        fetchManifest: async () => manifest,
+      }), null);
+      continue;
+    }
     assert.equal(asset.available, true, resource.destination);
     assert.equal(asset.migrationStatus, "published", resource.destination);
     assert.equal(asset.scope, "artwork", resource.destination);

@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0",
+  "status": "r2-verified",
+  "artworkId": "vg01",
+  "releaseIdentity": {
+    "title": "Self-Portrait",
+    "date": "September 1889",
+    "museum": "Musée d’Orsay",
+    "inventoryNumber": "RF 1949 17"
+  },
+  "destinationRoot": "artworks/vg01/",
+  "resources": [
+    {
+      "key": "images.main",
+      "source": "assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp",
+      "destination": "artworks/vg01/images/main-orsay-1889-v1.webp",
+      "bytes": 267520,
+      "sha256": "65b10b377b341e2837768a2a1c748b53546e0e8e5ac72d2cfe994dbf486844fa",
+      "mimeType": "image/webp",
+      "available": true,
+      "migrationStatus": "published"
+    },
+    {
+      "key": "models.portrait",
+      "source": "assets/artists/vincent-van-gogh/artworks/self-portrait/models/portrait-orsay-1889-v2.glb",
+      "destination": "artworks/vg01/models/portrait-orsay-1889-v2.glb",
+      "bytes": 3198048,
+      "sha256": "1178d84ef3884c6b9585a80bb7e053cc8a359749f6816f5c2fc209e2dbb89126",
+      "mimeType": "model/gltf-binary",
+      "available": true,
+      "migrationStatus": "published"
+    },
+    {
+      "key": "ar.target",
+      "source": "assets/artists/vincent-van-gogh/artworks/self-portrait/ar/target-orsay-1889-v1.mind",
+      "destination": "artworks/vg01/ar/target-orsay-1889-v1.mind",
+      "bytes": 980862,
+      "sha256": "2cd573741ed98fab27e53bdffdfd17430a8c2dc65e3e32e210950e2f3bcabc1b",
+      "mimeType": "application/octet-stream",
+      "available": true,
+      "migrationStatus": "published",
+      "targetIndex": 0,
+      "hardwareValidationStatus": "pending"
+    }
+  ],
+  "quarantine": {
+    "identity": "Chicago 1887",
+    "policy": "Retained only for rollback; no active vg01 surface may reference these resources.",
+    "families": [
+      "images.main legacy JPEG",
+      "images.out-of-frame",
+      "audio.guide",
+      "audio.overview",
+      "videos.animation",
+      "models.standing",
+      "models.bedroom-standing",
+      "models.gallery-standing",
+      "ar.target legacy MindAR"
+    ]
+  }
+}

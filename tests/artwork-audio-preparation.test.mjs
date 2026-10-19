@@ -210,22 +210,27 @@ test("historical mo01 pages resolve three manifest keys while keeping click-only
     readFile(resolve(repositoryRoot, "print-ar.html"), "utf8"),
     readFile(resolve(repositoryRoot, "scripts/print-ar.js"), "utf8"),
   ]);
-  assert.match(arabicHtml, /scripts\/print-ar\.js\?v=4/);
+  assert.match(arabicHtml, /scripts\/print-ar\.js\?v=5/);
   assert.match(arabicHtml, /scripts\/artwork-media-manifest\.js\?v=3/);
   assert.match(arabicScript, /mediaManifest: "https:\/\/media\.artdaci\.com\/artworks\/mo01\/manifest\.json"/);
   assert.match(arabicScript, /audioMediaKey: "audio\.overview\.ar"/);
   assert.doesNotMatch(arabicScript, /media\.artdaci\.com\/artworks\/mo01\/audio\//);
 });
 
-test("VG01 Chicago 1887 assets retain their approved identities after the Arabic overview addition", async () => {
-  const files = [
-    ["content/media-manifests/artworks/vg01/manifest.json", "ab662722bafe676cc342f5370d580a45168548425e16f73546a278bc7c554d23"],
-    ["docs/production/migrations/vg01-r2.json", "e972bbfa3584dd1906790e6afba0bfa8028974fceecfff945412b46462bf9343"],
-  ];
-
-  for (const [path, sha256] of files) {
-    const content = normalizeTextLineEndings(await readFile(resolve(repositoryRoot, path)));
-    assert.equal(createHash("sha256").update(content).digest("hex"), sha256);
-    assert.equal(content.includes(Buffer.from("vg02")), false);
+test("VG01 Orsay 1889 preparation does not expose legacy overview audio", async () => {
+  const manifest = JSON.parse(
+    await readFile(resolve(repositoryRoot, "content/media-manifests/artworks/vg01/manifest.json"), "utf8"),
+  );
+  assert.equal(manifest.artwork.date, "September 1889");
+  assert.equal(manifest.artwork.museum, "Musée d’Orsay");
+  for (const family of [manifest.media.audio.guide, manifest.media.audio.overview]) {
+    for (const entry of Object.values(family)) {
+      assert.equal(entry.available, false);
+      assert.equal(entry.migrationStatus, "quarantined-unused");
+    }
   }
+  const historicalMap = normalizeTextLineEndings(
+    await readFile(resolve(repositoryRoot, "docs/production/migrations/vg01-r2.json")),
+  );
+  assert.equal(createHash("sha256").update(historicalMap).digest("hex"), "e972bbfa3584dd1906790e6afba0bfa8028974fceecfff945412b46462bf9343");
 });

@@ -24,8 +24,8 @@ test('all twelve thumbnail and fallback references exist in shared assets or iso
 });
 test('audio is exact-language: canonical overview or explicitly configured Hub narration',()=>{
   let available=0;
-  for(const w of works)for(const lang of HUB_LANGUAGES){const media=resolveHubMedia(w,manifest(w.artworkId),lang);assert.ok(media.audio,`${w.artworkId}/${lang}`);available++;if(w.artworkId==='vg02'&&lang==='ar')assert.equal(media.audio,w.audioPresentation.ar.path);else assert.match(media.audio,new RegExp(`/audio/${lang}/overview\\.mp3$`));assert.ok(artworkActions(media,lang).some(a=>a.id==='audio'));}
-  assert.equal(available,36);
+  for(const w of works)for(const lang of HUB_LANGUAGES){const media=resolveHubMedia(w,manifest(w.artworkId),lang);if(w.artworkId==='vg01'){assert.equal(media.audio,null);assert.equal(artworkActions(media,lang).some(a=>a.id==='audio'),false);continue;}assert.ok(media.audio,`${w.artworkId}/${lang}`);available++;if(w.artworkId==='vg02'&&lang==='ar')assert.equal(media.audio,w.audioPresentation.ar.path);else assert.match(media.audio,new RegExp(`/audio/${lang}/overview\\.mp3$`));assert.ok(artworkActions(media,lang).some(a=>a.id==='audio'));}
+  assert.equal(available,33);
   const canonicalBedroom={...works.find(w=>w.artworkId==='vg02'),audioPresentation:undefined};
   assert.equal(resolveHubMedia(canonicalBedroom,manifest('vg02'),'ar').audio,null);
 });
@@ -67,7 +67,7 @@ test('museum gallery routes retain their requested room when WebXR starts and en
   assert.equal((source.match(/visitor\.rotation(?:\.set\(0, experienceStartYaw, 0\)|\.y = experienceStartYaw)/g)||[]).length,4);
 });
 test('V6.13 actions exclude future 3D, AR, Space, VR and video capabilities',()=>{
-  for(const w of works){const actions=artworkActions(resolveHubMedia(w,manifest(w.artworkId),'fr'),'fr');assert.deepEqual(actions.map(a=>a.id),['about','image','audio',...(w.museumId?['museum']:[]),'return']);}
+  for(const w of works){const actions=artworkActions(resolveHubMedia(w,manifest(w.artworkId),'fr'),'fr');assert.deepEqual(actions.map(a=>a.id),['about','image',...(w.artworkId==='vg01'?[]:['audio']),...(w.museumId?['museum']:[]),'return']);}
 });
 test('Hub guide identities expose availability without embedding runtime model paths',()=>{
   assert.deepEqual(config.artists.find(a=>a.artistId==='ve').guide,{guideId:'vermeer-guide',status:'available'});

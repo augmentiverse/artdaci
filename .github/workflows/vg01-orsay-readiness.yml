@@ -1,0 +1,37 @@
+name: VG01 Orsay 1889 readiness
+
+on:
+  pull_request:
+    paths:
+      - 'docs/production/migrations/vg01-orsay-1889-readiness.json'
+      - 'scripts/check-vg01-orsay-media.mjs'
+      - 'tests/vg01-orsay-readiness.test.mjs'
+      - '.github/workflows/vg01-orsay-readiness.yml'
+  workflow_dispatch:
+    inputs:
+      verify_remote:
+        description: 'Download and hash-check the three public Cloudflare R2 media (fails until uploaded)'
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Check unpublished VG01 preparation
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Offline readiness tests (no Cloudflare credentials)
+        run: node --test tests/vg01-orsay-readiness.test.mjs
+      - name: Validate media registration
+        run: node scripts/check-vg01-orsay-media.mjs
+      - name: Remote R2 byte/MIME/SHA-256/CORS check
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.verify_remote }}
+        run: node scripts/check-vg01-orsay-media.mjs --remote

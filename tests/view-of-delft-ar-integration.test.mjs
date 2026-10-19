@@ -97,10 +97,10 @@ test("ve02 routing and declarative media configuration expose Image and Space AR
   }
   assert.match(arHtml, /data-artwork-media-target-key="ar\.target"/);
   assert.match(arHtml, /data-artwork-media-image-key="images\.tracking-source"/);
-  assert.match(arHtml, /ar-viewer\.js\?v=60/);
+  assert.match(arHtml, /ar-viewer\.js\?v=61/);
   assert.match(arViewer, /if \(manifest\.print\?\.imageTargetSource\)/);
   assert.match(arViewer, /target-image-link"\)\.href = manifest\.print\.imageTargetSource/);
-  assert.match(spaceHtml, /space-viewer\.js\?v=37/);
+  assert.match(spaceHtml, /space-viewer\.js\?v=38/);
   assert.match(arViewer, /"view-of-delft": "content\/paintings\/view-of-delft\.json\?v=2"/);
   assert.match(spaceViewer, /"view-of-delft": "content\/paintings\/view-of-delft\.json\?v=2"/);
   assert.doesNotMatch(arHtml + spaceHtml, /shared\//);
