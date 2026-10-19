@@ -101,3 +101,18 @@ test("published VG01 surfaces read the canonical R2 manifest", async () => {
     assert.doesNotMatch(source, /\/content\/media-manifests\/artworks\/vg01\/manifest\.json/, page);
   }
 });
+
+test("VG01 printable pages identify Musée d’Orsay as the owning museum", async () => {
+  const [museumScript, englishPage, frenchPage, arabicPage] = await Promise.all([
+    readFile(new URL("../scripts/painting-museum.js", import.meta.url), "utf8"),
+    readFile(new URL("../print-van-gogh.html", import.meta.url), "utf8"),
+    readFile(new URL("../print-van-gogh-fr.html", import.meta.url), "utf8"),
+    readFile(new URL("../print-ar.html", import.meta.url), "utf8"),
+  ]);
+  assert.match(museumScript, /"print-van-gogh\.html": \["orsay", "content\/museums\/orsay\.json"\]/);
+  assert.match(museumScript, /"print-van-gogh-fr\.html": \["orsay", "content\/museums\/orsay\.json"\]/);
+  assert.match(museumScript, /"van-gogh": \["orsay", "content\/museums\/orsay\.json"\]/);
+  for (const page of [englishPage, frenchPage, arabicPage]) {
+    assert.match(page, /scripts\/painting-museum\.js\?v=3/);
+  }
+});
