@@ -1067,6 +1067,21 @@ figcaption strong {
   line-height: 1.25;
 }
 
+.qr-card > a {
+  display: block;
+  padding: 2px;
+  background: #fff;
+}
+
+.qr-card code {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
 .index-qr {
   max-width: 1320px;
   margin: 30px auto 0;

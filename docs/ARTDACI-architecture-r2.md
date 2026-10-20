@@ -94,14 +94,13 @@ Les objets média versionnés peuvent recevoir une longue durée de cache et le 
 
 ## QR codes
 
-Une image de QR code peut être publiée sous `artworks/{id}/images/qr/...`. Le contenu encodé doit toujours être une route stable du site, par exemple :
+Une image de QR code peut être publiée sous `artworks/{id}/images/qr/...`. Le contenu encodé doit toujours être la route stable déclarée par `pageUrl` dans le manifeste canonique de l’œuvre, par exemple :
 
 ```text
-https://artdaci.com/a/ve01
-https://artdaci.com/ar.html?painting=vermeer-girl-with-a-pearl-earring
+https://artdaci.com/ar/girl-with-a-pearl-earring
 ```
 
-Un QR code ne doit jamais encoder directement une URL `media.artdaci.com`. La destination publique reste ainsi stable même si une clé R2, un format ou un fournisseur change.
+La feuille imprimable, le lien cliquable et le générateur de QR doivent tous lire cette même valeur. Un QR code ne doit jamais encoder directement une URL `media.artdaci.com`, `github.io`, une Preview Vercel ou une adresse locale. La destination publique reste ainsi stable même si une clé R2, un format ou un fournisseur change.
 
 ## Quarantaine et doublons
 

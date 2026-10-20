@@ -14,7 +14,7 @@
     "museum": "Musée du Louvre",
     "location": { "city": "Paris", "country": "France" }
   },
-  "pageUrl": "https://artdaci.com/a/ld06",
+  "pageUrl": "https://artdaci.com/ar/ferronniere",
   "mediaBaseUrl": "https://media.artdaci.com/artworks/ld06/",
   "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
   "cachePolicy": "no-store",

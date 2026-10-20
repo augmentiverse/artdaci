@@ -1,0 +1,65 @@
+:root {
+  color: #10233b;
+  background: #f2f5f8;
+  font-family: Inter, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+
+.document-header {
+  max-width: 210mm;
+  margin: 0 auto;
+  padding: 18mm 14mm 8mm;
+  background: white;
+}
+.document-header p { margin: 0 0 3mm; color: #52657b; }
+.document-header h1 { margin: 0 0 4mm; font: 700 28pt/1.05 Georgia, serif; }
+
+.artist-sheet {
+  width: 210mm;
+  min-height: 297mm;
+  margin: 8mm auto;
+  padding: 10mm;
+  background: white;
+  break-after: page;
+}
+.artist-sheet > header {
+  padding-bottom: 3mm;
+  border-bottom: 1.2mm solid #c89a3d;
+}
+.artist-sheet > header p { margin: 0; color: #52657b; text-transform: uppercase; letter-spacing: .08em; }
+.artist-sheet > header h2 { margin: 1mm 0 0; font: 700 20pt/1.05 Georgia, serif; }
+.qr-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; padding-top: 5mm; }
+.artwork-qr {
+  min-height: 68mm;
+  display: grid;
+  grid-template-columns: 43mm 1fr;
+  gap: 5mm;
+  align-items: center;
+  padding: 3mm;
+  border: .35mm solid #aeb9c6;
+  border-radius: 2mm;
+  break-inside: avoid;
+}
+.artwork-qr a { display: block; background: white; padding: 2mm; }
+.artwork-qr img { display: block; width: 39mm; height: 39mm; object-fit: contain; image-rendering: auto; }
+.artwork-qr span { color: #967025; font-weight: 800; letter-spacing: .08em; }
+.artwork-qr h3 { margin: 1.5mm 0 1mm; font: 700 13pt/1.1 Georgia, serif; }
+.artwork-qr p { margin: 0 0 2mm; font-size: 9.5pt; }
+.artwork-qr code { display: block; overflow-wrap: anywhere; color: #1a4d7a; font: 7.5pt/1.25 Consolas, monospace; }
+.error { color: #8c1d18; padding: 20mm; }
+
+@page { size: A4 portrait; margin: 0; }
+@media print {
+  :root { background: white; }
+  .document-header { display: none; }
+  .artist-sheet { width: 210mm; min-height: 297mm; margin: 0; padding: 10mm; box-shadow: none; }
+  .qr-grid { grid-template-columns: 1fr 1fr; }
+  .artist-sheet:last-child { break-after: auto; }
+}
+
+@media screen and (max-width: 800px) {
+  .document-header, .artist-sheet { width: 100%; min-height: auto; padding: 8vw; }
+  .qr-grid { grid-template-columns: 1fr; }
+}

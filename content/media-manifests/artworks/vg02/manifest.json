@@ -14,7 +14,7 @@
     "museum": "Van Gogh Museum",
     "location": { "city": "Amsterdam", "country": "Netherlands" }
   },
-  "pageUrl": "https://artdaci.com/a/vg02",
+  "pageUrl": "https://artdaci.com/ar/bedroom-in-arles",
   "mediaBaseUrl": "https://media.artdaci.com/artworks/vg02/",
   "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
   "cachePolicy": "no-store",

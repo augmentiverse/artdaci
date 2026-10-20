@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ARTDACI — Official artwork QR codes</title>
+    <link rel="stylesheet" href="styles/print-book-qrs.css" />
+  </head>
+  <body>
+    <header class="document-header">
+      <p>ARTDACI · Print control sheet</p>
+      <h1>Official artwork QR codes</h1>
+      <p>Each printed address, clickable link and encoded payload is read from the artwork media manifest.</p>
+    </header>
+    <main id="qr-book" aria-live="polite">
+      <p class="loading">Loading the 24 canonical artwork destinations…</p>
+    </main>
+    <noscript>This printable control sheet requires JavaScript to load the canonical manifests.</noscript>
+    <script type="module" src="scripts/print-book-qrs.js?v=1"></script>
+  </body>
+</html>

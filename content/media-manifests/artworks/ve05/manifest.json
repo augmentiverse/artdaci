@@ -14,7 +14,7 @@
     "museum": "Musée du Louvre",
     "location": { "city": "Paris", "country": "France" }
   },
-  "pageUrl": "https://artdaci.com/a/ve05",
+  "pageUrl": "https://artdaci.com/ar/the-astronomer",
   "mediaBaseUrl": "https://media.artdaci.com/artworks/ve05/",
   "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
   "cachePolicy": "no-store",
