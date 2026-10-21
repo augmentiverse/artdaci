@@ -33,7 +33,7 @@ for(const js of inline) new vm.Script(js,{filename:"museums.html inline script"}
 const imageDefs=html.match(/const ARTWORK_IMAGES=\{([\s\S]*?)\};/);
 assert.ok(imageDefs,"artwork thumbnail mapping missing");
 const artworksPath=new URL("../",import.meta.url);
-const thumbnailPaths=[...imageDefs[1].matchAll(/\\b(?:ld|ve|vg|mo)\\d+:'([^']+)'/g)].map(m=>m[1]);
+const thumbnailPaths=[...imageDefs[1].matchAll(/\b(?:ld|ve|vg|mo)\d+:'([^']+)'/g)].map(m=>m[1]);
 assert.equal(thumbnailPaths.length,12,"all twelve artwork thumbnail paths must be listed");
 for(const img of thumbnailPaths) assert.ok(existsSync(new URL("../"+img,import.meta.url)),"missing source artwork asset: "+img);
 for(const museum of base.museums) for(const work of museum.artworks){
