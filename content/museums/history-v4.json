@@ -1,0 +1,181 @@
+{
+  "schemaVersion": "1.0",
+  "editorialReview": "2026-10-21",
+  "description": "Historic milestones for the six ARTDACI museums. Every milestone is supported by an institutional museum source.",
+  "museums": {
+    "louvre": [
+      {
+        "year": "1190",
+        "text": {
+          "fr": "Le futur palais du Louvre naît comme forteresse défensive sous Philippe Auguste.",
+          "en": "The future Louvre begins as a defensive fortress under Philip II.",
+          "ar": "بدأ موقع اللوفر حصنًا دفاعيًا في عهد فيليب أوغست."
+        },
+        "source": "https://presse.louvre.fr/le-musee-du-louvre-en-bref-1063000220316/?lang=en"
+      },
+      {
+        "year": "1793",
+        "text": {
+          "fr": "Pendant la Révolution française, le palais ouvre au public comme musée d'art.",
+          "en": "During the French Revolution, the palace opens to the public as an art museum.",
+          "ar": "خلال الثورة الفرنسية فُتح القصر للجمهور بوصفه متحفًا للفنون."
+        },
+        "source": "https://presse.louvre.fr/le-musee-du-louvre-en-bref-1063000220316/?lang=en"
+      },
+      {
+        "year": "1989",
+        "text": {
+          "fr": "La Pyramide d'I. M. Pei inaugure une nouvelle entrée au cœur de la cour Napoléon.",
+          "en": "I. M. Pei's Pyramid opens a new entrance in the Cour Napoléon.",
+          "ar": "افتُتح هرم آي. إم. باي ليصبح مدخلًا جديدًا في ساحة نابليون."
+        },
+        "source": "https://www.louvre.fr/en/explore/the-palace/a-pyramid-for-a-symbol"
+      }
+    ],
+    "orsay": [
+      {
+        "year": "1900",
+        "text": {
+          "fr": "La gare d'Orsay ouvre pour l'Exposition universelle de Paris.",
+          "en": "Orsay railway station opens for the Paris Universal Exposition.",
+          "ar": "افتُتحت محطة أورسيه بمناسبة المعرض العالمي في باريس."
+        },
+        "source": "https://www.musee-orsay.fr/fr/articles/histoire-du-musee-60"
+      },
+      {
+        "year": "1977",
+        "text": {
+          "fr": "Le projet de transformer l'ancienne gare en musée est officiellement décidé.",
+          "en": "The conversion of the former railway station into a museum is officially approved.",
+          "ar": "اتُّخذ القرار الرسمي بتحويل المحطة القديمة إلى متحف."
+        },
+        "source": "https://www.musee-orsay.fr/fr/articles/histoire-du-musee-60"
+      },
+      {
+        "year": "1986",
+        "text": {
+          "fr": "Le musée d'Orsay ouvre ses portes au public en décembre.",
+          "en": "The Musée d'Orsay opens to the public in December.",
+          "ar": "فتح متحف أورسيه أبوابه للجمهور في ديسمبر."
+        },
+        "source": "https://www.musee-orsay.fr/fr/articles/histoire-du-musee-60"
+      }
+    ],
+    "mauritshuis": [
+      {
+        "year": "1644",
+        "text": {
+          "fr": "Johan Maurits regagne La Haye et s'installe dans son palais urbain.",
+          "en": "Johan Maurits returns to The Hague and takes up residence in his city palace.",
+          "ar": "عاد يوهان موريتس إلى لاهاي واستقر في قصره داخل المدينة."
+        },
+        "source": "https://www.mauritshuis.nl/en/what-s-on/always-on-show/welcome-to-the-mauritshuis/history-of-the-building"
+      },
+      {
+        "year": "1822",
+        "text": {
+          "fr": "L'édifice devient la Galerie royale de peintures, ouverte au public.",
+          "en": "The building opens to the public as the Royal Picture Gallery.",
+          "ar": "افتُتح المبنى للجمهور بوصفه المعرض الملكي للوحات."
+        },
+        "source": "https://www.mauritshuis.nl/en/what-s-on/always-on-show/welcome-to-the-mauritshuis/house-filled-with-stories/house-filled-with-stories"
+      },
+      {
+        "year": "2014",
+        "text": {
+          "fr": "Une rénovation relie le palais à de nouveaux espaces par un foyer souterrain.",
+          "en": "A renovation connects the historic palace to new facilities through an underground foyer.",
+          "ar": "ربط التجديد القصر التاريخي بمرافق جديدة عبر بهو تحت الأرض."
+        },
+        "source": "https://www.mauritshuis.nl/en/what-s-on/always-on-show/welcome-to-the-mauritshuis/history-of-the-building"
+      }
+    ],
+    "czartoryski": [
+      {
+        "year": "1801",
+        "text": {
+          "fr": "La princesse Izabela Czartoryska ouvre sa collection au public à Puławy.",
+          "en": "Princess Izabela Czartoryska opens her collection to the public in Puławy.",
+          "ar": "أتاحت الأميرة إيزابيلا تشارتوريسكا مجموعتها للجمهور في بوافي."
+        },
+        "source": "https://mnk.pl/en/branches/czartoryski-museum/"
+      },
+      {
+        "year": "1876",
+        "text": {
+          "fr": "La collection de la famille Czartoryski rejoint Cracovie.",
+          "en": "The Czartoryski family collection moves to Kraków.",
+          "ar": "انتقلت مجموعة أسرة تشارتوريسكي إلى كراكوف."
+        },
+        "source": "https://mnk.pl/en/branches/czartoryski-museum/"
+      },
+      {
+        "year": "2019",
+        "text": {
+          "fr": "Le musée rouvre après une vaste restauration des bâtiments et des salles.",
+          "en": "The museum reopens after extensive restoration of its buildings and galleries.",
+          "ar": "أُعيد افتتاح المتحف بعد ترميم شامل للمباني وقاعات العرض."
+        },
+        "source": "https://mnk.pl/en/the-past-of-the-future-the-renovation-of-the-mnk-czartoryski-museum/"
+      }
+    ],
+    "van-gogh-museum": [
+      {
+        "year": "1973",
+        "text": {
+          "fr": "Le bâtiment principal conçu par Gerrit Rietveld ouvre ses portes.",
+          "en": "The main building designed by Gerrit Rietveld opens.",
+          "ar": "افتُتح المبنى الرئيسي الذي صممه غيريت ريتفيلد."
+        },
+        "source": "https://www.vangoghmuseum.nl/nl/over/organisatie/het-gebouw"
+      },
+      {
+        "year": "1999",
+        "text": {
+          "fr": "L'aile d'expositions conçue par Kisho Kurokawa est inaugurée.",
+          "en": "The exhibition wing designed by Kisho Kurokawa opens.",
+          "ar": "افتُتح جناح المعارض الذي صممه كيشو كوروكاوا."
+        },
+        "source": "https://www.vangoghmuseum.nl/nl/over/organisatie/het-gebouw"
+      },
+      {
+        "year": "2015",
+        "text": {
+          "fr": "Une nouvelle entrée publique sur la Museumplein facilite l'accueil.",
+          "en": "A new public entrance on Museumplein opens.",
+          "ar": "افتُتح مدخل جديد للزوار في ساحة المتاحف."
+        },
+        "source": "https://www.vangoghmuseum.nl/nl/over/organisatie/kantoren-in-amsterdam"
+      }
+    ],
+    "national-gallery-of-art-washington": [
+      {
+        "year": "1941",
+        "text": {
+          "fr": "Le bâtiment Ouest est inauguré et la National Gallery of Art ouvre au public.",
+          "en": "The West Building is dedicated and the National Gallery opens to the public.",
+          "ar": "افتُتح المبنى الغربي وبدأ المعرض الوطني للفنون استقبال الجمهور."
+        },
+        "source": "https://www.nga.gov/national-gallery-history"
+      },
+      {
+        "year": "1978",
+        "text": {
+          "fr": "Le bâtiment Est, conçu par I. M. Pei, accueille l'art moderne et contemporain.",
+          "en": "I. M. Pei's East Building opens for modern and contemporary art.",
+          "ar": "افتُتح المبنى الشرقي الذي صممه آي. إم. باي للفن الحديث والمعاصر."
+        },
+        "source": "https://www.nga.gov/about-us/our-campus"
+      },
+      {
+        "year": "2016",
+        "text": {
+          "fr": "Après rénovation, le bâtiment Est gagne de nouvelles salles et une terrasse de sculptures.",
+          "en": "Renovation adds new exhibition galleries and a rooftop sculpture terrace to the East Building.",
+          "ar": "أضاف التجديد قاعات عرض جديدة وشرفة لمنحوتات السطح إلى المبنى الشرقي."
+        },
+        "source": "https://www.nga.gov/about-us/our-campus"
+      }
+    ]
+  }
+}
