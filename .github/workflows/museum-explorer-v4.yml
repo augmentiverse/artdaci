@@ -1,0 +1,25 @@
+name: Museum Explorer V4 checks
+
+on:
+  pull_request:
+    paths:
+      - museums.html
+      - content/museums/history-v4.json
+      - content/museums/learning-v1.json
+      - tests/museum-explorer-v4.test.mjs
+      - .github/workflows/museum-explorer-v4.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-museum-explorer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Validate museum editorial data and inline JavaScript
+        run: node tests/museum-explorer-v4.test.mjs

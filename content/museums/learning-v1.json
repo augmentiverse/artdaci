@@ -1,0 +1,594 @@
+{
+  "schemaVersion": "1.0",
+  "lastEditorialReview": "2026-10-21",
+  "museums": {
+    "louvre": [
+      {
+        "id": "historic-event",
+        "prompt": {
+          "fr": "Quel événement marque l'année 1190 pour ce musée ?",
+          "en": "Which event occurred at this museum in 1190?",
+          "ar": "ما الحدث الذي وقع في تاريخ هذا المتحف عام 1190؟"
+        },
+        "choices": [
+          {
+            "fr": "Le futur palais du Louvre naît comme forteresse défensive sous Philippe Auguste.",
+            "en": "The future Louvre begins as a defensive fortress under Philip II.",
+            "ar": "بدأ موقع اللوفر حصنًا دفاعيًا في عهد فيليب أوغست."
+          },
+          {
+            "fr": "Pendant la Révolution française, le palais ouvre au public comme musée d'art.",
+            "en": "During the French Revolution, the palace opens to the public as an art museum.",
+            "ar": "خلال الثورة الفرنسية فُتح القصر للجمهور بوصفه متحفًا للفنون."
+          },
+          {
+            "fr": "La Pyramide d'I. M. Pei inaugure une nouvelle entrée au cœur de la cour Napoléon.",
+            "en": "I. M. Pei's Pyramid opens a new entrance in the Cour Napoléon.",
+            "ar": "افتُتح هرم آي. إم. باي ليصبح مدخلًا جديدًا في ساحة نابليون."
+          }
+        ],
+        "correct": 0,
+        "explanation": {
+          "fr": "Le futur palais du Louvre naît comme forteresse défensive sous Philippe Auguste.",
+          "en": "The future Louvre begins as a defensive fortress under Philip II.",
+          "ar": "بدأ موقع اللوفر حصنًا دفاعيًا في عهد فيليب أوغست."
+        },
+        "source": "https://presse.louvre.fr/le-musee-du-louvre-en-bref-1063000220316/?lang=en"
+      },
+      {
+        "id": "historic-date",
+        "prompt": {
+          "fr": "En quelle année : La Pyramide d'I. M. Pei inaugure une nouvelle entrée au cœur de la cour Napoléon.",
+          "en": "In which year: I. M. Pei's Pyramid opens a new entrance in the Cour Napoléon.",
+          "ar": "في أي سنة: افتُتح هرم آي. إم. باي ليصبح مدخلًا جديدًا في ساحة نابليون."
+        },
+        "choices": [
+          {
+            "fr": "1190",
+            "en": "1190",
+            "ar": "1190"
+          },
+          {
+            "fr": "1793",
+            "en": "1793",
+            "ar": "1793"
+          },
+          {
+            "fr": "1989",
+            "en": "1989",
+            "ar": "1989"
+          }
+        ],
+        "correct": 2,
+        "explanation": {
+          "fr": "La Pyramide d'I. M. Pei inaugure une nouvelle entrée au cœur de la cour Napoléon.",
+          "en": "I. M. Pei's Pyramid opens a new entrance in the Cour Napoléon.",
+          "ar": "افتُتح هرم آي. إم. باي ليصبح مدخلًا جديدًا في ساحة نابليون."
+        },
+        "source": "https://www.louvre.fr/en/explore/the-palace/a-pyramid-for-a-symbol"
+      },
+      {
+        "id": "artwork-museum",
+        "prompt": {
+          "fr": "Quelle œuvre d’ARTDACI est conservée dans ce musée ?",
+          "en": "Which ARTDACI artwork belongs to this museum's collection?",
+          "ar": "أي عمل من ARTDACI محفوظ في مجموعة هذا المتحف؟"
+        },
+        "choices": [
+          {
+            "fr": "La Dame à l’hermine",
+            "en": "Lady with an Ermine",
+            "ar": "السيدة ذات القاقم"
+          },
+          {
+            "fr": "La Joconde",
+            "en": "Mona Lisa",
+            "ar": "الموناليزا"
+          },
+          {
+            "fr": "Autoportrait (1889)",
+            "en": "Self-Portrait (1889)",
+            "ar": "صورة ذاتية (1889)"
+          }
+        ],
+        "correct": 1,
+        "explanation": {
+          "fr": "La Joconde fait partie des œuvres conservées dans ce musée.",
+          "en": "Mona Lisa is held in this museum's collection.",
+          "ar": "الموناليزا من الأعمال المحفوظة في مجموعة هذا المتحف."
+        },
+        "source": "https://www.louvre.fr/en/explore/the-palace/mona-lisa"
+      }
+    ],
+    "orsay": [
+      {
+        "id": "historic-event",
+        "prompt": {
+          "fr": "Quel événement marque l'année 1900 pour ce musée ?",
+          "en": "Which event occurred at this museum in 1900?",
+          "ar": "ما الحدث الذي وقع في تاريخ هذا المتحف عام 1900؟"
+        },
+        "choices": [
+          {
+            "fr": "La gare d'Orsay ouvre pour l'Exposition universelle de Paris.",
+            "en": "Orsay railway station opens for the Paris Universal Exposition.",
+            "ar": "افتُتحت محطة أورسيه بمناسبة المعرض العالمي في باريس."
+          },
+          {
+            "fr": "Le projet de transformer l'ancienne gare en musée est officiellement décidé.",
+            "en": "The conversion of the former railway station into a museum is officially approved.",
+            "ar": "اتُّخذ القرار الرسمي بتحويل المحطة القديمة إلى متحف."
+          },
+          {
+            "fr": "Le musée d'Orsay ouvre ses portes au public en décembre.",
+            "en": "The Musée d'Orsay opens to the public in December.",
+            "ar": "فتح متحف أورسيه أبوابه للجمهور في ديسمبر."
+          }
+        ],
+        "correct": 0,
+        "explanation": {
+          "fr": "La gare d'Orsay ouvre pour l'Exposition universelle de Paris.",
+          "en": "Orsay railway station opens for the Paris Universal Exposition.",
+          "ar": "افتُتحت محطة أورسيه بمناسبة المعرض العالمي في باريس."
+        },
+        "source": "https://www.musee-orsay.fr/fr/articles/histoire-du-musee-60"
+      },
+      {
+        "id": "historic-date",
+        "prompt": {
+          "fr": "En quelle année : Le musée d'Orsay ouvre ses portes au public en décembre.",
+          "en": "In which year: The Musée d'Orsay opens to the public in December.",
+          "ar": "في أي سنة: فتح متحف أورسيه أبوابه للجمهور في ديسمبر."
+        },
+        "choices": [
+          {
+            "fr": "1900",
+            "en": "1900",
+            "ar": "1900"
+          },
+          {
+            "fr": "1977",
+            "en": "1977",
+            "ar": "1977"
+          },
+          {
+            "fr": "1986",
+            "en": "1986",
+            "ar": "1986"
+          }
+        ],
+        "correct": 2,
+        "explanation": {
+          "fr": "Le musée d'Orsay ouvre ses portes au public en décembre.",
+          "en": "The Musée d'Orsay opens to the public in December.",
+          "ar": "فتح متحف أورسيه أبوابه للجمهور في ديسمبر."
+        },
+        "source": "https://www.musee-orsay.fr/fr/articles/histoire-du-musee-60"
+      },
+      {
+        "id": "artwork-museum",
+        "prompt": {
+          "fr": "Quelle œuvre d’ARTDACI est conservée dans ce musée ?",
+          "en": "Which ARTDACI artwork belongs to this museum's collection?",
+          "ar": "أي عمل من ARTDACI محفوظ في مجموعة هذا المتحف؟"
+        },
+        "choices": [
+          {
+            "fr": "La Chambre à coucher",
+            "en": "The Bedroom",
+            "ar": "غرفة النوم"
+          },
+          {
+            "fr": "Autoportrait (1889)",
+            "en": "Self-Portrait (1889)",
+            "ar": "صورة ذاتية (1889)"
+          },
+          {
+            "fr": "La Jeune Fille à la perle",
+            "en": "Girl with a Pearl Earring",
+            "ar": "الفتاة ذات القرط اللؤلؤي"
+          }
+        ],
+        "correct": 1,
+        "explanation": {
+          "fr": "Autoportrait (1889) fait partie des œuvres conservées dans ce musée.",
+          "en": "Self-Portrait (1889) is held in this museum's collection.",
+          "ar": "صورة ذاتية (1889) من الأعمال المحفوظة في مجموعة هذا المتحف."
+        },
+        "source": "https://www.musee-orsay.fr/fr/oeuvres/portrait-de-lartiste-747"
+      }
+    ],
+    "mauritshuis": [
+      {
+        "id": "historic-event",
+        "prompt": {
+          "fr": "Quel événement marque l'année 1644 pour ce musée ?",
+          "en": "Which event occurred at this museum in 1644?",
+          "ar": "ما الحدث الذي وقع في تاريخ هذا المتحف عام 1644؟"
+        },
+        "choices": [
+          {
+            "fr": "Johan Maurits regagne La Haye et s'installe dans son palais urbain.",
+            "en": "Johan Maurits returns to The Hague and takes up residence in his city palace.",
+            "ar": "عاد يوهان موريتس إلى لاهاي واستقر في قصره داخل المدينة."
+          },
+          {
+            "fr": "L'édifice devient la Galerie royale de peintures, ouverte au public.",
+            "en": "The building opens to the public as the Royal Picture Gallery.",
+            "ar": "افتُتح المبنى للجمهور بوصفه المعرض الملكي للوحات."
+          },
+          {
+            "fr": "Une rénovation relie le palais à de nouveaux espaces par un foyer souterrain.",
+            "en": "A renovation connects the historic palace to new facilities through an underground foyer.",
+            "ar": "ربط التجديد القصر التاريخي بمرافق جديدة عبر بهو تحت الأرض."
+          }
+        ],
+        "correct": 0,
+        "explanation": {
+          "fr": "Johan Maurits regagne La Haye et s'installe dans son palais urbain.",
+          "en": "Johan Maurits returns to The Hague and takes up residence in his city palace.",
+          "ar": "عاد يوهان موريتس إلى لاهاي واستقر في قصره داخل المدينة."
+        },
+        "source": "https://www.mauritshuis.nl/en/what-s-on/always-on-show/welcome-to-the-mauritshuis/history-of-the-building"
+      },
+      {
+        "id": "historic-date",
+        "prompt": {
+          "fr": "En quelle année : Une rénovation relie le palais à de nouveaux espaces par un foyer souterrain.",
+          "en": "In which year: A renovation connects the historic palace to new facilities through an underground foyer.",
+          "ar": "في أي سنة: ربط التجديد القصر التاريخي بمرافق جديدة عبر بهو تحت الأرض."
+        },
+        "choices": [
+          {
+            "fr": "1644",
+            "en": "1644",
+            "ar": "1644"
+          },
+          {
+            "fr": "1822",
+            "en": "1822",
+            "ar": "1822"
+          },
+          {
+            "fr": "2014",
+            "en": "2014",
+            "ar": "2014"
+          }
+        ],
+        "correct": 2,
+        "explanation": {
+          "fr": "Une rénovation relie le palais à de nouveaux espaces par un foyer souterrain.",
+          "en": "A renovation connects the historic palace to new facilities through an underground foyer.",
+          "ar": "ربط التجديد القصر التاريخي بمرافق جديدة عبر بهو تحت الأرض."
+        },
+        "source": "https://www.mauritshuis.nl/en/what-s-on/always-on-show/welcome-to-the-mauritshuis/history-of-the-building"
+      },
+      {
+        "id": "artwork-museum",
+        "prompt": {
+          "fr": "Quelle œuvre d’ARTDACI est conservée dans ce musée ?",
+          "en": "Which ARTDACI artwork belongs to this museum's collection?",
+          "ar": "أي عمل من ARTDACI محفوظ في مجموعة هذا المتحف؟"
+        },
+        "choices": [
+          {
+            "fr": "Ginevra de’ Benci",
+            "en": "Ginevra de’ Benci",
+            "ar": "جينيفرا دي بنشي"
+          },
+          {
+            "fr": "La Jeune Fille à la perle",
+            "en": "Girl with a Pearl Earring",
+            "ar": "الفتاة ذات القرط اللؤلؤي"
+          },
+          {
+            "fr": "La Dame à l’hermine",
+            "en": "Lady with an Ermine",
+            "ar": "السيدة ذات القاقم"
+          }
+        ],
+        "correct": 1,
+        "explanation": {
+          "fr": "La Jeune Fille à la perle fait partie des œuvres conservées dans ce musée.",
+          "en": "Girl with a Pearl Earring is held in this museum's collection.",
+          "ar": "الفتاة ذات القرط اللؤلؤي من الأعمال المحفوظة في مجموعة هذا المتحف."
+        },
+        "source": "https://www.mauritshuis.nl/en/our-collection/artworks/670-girl-with-a-pearl-earring/"
+      }
+    ],
+    "czartoryski": [
+      {
+        "id": "historic-event",
+        "prompt": {
+          "fr": "Quel événement marque l'année 1801 pour ce musée ?",
+          "en": "Which event occurred at this museum in 1801?",
+          "ar": "ما الحدث الذي وقع في تاريخ هذا المتحف عام 1801؟"
+        },
+        "choices": [
+          {
+            "fr": "La princesse Izabela Czartoryska ouvre sa collection au public à Puławy.",
+            "en": "Princess Izabela Czartoryska opens her collection to the public in Puławy.",
+            "ar": "أتاحت الأميرة إيزابيلا تشارتوريسكا مجموعتها للجمهور في بوافي."
+          },
+          {
+            "fr": "La collection de la famille Czartoryski rejoint Cracovie.",
+            "en": "The Czartoryski family collection moves to Kraków.",
+            "ar": "انتقلت مجموعة أسرة تشارتوريسكي إلى كراكوف."
+          },
+          {
+            "fr": "Le musée rouvre après une vaste restauration des bâtiments et des salles.",
+            "en": "The museum reopens after extensive restoration of its buildings and galleries.",
+            "ar": "أُعيد افتتاح المتحف بعد ترميم شامل للمباني وقاعات العرض."
+          }
+        ],
+        "correct": 0,
+        "explanation": {
+          "fr": "La princesse Izabela Czartoryska ouvre sa collection au public à Puławy.",
+          "en": "Princess Izabela Czartoryska opens her collection to the public in Puławy.",
+          "ar": "أتاحت الأميرة إيزابيلا تشارتوريسكا مجموعتها للجمهور في بوافي."
+        },
+        "source": "https://mnk.pl/en/branches/czartoryski-museum/"
+      },
+      {
+        "id": "historic-date",
+        "prompt": {
+          "fr": "En quelle année : Le musée rouvre après une vaste restauration des bâtiments et des salles.",
+          "en": "In which year: The museum reopens after extensive restoration of its buildings and galleries.",
+          "ar": "في أي سنة: أُعيد افتتاح المتحف بعد ترميم شامل للمباني وقاعات العرض."
+        },
+        "choices": [
+          {
+            "fr": "1801",
+            "en": "1801",
+            "ar": "1801"
+          },
+          {
+            "fr": "1876",
+            "en": "1876",
+            "ar": "1876"
+          },
+          {
+            "fr": "2019",
+            "en": "2019",
+            "ar": "2019"
+          }
+        ],
+        "correct": 2,
+        "explanation": {
+          "fr": "Le musée rouvre après une vaste restauration des bâtiments et des salles.",
+          "en": "The museum reopens after extensive restoration of its buildings and galleries.",
+          "ar": "أُعيد افتتاح المتحف بعد ترميم شامل للمباني وقاعات العرض."
+        },
+        "source": "https://mnk.pl/en/the-past-of-the-future-the-renovation-of-the-mnk-czartoryski-museum/"
+      },
+      {
+        "id": "artwork-museum",
+        "prompt": {
+          "fr": "Quelle œuvre d’ARTDACI est conservée dans ce musée ?",
+          "en": "Which ARTDACI artwork belongs to this museum's collection?",
+          "ar": "أي عمل من ARTDACI محفوظ في مجموعة هذا المتحف؟"
+        },
+        "choices": [
+          {
+            "fr": "La Joconde",
+            "en": "Mona Lisa",
+            "ar": "الموناليزا"
+          },
+          {
+            "fr": "La Dame à l’hermine",
+            "en": "Lady with an Ermine",
+            "ar": "السيدة ذات القاقم"
+          },
+          {
+            "fr": "La Chambre à coucher",
+            "en": "The Bedroom",
+            "ar": "غرفة النوم"
+          }
+        ],
+        "correct": 1,
+        "explanation": {
+          "fr": "La Dame à l’hermine fait partie des œuvres conservées dans ce musée.",
+          "en": "Lady with an Ermine is held in this museum's collection.",
+          "ar": "السيدة ذات القاقم من الأعمال المحفوظة في مجموعة هذا المتحف."
+        },
+        "source": "https://mnk.pl/en/branches/czartoryski-museum/"
+      }
+    ],
+    "van-gogh-museum": [
+      {
+        "id": "historic-event",
+        "prompt": {
+          "fr": "Quel événement marque l'année 1973 pour ce musée ?",
+          "en": "Which event occurred at this museum in 1973?",
+          "ar": "ما الحدث الذي وقع في تاريخ هذا المتحف عام 1973؟"
+        },
+        "choices": [
+          {
+            "fr": "Le bâtiment principal conçu par Gerrit Rietveld ouvre ses portes.",
+            "en": "The main building designed by Gerrit Rietveld opens.",
+            "ar": "افتُتح المبنى الرئيسي الذي صممه غيريت ريتفيلد."
+          },
+          {
+            "fr": "L'aile d'expositions conçue par Kisho Kurokawa est inaugurée.",
+            "en": "The exhibition wing designed by Kisho Kurokawa opens.",
+            "ar": "افتُتح جناح المعارض الذي صممه كيشو كوروكاوا."
+          },
+          {
+            "fr": "Une nouvelle entrée publique sur la Museumplein facilite l'accueil.",
+            "en": "A new public entrance on Museumplein opens.",
+            "ar": "افتُتح مدخل جديد للزوار في ساحة المتاحف."
+          }
+        ],
+        "correct": 0,
+        "explanation": {
+          "fr": "Le bâtiment principal conçu par Gerrit Rietveld ouvre ses portes.",
+          "en": "The main building designed by Gerrit Rietveld opens.",
+          "ar": "افتُتح المبنى الرئيسي الذي صممه غيريت ريتفيلد."
+        },
+        "source": "https://www.vangoghmuseum.nl/nl/over/organisatie/het-gebouw"
+      },
+      {
+        "id": "historic-date",
+        "prompt": {
+          "fr": "En quelle année : Une nouvelle entrée publique sur la Museumplein facilite l'accueil.",
+          "en": "In which year: A new public entrance on Museumplein opens.",
+          "ar": "في أي سنة: افتُتح مدخل جديد للزوار في ساحة المتاحف."
+        },
+        "choices": [
+          {
+            "fr": "1973",
+            "en": "1973",
+            "ar": "1973"
+          },
+          {
+            "fr": "1999",
+            "en": "1999",
+            "ar": "1999"
+          },
+          {
+            "fr": "2015",
+            "en": "2015",
+            "ar": "2015"
+          }
+        ],
+        "correct": 2,
+        "explanation": {
+          "fr": "Une nouvelle entrée publique sur la Museumplein facilite l'accueil.",
+          "en": "A new public entrance on Museumplein opens.",
+          "ar": "افتُتح مدخل جديد للزوار في ساحة المتاحف."
+        },
+        "source": "https://www.vangoghmuseum.nl/nl/over/organisatie/kantoren-in-amsterdam"
+      },
+      {
+        "id": "artwork-museum",
+        "prompt": {
+          "fr": "Quelle œuvre d’ARTDACI est conservée dans ce musée ?",
+          "en": "Which ARTDACI artwork belongs to this museum's collection?",
+          "ar": "أي عمل من ARTDACI محفوظ في مجموعة هذا المتحف؟"
+        },
+        "choices": [
+          {
+            "fr": "Autoportrait (1889)",
+            "en": "Self-Portrait (1889)",
+            "ar": "صورة ذاتية (1889)"
+          },
+          {
+            "fr": "La Chambre à coucher",
+            "en": "The Bedroom",
+            "ar": "غرفة النوم"
+          },
+          {
+            "fr": "Ginevra de’ Benci",
+            "en": "Ginevra de’ Benci",
+            "ar": "جينيفرا دي بنشي"
+          }
+        ],
+        "correct": 1,
+        "explanation": {
+          "fr": "La Chambre à coucher fait partie des œuvres conservées dans ce musée.",
+          "en": "The Bedroom is held in this museum's collection.",
+          "ar": "غرفة النوم من الأعمال المحفوظة في مجموعة هذا المتحف."
+        },
+        "source": "https://www.vangoghmuseum.nl/en/collection/s0047V1962"
+      }
+    ],
+    "national-gallery-of-art-washington": [
+      {
+        "id": "historic-event",
+        "prompt": {
+          "fr": "Quel événement marque l'année 1941 pour ce musée ?",
+          "en": "Which event occurred at this museum in 1941?",
+          "ar": "ما الحدث الذي وقع في تاريخ هذا المتحف عام 1941؟"
+        },
+        "choices": [
+          {
+            "fr": "Le bâtiment Ouest est inauguré et la National Gallery of Art ouvre au public.",
+            "en": "The West Building is dedicated and the National Gallery opens to the public.",
+            "ar": "افتُتح المبنى الغربي وبدأ المعرض الوطني للفنون استقبال الجمهور."
+          },
+          {
+            "fr": "Le bâtiment Est, conçu par I. M. Pei, accueille l'art moderne et contemporain.",
+            "en": "I. M. Pei's East Building opens for modern and contemporary art.",
+            "ar": "افتُتح المبنى الشرقي الذي صممه آي. إم. باي للفن الحديث والمعاصر."
+          },
+          {
+            "fr": "Après rénovation, le bâtiment Est gagne de nouvelles salles et une terrasse de sculptures.",
+            "en": "Renovation adds new exhibition galleries and a rooftop sculpture terrace to the East Building.",
+            "ar": "أضاف التجديد قاعات عرض جديدة وشرفة لمنحوتات السطح إلى المبنى الشرقي."
+          }
+        ],
+        "correct": 0,
+        "explanation": {
+          "fr": "Le bâtiment Ouest est inauguré et la National Gallery of Art ouvre au public.",
+          "en": "The West Building is dedicated and the National Gallery opens to the public.",
+          "ar": "افتُتح المبنى الغربي وبدأ المعرض الوطني للفنون استقبال الجمهور."
+        },
+        "source": "https://www.nga.gov/national-gallery-history"
+      },
+      {
+        "id": "historic-date",
+        "prompt": {
+          "fr": "En quelle année : Après rénovation, le bâtiment Est gagne de nouvelles salles et une terrasse de sculptures.",
+          "en": "In which year: Renovation adds new exhibition galleries and a rooftop sculpture terrace to the East Building.",
+          "ar": "في أي سنة: أضاف التجديد قاعات عرض جديدة وشرفة لمنحوتات السطح إلى المبنى الشرقي."
+        },
+        "choices": [
+          {
+            "fr": "1941",
+            "en": "1941",
+            "ar": "1941"
+          },
+          {
+            "fr": "1978",
+            "en": "1978",
+            "ar": "1978"
+          },
+          {
+            "fr": "2016",
+            "en": "2016",
+            "ar": "2016"
+          }
+        ],
+        "correct": 2,
+        "explanation": {
+          "fr": "Après rénovation, le bâtiment Est gagne de nouvelles salles et une terrasse de sculptures.",
+          "en": "Renovation adds new exhibition galleries and a rooftop sculpture terrace to the East Building.",
+          "ar": "أضاف التجديد قاعات عرض جديدة وشرفة لمنحوتات السطح إلى المبنى الشرقي."
+        },
+        "source": "https://www.nga.gov/about-us/our-campus"
+      },
+      {
+        "id": "artwork-museum",
+        "prompt": {
+          "fr": "Quelle œuvre d’ARTDACI est conservée dans ce musée ?",
+          "en": "Which ARTDACI artwork belongs to this museum's collection?",
+          "ar": "أي عمل من ARTDACI محفوظ في مجموعة هذا المتحف؟"
+        },
+        "choices": [
+          {
+            "fr": "La Jeune Fille à la perle",
+            "en": "Girl with a Pearl Earring",
+            "ar": "الفتاة ذات القرط اللؤلؤي"
+          },
+          {
+            "fr": "Ginevra de’ Benci",
+            "en": "Ginevra de’ Benci",
+            "ar": "جينيفرا دي بنشي"
+          },
+          {
+            "fr": "La Joconde",
+            "en": "Mona Lisa",
+            "ar": "الموناليزا"
+          }
+        ],
+        "correct": 1,
+        "explanation": {
+          "fr": "Ginevra de’ Benci fait partie des œuvres conservées dans ce musée.",
+          "en": "Ginevra de’ Benci is held in this museum's collection.",
+          "ar": "جينيفرا دي بنشي من الأعمال المحفوظة في مجموعة هذا المتحف."
+        },
+        "source": "https://www.nga.gov/artists/1479-leonardo-da-vinci/artworks"
+      }
+    ]
+  }
+}

@@ -44,6 +44,51 @@ a{color:inherit}button{font:inherit;cursor:pointer}button:disabled{cursor:not-al
 [dir=rtl] .learning-question{text-align:right;align-items:flex-start}
 @media(max-width:660px){.portal-area{padding:17px 14px}.portal-tabs button{flex:1;min-width:max-content;padding:9px 11px;font-size:.77rem}.immersive-layout{grid-template-columns:1fr}.immersive-preview img{height:155px}.learning-questions{grid-template-columns:1fr}.museum-selector{margin-bottom:0}.portal-area{margin-top:16px}}
 
+
+/* V4: curated collection thumbnails and museum historical timelines */
+.artworks.artwork-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:14px}
+.artwork-grid .artwork-card{display:flex;flex-direction:column;align-items:stretch;border:1px solid var(--line);border-radius:13px;overflow:hidden;padding:0;background:#162433;text-align:start;text-decoration:none;min-width:0;transition:border-color .15s,transform .15s}
+.artwork-grid .artwork-card:hover,.artwork-grid .artwork-card:focus-visible{border-color:var(--accent);transform:translateY(-2px)}
+.artwork-grid .artwork-card::after{content:none}
+.artwork-card .artwork-thumb{display:block;height:155px;background:#0f1c2c;overflow:hidden}
+.artwork-card .artwork-thumb img{width:100%;height:100%;object-fit:contain;display:block}
+.artwork-card .artwork-description{display:flex;justify-content:space-between;gap:9px;align-items:center;padding:12px}
+.artwork-card .artwork-description strong{font-size:.9rem;font-weight:650;line-height:1.3}
+.artwork-card .artwork-description span{color:var(--accent)}
+.history-intro{color:var(--muted);font-size:.9rem;margin:0 0 14px}
+.history-timeline{list-style:none;margin:18px 0 0;padding:0 0 0 22px;border-inline-start:2px solid #786443;display:grid;gap:20px}
+.history-timeline li{position:relative;padding-inline-start:18px;padding-inline-end:10px}
+.history-timeline li::before{content:"";position:absolute;inset-inline-start:-29px;top:7px;width:11px;height:11px;border:2px solid var(--accent);background:#182432;border-radius:100%}
+.history-date{font-variant-numeric:tabular-nums;font-weight:750;color:var(--accent);font-size:1.1rem}
+.history-text{margin:5px 0;font-size:.92rem;color:var(--ink)}
+.history-source{font-size:.8rem;color:var(--accent);text-underline-offset:3px}
+[dir=rtl] .history-timeline{padding:0 22px 0 0}
+.history-empty{color:var(--muted);font-size:.9rem}
+@media(max-width:660px){.artworks.artwork-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.artwork-card .artwork-thumb{height:120px}.artwork-card .artwork-description{padding:9px}.artwork-card .artwork-description strong{font-size:.82rem}}
+
+/* Museum Explorer — accessible three-question learning journey */
+.quiz-root{display:grid;gap:14px;max-width:770px}
+.quiz-progress{display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--muted);font-size:.86rem}
+.quiz-progress progress{flex:1;max-width:270px;height:12px;accent-color:var(--accent)}
+.quiz-question{font-size:clamp(1.02rem,2.5vw,1.25rem);line-height:1.5;margin:0;color:var(--ink)}
+.quiz-choices{list-style:none;padding:0;margin:0;display:grid;gap:9px}
+.quiz-choice{width:100%;text-align:start;padding:12px 15px;min-height:48px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);color:var(--ink);font:inherit;line-height:1.45;cursor:pointer}
+.quiz-choice:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.quiz-choice:hover:not(:disabled){border-color:var(--accent)}
+.quiz-choice:disabled{cursor:default;opacity:1}
+.quiz-choice.is-correct{border-color:#77b69a;background:#204638}
+.quiz-choice.is-wrong{border-color:#d58d85;background:#4c2d32}
+.quiz-feedback{padding:15px;border:1px solid var(--line);background:#1c2d3a;border-radius:12px;display:grid;gap:8px}
+.quiz-feedback strong{color:var(--accent)}
+.quiz-feedback p{margin:0;font-size:.91rem}
+.quiz-feedback a{font-size:.85rem;color:var(--accent);text-underline-offset:3px}
+.quiz-primary{justify-self:start;border:1px solid var(--accent);color:#111e2b;background:var(--accent);padding:11px 17px;min-height:44px;font:inherit;font-weight:700;border-radius:10px;cursor:pointer}
+.quiz-primary:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.quiz-result{padding:20px;border:1px solid var(--line);border-radius:13px;background:var(--surface-2);display:grid;gap:12px}
+.quiz-result h4,.quiz-result p{margin:0}
+.quiz-result-score{font-size:1.7rem;color:var(--accent);font-weight:800}
+.quiz-result-actions{display:flex;flex-wrap:wrap;gap:10px}
+@media(max-width:550px){.quiz-result-actions{flex-direction:column;align-items:stretch}.quiz-result-actions .quiz-primary{width:100%}.quiz-progress{flex-wrap:wrap}}
 </style>
   
 </head>
@@ -100,6 +145,8 @@ a{color:inherit}button{font:inherit;cursor:pointer}button:disabled{cursor:not-al
           <button type="button" id="tab-artworks" role="tab" aria-controls="pane-artworks" aria-selected="true" tabindex="0" data-tab="artworks"></button>
           <button type="button" id="tab-immersive" role="tab" aria-controls="pane-immersive" aria-selected="false" tabindex="-1" data-tab="immersive"></button>
           <button type="button" id="tab-knowledge" role="tab" aria-controls="pane-knowledge" aria-selected="false" tabindex="-1" data-tab="knowledge"></button>
+          <button type="button" id="tab-history" role="tab" aria-controls="pane-history" aria-selected="false" tabindex="-1" data-tab="history"></button>
+          <button type="button" id="tab-quiz" role="tab" aria-controls="pane-quiz" aria-selected="false" tabindex="-1" data-tab="quiz"></button>
         </div>
         <div class="portal-panel" id="pane-artworks" role="tabpanel" aria-labelledby="tab-artworks" tabindex="0">
           <h3 id="artworks-heading"></h3><p id="artworks-description" class="panel-description"></p><div class="artworks" id="artworks"></div>
@@ -112,6 +159,14 @@ a{color:inherit}button{font:inherit;cursor:pointer}button:disabled{cursor:not-al
           <h3 id="knowledge-heading"></h3><p id="knowledge-description" class="panel-description"></p>
           <div class="learning-questions" id="learning-questions"></div><p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
           <a id="knowledge-semantic" class="knowledge-semantic"></a><p id="knowledge-note" class="knowledge-note"></p>
+        </div>
+        <div class="portal-panel" id="pane-history" role="tabpanel" aria-labelledby="tab-history" tabindex="0" hidden>
+          <h3 id="history-title"></h3><p id="history-intro" class="history-intro"></p>
+          <ol id="history-timeline" class="history-timeline"></ol>
+        </div>
+        <div class="portal-panel" id="pane-quiz" role="tabpanel" aria-labelledby="tab-quiz" tabindex="0" hidden>
+          <h3 id="quiz-title"></h3><p id="quiz-intro" class="panel-description"></p>
+          <div id="quiz-root" class="quiz-root" aria-live="polite" aria-atomic="false"></div>
         </div>
       </section>
     </main>
@@ -652,13 +707,41 @@ const UI = {
     gallery: 'جناح المتاحف الستة', semantic: 'ARTDACI الدلالي', skip: 'الانتقال إلى المحتوى', unavailable: 'تعذّر تحميل الجولة. يرجى المحاولة مجددًا عند الاتصال بالإنترنت.',
     photoAlt: 'صورة فوتوغرافية للمتحف: ', portalEyebrow:'بوابة ثقافية مترابطة', portalTitle:'استكشف المزيد', portalIntro:'اكتشف الأعمال الفنية والتجارب الغامرة والروابط المعرفية المرتبطة بهذا المتحف.', portalTabs:['الأعمال الفنية','3D · AR · VR','المعرفة والأسئلة'], artworksDescription:'افتح أحد الأعمال المرتبطة بالمتحف في كتاب ARTDACI المتصل.', experiencesDescription:'انتقل من الجولة الفوتوغرافية إلى التجارب الغامرة المتاحة.', museumPreview:'رسم توضيحي من ARTDACI للمتحف (ليس صورة فوتوغرافية)', knowledgeTitle:'أسئلة للتعمق', knowledgeDescription:'انسخ أي سؤال لنقاش موجّه أو نشاط تعليمي.', copyQuestion:'نسخ السؤال', copied:'تم نسخ السؤال.', copyFailed:'تعذر النسخ. حدد السؤال يدويًا.', semanticOpen:'فتح ARTDACI الدلالي ↗', knowledgeNote:'سيُضاف مرشد ذكاء اصطناعي سياقي داخل المتحف في مرحلة لاحقة؛ يمكن زيارة الرسم البياني الدلالي الموجود عبر الرابط أعلاه.', selector:'اختر متحفًا'}
 };
+
+const HISTORY_UI={
+  fr:{tab:'Histoire',title:'L’histoire du musée',intro:'Trois dates clés pour comprendre le lieu, son architecture et sa collection.',source:'Source institutionnelle ↗',unavailable:'Chronologie temporairement indisponible.'},
+  en:{tab:'History',title:'The museum through time',intro:'Three key dates reveal the history of this place, its architecture and collection.',source:'Museum source ↗',unavailable:'Timeline temporarily unavailable.'},
+  ar:{tab:'التاريخ',title:'محطات من تاريخ المتحف',intro:'ثلاثة تواريخ أساسية لفهم تاريخ المكان وعمارته ومجموعته.',source:'مصدر المتحف ↗',unavailable:'الخط الزمني غير متاح مؤقتًا.'}
+};
+const QUIZ_UI={
+  fr:{tab:'Défi culturel',title:'Testez votre découverte',intro:'Trois questions autocorrigées par musée. Les réponses et leur explication reposent sur des sources institutionnelles.',unavailable:'Le défi n’est pas disponible pour le moment.',progress:(i,n)=>'Question '+i+' sur '+n,correct:'Bonne réponse !',wrong:'À retenir',source:'Vérifier la source ↗',next:'Question suivante →',result:'Parcours terminé',score:(s,n)=>s+' bonnes réponses sur '+n,restart:'Recommencer',immersive:'Explorer en 3D · RA · VR',note:'Vos réponses restent dans cette page ; aucune donnée personnelle n’est collectée.'},
+  en:{tab:'Culture challenge',title:'Test what you discovered',intro:'Three self-check questions per museum, with explanations grounded in institutional sources.',unavailable:'The challenge is temporarily unavailable.',progress:(i,n)=>'Question '+i+' of '+n,correct:'Correct!',wrong:'Remember this',source:'Check the source ↗',next:'Next question →',result:'Journey completed',score:(s,n)=>s+' correct out of '+n,restart:'Try again',immersive:'Explore in 3D · AR · VR',note:'Your answers stay in this page; no personal data is collected.'},
+  ar:{tab:'تحدٍ ثقافي',title:'اختبر ما اكتشفته',intro:'ثلاثة أسئلة ذات تصحيح فوري لكل متحف، مع تفسيرات تستند إلى مصادر مؤسسية.',unavailable:'التحدي غير متاح مؤقتًا.',progress:(i,n)=>'السؤال '+i+' من '+n,correct:'إجابة صحيحة!',wrong:'معلومة للتذكر',source:'التحقق من المصدر ↗',next:'السؤال التالي ←',result:'اكتملت الجولة',score:(s,n)=>s+' إجابات صحيحة من '+n,restart:'حاول مجددًا',immersive:'استكشف 3D · AR · VR',note:'تبقى إجاباتك داخل هذه الصفحة ولا تُجمع أي بيانات شخصية.'}
+};
+const ARTWORK_IMAGES={
+  ld01:'assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg',
+  ld02:'assets/artists/leonardo-da-vinci/collection/the-lady-with-an-ermine-davinci.webp',
+  ld05:'assets/artists/paintings_images/davinci/davinci_ginevra-de-benci.png',
+  ld06:'assets/artists/paintings_images/davinci/davinci_belle-ferronnière.png',
+  ve01:'assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg',
+  ve02:'assets/artists/johannes-vermeer/artworks/view_of_delft/images/ve02-view-of-delft-web.webp',
+  ve05:'assets/artists/paintings_images/vermeer/vermeer_astronomer.png',
+  ve06:'assets/artists/paintings_images/vermeer/vermeer_woman-holding-balance.png',
+  vg01:'assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp',
+  vg02:'assets/artists/vincent-van-gogh/artworks/the-bedroom/images/bed-van-gogh.jpeg',
+  mo02:'assets/artists/claude-monet/collection/le-pont-d-argenteuil-monet.webp',
+  mo06:'assets/artists/paintings_images/monet/monet_woman-parasol.png'
+};
 const $ = (id) => document.getElementById(id);
 const search = new URLSearchParams(location.search);
 const initialLang = search.get('lang');
 let lang = ['fr','en','ar'].includes(initialLang) ? initialLang : 'fr';
 let index = 0;
 let museums = [];
-let activeTab = 'artworks';
+let activeTab = ['artworks','immersive','knowledge','history','quiz'].includes(search.get('tab')) ? search.get('tab') : 'artworks';
+let historyByMuseum={};
+let learningByMuseum={};
+const learningProgress=new Map();
 
 function text(id, value) { $(id).textContent = value; }
 function local(record) { return record?.[lang] ?? record?.fr ?? ''; }
@@ -734,8 +817,8 @@ function renderSelector() {
 function renderPortal() {
   const u=UI[lang];
   text('portal-eyebrow',u.portalEyebrow);text('portal-heading',u.portalTitle);text('portal-description',u.portalIntro);
-  ['artworks','immersive','knowledge'].forEach((name,i)=>{
-    const button=$('tab-'+name);button.textContent=u.portalTabs[i];
+  ['artworks','immersive','knowledge','history','quiz'].forEach((name,i)=>{
+    const button=$('tab-'+name);button.textContent=name==='history'?HISTORY_UI[lang].tab:name==='quiz'?QUIZ_UI[lang].tab:u.portalTabs[i];
     button.setAttribute('aria-selected',String(activeTab===name));button.tabIndex=activeTab===name?0:-1;
     $('pane-'+name).hidden=activeTab!==name;
   });
@@ -744,6 +827,10 @@ function renderPortal() {
   text('knowledge-semantic',u.semanticOpen);$('knowledge-semantic').href=`semantic/?lang=${lang}`;
   text('knowledge-note',u.knowledgeNote);
   text('model-caption',u.museumPreview);
+  text('history-title',HISTORY_UI[lang].title);
+  text('history-intro',HISTORY_UI[lang].intro);
+  text('quiz-title',QUIZ_UI[lang].title);
+  text('quiz-intro',QUIZ_UI[lang].intro);
 }
 function renderKnowledge(museum) {
   const root=$('learning-questions');root.replaceChildren();text('copy-status','');
@@ -760,18 +847,89 @@ function renderKnowledge(museum) {
   });
 }
 function setTab(tab,focus=false) {
-  if(!['artworks','immersive','knowledge'].includes(tab))return;
+  if(!['artworks','immersive','knowledge','history','quiz'].includes(tab))return;
   activeTab=tab;renderPortal();
+  const url=new URL(location.href);url.searchParams.set('tab',tab);
+  history.replaceState(null,'',url.pathname+url.search+url.hash);
   if(focus)$('tab-'+tab).focus();
 }
 document.querySelectorAll('[data-tab]').forEach(button=>button.addEventListener('click',()=>setTab(button.dataset.tab)));
 $('portal-tabs').addEventListener('keydown',event=>{
   if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
-  event.preventDefault();const names=['artworks','immersive','knowledge'];let i=names.indexOf(activeTab);
-  if(event.key==='Home')i=0;else if(event.key==='End')i=2;
+  event.preventDefault();const names=['artworks','immersive','knowledge','history','quiz'];let i=names.indexOf(activeTab);
+  if(event.key==='Home')i=0;else if(event.key==='End')i=names.length-1;
   else i=(i+(event.key==='ArrowRight'?(lang==='ar'?-1:1):(lang==='ar'?1:-1))+names.length)%names.length;
   setTab(names[i],true);
 });
+
+function renderQuiz(museum) {
+  const root=$('quiz-root');root.replaceChildren();
+  const questions=learningByMuseum[museum.id], copy=QUIZ_UI[lang];
+  if(!Array.isArray(questions)||questions.length===0){
+    root.append(el('p','history-empty',copy.unavailable));return;
+  }
+  let state=learningProgress.get(museum.id);
+  if(!state){state={step:0,answers:[]};learningProgress.set(museum.id,state);}
+  const total=questions.length;
+  const correct=state.answers.reduce((count,answer,i)=>count+(answer===questions[i].correct?1:0),0);
+  if(state.step>=total){
+    const summary=el('section','quiz-result');
+    summary.append(el('h4','',copy.result),el('strong','quiz-result-score',copy.score(correct,total)));
+    const actions=el('div','quiz-result-actions');
+    const restart=el('button','quiz-primary',copy.restart);restart.type='button';
+    restart.addEventListener('click',()=>{learningProgress.set(museum.id,{step:0,answers:[]});renderQuiz(museum);$('quiz-root').querySelector('.quiz-choice')?.focus();});
+    const immersive=el('button','quiz-primary',copy.immersive);immersive.type='button';
+    immersive.addEventListener('click',()=>setTab('immersive',true));
+    actions.append(restart,immersive);summary.append(actions,el('p','history-intro',copy.note));
+    root.append(summary);return;
+  }
+  const question=questions[state.step],answered=Number.isInteger(state.answers[state.step]);
+  const progress=el('div','quiz-progress');
+  progress.append(el('span','',copy.progress(state.step+1,total)));
+  const bar=el('progress');bar.max=total;bar.value=state.step+(answered?1:0);
+  bar.setAttribute('aria-label',copy.progress(state.step+1,total));progress.append(bar);
+  root.append(progress,el('h4','quiz-question',local(question.prompt)));
+  const choices=el('ol','quiz-choices');
+  question.choices.forEach((choice,i)=>{
+    const li=el('li');
+    const button=el('button','quiz-choice',local(choice));button.type='button';
+    if(answered){
+      button.disabled=true;
+      if(i===question.correct)button.classList.add('is-correct');
+      if(i===state.answers[state.step]&&i!==question.correct)button.classList.add('is-wrong');
+    }
+    button.addEventListener('click',()=>{
+      if(Number.isInteger(state.answers[state.step]))return;
+      state.answers[state.step]=i;
+      renderQuiz(museum);
+      $('quiz-next')?.focus();
+    });
+    li.append(button);choices.append(li);
+  });
+  root.append(choices);
+  if(answered){
+    const right=state.answers[state.step]===question.correct;
+    const feedback=el('div','quiz-feedback');feedback.setAttribute('role','status');
+    feedback.append(el('strong','',right?copy.correct:copy.wrong),el('p','',local(question.explanation)));
+    feedback.append(link(copy.source,question.source,'',true));
+    root.append(feedback);
+    const next=el('button','quiz-primary',state.step===total-1?copy.result:copy.next);
+    next.id='quiz-next';next.type='button';
+    next.addEventListener('click',()=>{state.step++;renderQuiz(museum);$('quiz-root').querySelector('.quiz-choice,.quiz-primary')?.focus();});
+    root.append(next);
+  }
+}
+function renderHistory(museum){
+  const root=$('history-timeline');root.replaceChildren();
+  const milestones=historyByMuseum[museum.id]||[];
+  if(!milestones.length){root.append(el('li','history-empty',HISTORY_UI[lang].unavailable));return;}
+  milestones.forEach(item=>{
+    const li=el('li','history-milestone');
+    li.append(el('div','history-date',item.year),el('p','history-text',local(item.text)));
+    li.append(link(HISTORY_UI[lang].source,item.source,'history-source',true));
+    root.append(li);
+  });
+}
 function renderFacts(museum) {
   const root = $('facts');
   root.replaceChildren();
@@ -786,8 +944,20 @@ function renderFacts(museum) {
 }
 function renderArtworks(museum) {
   const root=$('artworks');
-  root.replaceChildren();
-  museum.artworks.forEach(item => root.append(link(local(item.title),internalUrl(item.href))));
+  root.replaceChildren();root.classList.add('artwork-grid');
+  museum.artworks.forEach(item => {
+    const card=link('',internalUrl(item.href),'artwork-card');
+    const media=el('span','artwork-thumb');
+    if(ARTWORK_IMAGES[item.id]){
+      const img=el('img');
+      img.src=ARTWORK_IMAGES[item.id];img.loading='lazy';img.decoding='async';img.alt=local(item.title);
+      img.addEventListener('error',()=>img.remove(),{once:true});
+      media.append(img);
+    }
+    const caption=el('span','artwork-description');
+    caption.append(el('strong','',local(item.title)),el('span','','↗'));
+    card.append(media,caption);root.append(card);
+  });
 }
 function renderExperiences(museum) {
   const root=$('experiences');
@@ -829,7 +999,7 @@ function render() {
   $('gallery-link').href=internalUrl('gallery-vr.html?room=museums');
   $('semantic-link').href=`semantic/?lang=${lang}`;
   $('home-link').href=lang==='fr'?'index-fr.html':lang==='ar'?'index-ar.html':'index.html';
-  renderSelector();renderPortal();renderFacts(museum);renderArtworks(museum);renderExperiences(museum);renderKnowledge(museum);renderPhoto(museum);
+  renderSelector();renderPortal();renderFacts(museum);renderArtworks(museum);renderExperiences(museum);renderKnowledge(museum);renderHistory(museum);renderQuiz(museum);renderPhoto(museum);
   replaceState(museum);
   $('museum-stage').setAttribute('aria-busy','false');
 }
@@ -848,7 +1018,7 @@ document.addEventListener('keydown',event=>{
   if(event.key==='ArrowRight'){event.preventDefault();navigate(lang==='ar'?-1:1);}
   if(event.key==='ArrowLeft'){event.preventDefault();navigate(lang==='ar'?1:-1);}
 });
-window.addEventListener('popstate',()=>{const q=new URLSearchParams(location.search);if(['fr','en','ar'].includes(q.get('lang')))lang=q.get('lang');const n=museums.findIndex(m=>m.id===q.get('museum'));if(n>=0)index=n;render();});
+window.addEventListener('popstate',()=>{const q=new URLSearchParams(location.search);if(['fr','en','ar'].includes(q.get('lang')))lang=q.get('lang');const n=museums.findIndex(m=>m.id===q.get('museum'));if(n>=0)index=n;if(['artworks','immersive','knowledge','history','quiz'].includes(q.get('tab')))activeTab=q.get('tab');render();});
 
 try {
   const response={ok:true,json:async()=>EMBEDDED_MUSEUM_DATA};
@@ -859,6 +1029,20 @@ try {
   const chosen=museums.findIndex(m=>m.id===search.get('museum'));
   if(chosen>=0)index=chosen;
   render();
+  fetch('content/museums/history-v4.json')
+    .then(response=>{if(!response.ok)throw Error('History data unavailable');return response.json();})
+    .then(data=>{
+      if(data.schemaVersion!=='1.0'||!data.museums||typeof data.museums!=='object')throw Error('Invalid museum history data');
+      historyByMuseum=data.museums;renderHistory(museums[index]);
+    })
+    .catch(error=>console.warn('ARTDACI museum timeline:',error));
+  fetch('content/museums/learning-v1.json')
+    .then(response=>{if(!response.ok)throw Error('Learning data unavailable');return response.json();})
+    .then(data=>{
+      if(data.schemaVersion!=='1.0'||!data.museums||typeof data.museums!=='object')throw Error('Invalid museum learning data');
+      learningByMuseum=data.museums;renderQuiz(museums[index]);
+    })
+    .catch(error=>console.warn('ARTDACI museum learning:',error));
 } catch(error) {
   console.error('ARTDACI Museum Explorer:',error);
   $('museum-stage').setAttribute('aria-busy','false');
