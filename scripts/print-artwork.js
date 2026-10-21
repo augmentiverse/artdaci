@@ -1,4 +1,5 @@
 import { formatArtworkNumber } from "./artwork-numbering.js?v=1";
+import { resolvePaintingMuseum } from "./painting-museum-resolver.mjs?v=1";
 import { resolveArtworkAudioOverview } from "./artwork-media-manifest.js?v=5";
 
 const SOURCES = {
@@ -7,14 +8,6 @@ const SOURCES = {
   "pont-d-argenteuil": "content/paintings/pont-d-argenteuil.json"
 };
 const SUPPLEMENTAL_SOURCE = "content/paintings/additional-16.json";
-const MUSEUMS = {
-  "lady-with-an-ermine": ["czartoryski", "content/museums/czartoryski.json?v=2"],
-  "view-of-delft": ["mauritshuis", "content/museums/mauritshuis.json"],
-  "pont-d-argenteuil": ["orsay", "content/museums/orsay.json"],
-  "ginevra-de-benci": ["national-gallery-of-art-washington", "content/museums/national-gallery-of-art-washington.json?v=1"],
-  "woman-holding-balance": ["national-gallery-of-art-washington", "content/museums/national-gallery-of-art-washington.json?v=1"],
-  "woman-with-parasol": ["national-gallery-of-art-washington", "content/museums/national-gallery-of-art-washington.json?v=1"]
-};
 const AUDIO_ARTWORK_IDS = Object.freeze({
   "lady-with-an-ermine": "ld02",
   "last-supper": "ld03",
@@ -37,9 +30,9 @@ const AUDIO_ARTWORK_IDS = Object.freeze({
   "pont-d-argenteuil": "mo02",
 });
 const COPY = {
-  en: { pageTitle: "Printable Artwork Page", entry: "Museum Catalogue Entry", context: "Historical context", analysis: "Look closely", technique: "Technique and perception", legacy: "Meaning and legacy", museum: "THE MUSEUM", museumIntro: "This painting is preserved at", museumNote: "The museum image printed in the book is an AR target. Scan it to reveal the architectural model, place the model in your space, or visit its VR gallery.", ar: "Image AR", space: "Space AR", vr: "Museum VR", living: "Open the Living Book", back: "Back to the index", listen: "Listen to the artwork overview", pause: "Pause the artwork overview", resume: "Resume the artwork overview", audioError: "Audio unavailable", date: "Date", medium: "Medium", dimensions: "Dimensions", location: "Location", errorTitle: "Artwork unavailable", errorMessage: "The requested artwork could not be loaded." },
-  fr: { pageTitle: "Page imprimable de l’œuvre", entry: "Notice de catalogue", context: "Contexte historique", analysis: "Voir de près", technique: "Technique et perception", legacy: "Sens et héritage", museum: "LE MUSÉE", museumIntro: "Ce tableau est conservé au", museumNote: "L’image du musée imprimée dans le livre est une cible AR. Scannez-la pour révéler son modèle architectural, placez le modèle dans votre espace ou visitez sa galerie VR.", ar: "AR image", space: "AR espace", vr: "VR du musée", living: "Ouvrir le Living Book", back: "Retour à l’index", listen: "Écouter la présentation de l’œuvre", pause: "Mettre la présentation en pause", resume: "Reprendre la présentation de l’œuvre", audioError: "Audio indisponible", date: "Date", medium: "Technique", dimensions: "Dimensions", location: "Lieu", errorTitle: "Œuvre indisponible", errorMessage: "L’œuvre demandée n’a pas pu être chargée." },
-  ar: { pageTitle: "صفحة العمل القابلة للطباعة", entry: "بطاقة العمل", context: "السياق التاريخي", analysis: "نظرة قريبة", technique: "التقنية والإدراك", legacy: "المعنى والإرث", museum: "المتحف", museumIntro: "تُحفظ هذه اللوحة في", museumNote: "صورة المتحف المطبوعة في الكتاب هي هدف للواقع المعزز. امسحها لإظهار النموذج المعماري أو ضعه في مساحتك أو زر معرضه الافتراضي.", ar: "واقع معزز بالصورة", space: "واقع معزز مكاني", vr: "معرض المتحف الافتراضي", living: "فتح الكتاب الحي", back: "العودة إلى الفهرس", listen: "الاستماع إلى تقديم العمل الفني", pause: "إيقاف التقديم الصوتي مؤقتاً", resume: "متابعة تقديم العمل الفني", audioError: "الصوت غير متاح", date: "التاريخ", medium: "التقنية", dimensions: "الأبعاد", location: "الموقع", errorTitle: "العمل غير متاح", errorMessage: "تعذر تحميل العمل المطلوب." }
+  en: { pageTitle: "Printable Artwork Page", entry: "Museum Catalogue Entry", context: "Historical context", analysis: "Look closely", technique: "Technique and perception", legacy: "Meaning and legacy", museum: "THE MUSEUM", museumIntro: "This painting is preserved at", museumNote: "The museum image printed in the book is an AR target. Scan it to reveal the architectural model, place the model in your space, or visit its VR gallery.", museumUnavailable: "ARTDACI does not yet have a verified photograph or immersive model for this museum. Its name is shown without substituting another institution.", museumOfficial: "Museum artwork record", ar: "Image AR", space: "Space AR", vr: "Museum VR", living: "Open the Living Book", back: "Back to the index", listen: "Listen to the artwork overview", pause: "Pause the artwork overview", resume: "Resume the artwork overview", audioError: "Audio unavailable", date: "Date", medium: "Medium", dimensions: "Dimensions", location: "Location", errorTitle: "Artwork unavailable", errorMessage: "The requested artwork could not be loaded." },
+  fr: { pageTitle: "Page imprimable de l’œuvre", entry: "Notice de catalogue", context: "Contexte historique", analysis: "Voir de près", technique: "Technique et perception", legacy: "Sens et héritage", museum: "LE MUSÉE", museumIntro: "Ce tableau est conservé au", museumNote: "L’image du musée imprimée dans le livre est une cible AR. Scannez-la pour révéler son modèle architectural, placez le modèle dans votre espace ou visitez sa galerie VR.", museumUnavailable: "ARTDACI ne dispose pas encore de photographie vérifiée ni de modèle immersif pour ce musée. Aucun autre établissement ne lui est substitué.", museumOfficial: "Fiche de l’œuvre au musée", ar: "AR image", space: "AR espace", vr: "VR du musée", living: "Ouvrir le Living Book", back: "Retour à l’index", listen: "Écouter la présentation de l’œuvre", pause: "Mettre la présentation en pause", resume: "Reprendre la présentation de l’œuvre", audioError: "Audio indisponible", date: "Date", medium: "Technique", dimensions: "Dimensions", location: "Lieu", errorTitle: "Œuvre indisponible", errorMessage: "L’œuvre demandée n’a pas pu être chargée." },
+  ar: { pageTitle: "صفحة العمل القابلة للطباعة", entry: "بطاقة العمل", context: "السياق التاريخي", analysis: "نظرة قريبة", technique: "التقنية والإدراك", legacy: "المعنى والإرث", museum: "المتحف", museumIntro: "تُحفظ هذه اللوحة في", museumNote: "صورة المتحف المطبوعة في الكتاب هي هدف للواقع المعزز. امسحها لإظهار النموذج المعماري أو ضعه في مساحتك أو زر معرضه الافتراضي.", museumUnavailable: "لا تتوفر بعد صورة موثقة أو نموذج غامر لهذا المتحف في ARTDACI. ولن تُعرض صورة متحف آخر بدلاً منه.", museumOfficial: "بطاقة العمل في المتحف", ar: "واقع معزز بالصورة", space: "واقع معزز مكاني", vr: "معرض المتحف الافتراضي", living: "فتح الكتاب الحي", back: "العودة إلى الفهرس", listen: "الاستماع إلى تقديم العمل الفني", pause: "إيقاف التقديم الصوتي مؤقتاً", resume: "متابعة تقديم العمل الفني", audioError: "الصوت غير متاح", date: "التاريخ", medium: "التقنية", dimensions: "الأبعاد", location: "الموقع", errorTitle: "العمل غير متاح", errorMessage: "تعذر تحميل العمل المطلوب." }
 };
 const TEXTS = {
   fr: {
@@ -61,17 +54,16 @@ const esc = (v = "") => String(v).replaceAll("&", "&amp;").replaceAll("<", "&lt;
 const paintingPayload = await fetch(SOURCES[slug] || SUPPLEMENTAL_SOURCE).then(r => r.json());
 const manifest = Array.isArray(paintingPayload) ? paintingPayload.find((item) => item.slug === slug) : paintingPayload;
 if (!manifest) throw new Error(`Unknown painting: ${slug}`);
-const artistMuseum = manifest.artist?.name === "Leonardo da Vinci"
-  ? ["louvre", "content/museums/louvre.json?v=3"]
-  : manifest.artist?.name === "Johannes Vermeer"
-    ? ["mauritshuis", "content/museums/mauritshuis.json"]
-    : manifest.artist?.name === "Vincent van Gogh"
-      ? ["van-gogh-museum", "content/museums/van-gogh-museum.json"]
-      : ["orsay", "content/museums/orsay.json"];
-const museumConfig = MUSEUMS[slug] || artistMuseum;
-const museum = await fetch(museumConfig[1]).then(r => r.json());
-const copy = COPY[lang]; const localized = manifest.localizations?.[lang] || {}; const museumLocalized = museum.localizations?.[lang] || {};
-const title = localized.title || manifest.title; const locationName = museumLocalized.title || museum.title;
+const museumConfig = resolvePaintingMuseum(manifest);
+const museum = museumConfig
+  ? await fetch(museumConfig.url).then((response) => {
+      if (!response.ok) throw new Error(`Museum data unavailable: ${response.status}`);
+      return response.json();
+    })
+  : null;
+if (museum && museum.slug !== museumConfig.slug) throw new Error("Museum identity mismatch.");
+const copy = COPY[lang]; const localized = manifest.localizations?.[lang] || {}; const museumLocalized = museum?.localizations?.[lang] || {};
+const title = localized.title || manifest.title; const locationName = museumLocalized.title || museum?.title || manifest.currentLocation?.museum || "";
 const base = manifest.texts; const selected = TEXTS[lang]?.[slug] || [base.historicalContext, base.artisticAnalysis, `${base.palette || ""} ${base.perspectiveTechnique || ""}`, `${base.culturalSignificance || ""} ${base.influence || ""}`];
 const audioOverviewUrl = await resolveArtworkAudioOverview({
   artworkId: AUDIO_ARTWORK_IDS[slug],
@@ -84,7 +76,16 @@ root.innerHTML = `
   <section class="catalogue-text"><header><p class="eyebrow">${copy.entry}</p><h1>${esc(title)}</h1><p class="artist">${esc(manifest.artist.name)}</p></header>
   <dl class="catalogue-meta"><div><dt>${copy.date}</dt><dd>${esc(manifest.date)}</dd></div><div><dt>${copy.medium}</dt><dd>${esc(manifest.medium)}</dd></div><div><dt>${copy.dimensions}</dt><dd>${manifest.dimensions?.heightCm || "—"} × ${manifest.dimensions?.widthCm || "—"} cm</dd></div><div><dt>${copy.location}</dt><dd>${esc(manifest.currentLocation?.museum || locationName)}</dd></div></dl>
   <div class="catalogue-grid"><section><h2>${copy.context}</h2><p>${esc(selected[0])}</p></section><section><h2>${copy.analysis}</h2><p>${esc(selected[1])}</p></section><section><h2>${copy.technique}</h2><p>${esc(selected[2])}</p></section><section><h2>${copy.legacy}</h2><p>${esc(selected[3])}</p></section></div>
-  <section class="painting-museum-section"><img src="${esc(museum.media.image)}" alt="${esc(locationName)}"/><div><p class="eyebrow">${copy.museum}</p><h2>${esc(manifest.currentLocation?.museum || locationName)}</h2><p><strong>${copy.museumIntro} ${esc(manifest.currentLocation?.museum || locationName)}.</strong> ${esc(museumLocalized.texts?.artisticAnalysis || museum.texts.artisticAnalysis)}</p><p>${copy.museumNote}</p><div class="card-actions"><a class="button primary" href="gallery-vr.html?lang=${lang}&amp;room=museums&amp;museum=${museum.slug}">${copy.vr}</a><a class="button" href="ar.html?museum=${museum.slug}&amp;lang=${lang}">${copy.ar}</a><a class="button" href="space.html?museum=${museum.slug}&amp;lang=${lang}">${copy.space}</a></div></div></section>
+  <section class="painting-museum-section">
+  ${museum
+    ? `<img src="${esc(museum.media.image)}" alt="${esc(locationName)}"/>`
+    : `<div class="museum-no-photo" aria-hidden="true">🏛</div>`}
+  <div><p class="eyebrow">${copy.museum}</p><h2>${esc(locationName)}</h2>
+  ${museum
+    ? `<p><strong>${copy.museumIntro} ${esc(locationName)}.</strong> ${esc(museumLocalized.texts?.artisticAnalysis || museum.texts?.artisticAnalysis || "")}</p><p>${copy.museumNote}</p>
+      <div class="card-actions"><a class="button primary" href="gallery-vr.html?lang=${lang}&amp;room=museums&amp;museum=${museum.slug}">${copy.vr}</a><a class="button" href="ar.html?museum=${museum.slug}&amp;lang=${lang}">${copy.ar}</a><a class="button" href="space.html?museum=${museum.slug}&amp;lang=${lang}">${copy.space}</a></div>`
+    : `<p>${copy.museumUnavailable}</p>`}
+  </div></section>
   <aside class="ar-note">${audioOverviewUrl ? `<button class="button primary" id="artwork-audio-overview" type="button" aria-pressed="false">${copy.listen}</button><span aria-label="${lang}">${lang.toUpperCase()}</span>` : ""}<a class="button primary" href="book-3d.html?lang=${lang}">${copy.living}</a><a class="button" href="${indexUrl}">${copy.back}</a></aside></section>`;
 bindAudioOverview(audioOverviewUrl, copy);
 }

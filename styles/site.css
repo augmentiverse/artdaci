@@ -924,6 +924,7 @@ figcaption strong {
 .painting-museum-section { display: grid; grid-template-columns: minmax(240px, .8fr) minmax(280px, 1.2fr); gap: clamp(22px, 4vw, 48px); align-items: center; margin: 46px 0; padding: clamp(22px, 4vw, 42px); border: 2px solid #b88a43; border-radius: 24px; background: linear-gradient(135deg, #f4ead8, #dfcda9); box-shadow: 0 20px 55px rgba(54,35,15,.15); }
 .painting-museum-section img { width: 100%; max-height: 390px; object-fit: contain; border-radius: 14px; box-shadow: 0 12px 30px rgba(38,24,9,.22); }
 .painting-museum-section h2 { margin-top: 4px; }
+.painting-museum-section .museum-no-photo { display: grid; place-items: center; min-height: 220px; border: 1px dashed #997a4c; border-radius: 14px; color: #725227; background: rgba(255,255,255,.22); font-size: clamp(58px, 9vw, 100px); }
 @media (max-width: 760px) { .painting-museum-section { grid-template-columns: 1fr; } }
 
 .patron-profile {
