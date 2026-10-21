@@ -1466,6 +1466,7 @@ function applyCopy() {
     ["gallery-groups-link", lang === "fr" ? "Groupes de peintres en 3D" : lang === "ar" ? "مجموعات الرسامين ثلاثية الأبعاد" : "Painter Groups in 3D", `gallery-vr.html?lang=${lang}&room=groups`],
     ["gallery-louvre-link", lang === "fr" ? "Musée du Louvre" : lang === "ar" ? "متحف اللوفر" : "Louvre Museum", `gallery-vr.html?lang=${lang}&room=louvre`],
     ["gallery-museums-link", lang === "fr" ? "Aile des six musées" : lang === "ar" ? "جناح المتاحف الستة" : "Six Museums Wing", `gallery-vr.html?lang=${lang}&room=museums`],
+    ["gallery-museum-explorer-link", lang === "fr" ? "Découvrir les musées" : lang === "ar" ? "اكتشف المتاحف" : "Museum Explorer", `museums.html?lang=${lang}`],
     ["gallery-people-link", lang === "fr" ? "Les personnes derrière les peintres" : lang === "ar" ? "الأشخاص وراء الرسامين" : "People Behind the Painters", `gallery-vr.html?lang=${lang}&room=people&artist=da-vinci`],
     ["gallery-book-link", text.livingBook, `book-3d.html?lang=${lang}`],
     ["gallery-geo-link", "ARTDACI GEO", `geo/index.html?lang=${lang}`],
