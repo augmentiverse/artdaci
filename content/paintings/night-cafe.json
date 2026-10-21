@@ -1,0 +1,26 @@
+{
+  "id": "vincent-van-gogh-night-cafe-1888",
+  "slug": "night-cafe",
+  "bookOrder": 20,
+  "title": "The Night Café",
+  "artist": { "name": "Vincent van Gogh" },
+  "date": "1888",
+  "medium": "Oil on canvas",
+  "dimensions": {},
+  "currentLocation": { "museum": "Yale University Art Gallery", "city": "New Haven" },
+  "movement": ["Post-Impressionism"],
+  "media": { "image": "assets/artists/paintings_images/vangogh/vangogh_night-café.png" },
+  "print": { "chapter": "Post-Impressionism" },
+  "texts": {
+    "historicalContext": "Van Gogh depicted the all-night interior of the Café de la Gare in Arles.",
+    "artisticAnalysis": "Harsh colour, empty floor and isolated figures turn the room into an image of fatigue and unease.",
+    "composition": "Perspective rushes toward the rear doorway while the billiard table blocks the centre.",
+    "palette": "Clashing red, green and yellow deliberately reject natural harmony.",
+    "perspectiveTechnique": "Exaggerated recession and tilted spatial relationships intensify psychological pressure.",
+    "culturalSignificance": "The painting demonstrates how colour and space can communicate an emotional condition."
+  },
+  "localizations": {
+    "fr": { "title": "Le Café de nuit" },
+    "ar": { "title": "المقهى الليلي" }
+  }
+}
