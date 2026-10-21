@@ -1,7 +1,7 @@
 // Dependency-free smoke tests for ARTDACI Museum Explorer V4.
 // Run from repo root: node tests/museum-explorer-v4.test.mjs
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import vm from "node:vm";
 const html=readFileSync(new URL("../museums.html",import.meta.url),"utf8");
 const milestones=JSON.parse(readFileSync(new URL("../content/museums/history-v4.json",import.meta.url),"utf8"));
@@ -32,6 +32,10 @@ assert.ok(inline.length,"inline portal JavaScript missing");
 for(const js of inline) new vm.Script(js,{filename:"museums.html inline script"});
 const imageDefs=html.match(/const ARTWORK_IMAGES=\{([\s\S]*?)\};/);
 assert.ok(imageDefs,"artwork thumbnail mapping missing");
+const artworksPath=new URL("../",import.meta.url);
+const thumbnailPaths=[...imageDefs[1].matchAll(/\\b(?:ld|ve|vg|mo)\\d+:'([^']+)'/g)].map(m=>m[1]);
+assert.equal(thumbnailPaths.length,12,"all twelve artwork thumbnail paths must be listed");
+for(const img of thumbnailPaths) assert.ok(existsSync(new URL("../"+img,import.meta.url)),"missing source artwork asset: "+img);
 for(const museum of base.museums) for(const work of museum.artworks){
   assert.ok(new RegExp("\\b"+work.id+"\\s*:").test(imageDefs[1]),"thumbnail mapping missing for "+work.id);
 }
