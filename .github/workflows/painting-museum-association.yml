@@ -1,0 +1,24 @@
+name: Validate painting–museum associations
+on:
+  pull_request:
+    paths:
+      - "scripts/painting-museum-resolver.mjs"
+      - "scripts/print-artwork.js"
+      - "print-artwork.html"
+      - "styles/site.css"
+      - "tests/painting-museum-association.test.mjs"
+      - "tests/print-artwork-template.test.mjs"
+      - ".github/workflows/painting-museum-association.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  museum-association:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Check museum mapping and artwork template
+        run: node --test tests/painting-museum-association.test.mjs tests/print-artwork-template.test.mjs
