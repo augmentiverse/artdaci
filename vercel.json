@@ -1,0 +1,29 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    { "source": "/ar/monalisa", "destination": "/ar.html?painting=mona-lisa", "permanent": false },
+    { "source": "/ar/ermine", "destination": "/print-artwork.html?painting=lady-with-an-ermine", "permanent": false },
+    { "source": "/ar/lastsupper", "destination": "/print-artwork.html?painting=last-supper", "permanent": false },
+    { "source": "/ar/annunciation", "destination": "/print-artwork.html?painting=annunciation", "permanent": false },
+    { "source": "/ar/ginevra", "destination": "/print-artwork.html?painting=ginevra-de-benci", "permanent": false },
+    { "source": "/ar/ferronniere", "destination": "/print-artwork.html?painting=belle-ferronniere", "permanent": false },
+    { "source": "/ar/girl-with-a-pearl-earring", "destination": "/ar.html?painting=vermeer-girl-with-a-pearl-earring", "permanent": false },
+    { "source": "/ar/view-of-delft", "destination": "/ar.html?painting=view-of-delft", "permanent": false },
+    { "source": "/ar/the-milkmaid", "destination": "/print-artwork.html?painting=vermeer-milkmaid", "permanent": false },
+    { "source": "/ar/the-art-of-painting", "destination": "/print-artwork.html?painting=art-of-painting", "permanent": false },
+    { "source": "/ar/the-astronomer", "destination": "/print-artwork.html?painting=vermeer-astronomer", "permanent": false },
+    { "source": "/ar/woman-holding-a-balance", "destination": "/print-artwork.html?painting=woman-holding-balance", "permanent": false },
+    { "source": "/ar/self-portrait", "destination": "/ar.html?painting=van-gogh", "permanent": false },
+    { "source": "/ar/bedroom-in-arles", "destination": "/ar.html?painting=van-gogh-bedroom", "permanent": false },
+    { "source": "/ar/the-starry-night", "destination": "/print-artwork.html?painting=starry-night", "permanent": false },
+    { "source": "/ar/sunflowers", "destination": "/print-artwork.html?painting=sunflowers", "permanent": false },
+    { "source": "/ar/cafe-terrace-at-night", "destination": "/print-artwork.html?painting=cafe-terrace", "permanent": false },
+    { "source": "/ar/the-night-cafe", "destination": "/print-artwork.html?painting=night-cafe", "permanent": false },
+    { "source": "/ar/impression-sunrise", "destination": "/print-monet-impression-sunrise.html", "permanent": false },
+    { "source": "/ar/the-bridge-at-argenteuil", "destination": "/print-artwork.html?painting=pont-d-argenteuil", "permanent": false },
+    { "source": "/ar/water-lilies", "destination": "/print-artwork.html?painting=water-lilies", "permanent": false },
+    { "source": "/ar/the-japanese-footbridge", "destination": "/print-artwork.html?painting=japanese-bridge", "permanent": false },
+    { "source": "/ar/poppies", "destination": "/print-artwork.html?painting=poppies", "permanent": false },
+    { "source": "/ar/woman-with-a-parasol", "destination": "/print-artwork.html?painting=woman-with-parasol", "permanent": false }
+  ]
+}

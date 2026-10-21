@@ -14,7 +14,7 @@
     "museum": "Musée d’Orsay",
     "location": { "city": "Paris", "country": "France" }
   },
-  "pageUrl": "https://artdaci.com/a/mo02",
+  "pageUrl": "https://artdaci.com/ar/the-bridge-at-argenteuil",
   "mediaBaseUrl": "https://media.artdaci.com/artworks/mo02/",
   "sharedMediaBaseUrl": "https://media.artdaci.com/shared/",
   "cachePolicy": "no-store",

@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "description": "Internal destinations for the canonical artwork QR routes declared by each media manifest pageUrl.",
+  "routes": {
+    "ld01": { "destination": "/ar.html?painting=mona-lisa", "experience": "image-ar" },
+    "ld02": { "destination": "/print-artwork.html?painting=lady-with-an-ermine", "experience": "artwork-page" },
+    "ld03": { "destination": "/print-artwork.html?painting=last-supper", "experience": "artwork-page" },
+    "ld04": { "destination": "/print-artwork.html?painting=annunciation", "experience": "artwork-page" },
+    "ld05": { "destination": "/print-artwork.html?painting=ginevra-de-benci", "experience": "artwork-page" },
+    "ld06": { "destination": "/print-artwork.html?painting=belle-ferronniere", "experience": "artwork-page" },
+    "ve01": { "destination": "/ar.html?painting=vermeer-girl-with-a-pearl-earring", "experience": "image-ar" },
+    "ve02": { "destination": "/ar.html?painting=view-of-delft", "experience": "image-ar" },
+    "ve03": { "destination": "/print-artwork.html?painting=vermeer-milkmaid", "experience": "artwork-page" },
+    "ve04": { "destination": "/print-artwork.html?painting=art-of-painting", "experience": "artwork-page" },
+    "ve05": { "destination": "/print-artwork.html?painting=vermeer-astronomer", "experience": "artwork-page" },
+    "ve06": { "destination": "/print-artwork.html?painting=woman-holding-balance", "experience": "artwork-page" },
+    "vg01": { "destination": "/ar.html?painting=van-gogh", "experience": "image-ar" },
+    "vg02": { "destination": "/ar.html?painting=van-gogh-bedroom", "experience": "image-ar" },
+    "vg03": { "destination": "/print-artwork.html?painting=starry-night", "experience": "artwork-page" },
+    "vg04": { "destination": "/print-artwork.html?painting=sunflowers", "experience": "artwork-page" },
+    "vg05": { "destination": "/print-artwork.html?painting=cafe-terrace", "experience": "artwork-page" },
+    "vg06": { "destination": "/print-artwork.html?painting=night-cafe", "experience": "artwork-page" },
+    "mo01": { "destination": "/print-monet-impression-sunrise.html", "experience": "artwork-page" },
+    "mo02": { "destination": "/print-artwork.html?painting=pont-d-argenteuil", "experience": "artwork-page" },
+    "mo03": { "destination": "/print-artwork.html?painting=water-lilies", "experience": "artwork-page" },
+    "mo04": { "destination": "/print-artwork.html?painting=japanese-bridge", "experience": "artwork-page" },
+    "mo05": { "destination": "/print-artwork.html?painting=poppies", "experience": "artwork-page" },
+    "mo06": { "destination": "/print-artwork.html?painting=woman-with-parasol", "experience": "artwork-page" }
+  }
+}
