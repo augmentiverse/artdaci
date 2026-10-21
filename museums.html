@@ -1,0 +1,872 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#121b29">
+  <meta name="description" content="ARTDACI Museum Explorer — six museums, real photographs, artworks and verified historical discoveries.">
+  <title>ARTDACI — Museum Explorer</title>
+  <link rel="icon" href="assets/app/artdaci-app-icon.svg" type="image/svg+xml">
+  <style>
+:root{color-scheme:dark;--bg:#111925;--surface:#182432;--surface-2:#213143;--line:#34465a;--ink:#f4efe6;--muted:#bcc8d4;--accent:#d8b87c;--focus:#f7d48f}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#26394a 0%,var(--bg) 57%);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);line-height:1.5}
+a{color:inherit}button{font:inherit;cursor:pointer}button:disabled{cursor:not-allowed;opacity:.42}button:focus-visible,a:focus-visible{outline:3px solid var(--focus);outline-offset:4px}.skip{position:absolute;top:-5rem;left:1rem;background:var(--ink);color:var(--bg);padding:.6rem;z-index:20}.skip:focus{top:1rem}
+.page-shell{max-width:1040px;margin:auto;padding:0 clamp(16px,4vw,38px)}.site-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:23px 0;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:12px;text-decoration:none}.brand-monogram{display:grid;place-items:center;border:1px solid #a79265;color:var(--accent);border-radius:11px;font-family:Georgia,serif;font-size:1.7rem;width:42px;height:42px}.brand strong{display:block;font-size:1rem;letter-spacing:.15em}.brand small{display:block;color:var(--muted);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase}.language-switch{display:flex;border:1px solid var(--line);border-radius:25px;gap:2px;padding:3px}.language-switch button{background:transparent;color:var(--muted);border:0;border-radius:20px;padding:9px 13px;font-size:.8rem;font-weight:700;min-height:38px}.language-switch button[aria-pressed=true]{background:var(--accent);color:#18202b}
+.intro{text-align:center;padding:36px 6px 26px}.eyebrow{margin:0 0 8px;color:var(--accent);font-size:.74rem;letter-spacing:.18em;font-weight:700}.intro h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.9rem,4vw,3rem);font-weight:500;letter-spacing:-.035em;line-height:1.17;margin:0}.intro-description{color:var(--muted);max-width:610px;margin:12px auto 0;font-size:.95rem}
+.explorer{overflow:hidden;border:1px solid var(--line);border-radius:20px;background:var(--surface);box-shadow:0 22px 60px #0003}.photo-frame{position:relative;aspect-ratio:16/7.5;min-height:210px;overflow:hidden;background:#2d3a49}.photo-frame img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .2s}.photo-gradient{position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,12,19,.35),transparent 38%);pointer-events:none}.photo-index{position:absolute;bottom:15px;left:19px;border-radius:8px;padding:6px 12px;background:#111925b5;font-size:.8rem;letter-spacing:.13em;font-weight:700;backdrop-filter:blur(7px)}.museum-info{padding:clamp(19px,3.2vw,31px)}.museum-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:14px}.museum-location{color:var(--accent);margin:0 0 5px;letter-spacing:.06em;font-size:.82rem}.museum-heading h2{font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.65rem,3.3vw,2.45rem);font-weight:500;line-height:1.15;margin:0}.museum-official{font-size:.79rem;color:var(--accent);white-space:nowrap;text-underline-offset:3px}.photo-credit{font-size:.72rem;color:var(--muted);margin:13px 0 0}.photo-credit a{color:#ddd0b4;text-underline-offset:2px}.facts{margin:24px 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.fact{background:var(--surface-2);padding:20px;border-radius:13px;border:1px solid #ffffff09}.fact-number{color:var(--accent);font-size:.77rem;font-weight:700;letter-spacing:.1em}.fact h3{font-size:1.05rem;margin:5px 0 8px;line-height:1.3}.fact p{margin:0;color:#d9e0e7;font-size:.89rem}.fact a{display:inline-block;margin-top:11px;color:var(--accent);text-underline-offset:3px;font-size:.76rem}
+.artworks-block,.immersive-block{border-top:1px solid var(--line);padding-top:17px;margin-top:18px}.artworks-block h3,.immersive-block h3{font-size:.81rem;letter-spacing:.07em;color:var(--muted);margin:0 0 10px;font-weight:650}.artworks,.experiences{display:flex;flex-wrap:wrap;gap:8px}.artworks a{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:18px;padding:8px 13px;text-decoration:none;background:#1d2a39;color:#f1eee5;font-size:.83rem;min-height:40px}.artworks a::after{content:'↗';padding-inline-start:7px;color:var(--accent)}.artworks a:hover,.experiences a:hover{border-color:var(--accent)}.experiences a{display:inline-flex;align-items:center;border:1px solid #8a724b;border-radius:9px;text-decoration:none;padding:10px 13px;background:#2b3540;font-weight:600;font-size:.84rem;min-height:44px}.experiences a:first-child{color:#1a2632;background:var(--accent);border-color:var(--accent)}
+.pager{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:20px 0 0}.pager-button{padding:12px 19px;min-height:46px;border-radius:11px;border:1px solid var(--line);font-weight:680}.pager-button.secondary{background:var(--surface-2);color:var(--ink)}.pager-button.primary{background:var(--accent);border-color:var(--accent);color:#1a2632}.step-indicator{text-align:center;min-width:68px;font-size:.86rem;font-variant-numeric:tabular-nums;color:var(--muted)}.dots{display:flex;gap:5px;justify-content:center;margin-top:7px}.dot{width:6px;height:6px;background:#718093;border-radius:8px}.dot.active{width:21px;background:var(--accent)}.keyboard-tip{text-align:center;color:var(--muted);font-size:.77rem;margin:11px 0 33px}.site-footer{border-top:1px solid var(--line);padding:19px 0 24px;display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between;color:var(--muted);font-size:.78rem}.site-footer a{color:var(--muted)}
+[dir=rtl] .fact{text-align:right}[dir=rtl] .museum-heading{text-align:right}[dir=rtl] .photo-credit{text-align:right}[dir=rtl] .artworks-block,[dir=rtl] .immersive-block{text-align:right}html[lang=ar] .intro,html[lang=ar] .keyboard-tip{text-align:center}
+@media(max-width:660px){.page-shell{padding:0 14px}.site-header{padding:13px 0}.brand strong{font-size:.83rem}.brand small{font-size:.59rem}.brand-monogram{width:37px;height:37px}.language-switch button{padding:8px 10px}.intro{padding:23px 4px 19px}.photo-frame{aspect-ratio:16/9;min-height:unset}.museum-heading{align-items:flex-start;flex-direction:column;gap:7px}.facts{grid-template-columns:1fr;margin:17px 0}.fact{padding:15px}.museum-info{padding:17px}.pager-button{padding:11px 13px}.museum-heading h2{font-size:1.8rem}.site-footer{justify-content:flex-start}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.photo-frame img{transition:none}}
+
+.photo-index,.step-indicator{direction:ltr;unicode-bidi:isolate}
+
+/* V2: richer ARTDACI portal wrapped around the original photo + two-facts exploration. */
+.museum-selector{display:flex;align-items:center;gap:8px;overflow-x:auto;scrollbar-width:thin;padding:0 2px 17px;margin-bottom:3px}
+.museum-choice{flex:0 0 auto;white-space:nowrap;border:1px solid var(--line);border-radius:18px;background:#213244;color:#dbe3e8;padding:9px 14px;min-height:42px;font-size:.8rem}
+.museum-choice.selected{background:#ceb07b;color:#162536;font-weight:700;border-color:#ceb07b}
+.portal-area{margin:23px 0 0;padding:21px clamp(14px,3vw,30px);border:1px solid var(--line);border-radius:19px;background:var(--surface)}
+.portal-intro h2{font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.4rem,2.5vw,2rem);font-weight:500;margin:2px 0 6px}
+.portal-intro p:last-child{color:var(--muted);font-size:.87rem;margin:0 0 17px}
+.portal-tabs{display:flex;flex-wrap:wrap;gap:6px;border-bottom:1px solid var(--line);padding-bottom:10px}
+.portal-tabs button{background:#233345;color:var(--muted);padding:10px 15px;min-height:44px;border:1px solid var(--line);border-radius:10px;font-size:.86rem;font-weight:600}
+.portal-tabs button[aria-selected=true]{background:var(--accent);border-color:var(--accent);color:#122334}
+.portal-panel{padding:19px 0 3px;min-height:115px}.portal-panel[hidden]{display:none}
+.portal-panel h3{font-size:1rem;margin:0 0 5px}
+.panel-description{margin:0 0 15px;font-size:.86rem;color:var(--muted)}
+.immersive-layout{display:grid;grid-template-columns:minmax(180px,280px) minmax(0,1fr);gap:22px;align-items:start}
+.immersive-preview{margin:0}.immersive-preview img{width:100%;height:175px;object-fit:contain;background:#14202d;border:1px solid var(--line);border-radius:13px;padding:8px}.immersive-preview figcaption{color:var(--muted);font-size:.72rem;margin-top:8px}
+.learning-questions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.learning-question{background:var(--surface-2);border-radius:12px;padding:15px;display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.learning-question p{font-size:.89rem;line-height:1.5;margin:0;flex:1}.copy-question{color:var(--accent);background:none;border:1px solid #9b8054;border-radius:8px;min-height:39px;padding:7px 10px;font-size:.8rem}
+.copy-status{font-size:.79rem;min-height:0;margin:8px 0 3px;color:var(--accent)}.knowledge-semantic{color:#1a2632;background:var(--accent);text-decoration:none;font-weight:650;display:inline-flex;align-items:center;min-height:44px;padding:10px 15px;border-radius:9px;font-size:.85rem;margin-top:10px}
+.knowledge-note{font-size:.76rem;color:var(--muted);margin-bottom:0}
+[dir=rtl] .learning-question{text-align:right;align-items:flex-start}
+@media(max-width:660px){.portal-area{padding:17px 14px}.portal-tabs button{flex:1;min-width:max-content;padding:9px 11px;font-size:.77rem}.immersive-layout{grid-template-columns:1fr}.immersive-preview img{height:155px}.learning-questions{grid-template-columns:1fr}.museum-selector{margin-bottom:0}.portal-area{margin-top:16px}}
+
+</style>
+  
+</head>
+<body>
+  <a class="skip" href="#museum-panel">Aller au contenu</a>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="index-fr.html" id="home-link" aria-label="ARTDACI — accueil">
+        <span class="brand-monogram" aria-hidden="true">A</span>
+        <span><strong>ARTDACI</strong><small>Museum Explorer</small></span>
+      </a>
+      <nav class="header-actions" aria-label="Language / Langue / اللغة">
+        <div class="language-switch" role="group" aria-label="Language / Langue / اللغة">
+          <button type="button" data-lang="fr" aria-pressed="true" lang="fr">FR</button>
+          <button type="button" data-lang="en" aria-pressed="false" lang="en">EN</button>
+          <button type="button" data-lang="ar" aria-pressed="false" lang="ar">AR</button>
+        </div>
+      </nav>
+    </header>
+    <main id="museum-panel" tabindex="-1">
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow" id="intro-eyebrow">PARCOURS CULTUREL</p>
+        <h1 id="page-title">Six musées, mille histoires</h1>
+        <p class="intro-description" id="intro-description">Explorez les musées liés aux chefs-d’œuvre d’ARTDACI, une découverte à la fois.</p>
+      </section>
+      <nav class="museum-selector" id="museum-selector" aria-label="Choisir un musée"></nav>
+      <section class="explorer" aria-labelledby="museum-title" id="museum-stage" aria-busy="true">
+        <div class="photo-frame">
+          <img id="museum-photo" alt="" decoding="async" fetchpriority="high">
+          <div class="photo-gradient" aria-hidden="true"></div>
+          <span class="photo-index" id="photo-index">01 / 06</span>
+        </div>
+        <div class="museum-info" id="museum-info" dir="auto">
+          <div class="museum-heading">
+            <div>
+              <p class="museum-location" id="museum-location"></p>
+              <h2 id="museum-title"></h2>
+            </div>
+            <a id="museum-official" class="museum-official" target="_blank" rel="noopener noreferrer"></a>
+          </div>
+          <p class="photo-credit" id="photo-credit"></p>
+          <div class="facts" id="facts" aria-label="Historical facts"></div>
+        </div>
+      </section>
+      <nav class="pager" aria-label="Museum navigation">
+        <button type="button" id="previous" class="pager-button secondary" disabled></button>
+        <div class="step-indicator"><span id="position" aria-live="polite" aria-atomic="true">1 / 6</span><div id="dots" class="dots" aria-hidden="true"></div></div>
+        <button type="button" id="next" class="pager-button primary"></button>
+      </nav>
+      <p class="keyboard-tip" id="keyboard-tip"></p>
+      <section class="portal-area" id="portal-area" aria-labelledby="portal-heading">
+        <div class="portal-intro"><p class="eyebrow" id="portal-eyebrow"></p><h2 id="portal-heading"></h2><p id="portal-description"></p></div>
+        <div class="portal-tabs" id="portal-tabs" role="tablist" aria-label="Explorer le musée">
+          <button type="button" id="tab-artworks" role="tab" aria-controls="pane-artworks" aria-selected="true" tabindex="0" data-tab="artworks"></button>
+          <button type="button" id="tab-immersive" role="tab" aria-controls="pane-immersive" aria-selected="false" tabindex="-1" data-tab="immersive"></button>
+          <button type="button" id="tab-knowledge" role="tab" aria-controls="pane-knowledge" aria-selected="false" tabindex="-1" data-tab="knowledge"></button>
+        </div>
+        <div class="portal-panel" id="pane-artworks" role="tabpanel" aria-labelledby="tab-artworks" tabindex="0">
+          <h3 id="artworks-heading"></h3><p id="artworks-description" class="panel-description"></p><div class="artworks" id="artworks"></div>
+        </div>
+        <div class="portal-panel" id="pane-immersive" role="tabpanel" aria-labelledby="tab-immersive" tabindex="0" hidden>
+          <h3 id="experiences-heading"></h3><p id="experiences-description" class="panel-description"></p>
+          <div class="immersive-layout"><figure class="immersive-preview"><img id="model-preview" alt="" loading="lazy"><figcaption id="model-caption"></figcaption></figure><div class="experiences" id="experiences"></div></div>
+        </div>
+        <div class="portal-panel" id="pane-knowledge" role="tabpanel" aria-labelledby="tab-knowledge" tabindex="0" hidden>
+          <h3 id="knowledge-heading"></h3><p id="knowledge-description" class="panel-description"></p>
+          <div class="learning-questions" id="learning-questions"></div><p id="copy-status" class="copy-status" role="status" aria-live="polite"></p>
+          <a id="knowledge-semantic" class="knowledge-semantic"></a><p id="knowledge-note" class="knowledge-note"></p>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer"><span>ARTDACI · DACI</span><a id="gallery-link" href="gallery-vr.html?lang=fr&amp;room=museums"></a><a id="semantic-link" href="semantic/?lang=fr"></a></footer>
+  </div>
+  <noscript>Cette expérience nécessite JavaScript. / This experience requires JavaScript. / تتطلب هذه التجربة جافاسكريبت.</noscript>
+<script>
+const EMBEDDED_MUSEUM_DATA={
+  "schemaVersion": "1.1",
+  "generatedFor": "ARTDACI Museum Explorer — Integrated Editorial Portal V2",
+  "lastEditorialReview": "2026-10-21",
+  "photoDeliveryNote": "Wikimedia Special:FilePath redirects are remote; consider self-hosting optimised versions after verifying conditions. Each image displays licence and creator credit.",
+  "museums": [
+    {
+      "id": "louvre",
+      "name": {
+        "fr": "Musée du Louvre",
+        "en": "Louvre Museum",
+        "ar": "متحف اللوفر"
+      },
+      "location": {
+        "fr": "Paris · France",
+        "en": "Paris · France",
+        "ar": "باريس · فرنسا"
+      },
+      "official": "https://www.louvre.fr/",
+      "photo": {
+        "file": "Musée du Louvre et pyramide du Louvre (Paris) (2).jpg",
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Mus%C3%A9e%20du%20Louvre%20et%20pyramide%20du%20Louvre%20%28Paris%29%20%282%29.jpg?width=1280",
+        "page": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e%20du%20Louvre%20et%20pyramide%20du%20Louvre%20%28Paris%29%20%282%29.jpg",
+        "author": "Gzen92",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      },
+      "fallback": "assets/environments/gallery/images/Louvre/louvre_building_plan/Louvre_museum.webp",
+      "facts": [
+        {
+          "title": {
+            "fr": "Une pyramide de verre au cœur d’un palais royal",
+            "en": "A modern glass pyramid inside a royal palace",
+            "ar": "هرم زجاجي حديث في قلب قصر ملكي"
+          },
+          "body": {
+            "fr": "La pyramide imaginée par I. M. Pei fut inaugurée en 1989. Elle abrite l’entrée principale souterraine, reliant une architecture contemporaine à plusieurs siècles d’histoire royale.",
+            "en": "Designed by I. M. Pei and opened in 1989, the glass pyramid shelters the museum’s underground main entrance—a striking contrast with the former royal palace.",
+            "ar": "افتُتح الهرم الزجاجي الذي صمّمه آي. إم. باي عام 1989، ويغطي المدخل الرئيسي تحت الأرض، جامعًا بين العمارة الحديثة وتاريخ القصر الملكي."
+          },
+          "source": "https://www.louvre.fr/decouvrir/le-palais/une-pyramide-pour-symbole"
+        },
+        {
+          "title": {
+            "fr": "La salle de La Joconde était une salle de cérémonie politique",
+            "en": "The Mona Lisa hangs in a former imperial state room",
+            "ar": "تُعرض الموناليزا في قاعة كانت مخصصة لمراسم الدولة"
+          },
+          "body": {
+            "fr": "Construite sous Napoléon III pour de grandes cérémonies et réunions officielles, la salle des États (salle 711) accueille aujourd’hui La Joconde. Ses murs ont pris une teinte bleu nuit lors du réaménagement de 2019.",
+            "en": "The Salle des États (Room 711) was created under Napoleon III for major state ceremonies. Today it houses the Mona Lisa; its midnight-blue walls date from a 2019 renovation.",
+            "ar": "أُنشئت قاعة الدول (القاعة 711) في عهد نابليون الثالث للمراسم الرسمية الكبرى، وتعرض اليوم الموناليزا. وقد اكتست جدرانها الأزرق الداكن خلال تجديد عام 2019."
+          },
+          "source": "https://www.louvre.fr/decouvrir/le-palais/de-la-joconde-aux-noces-de-cana"
+        }
+      ],
+      "artworks": [
+        {
+          "id": "ld01",
+          "title": {
+            "fr": "La Joconde",
+            "en": "Mona Lisa",
+            "ar": "الموناليزا"
+          },
+          "href": "print-target.html"
+        },
+        {
+          "id": "ld06",
+          "title": {
+            "fr": "La Belle Ferronnière",
+            "en": "La Belle Ferronnière",
+            "ar": "لا بيل فيرونيير"
+          },
+          "href": "print-artwork.html?painting=belle-ferronniere"
+        },
+        {
+          "id": "ve05",
+          "title": {
+            "fr": "L’Astronome",
+            "en": "The Astronomer",
+            "ar": "عالم الفلك"
+          },
+          "href": "print-artwork.html?painting=vermeer-astronomer"
+        }
+      ],
+      "questions": [
+        {
+          "fr": "Pourquoi associer une pyramide contemporaine à un palais historique ?",
+          "en": "Why place a modern pyramid inside a historic palace?",
+          "ar": "لماذا أُضيف هرم معاصر إلى قصر تاريخي؟"
+        },
+        {
+          "fr": "Comment la salle des États a-t-elle changé de fonction ?",
+          "en": "How did the Salle des États change its function?",
+          "ar": "كيف تغيّرت وظيفة قاعة الدول؟"
+        }
+      ]
+    },
+    {
+      "id": "orsay",
+      "name": {
+        "fr": "Musée d’Orsay",
+        "en": "Musée d’Orsay",
+        "ar": "متحف أورسيه"
+      },
+      "location": {
+        "fr": "Paris · France",
+        "en": "Paris · France",
+        "ar": "باريس · فرنسا"
+      },
+      "official": "https://www.musee-orsay.fr/",
+      "photo": {
+        "file": "Musée d'Orsay interior panoramic view.jpg",
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Mus%C3%A9e%20d%27Orsay%20interior%20panoramic%20view.jpg?width=1280",
+        "page": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e%20d%27Orsay%20interior%20panoramic%20view.jpg",
+        "author": "Celuici",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      },
+      "fallback": "assets/environments/gallery/images/Orsay/orsay_building_plan/Orsay_museum.png",
+      "facts": [
+        {
+          "title": {
+            "fr": "Le musée était autrefois une gare monumentale",
+            "en": "A great art museum that began as a railway station",
+            "ar": "متحف فني كان في الأصل محطة قطارات كبرى"
+          },
+          "body": {
+            "fr": "La gare d’Orsay fut construite pour l’Exposition universelle de 1900. Sa vaste verrière métallique subsiste : le bâtiment fut transformé en musée, inauguré en 1986.",
+            "en": "Built for the 1900 Universal Exhibition, the former Gare d’Orsay still retains its spectacular glass-and-metal train hall. It opened as an art museum in 1986.",
+            "ar": "بُنيت محطة أورسيه للمعرض العالمي سنة 1900، وما زالت تحتفظ بقاعة القطارات الكبرى ذات السقف الزجاجي والمعدني. وافتُتح المتحف عام 1986."
+          },
+          "source": "https://www.musee-orsay.fr/fr/articles/histoire-du-musee-60"
+        },
+        {
+          "title": {
+            "fr": "L’autoportrait de Van Gogh a changé de musée",
+            "en": "Van Gogh’s 1889 self-portrait passed through another museum",
+            "ar": "مرت صورة فان غوخ الذاتية لعام 1889 بمتحف آخر"
+          },
+          "body": {
+            "fr": "L’Autoportrait de 1889 d’ARTDACI fut offert à l’État français par Paul et Marguerite Gachet en 1949. Présenté au Jeu de Paume, il a été affecté au musée d’Orsay en 1986.",
+            "en": "ARTDACI’s 1889 Van Gogh self-portrait was donated by Paul and Marguerite Gachet in 1949. It was held at the Jeu de Paume before being assigned to the Musée d’Orsay in 1986.",
+            "ar": "تبرّع بول ومارغريت غاشيه بصورة فان غوخ الذاتية لعام 1889 إلى الدولة الفرنسية سنة 1949. وعُرضت في متحف جو دو بوم قبل انتقالها إلى متحف أورسيه سنة 1986."
+          },
+          "source": "https://www.musee-orsay.fr/fr/oeuvres/portrait-de-lartiste-747"
+        }
+      ],
+      "artworks": [
+        {
+          "id": "vg01",
+          "title": {
+            "fr": "Autoportrait (1889)",
+            "en": "Self-Portrait (1889)",
+            "ar": "صورة ذاتية (1889)"
+          },
+          "href": "print-van-gogh.html"
+        },
+        {
+          "id": "mo02",
+          "title": {
+            "fr": "Le Pont d’Argenteuil",
+            "en": "The Bridge at Argenteuil",
+            "ar": "جسر أرجنتوي"
+          },
+          "href": "print-artwork.html?painting=pont-d-argenteuil"
+        }
+      ],
+      "questions": [
+        {
+          "fr": "Que conserve un musée de son ancienne vie de gare ?",
+          "en": "What traces of its railway past does the museum preserve?",
+          "ar": "ما المعالم التي يحتفظ بها المتحف من ماضيه كمحطة؟"
+        },
+        {
+          "fr": "Que nous apprend la provenance de l’Autoportrait de Van Gogh ?",
+          "en": "What does the provenance of Van Gogh’s self-portrait tell us?",
+          "ar": "ماذا يكشف تاريخ اقتناء صورة فان غوخ الذاتية؟"
+        }
+      ]
+    },
+    {
+      "id": "mauritshuis",
+      "name": {
+        "fr": "Mauritshuis",
+        "en": "Mauritshuis",
+        "ar": "متحف موريتشهاوس"
+      },
+      "location": {
+        "fr": "La Haye · Pays-Bas",
+        "en": "The Hague · Netherlands",
+        "ar": "لاهاي · هولندا"
+      },
+      "official": "https://www.mauritshuis.nl/en/",
+      "photo": {
+        "file": "Mauritshuis seen from the water.jpg",
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Mauritshuis%20seen%20from%20the%20water.jpg?width=1280",
+        "page": "https://commons.wikimedia.org/wiki/File:Mauritshuis%20seen%20from%20the%20water.jpg",
+        "author": "Akazumo",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      },
+      "fallback": "assets/environments/gallery/images/Mauritshuis/Mauritshuis_building_plan/Mauritshuis_museum.png",
+      "facts": [
+        {
+          "title": {
+            "fr": "Un palais devenu musée",
+            "en": "A former private palace became a museum",
+            "ar": "قصر خاص تحوّل إلى متحف"
+          },
+          "body": {
+            "fr": "Le Mauritshuis fut d’abord la résidence du comte Jean-Maurice de Nassau-Siegen. Son intérieur rappelle encore le raffinement du XVIIe siècle, avec lustres et décors historiques.",
+            "en": "The Mauritshuis began as the private residence of Johan Maurits of Nassau-Siegen. Its historic rooms still recall the elegance of the Dutch Golden Age.",
+            "ar": "كان مبنى موريتشهاوس مقرًا خاصًا ليوهان موريتس من ناساو-زيغن، وما زالت قاعاته التاريخية تحتفظ بأناقة العصر الذهبي الهولندي."
+          },
+          "source": "https://www.mauritshuis.nl/en/what-s-on/always-on-show/welcome-to-the-mauritshuis/history-of-the-building"
+        },
+        {
+          "title": {
+            "fr": "La Jeune Fille à la perle fut achetée pour 2,30 florins",
+            "en": "Girl with a Pearl Earring was bought for 2.30 guilders",
+            "ar": "اشتُريت الفتاة ذات القرط اللؤلؤي مقابل 2.30 غيلدر"
+          },
+          "body": {
+            "fr": "En 1881, Arnoldus des Tombe acquit le tableau de Vermeer pour 2 florins et 30 centimes, frais compris. Il le légua ensuite au Mauritshuis.",
+            "en": "In 1881 Arnoldus des Tombe bought Vermeer’s masterpiece for only 2 guilders and 30 cents, including commission. He later left it to the Mauritshuis.",
+            "ar": "اشترى أرنولدوس دِس تومبه لوحة فيرمير عام 1881 مقابل غيلدرين وثلاثين سنتًا، شاملة الرسوم، ثم أوصى بها لمتحف موريتشهاوس."
+          },
+          "source": "https://www.mauritshuis.nl/en/our-collection/restoration-and-research/closer-to-vermeer-and-the-girl/girl-with-a-blog/how-much-is-the-girl-with-a-pearl-earring-of-vermeer-worth"
+        }
+      ],
+      "artworks": [
+        {
+          "id": "ve01",
+          "title": {
+            "fr": "La Jeune Fille à la perle",
+            "en": "Girl with a Pearl Earring",
+            "ar": "الفتاة ذات القرط اللؤلؤي"
+          },
+          "href": "print-vermeer-girl-with-a-pearl-earring.html"
+        },
+        {
+          "id": "ve02",
+          "title": {
+            "fr": "Vue de Delft",
+            "en": "View of Delft",
+            "ar": "منظر دلفت"
+          },
+          "href": "print-artwork.html?painting=view-of-delft"
+        }
+      ],
+      "questions": [
+        {
+          "fr": "Pourquoi exposer des peintures dans un ancien palais ?",
+          "en": "Why exhibit paintings in a former private palace?",
+          "ar": "لماذا تُعرض اللوحات في قصر خاص سابق؟"
+        },
+        {
+          "fr": "Comment une œuvre peu chère devient-elle un chef-d’œuvre mondial ?",
+          "en": "How did an inexpensive painting become a world-famous masterpiece?",
+          "ar": "كيف تحولت لوحة زهيدة الثمن إلى تحفة عالمية؟"
+        }
+      ]
+    },
+    {
+      "id": "czartoryski",
+      "name": {
+        "fr": "Musée des Princes Czartoryski",
+        "en": "Princes Czartoryski Museum",
+        "ar": "متحف أمراء تشارتوريسكي"
+      },
+      "location": {
+        "fr": "Cracovie · Pologne",
+        "en": "Kraków · Poland",
+        "ar": "كراكوف · بولندا"
+      },
+      "official": "https://mnk.pl/en/branches/czartoryski-museum/",
+      "photo": {
+        "file": "Czartoryski Museum, Monastery, 6 Pijarska street, Old Town, Kraków, Poland.jpg",
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Czartoryski%20Museum%2C%20Monastery%2C%206%20Pijarska%20street%2C%20Old%20Town%2C%20Krak%C3%B3w%2C%20Poland.jpg?width=1280",
+        "page": "https://commons.wikimedia.org/wiki/File:Czartoryski%20Museum%2C%20Monastery%2C%206%20Pijarska%20street%2C%20Old%20Town%2C%20Krak%C3%B3w%2C%20Poland.jpg",
+        "author": "Zygmunt Put",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      },
+      "fallback": "assets/environments/gallery/images/MNK-Czartoryski/MNK-Czartoryski_building_plan/MNK-Czartoryski_museum.webp",
+      "facts": [
+        {
+          "title": {
+            "fr": "Une collection qui a traversé l’Europe",
+            "en": "An art collection that travelled across Europe for safety",
+            "ar": "مجموعة فنية سافرت عبر أوروبا حفاظًا عليها"
+          },
+          "body": {
+            "fr": "Fondée à Puławy en 1801 par la princesse Izabela Czartoryska, la collection fut mise à l’abri à Paris après l’insurrection polonaise de 1830–1831, puis installée à Cracovie.",
+            "en": "Founded in Puławy in 1801 by Princess Izabela Czartoryska, the collection was sheltered in Paris after the 1830–1831 uprising before moving to Kraków.",
+            "ar": "أسست الأميرة إيزابيلا تشارتوريسكا المجموعة في بووافي عام 1801، ونُقلت إلى باريس بعد انتفاضة 1830–1831 قبل انتقالها إلى كراكوف."
+          },
+          "source": "https://mnk.pl/en/branches/czartoryski-museum/"
+        },
+        {
+          "title": {
+            "fr": "Un Léonard sauvé, un Raphaël disparu",
+            "en": "A Leonardo survived, but a Raphael vanished",
+            "ar": "نجت لوحة لليوناردو بينما اختفت أخرى لرافائيل"
+          },
+          "body": {
+            "fr": "La Dame à l’hermine de Léonard de Vinci fut récupérée après la Seconde Guerre mondiale. En revanche, le Portrait de jeune homme de Raphaël, autre trésor de la collection, demeure introuvable.",
+            "en": "Leonardo’s Lady with an Ermine was recovered after the Second World War; Raphael’s Portrait of a Young Man, another highlight of the collection, remains missing.",
+            "ar": "استُعيدت لوحة سيدة مع قاقم لليوناردو بعد الحرب العالمية الثانية، بينما لا تزال لوحة بورتريه شاب لرافائيل، وهي من كنوز المجموعة، مفقودة."
+          },
+          "source": "https://mnk.pl/en/branches/czartoryski-museum/"
+        }
+      ],
+      "artworks": [
+        {
+          "id": "ld02",
+          "title": {
+            "fr": "La Dame à l’hermine",
+            "en": "Lady with an Ermine",
+            "ar": "السيدة ذات القاقم"
+          },
+          "href": "print-artwork.html?painting=lady-with-an-ermine"
+        }
+      ],
+      "questions": [
+        {
+          "fr": "Pourquoi déplaçait-on les collections d’art en temps de crise ?",
+          "en": "Why were art collections moved during political crises?",
+          "ar": "لماذا نُقلت المجموعات الفنية خلال الأزمات السياسية؟"
+        },
+        {
+          "fr": "Quelles différences entre œuvre récupérée et œuvre disparue ?",
+          "en": "What separates a recovered artwork from a missing one?",
+          "ar": "ما الفرق بين عمل فني مسترد وآخر مفقود؟"
+        }
+      ]
+    },
+    {
+      "id": "van-gogh-museum",
+      "name": {
+        "fr": "Musée Van Gogh",
+        "en": "Van Gogh Museum",
+        "ar": "متحف فان غوخ"
+      },
+      "location": {
+        "fr": "Amsterdam · Pays-Bas",
+        "en": "Amsterdam · Netherlands",
+        "ar": "أمستردام · هولندا"
+      },
+      "official": "https://www.vangoghmuseum.nl/en/",
+      "photo": {
+        "file": "Amsterdam - Van Gogh Museum 40.jpg",
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Amsterdam%20-%20Van%20Gogh%20Museum%2040.jpg?width=1280",
+        "page": "https://commons.wikimedia.org/wiki/File:Amsterdam%20-%20Van%20Gogh%20Museum%2040.jpg",
+        "author": "Görkem Yavuz",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      },
+      "fallback": "assets/environments/gallery/images/Van-Gogh-s-Museum/vangogh-s-museum_building_plan/VanGogh_museum.png",
+      "facts": [
+        {
+          "title": {
+            "fr": "Sa belle-sœur a contribué à le rendre célèbre",
+            "en": "His sister-in-law helped make Van Gogh famous",
+            "ar": "ساعدت زوجة أخيه على نشر شهرته"
+          },
+          "body": {
+            "fr": "Après la mort de Vincent et de son frère Theo, Jo van Gogh-Bonger conserva les peintures et les lettres, et travailla pendant des années à faire connaître l’œuvre de Vincent.",
+            "en": "After Vincent and his brother Theo died, Theo’s widow Jo van Gogh-Bonger preserved the paintings and letters and spent years promoting Vincent’s work.",
+            "ar": "بعد وفاة فنسنت وشقيقه ثيو، حافظت جو فان غوخ-بونغر على اللوحات والرسائل، وكرّست سنوات للتعريف بأعمال فنسنت."
+          },
+          "source": "https://www.vangoghmuseum.nl/en/about/news-and-press/press-releases/20221122-van-gogh-museum-anniversary-year-kicks-off-with-tribute-van-gogh-family"
+        },
+        {
+          "title": {
+            "fr": "La plus grande collection de Van Gogh au monde",
+            "en": "The world’s largest Van Gogh collection",
+            "ar": "أكبر مجموعة لأعمال فان غوخ في العالم"
+          },
+          "body": {
+            "fr": "Le musée conserve environ 205 peintures, 500 dessins et plus de 800 lettres de Van Gogh : un ensemble exceptionnel pour suivre l’évolution de l’artiste.",
+            "en": "The museum holds approximately 205 paintings, 500 drawings and more than 800 letters by Van Gogh—an extraordinary record of his artistic development.",
+            "ar": "يضم المتحف نحو 205 لوحات و500 رسم وأكثر من 800 رسالة لفان غوخ، ما يتيح تتبّع تطوره الفني بصورة استثنائية."
+          },
+          "source": "https://www.vangoghmuseum.nl/assets/50eb1f35-21cc-4851-8dee-f2ea31ef1f12/Van-Gogh-Museum_Strategic-Plan_2025-2028?c=8f8d30032d4ef78d3b157c21b062c1141ad79db7b1cfabb34d419a7692336c73"
+        }
+      ],
+      "artworks": [
+        {
+          "id": "vg02",
+          "title": {
+            "fr": "La Chambre à coucher",
+            "en": "The Bedroom",
+            "ar": "غرفة النوم"
+          },
+          "href": "print-van-gogh-bedroom.html"
+        }
+      ],
+      "questions": [
+        {
+          "fr": "Comment Jo van Gogh-Bonger a-t-elle construit la mémoire de Vincent ?",
+          "en": "How did Jo van Gogh-Bonger help shape Vincent’s legacy?",
+          "ar": "كيف ساهمت جو فان غوخ-بونغر في الحفاظ على إرث فنسنت؟"
+        },
+        {
+          "fr": "Que révèlent les lettres sur la vie et l’œuvre de Van Gogh ?",
+          "en": "What do Van Gogh’s letters reveal about his life and art?",
+          "ar": "ماذا تكشف رسائل فان غوخ عن حياته وفنه؟"
+        }
+      ]
+    },
+    {
+      "id": "national-gallery-of-art-washington",
+      "name": {
+        "fr": "National Gallery of Art",
+        "en": "National Gallery of Art",
+        "ar": "المعرض الوطني للفنون"
+      },
+      "location": {
+        "fr": "Washington D. C. · États-Unis",
+        "en": "Washington, DC · United States",
+        "ar": "واشنطن العاصمة · الولايات المتحدة"
+      },
+      "official": "https://www.nga.gov/",
+      "photo": {
+        "file": "Mercury Fountain in the Rotunda of the National Gallery of Art.jpg",
+        "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Mercury%20Fountain%20in%20the%20Rotunda%20of%20the%20National%20Gallery%20of%20Art.jpg?width=1280",
+        "page": "https://commons.wikimedia.org/wiki/File:Mercury_Fountain_in_the_Rotunda_of_the_National_Gallery_of_Art.jpg",
+        "author": "John Menard",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/"
+      },
+      "fallback": "assets/environments/gallery/images/National Gallery of Art Washington/National Gallery of Art Washington_building_plan/National Gallery of Art Washington.webp",
+      "facts": [
+        {
+          "title": {
+            "fr": "La seule peinture de Léonard de Vinci présente dans les Amériques",
+            "en": "The only Leonardo da Vinci painting in the Americas",
+            "ar": "اللوحة الوحيدة لليوناردو دافنشي في الأمريكتين"
+          },
+          "body": {
+            "fr": "Ginevra de’ Benci, peinte vers 1474–1478, est la seule peinture de Léonard de Vinci conservée dans les Amériques. Le genévrier à l’arrière-plan fait écho au prénom du modèle en italien.",
+            "en": "Ginevra de’ Benci (c. 1474–1478) is the only Leonardo painting in the Americas. The juniper behind the sitter alludes to her Italian name.",
+            "ar": "لوحة جينيفرا دي بنتشي (نحو 1474–1478) هي اللوحة الوحيدة لليوناردو في الأمريكتين. وتشير شجرة العرعر خلف الشخصية إلى اسمها بالإيطالية."
+          },
+          "source": "https://www.nga.gov/about-us/our-campus"
+        },
+        {
+          "title": {
+            "fr": "Le bâtiment moderne imaginé à partir de deux triangles",
+            "en": "The modern building was designed around two triangles",
+            "ar": "صُمّم المبنى الحديث انطلاقًا من مثلثين"
+          },
+          "body": {
+            "fr": "Pour résoudre la forme trapézoïdale du terrain, I. M. Pei divisa le plan du bâtiment Est en deux triangles. Ouvert en 1978, il contraste avec le bâtiment Ouest classique ouvert en 1941.",
+            "en": "I. M. Pei divided the irregular trapezoidal site into two triangles. The East Building opened in 1978, contrasting with the classical West Building, which opened in 1941.",
+            "ar": "قسّم آي. إم. باي الموقع شبه المنحرف إلى مثلثين. وافتُتح المبنى الشرقي عام 1978، مقابل المبنى الغربي ذي الطراز الكلاسيكي الذي افتُتح عام 1941."
+          },
+          "source": "https://www.nga.gov/stories/articles/who-i-m-pei-10-things-know"
+        }
+      ],
+      "artworks": [
+        {
+          "id": "ld05",
+          "title": {
+            "fr": "Ginevra de’ Benci",
+            "en": "Ginevra de’ Benci",
+            "ar": "جينيفرا دي بنشي"
+          },
+          "href": "print-artwork.html?painting=ginevra-de-benci"
+        },
+        {
+          "id": "ve06",
+          "title": {
+            "fr": "La Femme à la balance",
+            "en": "Woman Holding a Balance",
+            "ar": "المرأة التي تحمل ميزانًا"
+          },
+          "href": "print-artwork.html?painting=woman-holding-balance"
+        },
+        {
+          "id": "mo06",
+          "title": {
+            "fr": "La Femme à l’ombrelle",
+            "en": "Woman with a Parasol",
+            "ar": "امرأة بمظلة"
+          },
+          "href": "print-artwork.html?painting=woman-with-parasol"
+        }
+      ],
+      "questions": [
+        {
+          "fr": "Que révèle le genévrier dans Ginevra de’ Benci ?",
+          "en": "What does the juniper symbolize in Ginevra de’ Benci?",
+          "ar": "إلامَ ترمز شجرة العرعر في لوحة جينيفرا دي بنتشي؟"
+        },
+        {
+          "fr": "Comment deux triangles peuvent-ils organiser un musée ?",
+          "en": "How can two triangles organize an entire museum?",
+          "ar": "كيف يمكن لمثلثين أن ينظما متحفًا كاملًا؟"
+        }
+      ]
+    }
+  ]
+}
+;
+(async()=>{
+/** ARTDACI Museum Explorer / Lot A. No external framework, no new immersive runtime. */
+const DATA_URL = './content/museums/explorer.json';
+const UI = {
+  fr: {
+    title: 'Six musées, mille histoires', intro: 'Explorez les musées liés aux chefs-d’œuvre d’ARTDACI, une découverte à la fois.', eyebrow: 'PARCOURS CULTUREL',
+    official: 'Site du musée ↗', artwork: 'Œuvres liées à ARTDACI', experience: 'Prolonger la visite',
+    virtual: 'Visiter en VR', ar: 'Explorer en RA', space: 'Placer en 3D / RA', source: 'Source ↗', prev: '← Précédent', next: 'Suivant →',
+    photograph: 'Photographie', fallback: 'Illustration ARTDACI (photographie momentanément indisponible)', keyboard: 'Utilisez aussi les touches ← et → du clavier.',
+    gallery: 'Galerie des six musées', semantic: 'ARTDACI sémantique', skip: 'Aller au contenu', unavailable: 'Le parcours ne peut pas être chargé. Réessayez avec une connexion Internet.',
+    photoAlt: 'Photographie du musée : ', portalEyebrow:'PORTAIL CULTUREL CONNECTÉ', portalTitle:'Approfondir la découverte', portalIntro:'Retrouvez les œuvres, les espaces immersifs et les liens de connaissance de ce musée.', portalTabs:['Œuvres','3D · RA · VR','Savoir & questions'], artworksDescription:'Ouvrez une œuvre liée à ce musée dans le livre connecté ARTDACI.', experiencesDescription:'Passez de la découverte photographique aux environnements immersifs déjà disponibles.', museumPreview:'Illustration ARTDACI du musée (non photographique)', knowledgeTitle:'Questions pour aller plus loin', knowledgeDescription:'Deux pistes d’exploration à copier pour un échange guidé ou un travail en classe.', copyQuestion:'Copier la question', copied:'Question copiée.', copyFailed:'Copie impossible. Sélectionnez la question manuellement.', semanticOpen:'Ouvrir ARTDACI Semantic ↗', knowledgeNote:'Le guide IA contextuel intégré au musée est envisagé pour une étape ultérieure ; le graphe sémantique existant est accessible ci-dessus.', selector:'Choisir un musée'},
+  en: {
+    title: 'Six museums, countless stories', intro: 'Discover the museums behind ARTDACI masterpieces, one fascinating stop at a time.', eyebrow: 'CULTURAL JOURNEY',
+    official: 'Museum website ↗', artwork: 'Related ARTDACI artworks', experience: 'Continue exploring',
+    virtual: 'Visit in VR', ar: 'Explore in AR', space: 'Place in 3D / AR', source: 'Source ↗', prev: '← Previous', next: 'Next →',
+    photograph: 'Photograph', fallback: 'ARTDACI illustration (photograph temporarily unavailable)', keyboard: 'You can also navigate with the ← and → keys.',
+    gallery: 'Six Museums Wing', semantic: 'ARTDACI Semantic', skip: 'Skip to content', unavailable: 'Unable to load the museum journey. Please try again while online.',
+    photoAlt: 'Photograph of the museum: ', portalEyebrow:'CONNECTED CULTURAL PORTAL', portalTitle:'Explore further', portalIntro:'Explore the artworks, immersive experiences and linked knowledge behind this museum.', portalTabs:['Artworks','3D · AR · VR','Knowledge & questions'], artworksDescription:'Open an artwork associated with this museum in ARTDACI’s connected book.', experiencesDescription:'Move from the photographic journey to available immersive experiences.', museumPreview:'ARTDACI museum illustration (not a photograph)', knowledgeTitle:'Questions to explore', knowledgeDescription:'Copy either question for guided discussion or classroom activities.', copyQuestion:'Copy question', copied:'Question copied.', copyFailed:'Unable to copy. Select the question manually.', semanticOpen:'Open ARTDACI Semantic ↗', knowledgeNote:'An in-site contextual AI guide is planned for a later phase; the existing semantic graph is available through the link above.', selector:'Choose a museum'},
+  ar: {
+    title: 'ستة متاحف وحكايات لا تنتهي', intro: 'اكتشف المتاحف المرتبطة بروائع ARTDACI، متحفًا بعد آخر.', eyebrow: 'رحلة ثقافية',
+    official: 'موقع المتحف ↗', artwork: 'الأعمال الفنية المرتبطة بـ ARTDACI', experience: 'تابع الاستكشاف',
+    virtual: 'زيارة بالواقع الافتراضي', ar: 'استكشاف بالواقع المعزز', space: 'عرض ثلاثي الأبعاد / معزز', source: 'المصدر ↗', prev: '→ السابق', next: 'التالي ←',
+    photograph: 'صورة فوتوغرافية', fallback: 'رسم من ARTDACI (الصورة غير متاحة مؤقتًا)', keyboard: 'يمكنك أيضًا التنقل باستخدام مفتاحَي السهمين.',
+    gallery: 'جناح المتاحف الستة', semantic: 'ARTDACI الدلالي', skip: 'الانتقال إلى المحتوى', unavailable: 'تعذّر تحميل الجولة. يرجى المحاولة مجددًا عند الاتصال بالإنترنت.',
+    photoAlt: 'صورة فوتوغرافية للمتحف: ', portalEyebrow:'بوابة ثقافية مترابطة', portalTitle:'استكشف المزيد', portalIntro:'اكتشف الأعمال الفنية والتجارب الغامرة والروابط المعرفية المرتبطة بهذا المتحف.', portalTabs:['الأعمال الفنية','3D · AR · VR','المعرفة والأسئلة'], artworksDescription:'افتح أحد الأعمال المرتبطة بالمتحف في كتاب ARTDACI المتصل.', experiencesDescription:'انتقل من الجولة الفوتوغرافية إلى التجارب الغامرة المتاحة.', museumPreview:'رسم توضيحي من ARTDACI للمتحف (ليس صورة فوتوغرافية)', knowledgeTitle:'أسئلة للتعمق', knowledgeDescription:'انسخ أي سؤال لنقاش موجّه أو نشاط تعليمي.', copyQuestion:'نسخ السؤال', copied:'تم نسخ السؤال.', copyFailed:'تعذر النسخ. حدد السؤال يدويًا.', semanticOpen:'فتح ARTDACI الدلالي ↗', knowledgeNote:'سيُضاف مرشد ذكاء اصطناعي سياقي داخل المتحف في مرحلة لاحقة؛ يمكن زيارة الرسم البياني الدلالي الموجود عبر الرابط أعلاه.', selector:'اختر متحفًا'}
+};
+const $ = (id) => document.getElementById(id);
+const search = new URLSearchParams(location.search);
+const initialLang = search.get('lang');
+let lang = ['fr','en','ar'].includes(initialLang) ? initialLang : 'fr';
+let index = 0;
+let museums = [];
+let activeTab = 'artworks';
+
+function text(id, value) { $(id).textContent = value; }
+function local(record) { return record?.[lang] ?? record?.fr ?? ''; }
+function el(tag, className, value) {
+  const item = document.createElement(tag);
+  if (className) item.className = className;
+  if (value !== undefined) item.textContent = value;
+  return item;
+}
+function link(label, href, className, external=false) {
+  const a = el('a', className, label);
+  a.href = href;
+  if (external) { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+  return a;
+}
+function internalUrl(path) {
+  const url = new URL(path, location.href);
+  const file = url.pathname.split('/').pop();
+  // Existing ARTDACI print pages are different documents for English, French
+  // and Arabic. Match their actual routes rather than silently opening EN.
+  const printAliases = {
+    'print-target.html': 'mona-lisa',
+    'print-vermeer-girl-with-a-pearl-earring.html': 'vermeer-girl-with-a-pearl-earring',
+    'print-van-gogh.html': 'van-gogh',
+    'print-van-gogh-bedroom.html': 'van-gogh-bedroom'
+  };
+  if (printAliases[file]) {
+    const slug = printAliases[file];
+    if (lang === 'ar') return new URL(`print-ar.html?painting=${encodeURIComponent(slug)}`,location.href).href;
+    if (lang === 'fr') url.pathname = url.pathname.replace(/\.html$/, '-fr.html');
+    return url.href;
+  }
+  if (['print-artwork.html', 'gallery-vr.html', 'ar.html', 'space.html'].includes(file)) url.searchParams.set('lang', lang);
+  return url.href;
+}
+function replaceState(museum) {
+  const url = new URL(location.href);
+  url.searchParams.set('lang',lang);
+  url.searchParams.set('museum',museum.id);
+  history.replaceState(null,'',url.pathname+url.search+url.hash);
+}
+function renderPhoto(museum) {
+  const img = $('museum-photo');
+  const p = museum.photo;
+  img.alt = UI[lang].photoAlt + local(museum.name);
+  img.onerror = null;
+  img.onload = null;
+  $('photo-credit').replaceChildren();
+  const copyright = el('span','',`${UI[lang].photograph} : ${p.author} · `);
+  const licence = link(p.license,p.licenseUrl,'',true);
+  const sep = document.createTextNode(' · ');
+  const origin = link('Wikimedia Commons ↗',p.page,'',true);
+  $('photo-credit').append(copyright,licence,sep,origin);
+  let active = true;
+  img.onerror = () => {
+    if (!active) return;
+    active = false;
+    img.onerror = null;
+    img.src = museum.fallback;
+    text('photo-credit',UI[lang].fallback);
+  };
+  img.src = p.url;
+}
+function renderSelector() {
+  const root=$('museum-selector');root.replaceChildren();root.setAttribute('aria-label',UI[lang].selector);
+  museums.forEach((museum,i)=>{
+    const button=el('button','museum-choice'+(index===i?' selected':''),local(museum.name));
+    button.type='button';button.setAttribute('aria-current',index===i?'step':'false');
+    button.addEventListener('click',()=>{index=i;render();});
+    root.append(button);
+  });
+}
+function renderPortal() {
+  const u=UI[lang];
+  text('portal-eyebrow',u.portalEyebrow);text('portal-heading',u.portalTitle);text('portal-description',u.portalIntro);
+  ['artworks','immersive','knowledge'].forEach((name,i)=>{
+    const button=$('tab-'+name);button.textContent=u.portalTabs[i];
+    button.setAttribute('aria-selected',String(activeTab===name));button.tabIndex=activeTab===name?0:-1;
+    $('pane-'+name).hidden=activeTab!==name;
+  });
+  text('artworks-description',u.artworksDescription);text('experiences-description',u.experiencesDescription);
+  text('knowledge-heading',u.knowledgeTitle);text('knowledge-description',u.knowledgeDescription);
+  text('knowledge-semantic',u.semanticOpen);$('knowledge-semantic').href=`semantic/?lang=${lang}`;
+  text('knowledge-note',u.knowledgeNote);
+  text('model-caption',u.museumPreview);
+}
+function renderKnowledge(museum) {
+  const root=$('learning-questions');root.replaceChildren();text('copy-status','');
+  (museum.questions||[]).forEach((item,i)=>{
+    const block=el('div','learning-question');
+    const question=el('p','',`${i+1}. ${local(item)}`);
+    const copy=el('button','copy-question',UI[lang].copyQuestion);
+    copy.type='button';
+    copy.addEventListener('click',async()=>{
+      try {await navigator.clipboard.writeText(local(item));text('copy-status',UI[lang].copied);}
+      catch(error) {text('copy-status',UI[lang].copyFailed);}
+    });
+    block.append(question,copy);root.append(block);
+  });
+}
+function setTab(tab,focus=false) {
+  if(!['artworks','immersive','knowledge'].includes(tab))return;
+  activeTab=tab;renderPortal();
+  if(focus)$('tab-'+tab).focus();
+}
+document.querySelectorAll('[data-tab]').forEach(button=>button.addEventListener('click',()=>setTab(button.dataset.tab)));
+$('portal-tabs').addEventListener('keydown',event=>{
+  if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+  event.preventDefault();const names=['artworks','immersive','knowledge'];let i=names.indexOf(activeTab);
+  if(event.key==='Home')i=0;else if(event.key==='End')i=2;
+  else i=(i+(event.key==='ArrowRight'?(lang==='ar'?-1:1):(lang==='ar'?1:-1))+names.length)%names.length;
+  setTab(names[i],true);
+});
+function renderFacts(museum) {
+  const root = $('facts');
+  root.replaceChildren();
+  museum.facts.forEach((fact, i) => {
+    const block = el('article','fact');
+    block.append(el('span','fact-number',String(i+1).padStart(2,'0')));
+    block.append(el('h3','',local(fact.title)));
+    block.append(el('p','',local(fact.body)));
+    block.append(link(UI[lang].source,fact.source,'fact-source',true));
+    root.append(block);
+  });
+}
+function renderArtworks(museum) {
+  const root=$('artworks');
+  root.replaceChildren();
+  museum.artworks.forEach(item => root.append(link(local(item.title),internalUrl(item.href))));
+}
+function renderExperiences(museum) {
+  const root=$('experiences');
+  root.replaceChildren();
+  $('model-preview').src=museum.fallback;
+  $('model-preview').alt=UI[lang].museumPreview+' : '+local(museum.name);
+  const q=encodeURIComponent(museum.id);
+  root.append(link(UI[lang].virtual,internalUrl(`gallery-vr.html?room=museums&museum=${q}`)));
+  root.append(link(UI[lang].ar,internalUrl(`ar.html?museum=${q}`)));
+  root.append(link(UI[lang].space,internalUrl(`space.html?museum=${q}`)));
+}
+function render() {
+  if (!museums.length) return;
+  const museum=museums[index], u=UI[lang];
+  document.documentElement.lang=lang;
+  document.documentElement.dir=lang==='ar'?'rtl':'ltr';
+  document.title=`${local(museum.name)} — ARTDACI Museum Explorer`;
+  text('intro-eyebrow',u.eyebrow);
+  text('page-title',u.title);
+  text('intro-description',u.intro);
+  text('museum-title',local(museum.name));
+  text('museum-location',local(museum.location));
+  text('artworks-heading',u.artwork);
+  text('experiences-heading',u.experience);
+  text('keyboard-tip',u.keyboard);
+  text('previous',u.prev);
+  text('next',u.next);
+  text('gallery-link',u.gallery);
+  text('semantic-link',u.semantic);
+  document.querySelector('.skip').textContent=u.skip;
+  document.querySelectorAll('[data-lang]').forEach(btn=>btn.setAttribute('aria-pressed',String(btn.dataset.lang===lang)));
+  const official=$('museum-official');official.textContent=u.official;official.href=museum.official;
+  text('photo-index',`${String(index+1).padStart(2,'0')} / ${String(museums.length).padStart(2,'0')}`);
+  text('position',`${index+1} / ${museums.length}`);
+  $('previous').disabled=index===0;
+  $('next').disabled=index===museums.length-1;
+  const dots=$('dots');dots.replaceChildren();
+  museums.forEach((_,i)=>dots.append(el('span','dot'+(i===index?' active':''))));
+  $('gallery-link').href=internalUrl('gallery-vr.html?room=museums');
+  $('semantic-link').href=`semantic/?lang=${lang}`;
+  $('home-link').href=lang==='fr'?'index-fr.html':lang==='ar'?'index-ar.html':'index.html';
+  renderSelector();renderPortal();renderFacts(museum);renderArtworks(museum);renderExperiences(museum);renderKnowledge(museum);renderPhoto(museum);
+  replaceState(museum);
+  $('museum-stage').setAttribute('aria-busy','false');
+}
+function navigate(delta) {
+  const next=Math.max(0,Math.min(museums.length-1,index+delta));
+  if(next===index) return;
+  index=next;render();
+  // During reading keep the gallery header visible on small screens.
+  if(window.scrollY>$('museum-stage').offsetTop+70) $('museum-stage').scrollIntoView({block:'start',behavior:'instant'});
+}
+$('previous').addEventListener('click',()=>navigate(-1));
+$('next').addEventListener('click',()=>navigate(1));
+document.querySelectorAll('[data-lang]').forEach(btn=>btn.addEventListener('click',()=>{if(btn.dataset.lang!==lang){lang=btn.dataset.lang;render();}}));
+document.addEventListener('keydown',event=>{
+  if(event.altKey||event.metaKey||event.ctrlKey||event.target.closest('button,a,input,select,textarea,[contenteditable]')) return;
+  if(event.key==='ArrowRight'){event.preventDefault();navigate(lang==='ar'?-1:1);}
+  if(event.key==='ArrowLeft'){event.preventDefault();navigate(lang==='ar'?1:-1);}
+});
+window.addEventListener('popstate',()=>{const q=new URLSearchParams(location.search);if(['fr','en','ar'].includes(q.get('lang')))lang=q.get('lang');const n=museums.findIndex(m=>m.id===q.get('museum'));if(n>=0)index=n;render();});
+
+try {
+  const response={ok:true,json:async()=>EMBEDDED_MUSEUM_DATA};
+  if(!response.ok)throw Error(`Museum data HTTP ${response.status}`);
+  const doc=await response.json();
+  if(!Array.isArray(doc.museums)||doc.museums.length!==6||doc.museums.some(m=>m.facts?.length!==2||!m.photo?.page))throw Error('Invalid museum dataset');
+  museums=doc.museums;
+  const chosen=museums.findIndex(m=>m.id===search.get('museum'));
+  if(chosen>=0)index=chosen;
+  render();
+} catch(error) {
+  console.error('ARTDACI Museum Explorer:',error);
+  $('museum-stage').setAttribute('aria-busy','false');
+  $('museum-stage').replaceChildren(el('p','load-error',UI[lang].unavailable));
+  $('previous').disabled=true;$('next').disabled=true;
+}
+
+})().catch(console.error);
+</script>
+</body>
+</html>
