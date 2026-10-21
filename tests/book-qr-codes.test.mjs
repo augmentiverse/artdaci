@@ -101,6 +101,17 @@ test("legacy retained QR destinations contain no GitHub, Preview or local URLs",
   }
 });
 
+test("the retained QR inventory contains exactly 44 assets including three explicit external destinations", async () => {
+  const legacy = await readJson("content/legacy-qr-destinations.json");
+  const entries = { ...legacy.destinations, ...legacy.externalDestinations };
+  assert.equal(Object.keys(entries).length, 44);
+  assert.equal(Object.keys(legacy.externalDestinations).length, 3);
+  for (const filename of Object.keys(entries)) {
+    const png = await readFile(new URL(`assets/qr/${filename}`, root));
+    assert.equal(png.subarray(1, 4).toString("ascii"), "PNG");
+  }
+});
+
 test("historical printable pages display and link the exact payload encoded by each QR asset", async () => {
   const legacy = await readJson("content/legacy-qr-destinations.json");
   const pages = {
