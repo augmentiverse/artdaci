@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "1.0",
+  "groupId": "leonardo",
+  "artistId": "ld",
+  "artistName": "Léonard de Vinci",
+  "canonicalUrl": "https://artdaci.com/ar/leonardo",
+  "compiledTargets": "/assets/targets/leonardo-six.mind",
+  "compiledTargetsBytes": 3567861,
+  "compiledTargetsSha256": "12b32293219db5f2f0b5abcc09b37c2fc537fd862bc144d7d8f304168c41d6dc",
+  "status": "ready",
+  "artworks": [
+    { "id": "ld01", "targetIndex": 0, "title": "La Joconde", "targetSource": "/assets/targets-src/ld01.jpg", "targetSourceSha256": "79ad741aef4aa40e8ab28a12e33d83756ef40caae4e13f6c1b11c7c06c2fc4b8", "url": "https://artdaci.com/ar/monalisa", "experience": "image-ar" },
+    { "id": "ld03", "targetIndex": 1, "title": "La Cène", "targetSource": "/assets/targets-src/ld03.jpg", "targetSourceSha256": "5c21ea9768355593abf1162bb9c6d541d7dba0b2425e5af9fed65655953b33d2", "url": "https://artdaci.com/ar/lastsupper", "experience": "artwork-page" },
+    { "id": "ld06", "targetIndex": 2, "title": "La Belle Ferronnière", "targetSource": "/assets/targets-src/ld06.jpg", "targetSourceSha256": "0c5ee673116b26bbd6eb7c88d5f7b6d53834537a7dccef5579e0161e0f9167b7", "url": "https://artdaci.com/ar/ferronniere", "experience": "artwork-page" },
+    { "id": "ld02", "targetIndex": 3, "title": "La Dame à l’hermine", "targetSource": "/assets/targets-src/ld02.jpg", "targetSourceSha256": "48025b68e1cc7900303089912ace050df87b1e328a4cc9f240b5415443ef1942", "url": "https://artdaci.com/ar/ermine", "experience": "artwork-page" },
+    { "id": "ld05", "targetIndex": 4, "title": "Ginevra de’ Benci", "targetSource": "/assets/targets-src/ld05.jpg", "targetSourceSha256": "c07d9bdbb6a963d9dd873b311dd963f579e5103fe1beef5bfdcf8735f0a95e6e", "url": "https://artdaci.com/ar/ginevra", "experience": "artwork-page" },
+    { "id": "ld04", "targetIndex": 5, "title": "L’Annonciation", "targetSource": "/assets/targets-src/ld04.jpg", "targetSourceSha256": "9ea45cb9b98c17aa671a9cca1ba3d9c21744330248879c8b41472abd39e930da", "url": "https://artdaci.com/ar/annunciation", "experience": "artwork-page" }
+  ]
+}
