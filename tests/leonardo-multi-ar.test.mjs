@@ -38,9 +38,9 @@ assert.equal(vercel.redirects.find(({ source }) => source === "/ar/monalisa")?.d
 assert.equal(vercel.redirects.find(({ source }) => source === "/ar/lastsupper")?.destination, "/print-artwork.html?painting=last-supper");
 
 assert.match(html, /styles\/ar-leonardo\.css\?v=1/);
-assert.match(html, /scripts\/ar-leonardo\.js\?v=1/);
+assert.match(html, /scripts\/ar-leonardo\.js\?v=2/);
 assert.match(html, /"three\/addons\/":"\/vendor\/three-addons\/"/);
-assert.match(runtime, /credentials:\s*"omit"/);
+assert.match(runtime, /credentials:\s*"same-origin"/);
 assert.match(runtime, /imageTargetSrc:\s*group\.compiledTargets/);
 assert.equal((runtime.match(/new MindARThree\(/g) || []).length, 1, "une seule création de session MindAR");
 assert.equal((runtime.match(/group\.compiledTargets/g) || []).length, 1, "aucun préchargement séparé du .mind");

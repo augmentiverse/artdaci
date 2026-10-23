@@ -9,7 +9,7 @@ const $ = (id) => document.getElementById(id);
 const state = { mindar: null, running: false, artwork: null, resources: [] };
 const group = await fetch("/content/ar-groups/leonardo.json", {
   cache: "no-store",
-  credentials: "omit",
+  credentials: "same-origin",
 }).then(async (response) => {
   if (!response.ok) throw new Error(`Catalogue inaccessible (HTTP ${response.status})`);
   return response.json();
