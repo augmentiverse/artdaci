@@ -11,6 +11,7 @@ const group = await readJson("content/ar-groups/leonardo.json");
 const vercel = await readJson("vercel.json");
 const html = await readText("ar-leonardo.html");
 const runtime = await readText("scripts/ar-leonardo.js");
+const homepages = await Promise.all(["index.html", "index-fr.html", "index-ar.html"].map(readText));
 
 assert.equal(group.groupId, "leonardo");
 assert.equal(group.canonicalUrl, "https://artdaci.com/ar/leonardo");
@@ -47,5 +48,10 @@ assert.equal((runtime.match(/group\.compiledTargets/g) || []).length, 1, "aucun 
 assert.ok(runtime.indexOf('$("start").addEventListener') < runtime.indexOf("new MindARThree("), "la session démarre uniquement après Start");
 assert.match(runtime, /anchor\.onTargetFound/);
 assert.match(runtime, /anchor\.onTargetLost/);
+
+for (const homepage of homepages) {
+  assert.equal((homepage.match(/href="ar\/leonardo"/g) || []).length, 1, "chaque accueil doit exposer une seule entrée Léonard AR");
+  assert.match(homepage, /hv2-experience-no">09</);
+}
 
 console.log("PASS: route Léonard, ordre 0–5, six sources, cible compilée et 24 routes individuelles préservées.");
