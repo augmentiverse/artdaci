@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#121b29">
-  <meta name="description" content="ARTDACI Museum Explorer — six museums, real photographs, artworks and verified historical discoveries.">
+  <meta name="description" content="ARTDACI Museum Explorer — 17 museums, artwork connections and cultural histories. Six museums offer AR/VR.">
   <title>ARTDACI — Museum Explorer</title>
   <link rel="icon" href="assets/app/artdaci-app-icon.svg" type="image/svg+xml">
   <style>
@@ -89,6 +89,18 @@ a{color:inherit}button{font:inherit;cursor:pointer}button:disabled{cursor:not-al
 .quiz-result-score{font-size:1.7rem;color:var(--accent);font-weight:800}
 .quiz-result-actions{display:flex;flex-wrap:wrap;gap:10px}
 @media(max-width:550px){.quiz-result-actions{flex-direction:column;align-items:stretch}.quiz-result-actions .quiz-primary{width:100%}.quiz-progress{flex-wrap:wrap}}
+
+/* Information-only museums have no AR/VR links; original six remain unchanged */
+.museum-selector{flex-wrap:wrap;overflow:visible}
+.museum-choice{white-space:normal;text-align:start}
+.museum-group{flex:0 0 100%;color:var(--accent);font-size:.78rem;font-weight:750;letter-spacing:.06em;margin:13px 0 2px;text-transform:uppercase}
+.museum-extra{border-top:1px solid var(--line);padding-top:18px;margin-top:22px}
+.museum-extra h3{font-size:1.12rem;font-family:Georgia,serif;font-weight:500;margin:14px 0 6px}
+.museum-extra p{line-height:1.75;margin:0;max-width:74ch}
+.museum-extra .museum-future{margin:18px 0 4px;color:var(--accent);font-size:.85rem}
+.museum-extra[hidden],.portal-area[hidden]{display:none!important}
+.photo-credit{overflow-wrap:anywhere}
+@media(max-width:660px){.museum-choice{padding:8px 11px;font-size:.75rem}}
 </style>
   
 </head>
@@ -111,7 +123,7 @@ a{color:inherit}button{font:inherit;cursor:pointer}button:disabled{cursor:not-al
     <main id="museum-panel" tabindex="-1">
       <section class="intro" aria-labelledby="page-title">
         <p class="eyebrow" id="intro-eyebrow">PARCOURS CULTUREL</p>
-        <h1 id="page-title">Six musées, mille histoires</h1>
+        <h1 id="page-title">17 musées, mille histoires</h1>
         <p class="intro-description" id="intro-description">Explorez les musées liés aux chefs-d’œuvre d’ARTDACI, une découverte à la fois.</p>
       </section>
       <nav class="museum-selector" id="museum-selector" aria-label="Choisir un musée"></nav>
@@ -119,7 +131,7 @@ a{color:inherit}button{font:inherit;cursor:pointer}button:disabled{cursor:not-al
         <div class="photo-frame">
           <img id="museum-photo" alt="" decoding="async" fetchpriority="high">
           <div class="photo-gradient" aria-hidden="true"></div>
-          <span class="photo-index" id="photo-index">01 / 06</span>
+          <span class="photo-index" id="photo-index">01 / 17</span>
         </div>
         <div class="museum-info" id="museum-info" dir="auto">
           <div class="museum-heading">
@@ -131,11 +143,12 @@ a{color:inherit}button{font:inherit;cursor:pointer}button:disabled{cursor:not-al
           </div>
           <p class="photo-credit" id="photo-credit"></p>
           <div class="facts" id="facts" aria-label="Historical facts"></div>
+          <section id="museum-extra" class="museum-extra" hidden><h3 id="museum-about-title"></h3><p id="museum-about"></p><h3 id="museum-spotlight-title"></h3><p id="museum-spotlight"></p><p class="museum-future" id="museum-future"></p></section>
         </div>
       </section>
       <nav class="pager" aria-label="Museum navigation">
         <button type="button" id="previous" class="pager-button secondary" disabled></button>
-        <div class="step-indicator"><span id="position" aria-live="polite" aria-atomic="true">1 / 6</span><div id="dots" class="dots" aria-hidden="true"></div></div>
+        <div class="step-indicator"><span id="position" aria-live="polite" aria-atomic="true">1 / 17</span><div id="dots" class="dots" aria-hidden="true"></div></div>
         <button type="button" id="next" class="pager-button primary"></button>
       </nav>
       <p class="keyboard-tip" id="keyboard-tip"></p>
@@ -686,21 +699,21 @@ const EMBEDDED_MUSEUM_DATA={
 const DATA_URL = './content/museums/explorer.json';
 const UI = {
   fr: {
-    title: 'Six musées, mille histoires', intro: 'Explorez les musées liés aux chefs-d’œuvre d’ARTDACI, une découverte à la fois.', eyebrow: 'PARCOURS CULTUREL',
+    title: '17 musées, mille histoires', intro: 'Explorez les musées liés aux chefs-d’œuvre d’ARTDACI, une découverte à la fois.', eyebrow: 'PARCOURS CULTUREL',
     official: 'Site du musée ↗', artwork: 'Œuvres liées à ARTDACI', experience: 'Prolonger la visite',
     virtual: 'Visiter en VR', ar: 'Explorer en RA', space: 'Placer en 3D / RA', source: 'Source ↗', prev: '← Précédent', next: 'Suivant →',
     photograph: 'Photographie', fallback: 'Illustration ARTDACI (photographie momentanément indisponible)', keyboard: 'Utilisez aussi les touches ← et → du clavier.',
     gallery: 'Galerie des six musées', semantic: 'ARTDACI sémantique', skip: 'Aller au contenu', unavailable: 'Le parcours ne peut pas être chargé. Réessayez avec une connexion Internet.',
     photoAlt: 'Photographie du musée : ', portalEyebrow:'PORTAIL CULTUREL CONNECTÉ', portalTitle:'Approfondir la découverte', portalIntro:'Retrouvez les œuvres, les espaces immersifs et les liens de connaissance de ce musée.', portalTabs:['Œuvres','3D · RA · VR','Savoir & questions'], artworksDescription:'Ouvrez une œuvre liée à ce musée dans le livre connecté ARTDACI.', experiencesDescription:'Passez de la découverte photographique aux environnements immersifs déjà disponibles.', museumPreview:'Illustration ARTDACI du musée (non photographique)', knowledgeTitle:'Questions pour aller plus loin', knowledgeDescription:'Deux pistes d’exploration à copier pour un échange guidé ou un travail en classe.', copyQuestion:'Copier la question', copied:'Question copiée.', copyFailed:'Copie impossible. Sélectionnez la question manuellement.', semanticOpen:'Ouvrir ARTDACI Semantic ↗', knowledgeNote:'Le guide IA contextuel intégré au musée est envisagé pour une étape ultérieure ; le graphe sémantique existant est accessible ci-dessus.', selector:'Choisir un musée'},
   en: {
-    title: 'Six museums, countless stories', intro: 'Discover the museums behind ARTDACI masterpieces, one fascinating stop at a time.', eyebrow: 'CULTURAL JOURNEY',
+    title: '17 museums, countless stories', intro: 'Discover the museums behind ARTDACI masterpieces, one fascinating stop at a time.', eyebrow: 'CULTURAL JOURNEY',
     official: 'Museum website ↗', artwork: 'Related ARTDACI artworks', experience: 'Continue exploring',
     virtual: 'Visit in VR', ar: 'Explore in AR', space: 'Place in 3D / AR', source: 'Source ↗', prev: '← Previous', next: 'Next →',
     photograph: 'Photograph', fallback: 'ARTDACI illustration (photograph temporarily unavailable)', keyboard: 'You can also navigate with the ← and → keys.',
     gallery: 'Six Museums Wing', semantic: 'ARTDACI Semantic', skip: 'Skip to content', unavailable: 'Unable to load the museum journey. Please try again while online.',
     photoAlt: 'Photograph of the museum: ', portalEyebrow:'CONNECTED CULTURAL PORTAL', portalTitle:'Explore further', portalIntro:'Explore the artworks, immersive experiences and linked knowledge behind this museum.', portalTabs:['Artworks','3D · AR · VR','Knowledge & questions'], artworksDescription:'Open an artwork associated with this museum in ARTDACI’s connected book.', experiencesDescription:'Move from the photographic journey to available immersive experiences.', museumPreview:'ARTDACI museum illustration (not a photograph)', knowledgeTitle:'Questions to explore', knowledgeDescription:'Copy either question for guided discussion or classroom activities.', copyQuestion:'Copy question', copied:'Question copied.', copyFailed:'Unable to copy. Select the question manually.', semanticOpen:'Open ARTDACI Semantic ↗', knowledgeNote:'An in-site contextual AI guide is planned for a later phase; the existing semantic graph is available through the link above.', selector:'Choose a museum'},
   ar: {
-    title: 'ستة متاحف وحكايات لا تنتهي', intro: 'اكتشف المتاحف المرتبطة بروائع ARTDACI، متحفًا بعد آخر.', eyebrow: 'رحلة ثقافية',
+    title: '17 متحفًا وحكايات لا تنتهي', intro: 'اكتشف المتاحف المرتبطة بروائع ARTDACI، متحفًا بعد آخر.', eyebrow: 'رحلة ثقافية',
     official: 'موقع المتحف ↗', artwork: 'الأعمال الفنية المرتبطة بـ ARTDACI', experience: 'تابع الاستكشاف',
     virtual: 'زيارة بالواقع الافتراضي', ar: 'استكشاف بالواقع المعزز', space: 'عرض ثلاثي الأبعاد / معزز', source: 'المصدر ↗', prev: '→ السابق', next: 'التالي ←',
     photograph: 'صورة فوتوغرافية', fallback: 'رسم من ARTDACI (الصورة غير متاحة مؤقتًا)', keyboard: 'يمكنك أيضًا التنقل باستخدام مفتاحَي السهمين.',
@@ -783,8 +796,62 @@ function replaceState(museum) {
   url.searchParams.set('museum',museum.id);
   history.replaceState(null,'',url.pathname+url.search+url.hash);
 }
+
+/* Only the six original museums have immersive experiences. */
+const EXTRA_UI={
+fr:{primary:'Six musées · visites immersives',extra:'Onze autres musées · photos et informations',about:'Découvrir le musée',spot:'Un chef-d’œuvre d’ARTDACI',future:'Des expériences RA et VR sont envisagées pour une étape ultérieure. Cette fiche propose actuellement des photographies et des informations culturelles.',search:'Recherche d’une photographie libre de droits…',missing:'Photographie indisponible. Consultez le site officiel.',commons:'Wikimedia Commons ↗'},
+en:{primary:'Six museums · immersive visits',extra:'Eleven more museums · photos and information',about:'About the museum',spot:'ARTDACI artwork connection',future:'AR and VR experiences may be developed for a future release. This museum currently offers photographs and cultural information only.',search:'Finding a freely licensed museum photograph…',missing:'Photograph unavailable. Please consult the official website.',commons:'Wikimedia Commons ↗'},
+ar:{primary:'ستة متاحف · زيارات غامرة',extra:'أحد عشر متحفًا · صور ومعلومات',about:'عن المتحف',spot:'عمل فني مرتبط بـ ARTDACI',future:'يمكن تطوير تجارب الواقع المعزز والافتراضي مستقبلًا. تتضمن هذه الصفحة حاليًا صورًا ومعلومات ثقافية فقط.',search:'جارٍ البحث عن صورة حرة الترخيص…',missing:'الصورة غير متاحة. يرجى مراجعة الموقع الرسمي.',commons:'ويكيميديا كومنز ↗'}
+};
+let photoRequest=0;
+const photoCache=new Map();
+function renderMuseumExtra(museum){
+ const extra=museum.tier==='information',panel=$('museum-extra');
+ panel.hidden=!extra;
+ $('portal-area').hidden=extra;
+ if(!extra)return;
+ const u=EXTRA_UI[lang];
+ text('museum-about-title',u.about);text('museum-about',local(museum.about));
+ text('museum-spotlight-title',u.spot);text('museum-spotlight',local(museum.spotlight));
+ text('museum-future',u.future);
+}
+async function renderExtraPhoto(museum){
+ const id=++photoRequest,img=$('museum-photo'),credit=$('photo-credit');
+ img.onload=null;img.onerror=null;img.style.visibility='hidden';img.removeAttribute('src');
+ img.alt=UI[lang].photoAlt+local(museum.name);credit.textContent=EXTRA_UI[lang].search;
+ try{
+  let photo=photoCache.get(museum.id);
+  if(!photo){
+   const api=new URL('https://commons.wikimedia.org/w/api.php');
+   Object.entries({action:'query',generator:'search',gsrsearch:'filetype:bitmap '+museum.photoSearch,gsrnamespace:6,gsrlimit:12,prop:'imageinfo',iiprop:'url|extmetadata',iiurlwidth:1280,format:'json',origin:'*'}).forEach(([k,v])=>api.searchParams.set(k,v));
+   const response=await fetch(api.href);if(!response.ok)throw Error('Commons HTTP '+response.status);
+   const results=await response.json();
+   const files=Object.values(results.query?.pages||{}).filter(p=>/\.(jpe?g|png|webp)$/i.test(p.title||'') && p.imageinfo?.[0]?.thumburl && /^(CC|Public domain|PD|PDM)/i.test(p.imageinfo[0].extmetadata?.LicenseShortName?.value||''));
+   if(!files.length)throw Error('No freely licensed photograph');
+   const tokens=['museum','museo','musée','building','exterior','facade'];
+   files.sort((a,b)=>tokens.filter(x=>b.title.toLowerCase().includes(x)).length-tokens.filter(x=>a.title.toLowerCase().includes(x)).length);
+   const info=files[0].imageinfo[0],meta=info.extmetadata||{};
+   const safe=s=>String(s||'').replace(/<[^>]+>/g,' ').replace(/&[^;]+;/g,' ').replace(/\s+/g,' ').trim();
+   photo={url:info.thumburl,page:info.descriptionurl,artist:safe(meta.Artist?.value||'Wikimedia Commons contributor').slice(0,140),licence:safe(meta.LicenseShortName?.value||'Free license'),licenceUrl:meta.LicenseUrl?.value||info.descriptionurl};
+   photoCache.set(museum.id,photo);
+  }
+  if(photoRequest!==id || museums[index]?.id!==museum.id)return;
+  img.onload=()=>{if(id===photoRequest)img.style.visibility='visible';};
+  img.onerror=()=>{if(id===photoRequest){img.style.visibility='hidden';credit.replaceChildren(document.createTextNode(EXTRA_UI[lang].missing+' '),link(UI[lang].official,museum.official,'',true));}};
+  img.src=photo.url;
+  credit.replaceChildren(document.createTextNode(UI[lang].photograph+' : '+photo.artist+' · '),link(photo.licence,photo.licenceUrl,'',true),document.createTextNode(' · '),link(EXTRA_UI[lang].commons,photo.page,'',true));
+ }catch(e){
+  if(photoRequest!==id||museums[index]?.id!==museum.id)return;
+  console.warn('ARTDACI extra museum photo',museum.id,e);
+  credit.replaceChildren(document.createTextNode(EXTRA_UI[lang].missing+' '),link(UI[lang].official,museum.official,'',true));
+ }
+}
+
 function renderPhoto(museum) {
+  if(museum.tier==='information'){renderExtraPhoto(museum);return;}
+  ++photoRequest;
   const img = $('museum-photo');
+  img.style.visibility='visible';
   const p = museum.photo;
   img.alt = UI[lang].photoAlt + local(museum.name);
   img.onerror = null;
@@ -808,6 +875,7 @@ function renderPhoto(museum) {
 function renderSelector() {
   const root=$('museum-selector');root.replaceChildren();root.setAttribute('aria-label',UI[lang].selector);
   museums.forEach((museum,i)=>{
+    if(i===0||i===6)root.append(el('p','museum-group',i===0?EXTRA_UI[lang].primary:EXTRA_UI[lang].extra));
     const button=el('button','museum-choice'+(index===i?' selected':''),local(museum.name));
     button.type='button';button.setAttribute('aria-current',index===i?'step':'false');
     button.addEventListener('click',()=>{index=i;render();});
@@ -972,6 +1040,7 @@ function renderExperiences(museum) {
 function render() {
   if (!museums.length) return;
   const museum=museums[index], u=UI[lang];
+  if(museum.tier==='information')activeTab='artworks';
   document.documentElement.lang=lang;
   document.documentElement.dir=lang==='ar'?'rtl':'ltr';
   document.title=`${local(museum.name)} — ARTDACI Museum Explorer`;
@@ -999,7 +1068,11 @@ function render() {
   $('gallery-link').href=internalUrl('gallery-vr.html?room=museums');
   $('semantic-link').href=`semantic/?lang=${lang}`;
   $('home-link').href=lang==='fr'?'index-fr.html':lang==='ar'?'index-ar.html':'index.html';
-  renderSelector();renderPortal();renderFacts(museum);renderArtworks(museum);renderExperiences(museum);renderKnowledge(museum);renderHistory(museum);renderQuiz(museum);renderPhoto(museum);
+  renderSelector();renderMuseumExtra(museum);renderFacts(museum);
+  if(museum.tier!=='information'){
+    renderPortal();renderArtworks(museum);renderExperiences(museum);renderKnowledge(museum);renderHistory(museum);renderQuiz(museum);
+  }
+  renderPhoto(museum);
   replaceState(museum);
   $('museum-stage').setAttribute('aria-busy','false');
 }
@@ -1025,7 +1098,12 @@ try {
   if(!response.ok)throw Error(`Museum data HTTP ${response.status}`);
   const doc=await response.json();
   if(!Array.isArray(doc.museums)||doc.museums.length!==6||doc.museums.some(m=>m.facts?.length!==2||!m.photo?.page))throw Error('Invalid museum dataset');
-  museums=doc.museums;
+  const moreResponse=await fetch('content/museums/additional-v1.json');
+   if(!moreResponse.ok)throw Error('Extra museum data HTTP '+moreResponse.status);
+   const more=await moreResponse.json();
+   if(more.schemaVersion!=='1.0'||!Array.isArray(more.museums)||more.museums.length!==11||more.museums.some(m=>m.tier!=='information'||!m.photoSearch||m.facts?.length!==2))throw Error('Invalid extra museums');
+   museums=[...doc.museums,...more.museums];
+   if(new Set(museums.map(m=>m.id)).size!==17)throw Error('Duplicate museum IDs');
   const chosen=museums.findIndex(m=>m.id===search.get('museum'));
   if(chosen>=0)index=chosen;
   render();
