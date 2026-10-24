@@ -1,0 +1,1092 @@
+{
+  "title": "ARTDACI · Atlas photographique des 17 musées",
+  "edition": "25 octobre 2026",
+  "scope": "Institutions muséales, architecture, collections, ressources numériques. Références ARTDACI signalées uniquement en note.",
+  "photos_note": "Photographies issues de Wikimedia Commons, sous des licences propres à chaque fichier ; elles ne sont pas toutes du domaine public. Les crédits et conditions sont accessibles via le lien de chaque image.",
+  "museums": [
+    {
+      "id": "louvre",
+      "name": "Musée du Louvre",
+      "city": "Paris",
+      "country": "France",
+      "period": "De l’Antiquité au milieu du XIXe siècle",
+      "collections": "Antiquités méditerranéennes et orientales, arts de l’Islam, peintures, sculptures, dessins et objets d’art. Ses départements documentent les transferts culturels, les écoles artistiques et l’histoire matérielle des œuvres.",
+      "masterpieces": "La Joconde (Léonard de Vinci) ; La Victoire de Samothrace ; La Vénus de Milo.",
+      "work": "La Joconde",
+      "artist": "Léonard de Vinci",
+      "date": "vers 1503–1519",
+      "digital": "La base des collections rassemble plus de 500 000 notices et constitue un instrument majeur de documentation patrimoniale. Les possibilités de téléchargement et de réutilisation varient selon les médias. ",
+      "rights": "Consultation publique des notices ; réutilisation des photographies à vérifier selon le fichier et la source.",
+      "sources": [
+        [
+          "Site officiel",
+          "https://www.louvre.fr/"
+        ],
+        [
+          "Catalogue des collections",
+          "https://collections.louvre.fr/"
+        ],
+        [
+          "À propos de la base",
+          "https://collections.louvre.fr/page/apropos"
+        ]
+      ],
+      "founded": "1793 (ouverture du musée)",
+      "place": "Palais du Louvre, rive droite de la Seine",
+      "subtitle": "Du palais royal au musée universel",
+      "history": "Né des collections royales et ouvert comme musée public durant la Révolution française, le Louvre occupe un ensemble palatial qui s'est développé de la forteresse médiévale aux grands aménagements de l'époque moderne. Sa vocation encyclopédique permet de confronter cultures, fonctions des objets et manières de représenter le monde sur plusieurs millénaires.",
+      "architecture": "Le palais s'organise autour des ailes Denon, Sully et Richelieu. La pyramide conçue par I. M. Pei, les cours intérieures, la cour Marly et la Galerie d'Apollon composent un parcours architectural presque aussi important que les collections. L'ampleur du site impose une visite par départements ou par thèmes.",
+      "visit": "Antiquités égyptiennes et gréco-romaines ; arts de l'Islam ; sculptures ; peintures italiennes, françaises et des écoles du Nord ; appartements historiques et objets d'art.",
+      "artdaci": "La Joconde ; La Belle Ferronnière ; La Vierge aux rochers (version du Louvre).",
+      "gallery": [
+        {
+          "caption": "Vue principale · cour Napoléon et pyramide",
+          "filename": "Louvre Museum Wikimedia Commons 2.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Louvre_Museum_Wikimedia_Commons_2.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Louvre_Museum_Wikimedia_Commons_2.jpg?width=1000"
+        },
+        {
+          "caption": "Cour Carrée · panorama",
+          "filename": "Louvre Museum Cour Carrée inner courtyard.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Louvre_Museum_Cour_Carr%C3%A9e_inner_courtyard.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Louvre_Museum_Cour_Carr%C3%A9e_inner_courtyard.jpg?width=1000"
+        },
+        {
+          "caption": "La Galerie d’Apollon · intérieur",
+          "filename": "La Galerie d'Apollon au Louvre.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:La_Galerie_d'Apollon_au_Louvre.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/La_Galerie_d'Apollon_au_Louvre.jpg?width=1000"
+        },
+        {
+          "caption": "Salle des Caryatides · Renaissance",
+          "filename": "Salle des Caryatides, Louvre, Paris.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Salle_des_Caryatides,_Louvre,_Paris.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Salle_des_Caryatides,_Louvre,_Paris.jpg?width=1000"
+        }
+      ],
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Louvre_Museum_Wikimedia_Commons_2.jpg?width=1000",
+      "heroCommons": "https://commons.wikimedia.org/wiki/File:Louvre_Museum_Wikimedia_Commons_2.jpg",
+      "wiki_category": "https://commons.wikimedia.org/w/index.php?search=Mus%C3%A9e%20du%20Louvre%20building%20interior&title=Special:MediaSearch&type=image"
+    },
+    {
+      "id": "orsay",
+      "name": "Musée d’Orsay",
+      "city": "Paris",
+      "country": "France",
+      "period": "Principalement 1848–1914",
+      "collections": "Peinture, sculpture, arts décoratifs, architecture, photographie et arts graphiques. L’ancienne gare met en scène les bouleversements artistiques et industriels du XIXe siècle.",
+      "masterpieces": "La Nuit étoilée sur le Rhône (Van Gogh) ; Bal du moulin de la Galette (Renoir) ; L’Olympia (Manet).",
+      "work": "Autoportrait (1889, musée d’Orsay)",
+      "artist": "Vincent van Gogh",
+      "date": "1888",
+      "digital": "Le catalogue institutionnel comprend informations techniques, provenances, bibliographies et expositions. L'accès aux notices ne vaut pas autorisation générale de reproduire leurs photographies.",
+      "rights": "Les crédits RMN–Grand Palais et les conditions applicables à chaque photographie doivent être examinés : téléchargement ne signifie pas licence ouverte générale.",
+      "sources": [
+        [
+          "Site officiel",
+          "https://www.musee-orsay.fr/"
+        ],
+        [
+          "Notice officielle de La Nuit étoilée",
+          "https://www.musee-orsay.fr/fr/oeuvres/la-nuit-etoilee-78696"
+        ]
+      ],
+      "founded": "1986",
+      "place": "Ancienne gare d’Orsay, rive gauche de la Seine",
+      "subtitle": "Une gare devenue musée du XIXe siècle",
+      "history": "Le musée fut inauguré en 1986 dans une gare édifiée pour l'Exposition universelle de 1900. Son projet réunit les courants souvent répartis entre musées des beaux-arts et collections modernes : réalisme, académisme, symbolisme, impressionnisme et post-impressionnisme.",
+      "architecture": "La nef sous verrière, les structures métalliques, les grandes horloges et les volumes de l'ancienne gare créent une mise en scène singulière. La sculpture occupe particulièrement l'axe central ; les galeries de peinture permettent de suivre les ruptures esthétiques de 1848 à 1914.",
+      "visit": "Peinture (Manet, Courbet, Renoir, Degas, Cézanne, Van Gogh), sculpture de Rodin et Carpeaux, photographie, arts décoratifs et mobilier Art nouveau.",
+      "artdaci": "Autoportrait de Vincent van Gogh (1889, version du musée d’Orsay).",
+      "gallery": [
+        {
+          "caption": "Vue principale · façade de l’ancienne gare",
+          "filename": "Front view of the Musée d'Orsay.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Front_view_of_the_Mus%C3%A9e_d'Orsay.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Front_view_of_the_Mus%C3%A9e_d'Orsay.jpg?width=1000"
+        },
+        {
+          "caption": "Grande nef du musée",
+          "filename": "Musee d Orsay main hall Paris 2023 dllu.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Musee_d_Orsay_main_hall_Paris_2023_dllu.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Musee_d_Orsay_main_hall_Paris_2023_dllu.jpg?width=1000"
+        },
+        {
+          "caption": "Horloge intérieure",
+          "filename": "Clock in the Musée d'Orsay.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Clock_in_the_Mus%C3%A9e_d'Orsay.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Clock_in_the_Mus%C3%A9e_d'Orsay.jpg?width=1000"
+        },
+        {
+          "caption": "Galerie et sculptures",
+          "filename": "Grande galerie du Musée d'Orsay (1).jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Grande_galerie_du_Mus%C3%A9e_d'Orsay_(1).jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Grande_galerie_du_Mus%C3%A9e_d'Orsay_(1).jpg?width=1000"
+        }
+      ],
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Front_view_of_the_Mus%C3%A9e_d'Orsay.jpg?width=1000",
+      "heroCommons": "https://commons.wikimedia.org/wiki/File:Front_view_of_the_Mus%C3%A9e_d'Orsay.jpg",
+      "wiki_category": "https://commons.wikimedia.org/w/index.php?search=Mus%C3%A9e%20d%E2%80%99Orsay%20building%20interior&title=Special:MediaSearch&type=image"
+    },
+    {
+      "id": "mauritshuis",
+      "name": "Mauritshuis",
+      "city": "La Haye",
+      "country": "Pays-Bas",
+      "period": "Peinture néerlandaise et flamande des XVIe–XVIIe siècles",
+      "collections": "Collection de cabinet consacrée à l’Âge d’or, particulièrement les portraits, scènes de genre et tableaux d’histoire. Son accrochage permet une étude rapprochée de la matière picturale.",
+      "masterpieces": "La Jeune Fille à la perle (Vermeer) ; La Leçon d’anatomie du docteur Tulp (Rembrandt) ; Le Chardonneret (Fabritius).",
+      "work": "La Jeune Fille à la perle",
+      "artist": "Johannes Vermeer",
+      "date": "vers 1665",
+      "digital": "Catalogue en ligne et programmes de recherche sur les pigments, les retouches et les techniques de Vermeer. Certaines images HD sont offertes pour des usages définis, notamment non commerciaux.",
+      "rights": "Images téléchargeables en haute résolution pour les usages non commerciaux selon les conditions du musée ; les usages commerciaux appellent un contact dédié.",
+      "sources": [
+        [
+          "Site officiel",
+          "https://www.mauritshuis.nl/"
+        ],
+        [
+          "Notice de l’œuvre et conditions",
+          "https://www.mauritshuis.nl/en/our-collection/artworks/670-girl-with-a-pearl-earring/"
+        ],
+        [
+          "Recherche scientifique",
+          "https://www.mauritshuis.nl/en/our-collection/restoration-and-research/closer-to-vermeer-and-the-girl/girl-with-a-blog/result-research-girl-with-a-pearl-earring-vermeer"
+        ]
+      ],
+      "founded": "1822 (musée)",
+      "place": "Palais du XVIIe siècle près du Binnenhof",
+      "subtitle": "Le chef-d’œuvre à l’échelle d’une demeure",
+      "history": "Le Mauritshuis expose la collection royale de peintures des Pays-Bas dans une ancienne résidence aristocratique. Son format relativement intime encourage la contemplation des portraits, paysages, natures mortes et scènes de genre du Siècle d'or.",
+      "architecture": "Conçu par Jacob van Campen et Pieter Post, le palais présente une façade classique donnant sur le Hofvijver. Les salons décorés, les boiseries et les petites salles offrent une expérience différente de celle des grands musées encyclopédiques.",
+      "visit": "Vermeer, Rembrandt, Frans Hals, Fabritius, Jan Steen et peinture flamande ; salles historiques reconstituant l'atmosphère d'une collection princière.",
+      "artdaci": "La Jeune Fille à la perle (Johannes Vermeer).",
+      "gallery": [
+        {
+          "caption": "Vue principale · palais depuis le Hofvijver",
+          "filename": "Den Haag - Korte Vijverberg - View on Hofvijver along Mauritshuis 1636-1641 by Jacob van Campen & Pieter Post - Dutch Classicism.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Den_Haag_-_Korte_Vijverberg_-_View_on_Hofvijver_along_Mauritshuis_1636-1641_by_Jacob_van_Campen_%26_Pieter_Post_-_Dutch_Classicism.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Den_Haag_-_Korte_Vijverberg_-_View_on_Hofvijver_along_Mauritshuis_1636-1641_by_Jacob_van_Campen_%26_Pieter_Post_-_Dutch_Classicism.jpg?width=1000"
+        },
+        {
+          "caption": "Salons de peinture",
+          "filename": "Interior Museo Mauritshuis.JPG",
+          "commons": "https://commons.wikimedia.org/wiki/File:Interior_Museo_Mauritshuis.JPG",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior_Museo_Mauritshuis.JPG?width=1000"
+        },
+        {
+          "caption": "Parcours intérieur",
+          "filename": "2025-07-18 Mauritshuis 01.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:2025-07-18_Mauritshuis_01.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/2025-07-18_Mauritshuis_01.jpg?width=1000"
+        },
+        {
+          "caption": "Autre salle du musée",
+          "filename": "2025-07-18 Mauritshuis 06.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:2025-07-18_Mauritshuis_06.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/2025-07-18_Mauritshuis_06.jpg?width=1000"
+        }
+      ],
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Den_Haag_-_Korte_Vijverberg_-_View_on_Hofvijver_along_Mauritshuis_1636-1641_by_Jacob_van_Campen_%26_Pieter_Post_-_Dutch_Classicism.jpg?width=1000",
+      "heroCommons": "https://commons.wikimedia.org/wiki/File:Den_Haag_-_Korte_Vijverberg_-_View_on_Hofvijver_along_Mauritshuis_1636-1641_by_Jacob_van_Campen_%26_Pieter_Post_-_Dutch_Classicism.jpg",
+      "wiki_category": "https://commons.wikimedia.org/w/index.php?search=Mauritshuis%20building%20interior&title=Special:MediaSearch&type=image"
+    },
+    {
+      "id": "czartoryski",
+      "name": "Musée des Princes Czartoryski",
+      "city": "Cracovie",
+      "country": "Pologne",
+      "period": "Art européen du Moyen Âge au XIXe siècle et antiquités",
+      "collections": "Portraits, peinture ancienne, artisanat d’art, documents historiques et collections de la famille Czartoryski ; rattaché au Musée national de Cracovie.",
+      "masterpieces": "La Dame à l’hermine (Léonard de Vinci) ; Paysage avec le Bon Samaritain (Rembrandt).",
+      "work": "La Dame à l’hermine",
+      "artist": "Léonard de Vinci",
+      "date": "vers 1490",
+      "digital": "Les notices du Musée national de Cracovie donnent accès aux identifiants, techniques, descriptions et champs de droits ; leur granularité est utile pour les catalogues patrimoniaux.",
+      "rights": "La notice de La Dame à l’hermine indique explicitement CC0 / domaine public.",
+      "sources": [
+        [
+          "Site officiel",
+          "https://mnk.pl/en/"
+        ],
+        [
+          "Notice patrimoniale et droits CC0",
+          "https://zbiory.mnk.pl/en/catalog/157417"
+        ],
+        [
+          "Présentation scientifique",
+          "https://mnk.pl/en/collections/lady-with-an-ermine/"
+        ]
+      ],
+      "founded": "1801 (collection fondatrice)",
+      "place": "Palais Czartoryski, centre historique de Cracovie",
+      "subtitle": "Une collection historique polonaise au rayonnement européen",
+      "history": "La collection fondée par la princesse Izabela Czartoryska associe œuvres d'art, antiquités et objets historiques dans une démarche de préservation de la mémoire nationale. Ses vicissitudes reflètent les bouleversements politiques de la Pologne. Elle relève aujourd'hui du Musée national de Cracovie.",
+      "architecture": "Les salles rénovées du palais permettent de découvrir la peinture ancienne et les arts décoratifs dans une architecture patrimoniale. Des espaces voisins, dont l'ancien arsenal, complètent la compréhension du complexe muséal.",
+      "visit": "Peintures européennes, objets des collections princières, militaria, antiquités, manuscrits et traces de l'histoire du mécénat polonais.",
+      "artdaci": "La Dame à l’hermine (Léonard de Vinci).",
+      "gallery": [
+        {
+          "caption": "Vue principale · bâtiment du musée",
+          "filename": "Kraków, Muzeum Książąt Czartoryskich w Krakowie.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Krak%C3%B3w,_Muzeum_Ksi%C4%85%C5%BC%C4%85t_Czartoryskich_w_Krakowie.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Krak%C3%B3w,_Muzeum_Ksi%C4%85%C5%BC%C4%85t_Czartoryskich_w_Krakowie.jpg?width=1000"
+        },
+        {
+          "caption": "Galerie intérieure",
+          "filename": "Interior of the Czartoryski Museum, 2024, 01.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Interior_of_the_Czartoryski_Museum,_2024,_01.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior_of_the_Czartoryski_Museum,_2024,_01.jpg?width=1000"
+        },
+        {
+          "caption": "Salle d’exposition",
+          "filename": "Interior of the Czartoryski Museum, 2024, 06.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Interior_of_the_Czartoryski_Museum,_2024,_06.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior_of_the_Czartoryski_Museum,_2024,_06.jpg?width=1000"
+        },
+        {
+          "caption": "Autre espace intérieur",
+          "filename": "Interior of the Czartoryski Museum, 2024, 09.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Interior_of_the_Czartoryski_Museum,_2024,_09.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior_of_the_Czartoryski_Museum,_2024,_09.jpg?width=1000"
+        }
+      ],
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Krak%C3%B3w,_Muzeum_Ksi%C4%85%C5%BC%C4%85t_Czartoryskich_w_Krakowie.jpg?width=1000",
+      "heroCommons": "https://commons.wikimedia.org/wiki/File:Krak%C3%B3w,_Muzeum_Ksi%C4%85%C5%BC%C4%85t_Czartoryskich_w_Krakowie.jpg",
+      "wiki_category": "https://commons.wikimedia.org/w/index.php?search=Mus%C3%A9e%20des%20Princes%20Czartoryski%20building%20interior&title=Special:MediaSearch&type=image"
+    },
+    {
+      "id": "vangogh",
+      "name": "Musée Van Gogh",
+      "city": "Amsterdam",
+      "country": "Pays-Bas",
+      "period": "Peinture et arts graphiques de Van Gogh, XIXe siècle",
+      "collections": "Premier fonds mondial de peintures et dessins de Vincent van Gogh, complété par des œuvres de contemporains et des archives épistolaires.",
+      "masterpieces": "Les Tournesols ; Les Mangeurs de pommes de terre ; Amandier en fleurs.",
+      "work": "Les Tournesols",
+      "artist": "Vincent van Gogh",
+      "date": "1889, version F458",
+      "digital": "Le catalogue en ligne et l'édition savante de la correspondance constituent une référence pour relier les images aux lettres, personnes, lieux et dates.",
+      "rights": "Le musée autorise certaines images en format limité pour des usages non commerciaux ; les usages commerciaux font l’objet de procédures spécifiques. Des fichiers Wikimedia Commons sont indépendamment signalés en PD-Art.",
+      "sources": [
+        [
+          "Site officiel",
+          "https://www.vangoghmuseum.nl/en"
+        ],
+        [
+          "Conditions d’utilisation des images",
+          "https://www.vangoghmuseum.nl/assets/05aed642-6e2a-46e6-bb93-3a6826d63e91/Conditions-for-Use-of-Collection-Images-Van-Gogh-Museum-2022?c=1ae93a4fe2d6eb2875672ed16d59058741397476be6cd1c15ca16cc5e924d786"
+        ],
+        [
+          "Édition des lettres",
+          "https://vangoghletters.org/"
+        ],
+        [
+          "Présentation des lettres",
+          "https://www.vangoghmuseum.nl/en/art-and-stories/stories/all-stories/van-goghs-letters"
+        ]
+      ],
+      "founded": "1973",
+      "place": "Museumplein, Amsterdam",
+      "subtitle": "Comprendre un artiste à travers ses œuvres et ses lettres",
+      "history": "Fondé autour de la collection familiale de Vincent et Theo van Gogh, le musée montre l'évolution de l'artiste, ses influences et ses réseaux. Il ne se limite pas aux toiles célèbres : les dessins, études et documents éclairent les pratiques du peintre.",
+      "architecture": "Le bâtiment principal conçu par Gerrit Rietveld est complété par une aile d'exposition de Kisho Kurokawa. Les circulations organisent une lecture chronologique et thématique de la production artistique.",
+      "visit": "Peintures et dessins de Van Gogh, correspondance, études de matériaux et ensembles de ses contemporains ; compréhension des périodes néerlandaise, parisienne, arlésienne et de Saint-Rémy.",
+      "artdaci": "Les Tournesols (Vincent van Gogh).",
+      "gallery": [
+        {
+          "caption": "Vue principale · façade du musée",
+          "filename": "Van-Gogh-Museum-facade Amsterdam.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Van-Gogh-Museum-facade_Amsterdam.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Van-Gogh-Museum-facade_Amsterdam.jpg?width=1000"
+        },
+        {
+          "caption": "Architecture extérieure",
+          "filename": "Exterior of the Van Gogh Museum 20180702.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Exterior_of_the_Van_Gogh_Museum_20180702.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Exterior_of_the_Van_Gogh_Museum_20180702.jpg?width=1000"
+        },
+        {
+          "caption": "Espaces intérieurs",
+          "filename": "Intérieur du musée Van Gogh.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Int%C3%A9rieur_du_mus%C3%A9e_Van_Gogh.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Int%C3%A9rieur_du_mus%C3%A9e_Van_Gogh.jpg?width=1000"
+        },
+        {
+          "caption": "Bâtiment et environnement",
+          "filename": "Exterior of the Van Gogh Museum.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Exterior_of_the_Van_Gogh_Museum.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Exterior_of_the_Van_Gogh_Museum.jpg?width=1000"
+        }
+      ],
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Van-Gogh-Museum-facade_Amsterdam.jpg?width=1000",
+      "heroCommons": "https://commons.wikimedia.org/wiki/File:Van-Gogh-Museum-facade_Amsterdam.jpg",
+      "wiki_category": "https://commons.wikimedia.org/w/index.php?search=Mus%C3%A9e%20Van%20Gogh%20building%20interior&title=Special:MediaSearch&type=image"
+    },
+    {
+      "id": "nga",
+      "name": "National Gallery of Art",
+      "city": "Washington D.C.",
+      "country": "États-Unis",
+      "period": "Art occidental du Moyen Âge à aujourd’hui",
+      "collections": "Peintures, sculptures, dessins, estampes, photographies et arts décoratifs, avec de vastes fonds européens et américains.",
+      "masterpieces": "Ginevra de’ Benci (Léonard de Vinci) ; Femme tenant une balance (Vermeer) ; Femme à l’ombrelle (Monet).",
+      "work": "Ginevra de’ Benci",
+      "artist": "Léonard de Vinci",
+      "date": "vers 1474–1478",
+      "digital": "Un programme Open Access fournit de nombreuses images haute définition réutilisables ainsi que des données descriptives. Les notices d'inventaire et les publications de recherche facilitent l'étude des collections.",
+      "rights": "Très favorable à la réutilisation des œuvres dont les images sont identifiées comme Open Access ; ne pas étendre ce statut à tout média tiers.",
+      "sources": [
+        [
+          "Site officiel",
+          "https://www.nga.gov/"
+        ],
+        [
+          "Open Access et données",
+          "https://www.nga.gov/artworks/free-images-and-open-access"
+        ]
+      ],
+      "founded": "1941",
+      "place": "National Mall, Washington, D.C.",
+      "subtitle": "Un musée national à deux bâtiments complémentaires",
+      "history": "La National Gallery of Art résulte notamment du don fondateur d'Andrew W. Mellon. Sa collection retrace les grandes traditions occidentales, enrichies par la photographie, les arts modernes et une programmation scientifique étendue.",
+      "architecture": "Le West Building, monumental et néoclassique, abrite une grande part des écoles anciennes. L'East Building, dessiné par I. M. Pei, offre une expression moderniste ; le jardin de sculptures complète l'ensemble.",
+      "visit": "Peinture européenne du Moyen Âge au XIXe siècle, impressionnisme, sculpture, arts graphiques, photographies et art moderne.",
+      "artdaci": "Ginevra de’ Benci (Léonard de Vinci) ; Femme tenant une balance (Vermeer) ; Femme à l’ombrelle (Monet).",
+      "gallery": [
+        {
+          "caption": "Vue principale · West Building",
+          "filename": "National Gallery of Art - West Building facade.JPG",
+          "commons": "https://commons.wikimedia.org/wiki/File:National_Gallery_of_Art_-_West_Building_facade.JPG",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/National_Gallery_of_Art_-_West_Building_facade.JPG?width=1000"
+        },
+        {
+          "caption": "Rotonde et décor intérieur",
+          "filename": "National Gallery of Art rotunda flower display.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:National_Gallery_of_Art_rotunda_flower_display.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/National_Gallery_of_Art_rotunda_flower_display.jpg?width=1000"
+        },
+        {
+          "caption": "Galerie du musée",
+          "filename": "National Gallery of Art interior.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:National_Gallery_of_Art_interior.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/National_Gallery_of_Art_interior.jpg?width=1000"
+        },
+        {
+          "caption": "Atrium de l’East Building",
+          "filename": "East Building of the National Gallery of Art, atrium.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:East_Building_of_the_National_Gallery_of_Art,_atrium.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/East_Building_of_the_National_Gallery_of_Art,_atrium.jpg?width=1000"
+        }
+      ],
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/National_Gallery_of_Art_-_West_Building_facade.JPG?width=1000",
+      "heroCommons": "https://commons.wikimedia.org/wiki/File:National_Gallery_of_Art_-_West_Building_facade.JPG",
+      "wiki_category": "https://commons.wikimedia.org/w/index.php?search=National%20Gallery%20of%20Art%20building%20interior&title=Special:MediaSearch&type=image"
+    },
+    {
+      "id": "rijksmuseum",
+      "name": "Rijksmuseum",
+      "city": "Amsterdam",
+      "country": "Pays-Bas",
+      "period": "Huit siècles d’art et d’histoire des Pays-Bas",
+      "collections": "Peinture, objets d’art, imprimés, photographies, histoire coloniale, bibliothèques et archives ; excellence de la peinture hollandaise.",
+      "masterpieces": "La Ronde de nuit (Rembrandt) ; La Laitière (Vermeer) ; La Femme lisant une lettre (Vermeer).",
+      "work": "La Laitière",
+      "artist": "Johannes Vermeer",
+      "date": "vers 1658–1660",
+      "digital": "Ressources très développées pour les images d'œuvres du domaine public, métadonnées, API et IIIF. L'accès aux données ouvre des possibilités de recherche et de médiation numérique.",
+      "rights": "Large programme d’ouverture des données et de mise à disposition de reproductions HD des œuvres libres ; vérifier le droit de chaque objet.",
+      "sources": [
+        [
+          "Site officiel",
+          "https://www.rijksmuseum.nl/en"
+        ],
+        [
+          "Services de données",
+          "https://data.rijksmuseum.nl/"
+        ],
+        [
+          "Documentation IIIF",
+          "https://data.rijksmuseum.nl/tutorials/iiif/"
+        ],
+        [
+          "API de recherche",
+          "https://data.rijksmuseum.nl/tutorials/search/"
+        ]
+      ],
+      "founded": "1800 (institution), 1885 (édifice actuel)",
+      "place": "Museumplein, Amsterdam",
+      "subtitle": "Huit siècles d’art, d’histoire et de culture matérielle",
+      "history": "Musée national consacré à l'histoire et aux arts des Pays-Bas, le Rijksmuseum rapproche peintures célèbres, objets d'art, mobilier et témoins de la vie quotidienne. Il met les arts du Siècle d'or en dialogue avec un récit plus large des échanges et de la société néerlandaise.",
+      "architecture": "L'édifice de Pierre Cuypers combine vocabulaire néogothique et néo-Renaissance. La Galerie d'honneur conduit vers la Salle de la Ronde de nuit ; la bibliothèque Cuypers et les cours rénovées sont des éléments marquants de la visite.",
+      "visit": "Rembrandt, Vermeer, Frans Hals, Delft, arts asiatiques, maquettes navales, costumes, armes, porcelaines et estampes.",
+      "artdaci": "La Laitière (Johannes Vermeer).",
+      "gallery": [
+        {
+          "caption": "Vue principale · façade du musée",
+          "filename": "Rijksmuseum in Amsterdam.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Rijksmuseum_in_Amsterdam.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Rijksmuseum_in_Amsterdam.jpg?width=1000"
+        },
+        {
+          "caption": "Salle et collections",
+          "filename": "Interior of the Rijksmuseum Amsterdam pic13.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Interior_of_the_Rijksmuseum_Amsterdam_pic13.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior_of_the_Rijksmuseum_Amsterdam_pic13.jpg?width=1000"
+        },
+        {
+          "caption": "Perspective intérieure",
+          "filename": "Interior of the Rijksmuseum Amsterdam pic2.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Interior_of_the_Rijksmuseum_Amsterdam_pic2.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior_of_the_Rijksmuseum_Amsterdam_pic2.jpg?width=1000"
+        },
+        {
+          "caption": "Côté Museumplein",
+          "filename": "Rijksmuseum IAmsterdam.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Rijksmuseum_IAmsterdam.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Rijksmuseum_IAmsterdam.jpg?width=1000"
+        }
+      ],
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Rijksmuseum_in_Amsterdam.jpg?width=1000",
+      "heroCommons": "https://commons.wikimedia.org/wiki/File:Rijksmuseum_in_Amsterdam.jpg",
+      "wiki_category": "https://commons.wikimedia.org/w/index.php?search=Rijksmuseum%20building%20interior&title=Special:MediaSearch&type=image"
+    },
+    {
+      "id": "moma",
+      "name": "Museum of Modern Art (MoMA)",
+      "city": "New York",
+      "country": "États-Unis",
+      "period": "Art moderne et contemporain depuis la fin du XIXe siècle",
+      "collections": "Peinture, sculpture, architecture, design, photographie, cinéma, nouveaux médias et pratiques conceptuelles.",
+      "masterpieces": "La Nuit étoilée (Van Gogh) ; Les Demoiselles d’Avignon (Picasso) ; La Persistance de la mémoire (Dalí).",
+      "work": "La Nuit étoilée",
+      "artist": "Vincent van Gogh",
+      "date": "1889",
+      "digital": "Le MoMA diffuse les métadonnées de collection via GitHub en CSV et JSON sous CC0, mais cette ouverture ne comprend pas les droits des images.",
+      "rights": "Attention : les images ne font pas partie du jeu de données CC0 du MoMA ; leur licence demeure distincte.",
+      "sources": [
+        [
+          "Site officiel",
+          "https://www.moma.org/"
+        ],
+        [
+          "Données officielles et licence",
+          "https://github.com/MuseumofModernArt/collection"
+        ]
+      ],
+      "founded": "1929",
+      "place": "Midtown Manhattan, New York",
+      "subtitle": "Un laboratoire de l’art moderne et contemporain",
+      "history": "Créé à New York à la fin des années 1920, le MoMA a contribué à construire une histoire internationale de l'art moderne. Son approche transdisciplinaire associe depuis longtemps peinture, sculpture, design, cinéma, architecture et photographie.",
+      "architecture": "Les transformations successives de l'édifice et l'agrandissement achevé en 2019 ont réorganisé les galeries. Le jardin de sculptures Abby Aldrich Rockefeller constitue une articulation entre le musée et la ville.",
+      "visit": "Avant-gardes européennes, expressionnisme abstrait, pop art, art contemporain, design industriel, cinéma, photographie et architecture.",
+      "artdaci": "La Nuit étoilée (Vincent van Gogh, 1889).",
+      "gallery": [
+        {
+          "caption": "Vue principale · bâtiment du MoMA",
+          "filename": "Museum of Modern Art (30218283404).jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Museum_of_Modern_Art_(30218283404).jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Museum_of_Modern_Art_(30218283404).jpg?width=1000"
+        },
+        {
+          "caption": "Galeries d’art moderne",
+          "filename": "The Museum of Modern Art, MoMA, New York (50415229238).jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:The_Museum_of_Modern_Art,_MoMA,_New_York_(50415229238).jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/The_Museum_of_Modern_Art,_MoMA,_New_York_(50415229238).jpg?width=1000"
+        },
+        {
+          "caption": "Escalier intérieur",
+          "filename": "Interior staircase, Museum of Modern Art, New York City (July 2010).jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Interior_staircase,_Museum_of_Modern_Art,_New_York_City_(July_2010).jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior_staircase,_Museum_of_Modern_Art,_New_York_City_(July_2010).jpg?width=1000"
+        },
+        {
+          "caption": "Vue extérieure supplémentaire",
+          "filename": "Museum of Modern Art (MoMA) (51395759113).jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Museum_of_Modern_Art_(MoMA)_(51395759113).jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Museum_of_Modern_Art_(MoMA)_(51395759113).jpg?width=1000"
+        }
+      ],
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Museum_of_Modern_Art_(30218283404).jpg?width=1000",
+      "heroCommons": "https://commons.wikimedia.org/wiki/File:Museum_of_Modern_Art_(30218283404).jpg",
+      "wiki_category": "https://commons.wikimedia.org/w/index.php?search=Museum%20of%20Modern%20Art%20%28MoMA%29%20building%20interior&title=Special:MediaSearch&type=image"
+    },
+    {
+      "id": "marmottan",
+      "name": "Musée Marmottan Monet",
+      "city": "Paris",
+      "country": "France",
+      "period": "Impressionnisme et héritages du XIXe–XXe siècle",
+      "collections": "Premier ensemble mondial d’œuvres de Monet, œuvres de Berthe Morisot, collections impressionnistes et enluminures médiévales.",
+      "masterpieces": "Impression, soleil levant ; Nymphéas tardifs ; œuvres majeures de Berthe Morisot.",
+      "work": "Impression, soleil levant",
+      "artist": "Claude Monet",
+      "date": "1872",
+      "digital": "Notices de collection et ressources de médiation ; les images officielles ne doivent pas être présumées publiées sous licence ouverte.",
+      "rights": "La page professionnelle distingue des visuels téléchargeables et des demandes d’images : ne pas inférer une licence CC0 générale.",
+      "sources": [
+        [
+          "Site officiel",
+          "https://www.marmottan.fr/"
+        ],
+        [
+          "Images et droits",
+          "https://www.marmottan.fr/presse-et-professionnels/commandez-vos-photos/"
+        ],
+        [
+          "Historique des collections",
+          "https://www.academiedesbeauxarts.fr/le-musee-marmottan-monet"
+        ]
+      ],
+      "founded": "1934",
+      "place": "Hôtel particulier à proximité du jardin du Ranelagh, Paris",
+      "subtitle": "La mémoire de Monet et de l’impressionnisme",
+      "history": "Installé dans une demeure issue des collections de Paul Marmottan, le musée a vu son orientation évoluer grâce à des dons et legs majeurs, notamment liés à Monet. Il associe ainsi arts du Premier Empire et histoire de l'impressionnisme.",
+      "architecture": "Le caractère domestique des salons, de l'escalier et du mobilier ancien donne au parcours une atmosphère particulière. Les espaces consacrés à Monet invitent à observer les variations de lumière et les séries picturales.",
+      "visit": "Peinture de Claude Monet, œuvres de Berthe Morisot, impressionnistes, enluminures et arts décoratifs anciens.",
+      "artdaci": "Impression, soleil levant (Claude Monet).",
+      "gallery": [
+        {
+          "caption": "Vue principale · façade depuis la rue",
+          "filename": "Musée Marmottan Monet, Paris, from street.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_Marmottan_Monet,_Paris,_from_street.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Mus%C3%A9e_Marmottan_Monet,_Paris,_from_street.jpg?width=1000"
+        },
+        {
+          "caption": "Salon intérieur",
+          "filename": "Interior of the Musée Marmottan Monet 1.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Interior_of_the_Mus%C3%A9e_Marmottan_Monet_1.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior_of_the_Mus%C3%A9e_Marmottan_Monet_1.jpg?width=1000"
+        },
+        {
+          "caption": "Salle du musée",
+          "filename": "Interior of the Musée Marmottan Monet 6.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Interior_of_the_Mus%C3%A9e_Marmottan_Monet_6.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior_of_the_Mus%C3%A9e_Marmottan_Monet_6.jpg?width=1000"
+        },
+        {
+          "caption": "Espace de présentation des Nymphéas",
+          "filename": "Salle d'exposition des Nymphéas au musée Marmottan.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Salle_d'exposition_des_Nymph%C3%A9as_au_mus%C3%A9e_Marmottan.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Salle_d'exposition_des_Nymph%C3%A9as_au_mus%C3%A9e_Marmottan.jpg?width=1000"
+        }
+      ],
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Mus%C3%A9e_Marmottan_Monet,_Paris,_from_street.jpg?width=1000",
+      "heroCommons": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_Marmottan_Monet,_Paris,_from_street.jpg",
+      "wiki_category": "https://commons.wikimedia.org/w/index.php?search=Mus%C3%A9e%20Marmottan%20Monet%20building%20interior&title=Special:MediaSearch&type=image"
+    },
+    {
+      "id": "khm",
+      "name": "Kunsthistorisches Museum",
+      "city": "Vienne",
+      "country": "Autriche",
+      "period": "Antiquité, Renaissance et art baroque",
+      "collections": "Collections impériales des Habsbourg : peinture, antiquités, objets précieux et numismatique ; conservation et études techniques de haut niveau.",
+      "masterpieces": "L’Art de la peinture (Vermeer) ; La Tour de Babel (Pieter Bruegel l’Ancien) ; œuvres de Rubens et du Titien.",
+      "work": "L’Art de la peinture",
+      "artist": "Johannes Vermeer",
+      "date": "vers 1666–1668",
+      "digital": "Catalogue numérique et documentation de recherche, parfois complétés par radiographies, analyses des matériaux et études des restaurations.",
+      "rights": "Consultation documentaire et scientifique reconnue, mais licence de reproduction à contrôler pour chaque ressource.",
+      "sources": [
+        [
+          "Site officiel",
+          "https://www.khm.at/"
+        ],
+        [
+          "KHM Digital",
+          "https://www.khm.at/en/explore/digital-museum/"
+        ]
+      ],
+      "founded": "1891",
+      "place": "Maria-Theresien-Platz, Vienne",
+      "subtitle": "Les grandes collections impériales des Habsbourg",
+      "history": "Le Kunsthistorisches Museum réunit plusieurs ensembles issus des collections des Habsbourg, notamment la galerie de peintures, les antiquités et les objets précieux. Il offre une lecture de l'art européen dans ses liens avec les pratiques de cour et le mécénat princier.",
+      "architecture": "Son monument historiciste symétrique du Musée d'histoire naturelle possède une coupole, une vaste cage d'escalier et un décor monumental associant peinture, sculpture et marbres.",
+      "visit": "Bruegel l'Ancien, Titien, Rubens, Vermeer, antiquités égyptiennes et grecques, trésors de la Kunstkammer et monnaies.",
+      "artdaci": "L’Art de la peinture (Johannes Vermeer).",
+      "gallery": [
+        {
+          "caption": "Vue principale · bâtiment impérial",
+          "filename": "Kunsthistorisches Museum Wien.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Kunsthistorisches_Museum_Wien.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Kunsthistorisches_Museum_Wien.jpg?width=1000"
+        },
+        {
+          "caption": "Grand escalier",
+          "filename": "KHM Treppenaufgang.JPG",
+          "commons": "https://commons.wikimedia.org/wiki/File:KHM_Treppenaufgang.JPG",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/KHM_Treppenaufgang.JPG?width=1000"
+        },
+        {
+          "caption": "Plafond et décor monumental",
+          "filename": "Grand staircase ceiling with Apotheosis of the Renaissance fresco (Kunsthistorischen Museum).jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Grand_staircase_ceiling_with_Apotheosis_of_the_Renaissance_fresco_(Kunsthistorischen_Museum).jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Grand_staircase_ceiling_with_Apotheosis_of_the_Renaissance_fresco_(Kunsthistorischen_Museum).jpg?width=1000"
+        },
+        {
+          "caption": "Perspective architecturale",
+          "filename": "Kunsthistorisches Museum Vienna 0114.JPG",
+          "commons": "https://commons.wikimedia.org/wiki/File:Kunsthistorisches_Museum_Vienna_0114.JPG",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Kunsthistorisches_Museum_Vienna_0114.JPG?width=1000"
+        }
+      ],
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Kunsthistorisches_Museum_Wien.jpg?width=1000",
+      "heroCommons": "https://commons.wikimedia.org/wiki/File:Kunsthistorisches_Museum_Wien.jpg",
+      "wiki_category": "https://commons.wikimedia.org/w/index.php?search=Kunsthistorisches%20Museum%20building%20interior&title=Special:MediaSearch&type=image"
+    },
+    {
+      "id": "uffizi",
+      "name": "Galeries des Offices (Uffizi)",
+      "city": "Florence",
+      "country": "Italie",
+      "period": "Art italien du XIIIe au XVIIIe siècle, surtout Renaissance",
+      "collections": "Œuvres italiennes et européennes, dessins et estampes, dynastie des Médicis, avec articulation aux autres sites des Uffizi.",
+      "masterpieces": "L’Annonciation (Léonard de Vinci) ; La Naissance de Vénus (Botticelli) ; Le Printemps (Botticelli).",
+      "work": "L’Annonciation",
+      "artist": "Léonard de Vinci",
+      "date": "vers 1472–1475",
+      "digital": "Catalogue des œuvres, expositions et ressources virtuelles ; attention aux règles italiennes spécifiques concernant la réutilisation d'images de biens culturels.",
+      "rights": "La photographie personnelle ou d’étude est admise sous conditions ; les reproductions et usages commerciaux peuvent nécessiter une autorisation et, selon le cas, une redevance.",
+      "sources": [
+        [
+          "Site officiel",
+          "https://www.uffizi.it/en/"
+        ],
+        [
+          "Archives numériques",
+          "https://www.uffizi.it/en/pages/digital-archives"
+        ],
+        [
+          "Visites virtuelles",
+          "https://www.uffizi.it/en/online-exhibitions-categories/virtual-tours"
+        ],
+        [
+          "Règles de photographie",
+          "https://www.uffizi.it/en/pages/rules-to-visit-the-uffizi-galleries"
+        ]
+      ],
+      "founded": "1581 (galerie des collections)",
+      "place": "Complexe des Offices, Florence",
+      "subtitle": "La Renaissance au cœur de Florence",
+      "history": "Conçus au XVIe siècle pour accueillir les bureaux de l'administration du grand-duché, les Offices ont progressivement accueilli des collections des Médicis. Ils occupent une place fondamentale dans la construction des musées européens et dans l'histoire de la Renaissance.",
+      "architecture": "L'ensemble dessiné par Giorgio Vasari développe deux longues ailes et une cour ouverte sur l'Arno. Les couloirs ornés de sculptures, la Tribuna et les salles thématiques mettent en scène les chefs-d'œuvre du Quattrocento et du Cinquecento.",
+      "visit": "Giotto, Cimabue, Botticelli, Léonard de Vinci, Michel-Ange, Raphaël, Titien et écoles européennes.",
+      "artdaci": "L’Annonciation (Léonard de Vinci).",
+      "gallery": [
+        {
+          "caption": "Vue principale · façade et perspective",
+          "filename": "Firenze Galleria degli Uffizi Esterno 1.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Firenze_Galleria_degli_Uffizi_Esterno_1.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Firenze_Galleria_degli_Uffizi_Esterno_1.jpg?width=1000"
+        },
+        {
+          "caption": "Cour des Offices",
+          "filename": "Uffizi courtyard, Florence.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Uffizi_courtyard,_Florence.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Uffizi_courtyard,_Florence.jpg?width=1000"
+        },
+        {
+          "caption": "La Tribuna · salle historique",
+          "filename": "Tribuna uffizi.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Tribuna_uffizi.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Tribuna_uffizi.jpg?width=1000"
+        },
+        {
+          "caption": "Salle de peinture",
+          "filename": "Uffizi, Sala A7 'Lorenzo Monaco Gentile da Fabriano' a feb 2024 -FG1.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Uffizi,_Sala_A7_'Lorenzo_Monaco_Gentile_da_Fabriano'_a_feb_2024_-FG1.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Uffizi,_Sala_A7_'Lorenzo_Monaco_Gentile_da_Fabriano'_a_feb_2024_-FG1.jpg?width=1000"
+        }
+      ],
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Firenze_Galleria_degli_Uffizi_Esterno_1.jpg?width=1000",
+      "heroCommons": "https://commons.wikimedia.org/wiki/File:Firenze_Galleria_degli_Uffizi_Esterno_1.jpg",
+      "wiki_category": "https://commons.wikimedia.org/w/index.php?search=Galeries%20des%20Offices%20%28Uffizi%29%20building%20interior&title=Special:MediaSearch&type=image"
+    },
+    {
+      "id": "national-gallery",
+      "name": "National Gallery",
+      "city": "Londres",
+      "country": "Royaume-Uni",
+      "period": "Peinture européenne du XIIIe au début du XXe siècle",
+      "collections": "Peintures européennes anciennes et modernes, catalogues raisonnés, recherche sur la restauration, science des matériaux et histoire des techniques.",
+      "masterpieces": "Les Époux Arnolfini (Van Eyck) ; Le Dernier Voyage du Téméraire (Turner) ; Les Tournesols (Van Gogh, version de Londres).",
+      "work": "La Vierge aux rochers (version de Londres)",
+      "artist": "Léonard de Vinci",
+      "date": "1434",
+      "digital": "Notices d'œuvres, catalogues scientifiques et publications sur la conservation ; la politique des images est distincte des données documentaires.",
+      "rights": "Ne pas présumer un accès libre aux photos institutionnelles ; privilégier la notice du musée pour la recherche et la licence de chaque image pour la réutilisation.",
+      "sources": [
+        [
+          "Site officiel",
+          "https://www.nationalgallery.org.uk/"
+        ],
+        [
+          "Catalogue scientifique",
+          "https://www.nationalgallery.org.uk/paintings/catalogues/campbell-1998/the-arnolfini-portrait"
+        ],
+        [
+          "Bulletin technique",
+          "https://www.nationalgallery.org.uk/research/publications/technical-bulletin"
+        ]
+      ],
+      "founded": "1824",
+      "place": "Trafalgar Square, Londres",
+      "subtitle": "L’histoire de la peinture européenne en un seul lieu",
+      "history": "Fondée pour rendre accessible une collection nationale de tableaux, la National Gallery retrace l'histoire de la peinture occidentale du XIIIe au début du XXe siècle. Le classement par écoles et par périodes favorise comparaisons et parcours pédagogiques.",
+      "architecture": "La façade monumentale de William Wilkins domine Trafalgar Square. Les salles historiques, les coupoles et l'aile Sainsbury offrent des espaces très différents pour la peinture médiévale, la Renaissance et l'art moderne.",
+      "visit": "Peinture flamande, italienne, espagnole, française et britannique ; Van Eyck, Léonard, Titien, Turner et Van Gogh.",
+      "artdaci": "La Vierge aux rochers (version conservée à Londres, Léonard de Vinci).",
+      "gallery": [
+        {
+          "caption": "Vue principale · portique de Trafalgar Square",
+          "filename": "National Gallery Facade.JPG",
+          "commons": "https://commons.wikimedia.org/wiki/File:National_Gallery_Facade.JPG",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/National_Gallery_Facade.JPG?width=1000"
+        },
+        {
+          "caption": "Hall central",
+          "filename": "Central Hall, National Gallery.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Central_Hall,_National_Gallery.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Central_Hall,_National_Gallery.jpg?width=1000"
+        },
+        {
+          "caption": "Salles de peinture",
+          "filename": "Interior of the National Gallery, London, UK 01.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Interior_of_the_National_Gallery,_London,_UK_01.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior_of_the_National_Gallery,_London,_UK_01.jpg?width=1000"
+        },
+        {
+          "caption": "Une autre galerie",
+          "filename": "Interior of the National Gallery, London, UK 02.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Interior_of_the_National_Gallery,_London,_UK_02.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior_of_the_National_Gallery,_London,_UK_02.jpg?width=1000"
+        }
+      ],
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/National_Gallery_Facade.JPG?width=1000",
+      "heroCommons": "https://commons.wikimedia.org/wiki/File:National_Gallery_Facade.JPG",
+      "wiki_category": "https://commons.wikimedia.org/w/index.php?search=National%20Gallery%20building%20interior&title=Special:MediaSearch&type=image"
+    },
+    {
+      "id": "kroller",
+      "name": "Musée Kröller-Müller",
+      "city": "Otterlo",
+      "country": "Pays-Bas",
+      "period": "Art moderne, XIXe–XXe siècles ; sculptures et paysage",
+      "collections": "Deuxième grand ensemble Van Gogh au monde, art moderne européen et jardin de sculptures au parc De Hoge Veluwe.",
+      "masterpieces": "Terrasse du café le soir (Van Gogh) ; quatre tournesols fanés ; œuvres de Mondrian et de Seurat.",
+      "work": "Terrasse du café le soir",
+      "artist": "Vincent van Gogh",
+      "date": "1888",
+      "digital": "Catalogue et ressources documentaires sur les collections et l'histoire de Helene Kröller-Müller ; conditions d'utilisation des photographies à distinguer.",
+      "rights": "Images de presse téléchargeables pour les usages prévus ; usage commercial soumis à accord écrit selon la banque d’images du musée.",
+      "sources": [
+        [
+          "Site officiel",
+          "https://krollermuller.nl/en"
+        ],
+        [
+          "Collection Van Gogh",
+          "https://www.krollermuller.nl/en/about-the-collection/van-gogh-collection"
+        ],
+        [
+          "Banque d’images et droits",
+          "https://www.krollermuller.nl/en/about-us/press/image-bank"
+        ]
+      ],
+      "founded": "1938",
+      "place": "Parc national De Hoge Veluwe, Otterlo",
+      "subtitle": "Art moderne, architecture et paysage",
+      "history": "La collection de Helene Kröller-Müller associe un fonds remarquable de Vincent van Gogh à l'histoire des avant-gardes. Le musée doit autant son identité à la collection qu'à sa relation au parc naturel et au jardin de sculptures.",
+      "architecture": "Le bâtiment de Henry van de Velde et ses extensions proposent de longues perspectives vitrées ouvertes sur le paysage. L'expérience de visite se prolonge à l'extérieur, parmi de nombreuses œuvres sculptées.",
+      "visit": "Van Gogh, Seurat, Picasso, Mondrian, art moderne et sculptures de plein air ; parcours paysager comme prolongement des galeries.",
+      "artdaci": "Terrasse du café le soir (Vincent van Gogh).",
+      "gallery": [
+        {
+          "caption": "Vue principale · entrée du musée",
+          "filename": "Entrance Kröller-Müller Museum.JPG",
+          "commons": "https://commons.wikimedia.org/wiki/File:Entrance_Kr%C3%B6ller-M%C3%BCller_Museum.JPG",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Entrance_Kr%C3%B6ller-M%C3%BCller_Museum.JPG?width=1000"
+        },
+        {
+          "caption": "Musée et parc naturel",
+          "filename": "Hoge Veluwe National Park, Kröller-Müller Museum - panoramio (1).jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Hoge_Veluwe_National_Park,_Kr%C3%B6ller-M%C3%BCller_Museum_-_panoramio_(1).jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Hoge_Veluwe_National_Park,_Kr%C3%B6ller-M%C3%BCller_Museum_-_panoramio_(1).jpg?width=1000"
+        },
+        {
+          "caption": "Collection et espaces du musée",
+          "filename": "A day at the museum (5131189372).jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:A_day_at_the_museum_(5131189372).jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/A_day_at_the_museum_(5131189372).jpg?width=1000"
+        },
+        {
+          "caption": "Présentation d’œuvres sculptées",
+          "filename": "Kröller Muller Museum - panoramio - Rokus Cornelis.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Kr%C3%B6ller_Muller_Museum_-_panoramio_-_Rokus_Cornelis.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Kr%C3%B6ller_Muller_Museum_-_panoramio_-_Rokus_Cornelis.jpg?width=1000"
+        }
+      ],
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Entrance_Kr%C3%B6ller-M%C3%BCller_Museum.JPG?width=1000",
+      "heroCommons": "https://commons.wikimedia.org/wiki/File:Entrance_Kr%C3%B6ller-M%C3%BCller_Museum.JPG",
+      "wiki_category": "https://commons.wikimedia.org/w/index.php?search=Mus%C3%A9e%20Kr%C3%B6ller-M%C3%BCller%20building%20interior&title=Special:MediaSearch&type=image"
+    },
+    {
+      "id": "yale",
+      "name": "Yale University Art Gallery",
+      "city": "New Haven",
+      "country": "États-Unis",
+      "period": "Collections encyclopédiques, de l’Antiquité à nos jours",
+      "collections": "Arts américains et européens, arts d’Afrique, d’Asie, des Amériques anciennes, numismatique et arts modernes au sein d’un musée universitaire.",
+      "masterpieces": "Le Café de nuit (Van Gogh) ; œuvres américaines et collections archéologiques de référence.",
+      "work": "Le Café de nuit",
+      "artist": "Vincent van Gogh",
+      "date": "1888",
+      "digital": "Catalogue de collection et ressources universitaires ; diffusion ouverte de nombreux contenus éligibles, sans supposer que chaque image possède la même licence.",
+      "rights": "L’Open Access de Yale est important, mais conditionné au statut public-domain de chaque objet ; ne pas le confondre avec les règles particulières d’autres établissements de Yale.",
+      "sources": [
+        [
+          "Site officiel",
+          "https://artgallery.yale.edu/"
+        ],
+        [
+          "Politique d’accès ouvert de Yale",
+          "https://guides.library.yale.edu/openaccess/home"
+        ],
+        [
+          "Guide des images Yale",
+          "https://guides.library.yale.edu/arthistoryresearch/image-videos"
+        ]
+      ],
+      "founded": "1832",
+      "place": "Chapel Street, New Haven (Connecticut)",
+      "subtitle": "Le musée d’art universitaire dans sa dimension encyclopédique",
+      "history": "Établie au XIXe siècle, la Yale University Art Gallery est l'une des plus anciennes galeries d'art universitaires aux États-Unis. Elle conjugue conservation, enseignement, accès public et recherche interdisciplinaire.",
+      "architecture": "L'aile conçue par Louis Kahn en 1953 est une référence de l'architecture muséale moderne, notamment par sa structure et son plafond géométrique. Les bâtiments adjacents complètent l'ensemble de galeries.",
+      "visit": "Art américain, européen, antique, africain, asiatique, art des Amériques, photographie et arts contemporains.",
+      "artdaci": "Le Café de nuit (Vincent van Gogh).",
+      "gallery": [
+        {
+          "caption": "Vue principale · façade de Louis Kahn",
+          "filename": "Yale University Art Gallery exterior.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Yale_University_Art_Gallery_exterior.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Yale_University_Art_Gallery_exterior.jpg?width=1000"
+        },
+        {
+          "caption": "Hall de sculptures",
+          "filename": "Sculpture Hall Yale University Art Gallery 1.JPG",
+          "commons": "https://commons.wikimedia.org/wiki/File:Sculpture_Hall_Yale_University_Art_Gallery_1.JPG",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Sculpture_Hall_Yale_University_Art_Gallery_1.JPG?width=1000"
+        },
+        {
+          "caption": "Escalier intérieur",
+          "filename": "Yale University Art Gallery Staircase.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Yale_University_Art_Gallery_Staircase.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Yale_University_Art_Gallery_Staircase.jpg?width=1000"
+        },
+        {
+          "caption": "Plafond géométrique",
+          "filename": "Triangle-ceiling.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Triangle-ceiling.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Triangle-ceiling.jpg?width=1000"
+        }
+      ],
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Yale_University_Art_Gallery_exterior.jpg?width=1000",
+      "heroCommons": "https://commons.wikimedia.org/wiki/File:Yale_University_Art_Gallery_exterior.jpg",
+      "wiki_category": "https://commons.wikimedia.org/w/index.php?search=Yale%20University%20Art%20Gallery%20building%20interior&title=Special:MediaSearch&type=image"
+    },
+    {
+      "id": "courtauld",
+      "name": "Courtauld Gallery",
+      "city": "Londres",
+      "country": "Royaume-Uni",
+      "period": "Du Moyen Âge au XXIe siècle, forte spécialisation impressionniste",
+      "collections": "Peintures, dessins, sculptures, arts décoratifs et fonds photographiques de recherche de l’Institut Courtauld.",
+      "masterpieces": "Un bar aux Folies-Bergère (Manet) ; Autoportrait à l’oreille bandée (Van Gogh).",
+      "work": "Autoportrait à l’oreille bandée",
+      "artist": "Vincent van Gogh",
+      "date": "1889",
+      "digital": "Inventaires de collection, photographies et projets de numérisation de l'archive photographique du Courtauld ; droits variables selon les ressources.",
+      "rights": "La consultation gratuite des notices n’autorise pas automatiquement toutes les reproductions ; droits à vérifier au cas par cas.",
+      "sources": [
+        [
+          "Site officiel",
+          "https://courtauld.ac.uk/gallery/"
+        ],
+        [
+          "Collection en ligne",
+          "https://courtauld.ac.uk/gallery/"
+        ],
+        [
+          "Archives et numérisation",
+          "https://courtauld.ac.uk/wp-content/uploads/2025/01/Annual-Report-and-Financial-Statements-for-2023-24.pdf"
+        ]
+      ],
+      "founded": "1932 (Courtauld Institute)",
+      "place": "Somerset House, Strand, Londres",
+      "subtitle": "Une collection étroitement liée à la recherche",
+      "history": "Constituée dans le contexte du Courtauld Institute of Art, la galerie est reconnue pour ses chefs-d'œuvre impressionnistes et post-impressionnistes, mais ses collections couvrent également les primitifs, la Renaissance et les arts graphiques.",
+      "architecture": "Installée dans Somerset House, elle occupe une partie d'un grand ensemble néoclassique londonien. Les escaliers, les espaces restaurés et la proximité de la cour intérieure participent à la visite.",
+      "visit": "Manet, Cézanne, Van Gogh, Gauguin, Renoir, Monet, dessins et arts décoratifs ; dialogue entre musée, bibliothèque et recherche.",
+      "artdaci": "Autoportrait à l’oreille bandée (Vincent van Gogh).",
+      "gallery": [
+        {
+          "caption": "Vue principale · Somerset House",
+          "filename": "Somerset House Courtyard.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Somerset_House_Courtyard.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Somerset_House_Courtyard.jpg?width=1000"
+        },
+        {
+          "caption": "Escalier de la Courtauld Gallery",
+          "filename": "Courtauld Gallery, Staircase.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Courtauld_Gallery,_Staircase.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Courtauld_Gallery,_Staircase.jpg?width=1000"
+        },
+        {
+          "caption": "Cour vue depuis la galerie",
+          "filename": "Courtyard of Somerset House from the Courtauld Gallery - geograph.org.uk - 1863149.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Courtyard_of_Somerset_House_from_the_Courtauld_Gallery_-_geograph.org.uk_-_1863149.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Courtyard_of_Somerset_House_from_the_Courtauld_Gallery_-_geograph.org.uk_-_1863149.jpg?width=1000"
+        },
+        {
+          "caption": "Architecture intérieure",
+          "filename": "Staircase at the Courtauld Gallery 1.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Staircase_at_the_Courtauld_Gallery_1.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Staircase_at_the_Courtauld_Gallery_1.jpg?width=1000"
+        }
+      ],
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Somerset_House_Courtyard.jpg?width=1000",
+      "heroCommons": "https://commons.wikimedia.org/wiki/File:Somerset_House_Courtyard.jpg",
+      "wiki_category": "https://commons.wikimedia.org/w/index.php?search=Courtauld%20Gallery%20building%20interior&title=Special:MediaSearch&type=image"
+    },
+    {
+      "id": "orangerie",
+      "name": "Musée de l’Orangerie",
+      "city": "Paris",
+      "country": "France",
+      "period": "Impressionnisme, post-impressionnisme et École de Paris",
+      "collections": "Ensemble monumental des Nymphéas de Claude Monet et collection Walter–Guillaume (Cézanne, Renoir, Picasso, Modigliani, Soutine).",
+      "masterpieces": "Les huit grands ensembles des Nymphéas, répartis en deux salles ovales.",
+      "work": "Les Nymphéas — Matin",
+      "artist": "Claude Monet",
+      "date": "1914–1926",
+      "digital": "Visites virtuelles et ressources photographiques autour des salles ovales ; les droits des images des galeries et des œuvres sont à contrôler séparément.",
+      "rights": "L’accès à une visite virtuelle n’équivaut pas à une licence d’extraction des panoramas ou des modèles. Le fichier de l’œuvre sélectionnée sur Commons porte une indication de domaine public.",
+      "sources": [
+        [
+          "Site officiel",
+          "https://www.musee-orangerie.fr/"
+        ],
+        [
+          "Visite virtuelle des Nymphéas",
+          "https://www.musee-orangerie.fr/fr/node/150"
+        ]
+      ],
+      "founded": "1927 (installation des Nymphéas)",
+      "place": "Jardin des Tuileries, Paris",
+      "subtitle": "L’expérience spatiale des Nymphéas de Monet",
+      "history": "Ancienne orangerie des Tuileries, le bâtiment a été transformé en espace d'exposition au XXe siècle. Il est associé au grand ensemble décoratif des Nymphéas conçu par Monet, auquel s'ajoute la collection Walter-Guillaume.",
+      "architecture": "Les deux salles ovales consacrées aux Nymphéas donnent une dimension environnementale aux tableaux : la lumière naturelle, les courbes et le déploiement panoramique structurent la perception. Les autres galeries présentent la collection moderne.",
+      "visit": "Huit compositions monumentales des Nymphéas, Renoir, Cézanne, Modigliani, Picasso, Matisse, Soutine et autres peintres du début du XXe siècle.",
+      "artdaci": "Les Nymphéas (Claude Monet, ensemble décoratif).",
+      "gallery": [
+        {
+          "caption": "Vue principale · façade du musée",
+          "filename": "Musée de l’Orangerie exterior.JPG",
+          "commons": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_de_l%E2%80%99Orangerie_exterior.JPG",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Mus%C3%A9e_de_l%E2%80%99Orangerie_exterior.JPG?width=1000"
+        },
+        {
+          "caption": "Salle ovale des Nymphéas",
+          "filename": "Musée de L'Orangerie Water Lilies Room.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_de_L'Orangerie_Water_Lilies_Room.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Mus%C3%A9e_de_L'Orangerie_Water_Lilies_Room.jpg?width=1000"
+        },
+        {
+          "caption": "Monet dans le parcours intérieur",
+          "filename": "Musée de l'Orangerie 01.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_de_l'Orangerie_01.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Mus%C3%A9e_de_l'Orangerie_01.jpg?width=1000"
+        },
+        {
+          "caption": "Intérieur du musée",
+          "filename": "Musée de l’Orangerie interior1.JPG",
+          "commons": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_de_l%E2%80%99Orangerie_interior1.JPG",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Mus%C3%A9e_de_l%E2%80%99Orangerie_interior1.JPG?width=1000"
+        }
+      ],
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Mus%C3%A9e_de_l%E2%80%99Orangerie_exterior.JPG?width=1000",
+      "heroCommons": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_de_l%E2%80%99Orangerie_exterior.JPG",
+      "wiki_category": "https://commons.wikimedia.org/w/index.php?search=Mus%C3%A9e%20de%20l%E2%80%99Orangerie%20building%20interior&title=Special:MediaSearch&type=image"
+    },
+    {
+      "id": "cenacolo",
+      "name": "Museo del Cenacolo Vinciano",
+      "city": "Milan",
+      "country": "Italie",
+      "period": "Renaissance milanaise, fin du XVe siècle",
+      "collections": "Musée monographique installé dans le réfectoire de Santa Maria delle Grazie, avec La Cène de Léonard et la Crucifixion de Donato Montorfano.",
+      "masterpieces": "La Cène (Léonard de Vinci) ; La Crucifixion (Montorfano).",
+      "work": "La Cène",
+      "artist": "Léonard de Vinci",
+      "date": "vers 1494–1498",
+      "digital": "Documentation patrimoniale et ressources historiques sur les restaurations ; diffusion de photographies ne signifie pas accès libre aux relevés et modèles scientifiques.",
+      "rights": "Le musée prévoit des demandes formelles pour les images ; aucune licence Open Access universelle n’a été identifiée sur le portail officiel.",
+      "sources": [
+        [
+          "Site officiel",
+          "https://cenacolovinciano.org/en/museum/"
+        ],
+        [
+          "Musée et œuvres",
+          "https://cenacolovinciano.org/en/museum/"
+        ],
+        [
+          "Application et médiation",
+          "https://cenacolovinciano.org/en/info/"
+        ],
+        [
+          "Demandes d’images",
+          "https://cenacolovinciano.org/en/contact/"
+        ]
+      ],
+      "founded": "Musée monographique autour de La Cène",
+      "place": "Réfectoire du couvent Santa Maria delle Grazie, Milan",
+      "subtitle": "Un monument peint dans son architecture d’origine",
+      "history": "Ce lieu de visite est organisé autour de La Cène de Léonard de Vinci, exécutée sur la paroi du réfectoire dominicain. Sa valeur tient au lien indissociable entre le tableau mural, son cadre monastique et les siècles d'histoire de sa conservation.",
+      "architecture": "Le réfectoire est un espace architectural patrimonial et non une galerie de tableaux transférables. Les parois, les proportions de la salle et les interventions de restauration participent à l'interprétation de la peinture. Le complexe de Santa Maria delle Grazie est inscrit au patrimoine mondial de l'UNESCO.",
+      "visit": "Visite centrée sur La Cène, sur la Crucifixion de Giovanni Donato da Montorfano située sur la paroi opposée et sur les conditions de conservation du monument.",
+      "artdaci": "La Cène (Léonard de Vinci).",
+      "gallery": [
+        {
+          "caption": "Vue principale · Santa Maria delle Grazie",
+          "filename": "Santa Maria delle Grazie a Milano.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Santa_Maria_delle_Grazie_a_Milano.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Santa_Maria_delle_Grazie_a_Milano.jpg?width=1000"
+        },
+        {
+          "caption": "Vue du complexe monumental",
+          "filename": "Exterior of Santa Maria delle Grazie (Milan).jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Exterior_of_Santa_Maria_delle_Grazie_(Milan).jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Exterior_of_Santa_Maria_delle_Grazie_(Milan).jpg?width=1000"
+        },
+        {
+          "caption": "Mur peint du réfectoire",
+          "filename": "Parete del cenacolo vinciano a Milano.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Parete_del_cenacolo_vinciano_a_Milano.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Parete_del_cenacolo_vinciano_a_Milano.jpg?width=1000"
+        },
+        {
+          "caption": "Autre vue de l’architecture",
+          "filename": "Santa Maria delle Grazie, Milano.jpg",
+          "commons": "https://commons.wikimedia.org/wiki/File:Santa_Maria_delle_Grazie,_Milano.jpg",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Santa_Maria_delle_Grazie,_Milano.jpg?width=1000"
+        }
+      ],
+      "hero": "https://commons.wikimedia.org/wiki/Special:FilePath/Santa_Maria_delle_Grazie_a_Milano.jpg?width=1000",
+      "heroCommons": "https://commons.wikimedia.org/wiki/File:Santa_Maria_delle_Grazie_a_Milano.jpg",
+      "wiki_category": "https://commons.wikimedia.org/w/index.php?search=Museo%20del%20Cenacolo%20Vinciano%20building%20interior&title=Special:MediaSearch&type=image"
+    }
+  ]
+}
