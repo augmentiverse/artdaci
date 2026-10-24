@@ -33,7 +33,7 @@ assert.equal(compiled.byteLength, group.compiledTargetsBytes);
 assert.equal(sha256(compiled), group.compiledTargetsSha256);
 assert.ok(compiled.byteLength > 3_000_000, "la cible compilée doit contenir les six tableaux");
 
-assert.deepEqual(vercel.rewrites, [{ source: "/ar/leonardo", destination: "/ar-leonardo.html" }]);
+assert.equal(vercel.rewrites.find(({ source }) => source === "/ar/leonardo")?.destination, "/ar-leonardo.html");
 assert.equal(vercel.redirects.length, 24, "les 24 routes QR individuelles doivent rester intactes");
 assert.equal(vercel.redirects.find(({ source }) => source === "/ar/monalisa")?.destination, "/ar.html?painting=mona-lisa");
 assert.equal(vercel.redirects.find(({ source }) => source === "/ar/lastsupper")?.destination, "/print-artwork.html?painting=last-supper");

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "1.0",
+  "groupId": "vermeer",
+  "artistId": "ve",
+  "artistName": "Johannes Vermeer",
+  "canonicalUrl": "https://artdaci.com/ar/vermeer",
+  "qrCode": "/assets/qr/groups/vermeer.png",
+  "compiledTargets": "/assets/targets/vermeer-six.mind",
+  "compiledTargetsBytes": 4153953,
+  "compiledTargetsSha256": "4d717575725de3c92194b2f223c3b5c295b186c3b16defd4661cb2dddec2966b",
+  "status": "ready",
+  "artworks": [
+    { "id": "ve05", "targetIndex": 0, "title": "L’Astronome", "targetSource": "/assets/targets-src/ve05.jpg", "targetSourceSha256": "06c82be7bb7647cc21d7af0def229e559b6b44b2d1ebe03947252410878fcb14", "url": "https://artdaci.com/ar/the-astronomer", "experience": "artwork-page" },
+    { "id": "ve04", "targetIndex": 1, "title": "L’Art de la peinture", "targetSource": "/assets/targets-src/ve04.jpg", "targetSourceSha256": "6b642ab6a74511d1815f14680cd7c31193e99d720454292cbf106fe7a6b95b21", "url": "https://artdaci.com/ar/the-art-of-painting", "experience": "artwork-page" },
+    { "id": "ve01", "targetIndex": 2, "title": "La Jeune Fille à la perle", "targetSource": "/assets/targets-src/ve01.jpg", "targetSourceSha256": "e389ace8f9644e81c1419630f30161fcd4723e0dab40bf7c3245178c2d6a2d3a", "url": "https://artdaci.com/ar/girl-with-a-pearl-earring", "experience": "image-ar" },
+    { "id": "ve06", "targetIndex": 3, "title": "La Femme à la balance", "targetSource": "/assets/targets-src/ve06.jpg", "targetSourceSha256": "99e3a70344740c2a06161c6766ccb1d05feb7c76f53c82940186fb3473e184b4", "url": "https://artdaci.com/ar/woman-holding-a-balance", "experience": "artwork-page" },
+    { "id": "ve02", "targetIndex": 4, "title": "Vue de Delft", "targetSource": "/assets/targets-src/ve02.jpg", "targetSourceSha256": "73f8dac1a27898aa1f3ec74278e86016ae0d4f17dc2dcac86ad7ba8d08510b00", "url": "https://artdaci.com/ar/view-of-delft", "experience": "image-ar" },
+    { "id": "ve03", "targetIndex": 5, "title": "La Laitière", "targetSource": "/assets/targets-src/ve03.jpg", "targetSourceSha256": "2efa5f79bacaad7d555a9e66cd1522514138297b44d9617014499aacca984cb4", "url": "https://artdaci.com/ar/the-milkmaid", "experience": "artwork-page" }
+  ]
+}
