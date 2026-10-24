@@ -1,0 +1,656 @@
+{
+  "schemaVersion": "1.0",
+  "lastEditorialReview": "2026-10-24",
+  "type": "ARTDACI informational museums",
+  "museums": [
+    {
+      "id": "rijksmuseum",
+      "tier": "information",
+      "name": {
+        "fr": "Rijksmuseum",
+        "en": "Rijksmuseum",
+        "ar": "متحف ريكز"
+      },
+      "location": {
+        "fr": "Amsterdam · Pays-Bas",
+        "en": "Amsterdam · Netherlands",
+        "ar": "أمستردام · هولندا"
+      },
+      "official": "https://www.rijksmuseum.nl/en",
+      "photoSearch": "Rijksmuseum Amsterdam exterior facade building",
+      "photo": {
+        "search": "Rijksmuseum Amsterdam exterior facade building"
+      },
+      "about": {
+        "fr": "Musée national consacré à l’art et à l’histoire des Pays-Bas, le Rijksmuseum relie la culture matérielle, le portrait et les chefs-d’œuvre du Siècle d’or dans un imposant édifice conçu par Pierre Cuypers.",
+        "en": "The Dutch national museum of art and history brings together the Golden Age, decorative arts and centuries of cultural heritage inside Pierre Cuypers’s monumental building.",
+        "ar": "يستعرض المتحف الوطني الهولندي الفن والتاريخ، ويجمع روائع العصر الذهبي والفنون الزخرفية في مبنى ضخم صممه بيير كاوبيرس."
+      },
+      "facts": [
+        {
+          "title": {
+            "fr": "Histoire et architecture",
+            "en": "History and architecture",
+            "ar": "التاريخ والعمارة"
+          },
+          "body": {
+            "fr": "Inauguré dans son bâtiment actuel en 1885, le musée a rouvert en 2013 après une vaste rénovation. Sa galerie d’honneur présente des peintures majeures de l’école hollandaise.",
+            "en": "Opened in its present building in 1885, the museum reopened in 2013 following a major renovation. Its Gallery of Honour features key works of Dutch painting.",
+            "ar": "افتُتح المبنى الحالي عام 1885، وأعيد افتتاحه عام 2013 بعد تجديد شامل. وتعرض قاعة الشرف أعمالًا بارزة من الرسم الهولندي."
+          },
+          "source": "https://www.rijksmuseum.nl/en"
+        },
+        {
+          "title": {
+            "fr": "Une œuvre au cœur d’ARTDACI",
+            "en": "An ARTDACI masterpiece",
+            "ar": "تحفة فنية ضمن ARTDACI"
+          },
+          "body": {
+            "fr": "La Laitière de Vermeer (vers 1660) transforme un geste domestique en étude magistrale de la lumière, de la couleur et de l’attention.",
+            "en": "Vermeer’s The Milkmaid (c. 1660) turns a domestic action into a study of light, colour and absorbed concentration.",
+            "ar": "تحوّل لوحة «بائعة الحليب» لفيرمير (نحو 1660) فعلًا يوميًا إلى دراسة للضوء واللون والتركيز."
+          },
+          "source": "https://www.rijksmuseum.nl/en/collection/object/The-Milkmaid--42dd0e658c2979aec8e144d2357c55c0"
+        }
+      ],
+      "spotlight": {
+        "fr": "La Laitière — Johannes Vermeer",
+        "en": "The Milkmaid — Johannes Vermeer",
+        "ar": "بائعة الحليب — يوهانس فيرمير"
+      },
+      "artworks": [],
+      "questions": []
+    },
+    {
+      "id": "moma",
+      "tier": "information",
+      "name": {
+        "fr": "Museum of Modern Art (MoMA)",
+        "en": "Museum of Modern Art (MoMA)",
+        "ar": "متحف الفن الحديث (موما)"
+      },
+      "location": {
+        "fr": "New York · États-Unis",
+        "en": "New York · United States",
+        "ar": "نيويورك · الولايات المتحدة"
+      },
+      "official": "https://www.moma.org/",
+      "photoSearch": "Museum of Modern Art MoMA Manhattan exterior facade",
+      "photo": {
+        "search": "Museum of Modern Art MoMA Manhattan exterior facade"
+      },
+      "about": {
+        "fr": "Fondé à New York en 1929, le MoMA compte parmi les institutions qui ont profondément transformé la manière de présenter l’art moderne et contemporain.",
+        "en": "Founded in New York in 1929, MoMA helped define how modern and contemporary art is collected, exhibited and interpreted.",
+        "ar": "تأسس متحف موما في نيويورك عام 1929، وأسهم في إعادة تشكيل طرق جمع الفن الحديث والمعاصر وعرضه وتفسيره."
+      },
+      "facts": [
+        {
+          "title": {
+            "fr": "Histoire et architecture",
+            "en": "History and architecture",
+            "ar": "التاريخ والعمارة"
+          },
+          "body": {
+            "fr": "Ses galeries de Manhattan couvrent notamment la peinture, la sculpture, la photographie, le cinéma, l’architecture et le design.",
+            "en": "Its Manhattan galleries connect painting, sculpture, photography, film, architecture and design.",
+            "ar": "تربط قاعاته في مانهاتن الرسم والنحت والتصوير والسينما والعمارة والتصميم."
+          },
+          "source": "https://www.moma.org/"
+        },
+        {
+          "title": {
+            "fr": "Une œuvre au cœur d’ARTDACI",
+            "en": "An ARTDACI masterpiece",
+            "ar": "تحفة فنية ضمن ARTDACI"
+          },
+          "body": {
+            "fr": "La Nuit étoilée (1889) de Van Gogh conjugue observation du ciel, souvenir et imagination, avec des mouvements de pinceau expressifs.",
+            "en": "Van Gogh’s The Starry Night (1889) combines observation, memory and imagination in an expressive vision of a nocturnal sky.",
+            "ar": "تجمع لوحة «ليلة النجوم» (1889) لفان غوخ بين الرصد والذاكرة والخيال في رؤية تعبيرية للسماء الليلية."
+          },
+          "source": "https://www.moma.org/collection/works/79802"
+        }
+      ],
+      "spotlight": {
+        "fr": "La Nuit étoilée — Vincent van Gogh",
+        "en": "The Starry Night — Vincent van Gogh",
+        "ar": "ليلة النجوم — فنسنت فان غوخ"
+      },
+      "artworks": [],
+      "questions": []
+    },
+    {
+      "id": "marmottan",
+      "tier": "information",
+      "name": {
+        "fr": "Musée Marmottan Monet",
+        "en": "Musée Marmottan Monet",
+        "ar": "متحف مارموتان مونيه"
+      },
+      "location": {
+        "fr": "Paris · France",
+        "en": "Paris · France",
+        "ar": "باريس · فرنسا"
+      },
+      "official": "https://www.marmottan.fr/",
+      "photoSearch": "Musée Marmottan Monet Paris exterior house building",
+      "photo": {
+        "search": "Musée Marmottan Monet Paris exterior house building"
+      },
+      "about": {
+        "fr": "Installé dans un ancien hôtel particulier près du bois de Boulogne, ce musée réunit une collection exceptionnelle d’œuvres de Claude Monet et d’autres artistes impressionnistes.",
+        "en": "Located in a former private residence near the Bois de Boulogne, this museum is renowned for its outstanding Monet holdings and Impressionist collection.",
+        "ar": "يقع المتحف في مقر سكني سابق قرب غابة بولونيا، ويشتهر بمجموعته الاستثنائية من أعمال كلود مونيه والانطباعيين."
+      },
+      "facts": [
+        {
+          "title": {
+            "fr": "Histoire et architecture",
+            "en": "History and architecture",
+            "ar": "التاريخ والعمارة"
+          },
+          "body": {
+            "fr": "Le legs de Michel Monet a considérablement enrichi les collections et permis de mieux suivre l’évolution des séries du peintre.",
+            "en": "The bequest of Michel Monet greatly expanded the collection and helps visitors follow the painter’s development across different series.",
+            "ar": "أثرى إرث ميشيل مونيه المجموعة وساعد على تتبع تطور الفنان عبر سلاسله الفنية المتعددة."
+          },
+          "source": "https://www.marmottan.fr/"
+        },
+        {
+          "title": {
+            "fr": "Une œuvre au cœur d’ARTDACI",
+            "en": "An ARTDACI masterpiece",
+            "ar": "تحفة فنية ضمن ARTDACI"
+          },
+          "body": {
+            "fr": "Impression, soleil levant (1872), vue du port du Havre, a donné son nom au mouvement impressionniste.",
+            "en": "Impression, Sunrise (1872), depicting the harbour of Le Havre, gave Impressionism its name.",
+            "ar": "منحت لوحة «انطباع، شروق الشمس» (1872)، التي تصور ميناء لوهافر، الحركة الانطباعية اسمها."
+          },
+          "source": "https://www.marmottan.fr/"
+        }
+      ],
+      "spotlight": {
+        "fr": "Impression, soleil levant — Claude Monet",
+        "en": "Impression, Sunrise — Claude Monet",
+        "ar": "انطباع، شروق الشمس — كلود مونيه"
+      },
+      "artworks": [],
+      "questions": []
+    },
+    {
+      "id": "kunsthistorisches",
+      "tier": "information",
+      "name": {
+        "fr": "Kunsthistorisches Museum",
+        "en": "Kunsthistorisches Museum",
+        "ar": "متحف تاريخ الفن"
+      },
+      "location": {
+        "fr": "Vienne · Autriche",
+        "en": "Vienna · Austria",
+        "ar": "فيينا · النمسا"
+      },
+      "official": "https://www.khm.at/en/",
+      "photoSearch": "Kunsthistorisches Museum Vienna exterior facade Austria",
+      "photo": {
+        "search": "Kunsthistorisches Museum Vienna exterior facade Austria"
+      },
+      "about": {
+        "fr": "Grand musée de Vienne consacré aux collections impériales des Habsbourg, le Kunsthistorisches Museum associe architecture monumentale et histoire de l’art européen.",
+        "en": "Vienna’s great museum of the Habsburg imperial collections combines monumental architecture with a broad history of European painting and material culture.",
+        "ar": "يجمع متحف فيينا الكبير لمقتنيات آل هابسبورغ الإمبراطورية بين العمارة الضخمة وتاريخ الرسم الأوروبي والثقافة المادية."
+      },
+      "facts": [
+        {
+          "title": {
+            "fr": "Histoire et architecture",
+            "en": "History and architecture",
+            "ar": "التاريخ والعمارة"
+          },
+          "body": {
+            "fr": "Ouvert en 1891 sur la Ringstrasse, le bâtiment fut conçu comme écrin des collections de peinture, d’antiquités et d’objets précieux.",
+            "en": "Opened in 1891 on Vienna’s Ringstrasse, the building was designed to house paintings, antiquities and precious objects from the imperial collections.",
+            "ar": "افتُتح عام 1891 في شارع رينغشتراسه بفيينا، وصُمم لعرض اللوحات والآثار والمقتنيات الثمينة الإمبراطورية."
+          },
+          "source": "https://www.khm.at/en/"
+        },
+        {
+          "title": {
+            "fr": "Une œuvre au cœur d’ARTDACI",
+            "en": "An ARTDACI masterpiece",
+            "ar": "تحفة فنية ضمن ARTDACI"
+          },
+          "body": {
+            "fr": "L’Art de la peinture de Vermeer interroge l’atelier, l’allégorie et la manière dont le peintre représente la lumière et l’espace.",
+            "en": "Vermeer’s The Art of Painting explores the artist’s studio, allegory and the representation of light and interior space.",
+            "ar": "تتناول لوحة «فن الرسم» لفيرمير مرسم الفنان والرمزية وتمثيل الضوء والفضاء الداخلي."
+          },
+          "source": "https://www.khm.at/en/"
+        }
+      ],
+      "spotlight": {
+        "fr": "L’Art de la peinture — Johannes Vermeer",
+        "en": "The Art of Painting — Johannes Vermeer",
+        "ar": "فن الرسم — يوهانس فيرمير"
+      },
+      "artworks": [],
+      "questions": []
+    },
+    {
+      "id": "uffizi",
+      "tier": "information",
+      "name": {
+        "fr": "Galeries des Offices",
+        "en": "Uffizi Galleries",
+        "ar": "معارض أوفيزي"
+      },
+      "location": {
+        "fr": "Florence · Italie",
+        "en": "Florence · Italy",
+        "ar": "فلورنسا · إيطاليا"
+      },
+      "official": "https://www.uffizi.it/en",
+      "photoSearch": "Uffizi Galleries Florence exterior courtyard Vasari",
+      "photo": {
+        "search": "Uffizi Galleries Florence exterior courtyard Vasari"
+      },
+      "about": {
+        "fr": "Au cœur de Florence, les Offices constituent l’un des grands lieux de découverte de la Renaissance italienne, depuis les premières expérimentations picturales jusqu’aux chefs-d’œuvre des Médicis.",
+        "en": "At the heart of Florence, the Uffizi offers a major journey through the Italian Renaissance and the collections shaped by the Medici family.",
+        "ar": "في قلب فلورنسا، يقدم الأوفيزي رحلة عبر عصر النهضة الإيطالية والمجموعات الفنية التي رعتها أسرة ميديشي."
+      },
+      "facts": [
+        {
+          "title": {
+            "fr": "Histoire et architecture",
+            "en": "History and architecture",
+            "ar": "التاريخ والعمارة"
+          },
+          "body": {
+            "fr": "Conçu au XVIe siècle par Giorgio Vasari, le complexe abritait initialement des bureaux administratifs ; il devint ensuite un lieu de conservation et d’exposition d’œuvres d’art.",
+            "en": "Designed by Giorgio Vasari in the sixteenth century, the complex began as administrative offices and gradually became a home for major art collections.",
+            "ar": "صمّم جورجو فازاري المجمع في القرن السادس عشر ليكون مكاتب إدارية، ثم تحول تدريجيًا إلى فضاء لحفظ الأعمال الفنية وعرضها."
+          },
+          "source": "https://www.uffizi.it/en"
+        },
+        {
+          "title": {
+            "fr": "Une œuvre au cœur d’ARTDACI",
+            "en": "An ARTDACI masterpiece",
+            "ar": "تحفة فنية ضمن ARTDACI"
+          },
+          "body": {
+            "fr": "L’Annonciation, œuvre de jeunesse de Léonard de Vinci, permet d’étudier la perspective, le paysage et le souci des détails naturels.",
+            "en": "Leonardo da Vinci’s early Annunciation is a rich example for studying perspective, landscape and close observation of nature.",
+            "ar": "تتيح لوحة «البشارة» المبكرة لليوناردو دافنشي دراسة المنظور والمناظر الطبيعية ودقة ملاحظة التفاصيل."
+          },
+          "source": "https://www.uffizi.it/en/artworks/annunciation-leonardo-da-vinci"
+        }
+      ],
+      "spotlight": {
+        "fr": "L’Annonciation — Léonard de Vinci",
+        "en": "The Annunciation — Leonardo da Vinci",
+        "ar": "البشارة — ليوناردو دافنشي"
+      },
+      "artworks": [],
+      "questions": []
+    },
+    {
+      "id": "national-gallery-london",
+      "tier": "information",
+      "name": {
+        "fr": "National Gallery (Londres)",
+        "en": "National Gallery (London)",
+        "ar": "المعرض الوطني (لندن)"
+      },
+      "location": {
+        "fr": "Londres · Royaume-Uni",
+        "en": "London · United Kingdom",
+        "ar": "لندن · المملكة المتحدة"
+      },
+      "official": "https://www.nationalgallery.org.uk/",
+      "photoSearch": "National Gallery London Trafalgar Square museum exterior",
+      "photo": {
+        "search": "National Gallery London Trafalgar Square museum exterior"
+      },
+      "about": {
+        "fr": "Sur Trafalgar Square, la National Gallery présente des peintures européennes du Moyen Âge au début du XXe siècle et permet de suivre les transformations des styles picturaux.",
+        "en": "Overlooking Trafalgar Square, the National Gallery presents European paintings from the Middle Ages to the early twentieth century.",
+        "ar": "يطل المعرض الوطني على ميدان ترافالغار ويعرض الرسم الأوروبي من العصور الوسطى حتى مطلع القرن العشرين."
+      },
+      "facts": [
+        {
+          "title": {
+            "fr": "Histoire et architecture",
+            "en": "History and architecture",
+            "ar": "التاريخ والعمارة"
+          },
+          "body": {
+            "fr": "Fondée en 1824, elle rend accessibles au public des œuvres issues de plusieurs écoles européennes, dans des galeries organisées historiquement.",
+            "en": "Founded in 1824, it offers public access to paintings from many European schools, broadly arranged in historical galleries.",
+            "ar": "تأسس عام 1824 ويتيح للجمهور أعمالًا من مدارس أوروبية متعددة، ضمن قاعات تُرتب بصورة تاريخية."
+          },
+          "source": "https://www.nationalgallery.org.uk/"
+        },
+        {
+          "title": {
+            "fr": "Une œuvre au cœur d’ARTDACI",
+            "en": "An ARTDACI masterpiece",
+            "ar": "تحفة فنية ضمن ARTDACI"
+          },
+          "body": {
+            "fr": "La version londonienne des Tournesols de Van Gogh est l’une de plusieurs peintures sur ce motif ; chaque version a sa propre histoire et provenance.",
+            "en": "The London Sunflowers is one of several versions Van Gogh painted. Each has its own history and provenance.",
+            "ar": "نسخة «دوار الشمس» الموجودة في لندن واحدة من نسخ عدة رسمها فان غوخ، ولكل منها تاريخها ومصدر اقتنائها."
+          },
+          "source": "https://www.nationalgallery.org.uk/paintings/vincent-van-gogh-sunflowers"
+        }
+      ],
+      "spotlight": {
+        "fr": "Les Tournesols (version de Londres) — Vincent van Gogh",
+        "en": "Sunflowers (London version) — Vincent van Gogh",
+        "ar": "دوار الشمس (نسخة لندن) — فنسنت فان غوخ"
+      },
+      "artworks": [],
+      "questions": []
+    },
+    {
+      "id": "kroller-muller",
+      "tier": "information",
+      "name": {
+        "fr": "Musée Kröller-Müller",
+        "en": "Kröller-Müller Museum",
+        "ar": "متحف كرولر مولر"
+      },
+      "location": {
+        "fr": "Otterlo · Pays-Bas",
+        "en": "Otterlo · Netherlands",
+        "ar": "أوترلو · هولندا"
+      },
+      "official": "https://krollermuller.nl/en",
+      "photoSearch": "Kröller-Müller Museum Otterlo sculpture garden museum building exterior",
+      "photo": {
+        "search": "Kröller-Müller Museum Otterlo sculpture garden museum building exterior"
+      },
+      "about": {
+        "fr": "Au sein du parc national De Hoge Veluwe, le Kröller-Müller rassemble une remarquable collection de Van Gogh et un jardin de sculptures où l’art dialogue avec le paysage.",
+        "en": "Inside De Hoge Veluwe National Park, the Kröller-Müller Museum combines an outstanding Van Gogh collection with a sculpture garden in a natural setting.",
+        "ar": "داخل متنزه دي هوخه فيلوفه الوطني، يجمع المتحف مجموعة بارزة لفان غوخ وحديقة منحوتات تتفاعل مع الطبيعة."
+      },
+      "facts": [
+        {
+          "title": {
+            "fr": "Histoire et architecture",
+            "en": "History and architecture",
+            "ar": "التاريخ والعمارة"
+          },
+          "body": {
+            "fr": "La collection fut constituée grâce à Helene Kröller-Müller, dont le projet associait art moderne, contemplation et éducation.",
+            "en": "The collection grew from Helene Kröller-Müller’s vision of bringing modern art, contemplation and learning together.",
+            "ar": "نشأت المجموعة من رؤية هيلين كرولر مولر التي جمعت بين الفن الحديث والتأمل والتعلم."
+          },
+          "source": "https://krollermuller.nl/en"
+        },
+        {
+          "title": {
+            "fr": "Une œuvre au cœur d’ARTDACI",
+            "en": "An ARTDACI masterpiece",
+            "ar": "تحفة فنية ضمن ARTDACI"
+          },
+          "body": {
+            "fr": "La Terrasse du café le soir (1888), peinte à Arles, est un exemple marquant des recherches de Van Gogh sur les couleurs nocturnes.",
+            "en": "Café Terrace at Night (1888), painted in Arles, shows Van Gogh’s experiments with colour and artificial light after dark.",
+            "ar": "تُظهر لوحة «شرفة المقهى ليلًا» (1888)، المرسومة في آرل، تجارب فان غوخ في اللون والإضاءة الاصطناعية ليلًا."
+          },
+          "source": "https://krollermuller.nl/en"
+        }
+      ],
+      "spotlight": {
+        "fr": "Terrasse du café le soir — Vincent van Gogh",
+        "en": "Café Terrace at Night — Vincent van Gogh",
+        "ar": "شرفة المقهى ليلًا — فنسنت فان غوخ"
+      },
+      "artworks": [],
+      "questions": []
+    },
+    {
+      "id": "yale-art-gallery",
+      "tier": "information",
+      "name": {
+        "fr": "Yale University Art Gallery",
+        "en": "Yale University Art Gallery",
+        "ar": "معرض الفنون بجامعة ييل"
+      },
+      "location": {
+        "fr": "New Haven · États-Unis",
+        "en": "New Haven · United States",
+        "ar": "نيو هيفن · الولايات المتحدة"
+      },
+      "official": "https://artgallery.yale.edu/",
+      "photoSearch": "Yale University Art Gallery New Haven exterior building Chapel Street",
+      "photo": {
+        "search": "Yale University Art Gallery New Haven exterior building Chapel Street"
+      },
+      "about": {
+        "fr": "Le musée universitaire de Yale articule conservation, recherche et enseignement. Ses collections couvrent de nombreuses époques et régions du monde.",
+        "en": "Yale’s university art museum connects collections with teaching, conservation and research across cultures and centuries.",
+        "ar": "يربط متحف جامعة ييل مقتنياته بالتعليم والحفظ والبحث عبر ثقافات وقرون متعددة."
+      },
+      "facts": [
+        {
+          "title": {
+            "fr": "Histoire et architecture",
+            "en": "History and architecture",
+            "ar": "التاريخ والعمارة"
+          },
+          "body": {
+            "fr": "Fondée en 1832, la galerie compte parmi les plus anciens musées d’art universitaires des États-Unis et met ses collections au service d’un large public.",
+            "en": "Founded in 1832, the gallery is among the oldest university art museums in the United States and serves a broad public.",
+            "ar": "تأسس المعرض عام 1832، وهو من أقدم متاحف الفن الجامعية في الولايات المتحدة ويخدم جمهورًا واسعًا."
+          },
+          "source": "https://artgallery.yale.edu/"
+        },
+        {
+          "title": {
+            "fr": "Une œuvre au cœur d’ARTDACI",
+            "en": "An ARTDACI masterpiece",
+            "ar": "تحفة فنية ضمن ARTDACI"
+          },
+          "body": {
+            "fr": "Le Café de nuit de Van Gogh dépeint un intérieur à la perspective saisissante, où le rouge et le vert intensifient l’atmosphère psychologique.",
+            "en": "Van Gogh’s The Night Café uses dramatic perspective and red-green contrasts to intensify the atmosphere of an interior.",
+            "ar": "تستخدم لوحة «المقهى الليلي» لفان غوخ منظورًا دراميًا وتباين الأحمر والأخضر لتعميق الجو النفسي للمكان."
+          },
+          "source": "https://artgallery.yale.edu/"
+        }
+      ],
+      "spotlight": {
+        "fr": "Le Café de nuit — Vincent van Gogh",
+        "en": "The Night Café — Vincent van Gogh",
+        "ar": "المقهى الليلي — فنسنت فان غوخ"
+      },
+      "artworks": [],
+      "questions": []
+    },
+    {
+      "id": "courtauld",
+      "tier": "information",
+      "name": {
+        "fr": "Courtauld Gallery",
+        "en": "Courtauld Gallery",
+        "ar": "معرض كورتولد"
+      },
+      "location": {
+        "fr": "Londres · Royaume-Uni",
+        "en": "London · United Kingdom",
+        "ar": "لندن · المملكة المتحدة"
+      },
+      "official": "https://courtauld.ac.uk/gallery/",
+      "photoSearch": "The Courtauld Gallery Somerset House London courtyard exterior",
+      "photo": {
+        "search": "The Courtauld Gallery Somerset House London courtyard exterior"
+      },
+      "about": {
+        "fr": "Située à Somerset House, la Courtauld Gallery est renommée pour ses peintures impressionnistes et postimpressionnistes et son lien avec l’étude scientifique de l’art.",
+        "en": "Located in Somerset House, the Courtauld Gallery is celebrated for Impressionist and Post-Impressionist painting and for its close relationship with art-historical research.",
+        "ar": "يقع معرض كورتولد في سومرست هاوس، ويشتهر بأعمال الانطباعيين وما بعد الانطباعيين وبصلته بالدراسات الأكاديمية للفن."
+      },
+      "facts": [
+        {
+          "title": {
+            "fr": "Histoire et architecture",
+            "en": "History and architecture",
+            "ar": "التاريخ والعمارة"
+          },
+          "body": {
+            "fr": "Associée au Courtauld Institute of Art, elle fait dialoguer expositions, conservation, recherche et formation en histoire de l’art.",
+            "en": "Connected to the Courtauld Institute of Art, it brings exhibitions, conservation and art-history education together.",
+            "ar": "يرتبط المعرض بمعهد كورتولد للفنون، ويجمع بين المعارض والترميم والبحث وتعليم تاريخ الفن."
+          },
+          "source": "https://courtauld.ac.uk/gallery/"
+        },
+        {
+          "title": {
+            "fr": "Une œuvre au cœur d’ARTDACI",
+            "en": "An ARTDACI masterpiece",
+            "ar": "تحفة فنية ضمن ARTDACI"
+          },
+          "body": {
+            "fr": "L’Autoportrait à l’oreille bandée de Van Gogh (1889) invite à étudier les liens entre représentation de soi, couleur et histoire de l’artiste.",
+            "en": "Van Gogh’s Self-Portrait with Bandaged Ear (1889) invites study of self-representation, colour and the artist’s life.",
+            "ar": "تدعو لوحة «صورة ذاتية بأذن مضمدة» لفان غوخ (1889) إلى دراسة التمثيل الذاتي واللون وسيرة الفنان."
+          },
+          "source": "https://courtauld.ac.uk/gallery/"
+        }
+      ],
+      "spotlight": {
+        "fr": "Autoportrait à l’oreille bandée — Vincent van Gogh",
+        "en": "Self-Portrait with Bandaged Ear — Vincent van Gogh",
+        "ar": "صورة ذاتية بأذن مضمدة — فنسنت فان غوخ"
+      },
+      "artworks": [],
+      "questions": []
+    },
+    {
+      "id": "orangerie",
+      "tier": "information",
+      "name": {
+        "fr": "Musée de l’Orangerie",
+        "en": "Musée de l’Orangerie",
+        "ar": "متحف الأورانجري"
+      },
+      "location": {
+        "fr": "Paris · France",
+        "en": "Paris · France",
+        "ar": "باريس · فرنسا"
+      },
+      "official": "https://www.musee-orangerie.fr/en",
+      "photoSearch": "Musée de l’Orangerie Paris exterior entrance Tuileries garden",
+      "photo": {
+        "search": "Musée de l’Orangerie Paris exterior entrance Tuileries garden"
+      },
+      "about": {
+        "fr": "Installé dans le jardin des Tuileries, le musée de l’Orangerie est célèbre pour les vastes compositions des Nymphéas de Monet, présentées dans deux salles ovales.",
+        "en": "Set in the Tuileries Garden, the Musée de l’Orangerie is known for Monet’s monumental Water Lilies panels displayed in two oval rooms.",
+        "ar": "يقع متحف الأورانجري في حديقة التويلري، ويشتهر بلوحات «زنابق الماء» الضخمة لمونيه المعروضة في قاعتين بيضاويتين."
+      },
+      "facts": [
+        {
+          "title": {
+            "fr": "Histoire et architecture",
+            "en": "History and architecture",
+            "ar": "التاريخ والعمارة"
+          },
+          "body": {
+            "fr": "Les ensembles furent installés après la mort de Monet. Leur dispositif architectural favorise une perception panoramique et une visite contemplative.",
+            "en": "Installed after Monet’s death, the panels form a panoramic environment designed for sustained, contemplative viewing.",
+            "ar": "وُضعت هذه اللوحات بعد وفاة مونيه، ويخلق ترتيبها المعماري بيئة بانورامية للتأمل والمشاهدة الهادئة."
+          },
+          "source": "https://www.musee-orangerie.fr/en"
+        },
+        {
+          "title": {
+            "fr": "Une œuvre au cœur d’ARTDACI",
+            "en": "An ARTDACI masterpiece",
+            "ar": "تحفة فنية ضمن ARTDACI"
+          },
+          "body": {
+            "fr": "Les grands panneaux des Nymphéas appartiennent à une série vaste dont les versions sont conservées dans plusieurs musées : leur identification exacte est essentielle.",
+            "en": "The large Water Lilies panels belong to a much wider series held in different museums; individual versions should not be conflated.",
+            "ar": "تنتمي لوحات «زنابق الماء» الجدارية إلى سلسلة أوسع موزعة على متاحف متعددة، لذا يجب التمييز بين نسخها بدقة."
+          },
+          "source": "https://www.musee-orangerie.fr/en"
+        }
+      ],
+      "spotlight": {
+        "fr": "Les Nymphéas (grands panneaux) — Claude Monet",
+        "en": "Water Lilies (large panels) — Claude Monet",
+        "ar": "زنابق الماء (لوحات جدارية) — كلود مونيه"
+      },
+      "artworks": [],
+      "questions": []
+    },
+    {
+      "id": "cenacolo-vinciano",
+      "tier": "information",
+      "name": {
+        "fr": "Musée du Cénacle de Léonard",
+        "en": "Museo del Cenacolo Vinciano",
+        "ar": "متحف العشاء الأخير"
+      },
+      "location": {
+        "fr": "Milan · Italie",
+        "en": "Milan · Italy",
+        "ar": "ميلانو · إيطاليا"
+      },
+      "official": "https://cenacolovinciano.org/en/",
+      "photoSearch": "Santa Maria delle Grazie Milan exterior brick church refectory",
+      "photo": {
+        "search": "Santa Maria delle Grazie Milan exterior brick church refectory"
+      },
+      "about": {
+        "fr": "Le musée du Cénacle préserve un lieu exceptionnel : la grande peinture murale de Léonard de Vinci y demeure sur le mur du réfectoire du couvent de Santa Maria delle Grazie.",
+        "en": "The Cenacolo museum preserves an exceptional in-situ work: Leonardo’s mural remains on the wall of the former refectory of Santa Maria delle Grazie.",
+        "ar": "يحافظ متحف العشاء الأخير على عمل استثنائي في موضعه الأصلي، إذ لا تزال جدارية ليوناردو على جدار قاعة الطعام السابقة لدير سانتا ماريا ديلي غراتسيه."
+      },
+      "facts": [
+        {
+          "title": {
+            "fr": "Histoire et architecture",
+            "en": "History and architecture",
+            "ar": "التاريخ والعمارة"
+          },
+          "body": {
+            "fr": "Peinte à la fin du XVe siècle, l’œuvre a nécessité de nombreux soins de conservation. La visite du site est organisée pour protéger la peinture et son environnement.",
+            "en": "Painted at the end of the fifteenth century, the mural has required extensive conservation. Visits are managed to protect the fragile artwork and its setting.",
+            "ar": "رُسمت الجدارية في أواخر القرن الخامس عشر وتطلبت عناية كبيرة بالترميم. وتُنظم الزيارات لحماية العمل الهش وبيئته."
+          },
+          "source": "https://cenacolovinciano.org/en/"
+        },
+        {
+          "title": {
+            "fr": "Une œuvre au cœur d’ARTDACI",
+            "en": "An ARTDACI masterpiece",
+            "ar": "تحفة فنية ضمن ARTDACI"
+          },
+          "body": {
+            "fr": "La Cène n’est pas une toile déplacée dans un musée : son contexte architectural original est indispensable à l’interprétation historique de l’œuvre.",
+            "en": "The Last Supper is not a portable canvas moved into a gallery. Its original architectural context is central to understanding the work.",
+            "ar": "«العشاء الأخير» ليست لوحة منقولة إلى معرض، بل يرتبط فهمها التاريخي بموقعها المعماري الأصلي."
+          },
+          "source": "https://cenacolovinciano.org/en/"
+        }
+      ],
+      "spotlight": {
+        "fr": "La Cène — Léonard de Vinci",
+        "en": "The Last Supper — Leonardo da Vinci",
+        "ar": "العشاء الأخير — ليوناردو دافنشي"
+      },
+      "artworks": [],
+      "questions": []
+    }
+  ]
+}
