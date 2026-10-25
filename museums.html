@@ -90,6 +90,8 @@ a{color:inherit}button{font:inherit;cursor:pointer}button:disabled{cursor:not-al
 .quiz-result-actions{display:flex;flex-wrap:wrap;gap:10px}
 @media(max-width:550px){.quiz-result-actions{flex-direction:column;align-items:stretch}.quiz-result-actions .quiz-primary{width:100%}.quiz-progress{flex-wrap:wrap}}
 .atlas-entry-wrap{text-align:center;margin:0 auto 26px}.atlas-entry{display:inline-flex;align-items:center;justify-content:center;min-height:47px;padding:12px 19px;border:1px solid var(--accent);border-radius:12px;background:#d8b87c17;color:var(--accent);font-weight:700;text-decoration:none;max-width:100%}.atlas-entry:hover,.atlas-entry:focus-visible{background:#d8b87c2d}
+
+.atlas-entry{margin:20px 0 1px}.atlas-entry-link{display:inline-flex;align-items:center;text-decoration:none;min-height:44px;padding:10px 17px;border:1px solid #ba9461;border-radius:10px;color:#f0cf9b;background:#342d27;font-size:.86rem;font-weight:710}.atlas-entry-link:hover{background:#493a2a;color:#fff4e5}
 </style>
   
 </head>
@@ -114,6 +116,7 @@ a{color:inherit}button{font:inherit;cursor:pointer}button:disabled{cursor:not-al
         <p class="eyebrow" id="intro-eyebrow">PARCOURS CULTUREL</p>
         <h1 id="page-title">Six musées, mille histoires</h1>
         <p class="intro-description" id="intro-description">Explorez les musées liés aux chefs-d’œuvre d’ARTDACI, une découverte à la fois.</p>
+        <p class="atlas-entry"><a id="atlas-entry-link" class="atlas-entry-link" href="museum-atlas/index.html">Atlas documentaire · 17 musées, galeries de photographies et sources ↗</a></p>
       </section>
       <div class="atlas-entry-wrap"><a class="atlas-entry" id="atlas-entry" href="museums-atlas.html" lang="fr">Découvrir l’atlas photographique des 17 musées ↗</a></div>
       <nav class="museum-selector" id="museum-selector" aria-label="Choisir un musée"></nav>
@@ -980,6 +983,7 @@ function render() {
   text('intro-eyebrow',u.eyebrow);
   text('page-title',u.title);
   text('intro-description',u.intro);
+  text('atlas-entry-link',({fr:'Atlas documentaire · 17 musées, photos et sources ↗',en:'Research Atlas · 17 museums, photographs and sources ↗',ar:'الأطلس الوثائقي · 17 متحفًا وصور ومصادر ↗'})[lang]);
   text('atlas-entry',{fr:'Découvrir l’atlas photographique des 17 musées ↗',en:'Explore the 17-museum photographic atlas (in French) ↗',ar:'استكشف الأطلس المصوّر للمتاحف السبعة عشر (بالفرنسية) ↗'}[lang]);
   text('museum-title',local(museum.name));
   text('museum-location',local(museum.location));
