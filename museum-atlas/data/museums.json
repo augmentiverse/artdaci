@@ -1,7 +1,7 @@
 {
-  "version": "1.0",
-  "generated": "2026-10-25",
-  "editorial": "ARTDACI · atlas des musées · documents de recherche et photographies réelles",
+  "version": "2.0",
+  "generated": "2026-10-26",
+  "editorial": "ARTDACI Atlas des musées — dossiers scientifiques enrichis",
   "notice": "Photographies issues de Wikimedia Commons. Vérifier les licences et auteurs sur la fiche de chaque fichier ; elles ne sont pas nécessairement du domaine public.",
   "museums": [
     {
@@ -64,7 +64,41 @@
         "caption": "Vue extérieure / façade",
         "page": "https://commons.wikimedia.org/wiki/File:Louvre_Museum_Full_view.jpg",
         "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Louvre%20Museum%20Full%20view.jpg?width=2048"
-      }
+      },
+      "timeline": [
+        {
+          "date": "1190",
+          "title": "Forteresse de Philippe Auguste"
+        },
+        {
+          "date": "1793",
+          "title": "Ouverture au public des collections"
+        },
+        {
+          "date": "1989",
+          "title": "Pyramide d’I. M. Pei"
+        },
+        {
+          "date": "2019",
+          "title": "Nouvelle scénographie de la Salle des États"
+        }
+      ],
+      "researchTopics": [
+        {
+          "title": "Le musée-palais",
+          "body": "Les fondations médiévales, façades classiques, salles de cérémonie et galeries forment une archive monumentale de la monarchie et des usages de l’État. Le réaménagement moderne organise des parcours dans plusieurs ailes."
+        },
+        {
+          "title": "Les collections au-delà des tableaux",
+          "body": "Les départements de conservation associent antiquités, arts de l’Islam, sculptures, objets d’art et arts graphiques à la peinture européenne. La Joconde est un point d’entrée, mais ne résume pas l’institution."
+        },
+        {
+          "title": "Provenance et recherche",
+          "body": "Inventaires, archives et données des œuvres aident à comprendre transferts, legs, acquisitions et dépôts. Les notices évoluent avec les travaux de catalogage."
+        }
+      ],
+      "conservationDetail": "La conservation nécessite de surveiller lumière, climat, déplacements et fréquentation. Laboratoires, équipes de restauration et documentalistes croisent analyses matérielles et histoire des œuvres.",
+      "digitalDetail": "Le catalogue collections.louvre.fr donne accès à une documentation très vaste. La consultation des notices ne signifie pas que toutes les images sont librement réutilisables."
     },
     {
       "id": "orsay",
@@ -99,6 +133,14 @@
         {
           "name": "Ressource institutionnelle",
           "url": "https://histoiredesarts.culture.gouv.fr/Toutes-les-ressources/Musee-d-Orsay/Histoire-du-musee-d-Orsay"
+        },
+        {
+          "name": "Histoire de la gare et du musée",
+          "url": "https://www.musee-orsay.fr/fr/articles/histoire-du-musee-60"
+        },
+        {
+          "name": "Fonds documentaires de l’histoire du musée",
+          "url": "https://www.musee-orsay.fr/fr/ressources/ressources-scientifiques/les-fonds-histoire-du-musee"
         }
       ],
       "gallery": [
@@ -126,7 +168,41 @@
         "caption": "Vue extérieure / façade",
         "page": "https://commons.wikimedia.org/wiki/File:Front_view_of_the_Mus%C3%A9e_d'Orsay.jpg",
         "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Front%20view%20of%20the%20Mus%C3%A9e%20d'Orsay.jpg?width=2048"
-      }
+      },
+      "timeline": [
+        {
+          "date": "1900",
+          "title": "Gare de l’Exposition universelle"
+        },
+        {
+          "date": "1939",
+          "title": "Déclin de l’usage ferroviaire initial"
+        },
+        {
+          "date": "1986",
+          "title": "Inauguration du musée d’Orsay"
+        },
+        {
+          "date": "Depuis 1986",
+          "title": "Évolution des galeries et des fonds de recherche"
+        }
+      ],
+      "researchTopics": [
+        {
+          "title": "Un bâtiment comme première œuvre",
+          "body": "La nef vitrée, les horloges et l’ossature métallique illustrent le progrès industriel auquel répondent les arts de la fin du XIXe siècle."
+        },
+        {
+          "title": "Une période charnière",
+          "body": "L’intervalle 1848–1914 rassemble réalisme, impressionnisme, symbolisme, sculpture et photographie. Il permet de rapprocher innovations picturales et transformations sociales."
+        },
+        {
+          "title": "Van Gogh et Monet",
+          "body": "L’Autoportrait de 1889 conservé à Orsay doit être identifié précisément ; il appartient à une série distincte des autres autoportraits. Les ponts peints par Monet illustrent la modernité du paysage."
+        }
+      ],
+      "conservationDetail": "L’étude des supports, pigments et tirages photographiques témoigne des transformations techniques du XIXe siècle. Le musée conserve aussi des archives documentant la transformation de la gare.",
+      "digitalDetail": "Le musée propose dossiers d’expositions, notices et fonds sur la gare d’Orsay. Les usages des illustrations dépendent des ayants droit et des crédits."
     },
     {
       "id": "mauritshuis",
@@ -160,6 +236,10 @@
         {
           "name": "Catalogue",
           "url": "https://www.mauritshuis.nl/en/our-collection"
+        },
+        {
+          "name": "Histoire de la collection",
+          "url": "https://www.mauritshuis.nl/en/what-s-on/always-on-show/welcome-to-the-mauritshuis/history-of-the-collection"
         }
       ],
       "gallery": [
@@ -187,7 +267,41 @@
         "caption": "Vue extérieure / façade",
         "page": "https://commons.wikimedia.org/wiki/File:Mauritshuis_seen_from_the_water.jpg",
         "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Mauritshuis%20seen%20from%20the%20water.jpg?width=2048"
-      }
+      },
+      "timeline": [
+        {
+          "date": "XVIIe siècle",
+          "title": "Construction du palais de Johan Maurits"
+        },
+        {
+          "date": "1774",
+          "title": "Galerie de Guillaume V"
+        },
+        {
+          "date": "1822",
+          "title": "Ouverture au Mauritshuis"
+        },
+        {
+          "date": "2014",
+          "title": "Réouverture après rénovation et extension"
+        }
+      ],
+      "researchTopics": [
+        {
+          "title": "Une collection royale devenue publique",
+          "body": "La collection de Guillaume V, transportée en France puis restituée, est à l’origine de la Galerie royale de peintures. Acquisitions et donations la prolongent."
+        },
+        {
+          "title": "Un écrin domestique",
+          "body": "La dimension des salles du palais influe sur la contemplation de Vermeer, Rembrandt et Fabritius ; la modernisation a ajouté un accès souterrain et des espaces de médiation."
+        },
+        {
+          "title": "Histoire coloniale",
+          "body": "Le fondateur du palais gouverna le Brésil néerlandais au service d’une compagnie coloniale. Le musée examine aujourd’hui l’histoire de son bâtiment dans ce contexte."
+        }
+      ],
+      "conservationDetail": "Les recherches matérielles sur les pigments, le vieillissement et la restauration complètent l’analyse du tableau. Les études autour de La Jeune Fille à la perle rendent ces méthodes particulièrement lisibles.",
+      "digitalDetail": "La collection en ligne et les dossiers de recherche relient données d’œuvres, histoire du bâtiment et résultats de conservation."
     },
     {
       "id": "czartoryski",
@@ -217,6 +331,14 @@
         {
           "name": "Musée Czartoryski",
           "url": "https://mnk.pl/en/wystawy/mnk-czartoryski-museum/"
+        },
+        {
+          "name": "Présentation institutionnelle",
+          "url": "https://mnk.pl/en/branches/czartoryski-museum/"
+        },
+        {
+          "name": "Notice : Lady with an Ermine",
+          "url": "https://mnk.pl/en/collections/lady-with-an-ermine/"
         }
       ],
       "gallery": [
@@ -244,7 +366,41 @@
         "caption": "Vue extérieure / façade",
         "page": "https://commons.wikimedia.org/wiki/File:Czartoryski_Museum%2C_Monastery%2C_6_Pijarska_street%2C_Old_Town%2C_Krak%C3%B3w%2C_Poland.jpg",
         "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Czartoryski%20Museum%2C%20Monastery%2C%206%20Pijarska%20street%2C%20Old%20Town%2C%20Krak%C3%B3w%2C%20Poland.jpg?width=2048"
-      }
+      },
+      "timeline": [
+        {
+          "date": "1801",
+          "title": "Fondation de la collection à Puławy"
+        },
+        {
+          "date": "1831",
+          "title": "Exil des collections à Paris"
+        },
+        {
+          "date": "1876",
+          "title": "Installation à Cracovie"
+        },
+        {
+          "date": "2016–2023",
+          "title": "Acquisition par l’État et réouvertures après rénovation"
+        }
+      ],
+      "researchTopics": [
+        {
+          "title": "La collection comme mémoire nationale",
+          "body": "Izabela Czartoryska réunit souvenirs de la Pologne, peintures, armes, arts décoratifs et curiosités. Les objets racontent une histoire politique autant qu’une histoire esthétique."
+        },
+        {
+          "title": "Destins d’œuvres",
+          "body": "La Dame à l’hermine fut récupérée après la Seconde Guerre mondiale ; le Portrait de jeune homme de Raphaël demeure porté disparu. Leurs itinéraires permettent d’étudier saisies et restitutions."
+        },
+        {
+          "title": "Un ensemble architectural",
+          "body": "Le palais, l’Arsenal et le monastère sont des espaces complémentaires. Des dispositifs pédagogiques et d’accessibilité ont accompagné leur rénovation."
+        }
+      ],
+      "conservationDetail": "L’histoire de cette collection exige une attention aux risques de dispersion et au travail d’inventaire. Les recherches de provenance complètent les approches de restauration.",
+      "digitalDetail": "Le catalogue du Musée national de Cracovie fournit notices, matériaux, numéros d’inventaire et informations de droits ; celui de La Dame à l’hermine mentionne CC0."
     },
     {
       "id": "van-gogh-museum",
@@ -279,6 +435,10 @@
         {
           "name": "Van Gogh Worldwide",
           "url": "https://vangoghworldwide.org/"
+        },
+        {
+          "name": "Plan stratégique et profil du musée",
+          "url": "https://www.vangoghmuseum.nl/assets/50eb1f35-21cc-4851-8dee-f2ea31ef1f12/Van-Gogh-Museum_Strategic-Plan_2025-2028?c=8f8d30032d4ef78d3b157c21b062c1141ad79db7b1cfabb34d419a7692336c73"
         }
       ],
       "gallery": [
@@ -306,7 +466,41 @@
         "caption": "Vue extérieure / façade",
         "page": "https://commons.wikimedia.org/wiki/File:Exterior_of_the_Van_Gogh_Museum.jpg",
         "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Exterior%20of%20the%20Van%20Gogh%20Museum.jpg?width=2048"
-      }
+      },
+      "timeline": [
+        {
+          "date": "1890–1925",
+          "title": "Préservation familiale par Theo et Jo"
+        },
+        {
+          "date": "1973",
+          "title": "Ouverture du musée d’Amsterdam"
+        },
+        {
+          "date": "1999",
+          "title": "Extension de Kisho Kurokawa"
+        },
+        {
+          "date": "2015",
+          "title": "Nouvelle entrée des visiteurs"
+        }
+      ],
+      "researchTopics": [
+        {
+          "title": "Une collection exceptionnelle",
+          "body": "Le musée annonce environ 205 peintures, 500 dessins et plus de 800 lettres. Ces sources permettent de relier l’évolution stylistique du peintre à ses échanges et projets."
+        },
+        {
+          "title": "Les lettres et la biographie",
+          "body": "La correspondance donne des éléments contemporains aux œuvres. Elle permet de confronter les récits populaires aux documents."
+        },
+        {
+          "title": "La Chambre à coucher",
+          "body": "La version réalisée à Arles en 1888 conservée au musée doit être distinguée d’autres versions du même motif. Les notices ARTDACI doivent préciser cette différence."
+        }
+      ],
+      "conservationDetail": "Les pigments sensibles à la lumière et les matériaux vieillissants imposent des conditions de présentation prudentes. Les études techniques renseignent sur les changements de couleur.",
+      "digitalDetail": "Van Gogh Worldwide facilite la confrontation des collections de plusieurs institutions ; les données de catalogage et les droits des reproductions ne sont pas identiques."
     },
     {
       "id": "national-gallery-of-art-washington",
@@ -368,7 +562,41 @@
         "caption": "Vue extérieure / façade",
         "page": "https://commons.wikimedia.org/wiki/File:National_Gallery_of_Art_-_West_Building.JPG",
         "url": "https://commons.wikimedia.org/wiki/Special:FilePath/National%20Gallery%20of%20Art%20-%20West%20Building.JPG?width=2048"
-      }
+      },
+      "timeline": [
+        {
+          "date": "1941",
+          "title": "Ouverture du West Building"
+        },
+        {
+          "date": "1978",
+          "title": "Inauguration de l’East Building de Pei"
+        },
+        {
+          "date": "1999",
+          "title": "Ouverture du Sculpture Garden"
+        },
+        {
+          "date": "2016",
+          "title": "Réaménagement de l’East Building"
+        }
+      ],
+      "researchTopics": [
+        {
+          "title": "Deux langages architecturaux",
+          "body": "John Russell Pope dessine un bâtiment classique pour les œuvres anciennes ; I. M. Pei imagine un ensemble triangulaire pour l’art moderne. Un passage relie les deux parties."
+        },
+        {
+          "title": "Collections et mission publique",
+          "body": "La galerie conserve plus de 160 000 œuvres et propose un accès gratuit. Ginevra de’ Benci, Woman Holding a Balance et Woman with a Parasol sont les associations ARTDACI."
+        },
+        {
+          "title": "Jardin et espace urbain",
+          "body": "Les sculptures en plein air prolongent la visite vers le National Mall et soulignent la relation entre musée et espace civique."
+        }
+      ],
+      "conservationDetail": "Les équipes de conservation et de recherche étudient supports, pigments, restauration et provenance. Les catalogues présentent le contexte et les déplacements des œuvres.",
+      "digitalDetail": "Le programme Open Access permet la réutilisation de nombreuses images et données ; photographies des bâtiments et éléments protégés peuvent relever de conditions différentes."
     },
     {
       "id": "rijksmuseum",
@@ -430,7 +658,41 @@
         "caption": "Vue extérieure / façade",
         "page": "https://commons.wikimedia.org/wiki/File:Amsterdam_Rijksmuseum_front_(detail).jpg",
         "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Amsterdam%20Rijksmuseum%20front%20(detail).jpg?width=2048"
-      }
+      },
+      "timeline": [
+        {
+          "date": "1800",
+          "title": "Ouverture initiale à La Haye"
+        },
+        {
+          "date": "1808",
+          "title": "Transfert des collections à Amsterdam"
+        },
+        {
+          "date": "1885",
+          "title": "Bâtiment de Pierre Cuypers"
+        },
+        {
+          "date": "2013",
+          "title": "Réouverture après rénovation"
+        }
+      ],
+      "researchTopics": [
+        {
+          "title": "Une histoire nationale en objets",
+          "body": "Peintures, livres, armes, instruments et arts décoratifs témoignent des sociétés néerlandaises sur plusieurs siècles. Le parcours dépasse le seul Siècle d’or."
+        },
+        {
+          "title": "La Galerie d’honneur",
+          "body": "Les tableaux de Rembrandt, Frans Hals et Vermeer donnent lieu à une réflexion sur portraits, métiers, commerce et représentation de la vie quotidienne."
+        },
+        {
+          "title": "Regarder l’histoire coloniale",
+          "body": "Le musée intègre des objets et récits liés aux réseaux commerciaux et coloniaux néerlandais. Leur interprétation exige de multiplier les points de vue."
+        }
+      ],
+      "conservationDetail": "La documentation des œuvres et les analyses de la matière picturale éclairent les restaurations. L’architecture du bâtiment historique a elle-même fait l’objet d’importants travaux.",
+      "digitalDetail": "Le catalogue numérique et Rijksstudio offrent des recherches par œuvre, auteur, thème et période. Toujours vérifier le statut juridique du fichier téléchargé."
     },
     {
       "id": "moma",
@@ -465,6 +727,14 @@
         {
           "name": "La Nuit étoilée",
           "url": "https://www.moma.org/collection/works/79802"
+        },
+        {
+          "name": "Archives des expositions",
+          "url": "https://www.moma.org/calendar/about/exhibition-history"
+        },
+        {
+          "name": "Histoire du MoMA",
+          "url": "https://research.moma.org/momahistory"
         }
       ],
       "gallery": [
@@ -492,7 +762,41 @@
         "caption": "Vue extérieure / façade",
         "page": "https://commons.wikimedia.org/wiki/File:MoMA_exterior_(1629399048).jpg",
         "url": "https://commons.wikimedia.org/wiki/Special:FilePath/MoMA%20exterior%20(1629399048).jpg?width=2048"
-      }
+      },
+      "timeline": [
+        {
+          "date": "1929",
+          "title": "Fondation et exposition inaugurale"
+        },
+        {
+          "date": "1930–1950",
+          "title": "Développement des départements spécialisés"
+        },
+        {
+          "date": "2004",
+          "title": "Réaménagement du complexe"
+        },
+        {
+          "date": "2019",
+          "title": "Extension et nouveaux accrochages"
+        }
+      ],
+      "researchTopics": [
+        {
+          "title": "Un musée des médias modernes",
+          "body": "À la peinture et à la sculpture s’ajoutent cinéma, architecture, photographie, design et performances. Le MoMA aborde ainsi plusieurs histoires de la modernité."
+        },
+        {
+          "title": "Archives des expositions",
+          "body": "Les inventaires, photographies d’installation et catalogues constituent des sources permettant de suivre la façon dont les œuvres ont été interprétées depuis 1929."
+        },
+        {
+          "title": "La Nuit étoilée",
+          "body": "Le chef-d’œuvre de Van Gogh offre un repère avant le XXe siècle ; sa présence explique comment le musée retrace les origines de l’art moderne."
+        }
+      ],
+      "conservationDetail": "L’entretien des films, œuvres performatives, objets de design ou médias électroniques exige des méthodes distinctes de celles de la peinture. Les enjeux d’obsolescence technique sont importants.",
+      "digitalDetail": "Le catalogue décrit près de 200 000 œuvres et le MoMA publie des métadonnées de recherche sur GitHub ; il précise que certaines notices restent incomplètes."
     },
     {
       "id": "marmottan",
@@ -550,7 +854,41 @@
         "caption": "Vue extérieure / façade",
         "page": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_Marmottan_Monet_Paris.jpg",
         "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Mus%C3%A9e%20Marmottan%20Monet%20Paris.jpg?width=2048"
-      }
+      },
+      "timeline": [
+        {
+          "date": "1934",
+          "title": "Ouverture autour de la collection Marmottan"
+        },
+        {
+          "date": "1966",
+          "title": "Legs de Michel Monet"
+        },
+        {
+          "date": "Fin du XXe siècle",
+          "title": "Développement des collections impressionnistes"
+        },
+        {
+          "date": "XXIe siècle",
+          "title": "Expositions et recherches thématiques"
+        }
+      ],
+      "researchTopics": [
+        {
+          "title": "La collection Monet",
+          "body": "Paysages d’Argenteuil, vues de Giverny et Nymphéas permettent de suivre l’évolution d’un même peintre. Impression, soleil levant demeure l’œuvre emblématique."
+        },
+        {
+          "title": "Berthe Morisot",
+          "body": "Le musée possède un ensemble public remarquable d’œuvres de cette peintre, indispensable pour étudier la place des femmes dans l’impressionnisme."
+        },
+        {
+          "title": "Histoire des legs",
+          "body": "L’institution se comprend à travers les familles et collectionneurs qui ont transmis des ensembles privés au public."
+        }
+      ],
+      "conservationDetail": "Les surfaces peintes et les variations de matériaux au fil de la carrière de Monet nécessitent un suivi de conservation. Les expositions temporaires peuvent modifier la présence des œuvres.",
+      "digitalDetail": "Le site présente des collections et des parcours documentaires, mais les droits de reproduction des photographies sont à distinguer de l’accès aux notices."
     },
     {
       "id": "kunsthistorisches",
@@ -608,7 +946,41 @@
         "caption": "Vue extérieure / façade",
         "page": "https://commons.wikimedia.org/wiki/File:Kunsthistorisches_Museum_Front.jpg",
         "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Kunsthistorisches%20Museum%20Front.jpg?width=2048"
-      }
+      },
+      "timeline": [
+        {
+          "date": "XVIe–XVIIe siècles",
+          "title": "Constitution des collections Habsbourg"
+        },
+        {
+          "date": "1891",
+          "title": "Inauguration du grand musée"
+        },
+        {
+          "date": "XXe siècle",
+          "title": "Réorganisations des collections"
+        },
+        {
+          "date": "XXIe siècle",
+          "title": "Catalogues, recherches et expositions"
+        }
+      ],
+      "researchTopics": [
+        {
+          "title": "L’héritage impérial",
+          "body": "Les collectionneurs Habsbourg ont rassemblé des œuvres européennes exceptionnelles. Leurs choix influencent encore la composition des départements."
+        },
+        {
+          "title": "Une collection de Bruegel",
+          "body": "Paysages, fêtes et scènes de société permettent d’étudier la représentation des usages et des croyances dans l’Europe du Nord."
+        },
+        {
+          "title": "Vermeer et l’atelier",
+          "body": "L’Art de la peinture associe une scène de travail, une carte, des costumes et plusieurs signes allégoriques. Son étude relie iconographie et matérialité."
+        }
+      ],
+      "conservationDetail": "La variété des matériaux — peintures, monnaies, antiquités, objets précieux — entraîne des protocoles distincts. Les présentations demeurent liées aux caractéristiques du bâtiment.",
+      "digitalDetail": "Les catalogues en ligne du KHM fournissent des notices scientifiques. Conditions de reproduction et de réutilisation à contrôler pour chaque photographie."
     },
     {
       "id": "uffizi",
@@ -643,6 +1015,14 @@
         {
           "name": "Œuvres",
           "url": "https://www.uffizi.it/en/artworks"
+        },
+        {
+          "name": "Architecture",
+          "url": "https://www.uffizi.it/en/the-uffizi/architecture"
+        },
+        {
+          "name": "Histoire des galeries",
+          "url": "https://www.uffizi.it/en/pages/about-us"
         }
       ],
       "gallery": [
@@ -670,7 +1050,41 @@
         "caption": "Vue extérieure / façade",
         "page": "https://commons.wikimedia.org/wiki/File:Firenze_Galleria_degli_Uffizi_Esterno_1.jpg",
         "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Firenze%20Galleria%20degli%20Uffizi%20Esterno%201.jpg?width=2048"
-      }
+      },
+      "timeline": [
+        {
+          "date": "1560–1580",
+          "title": "Construction par Giorgio Vasari"
+        },
+        {
+          "date": "1769",
+          "title": "Accès au public sous Pierre-Léopold"
+        },
+        {
+          "date": "XXe siècle",
+          "title": "Renouvellement des salles"
+        },
+        {
+          "date": "2014",
+          "title": "Constitution de l’ensemble Uffizi, Pitti, Boboli"
+        }
+      ],
+      "researchTopics": [
+        {
+          "title": "De l’administration à la galerie",
+          "body": "L’architecture construite pour les offices florentins devient le cadre des collections des Médicis. Le parcours décrit le rôle politique du mécénat."
+        },
+        {
+          "title": "Un patrimoine plus large",
+          "body": "Outre les peintures, les Offices conservent sculptures antiques, dessins, estampes, archives, livres et photographies historiques."
+        },
+        {
+          "title": "L’Annonciation de Léonard",
+          "body": "La scène de jeunesse ouvre des questions sur la perspective, la botanique, le paysage et le travail de l’atelier renaissant."
+        }
+      ],
+      "conservationDetail": "Les œuvres sur bois, les dessins sensibles et l’architecture historique demandent des conditions de préservation différentes. Les recherches portent également sur les contextes de commandes et d’attribution.",
+      "digitalDetail": "Le musée publie notices, archives et contenus de découverte ; les conditions de reproduction des images restent spécifiques."
     },
     {
       "id": "national-gallery-london",
@@ -704,6 +1118,10 @@
         {
           "name": "Collections",
           "url": "https://www.nationalgallery.org.uk/paintings/collection-overview"
+        },
+        {
+          "name": "Histoire du bâtiment",
+          "url": "https://www.nationalgallery.org.uk/research/library-and-archive/research-guides/history-of-the-building"
         }
       ],
       "gallery": [
@@ -731,7 +1149,41 @@
         "caption": "Vue extérieure / façade",
         "page": "https://commons.wikimedia.org/wiki/File:Exterior_of_the_National_Gallery%2C_London.jpg",
         "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Exterior%20of%20the%20National%20Gallery%2C%20London.jpg?width=2048"
-      }
+      },
+      "timeline": [
+        {
+          "date": "1824",
+          "title": "Fondation avec 38 tableaux d’Angerstein"
+        },
+        {
+          "date": "1838",
+          "title": "Ouverture à Trafalgar Square"
+        },
+        {
+          "date": "XIXe–XXe siècles",
+          "title": "Extensions successives"
+        },
+        {
+          "date": "1991",
+          "title": "Ouverture de la Sainsbury Wing"
+        }
+      ],
+      "researchTopics": [
+        {
+          "title": "Une mission d’accès public",
+          "body": "La galerie se concentre sur la peinture européenne du XIIIe au début du XXe siècle. Le bâtiment et le classement reflètent l’évolution des missions éducatives."
+        },
+        {
+          "title": "Les versions des Tournesols",
+          "body": "Le tableau conservé à Londres correspond à une version particulière. Sa comparaison avec les autres versions permet d’étudier provenance et procédés de Van Gogh."
+        },
+        {
+          "title": "Archives et technique",
+          "body": "Les ressources du musée documentent les plans architecturaux, restaurations, encadrements et conditions de présentation des tableaux."
+        }
+      ],
+      "conservationDetail": "Les analyses des pigments, couches picturales et vernis documentent l’état des œuvres et orientent les interventions. Toute restauration exige de distinguer matière originale et ajouts ultérieurs.",
+      "digitalDetail": "Des notices de peintures et ressources pédagogiques sont accessibles gratuitement, mais les crédits photographiques doivent être examinés avant publication."
     },
     {
       "id": "kroller-muller",
@@ -766,6 +1218,14 @@
         {
           "name": "Collection et exposition Van Gogh",
           "url": "https://www.krollermuller.nl/en/what-s-on/exhibitions/van-gogh-all-our-paintings"
+        },
+        {
+          "name": "Collection Van Gogh",
+          "url": "https://www.krollermuller.nl/en/about-the-collection/van-gogh-collection"
+        },
+        {
+          "name": "Architecture",
+          "url": "https://www.krollermuller.nl/en/about-the-collection/architecture"
         }
       ],
       "gallery": [
@@ -793,7 +1253,41 @@
         "caption": "Vue extérieure / façade",
         "page": "https://commons.wikimedia.org/wiki/File:Kr%C3%B6ller-M%C3%BCller_Museum_01.jpg",
         "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Kr%C3%B6ller-M%C3%BCller%20Museum%2001.jpg?width=2048"
-      }
+      },
+      "timeline": [
+        {
+          "date": "1907–1922",
+          "title": "Constitution de la collection privée"
+        },
+        {
+          "date": "1938",
+          "title": "Ouverture du musée"
+        },
+        {
+          "date": "XXe siècle",
+          "title": "Développement du jardin de sculptures"
+        },
+        {
+          "date": "2026–2027",
+          "title": "Exposition réunissant 88 Van Gogh"
+        }
+      ],
+      "researchTopics": [
+        {
+          "title": "Van Gogh, au cœur de la collection",
+          "body": "L’institution conserve 88 peintures et un important ensemble de dessins du peintre, rassemblés grâce aux choix d’Helene Kröller-Müller."
+        },
+        {
+          "title": "Un jardin de sculptures",
+          "body": "Un espace de 25 hectares rassemble plus de 200 sculptures et des pavillons architecturaux. Les conditions de perception changent selon la saison et le paysage."
+        },
+        {
+          "title": "De Stijl et futurisme",
+          "body": "Les œuvres de Mondrian, Van Doesburg et d’autres modernistes permettent de replacer Van Gogh dans une histoire plus vaste."
+        }
+      ],
+      "conservationDetail": "L’entretien des sculptures extérieures répond aux risques du climat et de l’usage public. Le Jardin d’émail de Dubuffet illustre des pratiques de conservation préventive.",
+      "digitalDetail": "Catalogue, dossier architectural et ressources sur Van Gogh et le jardin sont disponibles ; les photographies restent sous conditions de réemploi variables."
     },
     {
       "id": "yale-art-gallery",
@@ -824,6 +1318,14 @@
         {
           "name": "Musées et bibliothèques de Yale",
           "url": "https://www.yale.edu/collections/museums-and-libraries"
+        },
+        {
+          "name": "Histoire de Yale",
+          "url": "https://www.yale.edu/about-yale/traditions-history"
+        },
+        {
+          "name": "Présentation académique",
+          "url": "https://catalog.yale.edu/art/art-resources-collections/yale-university-art-gallery/"
         }
       ],
       "gallery": [
@@ -851,7 +1353,41 @@
         "caption": "Vue extérieure / façade",
         "page": "https://commons.wikimedia.org/wiki/File:Yale_University_Art_Gallery_exterior.jpg",
         "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Yale%20University%20Art%20Gallery%20exterior.jpg?width=2048"
-      }
+      },
+      "timeline": [
+        {
+          "date": "1832",
+          "title": "Création de la Trumbull Gallery"
+        },
+        {
+          "date": "1953",
+          "title": "Extension dessinée par Louis Kahn"
+        },
+        {
+          "date": "2012",
+          "title": "Réouverture après réaménagement"
+        },
+        {
+          "date": "XXIe siècle",
+          "title": "Recherche et enseignement public"
+        }
+      ],
+      "researchTopics": [
+        {
+          "title": "Un musée dans l’université",
+          "body": "Les collections sont utilisées pour enseigner par l’observation directe, l’analyse de matériaux et les lectures historiques."
+        },
+        {
+          "title": "L’architecture de Louis Kahn",
+          "body": "Les espaces et la lumière du bâtiment moderne offrent un terrain d’étude de la relation entre construction et scénographie."
+        },
+        {
+          "title": "Une collection encyclopédique",
+          "body": "La galerie conserve près de 300 000 objets selon les documents récents de Yale, des antiquités aux arts modernes et contemporains."
+        }
+      ],
+      "conservationDetail": "Les méthodes de documentation et de conservation varient entre tableaux, textiles, objets archéologiques et supports contemporains. L’institution relie ces pratiques à ses programmes académiques.",
+      "digitalDetail": "Le catalogue et les ressources universitaires facilitent la recherche, mais la réutilisation des reproductions dépend des conditions de chaque œuvre."
     },
     {
       "id": "courtauld",
@@ -882,6 +1418,14 @@
         {
           "name": "Collections en ligne",
           "url": "https://courtauld.ac.uk/online-collections/"
+        },
+        {
+          "name": "Histoire de la galerie",
+          "url": "https://courtauld.ac.uk/gallery/about-the-courtauld-gallery/"
+        },
+        {
+          "name": "Conditions du catalogue",
+          "url": "https://gallerycollections.courtauld.ac.uk/about"
         }
       ],
       "gallery": [
@@ -909,7 +1453,41 @@
         "caption": "Vue extérieure / façade",
         "page": "https://commons.wikimedia.org/wiki/File:Somerset_House_Courtyard.jpg",
         "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Somerset%20House%20Courtyard.jpg?width=2048"
-      }
+      },
+      "timeline": [
+        {
+          "date": "1932",
+          "title": "Fondation de l’Institut Courtauld"
+        },
+        {
+          "date": "1989",
+          "title": "Installation à Somerset House"
+        },
+        {
+          "date": "2018",
+          "title": "Début du projet Courtauld Connects"
+        },
+        {
+          "date": "2021",
+          "title": "Réouverture de la galerie"
+        }
+      ],
+      "researchTopics": [
+        {
+          "title": "Une collection pour la recherche",
+          "body": "La galerie est intimement liée à l’enseignement de l’histoire de l’art et de la conservation, héritage des fondateurs Samuel Courtauld, Robert Witt et Viscount Lee."
+        },
+        {
+          "title": "Photographies et documentation",
+          "body": "Ses collections en ligne comptent plus de 33 000 objets ; le fonds photographique représente plus de 3,2 millions d’images, progressivement numérisées."
+        },
+        {
+          "title": "La place de Van Gogh",
+          "body": "L’Autoportrait à l’oreille bandée est un document pour comparer autoportrait, expression, technique et provenance."
+        }
+      ],
+      "conservationDetail": "L’étude technique et l’enseignement de la conservation constituent des activités anciennes de l’institut. Les studios et recherches traitent des peintures de chevalet et murales.",
+      "digitalDetail": "Certaines images de collections sont diffusées sous CC BY-NC 4.0, licence autorisant des réutilisations non commerciales avec attribution. Les autres documents ont des règles spécifiques."
     },
     {
       "id": "orangerie",
@@ -940,6 +1518,14 @@
         {
           "name": "Présentation institutionnelle",
           "url": "https://presse-orsay-orangerie.epmo-musees.fr/section/orangerie/orangerie-a-propos/?lang=eng"
+        },
+        {
+          "name": "Histoire du cycle des Nymphéas",
+          "url": "https://www.musee-orangerie.fr/fr/collection/les-nympheas-de-claude-monet/histoire-du-cycle-des-nympheas"
+        },
+        {
+          "name": "De l’orangerie au musée",
+          "url": "https://www.musee-orangerie.fr/fr/collection/de-lorangerie-au-musee"
         }
       ],
       "gallery": [
@@ -967,7 +1553,41 @@
         "caption": "Vue extérieure / façade",
         "page": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_de_l%E2%80%99Orangerie_exterior.JPG",
         "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Mus%C3%A9e%20de%20l%E2%80%99Orangerie%20exterior.JPG?width=2048"
-      }
+      },
+      "timeline": [
+        {
+          "date": "1852",
+          "title": "Construction du bâtiment des Tuileries"
+        },
+        {
+          "date": "1918–1922",
+          "title": "Don des Nymphéas par Monet et formalisation"
+        },
+        {
+          "date": "1927",
+          "title": "Ouverture des deux salles ovales"
+        },
+        {
+          "date": "2006",
+          "title": "Réouverture du musée rénové"
+        }
+      ],
+      "researchTopics": [
+        {
+          "title": "Une installation conçue avec l’artiste",
+          "body": "Huit panneaux d’environ deux mètres de haut forment près de 90 mètres linéaires de peinture dans deux salles ovales. L’éclairage et les axes guident la contemplation."
+        },
+        {
+          "title": "Un geste de paix",
+          "body": "L’offre de Monet à l’État intervient après l’armistice de 1918. Les œuvres sont installées après son décès."
+        },
+        {
+          "title": "La collection Walter–Guillaume",
+          "body": "L’Orangerie ne se réduit pas aux Nymphéas : elle conserve un ensemble impressionniste et moderne important."
+        }
+      ],
+      "conservationDetail": "L’architecture, le climat et la lumière doivent préserver à la fois les peintures et leur conception d’ensemble. Le spectateur fait l’expérience d’un environnement matériel précis.",
+      "digitalDetail": "Le musée propose notices et dossiers sur l’histoire des Nymphéas ; les images officielles sont soumises à crédit."
     },
     {
       "id": "cenacolo-vinciano",
@@ -997,6 +1617,18 @@
         {
           "name": "Le musée et l’histoire",
           "url": "https://cenacolovinciano.org/en/museum/"
+        },
+        {
+          "name": "Histoire du musée",
+          "url": "https://cenacolovinciano.org/en/museum/history/"
+        },
+        {
+          "name": "Conservation et restauration",
+          "url": "https://cenacolovinciano.org/en/museum/backstage/"
+        },
+        {
+          "name": "Notice de La Cène",
+          "url": "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/"
         }
       ],
       "gallery": [
@@ -1024,7 +1656,41 @@
         "caption": "Vue extérieure / façade",
         "page": "https://commons.wikimedia.org/wiki/File:Exterior_of_Santa_Maria_delle_Grazie_(Milan).jpg",
         "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Exterior%20of%20Santa%20Maria%20delle%20Grazie%20(Milan).jpg?width=2048"
-      }
+      },
+      "timeline": [
+        {
+          "date": "1494–1498",
+          "title": "Réalisation de La Cène sur enduit sec"
+        },
+        {
+          "date": "XVIe siècle",
+          "title": "Dégradations déjà documentées"
+        },
+        {
+          "date": "1977–1998",
+          "title": "Importante campagne de conservation"
+        },
+        {
+          "date": "2024",
+          "title": "Rattachement à Grande Brera"
+        }
+      ],
+      "researchTopics": [
+        {
+          "title": "Un lieu indissociable de l’œuvre",
+          "body": "La Cène couvre le mur du réfectoire de Santa Maria delle Grazie, face à la Crucifixion de Donato Montorfano. Le point de vue originel conditionne la lecture."
+        },
+        {
+          "title": "Un procédé expérimental",
+          "body": "Léonard peint sur enduit sec pour pouvoir retravailler lentement sa composition, contrairement à la fresque traditionnelle. La méthode a fragilisé l’œuvre."
+        },
+        {
+          "title": "Patrimoine mondial",
+          "body": "Le réfectoire et le couvent constituent un site patrimonial reconnu en 1980, dont la présentation doit tenir compte de la conservation."
+        }
+      ],
+      "conservationDetail": "Un contrôle climatique et un accès limité des visiteurs protègent une peinture extrêmement sensible. Les études distinguent fragments originaux, altérations et restaurations.",
+      "digitalDetail": "Le musée présente des images en haute définition et une documentation détaillée des interventions. La réutilisation des images nécessite le respect des conditions institutionnelles."
     }
   ]
 }
