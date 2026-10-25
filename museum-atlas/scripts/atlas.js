@@ -56,8 +56,14 @@ function renderDetail(museums,slug){
   ['numerique','Collections numériques et recherche',m.digital],
   ['visite','Préparer sa visite',m.visit]
  ];
- const titles=sections.map(s=>'<a href="#'+s[0]+'">'+esc(s[1])+'</a>').join('')+'<a href="#sources">Sources et ressources</a><a href="#photographies">Galerie photographique</a>';
+ const titles=sections.map(s=>'<a href="#'+s[0]+'">'+esc(s[1])+'</a>').join('')+'<a href="#chronologie">Chronologie</a><a href="#analyses">Dossiers d’analyse</a><a href="#conservation">Conservation</a><a href="#archives-num">Ressources numériques</a><a href="#sources">Sources et ressources</a><a href="#photographies">Galerie photographique</a>';
  const content=sections.map(([id,title,body])=>'<section class="article-section" id="'+id+'"><h2>'+esc(title)+'</h2><p>'+esc(body)+'</p></section>').join('');
+ const extended=(Array.isArray(m.timeline)&&Array.isArray(m.researchTopics))?[
+  '<section class="article-section atlas-extended" id="chronologie"><div class="eyebrow">REPÈRES HISTORIQUES</div><h2>Chronologie du musée</h2><ol class="museum-timeline">'+m.timeline.map(x=>'<li><time>'+esc(x.date)+'</time><span>'+esc(x.title)+'</span></li>').join('')+'</ol></section>',
+  '<section class="article-section atlas-extended" id="analyses"><div class="eyebrow">POUR APPROFONDIR</div><h2>Trois éclairages sur l’institution</h2><div class="research-topic-grid">'+m.researchTopics.map((x,i)=>'<article class="research-topic"><span class="topic-index">'+String(i+1).padStart(2,'0')+'</span><h3>'+esc(x.title)+'</h3><p>'+esc(x.body)+'</p></article>').join('')+'</div></section>',
+  '<section class="article-section atlas-extended" id="conservation"><div class="eyebrow">PATRIMOINE & SCIENCE</div><h2>Conservation, restauration et recherche</h2><p>'+esc(m.conservationDetail||'')+'</p></section>',
+  '<section class="article-section atlas-extended" id="archives-num"><div class="eyebrow">DONNÉES & ACCÈS</div><h2>Archives numériques et conditions de réutilisation</h2><p>'+esc(m.digitalDetail||'')+'</p></section>'
+ ].join(''):'';
  const sourceLinks=m.sources.map((s,i)=>'<li>'+external(s.url,String(i+1).padStart(2,'0')+' · '+s.name)+'</li>').join('');
  const preview=immersive?'<a class="secondary-cta" href="'+esc(root+'../museums.html?lang=fr&museum='+encodeURIComponent(m.id))+'">Explorer les expériences ARTDACI</a>':'<span class="secondary-cta" aria-label="Expériences immersives envisagées pour une future version">RA &amp; RV : futures extensions</span>';
  host.innerHTML='<nav class="breadcrumb" aria-label="Fil d’Ariane"><a href="'+esc(root+'index.html')+'">Atlas des 17 musées</a><span aria-hidden="true">›</span><span>'+esc(m.name)+'</span></nav>'+
@@ -66,7 +72,7 @@ function renderDetail(museums,slug){
  '<div class="detail-stats"><div class="detail-stat"><small>Ville et pays</small><strong>'+esc(m.city+' · '+m.country)+'</strong></div><div class="detail-stat"><small>Repère historique</small><strong>'+esc(m.opened)+'</strong></div><div class="detail-stat"><small>Architecture / lieu</small><strong>'+esc(m.architect)+'</strong></div></div>'+
  '<div class="detail-layout"><nav class="local-nav" aria-label="Sommaire de la fiche"><strong>DANS CETTE FICHE</strong>'+titles+'</nav>'+
  '<article class="detail-content"><div class="highlight"><strong>Connexion avec le livre augmenté ARTDACI</strong><p>'+esc(m.signature)+'</p></div>'+
- content+
+ content+extended+
  '<section class="article-section" id="sources"><h2>Bibliographie, sources et ressources</h2><p>Consultez les ressources institutionnelles pour approfondir l’histoire, les collections, la conservation, les recherches et la programmation du musée.</p><ul class="resources">'+sourceLinks+'</ul><p class="research-note">Consultation et sélection documentaire : octobre 2026. Les informations évolutives (horaires, tarifs, disponibilité des œuvres) doivent être revérifiées auprès des institutions. Une œuvre conservée n’est pas nécessairement exposée au moment de la visite.</p></section>'+
  '<section class="article-section gallery-section" id="photographies"><div class="eyebrow">IMAGES RÉELLES · WIKIMEDIA COMMONS</div><h2>Galerie photographique</h2><p>Façades, espaces intérieurs et vues architecturales. Les photographies sont associées à leurs pages originales pour contrôler auteurs, licences et autres résolutions.</p><div class="photo-grid" id="photo-gallery"></div><p class="research-note">Les photographies sont hébergées sur Wikimedia Commons. Le droit de réutiliser un cliché doit être vérifié sur chaque page de fichier. Les droits photographiques ne sont pas automatiquement ceux des œuvres visibles sur la photographie.</p></section>'+
  '</article></div><nav class="detail-pagination" aria-label="Parcourir les musées"><a href="'+esc(museumHref(museums[(pos+16)%17]))+'">← '+esc(museums[(pos+16)%17].name)+'</a><a href="'+esc(museumHref(museums[(pos+1)%17]))+'">'+esc(museums[(pos+1)%17].name)+' →</a></nav>';
