@@ -1,0 +1,603 @@
+{
+  "lang": "en",
+  "title": "ARTDACI — Museum Heritage Atlas",
+  "shortTitle": "Museum Heritage Atlas",
+  "notice": "A documentary and photographic journey through 17 museum institutions. Images originate from Wikimedia Commons; verify licences on each source page.",
+  "museums": [
+    {
+      "id": "louvre",
+      "name": "Louvre Museum",
+      "city": "Paris",
+      "country": "France",
+      "theme": "From royal palace to universal museum",
+      "history": "Originally a medieval fortress, the Louvre developed into a royal palace before opening as a public museum in 1793. Its galleries bring together works from many civilizations, periods and artistic traditions. The history of its collections is inseparable from France's political and cultural history.",
+      "architecture": "The Denon, Sully and Richelieu wings connect historic courtyards, lavish ceremonial interiors and the glass pyramid introduced by I. M. Pei in 1989. The architectural evolution is itself part of the visitor experience.",
+      "collections": "Ancient Egyptian, Greek and Roman antiquities, Islamic arts, paintings, sculptures, decorative arts and drawings. Leonardo's Mona Lisa and La Belle Ferronnière, as well as Vermeer's The Astronomer, connect the museum directly to ARTDACI.",
+      "education": "Compare Renaissance portraiture and Dutch interior painting, study the original gallery context of the Mona Lisa, and examine the differences between physical museum objects, reproductions and immersive media.",
+      "digital": "The online collections database provides extensive cataloguing and research records. Online visibility does not automatically grant permission to reproduce photographs; always check image credits and conditions.",
+      "visit": "Use the official website to check hours, temporary gallery closures, tickets and current display. A focused thematic itinerary is preferable to trying to see everything in one visit.",
+      "conservationDetail": "Curatorial departments collaborate with conservators, scientists and documentary specialists. Material analysis, lighting, humidity and crowd management are crucial to the long-term preservation of artworks.",
+      "signature": "Mona Lisa; La Belle Ferronnière; The Virgin of the Rocks (Louvre version)",
+      "researchTopics": [
+        {
+          "title": "The palace as evidence",
+          "body": "The Louvre's medieval foundations, classical façades and modern entrance preserve successive layers of political and architectural history."
+        },
+        {
+          "title": "Beyond painting",
+          "body": "Its departments embrace archaeology, sculpture, objects, drawings and cultural exchanges, challenging any reduction of the Louvre to its best-known paintings."
+        },
+        {
+          "title": "Provenance and interpretation",
+          "body": "Inventory records and research publications help explain how objects arrived, travelled and were displayed, while revealing gaps in historical knowledge."
+        }
+      ],
+      "timeline": [
+        "Medieval fortress",
+        "Museum opens in 1793",
+        "Grand Louvre pyramid opens",
+        "Mona Lisa gallery renewed"
+      ]
+    },
+    {
+      "id": "orsay",
+      "name": "Musée d’Orsay",
+      "city": "Paris",
+      "country": "France",
+      "theme": "Nineteenth-century art in a former railway station",
+      "history": "The Musée d'Orsay opened in 1986 in the station built for the 1900 Universal Exhibition. Its collections focus principally on 1848–1914, a period of industrial change, political transformation and new approaches to visual representation.",
+      "architecture": "Victor Laloux's railway station is recognizable by its vaulted iron-and-glass nave and monumental clocks. The conversion preserves its industrial character while creating galleries for painting, sculpture and decorative arts.",
+      "collections": "Impressionism and Post-Impressionism, sculpture, photography and the decorative arts. Van Gogh's Self-Portrait of 1889 is the specific version associated with ARTDACI, alongside paintings by Monet and contemporaries.",
+      "education": "Study changes in color and brushwork, relate photography and railway technology to visual modernity, and compare the approaches of Monet and Van Gogh.",
+      "digital": "The institution publishes collections information, exhibition dossiers and documentary archives, including material about the former station.",
+      "visit": "Consult official information for admission, temporary exhibitions and gallery access. Organize the visit by movements or artists.",
+      "conservationDetail": "Conservation research covers painted surfaces, sculptural materials, photographs and the building itself. Different media require different handling and display conditions.",
+      "signature": "Self-Portrait (1889) — Vincent van Gogh; Monet's landscapes",
+      "researchTopics": [
+        {
+          "title": "A museum built from a station",
+          "body": "The building itself illustrates the modernity that shaped the art on display."
+        },
+        {
+          "title": "Art between 1848 and 1914",
+          "body": "Realism, academic painting, Impressionism and early modernism coexist in an exceptionally concentrated historical period."
+        },
+        {
+          "title": "Distinct self-portraits",
+          "body": "The 1889 Orsay self-portrait must not be confused with Van Gogh's other portraits, dates or museum versions."
+        }
+      ],
+      "timeline": [
+        "Station for the 1900 exhibition",
+        "Changes in railway use",
+        "Museum opens in 1986",
+        "Museum galleries continue evolving"
+      ]
+    },
+    {
+      "id": "mauritshuis",
+      "name": "Mauritshuis",
+      "city": "The Hague",
+      "country": "Netherlands",
+      "theme": "Dutch Golden Age painting in a historic residence",
+      "history": "The Mauritshuis occupies the seventeenth-century residence of Johan Maurits of Nassau-Siegen. It became a museum in 1822, with holdings shaped by the princely collections of the Netherlands. Its history also raises questions about the building's colonial origins.",
+      "architecture": "The classical mansion overlooks the Hofvijver. Historic intimate rooms contrast with an underground entrance and extension added during the 2012–2014 renovation.",
+      "collections": "Dutch and Flemish paintings including masterpieces by Vermeer, Rembrandt, Fabritius, Hals and Steen. Girl with a Pearl Earring and View of Delft are central ARTDACI artworks.",
+      "education": "Examine light, urban views, domestic interiors and the distinction between portrait and tronie; explore how a private residence became a national collection.",
+      "digital": "Digital catalogues and conservation features explain painting techniques, provenance and recent scientific studies.",
+      "visit": "Check the museum's website for admission, special exhibitions and loans: collection ownership does not guarantee an artwork is on display.",
+      "conservationDetail": "Technical examination of paintings, pigments and varnishes informs restoration and scholarship; studies of Girl with a Pearl Earring are especially instructive.",
+      "signature": "Girl with a Pearl Earring; View of Delft — Johannes Vermeer",
+      "researchTopics": [
+        {
+          "title": "From princely gallery to museum",
+          "body": "The collection of William V became the basis of a publicly accessible royal picture gallery."
+        },
+        {
+          "title": "The intimate setting",
+          "body": "Smaller rooms make the material qualities and scale of seventeenth-century paintings especially visible."
+        },
+        {
+          "title": "Colonial connections",
+          "body": "The original resident's involvement in Dutch Brazil is part of the critical history of the building."
+        }
+      ],
+      "timeline": [
+        "Seventeenth-century mansion",
+        "William V's public gallery",
+        "Museum established in 1822",
+        "Renovation and expansion in 2014"
+      ]
+    },
+    {
+      "id": "czartoryski",
+      "name": "Princes Czartoryski Museum",
+      "city": "Kraków",
+      "country": "Poland",
+      "theme": "A European art collection shaped by national memory",
+      "history": "Princess Izabela Czartoryska assembled a heritage collection at Puławy beginning in 1801. Political unrest forced parts of it into exile before the museum settled in Kraków in 1876. Wartime losses, restitution and public ownership form important chapters in its history.",
+      "architecture": "The Czartoryski Palace and adjacent historic buildings combine galleries, courtly collections and documentary exhibits in Kraków's old town.",
+      "collections": "Leonardo's Lady with an Ermine is its most celebrated painting. Other objects include European painting, historical relics, manuscripts and decorative arts. The missing Portrait of a Young Man by Raphael remains a significant wartime loss.",
+      "education": "Trace the journeys of individual objects through acquisition, exile, confiscation and recovery; connect art history with heritage protection and national history.",
+      "digital": "Records of the National Museum in Kraków provide object descriptions, inventory references and information about provenance and reproduction rights.",
+      "visit": "Consult the National Museum's official visitor guidance for opening hours, ticketing and temporary room arrangements.",
+      "conservationDetail": "Building renovations, cataloguing and provenance research contribute to preserving the collection; the history of wartime dispersal is central to conservation.",
+      "signature": "Lady with an Ermine — Leonardo da Vinci",
+      "researchTopics": [
+        {
+          "title": "Collections and national memory",
+          "body": "Private collecting preserved artworks and historical symbols during periods of Polish political upheaval."
+        },
+        {
+          "title": "Dispersal and restitution",
+          "body": "The paths of Leonardo's painting and the missing Raphael reveal the impact of conflict on cultural heritage."
+        },
+        {
+          "title": "Museum architecture",
+          "body": "The palace and surrounding buildings have been restored to improve conservation and public interpretation."
+        }
+      ],
+      "timeline": [
+        "Collection founded in 1801",
+        "Works moved into exile",
+        "Kraków museum in 1876",
+        "State acquisition and renewed galleries"
+      ]
+    },
+    {
+      "id": "van-gogh-museum",
+      "name": "Van Gogh Museum",
+      "city": "Amsterdam",
+      "country": "Netherlands",
+      "theme": "The artist's life through paintings, drawings and letters",
+      "history": "The Van Gogh Museum opened in 1973 to preserve and share the collection kept by the artist's family. The work of Theo and Jo van Gogh-Bonger was essential in safeguarding letters and paintings and shaping Van Gogh's reputation.",
+      "architecture": "Gerrit Rietveld's original building is complemented by a Kisho Kurokawa extension. Its galleries arrange artworks and documentary material to support an understanding of the painter's development.",
+      "collections": "Paintings, drawings, prints, letters and artworks by Van Gogh's contemporaries. Its 1888 Bedroom in Arles is distinct from other versions produced by the artist.",
+      "education": "Compare works made in the Netherlands, Paris, Arles and Saint-Rémy. Use letters as primary evidence rather than relying solely on later biographical legends.",
+      "digital": "Online collections, letters and the Van Gogh Worldwide platform allow comparison across museums. Reuse permissions for individual images still require checking.",
+      "visit": "Consult the official museum website for timed admission, temporary displays and visitor guidance.",
+      "conservationDetail": "Pigment change, light sensitivity and fragile supports create complex conservation challenges and can influence loans or display.",
+      "signature": "The Bedroom (1888 museum version); Sunflowers — Vincent van Gogh",
+      "researchTopics": [
+        {
+          "title": "A family legacy",
+          "body": "Theo and Jo van Gogh-Bonger played decisive roles in conserving and circulating Van Gogh's works and letters."
+        },
+        {
+          "title": "Art and correspondence",
+          "body": "Letters connect the paintings to contemporary experiences and ambitions, while placing limits on later myths."
+        },
+        {
+          "title": "Multiple versions",
+          "body": "The Bedroom exists in different versions with separate locations and histories, which ARTDACI must identify precisely."
+        }
+      ],
+      "timeline": [
+        "Preservation after 1890",
+        "Museum opens in 1973",
+        "Kurokawa extension",
+        "New visitor entrance"
+      ]
+    },
+    {
+      "id": "national-gallery-of-art-washington",
+      "name": "National Gallery of Art",
+      "city": "Washington, D.C.",
+      "country": "United States",
+      "theme": "A national collection across two landmark buildings",
+      "history": "The National Gallery of Art opened in 1941. Its West Building, East Building and Sculpture Garden connect centuries of art with a public educational mission. General admission to the permanent collection is free.",
+      "architecture": "The classical West Building by John Russell Pope contrasts with I. M. Pei's angular modern East Building, opened in 1978. Their architectural languages frame different collections and exhibitions.",
+      "collections": "European and American painting, sculpture, works on paper and photography. Leonardo's Ginevra de' Benci, Vermeer's Woman Holding a Balance and Monet's Woman with a Parasol are significant ARTDACI connections.",
+      "education": "Compare architectural design and public access, read object provenance records, and use digitally available images as educational resources.",
+      "digital": "The museum's Open Access programme makes many high-quality artwork images and datasets available for reuse; building photographs and trademarks may follow different terms.",
+      "visit": "The permanent collection is generally free to visit; consult the official schedule for exhibitions, closures and access.",
+      "conservationDetail": "Conservators and scientists examine pigments, supports, restoration history and provenance, informing both exhibition and digital cataloguing.",
+      "signature": "Ginevra de’ Benci; Woman Holding a Balance; Woman with a Parasol",
+      "researchTopics": [
+        {
+          "title": "Two architectural visions",
+          "body": "The West and East Buildings contrast classical symmetry with modern geometry."
+        },
+        {
+          "title": "A national public resource",
+          "body": "The museum combines free access, education, exhibitions and conservation research."
+        },
+        {
+          "title": "Open Access leadership",
+          "body": "Freely shared artwork data support scholarship but should not be confused with unrestricted rights to every museum photograph."
+        }
+      ],
+      "timeline": [
+        "West Building opens in 1941",
+        "East Building opens in 1978",
+        "Sculpture Garden opens",
+        "East Building renovated"
+      ]
+    },
+    {
+      "id": "rijksmuseum",
+      "name": "Rijksmuseum",
+      "city": "Amsterdam",
+      "country": "Netherlands",
+      "theme": "Art and history of the Netherlands",
+      "history": "The Rijksmuseum's origins date to 1800, with its present Amsterdam building opening in 1885. Its collections interpret centuries of Dutch society through paintings, historical objects and decorative arts.",
+      "architecture": "Pierre Cuypers combined Gothic and Renaissance elements in a richly decorated landmark. The Gallery of Honour and public passage through the building are distinctive features.",
+      "collections": "Dutch painting, historical artifacts, prints, Asian art and decorative objects. Vermeer's The Milkmaid links ordinary domestic life with exceptional pictorial precision.",
+      "education": "Read objects as historical evidence, examine the representation of daily labor, and explore complex histories of trade and colonialism.",
+      "digital": "The online collection and Rijksstudio offer searchable images and object descriptions; conditions of use should be checked for individual files.",
+      "visit": "Review ticketing, museum maps and temporary display arrangements before visiting.",
+      "conservationDetail": "The conservation of national collections includes painting analysis, restoration and protection of the historic building.",
+      "signature": "The Milkmaid — Johannes Vermeer",
+      "researchTopics": [
+        {
+          "title": "National narratives",
+          "body": "Historical objects complement paintings and raise questions about how a nation tells its own history."
+        },
+        {
+          "title": "Gallery of Honour",
+          "body": "Rembrandt, Vermeer and Hals provide rich comparisons of genre, portraiture and light."
+        },
+        {
+          "title": "Global trading networks",
+          "body": "Dutch maritime and colonial histories form part of the context in which collection objects were made and circulated."
+        }
+      ],
+      "timeline": [
+        "National museum opens in 1800",
+        "Move to Amsterdam",
+        "Current building opens in 1885",
+        "Museum reopens after renovation"
+      ]
+    },
+    {
+      "id": "moma",
+      "name": "Museum of Modern Art (MoMA)",
+      "city": "New York",
+      "country": "United States",
+      "theme": "Modern and contemporary art across media",
+      "history": "Founded in 1929, MoMA helped redefine art museums by presenting painting alongside design, photography, film, architecture and new forms of creative practice.",
+      "architecture": "Its Midtown Manhattan complex has evolved through several architectural expansions. Galleries bring together works from different disciplines and offer changing historical interpretations.",
+      "collections": "Modern painting and sculpture, architecture, photography, film and design. Van Gogh's The Starry Night (1889) is a foundation stone for the story of modern art.",
+      "education": "Compare pictorial expression with photography, film and design; use exhibition archives to trace how the interpretation of works changes over time.",
+      "digital": "MoMA offers a large online collection, historical exhibition archives and open datasets. Object metadata and image copyrights have different conditions.",
+      "visit": "Consult official visitor information for advance tickets, current exhibitions, accessibility and schedules.",
+      "conservationDetail": "Conserving moving images, design objects and electronic works involves technical obsolescence and materials very different from oil painting.",
+      "signature": "The Starry Night — Vincent van Gogh",
+      "researchTopics": [
+        {
+          "title": "Art beyond painting",
+          "body": "The museum integrates multiple visual media in narratives of modernity."
+        },
+        {
+          "title": "Exhibition histories",
+          "body": "Archives document how works have been displayed and reinterpreted since the museum's founding."
+        },
+        {
+          "title": "Art and technology",
+          "body": "New media require evolving forms of documentation, conservation and presentation."
+        }
+      ],
+      "timeline": [
+        "MoMA founded in 1929",
+        "Expansion of specialist departments",
+        "Architectural redevelopment",
+        "2019 expansion and rearrangement"
+      ]
+    },
+    {
+      "id": "marmottan",
+      "name": "Musée Marmottan Monet",
+      "city": "Paris",
+      "country": "France",
+      "theme": "An exceptional collection of Impressionist painting",
+      "history": "Opened in 1934, the museum grew from private collections. The bequest of Michel Monet considerably expanded its holdings of the painter's work and strengthened its importance for the history of Impressionism.",
+      "architecture": "A former private residence near the Bois de Boulogne provides a comparatively intimate setting for paintings and period collections.",
+      "collections": "Monet's Impression, Sunrise, the work that gave Impressionism its name, anchors an extensive holding of his paintings. The museum also preserves an important collection of Berthe Morisot.",
+      "education": "Examine the evolution of Monet's color and subject matter, the role of private bequests, and the participation of women artists in Impressionism.",
+      "digital": "Official collection pages and exhibition dossiers support research. Many artworks can be viewed online, but reproduction rights need individual review.",
+      "visit": "Check exhibition changes and collection display details on the official website.",
+      "conservationDetail": "Conservators monitor paint surfaces, supports and the effects of changing exhibition conditions on Impressionist works.",
+      "signature": "Impression, Sunrise — Claude Monet",
+      "researchTopics": [
+        {
+          "title": "A private collection becomes public",
+          "body": "Family donations and bequests transformed the institution's scope."
+        },
+        {
+          "title": "Monet through the decades",
+          "body": "Multiple works illuminate transitions in landscape, color, atmosphere and serial painting."
+        },
+        {
+          "title": "Berthe Morisot",
+          "body": "Her substantial presence challenges a history of Impressionism focused only on male painters."
+        }
+      ],
+      "timeline": [
+        "Museum opens in 1934",
+        "Michel Monet bequest",
+        "Further Impressionist donations",
+        "New exhibitions and scholarship"
+      ]
+    },
+    {
+      "id": "kunsthistorisches",
+      "name": "Kunsthistorisches Museum",
+      "city": "Vienna",
+      "country": "Austria",
+      "theme": "The imperial collections of the Habsburgs",
+      "history": "Opened in 1891, the museum presents collections accumulated by the Habsburg dynasty across centuries. Its galleries chart European painting and the history of collecting in an imperial setting.",
+      "architecture": "The monumental museum on Vienna's Ringstrasse uses domes, staircases and historicist decoration as part of its display of imperial cultural ambition.",
+      "collections": "European painting, antiquities, precious objects and coins. Vermeer's The Art of Painting joins works by Bruegel, Titian, Rubens and Velázquez.",
+      "education": "Explore princely collecting, iconography and the social functions of painting; compare approaches to interiors, portraiture and allegory.",
+      "digital": "The institution makes collection records and research available online, subject to image rights and licensing.",
+      "visit": "Check the museum's current opening arrangements, temporary exhibitions and admission.",
+      "conservationDetail": "Conservation ranges from oil paintings to metal objects, antiquities and delicate decorative materials.",
+      "signature": "The Art of Painting — Johannes Vermeer",
+      "researchTopics": [
+        {
+          "title": "Imperial collecting",
+          "body": "Dynastic acquisitions shaped the collection long before it became a public museum."
+        },
+        {
+          "title": "Bruegel and society",
+          "body": "Bruegel's paintings offer a distinctive window on landscape and social practices."
+        },
+        {
+          "title": "Vermeer and allegory",
+          "body": "The Art of Painting combines a studio scene with maps and symbols that invite multilayered interpretation."
+        }
+      ],
+      "timeline": [
+        "Habsburg collections assembled",
+        "Building opens in 1891",
+        "Rearrangement of displays",
+        "Contemporary research and digital catalogues"
+      ]
+    },
+    {
+      "id": "uffizi",
+      "name": "Uffizi Galleries",
+      "city": "Florence",
+      "country": "Italy",
+      "theme": "Renaissance art and the legacy of the Medici",
+      "history": "The complex was designed by Giorgio Vasari in the sixteenth century for Florentine administrative offices. It later became an influential public gallery based around the collections of the Medici family.",
+      "architecture": "Long wings surround a courtyard opening toward the Arno. Architecture, views of Florence and historic galleries connect artistic patronage with civic and political power.",
+      "collections": "Italian painting from the Middle Ages to the Renaissance and beyond, as well as sculptures and drawings. Leonardo's early Annunciation is a significant example of perspective and observation.",
+      "education": "Study perspective, humanism, workshops and the links between artistic innovation and patronage in Renaissance Florence.",
+      "digital": "The galleries publish artwork records and research resources. Rights to reproduce photographs should be checked individually.",
+      "visit": "Advance reservations and changing gallery arrangements are worth checking on official channels.",
+      "conservationDetail": "Preservation covers wooden panels, drawings, sculptures and historic architecture, each requiring distinctive environmental care.",
+      "signature": "The Annunciation — Leonardo da Vinci",
+      "researchTopics": [
+        {
+          "title": "Medici patronage",
+          "body": "Collections reveal the connection between political representation and artistic commissions."
+        },
+        {
+          "title": "The history of a gallery",
+          "body": "Administrative buildings evolved into a major public institution for the study of art."
+        },
+        {
+          "title": "Leonardo's early experimentation",
+          "body": "The Annunciation reveals attention to landscape, perspective and natural detail."
+        }
+      ],
+      "timeline": [
+        "Vasari's building begun in 1560",
+        "Public access expands",
+        "Gallery organisation evolves",
+        "Institution includes Uffizi, Pitti and Boboli"
+      ]
+    },
+    {
+      "id": "national-gallery-london",
+      "name": "National Gallery",
+      "city": "London",
+      "country": "United Kingdom",
+      "theme": "European painting in a public national collection",
+      "history": "Founded in 1824 with 38 pictures from the Angerstein collection, the National Gallery grew into a major publicly accessible survey of western European painting.",
+      "architecture": "William Wilkins's Trafalgar Square building opened in 1838. Later extensions, including the Sainsbury Wing, changed visitor access and gallery design.",
+      "collections": "Painting from the thirteenth to the early twentieth century, including Van Eyck, Rembrandt, Turner and Van Gogh. The London Sunflowers is a distinct version of Van Gogh's celebrated motif.",
+      "education": "Compare pictorial schools, study the techniques and provenance of paintings, and distinguish multiple versions of the Sunflowers.",
+      "digital": "Digital painting records, archival guides and educational materials are available, though image reuse may be subject to separate conditions.",
+      "visit": "The permanent collection is generally free; check temporary exhibition tickets and opening hours.",
+      "conservationDetail": "Conservation specialists study pigments, varnishes, supports and restoration histories, informing public interpretation.",
+      "signature": "Sunflowers (London version) — Vincent van Gogh",
+      "researchTopics": [
+        {
+          "title": "A public painting gallery",
+          "body": "The focus on painting provides a chronological study of different European traditions."
+        },
+        {
+          "title": "Versions and provenance",
+          "body": "The London Sunflowers should be compared carefully with other versions held elsewhere."
+        },
+        {
+          "title": "Art and conservation",
+          "body": "Technical research helps explain changes to colors, surfaces and displays."
+        }
+      ],
+      "timeline": [
+        "Gallery founded in 1824",
+        "Trafalgar Square building opens",
+        "Galleries expanded",
+        "Sainsbury Wing opens in 1991"
+      ]
+    },
+    {
+      "id": "kroller-muller",
+      "name": "Kröller-Müller Museum",
+      "city": "Otterlo",
+      "country": "Netherlands",
+      "theme": "Modern art in dialogue with nature",
+      "history": "Helene Kröller-Müller's collection formed the basis of a museum opened in 1938 inside De Hoge Veluwe National Park. Modern painting and sculpture are presented in close relation to the natural environment.",
+      "architecture": "Modern galleries and a large sculpture garden include architectural works and pavilions associated with Rietveld and Aldo van Eyck.",
+      "collections": "An exceptional holding of Van Gogh paintings and works on paper, including Café Terrace at Night, alongside Seurat, Mondrian and modern sculpture.",
+      "education": "Explore light and color, compare a painted landscape with sculptures experienced outdoors, and study private collecting.",
+      "digital": "Official collection resources document Van Gogh and the sculpture garden. Photographs and object images may have different reuse rules.",
+      "visit": "Access requires consideration of national park entrance arrangements and the museum's own visitor information.",
+      "conservationDetail": "Outdoor sculpture faces weathering, temperature, humidity and public-use challenges in addition to ordinary collection conservation.",
+      "signature": "Café Terrace at Night — Vincent van Gogh",
+      "researchTopics": [
+        {
+          "title": "A major Van Gogh collection",
+          "body": "Helene's interest in Van Gogh shaped one of the most significant collections outside Amsterdam."
+        },
+        {
+          "title": "The sculpture garden",
+          "body": "Art changes in appearance as natural light and seasons transform the setting."
+        },
+        {
+          "title": "Modern art movements",
+          "body": "De Stijl, abstraction and modern sculpture connect Van Gogh to later artistic developments."
+        }
+      ],
+      "timeline": [
+        "Private collection assembled",
+        "Museum opens in 1938",
+        "Sculpture garden develops",
+        "Collection research continues"
+      ]
+    },
+    {
+      "id": "yale-art-gallery",
+      "name": "Yale University Art Gallery",
+      "city": "New Haven",
+      "country": "United States",
+      "theme": "Art collections as a university research laboratory",
+      "history": "Founded in 1832, Yale University Art Gallery connects artworks with teaching, conservation and academic research. Its collections span many cultures and historical periods.",
+      "architecture": "The gallery includes Louis Kahn's 1953 modernist building and later interconnected spaces. Its design provides a notable example of architecture serving the study of art.",
+      "collections": "Ancient and global art, American and European painting, sculpture, works on paper and decorative objects. Van Gogh's The Night Café is a key ARTDACI connection.",
+      "education": "Use close looking, object research and provenance records to build evidence-based interpretations, and relate gallery design to learning.",
+      "digital": "Online collections and academic publications support teaching and research. Check the conditions for reusing individual images.",
+      "visit": "Consult the gallery's official site for hours, admission, public programmes and current displays.",
+      "conservationDetail": "Research and conservation apply varied approaches to paintings, textiles, archaeological objects and works on paper.",
+      "signature": "The Night Café — Vincent van Gogh",
+      "researchTopics": [
+        {
+          "title": "A teaching museum",
+          "body": "Collections are central to courses and interdisciplinary research, not only visitor display."
+        },
+        {
+          "title": "Louis Kahn's architecture",
+          "body": "Light, geometry and circulation demonstrate the relationship between buildings and education."
+        },
+        {
+          "title": "Global collections",
+          "body": "A wide range of media and traditions supports comparative research."
+        }
+      ],
+      "timeline": [
+        "Gallery founded in 1832",
+        "Louis Kahn extension",
+        "Renovated galleries reopen",
+        "Research and public education develop"
+      ]
+    },
+    {
+      "id": "courtauld",
+      "name": "The Courtauld Gallery",
+      "city": "London",
+      "country": "United Kingdom",
+      "theme": "Art-historical scholarship and exceptional paintings",
+      "history": "The Courtauld combines a public gallery with a research and teaching institute. Its collection is particularly strong in Impressionism and Post-Impressionism.",
+      "architecture": "Located at Somerset House, the museum operates within a historic neoclassical complex that also contains teaching and research spaces.",
+      "collections": "Paintings by Manet, Cézanne, Renoir, Gauguin and Van Gogh, including Self-Portrait with Bandaged Ear. Its drawings and photographic archives broaden research possibilities.",
+      "education": "Combine visual analysis, provenance research, conservation evidence and documentary archives to interpret artworks.",
+      "digital": "Online collections provide information on many thousands of objects, while substantial photographic archives are progressively digitized. Some image licences limit commercial reuse.",
+      "visit": "Check current admission, exhibitions and accessible routes through Somerset House.",
+      "conservationDetail": "The institution has a long tradition of conservation education and technical study of paintings and artworks.",
+      "signature": "Self-Portrait with Bandaged Ear — Vincent van Gogh",
+      "researchTopics": [
+        {
+          "title": "A scholarly museum",
+          "body": "Teaching and conservation work are integral to the gallery's identity."
+        },
+        {
+          "title": "Photographic archives",
+          "body": "Large image collections provide historical evidence about buildings and artworks."
+        },
+        {
+          "title": "Van Gogh's portrait",
+          "body": "Self-representation can be studied alongside artist correspondence, materials and provenance."
+        }
+      ],
+      "timeline": [
+        "Institute founded in 1932",
+        "Move to Somerset House",
+        "Courtauld Connects renovation",
+        "Gallery reopens in 2021"
+      ]
+    },
+    {
+      "id": "orangerie",
+      "name": "Musée de l’Orangerie",
+      "city": "Paris",
+      "country": "France",
+      "theme": "Monet's monumental Water Lilies and spatial contemplation",
+      "history": "The former orangery in the Tuileries Garden was converted into a museum. In 1927 it opened rooms designed for Monet's large decorative Water Lilies panels, installed after the artist's death.",
+      "architecture": "Two oval rooms create a panoramic environment where painted water, reflections and vegetation surround the visitor. The building's spatial sequence is inseparable from the artwork.",
+      "collections": "Eight monumental Water Lilies panels, plus the Jean Walter–Paul Guillaume collection including Impressionist and modern paintings.",
+      "education": "Study the experience of scale, duration, light and perception; compare the original architectural installation with virtual reconstructions.",
+      "digital": "Official collections and historical resources explain the Water Lilies cycle and modern holdings. Photo credits must be respected.",
+      "visit": "Check admission, reservations and temporary gallery arrangements on the official website.",
+      "conservationDetail": "Paintings and architecture require careful control of natural light, visitor flow and conservation conditions.",
+      "signature": "Water Lilies (monumental panels) — Claude Monet",
+      "researchTopics": [
+        {
+          "title": "A painted environment",
+          "body": "Monet designed a spatial experience rather than isolated pictures."
+        },
+        {
+          "title": "A gesture of peace",
+          "body": "The donation of the decorations was linked to the end of the First World War."
+        },
+        {
+          "title": "Beyond Water Lilies",
+          "body": "The museum also preserves the Jean Walter–Paul Guillaume collection of modern painting."
+        }
+      ],
+      "timeline": [
+        "Orangery constructed in 1852",
+        "Monet's donation agreed",
+        "Water Lilies rooms open in 1927",
+        "Renovated museum reopens"
+      ]
+    },
+    {
+      "id": "cenacolo-vinciano",
+      "name": "Museo del Cenacolo Vinciano",
+      "city": "Milan",
+      "country": "Italy",
+      "theme": "Leonardo's Last Supper in its original architectural setting",
+      "history": "Leonardo's Last Supper remains in the former refectory of Santa Maria delle Grazie, where it was painted in the late fifteenth century. The site preserves the work in its original architectural setting rather than as a portable museum painting.",
+      "architecture": "The refectory frames the mural's carefully constructed perspective. Donato Montorfano's Crucifixion occupies the opposite wall, making the building's original purpose essential to interpretation.",
+      "collections": "Leonardo's mural is the focus of the visit. The broader monastery complex and conservation history explain the physical fragility and cultural significance of the work.",
+      "education": "Explore the construction of space and emotion, and differentiate surviving original paint, historic restorations and modern digital reconstructions.",
+      "digital": "The official museum provides detailed history, high-resolution images and information about research and restoration. Reproduction permissions must be checked.",
+      "visit": "Visits require advance booking and strict limits intended to protect the mural. Always consult current official rules.",
+      "conservationDetail": "Leonardo's experimental work on dry plaster proved fragile, requiring major restoration campaigns and carefully regulated environmental conditions.",
+      "signature": "The Last Supper — Leonardo da Vinci",
+      "researchTopics": [
+        {
+          "title": "A work anchored to its place",
+          "body": "The painting's original refectory environment is fundamental to its meaning."
+        },
+        {
+          "title": "An experimental technique",
+          "body": "Working on dry plaster allowed revision but contributed to severe deterioration."
+        },
+        {
+          "title": "Conservation and authenticity",
+          "body": "Documentation helps distinguish original passages, damage and restorations without pretending missing areas are intact."
+        }
+      ],
+      "timeline": [
+        "Mural painted in the 1490s",
+        "Early deterioration recorded",
+        "Major conservation work",
+        "Modern preservation and visitor limits"
+      ]
+    }
+  ]
+}
