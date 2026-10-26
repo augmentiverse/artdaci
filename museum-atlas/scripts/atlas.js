@@ -25,11 +25,15 @@ async function load(){
   const translationResponse=await fetch(root+'data/'+locale+'.json');
   if(!translationResponse.ok)throw Error('Translation data HTTP '+translationResponse.status);
   const tr=await translationResponse.json();
-  if(tr.museums?.length!==17)throw Error('Missing translations');
+  const photosResponse=await fetch(root+'data/photographic-gallery.json');
+  if(!photosResponse.ok)throw Error('Photographic collection unavailable');
+  const photoData=await photosResponse.json();
+  if(tr.museums?.length!==17||photoData.photos?.length!==17)throw Error('Missing translations or photographs');
   const local=db.museums.map((museum,index)=>{
    const t=tr.museums.find(x=>x.id===museum.id);
-   if(!t||t.timeline.length!==4||t.researchTopics.length!==3)throw Error('Incomplete translation '+museum.id);
-   return {...museum,...t,timeline:museum.timeline.map((event,i)=>({...event,title:t.timeline[i]}))};
+   const photos=photoData.photos.find(x=>x.id===museum.id);
+   if(!t||!photos||t.timeline.length!==4||t.researchTopics.length!==3||photos.photos.length<3)throw Error('Incomplete museum translation '+museum.id);
+   return {...museum,...t,hero:{url:photos.hero.src,page:photos.hero.file},gallery:photos.photos.map(p=>({url:p.src,page:p.file})),timeline:museum.timeline.map((event,i)=>({...event,title:t.timeline[i]}))};
   });
   document.documentElement.lang=locale;document.documentElement.dir=rtl?'rtl':'ltr';document.body.dir=rtl?'rtl':'ltr';
   if(document.body.dataset.page==='index')renderIndexTranslated(local);
