@@ -40,7 +40,17 @@ async function load(){
   else renderDetailTranslated(local,document.body.dataset.slug);
  }
 }
+function prepareFrenchHeader(){
+  const header=document.querySelector('.site-header');
+  if(!header||header.querySelector('.locale-nav'))return;
+  const slug=document.body.dataset.slug;
+  const localizedHref=(lng)=>document.body.dataset.page==='detail'?(root+'musees/'+encodeURIComponent(slug)+'.html'+(lng==='fr'?'':'?lang='+lng)):(root+'index.html'+(lng==='fr'?'':'?lang='+lng));
+  const nav=document.createElement('nav');nav.className='locale-nav';nav.setAttribute('aria-label','Choix de langue');
+  nav.innerHTML=['fr','en','ar'].map(lng=>'<a href="'+esc(localizedHref(lng))+'" lang="'+lng+'" hreflang="'+lng+'" '+(lng==='fr'?'aria-current="page"':'')+'>'+(lng==='ar'?'العربية':lng.toUpperCase())+'</a>').join('');
+  header.append(nav);
+}
 function renderIndex(museums){
+ prepareFrenchHeader();
  const search=$('atlas-search'),country=$('atlas-country');
  for(const name of [...new Set(museums.map(m=>m.country))].sort((a,b)=>a.localeCompare(b,'fr'))){
   const option=document.createElement('option');option.value=name;option.textContent=name;country.append(option);
@@ -64,6 +74,7 @@ function renderIndex(museums){
  search.addEventListener('input',apply);country.addEventListener('change',apply);apply();
 }
 function renderDetail(museums,slug){
+ prepareFrenchHeader();
  const m=museums.find(x=>x.id===slug),host=$('detail-app');
  if(!m){host.innerHTML='<section class="section"><h1>Musée introuvable</h1><p>Cette fiche ne figure pas dans le catalogue ARTDACI.</p><a href="'+esc(root+'index.html')+'">Retour à l’atlas</a></section>';return;}
  document.title=m.name+' | ARTDACI — Atlas du patrimoine muséal';
