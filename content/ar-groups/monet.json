@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "1.0",
+  "groupId": "monet",
+  "artistId": "mo",
+  "artistName": "Claude Monet",
+  "canonicalUrl": "https://artdaci.com/ar/monet",
+  "qrCode": "/assets/qr/groups/monet.png",
+  "compiledTargets": "/assets/targets/monet-six.mind",
+  "compiledTargetsBytes": 5168864,
+  "compiledTargetsSha256": "aa102075d3082083a53b1f43ca49365cfe20f7728ad24dd1d982dba1f03d05de",
+  "status": "ready",
+  "artworks": [
+    { "id": "mo03", "targetIndex": 0, "title": "Les Nymphéas", "targetSource": "/assets/targets-src/mo03.jpg", "targetSourceSha256": "9a35d0955364c3eca3b9a10f10460e616d0aee0d24c60e46428960fbea46551c", "url": "https://artdaci.com/ar/water-lilies", "experience": "artwork-page" },
+    { "id": "mo04", "targetIndex": 1, "title": "Le Bassin aux nymphéas, harmonie verte", "targetSource": "/assets/targets-src/mo04.jpg", "targetSourceSha256": "bf5addfc7c2f3ae812c53db928f0ac61de27ae9f14d84755741865d00ec7e9d0", "url": "https://artdaci.com/ar/the-japanese-footbridge", "experience": "artwork-page" },
+    { "id": "mo06", "targetIndex": 2, "title": "La Femme à l’ombrelle", "targetSource": "/assets/targets-src/mo06.jpg", "targetSourceSha256": "8823a0ba0684c850f907f38aa1e5c52836a2a0d38647c2528a76196760244263", "url": "https://artdaci.com/ar/woman-with-a-parasol", "experience": "artwork-page" },
+    { "id": "mo02", "targetIndex": 3, "title": "Le Pont d’Argenteuil", "targetSource": "/assets/targets-src/mo02.jpg", "targetSourceSha256": "d29825f573f00a7c5d2d6ebfc0c4d774f09e825586890c21d331eb3c1b88c3a6", "url": "https://artdaci.com/ar/the-bridge-at-argenteuil", "experience": "artwork-page" },
+    { "id": "mo05", "targetIndex": 4, "title": "Les Coquelicots", "targetSource": "/assets/targets-src/mo05.jpg", "targetSourceSha256": "62a3ca5cd2c11be2e79ec964e61b332f2ade1e7d5f544210d923abc1fc5f3e61", "url": "https://artdaci.com/ar/poppies", "experience": "artwork-page" },
+    { "id": "mo01", "targetIndex": 5, "title": "Impression, soleil levant", "targetSource": "/assets/targets-src/mo01.jpg", "targetSourceSha256": "5a5857b724c55986d99aafde370836a04d1e7c1f21220987819317d40815a3dc", "url": "https://artdaci.com/ar/impression-sunrise", "experience": "artwork-page" }
+  ]
+}

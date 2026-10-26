@@ -3,7 +3,8 @@
   "rewrites": [
     { "source": "/ar/leonardo", "destination": "/ar-leonardo.html" },
     { "source": "/ar/vermeer", "destination": "/ar-vermeer.html" },
-    { "source": "/ar/van-gogh", "destination": "/ar-van-gogh.html" }
+    { "source": "/ar/van-gogh", "destination": "/ar-van-gogh.html" },
+    { "source": "/ar/monet", "destination": "/ar-monet.html" }
   ],
   "redirects": [
     { "source": "/ar/monalisa", "destination": "/ar.html?painting=mona-lisa", "permanent": false },
