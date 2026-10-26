@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#121b29">
-  <meta name="description" content="ARTDACI Museum Explorer — six museums, real photographs, artworks and verified historical discoveries.">
+  <meta name="description" content="ARTDACI Museum Explorer — discover museum collections, photographic heritage and immersive art experiences.">
   <title>ARTDACI — Museum Explorer</title>
   <link rel="icon" href="assets/app/artdaci-app-icon.svg" type="image/svg+xml">
   <style>
@@ -113,7 +113,7 @@ a{color:inherit}button{font:inherit;cursor:pointer}button:disabled{cursor:not-al
     <main id="museum-panel" tabindex="-1">
       <section class="intro" aria-labelledby="page-title">
         <p class="eyebrow" id="intro-eyebrow">PARCOURS CULTUREL</p>
-        <h1 id="page-title">Six musées, mille histoires</h1>
+        <h1 id="page-title">Des musées, mille histoires</h1>
         <p class="intro-description" id="intro-description">Explorez les musées liés aux chefs-d’œuvre d’ARTDACI, une découverte à la fois.</p>
         </section>
       <div class="atlas-entry-wrap"><a class="atlas-entry" id="atlas-entry" href="museums-atlas.html" lang="fr">Découvrir l’atlas photographique des 17 musées ↗</a></div>
@@ -689,21 +689,21 @@ const EMBEDDED_MUSEUM_DATA={
 const DATA_URL = './content/museums/explorer.json';
 const UI = {
   fr: {
-    title: 'Six musées, mille histoires', intro: 'Explorez les musées liés aux chefs-d’œuvre d’ARTDACI, une découverte à la fois.', eyebrow: 'PARCOURS CULTUREL',
+    title: 'Des musées, mille histoires', intro: 'Explorez les musées liés aux chefs-d’œuvre d’ARTDACI, une découverte à la fois.', eyebrow: 'PARCOURS CULTUREL',
     official: 'Site du musée ↗', artwork: 'Œuvres liées à ARTDACI', experience: 'Prolonger la visite',
     virtual: 'Visiter en VR', ar: 'Explorer en RA', space: 'Placer en 3D / RA', source: 'Source ↗', prev: '← Précédent', next: 'Suivant →',
     photograph: 'Photographie', fallback: 'Illustration ARTDACI (photographie momentanément indisponible)', keyboard: 'Utilisez aussi les touches ← et → du clavier.',
     gallery: 'Galerie des six musées', semantic: 'ARTDACI sémantique', skip: 'Aller au contenu', unavailable: 'Le parcours ne peut pas être chargé. Réessayez avec une connexion Internet.',
     photoAlt: 'Photographie du musée : ', portalEyebrow:'PORTAIL CULTUREL CONNECTÉ', portalTitle:'Approfondir la découverte', portalIntro:'Retrouvez les œuvres, les espaces immersifs et les liens de connaissance de ce musée.', portalTabs:['Œuvres','3D · RA · VR','Savoir & questions'], artworksDescription:'Ouvrez une œuvre liée à ce musée dans le livre connecté ARTDACI.', experiencesDescription:'Passez de la découverte photographique aux environnements immersifs déjà disponibles.', museumPreview:'Illustration ARTDACI du musée (non photographique)', knowledgeTitle:'Questions pour aller plus loin', knowledgeDescription:'Deux pistes d’exploration à copier pour un échange guidé ou un travail en classe.', copyQuestion:'Copier la question', copied:'Question copiée.', copyFailed:'Copie impossible. Sélectionnez la question manuellement.', semanticOpen:'Ouvrir ARTDACI Semantic ↗', knowledgeNote:'Le guide IA contextuel intégré au musée est envisagé pour une étape ultérieure ; le graphe sémantique existant est accessible ci-dessus.', selector:'Choisir un musée'},
   en: {
-    title: 'Six museums, countless stories', intro: 'Discover the museums behind ARTDACI masterpieces, one fascinating stop at a time.', eyebrow: 'CULTURAL JOURNEY',
+    title: 'Museums, Countless Stories', intro: 'Discover the museums behind ARTDACI masterpieces, one fascinating stop at a time.', eyebrow: 'CULTURAL JOURNEY',
     official: 'Museum website ↗', artwork: 'Related ARTDACI artworks', experience: 'Continue exploring',
     virtual: 'Visit in VR', ar: 'Explore in AR', space: 'Place in 3D / AR', source: 'Source ↗', prev: '← Previous', next: 'Next →',
     photograph: 'Photograph', fallback: 'ARTDACI illustration (photograph temporarily unavailable)', keyboard: 'You can also navigate with the ← and → keys.',
     gallery: 'Six Museums Wing', semantic: 'ARTDACI Semantic', skip: 'Skip to content', unavailable: 'Unable to load the museum journey. Please try again while online.',
     photoAlt: 'Photograph of the museum: ', portalEyebrow:'CONNECTED CULTURAL PORTAL', portalTitle:'Explore further', portalIntro:'Explore the artworks, immersive experiences and linked knowledge behind this museum.', portalTabs:['Artworks','3D · AR · VR','Knowledge & questions'], artworksDescription:'Open an artwork associated with this museum in ARTDACI’s connected book.', experiencesDescription:'Move from the photographic journey to available immersive experiences.', museumPreview:'ARTDACI museum illustration (not a photograph)', knowledgeTitle:'Questions to explore', knowledgeDescription:'Copy either question for guided discussion or classroom activities.', copyQuestion:'Copy question', copied:'Question copied.', copyFailed:'Unable to copy. Select the question manually.', semanticOpen:'Open ARTDACI Semantic ↗', knowledgeNote:'An in-site contextual AI guide is planned for a later phase; the existing semantic graph is available through the link above.', selector:'Choose a museum'},
   ar: {
-    title: 'ستة متاحف وحكايات لا تنتهي', intro: 'اكتشف المتاحف المرتبطة بروائع ARTDACI، متحفًا بعد آخر.', eyebrow: 'رحلة ثقافية',
+    title: 'متاحف وحكايات لا تنتهي', intro: 'اكتشف المتاحف المرتبطة بروائع ARTDACI، متحفًا بعد آخر.', eyebrow: 'رحلة ثقافية',
     official: 'موقع المتحف ↗', artwork: 'الأعمال الفنية المرتبطة بـ ARTDACI', experience: 'تابع الاستكشاف',
     virtual: 'زيارة بالواقع الافتراضي', ar: 'استكشاف بالواقع المعزز', space: 'عرض ثلاثي الأبعاد / معزز', source: 'المصدر ↗', prev: '→ السابق', next: 'التالي ←',
     photograph: 'صورة فوتوغرافية', fallback: 'رسم من ARTDACI (الصورة غير متاحة مؤقتًا)', keyboard: 'يمكنك أيضًا التنقل باستخدام مفتاحَي السهمين.',
