@@ -186,11 +186,38 @@ const caption=document.createElement('figcaption');caption.append(document.creat
 }
 function renderIndexTranslated(museums){
 const U=LOCAL[locale];prepareTranslatedHeader();document.title=U.title;
+const indexCopy=locale==='ar'?{
+ heroCta:'استكشف المتاحف السبعة عشر',methodCta:'منهج التوثيق',
+ stats:['مؤسسة','بلدان','مرجعًا مصورًا','رابطًا توثيقيًا'],
+ sectionTitle:'استكشف المؤسسات',sectionLead:'لكل متحف ملف بحثي مستقل ومعرض صور موثق',
+ featuredTitle:'المتاحف الستة الغامرة',featuredText:'تتيح هذه المؤسسات الستة بالفعل روابط إلى تجارب ARTDACI الغامرة',
+ extraTitle:'أحد عشر متحفًا إضافيًا',extraText:'ملفات وثائقية وصور حقيقية؛ وستُطوّر التجارب الغامرة مستقبلًا',
+ methodTitle:'منهجية توثيقية قابلة للتحقق',methodItems:[['مصادر مؤسسية','تعتمد المعلومات على مواقع المتاحف وفهارسها ووثائقها التاريخية.'],['صور فوتوغرافية حقيقية','ترتبط الصور بملفات ويكيميديا كومنز للتحقق من الأسماء والتراخيص.'],['الأعمال ومواقع حفظها','تشير صلات ARTDACI إلى أعمال أو نسخ تملكها المؤسسات، وقد يتغير عرضها.'],['تجارب غامرة مستقبلية','تقتصر تجارب الواقع المعزز والافتراضي المتاحة حاليًا على المتاحف الستة الرئيسية.']],
+ searchLabel:'ابحث عن متحف أو مدينة أو فنان أو مجموعة',searchPlaceholder:'مثال: فيرمير، أمستردام، الانطباعية',allCountries:'كل البلدان',nothing:'لا يوجد متحف مطابق'
+}:{
+ heroCta:'Explore all 17 museums',methodCta:'Read our methodology',
+ stats:['institutions','countries','photographic references','research links'],
+ sectionTitle:'Explore the institutions',sectionLead:'Each museum has a dedicated research dossier and a documented photographic gallery',
+ featuredTitle:'Six immersive museums',featuredText:'These institutions already connect to ARTDACI AR and VR experiences',
+ extraTitle:'Eleven additional museums',extraText:'Research dossiers and authentic photographs; immersive experiences may follow later',
+ methodTitle:'Documented, evolving, verifiable research',methodItems:[['Institutional sources','Information comes from official museum websites, collections catalogues and historical documentation.'],['Authentic photographs','Photographs link to Wikimedia Commons files with author information and licences.'],['Artworks and locations','ARTDACI connects to works or specific versions held by museums; display can change.'],['Future immersive access','Existing AR and VR experiences remain limited to the six principal museums.']],
+ searchLabel:'Search for a museum, city, artist or collection',searchPlaceholder:'e.g. Vermeer, Amsterdam, Impressionism',allCountries:'All countries',nothing:'No museum matches your search'
+};
+function setText(selector,value){const n=document.querySelector(selector);if(n)n.textContent=value;}
+setText('.index-hero .eyebrow','ARTDACI / '+U.research+' · 2026');
+const buttons=document.querySelectorAll('.index-hero .hero-actions a');if(buttons[0])buttons[0].textContent=indexCopy.heroCta+' ↗';if(buttons[1])buttons[1].textContent=indexCopy.methodCta;
+document.querySelectorAll('.index-stats span').forEach((node,i)=>{const count=[17,7,51,66][i];if(count!==undefined)node.textContent=count+' '+indexCopy.stats[i]});
+setText('.section-head h2',indexCopy.sectionTitle);setText('.section-head p',indexCopy.sectionLead);
+setText('#featured-block .group-heading h3',indexCopy.featuredTitle);setText('#featured-block .group-heading p',indexCopy.featuredText);
+setText('#additional-block .group-heading h3',indexCopy.extraTitle);setText('#additional-block .group-heading p',indexCopy.extraText);
+setText('.methodology h2',indexCopy.methodTitle);
+document.querySelectorAll('.method-grid article').forEach((node,i)=>{const block=indexCopy.methodItems[i];if(!block)return;const heading=node.querySelector('h3'),p=node.querySelector('p');if(heading)heading.textContent=block[0];if(p)p.textContent=block[1];});
+setText('label[for=atlas-search]',indexCopy.searchLabel);setText('#no-results',indexCopy.nothing);
 const h=document.querySelector('.index-hero h1');if(h)h.textContent=U.researchHeading;
 const subtitle=document.querySelector('.index-hero>p');if(subtitle)subtitle.textContent=U.indexLead;
 const search=$('atlas-search'),country=$('atlas-country');if(!search||!country)return;
 const label=document.querySelector('label[for=atlas-search]');if(label)label.textContent=U.explorer;
-search.placeholder=U.explorer;country.innerHTML='<option value="">'+esc(U.location)+'</option>';
+search.placeholder=indexCopy.searchPlaceholder;country.innerHTML='<option value="">'+esc(indexCopy.allCountries)+'</option>';
 for(const c of [...new Set(museums.map(m=>m.country))]){const option=document.createElement('option');option.value=c;option.textContent=c;country.append(option)}
 function rerender(){
 const q=search.value.trim().toLocaleLowerCase(locale),c=country.value;
