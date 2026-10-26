@@ -1,0 +1,515 @@
+{
+  "source": "Existing ARTDACI French photographic atlas",
+  "photos": [
+    {
+      "id": "louvre",
+      "photographicId": "louvre",
+      "hero": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Louvre_Museum_Wikimedia_Commons_2.jpg?width=1000",
+        "file": "https://commons.wikimedia.org/wiki/File:Louvre_Museum_Wikimedia_Commons_2.jpg"
+      },
+      "photos": [
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Louvre_Museum_Wikimedia_Commons_2.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Louvre_Museum_Wikimedia_Commons_2.jpg",
+          "label": "Vue principale · cour Napoléon et pyramide"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Louvre_Museum_Cour_Carr%C3%A9e_inner_courtyard.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Louvre_Museum_Cour_Carr%C3%A9e_inner_courtyard.jpg",
+          "label": "Cour Carrée · panorama"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/La_Galerie_d'Apollon_au_Louvre.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:La_Galerie_d'Apollon_au_Louvre.jpg",
+          "label": "La Galerie d’Apollon · intérieur"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Salle_des_Caryatides,_Louvre,_Paris.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Salle_des_Caryatides,_Louvre,_Paris.jpg",
+          "label": "Salle des Caryatides · Renaissance"
+        }
+      ]
+    },
+    {
+      "id": "orsay",
+      "photographicId": "orsay",
+      "hero": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Front_view_of_the_Mus%C3%A9e_d'Orsay.jpg?width=1000",
+        "file": "https://commons.wikimedia.org/wiki/File:Front_view_of_the_Mus%C3%A9e_d'Orsay.jpg"
+      },
+      "photos": [
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Front_view_of_the_Mus%C3%A9e_d'Orsay.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Front_view_of_the_Mus%C3%A9e_d'Orsay.jpg",
+          "label": "Vue principale · façade de l’ancienne gare"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Musee_d_Orsay_main_hall_Paris_2023_dllu.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Musee_d_Orsay_main_hall_Paris_2023_dllu.jpg",
+          "label": "Grande nef du musée"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Clock_in_the_Mus%C3%A9e_d'Orsay.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Clock_in_the_Mus%C3%A9e_d'Orsay.jpg",
+          "label": "Horloge intérieure"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Grande_galerie_du_Mus%C3%A9e_d'Orsay_(1).jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Grande_galerie_du_Mus%C3%A9e_d'Orsay_(1).jpg",
+          "label": "Galerie et sculptures"
+        }
+      ]
+    },
+    {
+      "id": "mauritshuis",
+      "photographicId": "mauritshuis",
+      "hero": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Den_Haag_-_Korte_Vijverberg_-_View_on_Hofvijver_along_Mauritshuis_1636-1641_by_Jacob_van_Campen_%26_Pieter_Post_-_Dutch_Classicism.jpg?width=1000",
+        "file": "https://commons.wikimedia.org/wiki/File:Den_Haag_-_Korte_Vijverberg_-_View_on_Hofvijver_along_Mauritshuis_1636-1641_by_Jacob_van_Campen_%26_Pieter_Post_-_Dutch_Classicism.jpg"
+      },
+      "photos": [
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Den_Haag_-_Korte_Vijverberg_-_View_on_Hofvijver_along_Mauritshuis_1636-1641_by_Jacob_van_Campen_%26_Pieter_Post_-_Dutch_Classicism.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Den_Haag_-_Korte_Vijverberg_-_View_on_Hofvijver_along_Mauritshuis_1636-1641_by_Jacob_van_Campen_%26_Pieter_Post_-_Dutch_Classicism.jpg",
+          "label": "Vue principale · palais depuis le Hofvijver"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior_Museo_Mauritshuis.JPG?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Interior_Museo_Mauritshuis.JPG",
+          "label": "Salons de peinture"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/2025-07-18_Mauritshuis_01.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:2025-07-18_Mauritshuis_01.jpg",
+          "label": "Parcours intérieur"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/2025-07-18_Mauritshuis_06.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:2025-07-18_Mauritshuis_06.jpg",
+          "label": "Autre salle du musée"
+        }
+      ]
+    },
+    {
+      "id": "czartoryski",
+      "photographicId": "czartoryski",
+      "hero": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Krak%C3%B3w,_Muzeum_Ksi%C4%85%C5%BC%C4%85t_Czartoryskich_w_Krakowie.jpg?width=1000",
+        "file": "https://commons.wikimedia.org/wiki/File:Krak%C3%B3w,_Muzeum_Ksi%C4%85%C5%BC%C4%85t_Czartoryskich_w_Krakowie.jpg"
+      },
+      "photos": [
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Krak%C3%B3w,_Muzeum_Ksi%C4%85%C5%BC%C4%85t_Czartoryskich_w_Krakowie.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Krak%C3%B3w,_Muzeum_Ksi%C4%85%C5%BC%C4%85t_Czartoryskich_w_Krakowie.jpg",
+          "label": "Vue principale · bâtiment du musée"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior_of_the_Czartoryski_Museum,_2024,_01.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Interior_of_the_Czartoryski_Museum,_2024,_01.jpg",
+          "label": "Galerie intérieure"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior_of_the_Czartoryski_Museum,_2024,_06.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Interior_of_the_Czartoryski_Museum,_2024,_06.jpg",
+          "label": "Salle d’exposition"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior_of_the_Czartoryski_Museum,_2024,_09.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Interior_of_the_Czartoryski_Museum,_2024,_09.jpg",
+          "label": "Autre espace intérieur"
+        }
+      ]
+    },
+    {
+      "id": "van-gogh-museum",
+      "photographicId": "vangogh",
+      "hero": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Van-Gogh-Museum-facade_Amsterdam.jpg?width=1000",
+        "file": "https://commons.wikimedia.org/wiki/File:Van-Gogh-Museum-facade_Amsterdam.jpg"
+      },
+      "photos": [
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Van-Gogh-Museum-facade_Amsterdam.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Van-Gogh-Museum-facade_Amsterdam.jpg",
+          "label": "Vue principale · façade du musée"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Exterior_of_the_Van_Gogh_Museum_20180702.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Exterior_of_the_Van_Gogh_Museum_20180702.jpg",
+          "label": "Architecture extérieure"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Int%C3%A9rieur_du_mus%C3%A9e_Van_Gogh.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Int%C3%A9rieur_du_mus%C3%A9e_Van_Gogh.jpg",
+          "label": "Espaces intérieurs"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Exterior_of_the_Van_Gogh_Museum.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Exterior_of_the_Van_Gogh_Museum.jpg",
+          "label": "Bâtiment et environnement"
+        }
+      ]
+    },
+    {
+      "id": "national-gallery-of-art-washington",
+      "photographicId": "nga",
+      "hero": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/National_Gallery_of_Art_-_West_Building_facade.JPG?width=1000",
+        "file": "https://commons.wikimedia.org/wiki/File:National_Gallery_of_Art_-_West_Building_facade.JPG"
+      },
+      "photos": [
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/National_Gallery_of_Art_-_West_Building_facade.JPG?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:National_Gallery_of_Art_-_West_Building_facade.JPG",
+          "label": "Vue principale · West Building"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/National_Gallery_of_Art_rotunda_flower_display.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:National_Gallery_of_Art_rotunda_flower_display.jpg",
+          "label": "Rotonde et décor intérieur"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/National_Gallery_of_Art_interior.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:National_Gallery_of_Art_interior.jpg",
+          "label": "Galerie du musée"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/East_Building_of_the_National_Gallery_of_Art,_atrium.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:East_Building_of_the_National_Gallery_of_Art,_atrium.jpg",
+          "label": "Atrium de l’East Building"
+        }
+      ]
+    },
+    {
+      "id": "rijksmuseum",
+      "photographicId": "rijksmuseum",
+      "hero": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Rijksmuseum_in_Amsterdam.jpg?width=1000",
+        "file": "https://commons.wikimedia.org/wiki/File:Rijksmuseum_in_Amsterdam.jpg"
+      },
+      "photos": [
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Rijksmuseum_in_Amsterdam.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Rijksmuseum_in_Amsterdam.jpg",
+          "label": "Vue principale · façade du musée"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior_of_the_Rijksmuseum_Amsterdam_pic13.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Interior_of_the_Rijksmuseum_Amsterdam_pic13.jpg",
+          "label": "Salle et collections"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior_of_the_Rijksmuseum_Amsterdam_pic2.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Interior_of_the_Rijksmuseum_Amsterdam_pic2.jpg",
+          "label": "Perspective intérieure"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Rijksmuseum_IAmsterdam.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Rijksmuseum_IAmsterdam.jpg",
+          "label": "Côté Museumplein"
+        }
+      ]
+    },
+    {
+      "id": "moma",
+      "photographicId": "moma",
+      "hero": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Museum_of_Modern_Art_(30218283404).jpg?width=1000",
+        "file": "https://commons.wikimedia.org/wiki/File:Museum_of_Modern_Art_(30218283404).jpg"
+      },
+      "photos": [
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Museum_of_Modern_Art_(30218283404).jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Museum_of_Modern_Art_(30218283404).jpg",
+          "label": "Vue principale · bâtiment du MoMA"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/The_Museum_of_Modern_Art,_MoMA,_New_York_(50415229238).jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:The_Museum_of_Modern_Art,_MoMA,_New_York_(50415229238).jpg",
+          "label": "Galeries d’art moderne"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior_staircase,_Museum_of_Modern_Art,_New_York_City_(July_2010).jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Interior_staircase,_Museum_of_Modern_Art,_New_York_City_(July_2010).jpg",
+          "label": "Escalier intérieur"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Museum_of_Modern_Art_(MoMA)_(51395759113).jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Museum_of_Modern_Art_(MoMA)_(51395759113).jpg",
+          "label": "Vue extérieure supplémentaire"
+        }
+      ]
+    },
+    {
+      "id": "marmottan",
+      "photographicId": "marmottan",
+      "hero": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Mus%C3%A9e_Marmottan_Monet,_Paris,_from_street.jpg?width=1000",
+        "file": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_Marmottan_Monet,_Paris,_from_street.jpg"
+      },
+      "photos": [
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Mus%C3%A9e_Marmottan_Monet,_Paris,_from_street.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_Marmottan_Monet,_Paris,_from_street.jpg",
+          "label": "Vue principale · façade depuis la rue"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior_of_the_Mus%C3%A9e_Marmottan_Monet_1.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Interior_of_the_Mus%C3%A9e_Marmottan_Monet_1.jpg",
+          "label": "Salon intérieur"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior_of_the_Mus%C3%A9e_Marmottan_Monet_6.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Interior_of_the_Mus%C3%A9e_Marmottan_Monet_6.jpg",
+          "label": "Salle du musée"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Salle_d'exposition_des_Nymph%C3%A9as_au_mus%C3%A9e_Marmottan.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Salle_d'exposition_des_Nymph%C3%A9as_au_mus%C3%A9e_Marmottan.jpg",
+          "label": "Espace de présentation des Nymphéas"
+        }
+      ]
+    },
+    {
+      "id": "kunsthistorisches",
+      "photographicId": "khm",
+      "hero": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Kunsthistorisches_Museum_Wien.jpg?width=1000",
+        "file": "https://commons.wikimedia.org/wiki/File:Kunsthistorisches_Museum_Wien.jpg"
+      },
+      "photos": [
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Kunsthistorisches_Museum_Wien.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Kunsthistorisches_Museum_Wien.jpg",
+          "label": "Vue principale · bâtiment impérial"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/KHM_Treppenaufgang.JPG?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:KHM_Treppenaufgang.JPG",
+          "label": "Grand escalier"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Grand_staircase_ceiling_with_Apotheosis_of_the_Renaissance_fresco_(Kunsthistorischen_Museum).jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Grand_staircase_ceiling_with_Apotheosis_of_the_Renaissance_fresco_(Kunsthistorischen_Museum).jpg",
+          "label": "Plafond et décor monumental"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Kunsthistorisches_Museum_Vienna_0114.JPG?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Kunsthistorisches_Museum_Vienna_0114.JPG",
+          "label": "Perspective architecturale"
+        }
+      ]
+    },
+    {
+      "id": "uffizi",
+      "photographicId": "uffizi",
+      "hero": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Firenze_Galleria_degli_Uffizi_Esterno_1.jpg?width=1000",
+        "file": "https://commons.wikimedia.org/wiki/File:Firenze_Galleria_degli_Uffizi_Esterno_1.jpg"
+      },
+      "photos": [
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Firenze_Galleria_degli_Uffizi_Esterno_1.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Firenze_Galleria_degli_Uffizi_Esterno_1.jpg",
+          "label": "Vue principale · façade et perspective"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Uffizi_courtyard,_Florence.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Uffizi_courtyard,_Florence.jpg",
+          "label": "Cour des Offices"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Tribuna_uffizi.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Tribuna_uffizi.jpg",
+          "label": "La Tribuna · salle historique"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Uffizi,_Sala_A7_'Lorenzo_Monaco_Gentile_da_Fabriano'_a_feb_2024_-FG1.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Uffizi,_Sala_A7_'Lorenzo_Monaco_Gentile_da_Fabriano'_a_feb_2024_-FG1.jpg",
+          "label": "Salle de peinture"
+        }
+      ]
+    },
+    {
+      "id": "national-gallery-london",
+      "photographicId": "national-gallery",
+      "hero": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/National_Gallery_Facade.JPG?width=1000",
+        "file": "https://commons.wikimedia.org/wiki/File:National_Gallery_Facade.JPG"
+      },
+      "photos": [
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/National_Gallery_Facade.JPG?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:National_Gallery_Facade.JPG",
+          "label": "Vue principale · portique de Trafalgar Square"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Central_Hall,_National_Gallery.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Central_Hall,_National_Gallery.jpg",
+          "label": "Hall central"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior_of_the_National_Gallery,_London,_UK_01.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Interior_of_the_National_Gallery,_London,_UK_01.jpg",
+          "label": "Salles de peinture"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Interior_of_the_National_Gallery,_London,_UK_02.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Interior_of_the_National_Gallery,_London,_UK_02.jpg",
+          "label": "Une autre galerie"
+        }
+      ]
+    },
+    {
+      "id": "kroller-muller",
+      "photographicId": "kroller",
+      "hero": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Entrance_Kr%C3%B6ller-M%C3%BCller_Museum.JPG?width=1000",
+        "file": "https://commons.wikimedia.org/wiki/File:Entrance_Kr%C3%B6ller-M%C3%BCller_Museum.JPG"
+      },
+      "photos": [
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Entrance_Kr%C3%B6ller-M%C3%BCller_Museum.JPG?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Entrance_Kr%C3%B6ller-M%C3%BCller_Museum.JPG",
+          "label": "Vue principale · entrée du musée"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Hoge_Veluwe_National_Park,_Kr%C3%B6ller-M%C3%BCller_Museum_-_panoramio_(1).jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Hoge_Veluwe_National_Park,_Kr%C3%B6ller-M%C3%BCller_Museum_-_panoramio_(1).jpg",
+          "label": "Musée et parc naturel"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/A_day_at_the_museum_(5131189372).jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:A_day_at_the_museum_(5131189372).jpg",
+          "label": "Collection et espaces du musée"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Kr%C3%B6ller_Muller_Museum_-_panoramio_-_Rokus_Cornelis.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Kr%C3%B6ller_Muller_Museum_-_panoramio_-_Rokus_Cornelis.jpg",
+          "label": "Présentation d’œuvres sculptées"
+        }
+      ]
+    },
+    {
+      "id": "yale-art-gallery",
+      "photographicId": "yale",
+      "hero": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Yale_University_Art_Gallery_exterior.jpg?width=1000",
+        "file": "https://commons.wikimedia.org/wiki/File:Yale_University_Art_Gallery_exterior.jpg"
+      },
+      "photos": [
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Yale_University_Art_Gallery_exterior.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Yale_University_Art_Gallery_exterior.jpg",
+          "label": "Vue principale · façade de Louis Kahn"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Sculpture_Hall_Yale_University_Art_Gallery_1.JPG?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Sculpture_Hall_Yale_University_Art_Gallery_1.JPG",
+          "label": "Hall de sculptures"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Yale_University_Art_Gallery_Staircase.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Yale_University_Art_Gallery_Staircase.jpg",
+          "label": "Escalier intérieur"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Triangle-ceiling.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Triangle-ceiling.jpg",
+          "label": "Plafond géométrique"
+        }
+      ]
+    },
+    {
+      "id": "courtauld",
+      "photographicId": "courtauld",
+      "hero": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Somerset_House_Courtyard.jpg?width=1000",
+        "file": "https://commons.wikimedia.org/wiki/File:Somerset_House_Courtyard.jpg"
+      },
+      "photos": [
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Somerset_House_Courtyard.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Somerset_House_Courtyard.jpg",
+          "label": "Vue principale · Somerset House"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Courtauld_Gallery,_Staircase.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Courtauld_Gallery,_Staircase.jpg",
+          "label": "Escalier de la Courtauld Gallery"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Courtyard_of_Somerset_House_from_the_Courtauld_Gallery_-_geograph.org.uk_-_1863149.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Courtyard_of_Somerset_House_from_the_Courtauld_Gallery_-_geograph.org.uk_-_1863149.jpg",
+          "label": "Cour vue depuis la galerie"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Staircase_at_the_Courtauld_Gallery_1.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Staircase_at_the_Courtauld_Gallery_1.jpg",
+          "label": "Architecture intérieure"
+        }
+      ]
+    },
+    {
+      "id": "orangerie",
+      "photographicId": "orangerie",
+      "hero": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Mus%C3%A9e_de_l%E2%80%99Orangerie_exterior.JPG?width=1000",
+        "file": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_de_l%E2%80%99Orangerie_exterior.JPG"
+      },
+      "photos": [
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Mus%C3%A9e_de_l%E2%80%99Orangerie_exterior.JPG?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_de_l%E2%80%99Orangerie_exterior.JPG",
+          "label": "Vue principale · façade du musée"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Mus%C3%A9e_de_L'Orangerie_Water_Lilies_Room.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_de_L'Orangerie_Water_Lilies_Room.jpg",
+          "label": "Salle ovale des Nymphéas"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Mus%C3%A9e_de_l'Orangerie_01.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_de_l'Orangerie_01.jpg",
+          "label": "Monet dans le parcours intérieur"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Mus%C3%A9e_de_l%E2%80%99Orangerie_interior1.JPG?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_de_l%E2%80%99Orangerie_interior1.JPG",
+          "label": "Intérieur du musée"
+        }
+      ]
+    },
+    {
+      "id": "cenacolo-vinciano",
+      "photographicId": "cenacolo",
+      "hero": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Santa_Maria_delle_Grazie_a_Milano.jpg?width=1000",
+        "file": "https://commons.wikimedia.org/wiki/File:Santa_Maria_delle_Grazie_a_Milano.jpg"
+      },
+      "photos": [
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Santa_Maria_delle_Grazie_a_Milano.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Santa_Maria_delle_Grazie_a_Milano.jpg",
+          "label": "Vue principale · Santa Maria delle Grazie"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Exterior_of_Santa_Maria_delle_Grazie_(Milan).jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Exterior_of_Santa_Maria_delle_Grazie_(Milan).jpg",
+          "label": "Vue du complexe monumental"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Parete_del_cenacolo_vinciano_a_Milano.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Parete_del_cenacolo_vinciano_a_Milano.jpg",
+          "label": "Mur peint du réfectoire"
+        },
+        {
+          "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Santa_Maria_delle_Grazie,_Milano.jpg?width=1000",
+          "file": "https://commons.wikimedia.org/wiki/File:Santa_Maria_delle_Grazie,_Milano.jpg",
+          "label": "Autre vue de l’architecture"
+        }
+      ]
+    }
+  ]
+}
