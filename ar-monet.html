@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="theme-color" content="#102536" />
+    <title>ARTDACI — Claude Monet · AR multi-tableaux</title>
+    <link rel="icon" href="/assets/app/artdaci-maskable-icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles/ar-leonardo.css?v=1" />
+    <script type="importmap">{"imports":{"three":"/vendor/three.module.js","three/addons/":"/vendor/three-addons/"}}</script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a href="/index-fr.html" class="brand">ARTDACI</a>
+      <span>AR MULTI-TABLEAUX</span>
+    </header>
+    <main>
+      <section class="intro" id="intro">
+        <p class="eyebrow">CLAUDE MONET · SIX ŒUVRES</p>
+        <h1>Un QR code, six tableaux à explorer</h1>
+        <p>Autorisez la caméra une fois, puis visez successivement les reproductions imprimées. La même session identifie chaque tableau et affiche une couche d’information en réalité augmentée.</p>
+        <div class="actions">
+          <button id="start" type="button">Démarrer la reconnaissance AR</button>
+          <span id="readiness" role="status" aria-live="polite">Cibles prêtes · six tableaux</span>
+        </div>
+        <p class="note">La caméra et la cible multi-images ne sont chargées qu’après votre action. Les notices restent accessibles ci-dessous si la caméra AR est indisponible.</p>
+      </section>
+      <section id="viewer" class="viewer" hidden aria-label="Caméra AR">
+        <div id="ar-root" class="ar-root"></div>
+        <div class="viewer-bar">
+          <span id="scan-state" role="status" aria-live="polite">Pointez la caméra vers une œuvre.</span>
+          <button id="stop" type="button">Fermer la caméra</button>
+        </div>
+        <div id="recognized" class="recognized" hidden>
+          <p class="eyebrow">ŒUVRE RECONNUE</p>
+          <h2 id="recognized-title"></h2>
+          <p id="recognized-description"></p>
+          <a id="recognized-link" href="#">Ouvrir sa fiche</a>
+        </div>
+      </section>
+      <section class="gallery">
+        <h2>Les six œuvres</h2>
+        <p>Chaque tableau reste consultable directement, indépendamment de la caméra.</p>
+        <div id="artwork-grid" class="artwork-grid"></div>
+      </section>
+    </main>
+    <footer>ARTDACI · Les expériences AR et les QR codes individuels restent inchangés.</footer>
+    <script type="module" src="/scripts/ar-monet.js?v=1"></script>
+  </body>
+</html>
