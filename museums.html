@@ -981,7 +981,10 @@ function render() {
   text('intro-eyebrow',u.eyebrow);
   text('page-title',u.title);
   text('intro-description',u.intro);
-  text('atlas-entry',{fr:'Découvrir l’atlas photographique des 17 musées ↗',en:'Explore the 17-museum photographic atlas (in French) ↗',ar:'استكشف الأطلس المصوّر للمتاحف السبعة عشر (بالفرنسية) ↗'}[lang]);
+  text('atlas-entry',{fr:'ARTDACI — Atlas du patrimoine muséal ↗',en:'ARTDACI — Museum Heritage Atlas ↗',ar:'ARTDACI — أطلس التراث المتحفي ↗'}[lang]);
+  $('atlas-entry').href=lang==='fr'?'museums-atlas.html':lang==='en'?'museums-atlas-en.html':'museums-atlas-ar.html';
+  $('atlas-entry').removeAttribute('lang');
+  $('atlas-entry').setAttribute('hreflang',lang);
   text('museum-title',local(museum.name));
   text('museum-location',local(museum.location));
   text('artworks-heading',u.artwork);
