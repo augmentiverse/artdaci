@@ -37,6 +37,14 @@
         "Museum opens in 1793",
         "Grand Louvre pyramid opens",
         "Mona Lisa gallery renewed"
+      ],
+      "opened": "1793",
+      "architect": "Royal palace and I. M. Pei’s glass pyramid",
+      "timelineDates": [
+        "1190",
+        "1793",
+        "1989",
+        "2019"
       ]
     },
     {
@@ -72,6 +80,14 @@
         "Changes in railway use",
         "Museum opens in 1986",
         "Museum galleries continue evolving"
+      ],
+      "opened": "1986",
+      "architect": "Victor Laloux; former railway station",
+      "timelineDates": [
+        "1900",
+        "1939",
+        "1986",
+        "Since 1986"
       ]
     },
     {
@@ -107,6 +123,14 @@
         "William V's public gallery",
         "Museum established in 1822",
         "Renovation and expansion in 2014"
+      ],
+      "opened": "1822",
+      "architect": "Johan Maurits; Dutch Classical architecture",
+      "timelineDates": [
+        "17th century",
+        "1774",
+        "1822",
+        "2014"
       ]
     },
     {
@@ -142,6 +166,14 @@
         "Works moved into exile",
         "Kraków museum in 1876",
         "State acquisition and renewed galleries"
+      ],
+      "opened": "Collection founded in 1801",
+      "architect": "Czartoryski Palace",
+      "timelineDates": [
+        "1801",
+        "1831",
+        "1876",
+        "2016–2023"
       ]
     },
     {
@@ -177,6 +209,14 @@
         "Museum opens in 1973",
         "Kurokawa extension",
         "New visitor entrance"
+      ],
+      "opened": "1973",
+      "architect": "Gerrit Rietveld; Kisho Kurokawa extension",
+      "timelineDates": [
+        "1890–1925",
+        "1973",
+        "1999",
+        "2015"
       ]
     },
     {
@@ -212,6 +252,14 @@
         "East Building opens in 1978",
         "Sculpture Garden opens",
         "East Building renovated"
+      ],
+      "opened": "1941",
+      "architect": "John Russell Pope and I. M. Pei",
+      "timelineDates": [
+        "1941",
+        "1978",
+        "1999",
+        "2016"
       ]
     },
     {
@@ -247,6 +295,14 @@
         "Move to Amsterdam",
         "Current building opens in 1885",
         "Museum reopens after renovation"
+      ],
+      "opened": "Current building opened in 1885",
+      "architect": "Pierre Cuypers",
+      "timelineDates": [
+        "1800",
+        "1808",
+        "1885",
+        "2013"
       ]
     },
     {
@@ -282,6 +338,14 @@
         "Expansion of specialist departments",
         "Architectural redevelopment",
         "2019 expansion and rearrangement"
+      ],
+      "opened": "1929",
+      "architect": "Modern architecture; successive extensions",
+      "timelineDates": [
+        "1929",
+        "1930–1950",
+        "2004",
+        "2019"
       ]
     },
     {
@@ -317,6 +381,14 @@
         "Michel Monet bequest",
         "Further Impressionist donations",
         "New exhibitions and scholarship"
+      ],
+      "opened": "1934",
+      "architect": "Former private townhouse",
+      "timelineDates": [
+        "1934",
+        "1966",
+        "Late 20th century",
+        "21st century"
       ]
     },
     {
@@ -352,6 +424,14 @@
         "Building opens in 1891",
         "Rearrangement of displays",
         "Contemporary research and digital catalogues"
+      ],
+      "opened": "1891",
+      "architect": "Gottfried Semper and Carl von Hasenauer",
+      "timelineDates": [
+        "16th–17th centuries",
+        "1891",
+        "20th century",
+        "21st century"
       ]
     },
     {
@@ -387,6 +467,14 @@
         "Public access expands",
         "Gallery organisation evolves",
         "Institution includes Uffizi, Pitti and Boboli"
+      ],
+      "opened": "Sixteenth-century complex",
+      "architect": "Giorgio Vasari",
+      "timelineDates": [
+        "1560–1580",
+        "1769",
+        "20th century",
+        "2014"
       ]
     },
     {
@@ -422,6 +510,14 @@
         "Trafalgar Square building opens",
         "Galleries expanded",
         "Sainsbury Wing opens in 1991"
+      ],
+      "opened": "1824",
+      "architect": "William Wilkins and later extensions",
+      "timelineDates": [
+        "1824",
+        "1838",
+        "19th–20th centuries",
+        "1991"
       ]
     },
     {
@@ -457,6 +553,14 @@
         "Museum opens in 1938",
         "Sculpture garden develops",
         "Collection research continues"
+      ],
+      "opened": "1938",
+      "architect": "Henry van de Velde and later additions",
+      "timelineDates": [
+        "1907–1922",
+        "1938",
+        "20th century",
+        "2026–2027"
       ]
     },
     {
@@ -492,6 +596,14 @@
         "Louis Kahn extension",
         "Renovated galleries reopen",
         "Research and public education develop"
+      ],
+      "opened": "1832",
+      "architect": "Louis Kahn and historic buildings",
+      "timelineDates": [
+        "1832",
+        "1953",
+        "2012",
+        "21st century"
       ]
     },
     {
@@ -527,6 +639,14 @@
         "Move to Somerset House",
         "Courtauld Connects renovation",
         "Gallery reopens in 2021"
+      ],
+      "opened": "Institution founded in 1932",
+      "architect": "Somerset House",
+      "timelineDates": [
+        "1932",
+        "1989",
+        "2018",
+        "2021"
       ]
     },
     {
@@ -562,6 +682,14 @@
         "Monet's donation agreed",
         "Water Lilies rooms open in 1927",
         "Renovated museum reopens"
+      ],
+      "opened": "Museum opened in 1927",
+      "architect": "1852 building in the Tuileries Garden",
+      "timelineDates": [
+        "1852",
+        "1918–1922",
+        "1927",
+        "2006"
       ]
     },
     {
@@ -597,6 +725,14 @@
         "Early deterioration recorded",
         "Major conservation work",
         "Modern preservation and visitor limits"
+      ],
+      "opened": "Fifteenth-century mural in situ",
+      "architect": "Refrectory of Santa Maria delle Grazie monastery",
+      "timelineDates": [
+        "1494–1498",
+        "16th century",
+        "1977–1998",
+        "2024"
       ]
     }
   ]
