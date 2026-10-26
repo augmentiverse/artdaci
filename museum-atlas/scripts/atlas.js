@@ -33,7 +33,7 @@ async function load(){
    const t=tr.museums.find(x=>x.id===museum.id);
    const photos=photoData.photos.find(x=>x.id===museum.id);
    if(!t||!photos||t.timeline.length!==4||t.researchTopics.length!==3||photos.photos.length<3)throw Error('Incomplete museum translation '+museum.id);
-   return {...museum,...t,hero:{url:photos.hero.src,page:photos.hero.file},gallery:photos.photos.map(p=>({url:p.src,page:p.file})),timeline:museum.timeline.map((event,i)=>({...event,title:t.timeline[i]}))};
+   return {...museum,...t,hero:{url:photos.hero.src,page:photos.hero.file},gallery:photos.photos.map(p=>({url:p.src,page:p.file})),timeline:museum.timeline.map((event,i)=>({...event,date:t.timelineDates?.[i]||event.date,title:t.timeline[i]}))};
   });
   document.documentElement.lang=locale;document.documentElement.dir=rtl?'rtl':'ltr';document.body.dir=rtl?'rtl':'ltr';
   if(document.body.dataset.page==='index')renderIndexTranslated(local);
