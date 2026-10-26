@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "1.0",
+  "groupId": "van-gogh",
+  "artistId": "vg",
+  "artistName": "Vincent van Gogh",
+  "canonicalUrl": "https://artdaci.com/ar/van-gogh",
+  "qrCode": "/assets/qr/groups/van-gogh.png",
+  "compiledTargets": "/assets/targets/van-gogh-six.mind",
+  "compiledTargetsBytes": 5291064,
+  "compiledTargetsSha256": "95b7af26dcf72658347448e6a8f44a020400411d95c2ac0bcf2ae0a07826889a",
+  "status": "ready",
+  "artworks": [
+    { "id": "vg01", "targetIndex": 0, "title": "Autoportrait", "targetSource": "/assets/targets-src/vg01.jpg", "targetSourceSha256": "5d1d35d1d86dd7a5c776f3ba18816a888f1300093c98235d482e1ba0cd895ebd", "url": "https://artdaci.com/ar/self-portrait", "experience": "image-ar" },
+    { "id": "vg03", "targetIndex": 1, "title": "La Nuit étoilée", "targetSource": "/assets/targets-src/vg03.jpg", "targetSourceSha256": "447e5d9ea91a3c89d7e2430a435e175026d2e0b5c86342d21fae2e1d5f4f14df", "url": "https://artdaci.com/ar/the-starry-night", "experience": "artwork-page" },
+    { "id": "vg02", "targetIndex": 2, "title": "La Chambre", "targetSource": "/assets/targets-src/vg02.jpg", "targetSourceSha256": "353f04fc38745410a13c2d6958933da750f8560645e136ea2aa6559573e80ca9", "url": "https://artdaci.com/ar/bedroom-in-arles", "experience": "image-ar" },
+    { "id": "vg05", "targetIndex": 3, "title": "Terrasse du café le soir", "targetSource": "/assets/targets-src/vg05.jpg", "targetSourceSha256": "345106ec63cb4e40f8e82c7923c334a2252f7558fc46c050ecf430a8c96daccf", "url": "https://artdaci.com/ar/cafe-terrace-at-night", "experience": "artwork-page" },
+    { "id": "vg06", "targetIndex": 4, "title": "Le Café de nuit", "targetSource": "/assets/targets-src/vg06.jpg", "targetSourceSha256": "4f69797f7b44a6a9467926f1872b59f9cfa2f3c088ef649efe0985f7811f640b", "url": "https://artdaci.com/ar/the-night-cafe", "experience": "artwork-page" },
+    { "id": "vg04", "targetIndex": 5, "title": "Les Tournesols", "targetSource": "/assets/targets-src/vg04.jpg", "targetSourceSha256": "63490db8a209aecb1c8bd17748f471f9b4dc94b855bdc34bd1c6c096549558f7", "url": "https://artdaci.com/ar/sunflowers", "experience": "artwork-page" }
+  ]
+}
