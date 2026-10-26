@@ -62,7 +62,7 @@ function renderIndex(museums){
 function renderDetail(museums,slug){
  const m=museums.find(x=>x.id===slug),host=$('detail-app');
  if(!m){host.innerHTML='<section class="section"><h1>Musée introuvable</h1><p>Cette fiche ne figure pas dans le catalogue ARTDACI.</p><a href="'+esc(root+'index.html')+'">Retour à l’atlas</a></section>';return;}
- document.title=m.name+' | Atlas des 17 musées — ARTDACI';
+ document.title=m.name+' | ARTDACI — Atlas du patrimoine muséal';
  const description=document.querySelector('meta[name="description"]');if(description)description.content='Fiche du '+m.name+' : histoire, architecture, collections, conservation, photographies et ressources documentaires.';
  const pos=museums.indexOf(m),immersive=pos<6;
  const sections=[
@@ -155,7 +155,7 @@ parts.map(([id,title,text])=>'<section class="article-section" id="'+id+'"><h2>'
 '<section class="article-section atlas-extended" id="timeline"><h2>'+esc(U.timeline)+'</h2><ol class="museum-timeline">'+m.timeline.map(x=>'<li><time>'+esc(x.date)+'</time><span>'+esc(x.title)+'</span></li>').join('')+'</ol></section>'+
 '<section class="article-section atlas-extended" id="research"><h2>'+esc(U.topic)+'</h2><div class="research-topic-grid">'+m.researchTopics.map((x,i)=>'<article class="research-topic"><span class="topic-index">'+String(i+1).padStart(2,'0')+'</span><h3>'+esc(x.title)+'</h3><p>'+esc(x.body)+'</p></article>').join('')+'</div></section>'+
 '<section class="article-section" id="preservation"><h2>'+esc(U.conservation)+'</h2><p>'+esc(m.conservationDetail)+'</p></section>'+
-'<section class="article-section" id="digitization"><h2>'+esc(U.digital)+'</h2><p>'+esc(m.digitalDetail||m.digital)+'</p></section>'+
+'<section class="article-section" id="digitization"><h2>'+esc(U.digital)+'</h2><p>'+esc(m.digital)+'</p></section>'+
 '<section class="article-section" id="sources"><h2>'+esc(U.sources)+'</h2><ul class="resources">'+sources+'</ul><p class="research-note">'+esc(U.notice)+'</p></section>'+
 '<section class="article-section gallery-section" id="gallery"><h2>'+esc(U.photos)+'</h2><p>'+esc(U.photosInfo)+'</p><div class="photo-grid" id="photo-gallery"></div><p class="research-note">'+esc(U.galleryNote)+'</p></section>'+
 '</article></div>'+
