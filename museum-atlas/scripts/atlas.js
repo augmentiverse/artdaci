@@ -1,5 +1,7 @@
 (()=>{'use strict';
 const root=document.body.dataset.root||'./';
+const locale=(()=>{const x=new URLSearchParams(window.location.search).get('lang');return ['fr','en','ar'].includes(x)?x:'fr';})();
+const rtl=locale==='ar';
 const $=id=>document.getElementById(id);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const absolute=url=>/^https:\/\//.test(String(url||''))?url:'#';
@@ -16,8 +18,23 @@ async function load(){
  if(!response.ok)throw Error('Catalogue des musées indisponible (HTTP '+response.status+')');
  const db=await response.json();
  if(!Array.isArray(db.museums)||db.museums.length!==17||new Set(db.museums.map(m=>m.id)).size!==17)throw Error('Catalogue invalide');
- if(document.body.dataset.page==='index')renderIndex(db.museums);
- else renderDetail(db.museums,document.body.dataset.slug);
+ if(locale==='fr'){
+  if(document.body.dataset.page==='index')renderIndex(db.museums);
+  else renderDetail(db.museums,document.body.dataset.slug);
+ } else {
+  const translationResponse=await fetch(root+'data/'+locale+'.json');
+  if(!translationResponse.ok)throw Error('Translation data HTTP '+translationResponse.status);
+  const tr=await translationResponse.json();
+  if(tr.museums?.length!==17)throw Error('Missing translations');
+  const local=db.museums.map((museum,index)=>{
+   const t=tr.museums.find(x=>x.id===museum.id);
+   if(!t||t.timeline.length!==4||t.researchTopics.length!==3)throw Error('Incomplete translation '+museum.id);
+   return {...museum,...t,timeline:museum.timeline.map((event,i)=>({...event,title:t.timeline[i]}))};
+  });
+  document.documentElement.lang=locale;document.documentElement.dir=rtl?'rtl':'ltr';document.body.dir=rtl?'rtl':'ltr';
+  if(document.body.dataset.page==='index')renderIndexTranslated(local);
+  else renderDetailTranslated(local,document.body.dataset.slug);
+ }
 }
 function renderIndex(museums){
  const search=$('atlas-search'),country=$('atlas-country');
@@ -96,5 +113,82 @@ function openPhoto(photo,museum,number){
  const a=document.createElement('a');a.href=photo.page;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Wikimedia Commons · auteur, licence et haute définition ↗';p.append(a);
  if(typeof dialog.showModal==='function')dialog.showModal();else dialog.setAttribute('open','');
 }
+
+const LOCAL={
+en:{title:'ARTDACI — Museum Heritage Atlas',home:'Home',explorer:'Museum Explorer',photo:'Photographic Atlas',back:'Back to photographic atlas',research:'Research museum atlas',timeline:'Museum chronology',topic:'Three research perspectives',conservation:'Conservation, restoration and research',digital:'Digital archives and reuse conditions',sources:'References and resources',photos:'Photographic gallery',photosInfo:'Authentic views of the building and spaces, linked to their source files for attribution and licence information.',credit:'Image source and licence',opening:'Historical landmark',location:'Location',architect:'Architecture and site',sections:['History and identity','Architecture and museum spaces','Collections and masterpieces','Education and learning','Digital collections and research','Plan your visit'],focus:'ARTDACI artwork connection',official:'Official institution website',immersive:'Explore ARTDACI immersive experiences',future:'AR and VR experiences may be added later',photoBadge:'Museum photograph',museum:'Museum',related:'Research dossier',previous:'Previous',next:'Next',notice:'Museum holdings and displays can change. Confirm hours, tickets, artwork locations and photo licences on the linked official sources.',galleryNote:'Photographs are hosted on Wikimedia Commons. Check source pages for author, image dimensions and licence.',notFound:'Museum not found',loading:'The museum catalogue could not be loaded.',close:'Close',detail:'Detailed museum dossier',site:'ARTDACI Museum Heritage Atlas',researchHeading:'Museum heritage: 17 institutions',indexLead:'Discover 17 museums through architecture, history, collections and research. Their heritage connects original artworks with ARTDACI immersive art education.'},
+ar:{title:'ARTDACI — أطلس التراث المتحفي',home:'الرئيسية',explorer:'مستكشف المتاحف',photo:'الأطلس المصوّر',back:'العودة إلى الأطلس المصوّر',research:'أطلس المتاحف البحثي',timeline:'التسلسل الزمني للمتحف',topic:'ثلاث زوايا بحثية',conservation:'الحفظ والترميم والبحث',digital:'الأرشيف الرقمي وشروط إعادة الاستخدام',sources:'المراجع والمصادر',photos:'معرض الصور الفوتوغرافية',photosInfo:'صور حقيقية للمبنى والقاعات مرتبطة بملفاتها الأصلية للتحقق من اسم المصور والترخيص.',credit:'مصدر الصورة والترخيص',opening:'تاريخ المؤسسة',location:'الموقع',architect:'العمارة والمبنى',sections:['التاريخ والهوية','العمارة ومساحات العرض','المجموعات والتحف الفنية','التعليم والتعلم','المجموعات الرقمية والبحث','التحضير للزيارة'],focus:'العمل المرتبط بمشروع ARTDACI',official:'الموقع الرسمي للمؤسسة',immersive:'استكشف تجارب ARTDACI الغامرة',future:'يمكن إضافة تجارب الواقع المعزز والافتراضي لاحقًا',photoBadge:'صورة حقيقية للمتحف',museum:'المتحف',related:'الملف البحثي',previous:'السابق',next:'التالي',notice:'قد تتغير مواقع عرض الأعمال ومواعيد الزيارة. تحقق من التذاكر وحقوق الصور والمعلومات الحديثة لدى المؤسسات الرسمية.',galleryNote:'تستضاف الصور في ويكيميديا كومنز. راجع الملفات الأصلية لمعرفة المصور وأبعاد الصورة وترخيصها.',notFound:'المتحف غير موجود',loading:'تعذر تحميل فهرس المتاحف.',close:'إغلاق',detail:'الملف المتحفي المفصل',site:'أطلس التراث المتحفي ARTDACI',researchHeading:'التراث المتحفي: 17 مؤسسة',indexLead:'اكتشف 17 متحفًا عبر العمارة والتاريخ والمجموعات والبحث العلمي، مع ربط الأعمال الأصلية بالتعليم الفني الغامر في ARTDACI.'}
+};
+const pageDetail=m=>root+'musees/'+encodeURIComponent(m.id)+'.html?lang='+locale;
+function prepareTranslatedHeader(){
+const U=LOCAL[locale];
+const anchor=document.querySelector('.brand');if(anchor){anchor.href=(document.body.dataset.page==='detail'?'../../':'../')+'index.html?lang='+locale;const small=anchor.querySelector('small');if(small)small.textContent=U.site;}
+const header=document.querySelector('.header-nav');if(header)header.innerHTML='<a href="'+esc(root+'../museums.html?lang='+locale)+'">'+esc(U.explorer)+'</a><a href="'+esc(root+'../museums-atlas-'+locale+'.html')+'">'+esc(U.photo)+'</a>';
+const footer=document.querySelector('.site-footer');if(footer)footer.innerHTML='<span>© ARTDACI · 2026</span><span>'+esc(U.galleryNote)+'</span><a href="'+esc(root+'../museums-atlas-'+locale+'.html')+'">'+esc(U.photo)+' ↗</a>';
+const switcher=document.createElement('nav');switcher.className='locale-nav';switcher.setAttribute('aria-label','Languages');
+const id=document.body.dataset.slug;const url=lang=>document.body.dataset.page==='index'?'index.html'+(lang==='fr'?'':'?lang='+lang):'musees/'+encodeURIComponent(id)+'.html'+(lang==='fr'?'':'?lang='+lang);
+switcher.innerHTML=['fr','en','ar'].map(lang=>'<a href="'+esc(root+url(lang))+'" hreflang="'+lang+'" lang="'+lang+'" '+(lang===locale?'aria-current="page"':'')+'>'+(lang==='ar'?'العربية':lang.toUpperCase())+'</a>').join('');
+document.querySelector('.site-header')?.append(switcher);
+}
+function renderDetailTranslated(museums,slug){
+const U=LOCAL[locale],m=museums.find(x=>x.id===slug),host=$('detail-app');
+prepareTranslatedHeader();
+if(!m){host.textContent=U.notFound;return;}
+document.title=m.name+' | '+U.title;
+const meta=document.querySelector('meta[name=description]');if(meta)meta.content=m.name+' — '+m.theme;
+const index=museums.indexOf(m),immersive=index<6;
+const parts=[
+ ['history',U.sections[0],m.history],['architecture',U.sections[1],m.architecture],
+ ['collections',U.sections[2],m.collections],['education',U.sections[3],m.education],
+ ['digital',U.sections[4],m.digital],['visit',U.sections[5],m.visit]
+];
+const nav=parts.map(([id,title])=>'<a href="#'+id+'">'+esc(title)+'</a>').join('')+
+['timeline','research','preservation','digitization','sources','gallery'].map((id,i)=>'<a href="#'+id+'">'+esc([U.timeline,U.topic,U.conservation,U.digital,U.sources,U.photos][i])+'</a>').join('');
+const sources=m.sources.map((s,i)=>'<li>'+external(s.url,(i+1)+' · '+(new URL(s.url).hostname.replace('www.','')) )+'</li>').join('');
+const photoPage=root+'../museums-atlas-'+locale+'.html#museum-'+m.id;
+host.innerHTML='<nav class="breadcrumb"><a href="'+esc(photoPage)+'">'+esc(U.back)+'</a> / <span>'+esc(m.name)+'</span></nav>'+
+'<section class="detail-hero"><div class="detail-intro"><span class="badge">'+esc(immersive?U.immersive:U.future)+'</span><h1>'+esc(m.name)+'</h1><p class="place">'+esc(m.city+' · '+m.country)+'</p><p class="lead">'+esc(m.theme)+'. '+esc(m.history.slice(0,245))+'</p><div class="hero-actions">'+external(m.sources[0].url,U.official)+'<a class="secondary-cta" href="'+esc(photoPage)+'">'+esc(U.back)+'</a>'+(immersive?'<a class="secondary-cta" href="'+esc(root+'../museums.html?lang='+locale)+'">'+esc(U.immersive)+'</a>':'')+'</div></div>'+
+'<figure class="detail-photo"><img id="hero-museum-photo" fetchpriority="high" decoding="async" src="'+esc(m.hero.url)+'" alt="'+esc(U.photoBadge+' — '+m.name)+'"><figcaption class="credit">'+external(m.hero.page,U.credit)+'</figcaption></figure></section>'+
+'<div class="detail-stats"><div class="detail-stat"><small>'+esc(U.location)+'</small><strong>'+esc(m.city+' · '+m.country)+'</strong></div><div class="detail-stat"><small>'+esc(U.opening)+'</small><strong>'+esc(m.opened)+'</strong></div><div class="detail-stat"><small>'+esc(U.architect)+'</small><strong>'+esc(m.architect)+'</strong></div></div>'+
+'<div class="detail-layout"><nav class="local-nav" aria-label="Contents"><strong>'+esc(U.related)+'</strong>'+nav+'</nav><article class="detail-content">'+
+'<div class="highlight"><strong>'+esc(U.focus)+'</strong><p>'+esc(m.signature)+'</p></div>'+
+parts.map(([id,title,text])=>'<section class="article-section" id="'+id+'"><h2>'+esc(title)+'</h2><p>'+esc(text)+'</p></section>').join('')+
+'<section class="article-section atlas-extended" id="timeline"><h2>'+esc(U.timeline)+'</h2><ol class="museum-timeline">'+m.timeline.map(x=>'<li><time>'+esc(x.date)+'</time><span>'+esc(x.title)+'</span></li>').join('')+'</ol></section>'+
+'<section class="article-section atlas-extended" id="research"><h2>'+esc(U.topic)+'</h2><div class="research-topic-grid">'+m.researchTopics.map((x,i)=>'<article class="research-topic"><span class="topic-index">'+String(i+1).padStart(2,'0')+'</span><h3>'+esc(x.title)+'</h3><p>'+esc(x.body)+'</p></article>').join('')+'</div></section>'+
+'<section class="article-section" id="preservation"><h2>'+esc(U.conservation)+'</h2><p>'+esc(m.conservationDetail)+'</p></section>'+
+'<section class="article-section" id="digitization"><h2>'+esc(U.digital)+'</h2><p>'+esc(m.digitalDetail||m.digital)+'</p></section>'+
+'<section class="article-section" id="sources"><h2>'+esc(U.sources)+'</h2><ul class="resources">'+sources+'</ul><p class="research-note">'+esc(U.notice)+'</p></section>'+
+'<section class="article-section gallery-section" id="gallery"><h2>'+esc(U.photos)+'</h2><p>'+esc(U.photosInfo)+'</p><div class="photo-grid" id="photo-gallery"></div><p class="research-note">'+esc(U.galleryNote)+'</p></section>'+
+'</article></div>'+
+'<nav class="detail-pagination"><a href="'+esc(pageDetail(museums[(index+16)%17]))+'">'+esc(U.previous)+' · '+esc(museums[(index+16)%17].name)+'</a><a href="'+esc(pageDetail(museums[(index+1)%17]))+'">'+esc(museums[(index+1)%17].name)+' · '+esc(U.next)+'</a></nav>';
+safeImage($('hero-museum-photo'),m.gallery);
+const grid=$('photo-gallery');
+for(let i=0;i<m.gallery.length;i++){
+const p=m.gallery[i],fig=document.createElement('figure');fig.className='photo-figure';
+const link=document.createElement('a');link.href=p.page;link.target='_blank';link.rel='noopener noreferrer';link.setAttribute('aria-label',U.credit+' '+(i+1));
+const im=document.createElement('img');im.loading='lazy';im.src=p.url;im.alt=U.photoBadge+' '+(i+1)+' — '+m.name;safeImage(im,m.gallery.slice(i).concat(m.gallery.slice(0,i)));link.append(im);
+const caption=document.createElement('figcaption');caption.append(document.createTextNode(U.photoBadge+' '+(i+1)+' · '));const cl=document.createElement('a');cl.href=p.page;cl.rel='noopener noreferrer';cl.target='_blank';cl.textContent=U.credit+' ↗';caption.append(cl);fig.append(link,caption);grid.append(fig);
+}
+}
+function renderIndexTranslated(museums){
+const U=LOCAL[locale];prepareTranslatedHeader();document.title=U.title;
+const h=document.querySelector('.index-hero h1');if(h)h.textContent=U.researchHeading;
+const subtitle=document.querySelector('.index-hero>p');if(subtitle)subtitle.textContent=U.indexLead;
+const search=$('atlas-search'),country=$('atlas-country');if(!search||!country)return;
+const label=document.querySelector('label[for=atlas-search]');if(label)label.textContent=U.explorer;
+search.placeholder=U.explorer;country.innerHTML='<option value="">'+esc(U.location)+'</option>';
+for(const c of [...new Set(museums.map(m=>m.country))]){const option=document.createElement('option');option.value=c;option.textContent=c;country.append(option)}
+function rerender(){
+const q=search.value.trim().toLocaleLowerCase(locale),c=country.value;
+const filtered=museums.filter(m=>(!c||m.country===c)&&(!q||[m.name,m.city,m.country,m.theme,m.signature,m.history,m.collections].join(' ').toLocaleLowerCase(locale).includes(q)));
+for(const [key,list] of [['featured-grid',filtered.filter(m=>museums.indexOf(m)<6)],['additional-grid',filtered.filter(m=>museums.indexOf(m)>=6)]]){
+ $(key).innerHTML=list.map(m=>'<article class="museum-card"><div class="card-photo"><a href="'+esc(pageDetail(m))+'"><img loading="lazy" src="'+esc(m.hero.url)+'" alt="'+esc(U.photoBadge+' — '+m.name)+'"></a></div><div class="card-body"><div class="card-location">'+esc(m.city+' · '+m.country)+'</div><h4>'+esc(m.name)+'</h4><p>'+esc(m.signature)+'</p><a class="card-link" href="'+esc(pageDetail(m))+'">'+esc(U.detail)+' ↗</a></div></article>').join('');
+}
+$('featured-block').hidden=!filtered.some(m=>museums.indexOf(m)<6);
+$('additional-block').hidden=!filtered.some(m=>museums.indexOf(m)>=6);
+$('no-results').hidden=!!filtered.length;$('search-count').textContent=filtered.length+' / 17';
+}
+search.addEventListener('input',rerender);country.addEventListener('change',rerender);rerender();
+}
+
 load().catch(error=>{console.error('ARTDACI Museum Atlas',error);const el=$('detail-app')||$('no-results');if(el){el.hidden=false;el.textContent='Le catalogue des musées est momentanément indisponible. Consultez la connexion réseau ou réessayez.';}});
 })();
