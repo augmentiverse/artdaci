@@ -7,6 +7,9 @@
   <meta name="description" content="ARTDACI Museum Explorer — discover museum collections, photographic heritage and immersive art experiences.">
   <title>ARTDACI — Museum Explorer</title>
   <link rel="icon" href="assets/app/artdaci-app-icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&amp;family=Manrope:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
   <style>
 :root{color-scheme:dark;--bg:#111925;--surface:#182432;--surface-2:#213143;--line:#34465a;--ink:#f4efe6;--muted:#bcc8d4;--accent:#d8b87c;--focus:#f7d48f}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#26394a 0%,var(--bg) 57%);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);line-height:1.5}
@@ -91,6 +94,26 @@ a{color:inherit}button{font:inherit;cursor:pointer}button:disabled{cursor:not-al
 @media(max-width:550px){.quiz-result-actions{flex-direction:column;align-items:stretch}.quiz-result-actions .quiz-primary{width:100%}.quiz-progress{flex-wrap:wrap}}
 .atlas-entry-wrap{text-align:center;margin:0 auto 26px}.atlas-entry{display:inline-flex;align-items:center;justify-content:center;min-height:47px;padding:12px 19px;border:1px solid var(--accent);border-radius:12px;background:#d8b87c17;color:var(--accent);font-weight:700;text-decoration:none;max-width:100%}.atlas-entry:hover,.atlas-entry:focus-visible{background:#d8b87c2d}
 
+
+/* Museum typography V1 — contemporary display faces without altering body copy */
+.intro h1,.museum-heading h2,.portal-intro h2,.fact h3,.additional-context h3{
+  font-family:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-weight:700;
+  letter-spacing:-.032em;
+}
+.intro h1{font-size:clamp(2rem,4.15vw,3.35rem);line-height:1.13}
+.museum-heading h2{font-weight:700;line-height:1.19}
+html[lang="ar"] .intro h1,
+html[lang="ar"] .museum-heading h2,
+html[lang="ar"] .portal-intro h2,
+html[lang="ar"] .fact h3,
+html[lang="ar"] .additional-context h3{
+  font-family:"Cairo",Tahoma,"Segoe UI",sans-serif;
+  font-weight:700;
+  letter-spacing:0;
+  line-height:1.45;
+}
+@media(max-width:640px){.intro h1{font-size:clamp(1.8rem,7vw,2.65rem)}}
 </style>
   
 </head>
