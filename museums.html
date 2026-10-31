@@ -964,6 +964,7 @@ function renderArtworks(museum) {
     card.append(media,caption);root.append(card);
   });
 }
+const GEO_KML_LABEL={fr:'↓ Télécharger le KML de ce musée',en:'↓ Download this museum KML',ar:'↓ تنزيل ملف KML لهذا المتحف'};
 const GEO_UI={
  fr:{heading:'Explorer le musée sur le globe',description:'Accédez au musée sur Google Earth ou recherchez ses vues Street View depuis Google Maps. La couverture 3D et Street View dépend du lieu.',earth:'🌍 Explorer sur Google Earth ↗',street:'📍 Street View (via Google Maps) ↗',atlas:'Voir dans ARTDACI Earth Explorer →'},
  en:{heading:'Explore the museum on Earth',description:'Find the museum in Google Earth or access available Street View panoramas through Google Maps. 3D and Street View coverage varies by location.',earth:'🌍 Open Google Earth ↗',street:'📍 Street View (via Google Maps) ↗',atlas:'View in ARTDACI Earth Explorer →'},
@@ -976,6 +977,7 @@ function renderGeo(museum){
  const root=$('geo-links');root.replaceChildren();
  root.append(link(ui.earth,'https://earth.google.com/web/search/'+query,'',true));
  root.append(link(ui.street,'https://www.google.com/maps/search/?api=1&query='+query,'',true));
+ root.append(link(GEO_KML_LABEL[lang],'geo/museums/'+encodeURIComponent(museum.id)+'.kml'));
  root.append(link(ui.atlas,'earth-explorer.html?lang='+encodeURIComponent(lang)));
 }
 function renderExperiences(museum) {
