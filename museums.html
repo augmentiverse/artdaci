@@ -965,17 +965,25 @@ function renderArtworks(museum) {
   });
 }
 const GEO_UI={
- fr:{heading:'Explorer le musée sur le globe',description:'Accédez au musée sur Google Earth ou recherchez ses vues Street View depuis Google Maps. La couverture 3D et Street View dépend du lieu.',earth:'🌍 Explorer sur Google Earth ↗',street:'📍 Street View (via Google Maps) ↗',atlas:'Voir dans ARTDACI Earth Explorer →'},
- en:{heading:'Explore the museum on Earth',description:'Find the museum in Google Earth or access available Street View panoramas through Google Maps. 3D and Street View coverage varies by location.',earth:'🌍 Open Google Earth ↗',street:'📍 Street View (via Google Maps) ↗',atlas:'View in ARTDACI Earth Explorer →'},
- ar:{heading:'استكشف المتحف على الكرة الأرضية',description:'اعرض موقع المتحف في Google Earth أو ابحث عن مشاهد Street View المتاحة عبر Google Maps. تختلف التغطية ثلاثية الأبعاد حسب الموقع.',earth:'🌍 استكشف عبر Google Earth ↗',street:'📍 Street View عبر Google Maps ↗',atlas:'عرض في ARTDACI Earth Explorer ←'}
+ fr:{heading:'Explorer le musée sur le globe',description:'Accédez à Google Earth ou ouvrez directement un panorama Street View à proximité du musée lorsqu’il existe. Le panorama peut ne pas montrer la façade.',earth:'🌍 Explorer sur Google Earth ↗',street:'📍 Street View 360° ↗',atlas:'Voir dans ARTDACI Earth Explorer →'},
+ en:{heading:'Explore the museum on Earth',description:'Open Google Earth or jump directly to a nearby Street View panorama where available. The panorama may not face the museum.',earth:'🌍 Open Google Earth ↗',street:'📍 Street View 360° ↗',atlas:'View in ARTDACI Earth Explorer →'},
+ ar:{heading:'استكشف المتحف على الكرة الأرضية',description:'افتح Google Earth أو انتقل مباشرة إلى أقرب بانوراما Street View متاحة. قد لا تُظهر الصورة واجهة المتحف.',earth:'🌍 استكشف عبر Google Earth ↗',street:'📍 Street View 360° ↗',atlas:'عرض في ARTDACI Earth Explorer ←'}
 };
 const GEO_SEARCH_NAMES={louvre:'Musee du Louvre Paris France',orsay:'Musee d Orsay Paris France',mauritshuis:'Mauritshuis The Hague Netherlands',czartoryski:'Czartoryski Museum Krakow Poland','van-gogh-museum':'Van Gogh Museum Amsterdam Netherlands','national-gallery-of-art-washington':'National Gallery of Art Washington DC USA'};
+// Coordinates mirror geo/data/museums.json. Keep synchronized with canonical locations.
+const GEO_VIEWPOINTS={
+ louvre:[48.861111,2.335833],orsay:[48.859972,2.326527],
+ mauritshuis:[52.080389,4.314306],czartoryski:[50.064641,19.939967],
+ 'van-gogh-museum':[52.358333,4.881111],
+ 'national-gallery-of-art-washington':[38.891389,-77.02]
+};
 function renderGeo(museum){
  const ui=GEO_UI[lang],query=encodeURIComponent(GEO_SEARCH_NAMES[museum.id]||local(museum.name)+' '+local(museum.location));
  text('geo-heading',ui.heading);text('geo-description',ui.description);
  const root=$('geo-links');root.replaceChildren();
  root.append(link(ui.earth,'https://earth.google.com/web/search/'+query,'',true));
- root.append(link(ui.street,'https://www.google.com/maps/search/?api=1&query='+query,'',true));
+ const point=GEO_VIEWPOINTS[museum.id];
+ if(point)root.append(link(ui.street,'https://www.google.com/maps/@?api=1&map_action=pano&viewpoint='+encodeURIComponent(point[0]+','+point[1]),'',true));
  root.append(link(ui.atlas,'earth-explorer.html?lang='+encodeURIComponent(lang)));
 }
 function renderExperiences(museum) {
