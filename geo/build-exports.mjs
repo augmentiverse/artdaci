@@ -40,7 +40,7 @@ function renderKml(key,data,atlasData,artworkData){
    '<p><b>Collections :</b> '+esc(short(record.collections,410))+'</p>'+
    '<p><b>Œuvre(s) associée(s) à ARTDACI :</b> '+esc(m.artwork)+'</p>'+
    (paintings.length?'<p><b>Ouvrir les fiches des tableaux :</b></p><ul>'+ext+'</ul>':'<p>Pour les œuvres, consultez le dossier du musée et les références ARTDACI.</p>')+
-   '<p><b>Explorer dans ARTDACI :</b> '+link(m.profileUrl,"Dossier du musée")+' · '+link(prefix+"earth-explorer.html?lang=fr","Atlas géographique")+(six.has(m.id)?" · "+link(prefix+"museums.html?lang=fr&amp;museum="+encodeURIComponent(m.id)+"&amp;tab=immersive","3D / AR / VR / GEO"):"")+'</p>'+
+   '<p><b>Explorer dans ARTDACI :</b> '+link(m.profileUrl,"Dossier du musée")+' · '+link(prefix+"earth-explorer.html?lang=fr","Atlas géographique")+(six.has(m.id)?" · "+link(prefix+"museums.html?lang=fr&museum="+encodeURIComponent(m.id)+"&tab=immersive","3D / AR / VR / GEO"):"")+'</p>'+
    '<p><b>Localisation :</b> '+link(map,"Google Maps")+' · '+link(pano,"Street View 360°")+'</p>'+
    (docs?'<p><b>Sources :</b> '+docs+'</p>':"")+
    (photo?'<p>'+photo+'</p>':"")+
