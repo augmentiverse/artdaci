@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "sourceNotice": "Four verified Wikimedia Commons file pages, with attribution/license information on the linked individual file page. No claim that all Commons photographs are automatically public domain.",
+  "images": {
+    "ld01": {
+      "file": "Leonardo da Vinci - Mona Lisa.jpg",
+      "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Leonardo%20da%20Vinci%20-%20Mona%20Lisa.jpg?width=960",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Leonardo%20da%20Vinci%20-%20Mona%20Lisa.jpg",
+      "status": "sourced-commons"
+    },
+    "ve01": {
+      "file": "Girl with a Pearl Earring.jpg",
+      "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Girl%20with%20a%20Pearl%20Earring.jpg?width=960",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Girl%20with%20a%20Pearl%20Earring.jpg",
+      "status": "sourced-commons"
+    },
+    "museum-feature-rijksmuseum": {
+      "file": "Vermeer - The Milkmaid.jpg",
+      "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/Vermeer%20-%20The%20Milkmaid.jpg?width=960",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Vermeer%20-%20The%20Milkmaid.jpg",
+      "status": "sourced-commons"
+    },
+    "museum-feature-moma": {
+      "file": "The Starry Night.jpg",
+      "imageUrl": "https://commons.wikimedia.org/wiki/Special:FilePath/The%20Starry%20Night.jpg?width=960",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:The%20Starry%20Night.jpg",
+      "status": "sourced-commons"
+    }
+  }
+}
