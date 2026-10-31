@@ -1,0 +1,23 @@
+# ARTDACI GEO KML 1.0
+
+A public, portable, **geographical** layer for the 17 ARTDACI museum entries. No Google API key, panorama download, 3D model extraction, or Google Earth API is used.
+
+- Canonical, sourced coordinate data: `data/museums.json`.
+- Entire collection: `artdaci-museums.kml` (17 museums).
+- Thematic collections: `artdaci-paris.kml`, `artdaci-renaissance.kml`, `artdaci-impressionism.kml`.
+- Alternative web-map data: `artdaci-museums.geojson` (WGS84 longitude, latitude).
+- Rebuild: `node geo/build-exports.mjs` from the repository root.
+
+## Editorial policy
+
+The KML placemarks identify **approximate museum/site positions**, not doors, Street View photo spheres, travel itineraries, or an assertion that an artwork is currently on public display. All 17 coordinate records link to a specific Wikidata item (which may itself cite an institutional source). Validate entrances and 3D/Street View availability before offering direct camera or panorama links.
+
+The Renaissance and Impressionism collections are **artwork-linked thematic selections** based on ARTDACI, not an exhaustive inventory of each museum's holdings. Paris is a location collection. KML descriptions refer visitors to ARTDACI dossiers and avoid embedding third-party photographs.
+
+Google Earth Web, Google Earth Pro and other KML applications may support different KML features. Shareable Google Earth projects must be created/shared separately in a Google account; publishing a KML does not automatically create a hosted project.
+
+All geographic exports are regenerated from `data/museums.json` to keep IDs, profiles, coordinates and subjects aligned. Review changes to the 17-museum primary editorial atlas before modifying this dataset.
+
+## Verification
+
+Run `node geo/build-exports.mjs`, then check that the generated files do not differ from the committed exports. Import the KML manually into Google Earth and verify the 17 locations, especially the Last Supper site in Milan. The files do not create walking/driving directions or promise satellite 3D.
