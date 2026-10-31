@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark"><title>ARTDACI GEO — Comparateur d'œuvres</title><meta name="description" content="Comparez côte à côte deux ou trois tableaux du catalogue ARTDACI, leurs dates, mouvements, musées, sources et images documentées.">
+<style>
+:root{color-scheme:dark;--bg:#101b29;--panel:#1a2c3c;--border:#4d6172;--text:#f5f1e9;--muted:#cbd3d9;--gold:#e9c688}*{box-sizing:border-box}body{margin:0;background:linear-gradient(145deg,#142838,#0b1520);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
+main{max-width:1400px;padding:26px 20px 75px;margin:auto}a{color:var(--gold)}header{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}nav{display:flex;gap:12px}h1{font-size:clamp(2rem,4vw,3.3rem);line-height:1.13;margin:35px 0 12px}.sub{max-width:900px;color:var(--muted)}
+.controls{display:flex;flex-wrap:wrap;align-items:end;gap:12px;margin:25px 0}.controls label{display:grid;gap:6px;flex:1 1 210px}.controls select{width:100%;padding:12px;border-radius:9px;border:1px solid #738899;background:#22394c;color:var(--text);font:inherit;min-height:48px}.controls button{min-height:48px;padding:10px 15px;border:1px solid var(--gold);background:transparent;color:var(--gold);border-radius:9px;cursor:pointer;font:inherit}button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #f7e6b9;outline-offset:2px}
+.grid{display:grid;grid-template-columns:repeat(var(--cols,2),minmax(0,1fr));gap:16px}.work{background:var(--panel);border:1px solid var(--border);border-radius:16px;overflow:hidden;min-width:0}.image{background:#091622;display:grid;place-items:center;min-height:250px}.image img{width:100%;max-height:460px;object-fit:contain}.placeholder{padding:30px;color:var(--muted);text-align:center}.body{padding:18px}.body h2{margin:0 0 8px;font-size:clamp(1.1rem,2vw,1.45rem)}.metadata{color:var(--muted);font-size:.95rem}.stat{border-top:1px solid #44596a;padding:10px 0}.stat strong{color:var(--gold);display:block;margin-bottom:3px}.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}.actions a{display:inline-flex;padding:8px 10px;border:1px solid #b19a75;border-radius:8px;text-decoration:none;font-size:.88rem;align-items:center;min-height:38px}.notice{border-left:3px solid var(--gold);background:#1c3546;padding:14px 18px;margin:20px 0}.small{font-size:.82rem;color:var(--muted)}.small a{text-decoration:underline}@media(max-width:760px){.grid{grid-template-columns:1fr}.image img{max-height:370px}main{padding:18px 12px 50px}}
+</style></head><body><main><header><a id="back" href="geo-artwork-journeys.html?lang=fr">← ARTDACI GEO</a><nav aria-label="Language"><a href="?lang=fr">FR</a><a href="?lang=en">EN</a><a href="?lang=ar">العربية</a></nav></header>
+<h1 id="title"></h1><p id="intro" class="sub"></p><aside id="notice" class="notice"></aside>
+<div class="controls"><label><span id="a-label"></span><select id="a"></select></label><label><span id="b-label"></span><select id="b"></select></label><label id="third-wrap" hidden><span id="c-label"></span><select id="c"></select></label><button type="button" id="third-toggle"></button></div>
+<div class="grid" id="comparison" aria-live="polite"></div><p id="foot" class="small"></p>
+<script>
+(async()=>{
+const $=id=>document.getElementById(id),params=new URLSearchParams(location.search),lang=['fr','en','ar'].includes(params.get('lang'))?params.get('lang'):'fr';
+document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';
+const t={
+fr:{title:'Comparer les œuvres',intro:'Sélectionnez deux ou trois tableaux parmi les 23 œuvres associées aux 17 musées d’ARTDACI. Comparez composition, période, artiste, musée et références.',notice:'Les images apparaissent uniquement lorsqu’une reproduction a une source explicitement référencée. L’absence d’image ne signifie pas absence d’œuvre. Les fiches des onze musées supplémentaires ne sont pas des dossiers individuels de tableau.',choose:'Choisir un tableau',third:'Ajouter un 3e tableau',remove:'Retirer le 3e',artist:'Artiste',date:'Datation',museum:'Musée',analysis:'Lecture artistique',imageMissing:'Reproduction non encore vérifiée pour ce tableau',photoSource:'Image : fichier source et licence',work:'Fiche du tableau',dossier:'Dossier du musée',semantic:'ARTDACI Semantic',immersive:'AR / VR / GEO',foot:'Comparaison pédagogique. Consulter les fiches institutionnelles pour les attributions, les datations et les droits de reproduction.'},
+en:{title:'Compare artworks',intro:'Select two or three works from the 23 paintings associated with ARTDACI’s 17 museums. Compare visual composition, period, artist, museum and references.',notice:'Images appear only where an exact source file has been documented. A missing image does not imply a missing artwork. The eleven additional museum entries link to museum dossiers.',choose:'Choose artwork',third:'Add third painting',remove:'Remove third',artist:'Artist',date:'Dating',museum:'Museum',analysis:'Artistic reading',imageMissing:'Artwork reproduction has not yet been verified',photoSource:'Image source and license',work:'Artwork profile',dossier:'Museum dossier',semantic:'ARTDACI Semantic',immersive:'AR / VR / GEO',foot:'Educational comparison. Check institutional records for attribution, dating and reproduction rights.'},
+ar:{title:'مقارنة الأعمال الفنية',intro:'اختر لوحتين أو ثلاث لوحات من بين 23 عملاً مرتبطاً بالمتاحف السبعة عشر لمقارنة الأسلوب والتاريخ والفنان والمتحف والمصادر.',notice:'تظهر الصور فقط عند توثيق مصدرها. عدم توفر صورة لا يعني غياب اللوحة. ترتبط أعمال المتاحف الإضافية بملفات المتاحف.',choose:'اختر لوحة',third:'إضافة لوحة ثالثة',remove:'حذف اللوحة الثالثة',artist:'الفنان',date:'التاريخ',museum:'المتحف',analysis:'قراءة فنية',imageMissing:'لم يتم التحقق من مصدر صورة هذه اللوحة بعد',photoSource:'مصدر الصورة والترخيص',work:'ملف اللوحة',dossier:'ملف المتحف',semantic:'ARTDACI Semantic',immersive:'تجارب الواقع المعزز والافتراضي',foot:'مقارنة تعليمية. راجع المصادر المؤسسية للتحقق من التاريخ والنسب وحقوق الصور.'}
+}[lang];
+$('back').href='geo-artwork-journeys.html?lang='+lang;for(const k of ['title','intro','notice','foot'])$(k).textContent=t[k];
+for(const [id,text] of [['a-label',t.choose+' 1'],['b-label',t.choose+' 2'],['c-label',t.choose+' 3']])$(id).textContent=text;
+const load=async p=>{const r=await fetch(p);if(!r.ok)throw Error('HTTP '+r.status+' '+p);return r.json();};
+const [learning,featured,artworks,geo,visuals]=await Promise.all([load('geo/data/artwork-learning.json'),load('geo/data/museum-featured-artworks.json'),load('geo/data/artworks.json'),load('geo/data/museums.json'),load('geo/data/artwork-visuals.json')]);
+const museums=new Map(geo.museums.map(m=>[m.id,m]));
+const canonical=learning.works.map(w=>{const museum=Object.keys(artworks.museums).find(id=>artworks.museums[id].some(x=>x.id===w.id));const artwork=(artworks.museums[museum]||[]).find(x=>x.id===w.id);return {...w,museum,title:artwork.title,href:artwork.href,profileType:'painting'};});
+const list=[...canonical,...featured.works].sort((a,b)=>a.sortYear-b.sortYear||a.artist.localeCompare(b.artist));
+if(list.length!==23||new Set(list.map(x=>x.id)).size!==23||list.some(x=>!museums.has(x.museum)))throw Error('Incomplete canonical artwork dataset');
+const byId=new Map(list.map(w=>[w.id,w]));
+for(const id of ['a','b','c']){for(const w of list){const opt=document.createElement('option');opt.value=w.id;opt.textContent=(w.title[lang]||w.title.fr)+' · '+w.artist;$(id).append(opt);}}
+const defaults=['ld01','ve01','museum-feature-moma'];['a','b','c'].forEach((id,i)=>$(id).value=byId.has(params.get(id))?params.get(id):defaults[i]);
+const add=(p,tag,text,klass)=>{const e=document.createElement(tag);e.textContent=text;if(klass)e.className=klass;p.append(e);return e;};
+const link=(p,label,url)=>{const e=document.createElement('a');e.textContent=label;e.href=url;e.target='_blank';e.rel='noopener noreferrer';p.append(e);return e;};
+const stat=(p,name,value)=>{const div=document.createElement('div');div.className='stat';add(div,'strong',name);add(div,'span',value);p.append(div);};
+let third=false;
+function render(){
+const ids=['a','b',...(third?['c']:[])].map(id=>$(id).value),set=new Set(ids);
+for(let i=0;i<ids.length;i++){const element=$(['a','b','c'][i]);element.setCustomValidity(set.size!==ids.length?'Choose distinct paintings':'');}
+$('comparison').replaceChildren();$('comparison').style.setProperty('--cols',String(ids.length));
+for(const id of ids){const w=byId.get(id),museum=museums.get(w.museum),visual=visuals.images[id];const card=document.createElement('article');card.className='work';
+const image=document.createElement('div');image.className='image';
+if(visual?.imageUrl&&visual?.sourcePage){const fig=document.createElement('figure');fig.style.margin='0';fig.style.width='100%';const img=document.createElement('img');img.loading='lazy';img.alt=(w.title[lang]||w.title.fr)+' — '+w.artist;img.src=visual.imageUrl;img.onerror=()=>{image.replaceChildren();add(image,'div',t.imageMissing,'placeholder');};fig.append(img);image.append(fig);}else add(image,'div',t.imageMissing,'placeholder');
+card.append(image);const body=document.createElement('div');body.className='body';add(body,'h2',w.title[lang]||w.title.fr);
+add(body,'p',w.artist,'metadata');stat(body,t.date,w.date);stat(body,t.museum,museum.name+' · '+museum.city);stat(body,t.analysis,w.style[lang]||w.style.fr);
+if(visual?.sourcePage){const credits=document.createElement('p');credits.className='small';link(credits,t.photoSource+' · Wikimedia Commons',visual.sourcePage);body.append(credits);}
+const actions=document.createElement('div');actions.className='actions';
+if(w.href)link(actions,t.work,'https://artdaci.com/'+w.href);link(actions,t.dossier,museum.profileUrl);
+link(actions,t.semantic,'semantic/index.html?lang='+encodeURIComponent(lang));
+if(w.profileType==='painting')link(actions,t.immersive,'museums.html?lang='+encodeURIComponent(lang)+'&museum='+encodeURIComponent(w.museum)+'&tab=immersive');
+body.append(actions);card.append(body);$('comparison').append(card);
+}
+const u=new URL(location.href);['a','b','c'].forEach(id=>u.searchParams.delete(id));ids.forEach((id,i)=>u.searchParams.set(['a','b','c'][i],id));history.replaceState(null,'',u.pathname+u.search);
+}
+for(const id of ['a','b','c'])$(id).addEventListener('change',render);
+$('third-toggle').addEventListener('click',()=>{third=!third;$('third-wrap').hidden=!third;$('third-toggle').textContent=third?t.remove:t.third;render();});
+third=Boolean(params.get('c'));$('third-wrap').hidden=!third;$('third-toggle').textContent=third?t.remove:t.third;render();
+})().catch(error=>{console.error(error);document.getElementById('comparison').textContent='Unable to load ARTDACI comparison data.'});
+</script></main></body></html>
