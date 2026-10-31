@@ -62,14 +62,13 @@ for(const key of Object.keys(geo.themes)){
 // Individual museum exports reuse exactly the same enriched Placemark descriptions as the collective KML.
 // This avoids divergent coordinates, links or research notes across GEO exports.
 const individual=renderKml('all',geo,editorial,artworks);
-const placemarks=[...individual.matchAll(/<Placemark>[\\s\\S]*?<\\/Placemark>/g)].map(match=>match[0]);
+const placemarks=[...individual.matchAll(/<Placemark>[\s\S]*?<\/Placemark>/g)].map(match=>match[0]);
 if(placemarks.length!==17)throw Error('Expected 17 enriched individual placemarks');
 const destination=path.join(dir,'museums');fs.mkdirSync(destination,{recursive:true});
 for(const [index,m] of geo.museums.entries()){
  if(!/^[a-z0-9-]+$/.test(m.id))throw Error('Invalid museum id');
- const encoded=m.id.replace(/[.*+?^{}()|[\\]\\\\]/g,'\\const geojson={type:'FeatureCollection'');
- if(!placemarks[index].includes('<value>'+m.id+'</value>'))throw Error('Misaligned museum profile: '+m.id);
- const document='<?xml version="1.0" encoding="UTF-8"?>\\n<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>'+m.name+' — ARTDACI GEO</name><description>ARTDACI GEO 2.0 — enriched museum dossier, approximate point</description><Style id="museum"><IconStyle><color>ff8cbcdf</color><scale>1.1</scale><Icon><href>https://maps.google.com/mapfiles/kml/shapes/museums.png</href></Icon></IconStyle></Style>\\n'+placemarks[index]+'\\n</Document></kml>\\n';
+  if(!placemarks[index].includes('<value>'+m.id+'</value>'))throw Error('Misaligned museum profile: '+m.id);
+ const document='<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>'+m.name+' — ARTDACI GEO</name><description>ARTDACI GEO 2.0 — enriched museum dossier, approximate point</description><Style id="museum"><IconStyle><color>ff8cbcdf</color><scale>1.1</scale><Icon><href>https://maps.google.com/mapfiles/kml/shapes/museums.png</href></Icon></IconStyle></Style>\n'+placemarks[index]+'\n</Document></kml>\n';
  fs.writeFileSync(path.join(destination,m.id+'.kml'),document);
 }
 console.log('Generated 17 individual enriched KML profiles');
