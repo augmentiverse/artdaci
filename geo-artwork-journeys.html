@@ -14,47 +14,59 @@ label{display:grid;gap:6px;min-width:240px}select{min-height:45px;padding:10px;b
 .step{margin:14px 0;padding:10px 0;border-top:1px solid #405464}.step strong{display:block;color:var(--gold)}.step span{display:block}
 .actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}.actions a{display:inline-flex;align-items:center;border:1px solid #ac916e;border-radius:8px;padding:9px 11px;min-height:42px;text-decoration:none;font-size:.88rem}
 .actions a:first-child{background:var(--gold);color:#17202a;font-weight:700}.notice{border-left:3px solid var(--gold);padding:14px 18px;background:#213747;margin:24px 0}
-footer{color:var(--muted);font-size:.85rem;margin-top:32px}@media(max-width:520px){main{padding:18px 14px 50px}nav a{padding:7px}}
+.visual{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:18px;margin:22px 0}.visual-panel{background:#1b2e3d;border:1px solid #445665;border-radius:16px;padding:20px}.visual-panel h2{margin:0 0 15px}.timeline{display:flex;align-items:flex-start;gap:10px;overflow-x:auto;padding:14px 0}.timeline-event{flex:1 0 150px;border-top:3px solid var(--gold);padding:10px 6px}.timeline-event b{display:block;color:var(--gold)}.timeline-event span{font-size:.87rem;color:var(--muted)}.compare-table{width:100%;border-collapse:collapse;font-size:.9rem}.compare-table th,.compare-table td{text-align:start;border-bottom:1px solid #53616d;padding:9px}.compare-table th{color:var(--gold)}.photo{margin:14px 0 4px}.photo img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;background:#31404d}.photo figcaption{font-size:.77rem;color:var(--muted);margin-top:8px}.photo figcaption a{color:var(--gold)}.related{padding:11px 0;border-top:1px solid #445665}.related h3{margin:0 0 7px;font-size:1rem}.related p{margin:0;color:var(--muted);font-size:.85rem}footer{color:var(--muted);font-size:.85rem;margin-top:32px}@media(max-width:520px){main{padding:18px 14px 50px}nav a{padding:7px}}
 </style></head>
 <body><main><header><a id="home" href="earth-explorer.html?lang=fr">← ARTDACI GEO</a><nav aria-label="Languages"><a href="?lang=fr" lang="fr">FR</a><a href="?lang=en" lang="en">EN</a><a href="?lang=ar" lang="ar">العربية</a></nav></header>
 <h1 id="title"></h1><p id="intro" class="intro"></p><aside id="notice" class="notice"></aside>
 <div class="filters"><label><span id="filter-label"></span><select id="artist-filter"><option value="all"></option></select></label></div>
-<section class="grid" id="cards" aria-live="polite"></section>
+<section class="visual" aria-label="Visual comparisons"><section class="visual-panel"><h2 id="timeline-heading"></h2><div class="timeline" id="timeline"></div></section><section class="visual-panel"><h2 id="comparison-heading"></h2><div id="comparison"></div></section></section><section class="grid" id="cards" aria-live="polite"></section>
 <footer id="footer"></footer></main>
 <script>
 (async()=>{
 const lang=['fr','en','ar'].includes(new URLSearchParams(location.search).get('lang'))?new URLSearchParams(location.search).get('lang'):'fr';
 document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';
 const t={
-fr:{title:'Des lieux aux tableaux',intro:'Trois histoires géographiques reliant le contexte artistique d’un tableau, son auteur et son musée de conservation. Cliquez sur les fiches pour approfondir la découverte.',notice:'Important : ces liaisons sont pédagogiques. Les points correspondent à des lieux de contexte à l’échelle de la ville et les lignes KML ne représentent pas le transport réel d’une œuvre.',filter:'Choisir un artiste',all:'Tous les artistes',from:'Lieu et contexte',art:'Tableau',to:'Musée de conservation',work:'Fiche du tableau',museum:'Dossier du musée',source:'Source institutionnelle',download:'Télécharger le KML',error:'Les données des parcours ne sont pas disponibles.',footer:'ARTDACI GEO · Sources des lieux et des œuvres accessibles depuis chaque fiche.'},
-en:{title:'From places to paintings',intro:'Three geographic stories connecting a painting’s artistic context, its creator and the museum holding the work. Follow the links for deeper research.',notice:'Important: these links are educational. Places are approximate city-level context markers, and the KML lines do not depict actual artwork transportation.',filter:'Choose an artist',all:'All artists',from:'Place and context',art:'Painting',to:'Collection museum',work:'Painting profile',museum:'Museum dossier',source:'Institutional source',download:'Download KML',error:'Journey data is unavailable.',footer:'ARTDACI GEO · Location and artwork sources are linked from each card.'},
-ar:{title:'من الأماكن إلى اللوحات',intro:'ثلاث قصص جغرافية تربط سياق اللوحة الفني بمبدعها والمتحف الذي يحفظها، مع روابط للمصادر والمعلومات.',notice:'تنبيه: هذه الروابط تعليمية، والنقاط مواقع تقريبية على مستوى المدن. لا تمثل خطوط KML مسار نقل اللوحات الفعلي.',filter:'اختر الفنان',all:'جميع الفنانين',from:'المكان والسياق',art:'اللوحة',to:'المتحف',work:'ملف اللوحة',museum:'ملف المتحف',source:'المصدر المؤسسي',download:'تنزيل KML',error:'تعذر تحميل بيانات المسارات.',footer:'ARTDACI GEO · روابط المصادر متوفرة في كل بطاقة.'}
+fr:{title:'Des lieux aux tableaux',intro:'Trois histoires géographiques reliant le contexte artistique d’un tableau, son auteur et son musée de conservation. Cliquez sur les fiches pour approfondir la découverte.',notice:'Important : ces liaisons sont pédagogiques. Les points correspondent à des lieux de contexte à l’échelle de la ville et les lignes KML ne représentent pas le transport réel d’une œuvre.',filter:'Choisir un artiste',all:'Tous les artistes',from:'Lieu et contexte',art:'Tableau',to:'Musée de conservation',work:'Fiche du tableau',museum:'Dossier du musée',source:'Source institutionnelle',download:'Télécharger le KML',error:'Les données des parcours ne sont pas disponibles.',timeline:'Chronologie des œuvres',comparison:'Comparer les approches artistiques',date:'Date',context:'Lecture artistique',photo:'Photographie du musée · Source et licence',semantic:'Explorer dans ARTDACI Semantic',immersive:'Expériences AR / VR / GEO',style:{vg02:'Intérieur et couleur expressive · postimpressionnisme',ve02:'Paysage urbain et lumière · peinture néerlandaise du XVIIe siècle',mo02:'Paysage, lumière et touches visibles · impressionnisme'},footer:'ARTDACI GEO · Sources des lieux et des œuvres accessibles depuis chaque fiche.'},
+en:{title:'From places to paintings',intro:'Three geographic stories connecting a painting’s artistic context, its creator and the museum holding the work. Follow the links for deeper research.',notice:'Important: these links are educational. Places are approximate city-level context markers, and the KML lines do not depict actual artwork transportation.',filter:'Choose an artist',all:'All artists',from:'Place and context',art:'Painting',to:'Collection museum',work:'Painting profile',museum:'Museum dossier',source:'Institutional source',download:'Download KML',error:'Journey data is unavailable.',timeline:'Artwork timeline',comparison:'Compare artistic approaches',date:'Date',context:'Artistic interpretation',photo:'Museum photograph · Source and license',semantic:'Explore in ARTDACI Semantic',immersive:'AR / VR / GEO experiences',style:{vg02:'Interior and expressive colour · Post-Impressionism',ve02:'Cityscape and light · Dutch Golden Age',mo02:'Landscape, light and visible brushwork · Impressionism'},footer:'ARTDACI GEO · Location and artwork sources are linked from each card.'},
+ar:{title:'من الأماكن إلى اللوحات',intro:'ثلاث قصص جغرافية تربط سياق اللوحة الفني بمبدعها والمتحف الذي يحفظها، مع روابط للمصادر والمعلومات.',notice:'تنبيه: هذه الروابط تعليمية، والنقاط مواقع تقريبية على مستوى المدن. لا تمثل خطوط KML مسار نقل اللوحات الفعلي.',filter:'اختر الفنان',all:'جميع الفنانين',from:'المكان والسياق',art:'اللوحة',to:'المتحف',work:'ملف اللوحة',museum:'ملف المتحف',source:'المصدر المؤسسي',download:'تنزيل KML',error:'تعذر تحميل بيانات المسارات.',timeline:'التسلسل الزمني للأعمال',comparison:'مقارنة الأساليب الفنية',date:'التاريخ',context:'قراءة فنية',photo:'صورة المتحف · المصدر والترخيص',semantic:'استكشف عبر ARTDACI Semantic',immersive:'تجارب الواقع المعزز والافتراضي',style:{vg02:'الألوان التعبيرية والفضاء الداخلي · ما بعد الانطباعية',ve02:'المدينة والضوء · الفن الهولندي في القرن السابع عشر',mo02:'المناظر الطبيعية والضوء · الانطباعية'},footer:'ARTDACI GEO · روابط المصادر متوفرة في كل بطاقة.'}
 }[lang],$=id=>document.getElementById(id);
 $('home').href='earth-explorer.html?lang='+lang;
 for(const k of ['title','intro','notice','footer'])$(k).textContent=t[k];
-$('filter-label').textContent=t.filter;$('artist-filter').firstElementChild.textContent=t.all;
+$('timeline-heading').textContent=t.timeline;$('comparison-heading').textContent=t.comparison;$('filter-label').textContent=t.filter;$('artist-filter').firstElementChild.textContent=t.all;
 const fetchJson=async p=>{const r=await fetch(p);if(!r.ok)throw Error('HTTP '+r.status);return r.json();};
 try{
-const [links,geo,places,artworks]=await Promise.all([fetchJson('geo/data/artwork-context-links.json'),fetchJson('geo/data/museums.json'),fetchJson('geo/data/artist-journeys.json'),fetchJson('geo/data/artworks.json')]);
-const museums=new Map(geo.museums.map(m=>[m.id,m])),cities=new Map(places.events.map(e=>[e.id,e]));
+const [links,geo,places,artworks,atlas]=await Promise.all([fetchJson('geo/data/artwork-context-links.json'),fetchJson('geo/data/museums.json'),fetchJson('geo/data/artist-journeys.json'),fetchJson('geo/data/artworks.json'),fetchJson('museum-atlas/data/museums.json')]);
+const museums=new Map(geo.museums.map(m=>[m.id,m])),cities=new Map(places.events.map(e=>[e.id,e])),photos=new Map(atlas.museums.map(m=>[m.id,m]));
 const list=links.connections;
 if(list.length!==3)throw Error('Incomplete journey registry');
 for(const artist of [...new Set(list.map(x=>x.artist))]){const opt=document.createElement('option');opt.value=artist;opt.textContent=artist;$('artist-filter').append(opt);}
 const add=(parent,tag,text,klass)=>{const el=document.createElement(tag);el.textContent=text;if(klass)el.className=klass;parent.append(el);return el;};
 const anchor=(parent,label,url)=>{const el=document.createElement('a');el.href=url;el.textContent=label;el.target='_blank';el.rel='noopener noreferrer';parent.append(el);};
 function render(){
-$('cards').replaceChildren();
-for(const x of list.filter(x=>$('artist-filter').value==='all'||x.artist===$('artist-filter').value)){
+$('cards').replaceChildren();$('timeline').replaceChildren();$('comparison').replaceChildren();
+const selected=list.filter(x=>$('artist-filter').value==='all'||x.artist===$('artist-filter').value).sort((a,b)=>(Number(a.year.match(/\d{4}/)?.[0])||0)-(Number(b.year.match(/\d{4}/)?.[0])||0));
+const table=document.createElement('table');table.className='compare-table';
+const head=document.createElement('thead'),hrow=document.createElement('tr');
+for(const v of [t.art,t.date,t.context])add(hrow,'th',v);
+head.append(hrow);table.append(head);const tbody=document.createElement('tbody');
+for(const x of selected){
+ const ev=document.createElement('div');ev.className='timeline-event';add(ev,'b',x.year);add(ev,'strong',x.work[lang]||x.work.fr);add(ev,'span',x.artist);$('timeline').append(ev);
+ const row=document.createElement('tr');add(row,'td',x.work[lang]||x.work.fr);add(row,'td',x.year);add(row,'td',t.style[x.id]||'');tbody.append(row);
+}table.append(tbody);$('comparison').append(table);
+
+for(const x of selected){
  const city=cities.get(x.origin),museum=museums.get(x.museum),art=(artworks.museums[x.museum]||[]).find(a=>a.id===x.id);
  if(!city||!museum||!art)continue;
  const card=document.createElement('article');card.className='card';
  add(card,'p',x.artist+' · '+x.year,'kicker');add(card,'h2',(art.title[lang]||x.work[lang]||x.work.fr));
  const stage=(label,value)=>{const div=document.createElement('div');div.className='step';add(div,'strong',label);add(div,'span',value);card.append(div);};
- stage(t.from,city.city+', '+city.country);stage(t.art,x.explanation[lang]||x.explanation.en);stage(t.to,museum.name+', '+museum.city);
+ const record=photos.get(x.museum);const photo=record?.hero;if(photo?.url&&photo?.page&&photo.url.startsWith('https://commons.wikimedia.org/')&&photo.page.startsWith('https://commons.wikimedia.org/')){const fig=document.createElement('figure');fig.className='photo';const img=document.createElement('img');img.src=photo.url;img.loading='lazy';img.alt=museum.name+' — '+(photo.caption||'');fig.append(img);const cap=document.createElement('figcaption');cap.append(document.createTextNode(t.photo+' · '));anchor(cap,'Wikimedia Commons',photo.page);fig.append(cap);card.append(fig);}stage(t.from,city.city+', '+city.country);stage(t.art,x.explanation[lang]||x.explanation.en);stage(t.to,museum.name+', '+museum.city);
  const actions=document.createElement('div');actions.className='actions';
  anchor(actions,t.work,'https://artdaci.com/'+art.href);
  anchor(actions,t.museum,museum.profileUrl);
  anchor(actions,t.source,x.museumSource);
+ anchor(actions,t.semantic,'semantic/index.html?lang='+encodeURIComponent(lang));
+ anchor(actions,t.immersive,'museums.html?lang='+encodeURIComponent(lang)+'&museum='+encodeURIComponent(x.museum)+'&tab=immersive');
  anchor(actions,t.download,'geo/artdaci-artwork-context-links.kml');
  card.append(actions);$('cards').append(card);
 }}
