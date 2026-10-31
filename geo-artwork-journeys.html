@@ -50,14 +50,14 @@ for(const v of [t.art,t.date,t.context])add(hrow,'th',v);
 head.append(hrow);table.append(head);const tbody=document.createElement('tbody');
 for(const x of selected){
  const ev=document.createElement('div');ev.className='timeline-event';add(ev,'b',x.date);const detail=artworks.museums[x.museum].find(w=>w.id===x.id);add(ev,'strong',detail.title[lang]||detail.title.fr);add(ev,'span',x.artist);$('timeline').append(ev);
- const row=document.createElement('tr');const detail=artworks.museums[x.museum].find(w=>w.id===x.id);add(row,'td',detail.title[lang]||detail.title.fr);add(row,'td',x.date);add(row,'td',x.style[lang]||x.style.fr);tbody.append(row);
+ const row=document.createElement('tr');add(row,'td',detail.title[lang]||detail.title.fr);add(row,'td',x.date);add(row,'td',x.style[lang]||x.style.fr);tbody.append(row);
 }table.append(tbody);$('comparison').append(table);
 
 for(const x of selected){
  const city=x.geographic?cities.get(x.geographic.origin):null,museum=museums.get(x.museum),art=(artworks.museums[x.museum]||[]).find(a=>a.id===x.id);
  if(!museum||!art)continue;
  const card=document.createElement('article');card.className='card';
- add(card,'p',x.artist+' · '+x.date,'kicker');add(card,'h2',(art.title[lang]||x.work[lang]||x.work.fr));
+ add(card,'p',x.artist+' · '+x.date,'kicker');add(card,'h2',(art.title[lang]||art.title.fr));
  const stage=(label,value)=>{const div=document.createElement('div');div.className='step';add(div,'strong',label);add(div,'span',value);card.append(div);};
  const record=photos.get(x.museum);const photo=record?.hero;if(photo?.url&&photo?.page&&photo.url.startsWith('https://commons.wikimedia.org/')&&photo.page.startsWith('https://commons.wikimedia.org/')){const fig=document.createElement('figure');fig.className='photo';const img=document.createElement('img');img.src=photo.url;img.loading='lazy';img.alt=museum.name+' — '+(photo.caption||'');fig.append(img);const cap=document.createElement('figcaption');cap.append(document.createTextNode(t.photo+' · '));anchor(cap,'Wikimedia Commons',photo.page);fig.append(cap);card.append(fig);}stage(t.from,city?city.city+', '+city.country:t.unknown);stage(t.art,x.geographic?(x.geographic.explanation[lang]||x.geographic.explanation.fr||x.geographic.explanation.en):x.style[lang]||x.style.fr);stage(t.to,museum.name+', '+museum.city);
  const actions=document.createElement('div');actions.className='actions';
