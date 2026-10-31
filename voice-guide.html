@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101a29"><meta name="description" content="Guide vocal ARTDACI gratuit, sans clé API ni IA externe.">
+<title>ARTDACI — Voice Guide (prototype gratuit)</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#f6f0e8;background:#0f1927}*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#23374a,#0f1927 68%);min-height:100vh}a{color:#ecd19a}
+header,main,footer{max-width:960px;margin:auto;padding:1.2rem clamp(1rem,4vw,2.5rem)}header{display:flex;align-items:center;justify-content:space-between;gap:1rem;border-bottom:1px solid #425166}
+.brand{text-decoration:none;font-weight:750;letter-spacing:.16em;color:#f5e8d1}.tag{color:#dac18c;font-size:.8rem}
+h1{font-family:Georgia,serif;font-size:clamp(2rem,6vw,3.5rem);margin:.4rem 0}h2{font-size:1.16rem;margin-top:0}
+.lead{color:#c4d0dc;max-width:700px;line-height:1.65}.grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:1.1rem;margin-top:1.5rem}
+.panel{background:#19293b;border:1px solid #40536a;border-radius:20px;padding:1.35rem;box-shadow:0 12px 35px #0002}
+label{display:block;font-weight:600;margin:.75rem 0 .35rem}select,input,button{font:inherit}select,input{background:#0d1a2a;color:#fff;border:1px solid #75869b;border-radius:10px;padding:.8rem;width:100%}
+button{background:#d9bd83;color:#172232;border:0;border-radius:10px;padding:.78rem 1rem;font-weight:700;cursor:pointer;min-height:44px}button.secondary{background:#2f4156;color:#fff;border:1px solid #63758d}
+button:disabled{opacity:.5;cursor:not-allowed}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #ffe1a2;outline-offset:3px}
+.actions{display:flex;flex-wrap:wrap;gap:.55rem;margin:1rem 0}.samples{display:flex;gap:.55rem;flex-wrap:wrap;margin:.75rem 0}
+.samples button{font-size:.86rem;background:#2a4056;color:#f3ead6;border:1px solid #6c7e92}
+.response{background:#101e2e;border-left:3px solid #d9bd83;border-radius:9px;padding:1rem;min-height:120px;line-height:1.6;white-space:pre-wrap}
+.muted{font-size:.86rem;color:#b8c7d8;line-height:1.55}.status{font-size:.86rem;color:#e6cd96;min-height:1.6em}
+footer{color:#aebfd0;font-size:.8rem}.skip{position:absolute;left:-9999px}.skip:focus{left:1rem;top:1rem;background:#fff;color:#000;padding:.6rem;z-index:10}
+[dir=rtl] .response{border-left:0;border-right:3px solid #d9bd83} @media(max-width:740px){.grid{grid-template-columns:1fr}}
+</style></head>
+<body><a class="skip" href="#main">Aller au contenu</a><header><a href="index.html" class="brand">ARTDACI</a><span class="tag">VOICE GUIDE · PROTOTYPE</span></header>
+<main id="main"><p class="tag" id="eyebrow">Médiation culturelle · Sans frais API</p><h1 id="title">Explorez l’art par la voix</h1><p class="lead" id="intro"></p>
+<div class="grid"><section class="panel" aria-labelledby="controlsTitle"><h2 id="controlsTitle"></h2>
+<label for="lang" id="langLabel"></label><select id="lang"><option value="fr">Français</option><option value="en">English</option><option value="ar">العربية</option></select>
+<label for="subject" id="subjectLabel"></label><select id="subject"></select>
+<label for="question" id="questionLabel"></label><input id="question" autocomplete="off" maxlength="250" enterkeyhint="send">
+<div class="actions"><button id="ask"></button><button class="secondary" id="mic"></button><button class="secondary" id="stop"></button></div>
+<p class="status" id="status" role="status" aria-live="polite"></p><p class="muted" id="privacy"></p>
+</section><section class="panel" aria-labelledby="answerTitle"><h2 id="answerTitle"></h2><div class="response" id="response" aria-live="polite"></div>
+<div class="actions"><button id="speak"></button><button class="secondary" id="cancel"></button></div>
+<p id="examplesTitle" class="muted"></p><div class="samples" id="examples"></div><p class="muted" id="limit"></p>
+</section></div></main><footer id="footer"></footer>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const locales={
+fr:{eyebrow:"Médiation culturelle · Sans frais API",title:"Explorez l’art par la voix",intro:"Choisissez une œuvre, posez une question à l’oral (si votre navigateur le permet) ou par écrit et écoutez une réponse préparée. Aucun compte ni clé API OpenAI.",controlsTitle:"Votre exploration",langLabel:"Langue",subjectLabel:"Œuvre",questionLabel:"Votre question",placeholder:"Ex. Qui a peint cette œuvre ?",ask:"Poser la question",mic:"🎙 Parler",stop:"Arrêter le micro",answerTitle:"Réponse du guide",speak:"▶ Écouter",cancel:"■ Arrêter la lecture",privacy:"Le guide ne transmet aucune question au serveur ARTDACI. Attention : certains navigateurs confient la reconnaissance vocale à un service externe. Utilisez la saisie écrite pour l’éviter.",limit:"Ce guide n'est pas une IA générative : seules les questions prévues sont traitées. Les autres reçoivent une explication et des suggestions.",examplesTitle:"Essayez :",questions:["Qui est l’artiste ?","De quand date cette œuvre ?","Dans quel musée se trouve-t-elle ?","Quelle technique est utilisée ?"],noRec:"La reconnaissance vocale n'est pas prise en charge ici. Utilisez le clavier, ou essayez Chrome / Edge.",listening:"Écoute en cours…",ready:"Prêt.",done:"Question reconnue.",error:"La reconnaissance vocale n'a pas fonctionné. Vous pouvez écrire votre question.",unknown:"Je ne dispose pas d’une réponse vérifiée à cette question dans cette version. Essayez : qui est l’artiste, quelle est la date, où se trouve l’œuvre, ou quelle technique a été utilisée.",welcome:"Choisissez une œuvre et posez une question.",noVoice:"Aucune voix de synthèse vocale n’est disponible dans votre navigateur.",microStopped:"Microphone arrêté.",notSecure:"Le microphone exige une connexion HTTPS."},
+en:{eyebrow:"Cultural exploration · No API fees",title:"Explore art with your voice",intro:"Select an artwork, ask a question aloud (when supported) or type it, then listen to a prepared answer. No account or OpenAI API key is required.",controlsTitle:"Your exploration",langLabel:"Language",subjectLabel:"Artwork",questionLabel:"Your question",placeholder:"e.g. Who painted this artwork?",ask:"Ask",mic:"🎙 Speak",stop:"Stop microphone",answerTitle:"Guide answer",speak:"▶ Listen",cancel:"■ Stop audio",privacy:"ARTDACI does not receive your question on its server. Note: some browsers send speech recognition audio to an external service. Use text input to avoid this.",limit:"This is not generative AI. Only predefined questions are supported; others return a limitation notice.",examplesTitle:"Try:",questions:["Who is the artist?","When was it painted?","Which museum holds it?","What technique was used?"],noRec:"Speech recognition is unavailable in this browser. Please type your question or try Chrome / Edge.",listening:"Listening…",ready:"Ready.",done:"Speech recognized.",error:"Speech recognition failed. Please type your question.",unknown:"I don't have a verified answer to that question in this version. Try asking about the artist, date, museum or technique.",welcome:"Select an artwork and ask a question.",noVoice:"Your browser has no available speech synthesis voice.",microStopped:"Microphone stopped.",notSecure:"Microphone access requires HTTPS."},
+ar:{eyebrow:"وساطة ثقافية · بدون رسوم API",title:"استكشف الفن بصوتك",intro:"اختر لوحة فنية ثم اطرح سؤالًا بالصوت إذا دعم المتصفح ذلك، أو اكتب السؤال، واستمع إلى إجابة مُعدّة مسبقًا. لا يلزم حساب أو مفتاح OpenAI.",controlsTitle:"استكشافك",langLabel:"اللغة",subjectLabel:"العمل الفني",questionLabel:"سؤالك",placeholder:"مثال: من رسم هذه اللوحة؟",ask:"اطرح السؤال",mic:"🎙 تحدث",stop:"إيقاف الميكروفون",answerTitle:"إجابة الدليل",speak:"▶ استمع",cancel:"■ إيقاف الصوت",privacy:"لا يُرسل ARTDACI الأسئلة إلى خادمه. تنبيه: قد تستخدم بعض المتصفحات خدمة خارجية للتعرف على الكلام. يمكنك استخدام الكتابة لتجنب ذلك.",limit:"هذا الدليل ليس ذكاءً اصطناعيًا توليديًا؛ يجيب فقط عن الأسئلة المُعدّة سلفًا.",examplesTitle:"جرّب:",questions:["من هو الفنان؟","متى رُسمت اللوحة؟","في أي متحف توجد؟","ما التقنية المستخدمة؟"],noRec:"التعرف على الصوت غير متاح في هذا المتصفح. اكتب سؤالك أو جرّب Chrome أو Edge.",listening:"جارٍ الاستماع…",ready:"جاهز.",done:"تم التعرف على السؤال.",error:"تعذر التعرف على الصوت. يمكنك كتابة السؤال.",unknown:"لا تتوفر إجابة موثقة لهذا السؤال في هذه النسخة. اسأل عن الفنان أو التاريخ أو المتحف أو التقنية.",welcome:"اختر عملًا فنيًا واطرح سؤالًا.",noVoice:"لا تتوفر ميزة تحويل النص إلى كلام في متصفحك.",microStopped:"توقف الميكروفون.",notSecure:"يتطلب الميكروفون اتصال HTTPS."}
+};
+const artworks=[
+{id:"mona",names:["La Joconde","Mona Lisa","الموناليزا"],details:[
+["Léonard de Vinci a peint La Joconde.","La Joconde a été réalisée au début du XVIe siècle, généralement datée d’environ 1503 à 1519.","Elle est conservée au musée du Louvre, à Paris.","Léonard utilise notamment le sfumato, des transitions très douces entre ombres et lumières."],
+["Leonardo da Vinci painted the Mona Lisa.","The Mona Lisa was painted in the early 16th century, generally dated to about 1503–1519.","It is housed at the Louvre Museum in Paris.","Leonardo used sfumato, creating very soft transitions between shadow and light."],
+["رسم ليوناردو دا فينشي لوحة الموناليزا.","رُسمت الموناليزا في أوائل القرن السادس عشر، ويؤرّخ لها عادة بين نحو 1503 و1519.","تُعرض في متحف اللوفر بباريس.","استخدم ليوناردو تقنية السفوماتو التي تُنعّم الانتقالات بين الظل والنور."]]},
+{id:"pearl",names:["La Jeune Fille à la perle","Girl with a Pearl Earring","الفتاة ذات القرط اللؤلؤي"],details:[
+["Johannes Vermeer a peint La Jeune Fille à la perle.","L’œuvre est généralement datée d’environ 1665.","Elle est conservée au Mauritshuis, à La Haye.","L’œuvre est une tronie : une étude expressive d’un personnage, avec un traitement subtil de la lumière."],
+["Johannes Vermeer painted Girl with a Pearl Earring.","It is generally dated to around 1665.","It is held by the Mauritshuis in The Hague.","This painting is a tronie, a character study noted for its subtle handling of light."],
+["رسم يوهانس فيرمير لوحة الفتاة ذات القرط اللؤلؤي.","تؤرّخ اللوحة عادة إلى نحو عام 1665.","تُحفظ في متحف موريتشهاوس في لاهاي.","العمل من نوع تروني، أي دراسة تعبيرية لشخصية، ويتميّز بمعالجة دقيقة للضوء."]]},
+{id:"starry",names:["La Nuit étoilée","The Starry Night","ليلة النجوم"],details:[
+["Vincent van Gogh a peint La Nuit étoilée.","Le tableau a été réalisé en 1889.","L’œuvre est conservée au Museum of Modern Art (MoMA), à New York.","Van Gogh emploie des touches expressives et des mouvements tourbillonnants pour représenter le ciel nocturne."],
+["Vincent van Gogh painted The Starry Night.","The painting was made in 1889.","It is held at the Museum of Modern Art (MoMA) in New York.","Van Gogh used expressive brushwork and swirling forms to portray the night sky."],
+["رسم فنسنت فان غوخ لوحة ليلة النجوم.","أُنجزت اللوحة عام 1889.","تُحفظ في متحف الفن الحديث (موما) بنيويورك.","استخدم فان غوخ ضربات فرشاة تعبيرية وأشكالًا دوّامية لتصوير السماء الليلية."]]}
+];
+const keys=["fr","en","ar"];let currentLang="fr",lastAnswer="",recognition=null;
+const langIndex=()=>keys.indexOf(currentLang);
+const normalize=s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[؟?!.,،:]/g," ").trim();
+function category(s){s=normalize(s);const patterns=[
+/artiste|peint|auteur|who|artist|painted|من.*(رسم|فنان)|الرسام|الفنان/,
+/date|quand|annee|siecle|when|year|متى|تاريخ|عام|سنة/,
+/musee|ou |conserv|museum|where|located|متحف|اين|أين|توجد|يعرض/,
+/technique|style|comment|how|brush|ما.*تقني|اسلوب|أسلوب|كيف|ضوء/
+];return patterns.findIndex(r=>r.test(s))}
+function setStatus(s){$("status").textContent=s}
+function answer(){const t=locales[currentLang],question=$("question").value.trim();const item=artworks.find(a=>a.id===$("subject").value)||artworks[0];const type=category(question);lastAnswer=type<0?t.unknown:item.details[langIndex()][type];$("response").textContent=lastAnswer;setStatus(t.ready)}
+function speak(){if(!("speechSynthesis" in window)){setStatus(locales[currentLang].noVoice);return;}speechSynthesis.cancel();const utter=new SpeechSynthesisUtterance(lastAnswer||locales[currentLang].welcome);utter.lang=({fr:"fr-FR",en:"en-US",ar:"ar-SA"})[currentLang];utter.rate=.93;const voices=speechSynthesis.getVoices();const preferred=voices.find(v=>v.lang.toLowerCase().startsWith(currentLang));if(preferred)utter.voice=preferred;speechSynthesis.speak(utter)}
+function stopMic(){if(recognition){try{recognition.stop()}catch(e){}recognition=null;}setStatus(locales[currentLang].microStopped)}
+function startMic(){const t=locales[currentLang];const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SpeechRecognition){setStatus(t.noRec);return}if(!window.isSecureContext){setStatus(t.notSecure);return}stopMic();const rec=new SpeechRecognition();recognition=rec;rec.lang=({fr:"fr-FR",en:"en-US",ar:"ar-SA"})[currentLang];rec.continuous=false;rec.interimResults=false;rec.onresult=e=>{const phrase=e.results?.[0]?.[0]?.transcript||"";$("question").value=phrase;setStatus(t.done);answer();recognition=null};rec.onerror=()=>{setStatus(t.error);recognition=null};rec.onend=()=>{if(recognition===rec){recognition=null;setStatus(t.ready)}};try{rec.start();setStatus(t.listening)}catch(e){setStatus(t.error);recognition=null}}
+function render(){stopMic();if("speechSynthesis" in window)speechSynthesis.cancel();currentLang=$("lang").value;const t=locales[currentLang];document.documentElement.lang=currentLang;document.documentElement.dir=currentLang==="ar"?"rtl":"ltr";
+for(const id of ["eyebrow","title","intro","controlsTitle","langLabel","subjectLabel","questionLabel","ask","mic","stop","answerTitle","speak","cancel","privacy","limit","examplesTitle"]){$(id).textContent=t[id]}
+$("question").placeholder=t.placeholder;
+const selected=$("subject").value||"mona";$("subject").replaceChildren(...artworks.map(a=>{const opt=document.createElement("option");opt.value=a.id;opt.textContent=a.names[langIndex()];return opt}));$("subject").value=selected;
+$("examples").replaceChildren(...t.questions.map(question=>{const b=document.createElement("button");b.type="button";b.textContent=question;b.addEventListener("click",()=>{$("question").value=question;answer()});return b}));
+lastAnswer=t.welcome;$("response").textContent=lastAnswer;$("footer").textContent="ARTDACI · Experimental guide without generative AI or OpenAI API.";setStatus(t.ready);
+if(!(window.SpeechRecognition||window.webkitSpeechRecognition)){$("mic").disabled=true;$("mic").title=t.noRec}else{$("mic").disabled=false;$("mic").title=""}
+if(!("speechSynthesis" in window)){$("speak").disabled=true;$("speak").title=t.noVoice}
+}
+$("lang").addEventListener("change",render);$("ask").addEventListener("click",answer);$("question").addEventListener("keydown",e=>{if(e.key==="Enter")answer()});
+$("mic").addEventListener("click",startMic);$("stop").addEventListener("click",stopMic);$("speak").addEventListener("click",speak);
+$("cancel").addEventListener("click",()=>{"speechSynthesis" in window&&speechSynthesis.cancel()});window.addEventListener("pagehide",()=>{stopMic();if("speechSynthesis" in window)speechSynthesis.cancel()});render();
+</script></body></html>
