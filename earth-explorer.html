@@ -22,9 +22,9 @@ ar:{label:'المسار الثقافي',all:'جميع المتاحف',paris:'م�
 const tc=TRAIL_UI[lang];$('trail-label').textContent=tc.label;
 for(const option of $('trail').options)option.textContent=tc[option.value];
 const KML_COPY={
-fr:{heading:'Télécharger les parcours Google Earth (KML)',description:'Importez ces fichiers dans Google Earth pour afficher les musées ensemble. Les circuits sont des collections culturelles, pas des itinéraires routiers.',all:'🌍 17 musées',paris:'Paris',renaissance:'Renaissance',impressionism:'Impressionnisme',geojson:'Données GeoJSON'},
-en:{heading:'Download Google Earth collections (KML)',description:'Import these files in Google Earth to explore museum locations together. These trails are cultural collections, not driving routes.',all:'🌍 All 17 museums',paris:'Paris',renaissance:'Renaissance',impressionism:'Impressionism',geojson:'GeoJSON dataset'},
-ar:{heading:'تنزيل مجموعات Google Earth بصيغة KML',description:'استورد هذه الملفات في Google Earth لاستكشاف المتاحف معًا. تمثل المسارات مجموعات ثقافية وليست توجيهات طرق.',all:'🌍 المتاحف الـ17',paris:'باريس',renaissance:'عصر النهضة',impressionism:'الانطباعية',geojson:'بيانات GeoJSON'}
+fr:{heading:'Télécharger les parcours Google Earth (KML)',description:'Importez ces fichiers dans Google Earth pour afficher les musées ensemble. Les circuits sont des collections culturelles, pas des itinéraires routiers.',all:'🌍 17 musées',paris:'Paris',renaissance:'Renaissance',impressionism:'Impressionnisme',artists:'Artistes et lieux historiques (pilote)',geojson:'Données GeoJSON'},
+en:{heading:'Download Google Earth collections (KML)',description:'Import these files in Google Earth to explore museum locations together. These trails are cultural collections, not driving routes.',all:'🌍 All 17 museums',paris:'Paris',renaissance:'Renaissance',impressionism:'Impressionism',artists:'Artists and historical places (pilot)',geojson:'GeoJSON dataset'},
+ar:{heading:'تنزيل مجموعات Google Earth بصيغة KML',description:'استورد هذه الملفات في Google Earth لاستكشاف المتاحف معًا. تمثل المسارات مجموعات ثقافية وليست توجيهات طرق.',all:'🌍 المتاحف الـ17',paris:'باريس',renaissance:'عصر النهضة',impressionism:'الانطباعية',artists:'الفنانون والأماكن التاريخية (نسخة أولية)',geojson:'بيانات GeoJSON'}
 };
 const MAP_COPY={
 fr:{heading:'Carte interactive des 17 musées',description:'Explorez les repères géographiques sans quitter ARTDACI. La carte suit vos filtres.',show:'Afficher la carte',hide:'Masquer la carte',note:'Fond de carte : © OpenStreetMap contributors. Affichage à la demande ; les points correspondent aux localisations approximatives des musées.',profile:'Ouvrir la fiche ARTDACI',error:'Carte non disponible. Les fiches et les fichiers KML restent accessibles.'},
@@ -34,7 +34,7 @@ ar:{heading:'خريطة تفاعلية للمتاحف السبعة عشر',descr
 const mc=MAP_COPY[lang];$('map-heading').textContent=mc.heading;$('map-description').textContent=mc.description;$('map-toggle').textContent=mc.show;$('map-note').textContent=mc.note;
 const kc=KML_COPY[lang];
 $('kml-heading').textContent=kc.heading;$('kml-description').textContent=kc.description;
-[['all','artdaci-museums.kml'],['paris','artdaci-paris.kml'],['renaissance','artdaci-renaissance.kml'],['impressionism','artdaci-impressionism.kml'],['geojson','artdaci-museums.geojson']].forEach(([key,file])=>{const l=document.createElement('a');l.href='geo/'+file;l.download=file;l.textContent=kc[key]+' ↓';$('kml-downloads').append(l);});
+[['all','artdaci-museums.kml'],['paris','artdaci-paris.kml'],['renaissance','artdaci-renaissance.kml'],['impressionism','artdaci-impressionism.kml'],['artists','artdaci-artists-journeys.kml'],['geojson','artdaci-museums.geojson']].forEach(([key,file])=>{const l=document.createElement('a');l.href='geo/'+file;l.download=file;l.textContent=kc[key]+' ↓';$('kml-downloads').append(l);});
 for(const k of ['title','description','notice'])$(k).textContent=t[k];
 $('search-label').textContent=t.search;$('country-label').textContent=t.country;$('back').textContent=t.back;$('back').href='museums.html?lang='+lang;
 $('atlas').textContent=t.atlas;$('atlas').href=lang==='en'?'museums-atlas-en.html':lang==='ar'?'museums-atlas-ar.html':'museums-atlas.html';
