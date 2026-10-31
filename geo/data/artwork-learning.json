@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "1.0",
+  "scope": "12 pre-existing artworks in six immersive museum collections",
+  "note": "Dates are indicative artwork datings; origins are not assumed. Only ids vg02,ve02,mo02 have independently documented city-context links in geo/data/artwork-context-links.json. Verify museum records for any changes.",
+  "works": [
+    {
+      "id": "ld01",
+      "artist": "Léonard de Vinci",
+      "date": "1503–1519",
+      "sortYear": 1503,
+      "style": {
+        "fr": "Portrait, sfumato et Renaissance italienne",
+        "en": "Portrait, sfumato and Italian Renaissance",
+        "ar": "البورتريه والسفوماتو وعصر النهضة الإيطالية"
+      },
+      "source": "https://collections.louvre.fr/ark:/53355/cl010062370"
+    },
+    {
+      "id": "ld06",
+      "artist": "Léonard de Vinci",
+      "date": "vers 1490–1499",
+      "sortYear": 1490,
+      "style": {
+        "fr": "Portrait de cour et modelé subtil · Renaissance",
+        "en": "Court portrait and subtle modelling · Renaissance",
+        "ar": "بورتريه بلاطي وتظليل دقيق · النهضة"
+      },
+      "source": "https://collections.louvre.fr/"
+    },
+    {
+      "id": "ve05",
+      "artist": "Johannes Vermeer",
+      "date": "vers 1668",
+      "sortYear": 1668,
+      "style": {
+        "fr": "Intérieur, science et lumière · peinture hollandaise",
+        "en": "Interior, science and light · Dutch painting",
+        "ar": "الفضاء الداخلي والعلم والضوء · الرسم الهولندي"
+      },
+      "source": "https://collections.louvre.fr/"
+    },
+    {
+      "id": "vg01",
+      "artist": "Vincent van Gogh",
+      "date": "1889",
+      "sortYear": 1889,
+      "style": {
+        "fr": "Autoportrait et touche expressive · postimpressionnisme",
+        "en": "Self-portrait and expressive brushwork · Post-Impressionism",
+        "ar": "صورة ذاتية وضربات فرشاة تعبيرية · ما بعد الانطباعية"
+      },
+      "source": "https://www.musee-orsay.fr/fr/oeuvres/portrait-de-lartiste-747"
+    },
+    {
+      "id": "ve01",
+      "artist": "Johannes Vermeer",
+      "date": "vers 1665",
+      "sortYear": 1665,
+      "style": {
+        "fr": "Tronie, lumière et expression du visage · peinture hollandaise",
+        "en": "Tronie, light and facial expression · Dutch painting",
+        "ar": "تروني والضوء وتعبير الوجه · الرسم الهولندي"
+      },
+      "source": "https://www.mauritshuis.nl/en/our-collection/artworks/670-girl-with-a-pearl-earring"
+    },
+    {
+      "id": "ld02",
+      "artist": "Léonard de Vinci",
+      "date": "vers 1490",
+      "sortYear": 1490,
+      "style": {
+        "fr": "Portrait, mouvement et clair-obscur · Renaissance",
+        "en": "Portrait, movement and chiaroscuro · Renaissance",
+        "ar": "بورتريه وحركة وتباين الضوء والظل · النهضة"
+      },
+      "source": "https://mnk.pl/en/collections/lady-with-an-ermine/"
+    },
+    {
+      "id": "ld05",
+      "artist": "Léonard de Vinci",
+      "date": "vers 1474–1478",
+      "sortYear": 1474,
+      "style": {
+        "fr": "Portrait de la première Renaissance et paysage",
+        "en": "Early Renaissance portrait and landscape",
+        "ar": "بورتريه النهضة المبكرة والمنظر الطبيعي"
+      },
+      "source": "https://www.nga.gov/artworks/1211-ginevra-de-benci"
+    },
+    {
+      "id": "ve06",
+      "artist": "Johannes Vermeer",
+      "date": "vers 1664",
+      "sortYear": 1664,
+      "style": {
+        "fr": "Intérieur, lumière et allégorie de l’équilibre",
+        "en": "Interior, light and allegory of balance",
+        "ar": "الفضاء الداخلي والضوء ورمزية التوازن"
+      },
+      "source": "https://www.nga.gov/artworks/1236-woman-holding-balance"
+    },
+    {
+      "id": "mo06",
+      "artist": "Claude Monet",
+      "date": "1875",
+      "sortYear": 1875,
+      "style": {
+        "fr": "Figure en plein air et lumière · impressionnisme",
+        "en": "Outdoor figure and light · Impressionism",
+        "ar": "شخصية في الهواء الطلق والضوء · الانطباعية"
+      },
+      "source": "https://www.nga.gov/artworks/61379-woman-with-parasol-madame-monet-and-her-son"
+    },
+    {
+      "id": "vg02",
+      "artist": "Vincent van Gogh",
+      "date": "1888",
+      "sortYear": 1888,
+      "style": {
+        "fr": "Intérieur et couleur expressive · postimpressionnisme",
+        "en": "Interior and expressive colour · Post-Impressionism",
+        "ar": "فضاء داخلي ولون تعبيري · ما بعد الانطباعية"
+      },
+      "source": "https://www.vangoghmuseum.nl/en/collection"
+    },
+    {
+      "id": "ve02",
+      "artist": "Johannes Vermeer",
+      "date": "vers 1660–1661",
+      "sortYear": 1660,
+      "style": {
+        "fr": "Paysage urbain et lumière · peinture hollandaise",
+        "en": "Cityscape and light · Dutch painting",
+        "ar": "المشهد الحضري والضوء · الرسم الهولندي"
+      },
+      "source": "https://www.mauritshuis.nl/en/our-collection/artworks/92-view-of-delft"
+    },
+    {
+      "id": "mo02",
+      "artist": "Claude Monet",
+      "date": "1874",
+      "sortYear": 1874,
+      "style": {
+        "fr": "Paysage, lumière et touches visibles · impressionnisme",
+        "en": "Landscape, light and brushwork · Impressionism",
+        "ar": "المنظر الطبيعي والضوء وضربات الفرشاة · الانطباعية"
+      },
+      "source": "https://www.musee-orsay.fr/fr/oeuvres/le-pont-dargenteuil-1297"
+    }
+  ]
+}
