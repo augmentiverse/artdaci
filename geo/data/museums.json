@@ -1,0 +1,272 @@
+{
+  "schemaVersion": "1.0",
+  "updated": "2026-10-31",
+  "coordinateSystem": "WGS84 / EPSG:4326",
+  "note": "Approximate museum location pins, not entrances or verified Street View panoramas; sources per museum. Site associations reflect ARTDACI artwork dossiers, not promises of current display.",
+  "themes": {
+    "all": {
+      "file": "artdaci-museums.kml",
+      "labelFr": "ARTDACI — Atlas géographique des 17 musées",
+      "labelEn": "ARTDACI — Geographic atlas of 17 museums"
+    },
+    "paris": {
+      "file": "artdaci-paris.kml",
+      "labelFr": "ARTDACI — Musées de Paris",
+      "labelEn": "ARTDACI — Paris museums"
+    },
+    "renaissance": {
+      "file": "artdaci-renaissance.kml",
+      "labelFr": "ARTDACI — Parcours Renaissance (œuvres ARTDACI)",
+      "labelEn": "ARTDACI — Renaissance artwork trail"
+    },
+    "impressionism": {
+      "file": "artdaci-impressionism.kml",
+      "labelFr": "ARTDACI — Musées de l’impressionnisme (œuvres ARTDACI)",
+      "labelEn": "ARTDACI — Impressionist artwork trail"
+    }
+  },
+  "museums": [
+    {
+      "id": "louvre",
+      "name": "Musée du Louvre",
+      "city": "Paris",
+      "country": "France",
+      "artwork": "La Joconde · Léonard de Vinci",
+      "latitude": 48.861111,
+      "longitude": 2.335833,
+      "coordinateSource": "https://www.wikidata.org/wiki/Q19675",
+      "precisionNote": null,
+      "themes": [
+        "paris",
+        "renaissance"
+      ],
+      "profileUrl": "https://artdaci.com/museum-atlas/musees/louvre.html"
+    },
+    {
+      "id": "orsay",
+      "name": "Musée d’Orsay",
+      "city": "Paris",
+      "country": "France",
+      "artwork": "Autoportrait (1889) · Vincent van Gogh",
+      "latitude": 48.859972,
+      "longitude": 2.326527,
+      "coordinateSource": "https://www.wikidata.org/wiki/Q23402",
+      "precisionNote": null,
+      "themes": [
+        "paris",
+        "impressionism"
+      ],
+      "profileUrl": "https://artdaci.com/museum-atlas/musees/orsay.html"
+    },
+    {
+      "id": "mauritshuis",
+      "name": "Mauritshuis",
+      "city": "La Haye",
+      "country": "Pays-Bas",
+      "artwork": "La Jeune Fille à la perle et Vue de Delft · Vermeer",
+      "latitude": 52.080389,
+      "longitude": 4.314306,
+      "coordinateSource": "https://www.wikidata.org/wiki/Q221092",
+      "precisionNote": null,
+      "themes": [],
+      "profileUrl": "https://artdaci.com/museum-atlas/musees/mauritshuis.html"
+    },
+    {
+      "id": "czartoryski",
+      "name": "Musée des Princes Czartoryski",
+      "city": "Cracovie",
+      "country": "Pologne",
+      "artwork": "La Dame à l’hermine · Léonard de Vinci",
+      "latitude": 50.064641,
+      "longitude": 19.939967,
+      "coordinateSource": "https://www.wikidata.org/wiki/Q1450630",
+      "precisionNote": null,
+      "themes": [
+        "renaissance"
+      ],
+      "profileUrl": "https://artdaci.com/museum-atlas/musees/czartoryski.html"
+    },
+    {
+      "id": "van-gogh-museum",
+      "name": "Musée Van Gogh",
+      "city": "Amsterdam",
+      "country": "Pays-Bas",
+      "artwork": "La Chambre à coucher · Vincent van Gogh",
+      "latitude": 52.358333,
+      "longitude": 4.881111,
+      "coordinateSource": "https://www.wikidata.org/wiki/Q224124",
+      "precisionNote": null,
+      "themes": [],
+      "profileUrl": "https://artdaci.com/museum-atlas/musees/van-gogh-museum.html"
+    },
+    {
+      "id": "national-gallery-of-art-washington",
+      "name": "National Gallery of Art",
+      "city": "Washington D.C.",
+      "country": "États-Unis",
+      "artwork": "Ginevra de’ Benci · Léonard ; La Femme à l’ombrelle · Monet",
+      "latitude": 38.891389,
+      "longitude": -77.02,
+      "coordinateSource": "https://www.wikidata.org/wiki/Q214867",
+      "precisionNote": null,
+      "themes": [
+        "renaissance",
+        "impressionism"
+      ],
+      "profileUrl": "https://artdaci.com/museum-atlas/musees/national-gallery-of-art-washington.html"
+    },
+    {
+      "id": "rijksmuseum",
+      "name": "Rijksmuseum",
+      "city": "Amsterdam",
+      "country": "Pays-Bas",
+      "artwork": "La Laitière · Johannes Vermeer",
+      "latitude": 52.359969,
+      "longitude": 4.885331,
+      "coordinateSource": "https://www.wikidata.org/wiki/Q190804",
+      "precisionNote": null,
+      "themes": [],
+      "profileUrl": "https://artdaci.com/museum-atlas/musees/rijksmuseum.html"
+    },
+    {
+      "id": "moma",
+      "name": "Museum of Modern Art (MoMA)",
+      "city": "New York",
+      "country": "États-Unis",
+      "artwork": "La Nuit étoilée · Vincent van Gogh",
+      "latitude": 40.761444,
+      "longitude": -73.977611,
+      "coordinateSource": "https://www.wikidata.org/wiki/Q188740",
+      "precisionNote": null,
+      "themes": [],
+      "profileUrl": "https://artdaci.com/museum-atlas/musees/moma.html"
+    },
+    {
+      "id": "marmottan",
+      "name": "Musée Marmottan Monet",
+      "city": "Paris",
+      "country": "France",
+      "artwork": "Impression, soleil levant · Claude Monet",
+      "latitude": 48.85928,
+      "longitude": 2.267383,
+      "coordinateSource": "https://www.wikidata.org/wiki/Q1327886",
+      "precisionNote": null,
+      "themes": [
+        "paris",
+        "impressionism"
+      ],
+      "profileUrl": "https://artdaci.com/museum-atlas/musees/marmottan.html"
+    },
+    {
+      "id": "kunsthistorisches",
+      "name": "Kunsthistorisches Museum",
+      "city": "Vienne",
+      "country": "Autriche",
+      "artwork": "L’Art de la peinture · Johannes Vermeer",
+      "latitude": 48.203881,
+      "longitude": 16.3616,
+      "coordinateSource": "https://www.wikidata.org/wiki/Q95569",
+      "precisionNote": null,
+      "themes": [],
+      "profileUrl": "https://artdaci.com/museum-atlas/musees/kunsthistorisches.html"
+    },
+    {
+      "id": "uffizi",
+      "name": "Galeries des Offices (Uffizi)",
+      "city": "Florence",
+      "country": "Italie",
+      "artwork": "L’Annonciation · Léonard de Vinci",
+      "latitude": 43.768333,
+      "longitude": 11.255278,
+      "coordinateSource": "https://www.wikidata.org/wiki/Q51252",
+      "precisionNote": null,
+      "themes": [
+        "renaissance"
+      ],
+      "profileUrl": "https://artdaci.com/museum-atlas/musees/uffizi.html"
+    },
+    {
+      "id": "national-gallery-london",
+      "name": "National Gallery (Londres)",
+      "city": "Londres",
+      "country": "Royaume-Uni",
+      "artwork": "Les Tournesols (version de Londres) · Vincent van Gogh",
+      "latitude": 51.508889,
+      "longitude": -0.128333,
+      "coordinateSource": "https://www.wikidata.org/wiki/Q180788",
+      "precisionNote": null,
+      "themes": [],
+      "profileUrl": "https://artdaci.com/museum-atlas/musees/national-gallery-london.html"
+    },
+    {
+      "id": "kroller-muller",
+      "name": "Musée Kröller-Müller",
+      "city": "Otterlo",
+      "country": "Pays-Bas",
+      "artwork": "Terrasse du café le soir · Vincent van Gogh",
+      "latitude": 52.095605,
+      "longitude": 5.817414,
+      "coordinateSource": "https://www.wikidata.org/wiki/Q1051928",
+      "precisionNote": null,
+      "themes": [],
+      "profileUrl": "https://artdaci.com/museum-atlas/musees/kroller-muller.html"
+    },
+    {
+      "id": "yale-art-gallery",
+      "name": "Yale University Art Gallery",
+      "city": "New Haven",
+      "country": "États-Unis",
+      "artwork": "Le Café de nuit · Vincent van Gogh",
+      "latitude": 41.30839,
+      "longitude": -72.930958,
+      "coordinateSource": "https://www.wikidata.org/wiki/Q1568434",
+      "precisionNote": null,
+      "themes": [],
+      "profileUrl": "https://artdaci.com/museum-atlas/musees/yale-art-gallery.html"
+    },
+    {
+      "id": "courtauld",
+      "name": "Courtauld Gallery",
+      "city": "Londres",
+      "country": "Royaume-Uni",
+      "artwork": "Autoportrait à l’oreille bandée · Vincent van Gogh",
+      "latitude": 51.511568,
+      "longitude": -0.117712,
+      "coordinateSource": "https://www.wikidata.org/wiki/Q12110695",
+      "precisionNote": null,
+      "themes": [],
+      "profileUrl": "https://artdaci.com/museum-atlas/musees/courtauld.html"
+    },
+    {
+      "id": "orangerie",
+      "name": "Musée de l’Orangerie",
+      "city": "Paris",
+      "country": "France",
+      "artwork": "Les Nymphéas (grands panneaux) · Claude Monet",
+      "latitude": 48.863845,
+      "longitude": 2.322538,
+      "coordinateSource": "https://www.wikidata.org/wiki/Q726781",
+      "precisionNote": null,
+      "themes": [
+        "paris",
+        "impressionism"
+      ],
+      "profileUrl": "https://artdaci.com/museum-atlas/musees/orangerie.html"
+    },
+    {
+      "id": "cenacolo-vinciano",
+      "name": "Museo del Cenacolo Vinciano",
+      "city": "Milan",
+      "country": "Italie",
+      "artwork": "La Cène · Léonard de Vinci",
+      "latitude": 45.466667,
+      "longitude": 9.170833,
+      "coordinateSource": "https://www.wikidata.org/wiki/Q128910",
+      "precisionNote": "Coordinates identify the Last Supper site at Santa Maria delle Grazie.",
+      "themes": [
+        "renaissance"
+      ],
+      "profileUrl": "https://artdaci.com/museum-atlas/musees/cenacolo-vinciano.html"
+    }
+  ]
+}
