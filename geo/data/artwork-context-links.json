@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "1.0",
+  "updated": "2026-10-31",
+  "type": "interpretive-artwork-links",
+  "noticeFr": "Liaisons documentaires entre un lieu de contexte artistique et un musée de conservation. Les lignes ne représentent ni le chemin physique de l’œuvre, ni son historique de propriété, ni une adresse exacte de création.",
+  "noticeEn": "Interpretive links between an artistic context place and a collecting museum. Lines do not represent artwork transport, provenance, or an exact creation address.",
+  "connections": [
+    {
+      "id": "vg02",
+      "artist": "Vincent van Gogh",
+      "work": {
+        "fr": "La Chambre à coucher",
+        "en": "The Bedroom"
+      },
+      "year": "1888",
+      "origin": "van-gogh-arles",
+      "museum": "van-gogh-museum",
+      "museumSource": "https://www.vangoghmuseum.nl/en/collection",
+      "explanation": {
+        "fr": "Le tableau appartient au contexte arlésien de Van Gogh. Repère urbain indicatif, non localisation exacte de la chambre ou de l'atelier.",
+        "en": "The painting belongs to Van Gogh's Arles period. The city marker does not locate the room or studio."
+      }
+    },
+    {
+      "id": "ve02",
+      "artist": "Johannes Vermeer",
+      "work": {
+        "fr": "Vue de Delft",
+        "en": "View of Delft"
+      },
+      "year": "vers 1660–1661",
+      "origin": "vermeer-delft",
+      "museum": "mauritshuis",
+      "museumSource": "https://www.mauritshuis.nl/en/our-collection/artworks/92-view-of-delft",
+      "explanation": {
+        "fr": "Le tableau représente Delft. Le point correspond au centre urbain, non au point de vue exact du peintre.",
+        "en": "The painting depicts Delft. The point represents the city, not the painter's precise viewpoint."
+      }
+    },
+    {
+      "id": "mo02",
+      "artist": "Claude Monet",
+      "work": {
+        "fr": "Le Pont d’Argenteuil",
+        "en": "The Bridge at Argenteuil"
+      },
+      "year": "1874",
+      "origin": "monet-argenteuil",
+      "museum": "orsay",
+      "museumSource": "https://www.musee-orsay.fr/fr/oeuvres/le-pont-dargenteuil-1297",
+      "explanation": {
+        "fr": "Le motif du pont à Argenteuil est documenté par le musée d’Orsay. Le repère correspond au centre d’Argenteuil, non au chevalet de Monet.",
+        "en": "The Argenteuil bridge motif is documented by Musée d'Orsay. The point indicates the town rather than Monet's easel location."
+      }
+    }
+  ]
+}
