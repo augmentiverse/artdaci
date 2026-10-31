@@ -31,3 +31,11 @@ Each KML museum placemark now contains an HTML description inside CDATA, generat
 Descriptions are intentionally concise to keep them usable in KML applications, and all user-facing HTML fields are escaped before interpolation. Clickable balloon HTML is supported in many Google Earth clients, but Google Earth Web may simplify or restrict the content. The full ARTDACI museum and artwork pages remain the reliable fallback.
 
 **Regenerate exports** after editing source data: `node geo/build-exports.mjs`. Verify generated KML and GeoJSON are committed together, import the KML in Google Earth, and test selected links in Earth Web and Google Earth Pro. The KML carries clickable URLs; it does not embed copyrighted Street View imagery or third-party 3D assets.
+
+## Individual museum KMLs — 17 enriched profiles
+
+`node geo/build-exports.mjs` now produces the four museum-collection KMLs, the canonical GeoJSON and **17 individual files** under `geo/museums/<museum-id>.kml`. Each individual placemark is taken from the same canonical GEO 2.0 information balloon as the complete atlas: history, architecture, collections, linked ARTDACI paintings, museum dossier, original source references, Maps and Street View. Approximate museum point coordinates are inherited from `geo/data/museums.json`; these do not represent rooms, gallery hanging positions or verified panoramas.
+
+Download links appear on all 17 Earth Explorer museum cards and within the existing GEO panel of the six immersive museums, localized in French, English and Arabic. This is a consolidation of the independent-file work from PR #42 on top of current `main`; it intentionally does **not** overwrite the newer Street View, Leaflet map, cultural trails, artwork journeys or KML 2.0 balloon code. Only the six immersive museums receive 3D/AR/VR shortcuts; other KMLs point to their research museum dossiers.
+
+To review: run the generator and ensure the output files match committed exports, count 17 distinct single-placemark files, inspect their XML and click through links in Google Earth where supported. HTML balloons can be restricted in Google Earth Web; the museum dossier on ARTDACI remains the canonical fallback.

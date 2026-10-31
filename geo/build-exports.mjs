@@ -59,5 +59,20 @@ for(const key of Object.keys(geo.themes)){
  fs.writeFileSync(path.join(dir,name),kml);
  console.log(name,(kml.match(/<Placemark>/g)||[]).length);
 }
+// Individual museum exports reuse exactly the same enriched Placemark descriptions as the collective KML.
+// This avoids divergent coordinates, links or research notes across GEO exports.
+const individual=renderKml('all',geo,editorial,artworks);
+const placemarks=[...individual.matchAll(/<Placemark>[\s\S]*?<\/Placemark>/g)].map(match=>match[0]);
+if(placemarks.length!==17)throw Error('Expected 17 enriched individual placemarks');
+const destination=path.join(dir,'museums');fs.mkdirSync(destination,{recursive:true});
+for(const [index,m] of geo.museums.entries()){
+ if(!/^[a-z0-9-]+$/.test(m.id))throw Error('Invalid museum id');
+  if(!placemarks[index].includes('<value>'+m.id+'</value>'))throw Error('Misaligned museum profile: '+m.id);
+ const xmlName=String(m.name).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+ const xmlCity=String(m.city+', '+m.country).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+ const document='<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>'+xmlName+' — ARTDACI GEO</name><description>ARTDACI GEO 2.0 — '+xmlCity+' — sourced interactive museum profile; approximate coordinates.</description><Style id="museum"><IconStyle><color>ff8cbcdf</color><scale>1.1</scale><Icon><href>https://maps.google.com/mapfiles/kml/shapes/museums.png</href></Icon></IconStyle></Style>\n'+placemarks[index]+'\n</Document></kml>\n';
+ fs.writeFileSync(path.join(destination,m.id+'.kml'),document);
+}
+console.log('Generated 17 individual enriched KML profiles');
 const geojson={type:'FeatureCollection',name:'ARTDACI museum points',features:geo.museums.map(m=>({type:'Feature',properties:{id:m.id,name:m.name,city:m.city,country:m.country,artwork:m.artwork,themes:m.themes,profileUrl:m.profileUrl,coordinateSource:m.coordinateSource},geometry:{type:'Point',coordinates:[m.longitude,m.latitude]}}))};
 fs.writeFileSync(path.join(dir,'artdaci-museums.geojson'),JSON.stringify(geojson,null,2)+'\n');

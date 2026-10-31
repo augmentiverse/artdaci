@@ -984,6 +984,7 @@ function renderGeo(museum){
  root.append(link(ui.earth,'https://earth.google.com/web/search/'+query,'',true));
  const point=GEO_VIEWPOINTS[museum.id];
  if(point)root.append(link(ui.street,'https://www.google.com/maps/@?api=1&map_action=pano&viewpoint='+encodeURIComponent(point[0]+','+point[1]),'',true));
+ root.append(link(({fr:'⬇ Télécharger le KML du musée',en:'⬇ Download museum KML',ar:'⬇ تنزيل ملف KML للمتحف'})[lang],'geo/museums/'+encodeURIComponent(museum.id)+'.kml'));
  root.append(link(ui.atlas,'earth-explorer.html?lang='+encodeURIComponent(lang)));
 }
 function renderExperiences(museum) {
