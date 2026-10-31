@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "1.0",
+  "source": "museums.html embedded editorial artwork links",
+  "note": "Artworks are associated with a museum, not geocoded to individual rooms. Their display locations may change.",
+  "museums": {
+    "louvre": [
+      {
+        "id": "ld01",
+        "title": {
+          "fr": "La Joconde",
+          "en": "Mona Lisa",
+          "ar": "الموناليزا"
+        },
+        "href": "print-target.html"
+      },
+      {
+        "id": "ld06",
+        "title": {
+          "fr": "La Belle Ferronnière",
+          "en": "La Belle Ferronnière",
+          "ar": "لا بيل فيرونيير"
+        },
+        "href": "print-artwork.html?painting=belle-ferronniere"
+      },
+      {
+        "id": "ve05",
+        "title": {
+          "fr": "L’Astronome",
+          "en": "The Astronomer",
+          "ar": "عالم الفلك"
+        },
+        "href": "print-artwork.html?painting=vermeer-astronomer"
+      }
+    ],
+    "orsay": [
+      {
+        "id": "vg01",
+        "title": {
+          "fr": "Autoportrait (1889)",
+          "en": "Self-Portrait (1889)",
+          "ar": "صورة ذاتية (1889)"
+        },
+        "href": "print-van-gogh.html"
+      },
+      {
+        "id": "mo02",
+        "title": {
+          "fr": "Le Pont d’Argenteuil",
+          "en": "The Bridge at Argenteuil",
+          "ar": "جسر أرجنتوي"
+        },
+        "href": "print-artwork.html?painting=pont-d-argenteuil"
+      }
+    ],
+    "mauritshuis": [
+      {
+        "id": "ve01",
+        "title": {
+          "fr": "La Jeune Fille à la perle",
+          "en": "Girl with a Pearl Earring",
+          "ar": "الفتاة ذات القرط اللؤلؤي"
+        },
+        "href": "print-vermeer-girl-with-a-pearl-earring.html"
+      },
+      {
+        "id": "ve02",
+        "title": {
+          "fr": "Vue de Delft",
+          "en": "View of Delft",
+          "ar": "منظر دلفت"
+        },
+        "href": "print-artwork.html?painting=view-of-delft"
+      }
+    ],
+    "czartoryski": [
+      {
+        "id": "ld02",
+        "title": {
+          "fr": "La Dame à l’hermine",
+          "en": "Lady with an Ermine",
+          "ar": "السيدة ذات القاقم"
+        },
+        "href": "print-artwork.html?painting=lady-with-an-ermine"
+      }
+    ],
+    "van-gogh-museum": [
+      {
+        "id": "vg02",
+        "title": {
+          "fr": "La Chambre à coucher",
+          "en": "The Bedroom",
+          "ar": "غرفة النوم"
+        },
+        "href": "print-van-gogh-bedroom.html"
+      }
+    ],
+    "national-gallery-of-art-washington": [
+      {
+        "id": "ld05",
+        "title": {
+          "fr": "Ginevra de’ Benci",
+          "en": "Ginevra de’ Benci",
+          "ar": "جينيفرا دي بنشي"
+        },
+        "href": "print-artwork.html?painting=ginevra-de-benci"
+      },
+      {
+        "id": "ve06",
+        "title": {
+          "fr": "La Femme à la balance",
+          "en": "Woman Holding a Balance",
+          "ar": "المرأة التي تحمل ميزانًا"
+        },
+        "href": "print-artwork.html?painting=woman-holding-balance"
+      },
+      {
+        "id": "mo06",
+        "title": {
+          "fr": "La Femme à l’ombrelle",
+          "en": "Woman with a Parasol",
+          "ar": "امرأة بمظلة"
+        },
+        "href": "print-artwork.html?painting=woman-with-parasol"
+      }
+    ]
+  }
+}
