@@ -1,0 +1,227 @@
+{
+  "schemaVersion": "1.0",
+  "type": "featured-works-in-research-museum-atlas",
+  "editorialNote": "Works are sourced museum associations, not promises of permanent public display. The eleven museum-feature records have no verified standalone ARTDACI painting pages or exact creation coordinates; use museum dossiers and source links.",
+  "works": [
+    {
+      "id": "museum-feature-rijksmuseum",
+      "museum": "rijksmuseum",
+      "artist": "Johannes Vermeer",
+      "date": "1658–1660",
+      "sortYear": 1658,
+      "title": {
+        "fr": "La Laitière",
+        "en": "The Milkmaid",
+        "ar": "خادمة الحليب"
+      },
+      "style": {
+        "fr": "Scène domestique, lumière et réalisme hollandais",
+        "en": "Domestic scene, light and Dutch realism",
+        "ar": "مشهد منزلي وضوء وواقعية هولندية"
+      },
+      "source": "https://www.rijksmuseum.nl/en/collection/SK-A-2344",
+      "profileType": "museum-dossier",
+      "geographic": null
+    },
+    {
+      "id": "museum-feature-moma",
+      "museum": "moma",
+      "artist": "Vincent van Gogh",
+      "date": "1889",
+      "sortYear": 1889,
+      "title": {
+        "fr": "La Nuit étoilée",
+        "en": "The Starry Night",
+        "ar": "الليلة المرصعة بالنجوم"
+      },
+      "style": {
+        "fr": "Ciel nocturne et couleur expressive · postimpressionnisme",
+        "en": "Night sky and expressive colour · Post-Impressionism",
+        "ar": "سماء ليلية وألوان تعبيرية · ما بعد الانطباعية"
+      },
+      "source": "https://www.moma.org/collection/works/79802",
+      "profileType": "museum-dossier",
+      "geographic": null
+    },
+    {
+      "id": "museum-feature-marmottan",
+      "museum": "marmottan",
+      "artist": "Claude Monet",
+      "date": "1872",
+      "sortYear": 1872,
+      "title": {
+        "fr": "Impression, soleil levant",
+        "en": "Impression, Sunrise",
+        "ar": "انطباع، شروق الشمس"
+      },
+      "style": {
+        "fr": "Port et atmosphère lumineuse · naissance de l’impressionnisme",
+        "en": "Harbour and atmospheric light · Impressionism",
+        "ar": "ميناء وضوء جوي · نشأة الانطباعية"
+      },
+      "source": "https://www.marmottan.fr/notice/4014/",
+      "profileType": "museum-dossier",
+      "geographic": null
+    },
+    {
+      "id": "museum-feature-kunsthistorisches",
+      "museum": "kunsthistorisches",
+      "artist": "Johannes Vermeer",
+      "date": "vers 1666–1668",
+      "sortYear": 1666,
+      "title": {
+        "fr": "L’Art de la peinture",
+        "en": "The Art of Painting",
+        "ar": "فن الرسم"
+      },
+      "style": {
+        "fr": "Atelier, allégorie et perspective · peinture hollandaise",
+        "en": "Studio, allegory and perspective · Dutch painting",
+        "ar": "المرسم والرمزية والمنظور · الرسم الهولندي"
+      },
+      "source": "https://www.khm.at/en/",
+      "profileType": "museum-dossier",
+      "geographic": null
+    },
+    {
+      "id": "museum-feature-uffizi",
+      "museum": "uffizi",
+      "artist": "Léonard de Vinci",
+      "date": "vers 1472",
+      "sortYear": 1472,
+      "title": {
+        "fr": "L’Annonciation",
+        "en": "Annunciation",
+        "ar": "البشارة"
+      },
+      "style": {
+        "fr": "Composition religieuse, perspective et paysage · Renaissance",
+        "en": "Religious scene, perspective and landscape · Renaissance",
+        "ar": "مشهد ديني ومنظور وطبيعة · النهضة"
+      },
+      "source": "https://www.uffizi.it/en/artworks/annunciation",
+      "profileType": "museum-dossier",
+      "geographic": null
+    },
+    {
+      "id": "museum-feature-national-gallery-london",
+      "museum": "national-gallery-london",
+      "artist": "Vincent van Gogh",
+      "date": "1888",
+      "sortYear": 1888,
+      "title": {
+        "fr": "Les Tournesols (version de Londres)",
+        "en": "Sunflowers (London version)",
+        "ar": "دوار الشمس (نسخة لندن)"
+      },
+      "style": {
+        "fr": "Nature morte, empâtements et jaunes expressifs",
+        "en": "Still life, impasto and expressive yellows",
+        "ar": "طبيعة صامتة وطلاء كثيف وأصفر تعبيري"
+      },
+      "source": "https://www.nationalgallery.org.uk/paintings/vincent-van-gogh-sunflowers",
+      "profileType": "museum-dossier",
+      "geographic": null
+    },
+    {
+      "id": "museum-feature-kroller-muller",
+      "museum": "kroller-muller",
+      "artist": "Vincent van Gogh",
+      "date": "1888",
+      "sortYear": 1888,
+      "title": {
+        "fr": "Terrasse du café le soir",
+        "en": "Café Terrace at Night",
+        "ar": "شرفة المقهى ليلاً"
+      },
+      "style": {
+        "fr": "Scène urbaine nocturne et contrastes colorés",
+        "en": "Nighttime street scene and colour contrasts",
+        "ar": "مشهد ليلي في المدينة وتباينات لونية"
+      },
+      "source": "https://krollermuller.nl/en",
+      "profileType": "museum-dossier",
+      "geographic": null
+    },
+    {
+      "id": "museum-feature-yale-art-gallery",
+      "museum": "yale-art-gallery",
+      "artist": "Vincent van Gogh",
+      "date": "1888",
+      "sortYear": 1888,
+      "title": {
+        "fr": "Le Café de nuit",
+        "en": "The Night Café",
+        "ar": "المقهى الليلي"
+      },
+      "style": {
+        "fr": "Intérieur, contrastes rouges et verts · postimpressionnisme",
+        "en": "Interior, red-green contrasts · Post-Impressionism",
+        "ar": "فضاء داخلي وتباين الأحمر والأخضر · ما بعد الانطباعية"
+      },
+      "source": "https://news.yale.edu/2025/07/14/vincent-van-goghs-luminous-late-night-haunt",
+      "profileType": "museum-dossier",
+      "geographic": null
+    },
+    {
+      "id": "museum-feature-courtauld",
+      "museum": "courtauld",
+      "artist": "Vincent van Gogh",
+      "date": "1889",
+      "sortYear": 1889,
+      "title": {
+        "fr": "Autoportrait à l’oreille bandée",
+        "en": "Self-Portrait with Bandaged Ear",
+        "ar": "صورة ذاتية بأذن مضمدة"
+      },
+      "style": {
+        "fr": "Autoportrait, couleur expressive et gravure japonaise",
+        "en": "Self-portrait, expressive colour and Japanese print",
+        "ar": "صورة ذاتية وألوان تعبيرية وطباعة يابانية"
+      },
+      "source": "https://courtauld.ac.uk/highlights/self-portrait-with-bandaged-ear/",
+      "profileType": "museum-dossier",
+      "geographic": null
+    },
+    {
+      "id": "museum-feature-orangerie",
+      "museum": "orangerie",
+      "artist": "Claude Monet",
+      "date": "1914–1926",
+      "sortYear": 1914,
+      "title": {
+        "fr": "Les Nymphéas (grands panneaux)",
+        "en": "Water Lilies (large panels)",
+        "ar": "زنابق الماء (اللوحات الكبيرة)"
+      },
+      "style": {
+        "fr": "Ensemble décoratif immersif, eau et variations lumineuses",
+        "en": "Immersive decorative cycle, water and shifting light",
+        "ar": "مجموعة زخرفية غامرة وماء وتغيرات الضوء"
+      },
+      "source": "https://www.musee-orangerie.fr/fr/collection/les-nympheas-de-claude-monet/histoire-du-cycle-des-nympheas",
+      "profileType": "museum-dossier",
+      "geographic": null
+    },
+    {
+      "id": "museum-feature-cenacolo-vinciano",
+      "museum": "cenacolo-vinciano",
+      "artist": "Léonard de Vinci",
+      "date": "1494–1498",
+      "sortYear": 1494,
+      "title": {
+        "fr": "La Cène",
+        "en": "The Last Supper",
+        "ar": "العشاء الأخير"
+      },
+      "style": {
+        "fr": "Peinture murale, gestes et composition de la Renaissance",
+        "en": "Mural painting, gestures and Renaissance composition",
+        "ar": "رسم جداري وإيماءات وتكوين عصر النهضة"
+      },
+      "source": "https://cenacolovinciano.org/en/museum/the-works/the-last-supper-leonardo-da-vinci-1452-1519/",
+      "profileType": "museum-dossier",
+      "geographic": null
+    }
+  ]
+}
