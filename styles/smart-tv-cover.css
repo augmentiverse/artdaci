@@ -6,3 +6,20 @@
 .hv2-tv-toggle:focus-visible { outline: 3px solid #e9bf6b; outline-offset: 3px; }
 .artdaci-tv .hv2-book-hero { display: flex; flex-direction: column; align-items: center; }
 @media (min-width: 1200px) and (min-height: 650px) { .artdaci-tv .hv2-tv-book-cover { max-height: 69vh; } }
+
+/* Reserve the greatest possible area for the book; actions remain below it. */
+.home-v2 .hv2-book-hero .hv2-tv-book-cover {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+  max-height: min(66vh, 500px);
+  object-fit: contain;
+}
+.home-v2 .hv2-book-hero .hv2-tv-toggle {
+  position: relative;
+  z-index: 2;
+  flex: 0 0 auto;
+  margin: 0 auto;
+  max-width: calc(100% - 12px);
+  text-align: center;
+}
