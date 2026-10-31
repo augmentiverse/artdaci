@@ -68,7 +68,9 @@ const destination=path.join(dir,'museums');fs.mkdirSync(destination,{recursive:t
 for(const [index,m] of geo.museums.entries()){
  if(!/^[a-z0-9-]+$/.test(m.id))throw Error('Invalid museum id');
   if(!placemarks[index].includes('<value>'+m.id+'</value>'))throw Error('Misaligned museum profile: '+m.id);
- const document='<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>'+m.name+' — ARTDACI GEO</name><description>ARTDACI GEO 2.0 — enriched museum dossier, approximate point</description><Style id="museum"><IconStyle><color>ff8cbcdf</color><scale>1.1</scale><Icon><href>https://maps.google.com/mapfiles/kml/shapes/museums.png</href></Icon></IconStyle></Style>\n'+placemarks[index]+'\n</Document></kml>\n';
+ const xmlName=String(m.name).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+ const xmlCity=String(m.city+', '+m.country).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+ const document='<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>'+xmlName+' — ARTDACI GEO</name><description>ARTDACI GEO 2.0 — '+xmlCity+' — sourced interactive museum profile; approximate coordinates.</description><Style id="museum"><IconStyle><color>ff8cbcdf</color><scale>1.1</scale><Icon><href>https://maps.google.com/mapfiles/kml/shapes/museums.png</href></Icon></IconStyle></Style>\n'+placemarks[index]+'\n</Document></kml>\n';
  fs.writeFileSync(path.join(destination,m.id+'.kml'),document);
 }
 console.log('Generated 17 individual enriched KML profiles');
