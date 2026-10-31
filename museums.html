@@ -33,7 +33,7 @@ a{color:inherit}button{font:inherit;cursor:pointer}button:disabled{cursor:not-al
 .portal-tabs button{background:#233345;color:var(--muted);padding:10px 15px;min-height:44px;border:1px solid var(--line);border-radius:10px;font-size:.86rem;font-weight:600}
 .portal-tabs button[aria-selected=true]{background:var(--accent);border-color:var(--accent);color:#122334}
 .portal-panel{padding:19px 0 3px;min-height:115px}.portal-panel[hidden]{display:none}
-.portal-panel h3{font-size:1rem;margin:0 0 5px}
+.portal-panel h3{font-size:1rem;margin:0 0 5px}.geo-section{margin-top:22px;padding-top:19px;border-top:1px solid var(--line)}.geo-links{display:flex;flex-wrap:wrap;gap:10px}.geo-links a{display:inline-flex;align-items:center;min-height:44px;padding:10px 15px;border:1px solid #b49a6c;border-radius:10px;background:#293a49;color:var(--ink);font-size:.86rem;font-weight:650;text-decoration:none}.geo-links a:first-child{background:var(--accent);color:#122334}.geo-links a:hover,.geo-links a:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
 .panel-description{margin:0 0 15px;font-size:.86rem;color:var(--muted)}
 .immersive-layout{display:grid;grid-template-columns:minmax(180px,280px) minmax(0,1fr);gap:22px;align-items:start}
 .immersive-preview{margin:0}.immersive-preview img{width:100%;height:175px;object-fit:contain;background:#14202d;border:1px solid var(--line);border-radius:13px;padding:8px}.immersive-preview figcaption{color:var(--muted);font-size:.72rem;margin-top:8px}
@@ -158,6 +158,7 @@ a{color:inherit}button{font:inherit;cursor:pointer}button:disabled{cursor:not-al
         <div class="portal-panel" id="pane-immersive" role="tabpanel" aria-labelledby="tab-immersive" tabindex="0" hidden>
           <h3 id="experiences-heading"></h3><p id="experiences-description" class="panel-description"></p>
           <div class="immersive-layout"><figure class="immersive-preview"><img id="model-preview" alt="" loading="lazy"><figcaption id="model-caption"></figcaption></figure><div class="experiences" id="experiences"></div></div>
+          <section class="geo-section" aria-labelledby="geo-heading"><h3 id="geo-heading"></h3><p id="geo-description" class="panel-description"></p><div id="geo-links" class="geo-links"></div></section>
         </div>
         <div class="portal-panel" id="pane-knowledge" role="tabpanel" aria-labelledby="tab-knowledge" tabindex="0" hidden>
           <h3 id="knowledge-heading"></h3><p id="knowledge-description" class="panel-description"></p>
@@ -695,21 +696,21 @@ const UI = {
     virtual: 'Visiter en VR', ar: 'Explorer en RA', space: 'Placer en 3D / RA', source: 'Source ↗', prev: '← Précédent', next: 'Suivant →',
     photograph: 'Photographie', fallback: 'Illustration ARTDACI (photographie momentanément indisponible)', keyboard: 'Utilisez aussi les touches ← et → du clavier.',
     gallery: 'Galerie des six musées', semantic: 'ARTDACI sémantique', skip: 'Aller au contenu', unavailable: 'Le parcours ne peut pas être chargé. Réessayez avec une connexion Internet.',
-    photoAlt: 'Photographie du musée : ', portalEyebrow:'PORTAIL CULTUREL CONNECTÉ', portalTitle:'Approfondir la découverte', portalIntro:'Retrouvez les œuvres, les espaces immersifs et les liens de connaissance de ce musée.', portalTabs:['Œuvres','3D · RA · VR','Savoir & questions'], artworksDescription:'Ouvrez une œuvre liée à ce musée dans le livre connecté ARTDACI.', experiencesDescription:'Passez de la découverte photographique aux environnements immersifs déjà disponibles.', museumPreview:'Illustration ARTDACI du musée (non photographique)', knowledgeTitle:'Questions pour aller plus loin', knowledgeDescription:'Deux pistes d’exploration à copier pour un échange guidé ou un travail en classe.', copyQuestion:'Copier la question', copied:'Question copiée.', copyFailed:'Copie impossible. Sélectionnez la question manuellement.', semanticOpen:'Ouvrir ARTDACI Semantic ↗', knowledgeNote:'Le guide IA contextuel intégré au musée est envisagé pour une étape ultérieure ; le graphe sémantique existant est accessible ci-dessus.', selector:'Choisir un musée'},
+    photoAlt: 'Photographie du musée : ', portalEyebrow:'PORTAIL CULTUREL CONNECTÉ', portalTitle:'Approfondir la découverte', portalIntro:'Retrouvez les œuvres, les espaces immersifs et les liens de connaissance de ce musée.', portalTabs:['Œuvres','3D · RA · VR · GEO','Savoir & questions'], artworksDescription:'Ouvrez une œuvre liée à ce musée dans le livre connecté ARTDACI.', experiencesDescription:'Passez de la découverte photographique aux environnements immersifs déjà disponibles.', museumPreview:'Illustration ARTDACI du musée (non photographique)', knowledgeTitle:'Questions pour aller plus loin', knowledgeDescription:'Deux pistes d’exploration à copier pour un échange guidé ou un travail en classe.', copyQuestion:'Copier la question', copied:'Question copiée.', copyFailed:'Copie impossible. Sélectionnez la question manuellement.', semanticOpen:'Ouvrir ARTDACI Semantic ↗', knowledgeNote:'Le guide IA contextuel intégré au musée est envisagé pour une étape ultérieure ; le graphe sémantique existant est accessible ci-dessus.', selector:'Choisir un musée'},
   en: {
     title: 'Museums, Countless Stories', intro: 'Discover the museums behind ARTDACI masterpieces, one fascinating stop at a time.', eyebrow: 'CULTURAL JOURNEY',
     official: 'Museum website ↗', artwork: 'Related ARTDACI artworks', experience: 'Continue exploring',
     virtual: 'Visit in VR', ar: 'Explore in AR', space: 'Place in 3D / AR', source: 'Source ↗', prev: '← Previous', next: 'Next →',
     photograph: 'Photograph', fallback: 'ARTDACI illustration (photograph temporarily unavailable)', keyboard: 'You can also navigate with the ← and → keys.',
     gallery: 'Six Museums Wing', semantic: 'ARTDACI Semantic', skip: 'Skip to content', unavailable: 'Unable to load the museum journey. Please try again while online.',
-    photoAlt: 'Photograph of the museum: ', portalEyebrow:'CONNECTED CULTURAL PORTAL', portalTitle:'Explore further', portalIntro:'Explore the artworks, immersive experiences and linked knowledge behind this museum.', portalTabs:['Artworks','3D · AR · VR','Knowledge & questions'], artworksDescription:'Open an artwork associated with this museum in ARTDACI’s connected book.', experiencesDescription:'Move from the photographic journey to available immersive experiences.', museumPreview:'ARTDACI museum illustration (not a photograph)', knowledgeTitle:'Questions to explore', knowledgeDescription:'Copy either question for guided discussion or classroom activities.', copyQuestion:'Copy question', copied:'Question copied.', copyFailed:'Unable to copy. Select the question manually.', semanticOpen:'Open ARTDACI Semantic ↗', knowledgeNote:'An in-site contextual AI guide is planned for a later phase; the existing semantic graph is available through the link above.', selector:'Choose a museum'},
+    photoAlt: 'Photograph of the museum: ', portalEyebrow:'CONNECTED CULTURAL PORTAL', portalTitle:'Explore further', portalIntro:'Explore the artworks, immersive experiences and linked knowledge behind this museum.', portalTabs:['Artworks','3D · AR · VR · GEO','Knowledge & questions'], artworksDescription:'Open an artwork associated with this museum in ARTDACI’s connected book.', experiencesDescription:'Move from the photographic journey to available immersive experiences.', museumPreview:'ARTDACI museum illustration (not a photograph)', knowledgeTitle:'Questions to explore', knowledgeDescription:'Copy either question for guided discussion or classroom activities.', copyQuestion:'Copy question', copied:'Question copied.', copyFailed:'Unable to copy. Select the question manually.', semanticOpen:'Open ARTDACI Semantic ↗', knowledgeNote:'An in-site contextual AI guide is planned for a later phase; the existing semantic graph is available through the link above.', selector:'Choose a museum'},
   ar: {
     title: 'متاحف وحكايات لا تنتهي', intro: 'اكتشف المتاحف المرتبطة بروائع ARTDACI، متحفًا بعد آخر.', eyebrow: 'رحلة ثقافية',
     official: 'موقع المتحف ↗', artwork: 'الأعمال الفنية المرتبطة بـ ARTDACI', experience: 'تابع الاستكشاف',
     virtual: 'زيارة بالواقع الافتراضي', ar: 'استكشاف بالواقع المعزز', space: 'عرض ثلاثي الأبعاد / معزز', source: 'المصدر ↗', prev: '→ السابق', next: 'التالي ←',
     photograph: 'صورة فوتوغرافية', fallback: 'رسم من ARTDACI (الصورة غير متاحة مؤقتًا)', keyboard: 'يمكنك أيضًا التنقل باستخدام مفتاحَي السهمين.',
     gallery: 'جناح المتاحف الستة', semantic: 'ARTDACI الدلالي', skip: 'الانتقال إلى المحتوى', unavailable: 'تعذّر تحميل الجولة. يرجى المحاولة مجددًا عند الاتصال بالإنترنت.',
-    photoAlt: 'صورة فوتوغرافية للمتحف: ', portalEyebrow:'بوابة ثقافية مترابطة', portalTitle:'استكشف المزيد', portalIntro:'اكتشف الأعمال الفنية والتجارب الغامرة والروابط المعرفية المرتبطة بهذا المتحف.', portalTabs:['الأعمال الفنية','3D · AR · VR','المعرفة والأسئلة'], artworksDescription:'افتح أحد الأعمال المرتبطة بالمتحف في كتاب ARTDACI المتصل.', experiencesDescription:'انتقل من الجولة الفوتوغرافية إلى التجارب الغامرة المتاحة.', museumPreview:'رسم توضيحي من ARTDACI للمتحف (ليس صورة فوتوغرافية)', knowledgeTitle:'أسئلة للتعمق', knowledgeDescription:'انسخ أي سؤال لنقاش موجّه أو نشاط تعليمي.', copyQuestion:'نسخ السؤال', copied:'تم نسخ السؤال.', copyFailed:'تعذر النسخ. حدد السؤال يدويًا.', semanticOpen:'فتح ARTDACI الدلالي ↗', knowledgeNote:'سيُضاف مرشد ذكاء اصطناعي سياقي داخل المتحف في مرحلة لاحقة؛ يمكن زيارة الرسم البياني الدلالي الموجود عبر الرابط أعلاه.', selector:'اختر متحفًا'}
+    photoAlt: 'صورة فوتوغرافية للمتحف: ', portalEyebrow:'بوابة ثقافية مترابطة', portalTitle:'استكشف المزيد', portalIntro:'اكتشف الأعمال الفنية والتجارب الغامرة والروابط المعرفية المرتبطة بهذا المتحف.', portalTabs:['الأعمال الفنية','3D · AR · VR · GEO','المعرفة والأسئلة'], artworksDescription:'افتح أحد الأعمال المرتبطة بالمتحف في كتاب ARTDACI المتصل.', experiencesDescription:'انتقل من الجولة الفوتوغرافية إلى التجارب الغامرة المتاحة.', museumPreview:'رسم توضيحي من ARTDACI للمتحف (ليس صورة فوتوغرافية)', knowledgeTitle:'أسئلة للتعمق', knowledgeDescription:'انسخ أي سؤال لنقاش موجّه أو نشاط تعليمي.', copyQuestion:'نسخ السؤال', copied:'تم نسخ السؤال.', copyFailed:'تعذر النسخ. حدد السؤال يدويًا.', semanticOpen:'فتح ARTDACI الدلالي ↗', knowledgeNote:'سيُضاف مرشد ذكاء اصطناعي سياقي داخل المتحف في مرحلة لاحقة؛ يمكن زيارة الرسم البياني الدلالي الموجود عبر الرابط أعلاه.', selector:'اختر متحفًا'}
 };
 
 const HISTORY_UI={
@@ -963,6 +964,20 @@ function renderArtworks(museum) {
     card.append(media,caption);root.append(card);
   });
 }
+const GEO_UI={
+ fr:{heading:'Explorer le musée sur le globe',description:'Accédez au musée sur Google Earth ou recherchez ses vues Street View depuis Google Maps. La couverture 3D et Street View dépend du lieu.',earth:'🌍 Explorer sur Google Earth ↗',street:'📍 Street View (via Google Maps) ↗',atlas:'Voir dans ARTDACI Earth Explorer →'},
+ en:{heading:'Explore the museum on Earth',description:'Find the museum in Google Earth or access available Street View panoramas through Google Maps. 3D and Street View coverage varies by location.',earth:'🌍 Open Google Earth ↗',street:'📍 Street View (via Google Maps) ↗',atlas:'View in ARTDACI Earth Explorer →'},
+ ar:{heading:'استكشف المتحف على الكرة الأرضية',description:'اعرض موقع المتحف في Google Earth أو ابحث عن مشاهد Street View المتاحة عبر Google Maps. تختلف التغطية ثلاثية الأبعاد حسب الموقع.',earth:'🌍 استكشف عبر Google Earth ↗',street:'📍 Street View عبر Google Maps ↗',atlas:'عرض في ARTDACI Earth Explorer ←'}
+};
+const GEO_SEARCH_NAMES={louvre:'Musee du Louvre Paris France',orsay:'Musee d Orsay Paris France',mauritshuis:'Mauritshuis The Hague Netherlands',czartoryski:'Czartoryski Museum Krakow Poland','van-gogh-museum':'Van Gogh Museum Amsterdam Netherlands','national-gallery-of-art-washington':'National Gallery of Art Washington DC USA'};
+function renderGeo(museum){
+ const ui=GEO_UI[lang],query=encodeURIComponent(GEO_SEARCH_NAMES[museum.id]||local(museum.name)+' '+local(museum.location));
+ text('geo-heading',ui.heading);text('geo-description',ui.description);
+ const root=$('geo-links');root.replaceChildren();
+ root.append(link(ui.earth,'https://earth.google.com/web/search/'+query,'',true));
+ root.append(link(ui.street,'https://www.google.com/maps/search/?api=1&query='+query,'',true));
+ root.append(link(ui.atlas,'earth-explorer.html?lang='+encodeURIComponent(lang)));
+}
 function renderExperiences(museum) {
   const root=$('experiences');
   root.replaceChildren();
@@ -972,6 +987,7 @@ function renderExperiences(museum) {
   root.append(link(UI[lang].virtual,internalUrl(`gallery-vr.html?room=museums&museum=${q}`)));
   root.append(link(UI[lang].ar,internalUrl(`ar.html?museum=${q}`)));
   root.append(link(UI[lang].space,internalUrl(`space.html?museum=${q}`)));
+  renderGeo(museum);
 }
 function render() {
   if (!museums.length) return;
