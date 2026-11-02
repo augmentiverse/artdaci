@@ -42,22 +42,22 @@ html[lang="ar"] .home-v2 .hv2-start-path { align-items:flex-start; }
 /* Cropping insets correspond to each image's inner painted area. */
 .home-v2 .hv2-artwork-trim-mona {
   --art-crop-top: 10%;
-  --art-crop-right: 12.4%;
+  --art-crop-right: 13.1%;
   --art-crop-bottom: 10%;
-  --art-crop-left: 12.4%;
+  --art-crop-left: 13.1%;
   --art-crop-scale: 1.25;
 }
 .home-v2 .hv2-artwork-trim-vermeer {
-  --art-crop-top: 12.5%;
+  --art-crop-top: 13.1%;
   --art-crop-right: 13.5%;
-  --art-crop-bottom: 13.5%;
+  --art-crop-bottom: 16.6%;
   --art-crop-left: 13.5%;
-  --art-crop-scale: 1.35;
+  --art-crop-scale: 1.38;
 }
 .home-v2 .hv2-artwork-trim-monet {
-  --art-crop-top: 12.6%;
+  --art-crop-top: 13.0%;
   --art-crop-right: 10.2%;
-  --art-crop-bottom: 12.9%;
+  --art-crop-bottom: 15.0%;
   --art-crop-left: 10.2%;
-  --art-crop-scale: 1.29;
+  --art-crop-scale: 1.32;
 }
