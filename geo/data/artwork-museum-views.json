@@ -165,8 +165,9 @@
       "exactPanoramaUrl": null,
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": "Google Arts & Culture guided Street View sequence reaches the painting. Not an exact camera-position deep link.",
-      "guidedPanoramaUrl": "https://artsandculture.google.com/story/can-you-find-vermeer-39-s-milkmaid-at-the-rijksmusem/mgWRovPAVXY1sQ?hl=en"
+      "notes": "Rijksmuseum second-floor Street View provided by owner; no artwork-specific sv_pid or camera orientation. Guided route also available.",
+      "guidedPanoramaUrl": "https://artsandculture.google.com/story/can-you-find-vermeer-39-s-milkmaid-at-the-rijksmusem/mgWRovPAVXY1sQ?hl=en",
+      "floorPanoramaUrl": "https://artsandculture.google.com/streetview/rijksmuseum-second-floor/kgF3c2qIEYZR8g"
     },
     {
       "slug": "mona-lisa",
@@ -252,12 +253,13 @@
       "artist": "Vincent van Gogh",
       "museum": "Musée d’Orsay",
       "city": "Paris",
-      "status": "museum-tour",
+      "status": "user-supplied-panorama",
       "sourceUrl": "https://artsandculture.google.com/partner/musee-dorsay-paris",
-      "exactPanoramaUrl": null,
+      "exactPanoramaUrl": "https://artsandculture.google.com/streetview/mus%C3%A9e-d%E2%80%99orsay-paris/KQEnDge3UJkVmw?sv_lng=2.3263487578078954&sv_lat=48.85964808509192&sv_h=205.0290438927428&sv_p=-19.28723577638587&sv_pid=_md5OyguSH2gWH36_rUv4A&sv_z=1",
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": ""
+      "notes": "Owner-provided camera-oriented panorama for the 1889 Musée d'Orsay Self-Portrait; artwork visibility and hanging not independently verified.",
+      "panoramaSource": "user-provided"
     },
     {
       "slug": "starry-night",
