@@ -27,3 +27,37 @@
 @media(max-width:420px) { .home-v2 .hv2-ar-links { grid-template-columns:1fr; } }
 @media(prefers-reduced-motion:reduce) { .home-v2 .hv2-work,.home-v2 .hv2-work-visual img { transition:none!important; } }
 html[lang="ar"] .home-v2 .hv2-start-path { align-items:flex-start; }
+
+
+/* Artwork images above contain a frame baked into the source pixels.
+   This crops only the ornament, keeping the painting itself intact.
+   The 1889 Van Gogh source is already frameless and is not cropped. */
+.home-v2 .hv2-work .hv2-work-visual img.hv2-frameless-crop,
+.home-v2 .hv2-work:hover .hv2-work-visual img.hv2-frameless-crop,
+.home-v2 .hv2-work:focus-visible .hv2-work-visual img.hv2-frameless-crop {
+  clip-path: inset(var(--art-crop-top) var(--art-crop-right) var(--art-crop-bottom) var(--art-crop-left));
+  transform: scale(var(--art-crop-scale)) !important;
+  transition: none !important;
+}
+/* Cropping insets correspond to each image's inner painted area. */
+.home-v2 .hv2-artwork-trim-mona {
+  --art-crop-top: 10%;
+  --art-crop-right: 12.4%;
+  --art-crop-bottom: 10%;
+  --art-crop-left: 12.4%;
+  --art-crop-scale: 1.25;
+}
+.home-v2 .hv2-artwork-trim-vermeer {
+  --art-crop-top: 12.5%;
+  --art-crop-right: 13.5%;
+  --art-crop-bottom: 13.5%;
+  --art-crop-left: 13.5%;
+  --art-crop-scale: 1.35;
+}
+.home-v2 .hv2-artwork-trim-monet {
+  --art-crop-top: 12.6%;
+  --art-crop-right: 10.2%;
+  --art-crop-bottom: 12.9%;
+  --art-crop-left: 10.2%;
+  --art-crop-scale: 1.29;
+}
