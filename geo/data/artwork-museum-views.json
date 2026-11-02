@@ -5,7 +5,8 @@
   "statusDefinitions": {
     "artwork-linked": "An Arts & Culture artwork page advertises Street View; exact scene not verified.",
     "museum-tour": "An institutional museum tour exists; artwork visibility not verified.",
-    "research-needed": "No verified institutional panorama source yet."
+    "research-needed": "No verified institutional panorama source yet.",
+    "user-supplied-panorama": "Direct panorama URL supplied by project owner; artwork visibility and current installation not independently verified."
   },
   "items": [
     {
@@ -118,12 +119,13 @@
       "artist": "Johannes Vermeer",
       "museum": "Mauritshuis",
       "city": "The Hague",
-      "status": "artwork-linked",
+      "status": "user-supplied-panorama",
       "sourceUrl": "https://artsandculture.google.com/asset/la-joven-de-la-perla-0000/3QFHLJgXCmQm2Q",
-      "exactPanoramaUrl": null,
+      "exactPanoramaUrl": "https://artsandculture.google.com/streetview/3QFHLJgXCmQm2Q?sv_lat=52.080361668027095&sv_lng=4.314442620391783&sv_pid=fHwCjye_LWcAAAQrDCFU1A&sv_h=347.14010719312864&sv_p=-15.890691646150543&sv_z=1",
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": ""
+      "notes": "Direct Street View panorama and camera direction supplied by project owner; visual artwork visibility and current hanging not independently checked.",
+      "panoramaSource": "user-provided"
     },
     {
       "slug": "woman-holding-balance",
@@ -144,12 +146,13 @@
       "artist": "Johannes Vermeer",
       "museum": "Mauritshuis",
       "city": "The Hague",
-      "status": "museum-tour",
+      "status": "user-supplied-panorama",
       "sourceUrl": "https://artsandculture.google.com/partner/mauritshuis",
-      "exactPanoramaUrl": null,
+      "exactPanoramaUrl": "https://artsandculture.google.com/streetview/3QFHLJgXCmQm2Q?sv_lat=52.08041207139772&sv_lng=4.314509059383893&sv_pid=Qk3tjMU9r-IAAAQrDCFU0A&sv_h=63.534741632009&sv_p=8.994399235477985&sv_z=1",
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": ""
+      "notes": "Direct Street View panorama and camera direction supplied by project owner; visual artwork visibility and current hanging not independently checked.",
+      "panoramaSource": "user-provided"
     },
     {
       "slug": "vermeer-milkmaid",
