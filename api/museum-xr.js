@@ -14,8 +14,14 @@ function allowedOrigin(req){
   }catch{return false}
 }
 async function quota(){
-  const result=await security.reserveBudget(fetch,env);
-  if(!result.ok){const error=new Error("Pilot daily request limit reached");error.status=429;throw error}
+  // Best-effort per-isolate guard, not a globally guaranteed daily cap.
+  const local=security.reserveProcessBudget();
+  if(!local.ok){const error=new Error("Pilot process request limit reached");error.status=429;throw error}
+  // Redis can be added later without changing the viewer or Google authentication.
+  if(env.UPSTASH_REDIS_REST_URL&&env.UPSTASH_REDIS_REST_TOKEN){
+    const shared=await security.reserveBudget(fetch,env);
+    if(!shared.ok){const error=new Error("Pilot shared daily limit reached");error.status=429;throw error}
+  }
 }
 async function googleToken(req){
   return federation.googleServiceToken(fetch,req,env,quota);
@@ -42,15 +48,17 @@ module.exports=async function handler(req,res){
   res.setHeader("X-Content-Type-Options","nosniff");
   // Same-origin browser requests only; do not allow cross-origin API access.
   res.setHeader("Vary","Origin");
+  res.setHeader("X-Robots-Tag","noindex, nofollow");
   if(req.method!=="POST")return fail(res,405,"POST required");
+  if((Number(req.headers["content-length"])||0)>8192)return fail(res,413,"Request too large");
   const body=req.body&&typeof req.body==="object"?req.body:{};
-  const configured=Boolean(env.MUSEUM_XR_ENABLED==="true"&&env.MUSEUM_XR_GOOGLE_SERVICE_ACCOUNT_EMAIL&&env.MUSEUM_XR_GOOGLE_PROJECT_NUMBER&&env.MUSEUM_XR_WORKLOAD_POOL_ID&&env.MUSEUM_XR_WORKLOAD_PROVIDER_ID&&env.MUSEUM_XR_GOOGLE_PROJECT_ID&&env.VERCEL_ENV==="preview"&&env.MUSEUM_XR_TICKET_SECRET?.length>=32&&env.UPSTASH_REDIS_REST_URL&&env.UPSTASH_REDIS_REST_TOKEN&&env.MUSEUM_XR_PREVIEW_TOKEN?.length>=24);
+  const configured=Boolean(env.MUSEUM_XR_ENABLED==="true"&&env.VERCEL_GIT_COMMIT_REF==="feature/streetview-webxr-museums-v1"&&env.MUSEUM_XR_GOOGLE_SERVICE_ACCOUNT_EMAIL&&env.MUSEUM_XR_GOOGLE_PROJECT_NUMBER&&env.MUSEUM_XR_WORKLOAD_POOL_ID&&env.MUSEUM_XR_WORKLOAD_PROVIDER_ID&&env.MUSEUM_XR_GOOGLE_PROJECT_ID&&env.VERCEL_ENV==="preview"&&env.MUSEUM_XR_TICKET_SECRET?.length>=32&&env.MUSEUM_XR_PREVIEW_TOKEN?.length>=24);
   if(!configured)return fail(res,503,"Museum XR pilot inactive");
   if(!allowedOrigin(req))return fail(res,403,"Origin not approved");
   if(!security.isPilotAuthorized(req.headers["x-museum-xr-preview"],env.MUSEUM_XR_PREVIEW_TOKEN))return fail(res,401,"Pilot access required");
   try{
     const action=body.action;
-    if(action==="catalog")return res.status(200).json({museums:security.catalog().map(x=>({id:x.id,title:x.title,museum:x.museum,source:x.source})),maxRequestsPerDay:security.MAX_DAILY_REQUESTS});
+    if(action==="catalog")return res.status(200).json({museums:security.catalog().map(x=>({id:x.id,title:x.title,museum:x.museum,source:x.source})),perInstanceDailyLimit:security.MAX_DAILY_REQUESTS,globalLimitGuaranteed:Boolean(env.UPSTASH_REDIS_REST_URL&&env.UPSTASH_REDIS_REST_TOKEN)});
     if(!validId(body.museumId))return fail(res,400,"Invalid museum");
     const m=security.museum(body.museumId);
     if(!m)return fail(res,404,"Museum not in pilot catalog");
