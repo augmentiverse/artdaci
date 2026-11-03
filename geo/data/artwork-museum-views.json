@@ -160,14 +160,14 @@
       "artist": "Johannes Vermeer",
       "museum": "Rijksmuseum",
       "city": "Amsterdam",
-      "status": "artwork-linked",
+      "status": "user-supplied-panorama",
       "sourceUrl": "https://artsandculture.google.com/asset/the-milkmaid-0455/9AHrwZ3Av6Zhjg",
-      "exactPanoramaUrl": null,
+      "exactPanoramaUrl": "https://artsandculture.google.com/streetview/rijksmuseum-second-floor/kgF3c2qIEYZR8g?sv_lng=4.885473582343728&sv_lat=52.36002500366842&sv_h=131.28520006601047&sv_p=-1.9022585674818941&sv_pid=X7fnicgWgMLKQ8my4feTfg&sv_z=1",
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": "Rijksmuseum second-floor Street View provided by owner; no artwork-specific sv_pid or camera orientation. Guided route also available.",
+      "notes": "Owner-provided camera-oriented panorama aiming at The Milkmaid. Direct view and current hanging not independently visually verified.",
       "guidedPanoramaUrl": "https://artsandculture.google.com/story/can-you-find-vermeer-39-s-milkmaid-at-the-rijksmusem/mgWRovPAVXY1sQ?hl=en",
-      "floorPanoramaUrl": "https://artsandculture.google.com/streetview/rijksmuseum-second-floor/kgF3c2qIEYZR8g"
+      "panoramaSource": "user-provided"
     },
     {
       "slug": "mona-lisa",
