@@ -40,7 +40,7 @@ async function googleFetch(path,token,opts={}){
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),TIMEOUT);
   try{
     const response=await fetch(GOOGLE+path,{...opts,headers:{
-      ...(opts.body?{"Content-Type":"application/json"}:{}),Authorization:"Bearer "+token
+      ...(opts.body?{"Content-Type":"application/json"}:{}),Authorization:"Bearer "+token,"X-Goog-User-Project":env.MUSEUM_XR_GOOGLE_PROJECT_ID
     },signal:controller.signal});
     if(!response.ok)throw Error("Google Maps Tiles request failed: "+response.status);
     return response;
@@ -49,7 +49,7 @@ async function googleFetch(path,token,opts={}){
 function validId(id){return typeof id==="string"&&/^[a-z0-9-]{1,64}$/.test(id)}
 function validPanoId(id){return typeof id==="string"&&/^[A-Za-z0-9_-]{5,256}$/.test(id)}
 function ticketResponse(res,payload,meta){
-  const {session,googleToken,...rest}=payload;
+  
   res.status(200).json({ticket:security.signTicket(payload,env.MUSEUM_XR_TICKET_SECRET),metadata:security.safeMetadata(meta),dimension:security.grid(meta)});
 }
 module.exports=async function handler(req,res){
@@ -58,7 +58,7 @@ module.exports=async function handler(req,res){
   res.setHeader("Access-Control-Allow-Origin","null");
   if(req.method!=="POST")return fail(res,405,"POST required");
   const body=req.body&&typeof req.body==="object"?req.body:{};
-  const configured=Boolean(env.MUSEUM_XR_ENABLED==="true"&&env.MUSEUM_XR_GOOGLE_SERVICE_ACCOUNT_EMAIL&&env.MUSEUM_XR_GOOGLE_PRIVATE_KEY&&env.MUSEUM_XR_TICKET_SECRET?.length>=32&&env.UPSTASH_REDIS_REST_URL&&env.UPSTASH_REDIS_REST_TOKEN&&env.MUSEUM_XR_PREVIEW_TOKEN?.length>=24);
+  const configured=Boolean(env.MUSEUM_XR_ENABLED==="true"&&env.MUSEUM_XR_GOOGLE_SERVICE_ACCOUNT_EMAIL&&env.MUSEUM_XR_GOOGLE_PRIVATE_KEY&&env.MUSEUM_XR_GOOGLE_PROJECT_ID&&env.MUSEUM_XR_TICKET_SECRET?.length>=32&&env.UPSTASH_REDIS_REST_URL&&env.UPSTASH_REDIS_REST_TOKEN&&env.MUSEUM_XR_PREVIEW_TOKEN?.length>=24);
   if(!configured)return fail(res,503,"Museum XR pilot inactive");
   if(!allowedOrigin(req))return fail(res,403,"Origin not approved");
   if(!security.isPilotAuthorized(req.headers["x-museum-xr-preview"],env.MUSEUM_XR_PREVIEW_TOKEN))return fail(res,401,"Pilot access required");
@@ -70,7 +70,7 @@ module.exports=async function handler(req,res){
     if(!m)return fail(res,404,"Museum not in pilot catalog");
     if(action==="start"){
       const google=await googleToken();
-      const sessionResult=await googleFetch("/createSession",{toString:()=>google},{
+      const sessionResult=await googleFetch("/createSession",google,{
         method:"POST",body:JSON.stringify({mapType:"streetview",language:"en-US",region:"US"})
       });
       const session=await sessionResult.json();
@@ -79,16 +79,17 @@ module.exports=async function handler(req,res){
       const data=await(await googleFetch("/streetview/metadata?"+q,google)).json();
       if(!security.validateIndoor(data,m))return fail(res,404,"No verified matching indoor panorama found");
       security.grid(data);
-      return ticketResponse(res,{id:m.id,session:session.session,googleToken:google,panoId:data.panoId,dimensions:security.grid(data),exp:Date.now()+20*60000},data);
+      return ticketResponse(res,{id:m.id,session:session.session,panoId:data.panoId,dimensions:security.grid(data),exp:Date.now()+20*60000},data);
     }
     if(!["neighbor","tile"].includes(action))return fail(res,400,"Unsupported action");
     const ticket=security.readTicket(body.ticket,env.MUSEUM_XR_TICKET_SECRET);
     if(!ticket||ticket.id!==m.id)return fail(res,403,"Invalid or expired ticket");
+    const google=await googleToken();
     if(action==="neighbor"){
       if(!validPanoId(body.panoId))return fail(res,400,"Invalid pano");
-      const current=await(await googleFetch("/streetview/metadata?"+new URLSearchParams({session:ticket.session,panoId:ticket.panoId}),ticket.googleToken)).json();
+      const current=await(await googleFetch("/streetview/metadata?"+new URLSearchParams({session:ticket.session,panoId:ticket.panoId}),google)).json();
       if(!security.validateIndoor(current,m)||!current.links?.some(link=>link.panoId===body.panoId))return fail(res,403,"Pano not adjacent");
-      const data=await(await googleFetch("/streetview/metadata?"+new URLSearchParams({session:ticket.session,panoId:body.panoId}),ticket.googleToken)).json();
+      const data=await(await googleFetch("/streetview/metadata?"+new URLSearchParams({session:ticket.session,panoId:body.panoId}),google)).json();
       if(!security.validateIndoor(data,m))return fail(res,403,"Pano outside allowed indoor area");
       security.grid(data);
       return ticketResponse(res,{...ticket,panoId:data.panoId,dimensions:security.grid(data),exp:Date.now()+20*60000},data);
@@ -96,7 +97,7 @@ module.exports=async function handler(req,res){
     const x=Number(body.x),y=Number(body.y),z=Number(body.zoom);
     if(!Number.isInteger(x)||!Number.isInteger(y)||z!==2||!ticket.dimensions||x<0||y<0||x>=ticket.dimensions.columns||y>=ticket.dimensions.rows)return fail(res,400,"Invalid tile");
     const path="/streetview/tiles/"+z+"/"+x+"/"+y+"?"+new URLSearchParams({session:ticket.session,panoId:ticket.panoId});
-    const response=await googleFetch(path,ticket.googleToken);
+    const response=await googleFetch(path,google);
     const mime=response.headers.get("content-type")||"";
     if(!mime.startsWith("image/"))throw Error("Unexpected tile content");
     const bytes=Buffer.from(await response.arrayBuffer());
