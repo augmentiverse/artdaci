@@ -15,12 +15,20 @@
       "artist": "Claude Monet",
       "museum": "National Museum of Western Art",
       "city": "Tokyo",
-      "status": "research-needed",
+      "status": "museum-tour",
       "sourceUrl": null,
       "exactPanoramaUrl": null,
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": ""
+      "notes": "Owner-provided Street View entry for National Museum of Western Art, Tokyo. No sv_pid or orientation parameters; no claim that Water Lilies is directly visible.",
+      "researchLead": {
+        "type": "institutional-virtual-tour-and-artwork",
+        "url": "https://artsandculture.google.com/partner/the-national-museum-of-western-art",
+        "evidence": "Owner provided museum Street View entry. Precise camera position for Water Lilies not yet supplied.",
+        "checkedAt": "2026-11-03",
+        "exactPanoramaVerified": false
+      },
+      "museumTourUrl": "https://artsandculture.google.com/streetview/AwFXeMnZK5jOBw"
     },
     {
       "slug": "japanese-bridge",
@@ -67,12 +75,20 @@
       "artist": "Claude Monet",
       "museum": "Musée d’Orsay",
       "city": "Paris",
-      "status": "museum-tour",
+      "status": "user-supplied-panorama",
       "sourceUrl": "https://artsandculture.google.com/partner/musee-dorsay-paris",
-      "exactPanoramaUrl": null,
+      "exactPanoramaUrl": "https://artsandculture.google.com/streetview/mus%C3%A9e-d%E2%80%99orsay-paris/KQEnDge3UJkVmw?sv_lng=2.327189678444856&sv_lat=48.85995980999985&sv_h=-66.75696960175809&sv_p=-16.653949028886018&sv_pid=0KJ5wkQYPVfq-CO6SqNKKw&sv_z=1.0002032035332302",
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": ""
+      "notes": "Owner-provided camera-oriented panorama intended to show Monet's 1873 Poppies at Musée d'Orsay; visibility/current hanging not independently checked.",
+      "researchLead": {
+        "type": "institutional-artwork-profile",
+        "url": "https://artsandculture.google.com/asset/poppy-field/xQGTinA-MPxcVg?hl=fr",
+        "evidence": "Camera-oriented URL supplied by project owner; no independent visual verification yet.",
+        "checkedAt": "2026-11-03",
+        "exactPanoramaVerified": false
+      },
+      "panoramaSource": "user-provided"
     },
     {
       "slug": "monet-impression-sunrise",
@@ -111,7 +127,14 @@
       "exactPanoramaUrl": null,
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": ""
+      "notes": "",
+      "researchLead": {
+        "type": "institutional-artwork-story",
+        "url": "https://artsandculture.google.com/story/KQWhTLphPokuKg",
+        "evidence": "Kunsthistorisches Museum story describes Vermeer's Art of Painting; it is not a Street View location.",
+        "checkedAt": "2026-11-03",
+        "exactPanoramaVerified": false
+      }
     },
     {
       "slug": "vermeer-girl-with-a-pearl-earring",
@@ -121,11 +144,11 @@
       "city": "The Hague",
       "status": "user-supplied-panorama",
       "sourceUrl": "https://artsandculture.google.com/asset/la-joven-de-la-perla-0000/3QFHLJgXCmQm2Q",
-      "exactPanoramaUrl": "https://artsandculture.google.com/streetview/3QFHLJgXCmQm2Q?sv_lat=52.080361668027095&sv_lng=4.314442620391783&sv_pid=fHwCjye_LWcAAAQrDCFU1A&sv_h=347.14010719312864&sv_p=-15.890691646150543&sv_z=1",
+      "exactPanoramaUrl": "https://artsandculture.google.com/streetview/3QFHLJgXCmQm2Q",
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": "Direct Street View panorama and camera direction supplied by project owner; visual artwork visibility and current hanging not independently checked.",
-      "panoramaSource": "user-provided"
+      "notes": "Project owner confirmed the Google Arts & Culture default entry view faces Girl with a Pearl Earring; former URL pointed to a nearby, misoriented panorama. This link does not expose sv_pid; current hanging not independently confirmed.",
+      "panoramaSource": "owner-confirmed-entry-panorama"
     },
     {
       "slug": "woman-holding-balance",
@@ -138,7 +161,14 @@
       "exactPanoramaUrl": null,
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": ""
+      "notes": "",
+      "researchLead": {
+        "type": "institutional-artwork-profile",
+        "url": "https://artsandculture.google.com/asset/woman-holding-a-balance-0008/-wHFDKu7-mhjtQ",
+        "evidence": "National Gallery of Art identifies the correct Vermeer work; no oriented panorama yet.",
+        "checkedAt": "2026-11-03",
+        "exactPanoramaVerified": false
+      }
     },
     {
       "slug": "view-of-delft",
@@ -148,10 +178,10 @@
       "city": "The Hague",
       "status": "user-supplied-panorama",
       "sourceUrl": "https://artsandculture.google.com/partner/mauritshuis",
-      "exactPanoramaUrl": "https://artsandculture.google.com/streetview/3QFHLJgXCmQm2Q?sv_lat=52.08041207139772&sv_lng=4.314509059383893&sv_pid=Qk3tjMU9r-IAAAQrDCFU0A&sv_h=63.534741632009&sv_p=8.994399235477985&sv_z=1",
+      "exactPanoramaUrl": "https://artsandculture.google.com/streetview/3QFHLJgXCmQm2Q?sv_lat=52.08041207139772&sv_lng=4.314509059383893&sv_pid=Qk3tjMU9r-IAAAQrDCFU0A&sv_h=56.085840547258194&sv_p=5.816453246720847&sv_z=0.11995524959896753",
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": "Direct Street View panorama and camera direction supplied by project owner; visual artwork visibility and current hanging not independently checked.",
+      "notes": "Project owner supplied corrected camera heading/pitch/zoom for View of Delft at Mauritshuis; visual verification pending.",
       "panoramaSource": "user-provided"
     },
     {
@@ -232,7 +262,14 @@
       "exactPanoramaUrl": null,
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": ""
+      "notes": "",
+      "researchLead": {
+        "type": "museum-guided-gallery",
+        "url": "https://artsandculture.google.com/story/visit-the-national-gallery-west-building-tour-national-gallery-of-art-washington-dc/DgUh7rTEhY2FiA",
+        "evidence": "Institutional West Building tour identifies Ginevra de' Benci and includes a gallery view. No camera-oriented panorama URL established.",
+        "checkedAt": "2026-11-03",
+        "exactPanoramaVerified": false
+      }
     },
     {
       "slug": "annunciation",
@@ -245,7 +282,14 @@
       "exactPanoramaUrl": null,
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": ""
+      "notes": "",
+      "researchLead": {
+        "type": "museum-guided-story",
+        "url": "https://artsandculture.google.com/story/explore-the-uffizi-galleries/cQVh5Rbqa2Q3dg?hl=en",
+        "evidence": "Official Uffizi Arts & Culture story features Leonardo's Annunciation and gallery exploration; position of the painting not verified.",
+        "checkedAt": "2026-11-03",
+        "exactPanoramaVerified": false
+      }
     },
     {
       "slug": "van-gogh",
@@ -280,12 +324,34 @@
       "artist": "Vincent van Gogh",
       "museum": "Van Gogh Museum",
       "city": "Amsterdam",
-      "status": "museum-tour",
+      "status": "user-supplied-panorama",
       "sourceUrl": "https://artsandculture.google.com/partner/van-gogh-museum",
-      "exactPanoramaUrl": null,
+      "exactPanoramaUrl": "https://artsandculture.google.com/streetview/KwF-AdF1REQl6w?sv_lng=4.881332390026839&sv_lat=52.35845400727424&sv_h=50.824061129131366&sv_p=-12.349767285698363&sv_pid=Nhu3UwMqQHZJBpIMBcAafg&sv_z=1",
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": ""
+      "notes": "Owner-provided camera-oriented panorama for the 1888 Bedroom at the Van Gogh Museum, Amsterdam. Separate 1889 third version at Musée d’Orsay retained as an alternate-version link. Actual visual match and current hanging not independently checked.",
+      "researchLead": {
+        "type": "museum-guided-story",
+        "url": "https://artsandculture.google.com/story/FQURa9LMQKsSiA",
+        "evidence": "User supplied a camera-oriented Van Gogh Museum Street View with sv_pid and camera parameters; visual confirmation pending.",
+        "checkedAt": "2026-11-03",
+        "exactPanoramaVerified": false
+      },
+      "alternateVersionPanoramas": [
+        {
+          "title": "The Bedroom (third version, 1889)",
+          "artist": "Vincent van Gogh",
+          "museum": "Musée d’Orsay",
+          "city": "Paris",
+          "workYear": 1889,
+          "museumObjectUrl": "https://www.musee-orsay.fr/fr/oeuvres/la-chambre-de-van-gogh-arles-746",
+          "exactPanoramaUrl": "https://artsandculture.google.com/streetview/mus%C3%A9e-d%E2%80%99orsay-paris/KQEnDge3UJkVmw?sv_lng=2.3261991&sv_lat=48.8597256&sv_h=293.34192229172606&sv_p=-13.995876116313326&sv_pid=BQpnrBh6xSBU3qyDjrDIcg&sv_z=1",
+          "source": "user-provided",
+          "visualVerification": "pending",
+          "notes": "Corrected owner-provided Orsay panorama orientation for the 1889 third version; distinct from 1888 original at Van Gogh Museum."
+        }
+      ],
+      "panoramaSource": "user-provided"
     },
     {
       "slug": "cafe-terrace",
@@ -324,7 +390,26 @@
       "exactPanoramaUrl": null,
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": ""
+      "notes": "Canonical ARTDACI painting remains the 1888 Sunflowers version at the National Gallery, London. Amsterdam's 1889 version is a distinct work; its general Street View museum entry is a supplementary exploration link only, not a replacement or exact panorama.",
+      "researchLead": {
+        "type": "institutional-artwork-profile",
+        "url": "https://artsandculture.google.com/asset/sgFYo56eujP-qQ",
+        "evidence": "Canonical London 1888 Sunflowers retained. Amsterdam 1889 Museum general Street View entry available as supplementary research, without artwork-specific orientation.",
+        "checkedAt": "2026-11-03",
+        "exactPanoramaVerified": false
+      },
+      "alternateVersionTours": [
+        {
+          "title": "Sunflowers (1889) — Amsterdam version",
+          "museum": "Van Gogh Museum",
+          "city": "Amsterdam",
+          "year": 1889,
+          "tourUrl": "https://artsandculture.google.com/streetview/hwEGmsM-FoHAwA",
+          "kind": "general-museum-tour",
+          "exactPanoramaVerified": false,
+          "notes": "Different canvas; optional general museum exploration, not canonical work or direct artwork view."
+        }
+      ]
     }
   ]
 }
