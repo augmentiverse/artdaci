@@ -390,11 +390,11 @@
       "exactPanoramaUrl": null,
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": "User chooses Van Gogh Museum Amsterdam 1889 Sunflowers as preferred canonical version instead of 1888 National Gallery London version. Submitted Street View link has no sv_pid, position, or orientation; it shares ID with museum artwork asset page, so must verify that it actually opens an indoor panorama. Canonical image asset update pending verification.",
+      "notes": "User prefers Van Gogh Museum Amsterdam 1889 version instead of London 1888 version. Street View base link opens Van Gogh Museum interior entry (confirmed by Google Arts & Culture page title), but no sv_pid or orientation was supplied, so cannot claim direct sightline to Sunflowers. Canonical art image must be matched to Amsterdam 1889 before migration of collection metadata.",
       "researchLead": {
         "type": "preferred-version-museum-tour-unverified",
         "url": "https://artsandculture.google.com/asset/sunflowers-vincent-van-gogh/hwEGmsM-FoHAwA?hl=en",
-        "evidence": "Amsterdam 1889 canvas is confirmed by Van Gogh Museum and Google Arts & Culture. User-provided /streetview/hwEGmsM-FoHAwA does not contain camera parameters and may resolve to artwork asset; indoor tour unverified.",
+        "evidence": "Street View base page identifies the Van Gogh Museum in Amsterdam, but supplies no camera positioning parameters. Amsterdam 1889 version confirmed by institution; visual and media match pending.",
         "checkedAt": "2026-11-03",
         "exactPanoramaVerified": false
       },
