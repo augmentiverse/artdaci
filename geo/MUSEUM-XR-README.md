@@ -1,33 +1,45 @@
-# ARTDACI Museum XR — WebXR Street View pilot (not enabled in production)
+# ARTDACI Museum XR — isolated Meta Quest / Street View WebXR pilot
 
-## Scope
-- New isolated route `geo/museum-xr.html?lang=fr&source=<encoded Google Arts & Culture URL>`.
-- Linked from `geo/museum-views.html` for artwork panoramas supplied by the project owner, and from `geo/index.html` for the National Gallery example.
-- Meta Quest Browser-compatible WebXR `immersive-vr` via the site's vendored Three.js, controller-ray selection of neighboring panorama markers, and ordinary HTML button fallback.
-- FR / EN / AR UI. Existing GEO, VR Gallery and Louvre XR remain unchanged.
+This feature is an **unreleased and initially disabled** Vercel Preview. The published site is unaffected.
 
-## Source/licensing boundary — crucial
-A link hosted by `artsandculture.google.com/streetview` is **not itself** a reusable equirectangular image, a stable Google Maps Tiles panorama ID, a license to republish imagery, or a guarantee that Map Tiles has equivalent coverage.
-This viewer **never** scrapes Google Arts & Culture, converts its `sv_pid` into a Maps Tiles ID, redistributes tiles, or stores imagery.
-It looks up an independent Map Tiles panorama by latitude/longitude, accepts only nearby `imageryType: indoor` imagery, and preserves the original external museum tour link as a fallback. Even a close indoor panorama must be manually validated for accuracy and artwork visibility.
-Google Maps Tiles panorama IDs are temporary and are used only for the session. Image copyright and report-problem link are surfaced as required.
+## What is ready
+- `geo/museum-xr.html?lang=fr&museum=national-gallery-london` loads the WebXR interface.
+- Four existing artwork links route to their distinct source museums.
+- Three languages: FR, EN and AR; original Google Arts & Culture link preserved.
+- Panorama rendered on an inward-facing Three.js sphere, Meta Quest `immersive-vr` session and controller-ray hotspot selection.
+- A Node Vercel function `/api/museum-xr` acts as an opt-in backend to Google Maps Tile API. It uses **server-to-server OAuth 2.0**, not the browser API key.
+- The backend only accepts five museum records from the registry and the user-provided National Gallery example, refuses non-indoor panoramas, checks geographic proximity and restricts navigation to adjacent panoramas in a 35m radius.
+- Access requires a private preview passphrase. Sessions use signed 20-minute tickets; no Google OAuth bearer is included in those tickets.
+- Daily cap is enforced through an **atomic Redis increment with Lua** and fails closed if Redis is not available. The limit is 300 **total upstream requests (including token requests)** per UTC day, which is more restrictive than 300 Google Street View tiles. The cap does not correspond directly to a maximum dollar charge or guarantee zero billing.
+- No persistent panorama/image storage; transient canvas buffers exist only for active visualization.
+- Attribution text appears in both the HTML viewer and a headset-rendered panel. Google Maps logo and report-problem UX inside WebXR still require compliance testing and improvements.
 
-## Activation prerequisites (not yet complete)
-1. Review current Google Maps Platform Map Tiles API and Street View policies, allowable immersive use and attribution requirements for this implementation.
-2. Create a Google Cloud project with **billing enabled**, enable the **Map Tiles API**, and create a **browser API key** restricted to `https://artdaci.com/*` and applicable Vercel previews. Apply key API restrictions and billing quotas/alerts. Google usage is not guaranteed free; do not commit a secret or unrestricted key.
-3. After review, supply the browser key through a deployment-specific config mechanism, rather than committing it to this repository. The pilot intentionally contains an empty `GOOGLE_MAP_TILES_KEY` and remains disabled until integration and compliance sign-off. A browser key is client-visible by design; use only a properly restricted browser key, not a service-account credential.
-4. Test whether the Google Map Tiles endpoints, session creation and tile responses permit access from the served site in Quest Browser (CORS and browser-key restrictions). If not, use a small same-origin server gateway with appropriately protected credentials, policy review and no image persistence.
-5. Confirm a nearby indoor panorama is available for each museum. Note that same-position GPS alone cannot distinguish floors or establish that a specified painting appears in view. The 35-meter guard is a defensive heuristic, **not** verification of the museum room.
-6. Perform a human-on-headset test (Meta Quest 3, HTTPS, controller raycast, `immersive-vr`, attribution legibility, performance, comfort, and accessible desktop fallback).
+## Security and billing prerequisites
+All environment variables must be added in Vercel **for the feature branch Preview only** — not Production:
+- `MUSEUM_XR_ENABLED=true`
+- `MUSEUM_XR_GOOGLE_PROJECT_ID`: Google Cloud billing project ID.
+- `MUSEUM_XR_GOOGLE_SERVICE_ACCOUNT_EMAIL` and `MUSEUM_XR_GOOGLE_PRIVATE_KEY`: OAuth service account JSON email and private key, kept server-side in encrypted secrets. Consider Workload Identity Federation/OIDC instead of static private keys for production.
+- `MUSEUM_XR_TICKET_SECRET`: secure random secret of at least 32 characters.
+- `MUSEUM_XR_PREVIEW_TOKEN`: distinct secure random passphrase of at least 24 characters. Never store it in GitHub; share it privately only with the person testing.
+- `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`: Redis store supporting the Upstash REST API, restricted and configured with a limit and retention appropriate to the pilot.
 
-## Design constraints / future hardening
-- High-resolution Google tiles are not pre-cached or downloaded to the repository. Zoom 2 caps the stitched texture near 1.7K×0.9K. Visual sharpness is intentionally limited for a small Quest performance budget.
-- The view is monoscopic 360° imagery at a fixed point, **not** stereoscopic depth, photogrammetry or physical room-scale 6DoF. Head orientation is tracked, but leaning does not reveal true parallax.
-- Adjacent panoramas come from `metadata.links`, which may refer to an exterior scene. The viewer rechecks `imageryType` and distance for each transition.
-- Production fallback displays the institutional link. No misleading “VR available” promise should be shown while API configuration is inactive.
-- Attribution and the report-problem action must remain visible and usable in the headset as well as on the 2D page; the current prototype's HTML attribution is *not* yet an in-headset overlay. This must be fixed before launch.
-- `node --test tests/geo-streetview-xr.test.mjs` validates static logic; manual testing and browser/runtime verification are still required.
+**No new paid store is automatically created.** Choose a Redis provider and cost limits before enabling the API. Never turn `MUSEUM_XR_ENABLED` on without all of the above. The code explicitly returns HTTP 503 when any prerequisite is missing.
 
-## Reference
-https://developers.google.com/maps/documentation/tile/streetview
-https://developers.google.com/maps/documentation/tile/policies
+A browser API key restricted to `https://artdaci.com/*` is **not compatible with this server OAuth strategy**; retain it restricted and unused, or deactivate it if not needed. The previously created $5 Google Cloud billing budget sends alerts only and does not enforce a spending cap. The local gateway request cap is separately enforced; do not assume it controls all Google requests using the same Cloud project.
+
+For service account OAuth, consult Google's documented `cloud-platform` scope and `X-Goog-User-Project` request header:
+https://developers.google.com/maps/documentation/tile/get-api-key
+
+## Important limitations
+1. Google Arts & Culture `sv_pid` is not a Map Tiles `panoId`; the app does **not** scrape or reuse the Arts & Culture imagery. Google Map Tiles may not return the interior views seen in Arts & Culture, or may select an adjacent floor or room.
+2. Photo spheres are monoscopic 3DoF imagery rather than navigable geometric 6DoF reconstructions. Hotspots allow panorama teleportation only where the API supplies links.
+3. Review live Google Maps Tile terms: https://developers.google.com/maps/documentation/tile/policies — including logo, full copyright text, visible report-problem action in immersive mode, and imagery caching requirements. **Do not launch publicly until compliance is verified.**
+4. Review Vercel function compatibility, browser/CORS behavior, session expiry, Upstash API, HTTPS origins, OpenXR browser compatibility and Meta Quest 3 performance.
+5. No current Google panorama access or Quest headset test has been performed. Activation and coverage verification require account-side setup and real hardware.
+
+## Validation
+`node --test tests/geo-streetview-xr.test.mjs tests/museum-xr-gateway.test.mjs`
+
+Test expected disabled behavior from Preview:
+`POST /api/museum-xr` -> 503 when `MUSEUM_XR_ENABLED` or secrets are absent.
+No keys, OAuth bearer tokens or Redis tokens should ever appear in client bundles, API responses, GitHub or logs.
