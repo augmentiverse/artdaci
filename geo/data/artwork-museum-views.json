@@ -20,7 +20,14 @@
       "exactPanoramaUrl": null,
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": ""
+      "notes": "",
+      "researchLead": {
+        "type": "institutional-virtual-tour-and-artwork",
+        "url": "https://artsandculture.google.com/partner/the-national-museum-of-western-art",
+        "evidence": "National Museum of Western Art, Tokyo offers a virtual museum tour and identifies its 1916 Monet Water Lilies. Direct camera-oriented position unverified.",
+        "checkedAt": "2026-11-03",
+        "exactPanoramaVerified": false
+      }
     },
     {
       "slug": "japanese-bridge",
@@ -72,7 +79,14 @@
       "exactPanoramaUrl": null,
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": ""
+      "notes": "",
+      "researchLead": {
+        "type": "institutional-artwork-profile",
+        "url": "https://artsandculture.google.com/asset/poppy-field/xQGTinA-MPxcVg?hl=fr",
+        "evidence": "Musée d'Orsay's 1873 Monet Poppy Field profile identified; museum-tour panorama position not found.",
+        "checkedAt": "2026-11-03",
+        "exactPanoramaVerified": false
+      }
     },
     {
       "slug": "monet-impression-sunrise",
