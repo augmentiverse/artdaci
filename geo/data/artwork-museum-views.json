@@ -144,11 +144,11 @@
       "city": "The Hague",
       "status": "user-supplied-panorama",
       "sourceUrl": "https://artsandculture.google.com/asset/la-joven-de-la-perla-0000/3QFHLJgXCmQm2Q",
-      "exactPanoramaUrl": "https://artsandculture.google.com/streetview/3QFHLJgXCmQm2Q?sv_lat=52.080361668027095&sv_lng=4.314442620391783&sv_pid=fHwCjye_LWcAAAQrDCFU1A&sv_h=347.14010719312864&sv_p=-15.890691646150543&sv_z=1",
+      "exactPanoramaUrl": "https://artsandculture.google.com/streetview/3QFHLJgXCmQm2Q",
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": "Direct Street View panorama and camera direction supplied by project owner; visual artwork visibility and current hanging not independently checked.",
-      "panoramaSource": "user-provided"
+      "notes": "Project owner confirmed the Google Arts & Culture default entry view faces Girl with a Pearl Earring; former URL pointed to a nearby, misoriented panorama. This link does not expose sv_pid; current hanging not independently confirmed.",
+      "panoramaSource": "owner-confirmed-entry-panorama"
     },
     {
       "slug": "woman-holding-balance",
@@ -178,10 +178,10 @@
       "city": "The Hague",
       "status": "user-supplied-panorama",
       "sourceUrl": "https://artsandculture.google.com/partner/mauritshuis",
-      "exactPanoramaUrl": "https://artsandculture.google.com/streetview/3QFHLJgXCmQm2Q?sv_lat=52.08041207139772&sv_lng=4.314509059383893&sv_pid=Qk3tjMU9r-IAAAQrDCFU0A&sv_h=63.534741632009&sv_p=8.994399235477985&sv_z=1",
+      "exactPanoramaUrl": "https://artsandculture.google.com/streetview/3QFHLJgXCmQm2Q?sv_lat=52.08041207139772&sv_lng=4.314509059383893&sv_pid=Qk3tjMU9r-IAAAQrDCFU0A&sv_h=56.085840547258194&sv_p=5.816453246720847&sv_z=0.11995524959896753",
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": "Direct Street View panorama and camera direction supplied by project owner; visual artwork visibility and current hanging not independently checked.",
+      "notes": "Project owner supplied corrected camera heading/pitch/zoom for View of Delft at Mauritshuis; visual verification pending.",
       "panoramaSource": "user-provided"
     },
     {
@@ -345,10 +345,10 @@
           "city": "Paris",
           "workYear": 1889,
           "museumObjectUrl": "https://www.musee-orsay.fr/fr/oeuvres/la-chambre-de-van-gogh-arles-746",
-          "exactPanoramaUrl": "https://artsandculture.google.com/streetview/mus%C3%A9e-d%E2%80%99orsay-paris/KQEnDge3UJkVmw?sv_lng=2.3261991&sv_lat=48.8597256&sv_h=294.51317783512974&sv_p=-24.603329386252483&sv_pid=BQpnrBh6xSBU3qyDjrDIcg&sv_z=1",
+          "exactPanoramaUrl": "https://artsandculture.google.com/streetview/mus%C3%A9e-d%E2%80%99orsay-paris/KQEnDge3UJkVmw?sv_lng=2.3261991&sv_lat=48.8597256&sv_h=293.34192229172606&sv_p=-13.995876116313326&sv_pid=BQpnrBh6xSBU3qyDjrDIcg&sv_z=1",
           "source": "user-provided",
           "visualVerification": "pending",
-          "notes": "Distinct 1889 smaller third version at Musée d'Orsay (RF 1959 2). Do not assign to the canonical Amsterdam 1888 painting."
+          "notes": "Corrected owner-provided Orsay panorama orientation for the 1889 third version; distinct from 1888 original at Van Gogh Museum."
         }
       ],
       "panoramaSource": "user-provided"
