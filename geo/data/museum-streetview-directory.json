@@ -10,7 +10,8 @@
       "kind": null,
       "url": null,
       "source": "Google Arts & Culture",
-      "exactArtworkPosition": false
+      "exactArtworkPosition": false,
+      "artworkPanoramas": []
     },
     {
       "id": "orsay",
@@ -19,7 +20,43 @@
       "kind": "streetview",
       "url": "https://artsandculture.google.com/streetview/mus%C3%A9e-d%E2%80%99orsay-paris/KQEnDge3UJkVmw",
       "source": "Google Arts & Culture",
-      "exactArtworkPosition": false
+      "exactArtworkPosition": false,
+      "artworkPanoramas": [
+        {
+          "slug": "van-gogh",
+          "names": {
+            "fr": "Autoportrait de Van Gogh (1889)",
+            "en": "Van Gogh Self-Portrait (1889)",
+            "ar": "صورة فان غوخ الذاتية (1889)"
+          },
+          "url": "https://artsandculture.google.com/streetview/mus%C3%A9e-d%E2%80%99orsay-paris/KQEnDge3UJkVmw?sv_lng=2.3263487578078954&sv_lat=48.85964808509192&sv_h=205.0290438927428&sv_p=-19.28723577638587&sv_pid=_md5OyguSH2gWH36_rUv4A&sv_z=1",
+          "source": "user-supplied-camera-orientation",
+          "visualVerification": "pending"
+        },
+        {
+          "slug": "poppies",
+          "names": {
+            "fr": "Les Coquelicots (1873)",
+            "en": "Poppies (1873)",
+            "ar": "شقائق النعمان (1873)"
+          },
+          "url": "https://artsandculture.google.com/streetview/mus%C3%A9e-d%E2%80%99orsay-paris/KQEnDge3UJkVmw?sv_lng=2.327189678444856&sv_lat=48.85995980999985&sv_h=-66.75696960175809&sv_p=-16.653949028886018&sv_pid=0KJ5wkQYPVfq-CO6SqNKKw&sv_z=1.0002032035332302",
+          "source": "user-supplied-camera-orientation",
+          "visualVerification": "pending"
+        },
+        {
+          "slug": "van-gogh-bedroom-orsay-1889",
+          "alternateVersionOf": "van-gogh-bedroom",
+          "names": {
+            "fr": "La Chambre (1889) · autre version",
+            "en": "The Bedroom (1889) · different version",
+            "ar": "غرفة النوم (1889) · نسخة مختلفة"
+          },
+          "url": "https://artsandculture.google.com/streetview/mus%C3%A9e-d%E2%80%99orsay-paris/KQEnDge3UJkVmw?sv_lng=2.3261991&sv_lat=48.8597256&sv_h=294.51317783512974&sv_p=-24.603329386252483&sv_pid=BQpnrBh6xSBU3qyDjrDIcg&sv_z=1",
+          "source": "user-supplied-camera-orientation",
+          "visualVerification": "pending"
+        }
+      ]
     },
     {
       "id": "mauritshuis",
@@ -28,7 +65,31 @@
       "kind": "streetview",
       "url": "https://artsandculture.google.com/streetview/3QFHLJgXCmQm2Q",
       "source": "Google Arts & Culture",
-      "exactArtworkPosition": false
+      "exactArtworkPosition": false,
+      "artworkPanoramas": [
+        {
+          "slug": "vermeer-girl-with-a-pearl-earring",
+          "names": {
+            "fr": "La Jeune Fille à la perle",
+            "en": "Girl with a Pearl Earring",
+            "ar": "الفتاة ذات القرط اللؤلؤي"
+          },
+          "url": "https://artsandculture.google.com/streetview/3QFHLJgXCmQm2Q?sv_lat=52.080361668027095&sv_lng=4.314442620391783&sv_pid=fHwCjye_LWcAAAQrDCFU1A&sv_h=347.14010719312864&sv_p=-15.890691646150543&sv_z=1",
+          "source": "user-supplied-camera-orientation",
+          "visualVerification": "pending"
+        },
+        {
+          "slug": "view-of-delft",
+          "names": {
+            "fr": "Vue de Delft",
+            "en": "View of Delft",
+            "ar": "منظر دلفت"
+          },
+          "url": "https://artsandculture.google.com/streetview/3QFHLJgXCmQm2Q?sv_lat=52.08041207139772&sv_lng=4.314509059383893&sv_pid=Qk3tjMU9r-IAAAQrDCFU0A&sv_h=63.534741632009&sv_p=8.994399235477985&sv_z=1",
+          "source": "user-supplied-camera-orientation",
+          "visualVerification": "pending"
+        }
+      ]
     },
     {
       "id": "czartoryski",
@@ -37,7 +98,8 @@
       "kind": null,
       "url": null,
       "source": "Google Arts & Culture",
-      "exactArtworkPosition": false
+      "exactArtworkPosition": false,
+      "artworkPanoramas": []
     },
     {
       "id": "vangogh",
@@ -46,7 +108,20 @@
       "kind": "streetview",
       "url": "https://artsandculture.google.com/streetview/KwF-AdF1REQl6w",
       "source": "Google Arts & Culture",
-      "exactArtworkPosition": false
+      "exactArtworkPosition": false,
+      "artworkPanoramas": [
+        {
+          "slug": "van-gogh-bedroom",
+          "names": {
+            "fr": "La Chambre (1888)",
+            "en": "The Bedroom (1888)",
+            "ar": "غرفة النوم (1888)"
+          },
+          "url": "https://artsandculture.google.com/streetview/KwF-AdF1REQl6w?sv_lng=4.881332390026839&sv_lat=52.35845400727424&sv_h=50.824061129131366&sv_p=-12.349767285698363&sv_pid=Nhu3UwMqQHZJBpIMBcAafg&sv_z=1",
+          "source": "user-supplied-camera-orientation",
+          "visualVerification": "pending"
+        }
+      ]
     },
     {
       "id": "nga",
@@ -55,7 +130,8 @@
       "kind": "virtual-tour",
       "url": "https://artsandculture.google.com/partner/national-gallery-of-art-washington-dc",
       "source": "Google Arts & Culture",
-      "exactArtworkPosition": false
+      "exactArtworkPosition": false,
+      "artworkPanoramas": []
     },
     {
       "id": "rijksmuseum",
@@ -64,7 +140,20 @@
       "kind": "streetview",
       "url": "https://artsandculture.google.com/streetview/rijksmuseum-second-floor/kgF3c2qIEYZR8g",
       "source": "Google Arts & Culture",
-      "exactArtworkPosition": false
+      "exactArtworkPosition": false,
+      "artworkPanoramas": [
+        {
+          "slug": "vermeer-milkmaid",
+          "names": {
+            "fr": "La Laitière",
+            "en": "The Milkmaid",
+            "ar": "الحلابة"
+          },
+          "url": "https://artsandculture.google.com/streetview/rijksmuseum-second-floor/kgF3c2qIEYZR8g?sv_lng=4.885473582343728&sv_lat=52.36002500366842&sv_h=131.28520006601047&sv_p=-1.9022585674818941&sv_pid=X7fnicgWgMLKQ8my4feTfg&sv_z=1",
+          "source": "user-supplied-camera-orientation",
+          "visualVerification": "pending"
+        }
+      ]
     },
     {
       "id": "moma",
@@ -73,7 +162,8 @@
       "kind": null,
       "url": null,
       "source": "Google Arts & Culture",
-      "exactArtworkPosition": false
+      "exactArtworkPosition": false,
+      "artworkPanoramas": []
     },
     {
       "id": "marmottan",
@@ -82,7 +172,8 @@
       "kind": null,
       "url": null,
       "source": "Google Arts & Culture",
-      "exactArtworkPosition": false
+      "exactArtworkPosition": false,
+      "artworkPanoramas": []
     },
     {
       "id": "khm",
@@ -91,7 +182,8 @@
       "kind": null,
       "url": null,
       "source": "Google Arts & Culture",
-      "exactArtworkPosition": false
+      "exactArtworkPosition": false,
+      "artworkPanoramas": []
     },
     {
       "id": "uffizi",
@@ -100,7 +192,8 @@
       "kind": "guided-tour",
       "url": "https://artsandculture.google.com/story/explore-the-uffizi-galleries/cQVh5Rbqa2Q3dg?hl=en",
       "source": "Google Arts & Culture",
-      "exactArtworkPosition": false
+      "exactArtworkPosition": false,
+      "artworkPanoramas": []
     },
     {
       "id": "national-gallery",
@@ -109,7 +202,8 @@
       "kind": "streetview",
       "url": "https://artsandculture.google.com/streetview/the-national-gallery/1AGVN5JVf0UVkw?sv_lng=-0.12933405572537834&sv_lat=51.508872946710625&sv_h=127.67513558936301&sv_p=-21.800971404287992&sv_pid=CAoSHENJQUJJaEFCYmM4bXdTakJKMnhsWmd5VjVnT0Y.&sv_z=0.15919859484925403",
       "source": "Google Arts & Culture",
-      "exactArtworkPosition": false
+      "exactArtworkPosition": false,
+      "artworkPanoramas": []
     },
     {
       "id": "kroller",
@@ -118,7 +212,8 @@
       "kind": null,
       "url": null,
       "source": "Google Arts & Culture",
-      "exactArtworkPosition": false
+      "exactArtworkPosition": false,
+      "artworkPanoramas": []
     },
     {
       "id": "yale",
@@ -127,7 +222,8 @@
       "kind": null,
       "url": null,
       "source": "Google Arts & Culture",
-      "exactArtworkPosition": false
+      "exactArtworkPosition": false,
+      "artworkPanoramas": []
     },
     {
       "id": "courtauld",
@@ -136,7 +232,8 @@
       "kind": null,
       "url": null,
       "source": "Google Arts & Culture",
-      "exactArtworkPosition": false
+      "exactArtworkPosition": false,
+      "artworkPanoramas": []
     },
     {
       "id": "orangerie",
@@ -145,7 +242,8 @@
       "kind": "virtual-tour",
       "url": "https://artsandculture.google.com/partner/musee-de-lorangerie",
       "source": "Google Arts & Culture",
-      "exactArtworkPosition": false
+      "exactArtworkPosition": false,
+      "artworkPanoramas": []
     },
     {
       "id": "cenacolo",
@@ -154,7 +252,9 @@
       "kind": null,
       "url": null,
       "source": "Google Arts & Culture",
-      "exactArtworkPosition": false
+      "exactArtworkPosition": false,
+      "artworkPanoramas": []
     }
-  ]
+  ],
+  "editorialNote": "Artwork panoramas are provided by the project owner and have not been independently visually verified; the 1889 Orsay Bedroom is separate from the canonical 1888 Van Gogh Museum work."
 }
