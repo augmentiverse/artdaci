@@ -111,7 +111,14 @@
       "exactPanoramaUrl": null,
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": ""
+      "notes": "",
+      "researchLead": {
+        "type": "institutional-artwork-story",
+        "url": "https://artsandculture.google.com/story/KQWhTLphPokuKg",
+        "evidence": "Kunsthistorisches Museum story describes Vermeer's Art of Painting; it is not a Street View location.",
+        "checkedAt": "2026-11-03",
+        "exactPanoramaVerified": false
+      }
     },
     {
       "slug": "vermeer-girl-with-a-pearl-earring",
@@ -138,7 +145,14 @@
       "exactPanoramaUrl": null,
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": ""
+      "notes": "",
+      "researchLead": {
+        "type": "institutional-artwork-profile",
+        "url": "https://artsandculture.google.com/asset/woman-holding-a-balance-0008/-wHFDKu7-mhjtQ",
+        "evidence": "National Gallery of Art identifies the correct Vermeer work; no oriented panorama yet.",
+        "checkedAt": "2026-11-03",
+        "exactPanoramaVerified": false
+      }
     },
     {
       "slug": "view-of-delft",
@@ -232,7 +246,14 @@
       "exactPanoramaUrl": null,
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": ""
+      "notes": "",
+      "researchLead": {
+        "type": "museum-guided-gallery",
+        "url": "https://artsandculture.google.com/story/visit-the-national-gallery-west-building-tour-national-gallery-of-art-washington-dc/DgUh7rTEhY2FiA",
+        "evidence": "Institutional West Building tour identifies Ginevra de' Benci and includes a gallery view. No camera-oriented panorama URL established.",
+        "checkedAt": "2026-11-03",
+        "exactPanoramaVerified": false
+      }
     },
     {
       "slug": "annunciation",
@@ -245,7 +266,14 @@
       "exactPanoramaUrl": null,
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": ""
+      "notes": "",
+      "researchLead": {
+        "type": "museum-guided-story",
+        "url": "https://artsandculture.google.com/story/explore-the-uffizi-galleries/cQVh5Rbqa2Q3dg?hl=en",
+        "evidence": "Official Uffizi Arts & Culture story features Leonardo's Annunciation and gallery exploration; position of the painting not verified.",
+        "checkedAt": "2026-11-03",
+        "exactPanoramaVerified": false
+      }
     },
     {
       "slug": "van-gogh",
@@ -285,7 +313,14 @@
       "exactPanoramaUrl": null,
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": ""
+      "notes": "",
+      "researchLead": {
+        "type": "museum-guided-story",
+        "url": "https://artsandculture.google.com/story/FQURa9LMQKsSiA",
+        "evidence": "Van Gogh Museum tour identifies the October 1888 Bedroom; direct indoor panorama of hanging not found.",
+        "checkedAt": "2026-11-03",
+        "exactPanoramaVerified": false
+      }
     },
     {
       "slug": "cafe-terrace",
@@ -324,7 +359,14 @@
       "exactPanoramaUrl": null,
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": ""
+      "notes": "",
+      "researchLead": {
+        "type": "institutional-artwork-profile",
+        "url": "https://artsandculture.google.com/asset/sgFYo56eujP-qQ",
+        "evidence": "National Gallery confirms its 1888 Sunflowers version; not a gallery panorama.",
+        "checkedAt": "2026-11-03",
+        "exactPanoramaVerified": false
+      }
     }
   ]
 }
