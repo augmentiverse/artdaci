@@ -383,30 +383,33 @@
       "slug": "sunflowers",
       "title": "Sunflowers",
       "artist": "Vincent van Gogh",
-      "museum": "Van Gogh Museum",
-      "city": "Amsterdam",
+      "museum": "National Gallery",
+      "city": "London",
       "status": "museum-tour",
-      "sourceUrl": "https://artsandculture.google.com/asset/sunflowers-vincent-van-gogh/hwEGmsM-FoHAwA?hl=en",
+      "sourceUrl": "https://artsandculture.google.com/partner/the-national-gallery-london",
       "exactPanoramaUrl": null,
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": "User prefers Van Gogh Museum Amsterdam 1889 version instead of London 1888 version. Street View base link opens Van Gogh Museum interior entry (confirmed by Google Arts & Culture page title), but no sv_pid or orientation was supplied, so cannot claim direct sightline to Sunflowers. Canonical art image must be matched to Amsterdam 1889 before migration of collection metadata.",
+      "notes": "Canonical ARTDACI painting remains the 1888 Sunflowers version at the National Gallery, London. Amsterdam's 1889 version is a distinct work; its general Street View museum entry is a supplementary exploration link only, not a replacement or exact panorama.",
       "researchLead": {
-        "type": "preferred-version-museum-tour-unverified",
-        "url": "https://artsandculture.google.com/asset/sunflowers-vincent-van-gogh/hwEGmsM-FoHAwA?hl=en",
-        "evidence": "Street View base page identifies the Van Gogh Museum in Amsterdam, but supplies no camera positioning parameters. Amsterdam 1889 version confirmed by institution; visual and media match pending.",
+        "type": "institutional-artwork-profile",
+        "url": "https://artsandculture.google.com/asset/sgFYo56eujP-qQ",
+        "evidence": "Canonical London 1888 Sunflowers retained. Amsterdam 1889 Museum general Street View entry available as supplementary research, without artwork-specific orientation.",
         "checkedAt": "2026-11-03",
         "exactPanoramaVerified": false
       },
-      "previousCanonicalVersion": {
-        "museum": "National Gallery",
-        "city": "London",
-        "year": 1888,
-        "sourceUrl": "https://artsandculture.google.com/partner/the-national-gallery-london",
-        "notes": "Previous canonical ARTDACI variant; different canvas from Amsterdam version."
-      },
-      "workYear": 1889,
-      "museumTourUrl": "https://artsandculture.google.com/streetview/hwEGmsM-FoHAwA"
+      "alternateVersionTours": [
+        {
+          "title": "Sunflowers (1889) — Amsterdam version",
+          "museum": "Van Gogh Museum",
+          "city": "Amsterdam",
+          "year": 1889,
+          "tourUrl": "https://artsandculture.google.com/streetview/hwEGmsM-FoHAwA",
+          "kind": "general-museum-tour",
+          "exactPanoramaVerified": false,
+          "notes": "Different canvas; optional general museum exploration, not canonical work or direct artwork view."
+        }
+      ]
     }
   ]
 }
