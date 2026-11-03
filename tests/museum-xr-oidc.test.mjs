@@ -43,6 +43,6 @@ test('token exchange grants only short-lived Google service-account access and n
  assert.deepEqual(JSON.parse(calls[1].options.body).scope,['https://www.googleapis.com/auth/cloud-platform']);
 });
 test('authentication fails closed if Google STS or budget storage fails',async()=>{
- await assert.rejects(googleServiceToken(async()=>({ok:false,status:403}),req,env,async()=>{}),/upstream/);
+ await assert.rejects(googleServiceToken(async()=>({ok:false,status:403}),{headers:{'x-vercel-oidc-token':'ey.different.signature'}},env,async()=>{}),/upstream/);
  await assert.rejects(googleServiceToken(async()=>{throw Error('No upstream expected')},{headers:{}},env,async()=>{}),/Missing/);
 });
