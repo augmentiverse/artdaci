@@ -15,19 +15,20 @@
       "artist": "Claude Monet",
       "museum": "National Museum of Western Art",
       "city": "Tokyo",
-      "status": "research-needed",
+      "status": "museum-tour",
       "sourceUrl": null,
       "exactPanoramaUrl": null,
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": "",
+      "notes": "Owner-provided Street View entry for National Museum of Western Art, Tokyo. No sv_pid or orientation parameters; no claim that Water Lilies is directly visible.",
       "researchLead": {
         "type": "institutional-virtual-tour-and-artwork",
         "url": "https://artsandculture.google.com/partner/the-national-museum-of-western-art",
-        "evidence": "National Museum of Western Art, Tokyo offers a virtual museum tour and identifies its 1916 Monet Water Lilies. Direct camera-oriented position unverified.",
+        "evidence": "Owner provided museum Street View entry. Precise camera position for Water Lilies not yet supplied.",
         "checkedAt": "2026-11-03",
         "exactPanoramaVerified": false
-      }
+      },
+      "museumTourUrl": "https://artsandculture.google.com/streetview/AwFXeMnZK5jOBw"
     },
     {
       "slug": "japanese-bridge",
@@ -323,16 +324,16 @@
       "artist": "Vincent van Gogh",
       "museum": "Van Gogh Museum",
       "city": "Amsterdam",
-      "status": "museum-tour",
+      "status": "user-supplied-panorama",
       "sourceUrl": "https://artsandculture.google.com/partner/van-gogh-museum",
-      "exactPanoramaUrl": null,
+      "exactPanoramaUrl": "https://artsandculture.google.com/streetview/KwF-AdF1REQl6w?sv_lng=4.881332390026839&sv_lat=52.35845400727424&sv_h=50.824061129131366&sv_p=-12.349767285698363&sv_pid=Nhu3UwMqQHZJBpIMBcAafg&sv_z=1",
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": "Canonical ARTDACI painting: 1888 original held by Van Gogh Museum, Amsterdam. A separately documented third version (1889) at Musée d'Orsay has its own user-provided panorama; this is not a panorama of the Amsterdam original.",
+      "notes": "Owner-provided camera-oriented panorama for the 1888 Bedroom at the Van Gogh Museum, Amsterdam. Separate 1889 third version at Musée d’Orsay retained as an alternate-version link. Actual visual match and current hanging not independently checked.",
       "researchLead": {
         "type": "museum-guided-story",
         "url": "https://artsandculture.google.com/story/FQURa9LMQKsSiA",
-        "evidence": "Van Gogh Museum tour identifies the October 1888 Bedroom; direct indoor panorama of hanging not found.",
+        "evidence": "User supplied a camera-oriented Van Gogh Museum Street View with sv_pid and camera parameters; visual confirmation pending.",
         "checkedAt": "2026-11-03",
         "exactPanoramaVerified": false
       },
@@ -349,7 +350,8 @@
           "visualVerification": "pending",
           "notes": "Distinct 1889 smaller third version at Musée d'Orsay (RF 1959 2). Do not assign to the canonical Amsterdam 1888 painting."
         }
-      ]
+      ],
+      "panoramaSource": "user-provided"
     },
     {
       "slug": "cafe-terrace",
@@ -381,21 +383,30 @@
       "slug": "sunflowers",
       "title": "Sunflowers",
       "artist": "Vincent van Gogh",
-      "museum": "National Gallery",
-      "city": "London",
+      "museum": "Van Gogh Museum",
+      "city": "Amsterdam",
       "status": "museum-tour",
-      "sourceUrl": "https://artsandculture.google.com/partner/the-national-gallery-london",
+      "sourceUrl": "https://artsandculture.google.com/asset/sunflowers-vincent-van-gogh/hwEGmsM-FoHAwA?hl=en",
       "exactPanoramaUrl": null,
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": "",
+      "notes": "User chooses Van Gogh Museum Amsterdam 1889 Sunflowers as preferred canonical version instead of 1888 National Gallery London version. Submitted Street View link has no sv_pid, position, or orientation; it shares ID with museum artwork asset page, so must verify that it actually opens an indoor panorama. Canonical image asset update pending verification.",
       "researchLead": {
-        "type": "institutional-artwork-profile",
-        "url": "https://artsandculture.google.com/asset/sgFYo56eujP-qQ",
-        "evidence": "National Gallery confirms its 1888 Sunflowers version; not a gallery panorama.",
+        "type": "preferred-version-museum-tour-unverified",
+        "url": "https://artsandculture.google.com/asset/sunflowers-vincent-van-gogh/hwEGmsM-FoHAwA?hl=en",
+        "evidence": "Amsterdam 1889 canvas is confirmed by Van Gogh Museum and Google Arts & Culture. User-provided /streetview/hwEGmsM-FoHAwA does not contain camera parameters and may resolve to artwork asset; indoor tour unverified.",
         "checkedAt": "2026-11-03",
         "exactPanoramaVerified": false
-      }
+      },
+      "previousCanonicalVersion": {
+        "museum": "National Gallery",
+        "city": "London",
+        "year": 1888,
+        "sourceUrl": "https://artsandculture.google.com/partner/the-national-gallery-london",
+        "notes": "Previous canonical ARTDACI variant; different canvas from Amsterdam version."
+      },
+      "workYear": 1889,
+      "museumTourUrl": "https://artsandculture.google.com/streetview/hwEGmsM-FoHAwA"
     }
   ]
 }
