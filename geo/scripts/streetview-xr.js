@@ -1,79 +1,69 @@
 import * as THREE from 'three';
-import {parseMuseumLink,validateIndoorPanorama,tileGrid,bearingVector} from './streetview-xr-core.mjs';
-
-// A Google Maps Platform browser key must be explicitly configured and HTTP-referrer restricted.
-// Never treat an Arts & Culture sv_pid as a Map Tiles panoId.
-const GOOGLE_MAP_TILES_KEY = ''; // Configure only after enabling billing and reviewing Maps Platform policy.
-const API='https://tile.googleapis.com/v1';
+import {bearingVector} from './streetview-xr-core.mjs';
 const params=new URLSearchParams(location.search);
-const language=['fr','en','ar'].includes(params.get('lang'))?params.get('lang'):'fr';
-const i18n={
- fr:{title:'Musées en réalité virtuelle',intro:'Explorez une vue panoramique du musée dans votre casque. La visite officielle reste disponible.',enter:'Entrer en VR',exit:'Quitter la VR',reset:'Recentrer',official:'Visite officielle ↗',unsupported:'Ce navigateur ne prend pas en charge WebXR immersif.',notConfigured:'Le module panoramique Google n’est pas encore activé. Utilisez la visite officielle ; aucune image Google n’est copiée.',notAvailable:'Aucun panorama intérieur Google Maps Tiles correspondant n’est disponible à cet endroit. Ouvrez la visite officielle.',loading:'Recherche du panorama autorisé…',ready:'Panorama chargé. Vous pouvez entrer en VR ou sélectionner une direction.',fail:'Le panorama est indisponible. La visite officielle reste accessible.',next:'Vers : ',disclaimer:'Les liens Arts & Culture ne garantissent pas la disponibilité d’un panorama dans l’API Maps Tiles, ni l’accrochage actuel des œuvres.'},
- en:{title:'Museums in virtual reality',intro:'Explore museum panoramas in your headset. The official tour remains available.',enter:'Enter VR',exit:'Exit VR',reset:'Recenter',official:'Official tour ↗',unsupported:'This browser does not support immersive WebXR.',notConfigured:'Google panorama access has not been enabled yet. Use the official tour; no Google imagery is copied.',notAvailable:'No matching indoor Google Maps Tiles panorama is available here. Use the official tour.',loading:'Looking for an authorized panorama…',ready:'Panorama loaded. Enter VR or select a direction.',fail:'The panorama is unavailable. The official tour remains available.',next:'Go to: ',disclaimer:'Arts & Culture links do not guarantee availability in Maps Tiles or that the painting is currently on display.'},
- ar:{title:'المتاحف في الواقع الافتراضي',intro:'استكشف المناظر البانورامية للمتاحف بواسطة نظارة الواقع الافتراضي، مع إمكانية فتح الجولة الرسمية.',enter:'الدخول إلى VR',exit:'الخروج من VR',reset:'إعادة التوجيه',official:'الجولة الرسمية ↗',unsupported:'هذا المتصفح لا يدعم WebXR الغامر.',notConfigured:'لم يتم تفعيل الوصول إلى صور Google بعد. يمكنك فتح الجولة الرسمية دون نسخ الصور.',notAvailable:'لا تتوفر بانوراما داخلية مطابقة عبر Google Maps Tiles لهذا الموقع.',loading:'جار البحث عن بانوراما مصرح بها…',ready:'تم تحميل البانوراما. يمكنك الدخول إلى الواقع الافتراضي.',fail:'البانوراما غير متاحة. يمكن فتح الجولة الرسمية.',next:'انتقال إلى: ',disclaimer:'لا تضمن روابط Arts & Culture توافر المشهد في Maps Tiles أو موقع اللوحة الحالي.'}
+const lang=['en','fr','ar'].includes(params.get('lang'))?params.get('lang'):'fr';
+const labels={
+fr:{title:'ARTDACI Museum XR',intro:'Exploration WebXR expérimentale. Les visites originales restent disponibles.',pilot:'Accès pilote',start:'Charger le panorama',enter:'Entrer en VR',exit:'Quitter la VR',reset:'Recentrer',official:'Visite officielle',disabled:'Pilote inactif : identifiants serveur et compteur de sécurité non configurés.',empty:'Aucun panorama intérieur équivalent confirmé. La visite officielle reste accessible.',ready:'Panorama disponible : exploration possible.',error:'Accès indisponible ou limite atteinte.',bad:'Accès pilote refusé.',next:'Panorama voisin',credit:'Crédits de panorama',note:'Les panoramas Google Arts & Culture et Map Tiles ne sont pas nécessairement identiques.'},
+en:{title:'ARTDACI Museum XR',intro:'Experimental WebXR museum exploration. Official tours remain available.',pilot:'Pilot access',start:'Load panorama',enter:'Enter VR',exit:'Exit VR',reset:'Recenter',official:'Official tour',disabled:'Pilot inactive: server credentials and safety counter not configured.',empty:'No matching indoor panorama confirmed. Official tour is still accessible.',ready:'Panorama available. Immersive exploration is ready.',error:'Unavailable or daily limit reached.',bad:'Pilot access denied.',next:'Adjacent panorama',credit:'Panorama credits',note:'Google Arts & Culture and Maps Tiles panoramas may be different.'},
+ar:{title:'ARTDACI Museum XR',intro:'استكشاف متاحف تجريبي عبر WebXR. الجولات الرسمية متاحة.',pilot:'الدخول التجريبي',start:'تحميل المشهد',enter:'الدخول إلى VR',exit:'الخروج من VR',reset:'إعادة التوجيه',official:'الجولة الرسمية',disabled:'النموذج غير مفعل: إعداد الخادم وحد الاستهلاك غير مكتمل.',empty:'لا يوجد مشهد داخلي مطابق مؤكد. الجولة الرسمية متاحة.',ready:'المشهد متاح للاستكشاف.',error:'الخدمة غير متاحة أو تجاوزت الحد اليومي.',bad:'الدخول التجريبي مرفوض.',next:'مشهد مجاور',credit:'حقوق الصورة',note:'قد تختلف مشاهد Google Arts & Culture عن Maps Tiles.'}
 };
-const t=i18n[language],$=id=>document.getElementById(id);
-document.documentElement.lang=language;document.documentElement.dir=language==='ar'?'rtl':'ltr';
-$('title').textContent=t.title;$('intro').textContent=t.intro;$('enter-vr').textContent=t.enter;$('reset').textContent=t.reset;$('disclaimer').textContent=t.disclaimer;$('official').textContent=t.official;
-$('back').href='index.html?lang='+language;
-document.querySelectorAll('[data-lang]').forEach(a=>{const q=new URLSearchParams(location.search);q.set('lang',a.dataset.lang);a.href='?'+q.toString();if(a.dataset.lang===language)a.setAttribute('aria-current','page')});
-const canvas=$('xr-canvas');const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
+const t=labels[lang],$=id=>document.getElementById(id);
+document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';
+$('title').textContent=t.title;$('intro').textContent=t.intro;
+$('start').textContent=t.start;$('enter-vr').textContent=t.enter;$('reset').textContent=t.reset;$('key-label').textContent=t.pilot;
+$('disclaimer').textContent=t.note;$('official').textContent=t.official;$('back').href='index.html?lang='+lang;
+document.querySelectorAll('[data-lang]').forEach(a=>{const query=new URLSearchParams(location.search);query.set('lang',a.dataset.lang);a.href='?'+query;if(a.dataset.lang===lang)a.setAttribute('aria-current','page')});
+const museumId=params.get('museum')||'national-gallery-london';
+const source=params.get('source');
+if(source){try{const u=new URL(source);if(u.protocol==='https:'&&u.hostname==='artsandculture.google.com'&&u.pathname.startsWith('/streetview/')){$('official').href=u.href;$('official').hidden=false}}catch{}}
+let pilotToken='',ticket='',currentMeta=null,sphere=null,loading=false;
+const canvas=$('xr-canvas'),renderer=new THREE.WebGLRenderer({canvas,antialias:true});
 renderer.xr.enabled=true;renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
-const scene=new THREE.Scene();scene.background=new THREE.Color(0x172b38);
-const camera=new THREE.PerspectiveCamera(75,1,.01,100);
-const rig=new THREE.Group();rig.add(camera);scene.add(rig);
-const raycaster=new THREE.Raycaster();
-const controllers=[renderer.xr.getController(0),renderer.xr.getController(1)];
-controllers.forEach(controller=>{rig.add(controller);controller.addEventListener('select',()=>{const hit=hitTest(controller);if(hit?.userData?.panoId)loadPanorama(hit.userData.panoId).catch(handleError);})});
-const hotspotGroup=new THREE.Group();scene.add(hotspotGroup);
-let sphere=null, session=null, currentMetadata=null, busy=false, ticket=0;
-function status(message){$('status').textContent=message;}
-function resize(){const box=canvas.getBoundingClientRect();const w=Math.max(1,Math.round(box.width)),h=Math.max(1,Math.round(box.height));renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
-window.addEventListener('resize',resize);resize();
-renderer.setAnimationLoop(()=>renderer.render(scene,camera));
-const target=parseMuseumLink(params.get('source')||'');
-if(target){$('official').href=target.source;$('official').hidden=false;}
-else $('official').hidden=true;
-const marker=new THREE.Vector3();
-function hitTest(controller){controller.updateWorldMatrix(true,false);raycaster.set(controller.getWorldPosition(marker),new THREE.Vector3(0,0,-1).transformDirection(controller.matrixWorld));return raycaster.intersectObjects(hotspotGroup.children)[0]?.object}
-function clearHotspots(){for(const child of [...hotspotGroup.children]){hotspotGroup.remove(child);child.geometry.dispose();child.material.dispose()}$('links').replaceChildren()}
-function addHotspots(metadata){clearHotspots();for(const link of (metadata.links||[]).slice(0,12)){if(!link.panoId||!Number.isFinite(Number(link.heading)))continue;const v=bearingVector(Number(link.heading));const mesh=new THREE.Mesh(new THREE.SphereGeometry(.14,14,10),new THREE.MeshBasicMaterial({color:0xe9c990}));mesh.position.set(v.x,-.7,v.z);mesh.userData.panoId=link.panoId;hotspotGroup.add(mesh);
-const button=document.createElement('button');button.className='secondary';button.textContent=t.next+(link.text||Math.round(Number(link.heading))+'°');button.addEventListener('click',()=>loadPanorama(link.panoId).catch(handleError));$('links').append(button);}}
-function endpoint(path,extra={}){const url=new URL(API+path);url.searchParams.set('session',session);url.searchParams.set('key',GOOGLE_MAP_TILES_KEY);for(const [key,value] of Object.entries(extra))url.searchParams.set(key,String(value));return url.toString()}
-async function requestJson(url){const response=await fetch(url,{cache:'no-store'});if(!response.ok)throw Error('Google Maps Tiles: HTTP '+response.status);return response.json()}
-async function createSession(){const response=await fetch(API+'/createSession?key='+encodeURIComponent(GOOGLE_MAP_TILES_KEY),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mapType:'streetview',language:language==='ar'?'ar':'en-US',region:'US'})});if(!response.ok)throw Error('Google Maps Tiles session HTTP '+response.status);const data=await response.json();if(!data.session)throw Error('Missing session');return data.session}
-async function loadTile(url){const response=await fetch(url,{cache:'no-store'});if(!response.ok)throw Error('Tile HTTP '+response.status);const blob=await response.blob();return createImageBitmap(blob)}
-async function loadPanorama(panoId){if(busy)return;busy=true;const attempt=++ticket;status(t.loading);$('enter-vr').disabled=true;try{
- const metadata=await requestJson(endpoint('/streetview/metadata',{panoId}));
- if(target && !validateIndoorPanorama(metadata,target,35).ok) {status(t.notAvailable);return}
- if(metadata.imageryType!=='indoor') {status(t.notAvailable);return}
- const grid=tileGrid(metadata,2);
- const surface=document.createElement('canvas');surface.width=grid.outputWidth;surface.height=grid.outputHeight;const context=surface.getContext('2d');
- // Request only a bounded number of tiles; no file persistence or redistribution.
- const coordinates=[];for(let y=0;y<grid.rows;y++)for(let x=0;x<grid.columns;x++)coordinates.push({x,y});
- for(let i=0;i<coordinates.length;i+=4){const batch=coordinates.slice(i,i+4);await Promise.all(batch.map(async({x,y})=>{
-  const bitmap=await loadTile(endpoint('/streetview/tiles/'+grid.level+'/'+x+'/'+y,{panoId:metadata.panoId}));
-  context.drawImage(bitmap,x*grid.tileWidth,y*grid.tileHeight);bitmap.close();
- }))}
- if(attempt!==ticket)return;
- const texture=new THREE.CanvasTexture(surface);texture.colorSpace=THREE.SRGBColorSpace||undefined;
- const nextSphere=new THREE.Mesh(new THREE.SphereGeometry(40,64,32),new THREE.MeshBasicMaterial({map:texture,side:THREE.BackSide}));
- // Street View tiles use their own panorama heading; use metadata to align azimuth as far as possible.
- nextSphere.rotation.y=THREE.MathUtils.degToRad(-Number(metadata.heading||0));
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x152634);
+const camera=new THREE.PerspectiveCamera(75,1,.05,100),rig=new THREE.Group();rig.add(camera);scene.add(rig);
+const hotspots=new THREE.Group();scene.add(hotspots);
+const creditSurface=document.createElement('canvas');creditSurface.width=1024;creditSurface.height=256;
+const creditTexture=new THREE.CanvasTexture(creditSurface);
+const creditPlane=new THREE.Mesh(new THREE.PlaneGeometry(2.5,.625),new THREE.MeshBasicMaterial({map:creditTexture,transparent:true,depthTest:false}));
+creditPlane.position.set(0,-1.2,-2.4);creditPlane.renderOrder=10;rig.add(creditPlane);
+const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector3();
+for(let i=0;i<2;i++){const controller=renderer.xr.getController(i);rig.add(controller);controller.addEventListener('select',()=>{controller.updateWorldMatrix(true,false);raycaster.set(controller.getWorldPosition(pointer),new THREE.Vector3(0,0,-1).transformDirection(controller.matrixWorld));const hit=raycaster.intersectObjects(hotspots.children)[0];if(hit?.object.userData.panoId)loadNeighbor(hit.object.userData.panoId).catch(reportError)})}
+function drawCredits(text){const context=creditSurface.getContext('2d');context.clearRect(0,0,1024,256);context.fillStyle='rgba(8,18,27,0.88)';context.fillRect(0,0,1024,256);context.fillStyle='#fff';context.font='32px system-ui';const chunks=String(text||'© Google Street View').match(/.{1,58}/g)||[];chunks.slice(0,3).forEach((line,i)=>context.fillText(line,30,55+i*49));context.font='25px system-ui';context.fillText('Google Street View · ARTDACI Museum XR',30,220);creditTexture.needsUpdate=true}
+drawCredits('© Google Street View');
+function size(){const b=canvas.getBoundingClientRect();renderer.setSize(Math.round(b.width),Math.round(b.height),false);camera.aspect=b.width/Math.max(1,b.height);camera.updateProjectionMatrix()}
+addEventListener('resize',size);size();renderer.setAnimationLoop(()=>renderer.render(scene,camera));
+function message(s){$('status').textContent=s}
+async function request(data,blob=false){
+ const response=await fetch('../api/museum-xr.cjs',{method:'POST',headers:{'Content-Type':'application/json','X-Museum-XR-Preview':pilotToken},body:JSON.stringify({...data,museumId}),cache:'no-store'});
+ if(!response.ok){const error=new Error('HTTP '+response.status);error.status=response.status;throw error}
+ return blob?createImageBitmap(await response.blob()):response.json();
+}
+function clearHotspots(){for(const o of [...hotspots.children]){hotspots.remove(o);o.geometry.dispose();o.material.dispose()}$('links').replaceChildren()}
+function addHotspots(metadata){clearHotspots();for(const item of metadata.links||[]){if(!item.panoId||!Number.isFinite(item.heading))continue;const position=bearingVector(item.heading,3);const mesh=new THREE.Mesh(new THREE.SphereGeometry(.15,14,10),new THREE.MeshBasicMaterial({color:'#e4bd7c'}));mesh.position.set(position.x,-.7,position.z);mesh.userData.panoId=item.panoId;hotspots.add(mesh);const button=document.createElement('button');button.className='secondary';button.textContent=t.next+' · '+Math.round(item.heading)+'°';button.addEventListener('click',()=>loadNeighbor(item.panoId).catch(reportError));$('links').append(button)}}
+async function showPanorama(result){
+ const meta=result.metadata,dim=result.dimension;
+ if(!meta?.copyright||!dim||!result.ticket)throw Error('Invalid gateway metadata');
+ const target=document.createElement('canvas');target.width=dim.width;target.height=dim.height;
+ const ctx=target.getContext('2d');
+ // Serial, bounded requests protect the quota and Quest memory budget.
+ for(let y=0;y<dim.rows;y++)for(let x=0;x<dim.columns;x++){const bitmap=await request({action:'tile',ticket:result.ticket,x,y,zoom:dim.zoom},true);ctx.drawImage(bitmap,x*dim.tileWidth,y*dim.tileHeight);bitmap.close()}
+ const texture=new THREE.CanvasTexture(target);texture.colorSpace=THREE.SRGBColorSpace||undefined;
+ const next=new THREE.Mesh(new THREE.SphereGeometry(40,64,32),new THREE.MeshBasicMaterial({map:texture,side:THREE.BackSide}));
+ next.rotation.y=THREE.MathUtils.degToRad(-Number(meta.heading||0));
  if(sphere){scene.remove(sphere);sphere.geometry.dispose();sphere.material.map.dispose();sphere.material.dispose()}
- sphere=nextSphere;scene.add(sphere);currentMetadata=metadata;
- $('attribution').replaceChildren();
- const credit=document.createElement('span');credit.textContent=metadata.copyright||'© Google Street View';$('attribution').append(credit);
- if(metadata.reportProblemLink){const report=new URL(metadata.reportProblemLink);if(report.protocol==='https:'){const a=document.createElement('a');a.href=report.href;a.target='_blank';a.rel='noopener noreferrer';a.textContent=language==='fr'?'Signaler un problème avec cette image':language==='ar'?'الإبلاغ عن مشكلة في هذه الصورة':'Report a problem with this image';$('attribution').append(a)}}
- addHotspots(metadata);$('enter-vr').disabled=!await navigator.xr?.isSessionSupported?.('immersive-vr');status(t.ready);
- }finally{busy=false}}
-function handleError(error){console.warn('ARTDACI Museum XR:',error);status(t.fail)}
-$('enter-vr').addEventListener('click',async()=>{try{if(renderer.xr.getSession()){await renderer.xr.getSession().end();return}const next=await navigator.xr.requestSession('immersive-vr',{optionalFeatures:['local-floor']});await renderer.xr.setSession(next)}catch(error){handleError(error)}});
+ sphere=next;scene.add(sphere);ticket=result.ticket;currentMeta=meta;
+ $('attribution').replaceChildren(document.createTextNode(meta.copyright));
+ if(meta.reportProblemLink){const a=document.createElement('a');a.href=meta.reportProblemLink;a.textContent=' · Report Street View image';a.target='_blank';a.rel='noopener noreferrer';$('attribution').append(a)}
+ drawCredits(meta.copyright);addHotspots(meta);message(t.ready);
+ $('enter-vr').disabled=!Boolean(await navigator.xr?.isSessionSupported?.('immersive-vr').catch(()=>false));
+}
+async function loadNeighbor(panoId){if(loading)return;loading=true;try{const data=await request({action:'neighbor',ticket,panoId});await showPanorama(data)}finally{loading=false}}
+function reportError(error){console.warn('Museum XR preview:',error.message);message(error.status===401?t.bad:error.status===404?t.empty:error.status===503?t.disabled:t.error)}
+$('start').addEventListener('click',async()=>{if(loading)return;loading=true;pilotToken=$('pilot-token').value.trim();$('pilot-token').value='';if(!pilotToken){message(t.bad);loading=false;return}
+ try{const catalog=await request({action:'catalog'});const entry=catalog.museums.find(m=>m.id===museumId);if(!entry){message(t.empty);return}
+ $('official').href=entry.source;$('official').hidden=false;const response=await request({action:'start'});await showPanorama(response)}catch(e){reportError(e)}finally{loading=false}});
+$('enter-vr').addEventListener('click',async()=>{try{const session=renderer.xr.getSession();if(session){await session.end();return}await renderer.xr.setSession(await navigator.xr.requestSession('immersive-vr',{optionalFeatures:['local-floor']}))}catch(e){reportError(e)}});
 renderer.xr.addEventListener('sessionstart',()=>{$('enter-vr').textContent=t.exit});
 renderer.xr.addEventListener('sessionend',()=>{$('enter-vr').textContent=t.enter});
-$('reset').addEventListener('click',()=>{rig.rotation.set(0,0,0);camera.rotation.set(0,0,0);if(!renderer.xr.isPresenting)camera.lookAt(0,0,-1)});
-if(!navigator.xr)status(t.unsupported);
-else status(t.loading);
-if(!GOOGLE_MAP_TILES_KEY){$('enter-vr').disabled=true;status(t.notConfigured)}
-else if(!target){status(t.notAvailable)}
-else (async()=>{try{session=await createSession();const metadata=await requestJson(endpoint('/streetview/metadata',{lat:target.lat,lng:target.lng,radius:20}));if(!validateIndoorPanorama(metadata,target,35).ok){status(t.notAvailable);return}await loadPanorama(metadata.panoId)}catch(error){handleError(error)}})();
+$('reset').addEventListener('click',()=>{rig.rotation.set(0,0,0);camera.rotation.set(0,0,0)});
+message(t.disabled);
