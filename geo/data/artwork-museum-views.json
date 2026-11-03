@@ -74,19 +74,20 @@
       "artist": "Claude Monet",
       "museum": "Musée d’Orsay",
       "city": "Paris",
-      "status": "museum-tour",
+      "status": "user-supplied-panorama",
       "sourceUrl": "https://artsandculture.google.com/partner/musee-dorsay-paris",
-      "exactPanoramaUrl": null,
+      "exactPanoramaUrl": "https://artsandculture.google.com/streetview/mus%C3%A9e-d%E2%80%99orsay-paris/KQEnDge3UJkVmw?sv_lng=2.327189678444856&sv_lat=48.85995980999985&sv_h=-66.75696960175809&sv_p=-16.653949028886018&sv_pid=0KJ5wkQYPVfq-CO6SqNKKw&sv_z=1.0002032035332302",
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": "",
+      "notes": "Owner-provided camera-oriented panorama intended to show Monet's 1873 Poppies at Musée d'Orsay; visibility/current hanging not independently checked.",
       "researchLead": {
         "type": "institutional-artwork-profile",
         "url": "https://artsandculture.google.com/asset/poppy-field/xQGTinA-MPxcVg?hl=fr",
-        "evidence": "Musée d'Orsay's 1873 Monet Poppy Field profile identified; museum-tour panorama position not found.",
+        "evidence": "Camera-oriented URL supplied by project owner; no independent visual verification yet.",
         "checkedAt": "2026-11-03",
         "exactPanoramaVerified": false
-      }
+      },
+      "panoramaSource": "user-provided"
     },
     {
       "slug": "monet-impression-sunrise",
@@ -327,14 +328,28 @@
       "exactPanoramaUrl": null,
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": "",
+      "notes": "Canonical ARTDACI painting: 1888 original held by Van Gogh Museum, Amsterdam. A separately documented third version (1889) at Musée d'Orsay has its own user-provided panorama; this is not a panorama of the Amsterdam original.",
       "researchLead": {
         "type": "museum-guided-story",
         "url": "https://artsandculture.google.com/story/FQURa9LMQKsSiA",
         "evidence": "Van Gogh Museum tour identifies the October 1888 Bedroom; direct indoor panorama of hanging not found.",
         "checkedAt": "2026-11-03",
         "exactPanoramaVerified": false
-      }
+      },
+      "alternateVersionPanoramas": [
+        {
+          "title": "The Bedroom (third version, 1889)",
+          "artist": "Vincent van Gogh",
+          "museum": "Musée d’Orsay",
+          "city": "Paris",
+          "workYear": 1889,
+          "museumObjectUrl": "https://www.musee-orsay.fr/fr/oeuvres/la-chambre-de-van-gogh-arles-746",
+          "exactPanoramaUrl": "https://artsandculture.google.com/streetview/mus%C3%A9e-d%E2%80%99orsay-paris/KQEnDge3UJkVmw?sv_lng=2.3261991&sv_lat=48.8597256&sv_h=294.51317783512974&sv_p=-24.603329386252483&sv_pid=BQpnrBh6xSBU3qyDjrDIcg&sv_z=1",
+          "source": "user-provided",
+          "visualVerification": "pending",
+          "notes": "Distinct 1889 smaller third version at Musée d'Orsay (RF 1959 2). Do not assign to the canonical Amsterdam 1888 painting."
+        }
+      ]
     },
     {
       "slug": "cafe-terrace",
