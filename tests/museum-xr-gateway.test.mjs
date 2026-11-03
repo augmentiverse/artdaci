@@ -61,3 +61,21 @@ test('no browser Google secret and key restrictions remain isolated',async()=>{
  assert.match(browser,/museum-xr/);assert.match(html,/pilot-token/);
  assert.match(browser,/creditPlane/);
 });
+
+test('private pilot has a best-effort guard without Redis (not a distributed global cap)',()=>{
+ const before=security.reserveProcessBudget();
+ assert.equal(before.ok,true);
+ assert.ok(before.usage>=1);
+ let last;
+ for(let i=0;i<65;i++)last=security.reserveProcessBudget();
+ assert.equal(last.ok,false);
+ const nextMinute=Date.now()+61000;
+ assert.equal(security.reserveProcessBudget(nextMinute).ok,true);
+});
+test('server configuration forbids deploying Google pilot in production and requires explicit Preview branch',async()=>{
+ const source=await readFile(new URL('../api/museum-xr.js',import.meta.url),'utf8');
+ assert.match(source,/VERCEL_GIT_COMMIT_REF==="feature\/streetview-webxr-museums-v1"/);
+ assert.match(source,/VERCEL_ENV==="preview"/);
+ assert.doesNotMatch(source,/MUSEUM_XR_GOOGLE_PRIVATE_KEY/);
+ assert.match(source,/reserveProcessBudget/);
+});
