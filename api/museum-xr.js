@@ -1,5 +1,6 @@
 "use strict";
 const security=require("../lib/museum-xr-security.cjs");
+const federation=require("../lib/museum-xr-oidc.cjs");
 const GOOGLE="https://tile.googleapis.com/v1",TIMEOUT=12000;
 const LIMIT_BODY=2_000_000;
 const env=process.env;
@@ -16,24 +17,8 @@ async function quota(){
   const result=await security.reserveBudget(fetch,env);
   if(!result.ok){const error=new Error("Pilot daily request limit reached");error.status=429;throw error}
 }
-async function googleToken(){
-  const email=env.MUSEUM_XR_GOOGLE_SERVICE_ACCOUNT_EMAIL;
-  const key=env.MUSEUM_XR_GOOGLE_PRIVATE_KEY;
-  if(!email||!key)throw Error("Google credentials unavailable");
-  const assertion=security.makeGoogleAssertion(email,key);
-  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),TIMEOUT);
-  try{
-    await quota();
-    const response=await fetch("https://oauth2.googleapis.com/token",{
-      method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},
-      body:new URLSearchParams({grant_type:"urn:ietf:params:oauth:grant-type:jwt-bearer",assertion}),
-      signal:controller.signal
-    });
-    if(!response.ok)throw Error("OAuth token request failed: "+response.status);
-    const data=await response.json();
-    if(!data.access_token)throw Error("OAuth token missing");
-    return data.access_token;
-  }finally{clearTimeout(timer)}
+async function googleToken(req){
+  return federation.googleServiceToken(fetch,req,env,quota);
 }
 async function googleFetch(path,token,opts={}){
   await quota();
@@ -55,10 +40,11 @@ function ticketResponse(res,payload,meta){
 module.exports=async function handler(req,res){
   res.setHeader("Cache-Control","no-store");
   res.setHeader("X-Content-Type-Options","nosniff");
-  res.setHeader("Access-Control-Allow-Origin","null");
+  // Same-origin browser requests only; do not allow cross-origin API access.
+  res.setHeader("Vary","Origin");
   if(req.method!=="POST")return fail(res,405,"POST required");
   const body=req.body&&typeof req.body==="object"?req.body:{};
-  const configured=Boolean(env.MUSEUM_XR_ENABLED==="true"&&env.MUSEUM_XR_GOOGLE_SERVICE_ACCOUNT_EMAIL&&env.MUSEUM_XR_GOOGLE_PRIVATE_KEY&&env.MUSEUM_XR_GOOGLE_PROJECT_ID&&env.MUSEUM_XR_TICKET_SECRET?.length>=32&&env.UPSTASH_REDIS_REST_URL&&env.UPSTASH_REDIS_REST_TOKEN&&env.MUSEUM_XR_PREVIEW_TOKEN?.length>=24);
+  const configured=Boolean(env.MUSEUM_XR_ENABLED==="true"&&env.MUSEUM_XR_GOOGLE_SERVICE_ACCOUNT_EMAIL&&env.MUSEUM_XR_GOOGLE_PROJECT_NUMBER&&env.MUSEUM_XR_WORKLOAD_POOL_ID&&env.MUSEUM_XR_WORKLOAD_PROVIDER_ID&&env.MUSEUM_XR_GOOGLE_PROJECT_ID&&env.VERCEL_ENV==="preview"&&env.MUSEUM_XR_TICKET_SECRET?.length>=32&&env.UPSTASH_REDIS_REST_URL&&env.UPSTASH_REDIS_REST_TOKEN&&env.MUSEUM_XR_PREVIEW_TOKEN?.length>=24);
   if(!configured)return fail(res,503,"Museum XR pilot inactive");
   if(!allowedOrigin(req))return fail(res,403,"Origin not approved");
   if(!security.isPilotAuthorized(req.headers["x-museum-xr-preview"],env.MUSEUM_XR_PREVIEW_TOKEN))return fail(res,401,"Pilot access required");
@@ -69,7 +55,7 @@ module.exports=async function handler(req,res){
     const m=security.museum(body.museumId);
     if(!m)return fail(res,404,"Museum not in pilot catalog");
     if(action==="start"){
-      const google=await googleToken();
+      const google=await googleToken(req);
       const sessionResult=await googleFetch("/createSession",google,{
         method:"POST",body:JSON.stringify({mapType:"streetview",language:"en-US",region:"US"})
       });
@@ -84,7 +70,7 @@ module.exports=async function handler(req,res){
     if(!["neighbor","tile"].includes(action))return fail(res,400,"Unsupported action");
     const ticket=security.readTicket(body.ticket,env.MUSEUM_XR_TICKET_SECRET);
     if(!ticket||ticket.id!==m.id)return fail(res,403,"Invalid or expired ticket");
-    const google=await googleToken();
+    const google=await googleToken(req);
     if(action==="neighbor"){
       if(!validPanoId(body.panoId))return fail(res,400,"Invalid pano");
       const current=await(await googleFetch("/streetview/metadata?"+new URLSearchParams({session:ticket.session,panoId:ticket.panoId}),google)).json();
@@ -104,7 +90,7 @@ module.exports=async function handler(req,res){
     if(bytes.length>LIMIT_BODY)throw Error("Tile too large");
     res.setHeader("Content-Type",mime);return res.status(200).send(bytes);
   }catch(error){
-    console.warn("Museum XR proxy:",error.message);
+    console.warn("Museum XR gateway failure:",error.status||502);
     return fail(res,error.status||502,error.status===429?"Daily usage cap reached":"Panorama gateway unavailable");
   }
 };
