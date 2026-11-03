@@ -35,10 +35,10 @@ test('museum XR is opt-in, uses official URLs and does not overwrite existing VR
   readFile(new URL('../geo/louvre-xr.html',import.meta.url),'utf8')
  ]);
  assert.match(viewer,/requestSession\('immersive-vr'/);
- assert.match(viewer,/mapType:'streetview'/);
- assert.match(viewer,/GOOGLE_MAP_TILES_KEY = ''/);
+ assert.match(viewer,/museum-xr/);
+ assert.doesNotMatch(viewer,/GOOGLE_MAP_TILES_KEY/);
  assert.match(viewer,/reportProblemLink/);
- assert.match(viewer,/metadata\.copyright/);
+ assert.match(viewer,/meta\.copyright/);
  assert.match(entry,/scripts\/streetview-xr\.js/);
  assert.match(registry,/museum-xr\.html/);
  assert.match(louvre,/scripts\/louvre-xr\.js/);
