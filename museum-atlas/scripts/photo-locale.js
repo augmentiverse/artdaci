@@ -21,8 +21,8 @@ function article(m,photos,i){
 const anchor='museum-'+m.id;
 return '<article class="museum-section" id="'+anchor+'" data-search="'+escape([m.name,m.city,m.country,m.theme,m.collections,m.history].join(' ').toLocaleLowerCase(lang))+'" data-country="'+escape(m.country)+'"><div class="atlas-museum-hero"><div class="atlas-photo-main"><img loading="lazy" src="'+escape(photos.hero.src)+'" alt="'+escape(U.photo+' — '+m.name)+'" onerror="this.hidden=true"><a href="'+escape(photos.hero.file)+'" target="_blank" rel="noopener noreferrer">'+escape(U.credits)+' ↗</a></div><div class="atlas-museum-heading"><span class="museum-index">'+String(i+1).padStart(2,'0')+' / 17</span><h2>'+escape(m.name)+'</h2><p class="location">'+escape(m.city+' · '+m.country)+'</p><p>'+escape(m.theme)+'</p><p class="signature">'+escape(U.work+': '+m.signature)+'</p></div></div>'+
 '<div class="detail-link-box"><div><strong>'+escape(U.details)+'</strong><p>'+escape(U.context)+'</p></div><a href="'+escape(pageHref(m))+'" class="detail-link">'+escape(U.open)+' ↗</a></div>'+
-' +museumTourLink(m)+
-'<div class="atlas-text-grid"><section><h3>+escape(U.history)+'</h3><p>'+escape(m.history)+'</p></section><section><h3>'+escape(U.architecture)+'</h3><p>'+escape(m.architecture)+'</p></section><section><h3>'+escape(U.collections)+'</h3><p>'+escape(m.collections)+'</p></section><section><h3>'+escape(U.digital)+'</h3><p>'+escape(m.digital)+'</p></section></div>'+
+museumTourLink(m)+
+'<div class="atlas-text-grid"><section><h3>'+escape(U.history)+'</h3><p>'+escape(m.history)+'</p></section><section><h3>'+escape(U.architecture)+'</h3><p>'+escape(m.architecture)+'</p></section><section><h3>'+escape(U.collections)+'</h3><p>'+escape(m.collections)+'</p></section><section><h3>'+escape(U.digital)+'</h3><p>'+escape(m.digital)+'</p></section></div>'+
 '<div class="album"><h3>'+escape(U.pictures)+'</h3><p>'+escape(U.picturesNote)+'</p><div class="album-grid">'+photos.photos.map((p,n)=>fig(p,m,n)).join('')+'</div></div></article>';
 }
 async function init(){
