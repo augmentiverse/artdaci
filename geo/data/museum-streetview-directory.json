@@ -52,7 +52,7 @@
             "en": "The Bedroom (1889) · different version",
             "ar": "غرفة النوم (1889) · نسخة مختلفة"
           },
-          "url": "https://artsandculture.google.com/streetview/mus%C3%A9e-d%E2%80%99orsay-paris/KQEnDge3UJkVmw?sv_lng=2.3261991&sv_lat=48.8597256&sv_h=294.51317783512974&sv_p=-24.603329386252483&sv_pid=BQpnrBh6xSBU3qyDjrDIcg&sv_z=1",
+          "url": "https://artsandculture.google.com/streetview/mus%C3%A9e-d%E2%80%99orsay-paris/KQEnDge3UJkVmw?sv_lng=2.3261991&sv_lat=48.8597256&sv_h=293.34192229172606&sv_p=-13.995876116313326&sv_pid=BQpnrBh6xSBU3qyDjrDIcg&sv_z=1",
           "source": "user-supplied-camera-orientation",
           "visualVerification": "pending"
         }
@@ -63,7 +63,7 @@
       "name": "Mauritshuis",
       "city": "La Haye",
       "kind": "streetview",
-      "url": "https://artsandculture.google.com/streetview/3QFHLJgXCmQm2Q",
+      "url": "https://artsandculture.google.com/streetview/3QFHLJgXCmQm2Q?sv_lat=52.08036379148908&sv_lng=4.314333606241696&sv_pid=ziy0ZuVfn5UAAAQrDCFVEg&sv_h=32.3772634864136&sv_p=-16.329441644777358&sv_z=0.03376129501680014",
       "source": "Google Arts & Culture",
       "exactArtworkPosition": false,
       "artworkPanoramas": [
@@ -74,8 +74,8 @@
             "en": "Girl with a Pearl Earring",
             "ar": "الفتاة ذات القرط اللؤلؤي"
           },
-          "url": "https://artsandculture.google.com/streetview/3QFHLJgXCmQm2Q?sv_lat=52.080361668027095&sv_lng=4.314442620391783&sv_pid=fHwCjye_LWcAAAQrDCFU1A&sv_h=347.14010719312864&sv_p=-15.890691646150543&sv_z=1",
-          "source": "user-supplied-camera-orientation",
+          "url": "https://artsandculture.google.com/streetview/3QFHLJgXCmQm2Q",
+          "source": "owner-confirmed-direct-view",
           "visualVerification": "pending"
         },
         {
@@ -85,7 +85,7 @@
             "en": "View of Delft",
             "ar": "منظر دلفت"
           },
-          "url": "https://artsandculture.google.com/streetview/3QFHLJgXCmQm2Q?sv_lat=52.08041207139772&sv_lng=4.314509059383893&sv_pid=Qk3tjMU9r-IAAAQrDCFU0A&sv_h=63.534741632009&sv_p=8.994399235477985&sv_z=1",
+          "url": "https://artsandculture.google.com/streetview/3QFHLJgXCmQm2Q?sv_lat=52.08041207139772&sv_lng=4.314509059383893&sv_pid=Qk3tjMU9r-IAAAQrDCFU0A&sv_h=56.085840547258194&sv_p=5.816453246720847&sv_z=0.11995524959896753",
           "source": "user-supplied-camera-orientation",
           "visualVerification": "pending"
         }
@@ -106,7 +106,7 @@
       "name": "Van Gogh Museum",
       "city": "Amsterdam",
       "kind": "streetview",
-      "url": "https://artsandculture.google.com/streetview/KwF-AdF1REQl6w",
+      "url": "https://artsandculture.google.com/streetview/KwF-AdF1REQl6w?sv_lng=4.88132969310592&sv_lat=52.35850068041622&sv_h=204.12876657410263&sv_p=-2.4636982515382186&sv_pid=25Hu_AatHiDpdiAKKBkAMg&sv_z=1",
       "source": "Google Arts & Culture",
       "exactArtworkPosition": false,
       "artworkPanoramas": [
@@ -138,7 +138,7 @@
       "name": "Rijksmuseum",
       "city": "Amsterdam",
       "kind": "streetview",
-      "url": "https://artsandculture.google.com/streetview/rijksmuseum-second-floor/kgF3c2qIEYZR8g",
+      "url": "https://artsandculture.google.com/streetview/rijksmuseum-second-floor/kgF3c2qIEYZR8g?sv_lng=4.885303304126437&sv_lat=52.36007665124918&sv_h=175.87416425272608&sv_p=0.7380529398352991&sv_pid=66L8taqlWEQkmGWPqTnlnA&sv_z=0.09549150281252627",
       "source": "Google Arts & Culture",
       "exactArtworkPosition": false,
       "artworkPanoramas": [
@@ -256,5 +256,5 @@
       "artworkPanoramas": []
     }
   ],
-  "editorialNote": "Artwork panoramas are provided by the project owner and have not been independently visually verified; the 1889 Orsay Bedroom is separate from the canonical 1888 Van Gogh Museum work."
+  "editorialNote": "The Mauritshuis default Street View is owner-confirmed to open facing Girl with a Pearl Earring, even without sv_pid in the URL. Museum entrance orientations were supplied separately. Orsay Bedroom remains 1889, not the Amsterdam 1888 version. Other painting orientations are owner-provided and not independently inspected."
 }
