@@ -34,7 +34,7 @@ function size(){const b=canvas.getBoundingClientRect();renderer.setSize(Math.rou
 addEventListener('resize',size);size();renderer.setAnimationLoop(()=>renderer.render(scene,camera));
 function message(s){$('status').textContent=s}
 async function request(data,blob=false){
- const response=await fetch('../api/museum-xr.cjs',{method:'POST',headers:{'Content-Type':'application/json','X-Museum-XR-Preview':pilotToken},body:JSON.stringify({...data,museumId}),cache:'no-store'});
+ const response=await fetch('../api/museum-xr',{method:'POST',headers:{'Content-Type':'application/json','X-Museum-XR-Preview':pilotToken},body:JSON.stringify({...data,museumId}),cache:'no-store'});
  if(!response.ok){const error=new Error('HTTP '+response.status);error.status=response.status;throw error}
  return blob?createImageBitmap(await response.blob()):response.json();
 }
