@@ -133,7 +133,7 @@ test('museum XR is opt-in, uses official URLs and does not overwrite existing VR
  assert.match(viewer,/meta\.copyright/);
  assert.match(entry,/scripts\/streetview-xr\.js/);
  assert.match(entry,/id="quality"/);
- assert.match(viewer,/quality:\$\('quality'\)\.value/);
+ assert.match(viewer,/const quality=\$\('quality'\)\.value/);
  assert.match(viewer,/dim\.width\+' × '\+dim\.height/);
  assert.match(viewer,/Promise\.all\(\[worker\(\),worker\(\)\]\)/);
  assert.match(registry,/museum-xr\.html/);
