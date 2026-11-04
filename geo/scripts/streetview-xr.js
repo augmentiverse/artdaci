@@ -225,7 +225,7 @@ renderer.setAnimationLoop(()=>{
        const selected=aimed.has(target);
        // The invisible hit sphere stays large; only the numbered disc changes.
        target.userData.badge?.material.color.setHex(selected?0x71ffff:0xffffff);
-       target.userData.badge?.scale.set(selected?.35:.30,selected?.35:.30,1);
+       target.userData.badge?.scale.set(selected ? 0.35 : 0.30,selected ? 0.35 : 0.30,1);
      }
      updateHoverCard(aimed.values().next().value||null);
      for(const [index,source] of [...session.inputSources].entries()){
@@ -267,7 +267,7 @@ renderer.setAnimationLoop(()=>{
      for(const target of hotspots.children){
        const active=hovering.has(target);
        target.userData.badge?.material.color.setHex(active?0x71ffff:0xffffff);
-       target.userData.badge?.scale.set(active?.35:.30,active?.35:.30,1);
+       target.userData.badge?.scale.set(active ? 0.35 : 0.30,active ? 0.35 : 0.30,1);
      }
      updateHoverCard(hovering.values().next().value||null);
    }else if(!session){
