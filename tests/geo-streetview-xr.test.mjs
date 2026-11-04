@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {parseMuseumLink,metersBetween,validateIndoorPanorama,tileGrid,bearingVector} from '../geo/scripts/streetview-xr-core.mjs';
+import {parseMuseumLink,metersBetween,validateIndoorPanorama,tileGrid,bearingVector,panoramaWorldYaw} from '../geo/scripts/streetview-xr-core.mjs';
 
 const official='https://artsandculture.google.com/streetview/the-national-gallery/abc?sv_lat=51.5088&sv_lng=-0.1293&sv_h=62.98&sv_p=8';
 test('only trusted Arts & Culture URLs and finite coordinates are accepted',()=>{
@@ -30,6 +30,18 @@ test('tiled panoramas have a bounded resolution and request budget',()=>{
  assert.throws(()=>tileGrid({imageWidth:0},2));
  assert.ok(Math.abs(bearingVector(90).x-3)<1e-8);
 });
+test('inward-facing 360 sphere is not mirrored and its image center follows compass headings',()=>{
+ // The inverted-X panorama geometry sends image center (u=0.5) to -X;
+ // rotation by panoramaWorldYaw must aim at the compass bearing vector.
+ for(const heading of [0,45,90,180,270,359]){
+  const yaw=panoramaWorldYaw(heading);
+  const imageCenter={x:-Math.cos(yaw),z:Math.sin(yaw)};
+  const target=bearingVector(heading,1);
+  assert.ok(Math.abs(imageCenter.x-target.x)<1e-10,'east-west at '+heading);
+  assert.ok(Math.abs(imageCenter.z-target.z)<1e-10,'north-south at '+heading);
+ }
+ assert.equal(panoramaWorldYaw(NaN),-Math.PI/2);
+});
 test('museum XR is opt-in, uses official URLs and does not overwrite existing VR scenes',async()=>{
  const [viewer,entry,registry,louvre]=await Promise.all([
   readFile(new URL('../geo/scripts/streetview-xr.js',import.meta.url),'utf8'),
@@ -38,6 +50,11 @@ test('museum XR is opt-in, uses official URLs and does not overwrite existing VR
   readFile(new URL('../geo/louvre-xr.html',import.meta.url),'utf8')
  ]);
  assert.match(viewer,/requestSession\('immersive-vr'/);
+ assert.match(viewer,/panoramaGeometry\.scale\(-1,1,1\)/);
+ assert.match(viewer,/new THREE\.MeshBasicMaterial\(\{map:texture,side:THREE\.FrontSide\}\)/);
+ assert.match(viewer,/next\.rotation\.y=panoramaWorldYaw\(meta\.heading\)/);
+ assert.doesNotMatch(viewer,/side:THREE\.BackSide/);
+
  assert.match(viewer,/import \{advancePinchTurn\} from '\.\/streetview-hand-turn\.mjs'/);
  assert.match(viewer,/let handMode=params\.get\('hands'\)==='1'&&!enhancedXR/);
  assert.match(viewer,/function updateHandTurning\(session,xrFrame\)/);
