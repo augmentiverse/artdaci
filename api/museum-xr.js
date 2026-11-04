@@ -170,8 +170,10 @@ module.exports=async function handler(req,res){
         return fail(res,400,"Zoom must decrease from signed ticket");
       const q=new URLSearchParams({session:ticket.session,panoId:ticket.panoId});
       const data=await(await googleFetch("/streetview/metadata?"+q,google)).json();
-      const nearby=data?.panoId===ticket.panoId&&Number.isFinite(data.lat)&&Number.isFinite(data.lng)&&security.distance(data,m)<=35;
-      const permitted=nearby&&(ticket.selectionMode==="location-demo-unverified"||security.validateIndoor(data,m));
+      const demo=ticket.selectionMode==="location-demo-unverified";
+      const nearby=data?.panoId===ticket.panoId&&Number.isFinite(data.lat)&&Number.isFinite(data.lng)&&
+        security.distance(data,m)<=(demo?security.MAX_DEMO_NAV_RADIUS_METRES:35);
+      const permitted=nearby&&(demo||security.validateIndoor(data,m));
       if(!permitted)return fail(res,403,"Panorama is no longer eligible");
       const dims=security.grid(data,z);
       return ticketResponse(res,{...ticket,dimensions:dims,exp:Date.now()+20*60000},data,ticket.selectionMode||"nearest");
@@ -179,9 +181,13 @@ module.exports=async function handler(req,res){
     if(action==="neighbor"){
       if(!validPanoId(body.panoId))return fail(res,400,"Invalid pano");
       const current=await(await googleFetch("/streetview/metadata?"+new URLSearchParams({session:ticket.session,panoId:ticket.panoId}),google)).json();
-      if(!security.validateIndoor(current,m)||!current.links?.some(link=>link.panoId===body.panoId))return fail(res,403,"Pano not adjacent");
+      if(current?.panoId!==ticket.panoId||!current.links?.some(link=>link.panoId===body.panoId))
+        return fail(res,403,"Panorama not adjacent");
       const data=await(await googleFetch("/streetview/metadata?"+new URLSearchParams({session:ticket.session,panoId:body.panoId}),google)).json();
-      if(!security.validateIndoor(data,m))return fail(res,403,"Pano outside allowed indoor area");
+      const allowed=ticket.selectionMode==="location-demo-unverified"
+        ?security.validateDemoNeighbor(current,data,m,body.panoId)
+        :security.validateIndoor(current,m)&&security.validateIndoor(data,m);
+      if(!allowed)return fail(res,403,"Neighbor outside allowed museum vicinity");
       const dims=security.grid(data,ticket.dimensions.zoom);
       return ticketResponse(res,{...ticket,panoId:data.panoId,dimensions:dims,exp:Date.now()+20*60000},data,ticket.selectionMode||"nearby-unverified");
     }
