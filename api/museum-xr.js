@@ -115,6 +115,8 @@ module.exports=async function handler(req,res){
     const m=security.museum(body.museumId);
     if(!m)return fail(res,404,"Museum not in pilot catalog");
     if(action==="start"||action==="start-exterior"){
+      if(!["hd","standard"].includes(body.quality))return fail(res,400,"Invalid image quality");
+      const requestedZoom=body.quality==="hd"?3:2;
       const google=await googleToken(req);
       const sessionResult=await googleFetch("/createSession",google,{
         method:"POST",body:JSON.stringify({mapType:"streetview",language:"en-US",region:"US"})
@@ -131,9 +133,9 @@ module.exports=async function handler(req,res){
            security.distance(scene,m)>35)return res.status(404).json({
           error:"No demonstration Street View panorama near this location.",code:"DEMO_PANORAMA_NOT_FOUND"
         });
-        security.grid(scene);
+        const dims=security.grid(scene,requestedZoom);
         return ticketResponse(res,{id:m.id,session:session.session,panoId:scene.panoId,
-          dimensions:security.grid(scene),exp:Date.now()+20*60000},scene,"location-demo-unverified");
+          dimensions:dims,exp:Date.now()+20*60000},scene,"location-demo-unverified");
       }
       const match=await searchIndoorNearMuseum(m,session.session,google);
       if(!match.metadata)return res.status(404).json({
@@ -141,8 +143,8 @@ module.exports=async function handler(req,res){
         code:"INDOOR_PANORAMA_NOT_FOUND",nearestType:match.nearestType,inspected:match.inspected
       });
       const data=match.metadata;
-      security.grid(data);
-      return ticketResponse(res,{id:m.id,session:session.session,panoId:data.panoId,dimensions:security.grid(data),exp:Date.now()+20*60000},data,match.mode);
+      const dims=security.grid(data,requestedZoom);
+      return ticketResponse(res,{id:m.id,session:session.session,panoId:data.panoId,dimensions:dims,exp:Date.now()+20*60000},data,match.mode);
     }
     if(!["neighbor","tile","rescale"].includes(action))return fail(res,400,"Unsupported action");
     const ticket=security.readTicket(body.ticket,env.MUSEUM_XR_TICKET_SECRET);
@@ -151,7 +153,7 @@ module.exports=async function handler(req,res){
     if(action==="rescale"){
       // Signed ticket proves prior authorization for this specific panoId.
       const z=Number(body.zoom);
-      if(!Number.isInteger(z)||z<0||z>1||z>=ticket.dimensions.zoom)
+      if(!Number.isInteger(z)||z<0||z>2||z>=ticket.dimensions.zoom)
         return fail(res,400,"Zoom must decrease from signed ticket");
       const q=new URLSearchParams({session:ticket.session,panoId:ticket.panoId});
       const data=await(await googleFetch("/streetview/metadata?"+q,google)).json();
@@ -167,11 +169,11 @@ module.exports=async function handler(req,res){
       if(!security.validateIndoor(current,m)||!current.links?.some(link=>link.panoId===body.panoId))return fail(res,403,"Pano not adjacent");
       const data=await(await googleFetch("/streetview/metadata?"+new URLSearchParams({session:ticket.session,panoId:body.panoId}),google)).json();
       if(!security.validateIndoor(data,m))return fail(res,403,"Pano outside allowed indoor area");
-      security.grid(data);
-      return ticketResponse(res,{...ticket,panoId:data.panoId,dimensions:security.grid(data),exp:Date.now()+20*60000},data,ticket.selectionMode||"nearby-unverified");
+      const dims=security.grid(data,ticket.dimensions.zoom);
+      return ticketResponse(res,{...ticket,panoId:data.panoId,dimensions:dims,exp:Date.now()+20*60000},data,ticket.selectionMode||"nearby-unverified");
     }
     const x=Number(body.x),y=Number(body.y),z=Number(body.zoom);
-    if(!Number.isInteger(x)||!Number.isInteger(y)||!ticket.dimensions||!Number.isInteger(z)||z<0||z>2||z!==ticket.dimensions.zoom||x<0||y<0||x>=ticket.dimensions.columns||y>=ticket.dimensions.rows)return fail(res,400,"Invalid tile");
+    if(!Number.isInteger(x)||!Number.isInteger(y)||!ticket.dimensions||!Number.isInteger(z)||z<0||z>3||z!==ticket.dimensions.zoom||x<0||y<0||x>=ticket.dimensions.columns||y>=ticket.dimensions.rows)return fail(res,400,"Invalid tile");
     const path="/streetview/tiles/"+z+"/"+x+"/"+y+"?"+new URLSearchParams({session:ticket.session,panoId:ticket.panoId});
     const response=await googleFetch(path,google);
     const mime=response.headers.get("content-type")||"";
