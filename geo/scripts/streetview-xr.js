@@ -415,7 +415,26 @@ async function request(data,blob=false){
  }
  const response=await fetch('../api/museum-xr',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...data,museumId}),cache:'no-store'});
  if(response.headers.get('content-type')?.includes('text/html')){const error=new Error('Vercel login required');error.status=401;throw error}
- if(!response.ok){let detail='';try{const data=await response.json();detail=String(data.code||data.stage||data.error||'').slice(0,100); if(data.nearestType)detail+=' · '+String(data.nearestType).slice(0,40)}catch{}const error=new Error('HTTP '+response.status);error.status=response.status;error.detail=detail;throw error}
+ if(!response.ok){
+  let detail='',code='',wait=0;
+  try{
+   const payload=await response.json();
+   code=String(payload.code||'').slice(0,64);
+   detail=String(code||payload.stage||payload.error||'').slice(0,100);
+   if(payload.nearestType)detail+=' · '+String(payload.nearestType).slice(0,40);
+   wait=Number(payload.retryAfterSeconds)||0;
+  }catch{}
+  const error=new Error('HTTP '+response.status);
+  error.status=response.status;error.detail=detail;error.code=code;
+  if(response.status===429){
+   const value=Number(response.headers.get('Retry-After'));
+   const seconds=Math.min(86400,Math.max(1,Math.ceil(wait||value||60)));
+   error.retryAfterSeconds=seconds;
+   quotaHold.until=Date.now()+seconds*1000;
+   quotaHold.code=code||'GOOGLE_RATE_LIMIT';
+  }
+  throw error;
+ }
  return blob?createImageBitmap(await response.blob()):response.json();
 }
 // The visible navigation points are deliberately small, but retain an invisible
