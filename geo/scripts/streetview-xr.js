@@ -38,20 +38,72 @@ $('quality-label').textContent=t.quality;$('quality').options[0].textContent=t.h
 $('disclaimer').textContent=t.note;$('official').textContent=t.official;$('back').href='index.html?lang='+lang;
 document.querySelectorAll('[data-lang]').forEach(a=>{const query=new URLSearchParams(location.search);query.set('lang',a.dataset.lang);a.href='?'+query;if(a.dataset.lang===lang)a.setAttribute('aria-current','page')});
 const museumId=params.get('museum')||'national-gallery-london';
-const museumsToTry=[
- {id:'national-gallery-london',label:'National Gallery · London'},
- {id:'vermeer-girl-with-a-pearl-earring',label:'Mauritshuis · Girl with a Pearl Earring'},
- {id:'view-of-delft',label:'Mauritshuis · View of Delft'},
- {id:'vermeer-milkmaid',label:'Rijksmuseum · The Milkmaid'},
- {id:'van-gogh',label:'Musée d’Orsay · Van Gogh'}
-];
-$('alternatives-title').textContent=lang==='fr'?'Autres panoramas à essayer (disponibilité non garantie)':lang==='ar'?'مناظر أخرى للتجربة (التوفر غير مضمون)':'Other panoramas to try (availability not guaranteed)';
-for(const item of museumsToTry){
- const link=document.createElement('a');
- link.href='?'+new URLSearchParams({lang,museum:item.id});
- link.textContent=item.label;
- if(item.id===museumId)link.setAttribute('aria-current','page');
- $('museum-list').append(link);
+const catalogText={
+ fr:{heading:'Explorer les œuvres ARTDACI · Street View 360° (expérimental)',
+  disclaimer:'Un panorama précis est fourni pour quatre œuvres seulement. Les autres entrées proposent la recherche d’une vue 360° près de leur musée, sans garantir la présence du tableau dans la salle.',
+  search:'Rechercher une œuvre, un artiste ou un musée',
+  direct:'Panorama direct fourni · salle non vérifiée',tour:'Visite institutionnelle · salle non vérifiée',
+  nearby:'Vue de proximité · disponibilité non vérifiée',results:'œuvres disponibles dans le catalogue'},
+ en:{heading:'Explore ARTDACI artworks · Street View 360° (experimental)',
+  disclaimer:'A direct panorama is supplied for only four artworks. Other entries offer a nearby 360° museum search; neither availability nor visibility of the artwork in its gallery is guaranteed.',
+  search:'Search artwork, artist or museum',
+  direct:'Supplied panorama · gallery unverified',tour:'Institutional tour · gallery unverified',
+  nearby:'Museum vicinity · availability unverified',results:'catalog entries'},
+ ar:{heading:'استكشف أعمال ARTDACI · ستريت فيو 360° (تجريبي)',
+  disclaimer:'تتوفر روابط بانورامية محددة لأربعة أعمال فقط. أما الأعمال الأخرى فتعتمد على البحث عن مشهد قريب من المتحف دون ضمان وجود اللوحة داخل القاعة.',
+  search:'ابحث عن لوحة أو فنان أو متحف',
+  direct:'رابط بانورامي محدد · القاعة غير مؤكدة',tour:'جولة مؤسسية · القاعة غير مؤكدة',
+  nearby:'مشهد قرب المتحف · التوفر غير مؤكد',results:'مدخل في الفهرس'}
+};
+const catalogCopy=catalogText[lang];
+$('alternatives-title').textContent=catalogCopy.heading;
+$('artwork-catalog-disclaimer').textContent=catalogCopy.disclaimer;
+$('artwork-search-label').textContent=catalogCopy.search;
+$('artwork-search').placeholder=catalogCopy.search;
+const artworkTitlesFr={
+ 'water-lilies':'Les Nymphéas','japanese-bridge':'Le Bassin aux nymphéas',
+ 'woman-with-parasol':'La Femme à l’ombrelle','pont-d-argenteuil':'Le Pont d’Argenteuil',
+ 'poppies':'Les Coquelicots','monet-impression-sunrise':'Impression, soleil levant',
+ 'vermeer-astronomer':'L’Astronome','art-of-painting':'L’Art de la peinture',
+ 'vermeer-girl-with-a-pearl-earring':'La Jeune Fille à la perle',
+ 'woman-holding-balance':'La Femme à la balance','view-of-delft':'Vue de Delft',
+ 'vermeer-milkmaid':'La Laitière','mona-lisa':'La Joconde','last-supper':'La Cène',
+ 'belle-ferronniere':'La Belle Ferronnière','lady-with-an-ermine':'La Dame à l’hermine',
+ 'ginevra-de-benci':'Ginevra de’ Benci','annunciation':'L’Annonciation',
+ 'van-gogh':'Autoportrait (1889)','starry-night':'La Nuit étoilée',
+ 'van-gogh-bedroom':'La Chambre à coucher','cafe-terrace':'Terrasse du café le soir',
+ 'night-cafe':'Le Café de nuit','sunflowers':'Les Tournesols'
+};
+const displayedTitle=item=>lang==='fr'?(artworkTitlesFr[item.id]||item.title):item.title;
+const artworkSearch=$('artwork-search'),artworkList=$('museum-list');
+function renderMuseumCatalog(items){
+ const sorted=[...items].sort((a,b)=>
+  Number(b.sourceKind==='direct-panorama')-Number(a.sourceKind==='direct-panorama')||
+  String(a.artist||'').localeCompare(String(b.artist||''),lang)||
+  String(a.title).localeCompare(String(b.title),lang));
+ function render(){
+  const needle=artworkSearch.value.trim().toLocaleLowerCase();
+  const matches=sorted.filter(x=>[x.title,displayedTitle(x),x.artist,x.museum,x.city].join(' ').toLocaleLowerCase().includes(needle));
+  artworkList.replaceChildren();
+  for(const x of matches){
+   const link=document.createElement('a');
+   const q=new URLSearchParams(location.search);q.set('lang',lang);q.set('museum',x.id);q.delete('source');
+   link.href='?'+q.toString();
+   const text=document.createElement('span');
+   text.textContent=displayedTitle(x)+' · '+(x.artist||x.museum)+' · '+x.museum;
+   link.append(text);
+   const kind=document.createElement('span');kind.className='xr-kind';
+   kind.textContent=x.sourceKind==='direct-panorama'?catalogCopy.direct:
+     x.sourceKind==='museum-tour'?catalogCopy.tour:catalogCopy.nearby;
+   link.append(kind);
+   link.title=kind.textContent;
+   if(x.id===museumId)link.setAttribute('aria-current','page');
+   artworkList.append(link);
+  }
+  $('artwork-result-count').textContent=matches.filter(x=>x.artist).length+' '+catalogCopy.results;
+ }
+ artworkSearch.addEventListener('input',render);
+ render();
 }
 const source=params.get('source');
 if(source){try{const u=new URL(source);if(u.protocol==='https:'&&u.hostname==='artsandculture.google.com'&&u.pathname.startsWith('/streetview/')){$('official').href=u.href;$('official').hidden=false}}catch{}}
@@ -625,12 +677,17 @@ async function startPanorama(action){
   const catalog=await request({action:'catalog'});
   const entry=catalog.museums.find(m=>m.id===museumId);
   if(!entry){message(t.empty);return}
-  $('official').href=entry.source;$('official').hidden=false;
+  if(entry.source){$('official').href=entry.source;$('official').hidden=false}
+  else{$('official').hidden=true;$('official').removeAttribute('href')}
   const response=await request({action,quality});await showPanorama(response);
   initialView={action,quality,panoId:currentMeta?.panoId||null};
  }catch(error){reportError(error)}finally{loading=false}
 }
-request({action:'catalog'}).then(catalog=>{const entry=catalog.museums.find(m=>m.id===museumId);if(entry){$('official').href=entry.source;$('official').hidden=false}}).catch(()=>{});
+request({action:'catalog'}).then(catalog=>{
+ renderMuseumCatalog(catalog.museums||[]);
+ const entry=catalog.museums.find(m=>m.id===museumId);
+ if(entry?.source){$('official').href=entry.source;$('official').hidden=false}
+}).catch(()=>{$('artwork-result-count').textContent=lang==='fr'?'Catalogue indisponible. Réessayez ultérieurement.':lang==='ar'?'الفهرس غير متاح حالياً.':'Catalog unavailable. Please retry later.'});
 $('start').addEventListener('click',()=>startPanorama('start'));
 $('demo').addEventListener('click',()=>startPanorama('start-exterior'));
 // A new immersive session MUST be requested directly in the user's click
