@@ -169,9 +169,12 @@ addEventListener('keydown',event=>{
  camera.rotation.x=lookPitch;event.preventDefault();
 });
 const renderClock=new THREE.Clock();
+let sessionHelpShown=false;
 renderer.setAnimationLoop(()=>{
  const dt=Math.min(renderClock.getDelta(),0.05);
  const session=renderer.xr.getSession();
+ if(session&&!sessionHelpShown){sessionHelpShown=true;vrNotice(t.aim)}
+ if(!session)sessionHelpShown=false;
  const head=session?renderer.xr.getCamera():camera;
  // Position nearby panorama markers at eye level rather than world-floor
  // level, which otherwise makes a controller ray miss in a seated Quest.
@@ -320,7 +323,7 @@ request({action:'catalog'}).then(catalog=>{const entry=catalog.museums.find(m=>m
 $('start').addEventListener('click',()=>startPanorama('start'));
 $('demo').addEventListener('click',()=>startPanorama('start-exterior'));
 $('enter-vr').addEventListener('click',async()=>{try{const session=renderer.xr.getSession();if(session){await session.end();return}await renderer.xr.setSession(await navigator.xr.requestSession('immersive-vr',{optionalFeatures:['local-floor']}))}catch(e){reportError(e)}});
-renderer.xr.addEventListener('sessionstart',()=>{$('enter-vr').textContent=t.exit});
+renderer.xr.addEventListener('sessionstart',()=>{$('enter-vr').textContent=t.exit;sessionHelpShown=false});
 renderer.xr.addEventListener('sessionend',()=>{$('enter-vr').textContent=t.enter});
 function setDesktopZoom(step){
  if(renderer.xr.isPresenting)return; // headset WebXR controls its own projection
