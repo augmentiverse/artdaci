@@ -25,7 +25,8 @@ button:focus-visible,a:focus-visible{outline:3px solid #ffe19a;outline-offset:3p
 </head>
 <body><header><a href="index.html" id="back">← ARTDACI GEO</a><nav aria-label="Language"><a href="?lang=fr" data-lang="fr">FR</a><a href="?lang=en" data-lang="en">EN</a><a href="?lang=ar" data-lang="ar">العربية</a></nav></header>
 <main><p>ARTDACI GEO · MUSEUM XR</p><h1 id="title">Musées en réalité virtuelle</h1><p id="intro"></p>
-<div class="viewport"><canvas id="xr-canvas" aria-label="Vue panoramique immersive" tabindex="0"></canvas></div>
+<div class="viewport"><canvas id="xr-canvas" aria-label="Vue panoramique immersive : glisser pour pivoter, molette pour zoomer" tabindex="0"></canvas></div>
+<p id="controls-help" class="note">Glissez pour pivoter, molette pour zoomer. En VR, tournez la tête ou utilisez le joystick droit.</p>
 <div class="tools"><label id="quality-label" for="quality">Qualité</label><select id="quality" aria-label="Qualité panoramique"><option value="hd" selected>Haute définition · 4K</option><option value="standard">Standard · 2K</option></select><button id="start">Chercher une salle intérieure</button><button id="demo" class="secondary">Tester Street View 360° (extérieur possible)</button><button id="enter-vr" disabled>Entrer en VR</button><button id="reset" class="secondary">Recentrer</button><a id="official" class="button secondary" target="_blank" rel="noopener noreferrer" hidden>Visite officielle ↗</a></div>
 <p class="note" id="image-kind">La visite officielle permet de voir les salles des musées. Le mode Street View 360° ici est une vue expérimentale de proximité, parfois extérieure, et ne représente pas nécessairement les tableaux.</p>
 <p class="note" id="preview-note">Prévisualisation privée protégée par Vercel. Aucun code supplémentaire nécessaire.</p>
