@@ -601,14 +601,24 @@ function reportError(error){console.warn('Museum XR preview:',error.message);
  if(renderer.xr.isPresenting)vrNotice(error.status===403?t.outside:t.loadFailed);
  if(error.status===403&&error.detail?.startsWith('NEIGHBOR_')){message(t.outside);return}
  if(error.hdUnavailable){message(t.hdError+(error.status?' · HTTP '+error.status:'')+(error.detail?' · '+error.detail:''));return}const empty=error.status===404&&error.detail?.includes('nearest-outdoor')?t.nearestOutdoor:t.empty;message((error.status===401?t.bad:error.status===404?empty:error.status===503?t.disabled:t.error)+(error.status?' · HTTP '+error.status:'')+(error.detail?' · '+error.detail:''))}
+let initialView={action:null,quality:null,panoId:null};
 async function startPanorama(action){
- if(loading)return;loading=true;
+ if(loading)return;
+ const quality=$('quality').value;
+ if(sphere&&currentMeta?.panoId===initialView.panoId&&initialView.action===action&&initialView.quality===quality){
+  message(lang==='fr'?'Panorama déjà chargé : utilisez la VR ou changez de mode de commande sans le télécharger à nouveau.':
+    lang==='ar'?'المشهد محمل بالفعل. استخدم VR أو بدّل طريقة التحكم دون إعادة تحميل.':
+    'Panorama already loaded. Enter VR or change controls without re-downloading.');
+  return;
+ }
+ loading=true;
  try{
   const catalog=await request({action:'catalog'});
   const entry=catalog.museums.find(m=>m.id===museumId);
   if(!entry){message(t.empty);return}
   $('official').href=entry.source;$('official').hidden=false;
-  const response=await request({action,quality:$('quality').value});await showPanorama(response);
+  const response=await request({action,quality});await showPanorama(response);
+  initialView={action,quality,panoId:currentMeta?.panoId||null};
  }catch(error){reportError(error)}finally{loading=false}
 }
 request({action:'catalog'}).then(catalog=>{const entry=catalog.museums.find(m=>m.id===museumId);if(entry){$('official').href=entry.source;$('official').hidden=false}}).catch(()=>{});
