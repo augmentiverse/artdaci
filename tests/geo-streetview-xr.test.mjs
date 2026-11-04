@@ -51,6 +51,18 @@ test('museum XR is opt-in, uses official URLs and does not overwrite existing VR
  assert.match(entry,/id="links-help"/);
  assert.match(viewer,/canvas\.addEventListener\('wheel'/);
  assert.match(viewer,/session\.inputSources/);
+ assert.match(viewer,/controller\.addEventListener\('selectstart'/);
+ assert.match(viewer,/controller\.addEventListener\('select'/);
+ assert.match(viewer,/controller\.add\(laser\)/);
+ assert.match(viewer,/new THREE\.SphereGeometry\(\.34,20,16\)/);
+ assert.match(viewer,/head\.getWorldPosition\(rayOrigins\)/);
+ assert.match(viewer,/laser\.material\.color\.setHex\(hit\?0x65ffe1/);
+ assert.match(viewer,/gazeHit\(\)/);
+ assert.match(viewer,/source\.gamepad\?\.buttons\?\.\[4\]/);
+ assert.match(viewer,/activateNextXRNeighbor\(\)/);
+ assert.match(viewer,/vrNotice\(t\.aim\)/);
+ assert.match(viewer,/if\(renderer\.xr\.isPresenting\)vrNotice/);
+ assert.match(entry,/rayon lumineux/);
  assert.match(viewer,/hdUnavailable/);
  assert.match(entry,/id="controls-help"/);
  assert.match(viewer,/museum-xr/);
