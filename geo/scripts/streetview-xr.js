@@ -337,9 +337,77 @@ async function startPanorama(action){
 request({action:'catalog'}).then(catalog=>{const entry=catalog.museums.find(m=>m.id===museumId);if(entry){$('official').href=entry.source;$('official').hidden=false}}).catch(()=>{});
 $('start').addEventListener('click',()=>startPanorama('start'));
 $('demo').addEventListener('click',()=>startPanorama('start-exterior'));
-$('enter-vr').addEventListener('click',async()=>{try{const session=renderer.xr.getSession();if(session){await session.end();return}await renderer.xr.setSession(await navigator.xr.requestSession('immersive-vr',{optionalFeatures:['local-floor']}))}catch(e){reportError(e)}});
-renderer.xr.addEventListener('sessionstart',()=>{$('enter-vr').textContent=t.exit;sessionHelpShown=false});
-renderer.xr.addEventListener('sessionend',()=>{$('enter-vr').textContent=t.enter});
+// A new immersive session MUST be requested directly in the user's click
+// gesture. Keep user-facing diagnostics separate from Google tile errors.
+const xrTexts={
+ fr:{request:'Demande VR envoyée au Quest…',pending:'WebXR attend la confirmation du casque. Vérifiez les autorisations dans Meta Quest Browser.',
+  starting:'Autorisation WebXR reçue : initialisation du rendu VR…',ready:'Session VR activée.',ended:'Session VR terminée.',
+  unavailable:'La VR immersive n’est pas disponible dans ce navigateur.',failed:'Impossible de démarrer la VR',
+  stale:'Le Quest ne répond pas encore à la demande VR. Si nécessaire, fermez l’onglet puis rouvrez la Preview.',
+  basic:'Mode VR stable (priorité à l’affichage).',advanced:'Navigation manettes expérimentale. Retournez au mode stable si la VR bloque.',
+  advancedLink:'Tester les commandes avancées',basicLink:'Revenir au mode VR stable'},
+ en:{request:'VR request sent to Quest…',pending:'WebXR is waiting for headset confirmation. Check permissions in Meta Quest Browser.',
+  starting:'WebXR permission granted: initializing VR renderer…',ready:'VR session active.',ended:'VR session ended.',
+  unavailable:'Immersive VR is unavailable in this browser.',failed:'Could not start VR',
+  stale:'Quest has not responded to VR request. Close and reopen the Preview tab if needed.',
+  basic:'Stable VR mode (rendering first).',advanced:'Experimental controller navigation. Return to stable mode if VR hangs.',
+  advancedLink:'Try advanced controls',basicLink:'Return to stable VR mode'},
+ ar:{request:'تم طلب تشغيل VR…',pending:'بانتظار موافقة النظارة على WebXR. راجع الصلاحيات في متصفح Quest.',
+  starting:'تم منح إذن WebXR؛ يبدأ العرض…',ready:'تم تشغيل VR.',ended:'انتهت جلسة VR.',
+  unavailable:'الوضع الغامر غير متاح في هذا المتصفح.',failed:'تعذر تشغيل VR',
+  stale:'لم تستجب النظارة بعد لطلب VR. أغلق التبويب وافتح المعاينة مرة أخرى عند الحاجة.',
+  basic:'وضع VR المستقر أولاً.',advanced:'تجربة تحكم متقدمة. عد إلى الوضع المستقر إذا تعطل VR.',
+  advancedLink:'تجربة عناصر التحكم المتقدمة',basicLink:'العودة إلى وضع VR المستقر'}
+};
+const xrText=xrTexts[lang],vrButton=$('enter-vr'),vrStatus=$('xr-diagnostic'),modeLink=$('xr-mode-link');
+$('xr-mode-summary').textContent=enhancedXR?xrText.advanced:xrText.basic;
+modeLink.textContent=enhancedXR?xrText.basicLink:xrText.advancedLink;
+const modeParams=new URLSearchParams(location.search);
+if(enhancedXR)modeParams.delete('xrControls');else modeParams.set('xrControls','enhanced');
+modeLink.href='?'+modeParams.toString();
+let requestingVR=false,pendingTimer=null,staleTimer=null,vrSessionStarted=false;
+function clearVRPending(){
+ clearTimeout(pendingTimer);clearTimeout(staleTimer);
+ pendingTimer=null;staleTimer=null;
+ requestingVR=false;vrButton.disabled=false;
+}
+function xrError(error){
+ clearVRPending();
+ const name=typeof error?.name==='string'&&/^[A-Za-z]{1,40}$/.test(error.name)?error.name:'Error';
+ vrStatus.textContent=xrText.failed+' ('+name+').';
+ console.warn('Museum XR immersive session start failed:',name);
+}
+vrButton.addEventListener('click',()=>{
+ const session=renderer.xr.getSession();
+ if(session){session.end().catch(xrError);return}
+ if(requestingVR)return;
+ if(!navigator.xr?.requestSession){vrStatus.textContent=xrText.unavailable;return}
+ requestingVR=true;vrSessionStarted=false;vrButton.disabled=true;
+ vrStatus.textContent=xrText.request;
+ pendingTimer=setTimeout(()=>{if(requestingVR&&!vrSessionStarted)vrStatus.textContent=xrText.pending},6000);
+ staleTimer=setTimeout(()=>{if(requestingVR&&!vrSessionStarted)vrStatus.textContent=xrText.stale},18000);
+ let promise;
+ try{
+  // Invoke requestSession synchronously while the click provides activation.
+  promise=navigator.xr.requestSession('immersive-vr',{optionalFeatures:['local-floor']});
+ }catch(error){xrError(error);return}
+ Promise.resolve(promise).then(async xrSession=>{
+  vrStatus.textContent=xrText.starting;
+  try{
+   await renderer.xr.setSession(xrSession);
+  }catch(error){
+   try{await xrSession.end()}catch{}
+   throw error;
+  }
+ }).catch(xrError);
+});
+renderer.xr.addEventListener('sessionstart',()=>{
+ vrSessionStarted=true;sessionHelpShown=false;
+ clearVRPending();vrButton.textContent=t.exit;vrStatus.textContent=xrText.ready;
+});
+renderer.xr.addEventListener('sessionend',()=>{
+ vrSessionStarted=false;clearVRPending();vrButton.textContent=t.enter;vrStatus.textContent=xrText.ended;
+});
 function setDesktopZoom(step){
  if(renderer.xr.isPresenting)return; // headset WebXR controls its own projection
  camera.fov=THREE.MathUtils.clamp(camera.fov+step,40,100);
