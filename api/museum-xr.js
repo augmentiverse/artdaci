@@ -182,12 +182,12 @@ module.exports=async function handler(req,res){
       if(!validPanoId(body.panoId))return fail(res,400,"Invalid pano");
       const current=await(await googleFetch("/streetview/metadata?"+new URLSearchParams({session:ticket.session,panoId:ticket.panoId}),google)).json();
       if(current?.panoId!==ticket.panoId||!current.links?.some(link=>link.panoId===body.panoId))
-        return fail(res,403,"Panorama not adjacent");
+        return res.status(403).json({error:"Panorama not adjacent",code:"NEIGHBOR_NOT_ADJACENT"});
       const data=await(await googleFetch("/streetview/metadata?"+new URLSearchParams({session:ticket.session,panoId:body.panoId}),google)).json();
       const allowed=ticket.selectionMode==="location-demo-unverified"
         ?security.validateDemoNeighbor(current,data,m,body.panoId)
         :security.validateIndoor(current,m)&&security.validateIndoor(data,m);
-      if(!allowed)return fail(res,403,"Neighbor outside allowed museum vicinity");
+      if(!allowed)return res.status(403).json({error:"Neighbor beyond pilot vicinity",code:"NEIGHBOR_OUT_OF_RANGE"});
       const dims=security.grid(data,ticket.dimensions.zoom);
       return ticketResponse(res,{...ticket,panoId:data.panoId,dimensions:dims,exp:Date.now()+20*60000},data,ticket.selectionMode||"nearby-unverified");
     }
