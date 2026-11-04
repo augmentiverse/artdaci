@@ -6,12 +6,36 @@ const require=createRequire(import.meta.url);
 const security=require('../lib/museum-xr-security.cjs');
 const gateway=require('../api/museum-xr.js');
 
-test('pilot allowlist includes four existing artworks and National Gallery',()=>{
+test('ARTDACI Street View pilot exposes 24 curated artwork venues and keeps its original gallery demo',()=>{
  const list=security.catalog();
- assert.equal(list.length,5);
- assert.ok(list.every(item=>item.id&&item.source.startsWith('https://artsandculture.google.com/streetview/')));
+ assert.equal(list.length,25);
+ assert.equal(list.filter(item=>item.artist).length,24);
+ assert.equal(list.filter(item=>item.sourceKind==='direct-panorama'&&item.artist).length,4);
+ assert.ok(list.every(item=>item.id&&item.venueId&&Number.isFinite(item.lat)&&Number.isFinite(item.lng)));
+ assert.ok(list.every(item=>item.coordinateSource.startsWith('https://')));
+ assert.ok(list.every(item=>!item.source||item.source.startsWith('https://artsandculture.google.com/')));
  assert.ok(security.museum('national-gallery-london'));
  assert.equal(security.museum('unknown-museum'),null);
+});
+test('geo atlas museum pins are used for unverified views without altering owner supplied direct artwork panorama positions',()=>{
+ const louvre=security.museum('mona-lisa');
+ assert.equal(louvre.venueId,'louvre');
+ assert.equal(louvre.sourceKind,'venue-proximity');
+ assert.equal(louvre.lat,48.861111);
+ assert.equal(louvre.lng,2.335833);
+ assert.equal(louvre.source,null);
+ const pearl=security.museum('vermeer-girl-with-a-pearl-earring');
+ assert.equal(pearl.venueId,'mauritshuis');
+ assert.equal(pearl.sourceKind,'direct-panorama');
+ assert.notEqual(pearl.lat,52.080389);
+ assert.ok(pearl.source.includes('artsandculture.google.com/streetview/'));
+ const monet=security.museum('water-lilies');
+ assert.equal(monet.venueId,'nmwa-tokyo');
+ assert.equal(monet.sourceKind,'venue-proximity');
+ assert.ok(Math.abs(monet.lat-35.715357)<0.000001);
+ const gallery=security.museum('art-of-painting');
+ assert.equal(gallery.sourceKind,'museum-tour');
+ assert.ok(gallery.source.includes('artsandculture.google.com/partner/'));
 });
 test('only indoor scene in the specified museum radius is eligible',()=>{
  const museum=security.museum('national-gallery-london');
@@ -180,6 +204,10 @@ test('demo neighbor is bounded to linked Street View scenes close to the same mu
 test('outdoor demo navigation is distinct from verified indoor painting-room traversal',async()=>{
  const source=await readFile(new URL('../api/museum-xr.js',import.meta.url),'utf8');
  assert.match(source,/security\.validateDemoNeighbor\(current,data,m,body\.panoId\)/);
+ assert.match(source,/m\.sourceKind==="direct-panorama"\?30:75/);
+ assert.match(source,/security\.MAX_DEMO_NAV_RADIUS_METRES/);
+ assert.match(source,/sourceKind:x\.sourceKind/);
+
  assert.match(source,/security\.validateIndoor\(current,m\)&&security\.validateIndoor\(data,m\)/);
  assert.match(source,/NEIGHBOR_OUT_OF_RANGE/);
 });
