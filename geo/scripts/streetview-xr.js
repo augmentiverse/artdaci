@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {bearingVector} from './streetview-xr-core.mjs';
+import {bearingVector,panoramaWorldYaw} from './streetview-xr-core.mjs';
 import {advancePinchTurn} from './streetview-hand-turn.mjs';
 const params=new URLSearchParams(location.search);
 const lang=['en','fr','ar'].includes(params.get('lang'))?params.get('lang'):'fr';
@@ -582,8 +582,15 @@ async function showPanorama(result){
  if(!target)throw Error('Panorama unavailable');
  const meta=resolved.metadata;
  const texture=new THREE.CanvasTexture(target);texture.colorSpace=THREE.SRGBColorSpace||undefined;
- const next=new THREE.Mesh(new THREE.SphereGeometry(40,64,32),new THREE.MeshBasicMaterial({map:texture,side:THREE.BackSide}));
- next.rotation.y=THREE.MathUtils.degToRad(-Number(meta.heading||0));
+ // Render from inside a truly inward-facing sphere, not with BackSide faces.
+// The old BackSide mapping reflected letters and reversed artwork profiles.
+// The official Three.js panorama example flips the geometry on X instead.
+ const panoramaGeometry=new THREE.SphereGeometry(40,64,32);
+ panoramaGeometry.scale(-1,1,1);
+ const next=new THREE.Mesh(panoramaGeometry,new THREE.MeshBasicMaterial({map:texture,side:THREE.FrontSide}));
+ // The image center corresponds to the Google metadata compass heading;
+ // this places numbered neighboring-view markers at the correct bearings.
+ next.rotation.y=panoramaWorldYaw(meta.heading);
  if(sphere){scene.remove(sphere);sphere.geometry.dispose();sphere.material.map.dispose();sphere.material.dispose()}
  sphere=next;scene.add(sphere);ticket=resolved.ticket;currentMeta=meta;
  $('attribution').replaceChildren(document.createTextNode(meta.copyright));
