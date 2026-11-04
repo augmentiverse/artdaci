@@ -38,6 +38,17 @@ test('museum XR is opt-in, uses official URLs and does not overwrite existing VR
   readFile(new URL('../geo/louvre-xr.html',import.meta.url),'utf8')
  ]);
  assert.match(viewer,/requestSession\('immersive-vr'/);
+ assert.match(viewer,/const enhancedXR=params\.get\('xrControls'\)==='enhanced'/);
+ assert.match(viewer,/if\(session&&enhancedXR\)/);
+ assert.match(viewer,/renderer\.render\(scene,camera\)/);
+ assert.match(viewer,/renderer\.xr\.addEventListener\('sessionstart'/);
+ assert.match(viewer,/navigator\.xr\.requestSession\('immersive-vr'/);
+ assert.match(viewer,/xrText\.pending/);
+ assert.match(viewer,/xrText\.stale/);
+ assert.match(viewer,/vrStatus\.textContent=xrText\.ready/);
+ assert.match(entry,/id="xr-diagnostic"/);
+ assert.match(entry,/id="xr-mode-link"/);
+ assert.match(entry,/id="xr-mode-summary"/);
  assert.match(viewer,/canvas\.addEventListener\('pointerdown'/);
  assert.match(viewer,/canvas\.addEventListener\('pointermove'/);
  assert.match(viewer,/addHotspots\(meta\)/);
