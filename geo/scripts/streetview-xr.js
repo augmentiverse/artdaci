@@ -395,7 +395,24 @@ renderer.setAnimationLoop((time,xrFrame)=>{
  renderer.render(scene,camera);
 });
 function message(s){$('status').textContent=s}
+const quotaHold={until:0,code:''};
+function quotaNotice(code,seconds){
+ const daily=code==='PILOT_DAILY_CAP';
+ const minute=code==='PILOT_MINUTE_CAP';
+ const phrases=lang==='fr'
+ ?[ 'Limite quotidienne du pilote atteinte : renouvellement au prochain jour UTC.', 'Trop de requêtes rapprochées : protection temporaire du pilote.', 'Google limite temporairement les requêtes.' ]
+ :lang==='ar'
+ ?['تم بلوغ الحد اليومي للتجربة؛ يتجدد عند بداية اليوم التالي UTC.','طلبات متكررة، توقف مؤقت للحماية.','تحدد جوجل الطلبات مؤقتاً.']
+ :['Pilot daily limit reached; resets on the next UTC day.','Too many requests; temporary pilot protection.','Google is temporarily rate-limiting requests.'];
+ return phrases[daily?0:minute?1:2]+(seconds>0?' · '+Math.ceil(seconds)+' s':'');
+}
 async function request(data,blob=false){
+ if(data.action!=='catalog'&&data.action!=='diagnose'&&quotaHold.until>Date.now()){
+  const error=new Error('Quota cooldown');
+  error.status=429;error.code=quotaHold.code;
+  error.retryAfterSeconds=Math.ceil((quotaHold.until-Date.now())/1000);
+  throw error;
+ }
  const response=await fetch('../api/museum-xr',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...data,museumId}),cache:'no-store'});
  if(response.headers.get('content-type')?.includes('text/html')){const error=new Error('Vercel login required');error.status=401;throw error}
  if(!response.ok){let detail='';try{const data=await response.json();detail=String(data.code||data.stage||data.error||'').slice(0,100); if(data.nearestType)detail+=' · '+String(data.nearestType).slice(0,40)}catch{}const error=new Error('HTTP '+response.status);error.status=response.status;error.detail=detail;throw error}
