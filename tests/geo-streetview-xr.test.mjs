@@ -39,8 +39,15 @@ test('museum XR is opt-in, uses official URLs and does not overwrite existing VR
  ]);
  assert.match(viewer,/requestSession\('immersive-vr'/);
  assert.match(viewer,/import \{advancePinchTurn\} from '\.\/streetview-hand-turn\.mjs'/);
- assert.match(viewer,/const handMode=params\.get\('hands'\)==='1'&&!enhancedXR/);
+ assert.match(viewer,/let handMode=params\.get\('hands'\)==='1'&&!enhancedXR/);
  assert.match(viewer,/function updateHandTurning\(session,xrFrame\)/);
+ assert.match(viewer,/handLink\.addEventListener\('click',event=>/);
+ assert.match(viewer,/event\.preventDefault\(\)/);
+ assert.match(viewer,/history\.replaceState\(null,''/);
+ assert.match(viewer,/quotaHold\.until>Date\.now\(\)/);
+ assert.match(viewer,/quotaNotice\(error\.code\|\|quotaHold\.code,seconds\)/);
+ assert.match(viewer,/initialView=\{action,quality,panoId:currentMeta\?\.panoId\|\|null\}/);
+
  assert.match(viewer,/xrFrame\.getJointPose\(thumbJoint,referenceSpace\)/);
  assert.match(viewer,/xrFrame\.getJointPose\(indexJoint,referenceSpace\)/);
  assert.match(viewer,/advancePinchTurn\(pinchTurn\.key===key\?pinchTurn\.state:null,sample\)/);
