@@ -37,9 +37,11 @@ export function tileGrid(metadata,level=2) {
   const width=Number(metadata.imageWidth),height=Number(metadata.imageHeight);
   const tileWidth=Number(metadata.tileWidth),tileHeight=Number(metadata.tileHeight);
   if (![width,height,tileWidth,tileHeight].every(v=>Number.isInteger(v)&&v>0)) throw Error("Invalid panorama dimensions");
-  // The number of image-tile columns doubles at each Google Street View zoom.
-  const outputWidth=Math.min(width,tileWidth*(2**level));
-  const outputHeight=Math.min(height,Math.ceil(outputWidth*height/width));
+  // Native dimensions describe zoom 5. Lower zoom levels are scaled down
+  // relative to that original size, not expanded to 2^level whole tiles.
+  const divisor=2**(5-level);
+  const outputWidth=Math.max(1,Math.ceil(width/divisor));
+  const outputHeight=Math.max(1,Math.ceil(height/divisor));
   if (outputWidth>4096||outputHeight>2048) throw Error("Panorama exceeds headset memory budget");
   const columns=Math.ceil(outputWidth/tileWidth),rows=Math.ceil(outputHeight/tileHeight);
   if (columns*rows>40) throw Error("Too many tile requests");
