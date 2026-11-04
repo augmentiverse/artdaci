@@ -99,7 +99,9 @@ function activateXRHotspot(controller){
  if(loading||!renderer.xr.isPresenting||performance.now()-lastXRSelection<500)return;
  try{
   scene.updateMatrixWorld(true);
-  const selected=controllerHit(controller)||(enhancedXR?gazeHit():null);
+  // Gaze fallback is evaluated only when the trigger is pressed, avoiding
+  // the expensive per-frame headset camera path of the enhanced mode.
+  const selected=controllerHit(controller)||gazeHit();
   if(!selected?.object?.userData?.panoId){
    if(enhancedXR)vrNotice(t.aim);
    else message(t.aim);
@@ -210,12 +212,19 @@ renderer.setAnimationLoop(()=>{
      // Avoid headset-camera HUD calculations that previously blocked startup.
      hotspots.position.set(0,1.25,0);
      scene.updateMatrixWorld(true);
+     const aimed=new Set();
      for(const info of controllerRays){
        info.laser.visible=Boolean(info.connected);
        if(!info.laser.visible)continue;
        const hit=controllerHit(info.controller);
        info.laser.material.color.setHex(hit?0x65ffe1:0xb5e7ff);
        info.laser.scale.z=hit?Math.min(hit.distance,4):4;
+       if(hit)aimed.add(hit.object);
+     }
+     for(const target of hotspots.children){
+       const selected=aimed.has(target);
+       target.material.color.setHex(selected?0x65ffe1:0xe4bd7c);
+       target.scale.setScalar(selected?1.18:1);
      }
      for(const [index,source] of [...session.inputSources].entries()){
        const pressed=Boolean(source.gamepad?.buttons?.[4]?.pressed);
