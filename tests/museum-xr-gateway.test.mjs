@@ -58,7 +58,8 @@ test('no browser Google secret and key restrictions remain isolated',async()=>{
  const browser=await readFile(new URL('../geo/scripts/streetview-xr.js',import.meta.url),'utf8');
  const html=await readFile(new URL('../geo/museum-xr.html',import.meta.url),'utf8');
  assert.doesNotMatch(browser,/tile\.googleapis\.com|oauth2\.googleapis\.com|GOOGLE_MAP_TILES_KEY/);
- assert.match(browser,/museum-xr/);assert.match(html,/pilot-token/);
+ assert.match(browser,/museum-xr/);assert.doesNotMatch(html,/pilot-token|key-label/);
+ assert.doesNotMatch(browser,/pilotToken|X-Museum-XR-Preview/);
  assert.match(browser,/creditPlane/);
 });
 
@@ -72,10 +73,13 @@ test('private pilot has a best-effort guard without Redis (not a distributed glo
  const nextMinute=Date.now()+61000;
  assert.equal(security.reserveProcessBudget(nextMinute).ok,true);
 });
-test('server configuration forbids deploying Google pilot in production and requires explicit Preview branch',async()=>{
+test('server configuration requires Preview and keeps Google credentials server-side',async()=>{
  const source=await readFile(new URL('../api/museum-xr.js',import.meta.url),'utf8');
  assert.match(source,/VERCEL_GIT_COMMIT_REF==="feature\/streetview-webxr-museums-v1"/);
  assert.match(source,/VERCEL_ENV==="preview"/);
  assert.doesNotMatch(source,/MUSEUM_XR_GOOGLE_PRIVATE_KEY/);
  assert.match(source,/reserveProcessBudget/);
+ assert.doesNotMatch(source,/MUSEUM_XR_PREVIEW_TOKEN|x-museum-xr-preview/);
+ assert.match(source,/Google Street View upstream unavailable/);
+ assert.match(source,/UPSTREAM_UNAVAILABLE/);
 });
