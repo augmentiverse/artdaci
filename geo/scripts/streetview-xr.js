@@ -35,7 +35,7 @@ addEventListener('resize',size);size();renderer.setAnimationLoop(()=>renderer.re
 function message(s){$('status').textContent=s}
 async function request(data,blob=false){
  const response=await fetch('../api/museum-xr',{method:'POST',headers:{'Content-Type':'application/json','X-Museum-XR-Preview':pilotToken},body:JSON.stringify({...data,museumId}),cache:'no-store'});
- if(!response.ok){const error=new Error('HTTP '+response.status);error.status=response.status;throw error}
+ if(!response.ok){let detail='';try{const data=await response.json();detail=String(data.stage||data.error||'').slice(0,100)}catch{}const error=new Error('HTTP '+response.status);error.status=response.status;error.detail=detail;throw error}
  return blob?createImageBitmap(await response.blob()):response.json();
 }
 function clearHotspots(){for(const o of [...hotspots.children]){hotspots.remove(o);o.geometry.dispose();o.material.dispose()}$('links').replaceChildren()}
@@ -58,7 +58,7 @@ async function showPanorama(result){
  $('enter-vr').disabled=!Boolean(await navigator.xr?.isSessionSupported?.('immersive-vr').catch(()=>false));
 }
 async function loadNeighbor(panoId){if(loading)return;loading=true;try{const data=await request({action:'neighbor',ticket,panoId});await showPanorama(data)}finally{loading=false}}
-function reportError(error){console.warn('Museum XR preview:',error.message);message(error.status===401?t.bad:error.status===404?t.empty:error.status===503?t.disabled:t.error)}
+function reportError(error){console.warn('Museum XR preview:',error.message);message((error.status===401?t.bad:error.status===404?t.empty:error.status===503?t.disabled:t.error)+(error.status?' · HTTP '+error.status:'')+(error.detail?' · '+error.detail:''))}
 $('start').addEventListener('click',async()=>{if(loading)return;loading=true;pilotToken=$('pilot-token').value.trim();$('pilot-token').value='';if(!pilotToken){message(t.bad);loading=false;return}
  try{const catalog=await request({action:'catalog'});const entry=catalog.museums.find(m=>m.id===museumId);if(!entry){message(t.empty);return}
  $('official').href=entry.source;$('official').hidden=false;const response=await request({action:'start'});await showPanorama(response)}catch(e){reportError(e)}finally{loading=false}});
