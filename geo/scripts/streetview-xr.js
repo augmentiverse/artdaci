@@ -593,6 +593,11 @@ async function showPanorama(result){
 }
 async function loadNeighbor(panoId){if(loading)return;loading=true;try{const data=await request({action:'neighbor',ticket,panoId});await showPanorama(data)}finally{loading=false}}
 function reportError(error){console.warn('Museum XR preview:',error.message);
+ if(error.status===429){
+  const seconds=error.retryAfterSeconds||Math.max(0,Math.ceil((quotaHold.until-Date.now())/1000));
+  message(quotaNotice(error.code||quotaHold.code,seconds));
+  return;
+ }
  if(renderer.xr.isPresenting)vrNotice(error.status===403?t.outside:t.loadFailed);
  if(error.status===403&&error.detail?.startsWith('NEIGHBOR_')){message(t.outside);return}
  if(error.hdUnavailable){message(t.hdError+(error.status?' · HTTP '+error.status:'')+(error.detail?' · '+error.detail:''));return}const empty=error.status===404&&error.detail?.includes('nearest-outdoor')?t.nearestOutdoor:t.empty;message((error.status===401?t.bad:error.status===404?empty:error.status===503?t.disabled:t.error)+(error.status?' · HTTP '+error.status:'')+(error.detail?' · '+error.detail:''))}
