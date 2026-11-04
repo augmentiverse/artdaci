@@ -1,6 +1,6 @@
 # ARTDACI Museum XR — isolated Meta Quest / Street View WebXR pilot
 
-This feature is an **unreleased and initially disabled** Vercel Preview. The published site is unaffected.
+This feature is an **unreleased, Vercel Authentication-protected Preview**. The published site is unaffected.
 
 ## What is ready
 - `geo/museum-xr.html?lang=fr&museum=national-gallery-london` loads the WebXR interface.
@@ -10,9 +10,10 @@ This feature is an **unreleased and initially disabled** Vercel Preview. The pub
 - A Node Vercel function `/api/museum-xr` acts as an opt-in backend to Google Maps Tile API. It uses **keyless Workload Identity Federation (Vercel Preview OIDC → Google STS → short-lived service account OAuth)**, not the browser API key or a Google private key.
 - The backend only accepts five museum records from the registry and the user-provided National Gallery example, refuses non-indoor panoramas, checks geographic proximity and restricts navigation to adjacent panoramas in a 35m radius.
 - Starting a museum view first checks the nearest panorama. If it is outdoor or missing, it now probes a fixed 13-point cluster around the supplied museum coordinates using `/streetview/panoIds`, then inspects up to 8 distinct candidates, accepting only `imageryType=indoor` within 35m. **Nearby is not proof of the exact room or artwork**. The UI labels any discovered nearby view as unverified and retains a link to the official Google Arts & Culture panorama.
-- Access requires a private preview passphrase. Sessions use signed 20-minute tickets; no Google OAuth bearer is included in those tickets.
+- The private Preview relies on **Vercel Authentication** (no separate pilot access code). The authenticated Preview is scoped to the feature branch, and Google federation accepts only its Preview identity. Sessions use signed 20-minute tickets; no Google OAuth bearer is included in those tickets.
 - The **small private pilot runs without Redis**. It applies a best-effort per-instance limit of 60 upstream requests/minute and 300 upstream requests/UTC day, including token-exchange requests. These limits reset after cold starts and apply separately to each server instance: **they are NOT global billing caps**. Redis may be added later to establish a globally shared daily limit. The Google Cloud API quotas and billing alerts remain separate controls.
 - No persistent panorama/image storage; transient canvas buffers exist only for active visualization.
+- Google Maps Tiles 5xx errors receive at most one bounded retry; the viewer shows safe upstream error stage and HTTP status. The nearby panorama selection is not a claim of verified artwork placement.
 - Attribution text appears in both the HTML viewer and a headset-rendered panel. Google Maps logo and report-problem UX inside WebXR still require compliance testing and improvements.
 
 ## Security and billing prerequisites
@@ -26,10 +27,10 @@ All environment variables must be added in Vercel **for the feature branch Previ
 - IAM service account Workload Identity User grant restricted to **that exact OIDC subject**. No Google JSON key may be generated or added to Vercel.
 - `VERCEL_ENV` must be `preview`; it is supplied automatically by Vercel.
 - `MUSEUM_XR_TICKET_SECRET`: secure random secret of at least 32 characters.
-- `MUSEUM_XR_PREVIEW_TOKEN`: distinct secure random passphrase of at least 24 characters. Never store it in GitHub; share it privately only with the person testing.
+- No Museum XR passphrase is needed. The prior `MUSEUM_XR_PREVIEW_TOKEN` environment setting is deprecated and ignored by the code; remove it from Vercel when convenient.
 - OPTIONAL: `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` if a globally shared request ceiling is needed. Both must be set together.
 
-**No Redis store is created or required for this tiny private pilot.** Activate the API only after the keyless OAuth identity and Preview passphrase have been verified. The code returns HTTP 503 when required secrets/configuration are missing; it is branch-locked to Preview. OIDC exchange also fails closed when Vercel does not provide a subject token or when deployed outside Preview.
+**No Redis store is created or required for this tiny private pilot.** Activate the API only after the keyless OAuth identity and Vercel Authentication are verified. The code returns HTTP 503 when required secrets/configuration are missing; it is restricted to Preview with branch-scoped Vercel environment variables. OIDC exchange also fails closed when Vercel does not provide a subject token or when deployed outside Preview.
 
 A browser API key restricted to `https://artdaci.com/*` is **not compatible with this server OAuth strategy**; retain it restricted and unused, or deactivate it if not needed. The previously created $5 Google Cloud billing budget sends alerts only and does not enforce a spending cap. The local gateway request cap is separately enforced; do not assume it controls all Google requests using the same Cloud project.
 
@@ -41,11 +42,11 @@ The gateway uses Google STS and IAM Credentials `generateAccessToken`, limited t
 2. Photo spheres are monoscopic 3DoF imagery rather than navigable geometric 6DoF reconstructions. Hotspots allow panorama teleportation only where the API supplies links.
 3. Review live Google Maps Tile terms: https://developers.google.com/maps/documentation/tile/policies — including logo, full copyright text, visible report-problem action in immersive mode, and imagery caching requirements. **Do not launch publicly until compliance is verified.**
 4. Review Vercel function compatibility, browser/CORS behavior, session expiry, Upstash API, HTTPS origins, OpenXR browser compatibility and Meta Quest 3 performance.
-5. No current Google panorama access or Quest headset test has been performed. Activation and coverage verification require account-side setup and real hardware.
+5. The user has tested the Preview: National Gallery's nearest panorama returned `outdoor`, and the demo experienced upstream HTTP 500 responses. An HTTP 500 stage is now exposed in safe diagnostic metadata. A successful headset panorama rendering has **not** been verified.
 
 ## Validation
 `node --test tests/geo-streetview-xr.test.mjs tests/museum-xr-gateway.test.mjs tests/museum-xr-oidc.test.mjs tests/museum-xr-search.test.mjs`
 
 Test expected disabled behavior from Preview:
 `POST /api/museum-xr` -> 503 when `MUSEUM_XR_ENABLED` or secrets are absent.
-No keys, OAuth bearer tokens or Redis tokens should ever appear in client bundles, API responses, GitHub or logs. Preview access code must not be committed. The pilot is not intended as a substitute for a globally enforced production cost cap.
+No keys, OAuth bearer tokens or Redis tokens should ever appear in client bundles, API responses, GitHub or logs. The redundant pilot access code has been removed from the viewer and gateway. The pilot is not intended as a substitute for a globally enforced production cost cap.
