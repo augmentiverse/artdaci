@@ -20,11 +20,22 @@ function allowedOrigin(req){
 async function quota(){
   // Best-effort per-isolate guard, not a globally guaranteed daily cap.
   const local=security.reserveProcessBudget();
-  if(!local.ok){const error=new Error("Pilot process request limit reached");error.status=429;throw error}
+  if(!local.ok){
+    const error=new Error("Pilot process "+(local.reason||"daily")+" request limit reached");
+    error.status=429;error.quotaCode=local.reason==="minute"?"PILOT_MINUTE_CAP":"PILOT_DAILY_CAP";
+    error.retryAfterSeconds=local.retryAfterSeconds;
+    throw error;
+  }
   // Redis can be added later without changing the viewer or Google authentication.
   if(env.UPSTASH_REDIS_REST_URL&&env.UPSTASH_REDIS_REST_TOKEN){
     const shared=await security.reserveBudget(fetch,env);
-    if(!shared.ok){const error=new Error("Pilot shared daily limit reached");error.status=429;throw error}
+    if(!shared.ok){
+      const error=new Error("Pilot shared daily limit reached");
+      error.status=429;error.quotaCode="PILOT_DAILY_CAP";
+      const now=Date.now();
+      error.retryAfterSeconds=Math.max(1,Math.ceil((Math.floor(now/86400000)*86400000+86400000-now)/1000));
+      throw error;
+    }
   }
 }
 async function googleToken(req){
@@ -204,11 +215,18 @@ module.exports=async function handler(req,res){
     const stage=typeof error.stage==="string"&&/^\/(?:createSession|streetview\/(?:metadata|panoIds|tiles))$/.test(error.stage)?error.stage:"gateway";
     const status=Number.isInteger(error.status)?error.status:502;
     // Log only fixed endpoint names and status; NEVER Google session IDs or tokens.
-    console.warn("Museum XR failure:",stage,"HTTP",status,
+    const limited=status===429;
+    const retryAfterSeconds=limited&&Number.isFinite(error.retryAfterSeconds)
+      ?Math.max(1,Math.min(86400,Math.ceil(error.retryAfterSeconds))):null;
+    if(retryAfterSeconds)res.setHeader("Retry-After",String(retryAfterSeconds));
+    const code=limited?(error.quotaCode||"GOOGLE_RATE_LIMIT"):
+      status>=500?"UPSTREAM_UNAVAILABLE":"GATEWAY_ERROR";
+    console.warn("Museum XR failure:",stage,"HTTP",status,code,
       error.tile?JSON.stringify(error.tile):"",error.reason||"");
     return res.status(status).json({
-      error:status===429?"Daily usage cap reached":status>=500?"Google Street View upstream unavailable":"Panorama gateway unavailable",
-      code:status>=500?"UPSTREAM_UNAVAILABLE":"GATEWAY_ERROR",stage,
+      error:limited?"Street View request limit reached":status>=500?"Google Street View upstream unavailable":"Panorama gateway unavailable",
+      code,stage,
+      ...(retryAfterSeconds?{retryAfterSeconds}:{}),
       ...(error.reason?{reason:error.reason}:{})
     });
   }
