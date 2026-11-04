@@ -93,13 +93,27 @@ module.exports=async function handler(req,res){
     if(!validId(body.museumId))return fail(res,400,"Invalid museum");
     const m=security.museum(body.museumId);
     if(!m)return fail(res,404,"Museum not in pilot catalog");
-    if(action==="start"){
+    if(action==="start"||action==="start-exterior"){
       const google=await googleToken(req);
       const sessionResult=await googleFetch("/createSession",google,{
         method:"POST",body:JSON.stringify({mapType:"streetview",language:"en-US",region:"US"})
       });
       const session=await sessionResult.json();
       if(!session.session)throw Error("Invalid session");
+      if(action==="start-exterior"){
+        // Deliberate VR functionality demo, NOT verified as a museum room.
+        const q=new URLSearchParams({session:session.session,lat:String(m.lat),lng:String(m.lng),radius:"30"});
+        let scene=null;
+        try{scene=await(await googleFetch("/streetview/metadata?"+q,google)).json()}
+        catch(error){if(error.status!==404)throw error}
+        if(!scene?.panoId||!scene?.copyright||!Number.isFinite(scene.lat)||!Number.isFinite(scene.lng)||
+           security.distance(scene,m)>35)return res.status(404).json({
+          error:"No demonstration Street View panorama near this location.",code:"DEMO_PANORAMA_NOT_FOUND"
+        });
+        security.grid(scene);
+        return ticketResponse(res,{id:m.id,session:session.session,panoId:scene.panoId,
+          dimensions:security.grid(scene),exp:Date.now()+20*60000},scene,"location-demo-unverified");
+      }
       const match=await searchIndoorNearMuseum(m,session.session,google);
       if(!match.metadata)return res.status(404).json({
         error:"No indoor Street View panorama found in Google Maps Tiles close to this museum.",
