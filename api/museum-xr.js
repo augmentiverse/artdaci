@@ -134,7 +134,14 @@ module.exports=async function handler(req,res){
   try{
     const action=body.action;
     if(action==="diagnose")return res.status(200).json({status:"preview",enabled:true,oidcTokenAvailable:Boolean(req.headers["x-vercel-oidc-token"]||env.VERCEL_OIDC_TOKEN)});
-    if(action==="catalog")return res.status(200).json({museums:security.catalog().map(x=>({id:x.id,title:x.title,museum:x.museum,source:x.source})),perInstanceDailyLimit:security.MAX_DAILY_REQUESTS,globalLimitGuaranteed:Boolean(env.UPSTASH_REDIS_REST_URL&&env.UPSTASH_REDIS_REST_TOKEN)});
+    if(action==="catalog")return res.status(200).json({
+      museums:security.catalog().map(x=>({
+        id:x.id,title:x.title,artist:x.artist,museum:x.museum,city:x.city,
+        source:x.source,sourceKind:x.sourceKind,venueId:x.venueId
+      })),
+      perInstanceDailyLimit:security.MAX_DAILY_REQUESTS,
+      globalLimitGuaranteed:Boolean(env.UPSTASH_REDIS_REST_URL&&env.UPSTASH_REDIS_REST_TOKEN)
+    });
     if(!validId(body.museumId))return fail(res,400,"Invalid museum");
     const m=security.museum(body.museumId);
     if(!m)return fail(res,404,"Museum not in pilot catalog");
@@ -149,12 +156,15 @@ module.exports=async function handler(req,res){
       if(!session.session)throw Error("Invalid session");
       if(action==="start-exterior"){
         // Deliberate VR functionality demo, NOT verified as a museum room.
-        const q=new URLSearchParams({session:session.session,lat:String(m.lat),lng:String(m.lng),radius:"30"});
+        // For artwork-provided viewing positions, retain the proven tight
+        // radius. Approximate museum pins may require a wider vicinity search.
+        const radius=m.sourceKind==="direct-panorama"?30:75;
+        const q=new URLSearchParams({session:session.session,lat:String(m.lat),lng:String(m.lng),radius:String(radius)});
         let scene=null;
         try{scene=await(await googleFetch("/streetview/metadata?"+q,google)).json()}
         catch(error){if(error.status!==404)throw error}
         if(!scene?.panoId||!scene?.copyright||!Number.isFinite(scene.lat)||!Number.isFinite(scene.lng)||
-           security.distance(scene,m)>35)return res.status(404).json({
+           security.distance(scene,m)>(m.sourceKind==="direct-panorama"?35:security.MAX_DEMO_NAV_RADIUS_METRES))return res.status(404).json({
           error:"No demonstration Street View panorama near this location.",code:"DEMO_PANORAMA_NOT_FOUND"
         });
         const dims=security.grid(scene,requestedZoom);
