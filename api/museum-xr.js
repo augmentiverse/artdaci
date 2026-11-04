@@ -49,6 +49,19 @@ async function googleFetch(path,token,opts={}){
       const error=new Error("Google Maps Tiles upstream HTTP "+response.status);
       error.status=response.status;
       error.stage=route;
+      // Google supplies stable error reasons such as "invalid" for coordinates.
+      // Only known reason names and integer tile coords are exposed, never raw
+      // response bodies, URLs, session tokens or service-account credentials.
+      if(route==="/streetview/tiles"){
+        const tile=path.match(/^\/streetview\/tiles\/(\d+)\/(\d+)\/(\d+)\?/);
+        if(tile)error.tile={zoom:Number(tile[1]),x:Number(tile[2]),y:Number(tile[3])};
+        if(response.status===400)try{
+          const body=await response.json();
+          const reason=body?.error?.errors?.[0]?.reason;
+          if(["invalid","notFound","badRequest","required","expired"].includes(reason))
+            error.reason=reason;
+        }catch{}
+      }
       throw error;
     }finally{clearTimeout(timer)}
   }
@@ -185,10 +198,12 @@ module.exports=async function handler(req,res){
     const stage=typeof error.stage==="string"&&/^\/(?:createSession|streetview\/(?:metadata|panoIds|tiles))$/.test(error.stage)?error.stage:"gateway";
     const status=Number.isInteger(error.status)?error.status:502;
     // Log only fixed endpoint names and status; NEVER Google session IDs or tokens.
-    console.warn("Museum XR failure:",stage,"HTTP",status);
+    console.warn("Museum XR failure:",stage,"HTTP",status,
+      error.tile?JSON.stringify(error.tile):"",error.reason||"");
     return res.status(status).json({
       error:status===429?"Daily usage cap reached":status>=500?"Google Street View upstream unavailable":"Panorama gateway unavailable",
-      code:status>=500?"UPSTREAM_UNAVAILABLE":"GATEWAY_ERROR",stage
+      code:status>=500?"UPSTREAM_UNAVAILABLE":"GATEWAY_ERROR",stage,
+      ...(error.reason?{reason:error.reason}:{})
     });
   }
 };
