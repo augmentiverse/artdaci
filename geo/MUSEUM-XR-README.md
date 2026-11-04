@@ -4,9 +4,9 @@ This feature is an **unreleased, Vercel Authentication-protected Preview**. The 
 
 ## Quest 3S regression check (2026-11-04)
 - After adding visible controller rays, the user reported that **Enter VR did not complete** although entry worked on the previous Preview. No browser-side stack trace is available; the root cause has not been confirmed.
-- This build defaults to **stable VR** (original head-tracked panorama plus yaw thumbstick, without new headset-camera/raycast UI in the animation loop). The advanced laser, gaze and A/X navigation are enabled only by `?xrControls=enhanced`, with a visible mode switch.
+- This build defaults to **stable VR** (original head-tracked panorama, yaw thumbstick, **controller lasers, turquoise hover, trigger to open a linked panorama, and A/X fallback**). The stable render path intentionally omits continuous headset-camera, gaze and HUD computations; gaze fallback runs only on a trigger press. `?xrControls=enhanced` retains the more complex camera-following markers and headset message overlay, but is optional and experimental.
 - `requestSession('immersive-vr')` is called directly in the VR button click handler to preserve transient user activation. Dedicated diagnostics report request sent, Quest consent pending, permission granted, started or rejected, and give an actionable message if the browser never responds. A controller-overlay failure is caught instead of preventing rendering.
-- **Neither mode has been revalidated on the physical Quest 3S** after the change. Only the stable mode should be tried first. Keep the older working preview available for comparison.
+- The user confirmed that stable-mode immersion launches, but controller selection was disabled in stable mode. Controller selection and A/X fallback have now been restored in stable mode. **These controls have not yet been validated on the physical Quest 3S** after the change. Only the stable mode should be tried first. Keep the older working preview available for comparison.
 - Continue to require Vercel Preview authentication and branch-only API configuration; do not merge to production.
 
 ## What is ready
