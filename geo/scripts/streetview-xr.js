@@ -1,20 +1,39 @@
 import * as THREE from 'three';
 import {bearingVector} from './streetview-xr-core.mjs';
+import {advancePinchTurn} from './streetview-hand-turn.mjs';
 const params=new URLSearchParams(location.search);
 const lang=['en','fr','ar'].includes(params.get('lang'))?params.get('lang'):'fr';
 // Default to the proven minimal XR render loop. New controller target tracking is
 // opt-in while headset compatibility is checked (?xrControls=enhanced).
 const enhancedXR=params.get('xrControls')==='enhanced';
+// Hand gestures are opt-in so the already-tested stable controller mode stays unchanged.
+const handMode=params.get('hands')==='1'&&!enhancedXR;
 const labels={
 fr:{title:'ARTDACI Museum XR',intro:'Exploration WebXR expérimentale. Les visites originales restent disponibles.',start:'Chercher une salle intérieure',demo:'Tester Street View 360° (extérieur possible)',demoReady:'Panorama de démonstration près du musée : il ne représente pas une salle d’exposition vérifiée.',retry:'Google refuse une tuile : essai avec une résolution inférieure…',lowerQuality:' (qualité réduite pour compatibilité)',quality:'Qualité',hd:'Haute définition · qualité selon la source',standard:'Standard · qualité réduite',loading:'Chargement des tuiles',controls:'Sur Quest 3S : visez un petit repère doré numéroté. Une infobulle indique la destination disponible ; la couleur turquoise confirme la visée. Appuyez sur la gâchette pour y aller, ou utilisez A/X. Tournez la tête pour regarder autour de vous.',hdError:'Tuiles haute définition indisponibles pour cette vue. La résolution 2K ne répond pas au niveau de qualité demandé.',imageKind:'Pour voir les œuvres dans leurs salles, utilisez la visite officielle. Le mode Street View 360° est une expérience expérimentale de proximité, parfois extérieure, et ne reproduit pas la salle du tableau.',enter:'Entrer en VR',exit:'Quitter la VR',reset:'Recentrer',official:'Visite officielle',disabled:'Preview privée : choisissez un mode et chargez un panorama.',empty:'Aucun panorama intérieur équivalent confirmé. La visite officielle reste accessible.',ready:'Panorama disponible : exploration possible.',nearby:'Vue intérieure à proximité, salle et œuvre non vérifiées.',nearestOutdoor:'Google Maps Tiles propose une vue extérieure, pas une vue intérieure vérifiable.',error:'Accès indisponible ou limite atteinte.',bad:'Authentification Vercel requise pour accéder à cette Preview.',next:'Vue voisine',zoomIn:'Zoom +',zoomOut:'Zoom −',moreViews:'Chaque numéro indique une vue voisine. Visez le repère pour afficher sa direction et, si Google la fournit, sa description.',outside:'Ce panorama est au-delà de la zone autorisée autour du musée.',unknownRoom:'Nom de la salle non communiqué',googleHint:'Information Google',aim:'Visez un point doré avec le rayon, ou regardez-le directement puis appuyez sur la gâchette. A/X : vue suivante.',opening:'Passage au panorama voisin…',arrived:'Panorama voisin chargé.',loadFailed:'Impossible de charger ce panorama. Réessayez sur un autre point.',credit:'Crédits de panorama',note:'Les panoramas Google Arts & Culture et Map Tiles ne sont pas nécessairement identiques.'},
 en:{title:'ARTDACI Museum XR',intro:'Experimental WebXR museum exploration. Official tours remain available.',start:'Find indoor museum view',demo:'Try Street View 360° (may be outdoors)',demoReady:'360° demo near the museum — not verified as an exhibition room.',retry:'Google rejected an image tile; trying a lower resolution…',lowerQuality:' (lower resolution for compatibility)',quality:'Quality',hd:'High definition · source-dependent',standard:'Standard · reduced quality',loading:'Loading tiles',controls:'On Quest 3S: point the controller laser at a small numbered gold marker to reveal its destination hint. Turquoise confirms targeting. Pull the trigger to go there or use A/X. Turn your head to look around.',hdError:'High-definition tiles are unavailable for this panorama. The 2K image does not meet the requested quality.',imageKind:'Use the official visit to see artworks inside the museum. Street View 360° here is a nearby experimental view, sometimes outdoors, and is not necessarily the artwork’s room.',enter:'Enter VR',exit:'Exit VR',reset:'Recenter',official:'Official tour',disabled:'Private Preview: choose a mode and load a panorama.',empty:'No matching indoor panorama confirmed. Official tour is still accessible.',ready:'Panorama available. Immersive exploration is ready.',nearby:'Nearby indoor view; exhibition room and artwork not verified.',nearestOutdoor:'Maps Tiles offers outdoor imagery here, not a verified indoor view.',error:'Unavailable or daily limit reached.',bad:'Vercel authentication is required to access this Preview.',next:'Nearby view',zoomIn:'Zoom in',zoomOut:'Zoom out',moreViews:'Each number identifies a nearby view. Aim at it to see its direction and any description supplied by Google.',outside:'This panorama is outside the permitted museum vicinity.',unknownRoom:'Room name not provided',googleHint:'Google description',aim:'Aim the laser at a gold point or look straight at it, then pull the trigger. A/X: next view.',opening:'Opening nearby panorama…',arrived:'Nearby panorama loaded.',loadFailed:'Could not load this panorama. Try another marker.',credit:'Panorama credits',note:'Google Arts & Culture and Maps Tiles panoramas may be different.'},
 ar:{title:'ARTDACI Museum XR',intro:'استكشاف متاحف تجريبي عبر WebXR. الجولات الرسمية متاحة.',start:'البحث عن مشهد داخلي',demo:'تجربة ستريت فيو 360° (قد يكون خارجياً)',demoReady:'عرض تجريبي قريب من المتحف؛ ليس قاعة عرض موثّقة.',retry:'تعذّر تحميل صورة؛ ستتم تجربة دقة أقل…',lowerQuality:' (دقة منخفضة للتوافق)',quality:'الجودة',hd:'دقة عالية · حسب المصدر',standard:'عادي · جودة مخفضة',loading:'تحميل الصور',controls:'على Quest 3S: وجّه شعاع وحدة التحكم نحو علامة ذهبية صغيرة مرقمة لعرض معلومات الوجهة. تتحول إلى الفيروزي عند تحديدها. اضغط الزناد للانتقال أو استخدم A/X. أدر رأسك للنظر حولك.',hdError:'الصور عالية الدقة غير متاحة لهذا المشهد. جودة 2K لا تلبي مستوى الجودة المطلوب.',imageKind:'لرؤية الأعمال داخل قاعات المتحف استخدم الجولة الرسمية. هنا تجربة بانورامية قريبة قد تكون خارجية ولا تمثل بالضرورة قاعة اللوحة.',enter:'الدخول إلى VR',exit:'الخروج من VR',reset:'إعادة التوجيه',official:'الجولة الرسمية',disabled:'معاينة خاصة: اختر وضعاً وحمّل المشهد.',empty:'لا يوجد مشهد داخلي مطابق مؤكد. الجولة الرسمية متاحة.',ready:'المشهد متاح للاستكشاف.',nearby:'مشهد داخلي قريب؛ لم يتم التحقق من القاعة أو اللوحة.',nearestOutdoor:'خرائط جوجل تعرض مشهداً خارجياً، وليس مشهداً داخلياً موثّقاً.',error:'الخدمة غير متاحة أو تجاوزت الحد اليومي.',bad:'تتطلب المعاينة الخاصة مصادقة Vercel.',next:'مشهد مجاور',zoomIn:'تقريب +',zoomOut:'إبعاد −',moreViews:'كل رقم يشير إلى مشهد قريب. وجّه المؤشر إليه لعرض الاتجاه ووصف جوجل إن كان متاحاً.',outside:'هذا المشهد خارج المنطقة المسموح بها حول المتحف.',unknownRoom:'لم يتم تحديد اسم القاعة',googleHint:'وصف جوجل',aim:'وجّه الشعاع إلى النقطة الذهبية أو انظر إليها واضغط الزناد. A/X للمشهد التالي.',opening:'الانتقال إلى المشهد المجاور…',arrived:'تم تحميل المشهد المجاور.',loadFailed:'تعذر تحميل هذا المشهد. جرّب نقطة أخرى.',credit:'حقوق الصورة',note:'قد تختلف مشاهد Google Arts & Culture عن Maps Tiles.'}
 };
+const handLabels={
+ fr:{on:'Activer la rotation avec les mains (expérimental)',off:'Revenir aux manettes',
+   help:'Sans manette : tournez naturellement la tête. Pour pivoter sans tourner le corps, activez ce mode, posez les manettes et rapprochez pouce + index d’une main ; gardez-les pincés et déplacez doucement la main à gauche ou à droite. Relâchez pour arrêter.',
+   waiting:'Suivi des mains demandé ; le casque doit reconnaître vos mains.',detected:'Mains reconnues : pincez pouce et index, puis déplacez la main horizontalement.',absent:'Mains non détectées : posez les manettes, activez le suivi des mains sur le Quest ou utilisez la tête.',
+   unsupported:'Suivi des mains non disponible dans cette session ; la rotation par la tête et les manettes restent possibles.'},
+ en:{on:'Try hand rotation (experimental)',off:'Return to controllers',
+   help:'Without controllers: turn your head naturally. To rotate without turning your body, enable this mode, set controllers down, pinch thumb and index finger on one hand, then gently move your pinched hand left or right. Release to stop.',
+   waiting:'Hand tracking requested; the headset must detect your hands.',detected:'Hands detected: pinch thumb and index, then move the hand horizontally.',absent:'Hands not detected: put controllers down, enable Quest hand tracking, or use head tracking.',
+   unsupported:'Hand tracking unavailable in this session; head movement and controllers still work.'},
+ ar:{on:'تجربة تدوير المشهد باليدين',off:'العودة إلى وحدات التحكم',
+   help:'بدون وحدات تحكم: أدر رأسك بشكل طبيعي. ولتدوير المشهد دون تحريك الجسم، فعّل هذا الوضع، ضع وحدات التحكم جانباً، قرّب الإبهام والسبابة من يد واحدة ثم حرّكهما بلطف يميناً أو يساراً. اترك القرصة للتوقف.',
+   waiting:'طُلِب تتبع اليدين؛ يجب أن تتعرف النظارة على يديك.',detected:'تم التعرف على اليدين: اضغط الإبهام والسبابة وحرّك اليد أفقياً.',absent:'لم تُكتشف اليدان: ضع وحدات التحكم جانباً أو فعّل تتبع اليدين في Quest.',
+   unsupported:'تتبع اليدين غير متاح في الجلسة؛ لا يزال بالإمكان تحريك الرأس واستخدام وحدات التحكم.'}
+};
+const handText=handLabels[lang];
 const t=labels[lang],$=id=>document.getElementById(id);
 document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';
 $('title').textContent=t.title;$('intro').textContent=t.intro;
 $('start').textContent=t.start;$('demo').textContent=t.demo;$('zoom-in').textContent=t.zoomIn;$('zoom-out').textContent=t.zoomOut;$('links-help').textContent=t.moreViews;$('enter-vr').textContent=t.enter;$('reset').textContent=t.reset;
 $('controls-help').textContent=t.controls;
+$('hand-help').textContent=handText.help;
 $('quality-label').textContent=t.quality;$('quality').options[0].textContent=t.hd;$('quality').options[1].textContent=t.standard;$('image-kind').textContent=t.imageKind;
 $('disclaimer').textContent=t.note;$('official').textContent=t.official;$('back').href='index.html?lang='+lang;
 document.querySelectorAll('[data-lang]').forEach(a=>{const query=new URLSearchParams(location.search);query.set('lang',a.dataset.lang);a.href='?'+query;if(a.dataset.lang===lang)a.setAttribute('aria-current','page')});
@@ -193,9 +212,63 @@ addEventListener('keydown',event=>{
  else return;
  camera.rotation.x=lookPitch;event.preventDefault();
 });
+// Optional WebXR Hand Input: native head tracking requires no controllers;
+ // this gesture only adds a gentle horizontal pivot.
+const handStatus=$('hand-status');
+const handLink=$('hand-mode-link');
+handLink.textContent=handMode?handText.off:handText.on;
+const handParams=new URLSearchParams(location.search);
+handParams.delete('xrControls');
+if(handMode)handParams.delete('hands');else handParams.set('hands','1');
+handLink.href='?'+handParams.toString();
+handStatus.textContent=handMode?handText.waiting:'';
+const pinchTurn={key:null,state:{active:false,x:null},lastHands:false};
+function updateHandTurning(session,xrFrame){
+ if(!handMode||!session||!xrFrame||typeof xrFrame.getJointPose!=='function')return;
+ const referenceSpace=renderer.xr.getReferenceSpace();
+ if(!referenceSpace)return;
+ const hands=[...session.inputSources].filter(source=>source.hand);
+ const detected=hands.length>0;
+ if(detected!==pinchTurn.lastHands){
+  handStatus.textContent=detected?handText.detected:handText.absent;
+  pinchTurn.lastHands=detected;
+ }
+ if(!detected){pinchTurn.key=null;pinchTurn.state={active:false,x:null};return}
+ let seenActive=false;
+ for(const [index,source] of hands.entries()){
+  const key=source.handedness||'hand'+index;
+  if(pinchTurn.key!==null&&pinchTurn.key!==key)continue;
+  const thumbJoint=source.hand.get('thumb-tip'),indexJoint=source.hand.get('index-finger-tip');
+  if(!thumbJoint||!indexJoint)continue;
+  const thumb=xrFrame.getJointPose(thumbJoint,referenceSpace);
+  const finger=xrFrame.getJointPose(indexJoint,referenceSpace);
+  if(!thumb||!finger)continue;
+  const tpos=thumb.transform.position,ipos=finger.transform.position;
+  const sample={
+   x:(tpos.x+ipos.x)*.5,
+   distance:Math.hypot(tpos.x-ipos.x,tpos.y-ipos.y,tpos.z-ipos.z)
+  };
+  const next=advancePinchTurn(pinchTurn.key===key?pinchTurn.state:null,sample);
+  if(pinchTurn.key===null&&!next.active)continue;
+  if(pinchTurn.key===null)pinchTurn.key=key;
+  if(pinchTurn.key===key){
+   rig.rotation.y+=next.yaw;
+   pinchTurn.state=next;
+   seenActive=next.active;
+   if(!next.active)pinchTurn.key=null;
+  }
+  // Once one hand controls the view, ignore simultaneous accidental pinches.
+  break;
+ }
+ if(pinchTurn.key!==null&&!seenActive){
+  pinchTurn.key=null;pinchTurn.state={active:false,x:null};
+ }
+}
+
 const renderClock=new THREE.Clock();
+let handInputErrorShown=false;
 let sessionHelpShown=false,renderErrorNotified=false;
-renderer.setAnimationLoop(()=>{
+renderer.setAnimationLoop((time,xrFrame)=>{
  const dt=Math.min(renderClock.getDelta(),0.05);
  const session=renderer.xr.getSession();
  try{
@@ -206,6 +279,14 @@ renderer.setAnimationLoop(()=>{
      const axes=right?.gamepad?.axes||[];
      const axis=axes.length>=3?axes[2]:(axes[0]||0);
      if(Math.abs(axis)>0.24)rig.rotation.y-=axis*dt*1.4;
+     if(handMode)try{updateHandTurning(session,xrFrame)}catch(error){
+       // Hand input is best-effort and can never block VR frame rendering.
+       if(!handInputErrorShown){
+         handInputErrorShown=true;
+         handStatus.textContent=handText.unsupported;
+         console.warn('Museum XR hand input unavailable:',error?.name||'Error');
+       }
+     }
    }
    if(session&&!enhancedXR){
      // Stable mode has a lightweight ray/trigger path and A/X gamepad fallback.
@@ -522,7 +603,7 @@ vrButton.addEventListener('click',()=>{
  let promise;
  try{
   // Invoke requestSession synchronously while the click provides activation.
-  promise=navigator.xr.requestSession('immersive-vr',{optionalFeatures:['local-floor']});
+  promise=navigator.xr.requestSession('immersive-vr',{optionalFeatures:handMode?['local-floor','hand-tracking']:['local-floor']});
  }catch(error){xrError(error);return}
  Promise.resolve(promise).then(async xrSession=>{
   vrStatus.textContent=xrText.starting;
@@ -535,11 +616,14 @@ vrButton.addEventListener('click',()=>{
  }).catch(xrError);
 });
 renderer.xr.addEventListener('sessionstart',()=>{
- vrSessionStarted=true;sessionHelpShown=false;
+ vrSessionStarted=true;sessionHelpShown=false;handInputErrorShown=false;
+ pinchTurn.key=null;pinchTurn.state={active:false,x:null};pinchTurn.lastHands=false;
  clearVRPending();vrButton.textContent=t.exit;vrStatus.textContent=xrText.ready;
 });
 renderer.xr.addEventListener('sessionend',()=>{
  vrSessionStarted=false;clearVRPending();vrButton.textContent=t.enter;vrStatus.textContent=xrText.ended;
+ pinchTurn.key=null;pinchTurn.state={active:false,x:null};pinchTurn.lastHands=false;
+ if(handMode)handStatus.textContent=handText.waiting;
 });
 function setDesktopZoom(step){
  if(renderer.xr.isPresenting)return; // headset WebXR controls its own projection
