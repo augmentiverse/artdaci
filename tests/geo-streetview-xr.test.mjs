@@ -22,7 +22,9 @@ test('unverified and outdoor Google viewpoints are not claimed as museum interio
 });
 test('tiled panoramas have a bounded resolution and request budget',()=>{
  const normal={imageWidth:13312,imageHeight:6656,tileWidth:512,tileHeight:512};
- assert.deepEqual(tileGrid(normal,2),{outputWidth:1664,outputHeight:832,tileWidth:512,tileHeight:512,columns:4,rows:2,level:2});
+ assert.deepEqual(tileGrid(normal,2),{outputWidth:2048,outputHeight:1024,tileWidth:512,tileHeight:512,columns:4,rows:2,level:2});
+ assert.deepEqual(tileGrid(normal,1),{outputWidth:1024,outputHeight:512,tileWidth:512,tileHeight:512,columns:2,rows:1,level:1});
+ assert.deepEqual(tileGrid(normal,0),{outputWidth:512,outputHeight:256,tileWidth:512,tileHeight:512,columns:1,rows:1,level:0});
  assert.throws(()=>tileGrid(normal,5),/memory budget/);
  assert.throws(()=>tileGrid({imageWidth:0},2));
  assert.ok(Math.abs(bearingVector(90).x-3)<1e-8);
