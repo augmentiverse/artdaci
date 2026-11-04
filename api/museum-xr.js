@@ -171,7 +171,7 @@ module.exports=async function handler(req,res){
       return ticketResponse(res,{...ticket,panoId:data.panoId,dimensions:security.grid(data),exp:Date.now()+20*60000},data,ticket.selectionMode||"nearby-unverified");
     }
     const x=Number(body.x),y=Number(body.y),z=Number(body.zoom);
-    if(!Number.isInteger(x)||!Number.isInteger(y)||z!==2||!ticket.dimensions||x<0||y<0||x>=ticket.dimensions.columns||y>=ticket.dimensions.rows)return fail(res,400,"Invalid tile");
+    if(!Number.isInteger(x)||!Number.isInteger(y)||!ticket.dimensions||!Number.isInteger(z)||z<0||z>2||z!==ticket.dimensions.zoom||x<0||y<0||x>=ticket.dimensions.columns||y>=ticket.dimensions.rows)return fail(res,400,"Invalid tile");
     const path="/streetview/tiles/"+z+"/"+x+"/"+y+"?"+new URLSearchParams({session:ticket.session,panoId:ticket.panoId});
     const response=await googleFetch(path,google);
     const mime=response.headers.get("content-type")||"";
