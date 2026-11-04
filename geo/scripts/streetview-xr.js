@@ -14,6 +14,21 @@ $('start').textContent=t.start;$('enter-vr').textContent=t.enter;$('reset').text
 $('disclaimer').textContent=t.note;$('official').textContent=t.official;$('back').href='index.html?lang='+lang;
 document.querySelectorAll('[data-lang]').forEach(a=>{const query=new URLSearchParams(location.search);query.set('lang',a.dataset.lang);a.href='?'+query;if(a.dataset.lang===lang)a.setAttribute('aria-current','page')});
 const museumId=params.get('museum')||'national-gallery-london';
+const museumsToTry=[
+ {id:'national-gallery-london',label:'National Gallery · London'},
+ {id:'vermeer-girl-with-a-pearl-earring',label:'Mauritshuis · Girl with a Pearl Earring'},
+ {id:'view-of-delft',label:'Mauritshuis · View of Delft'},
+ {id:'vermeer-milkmaid',label:'Rijksmuseum · The Milkmaid'},
+ {id:'van-gogh',label:'Musée d’Orsay · Van Gogh'}
+];
+$('alternatives-title').textContent=lang==='fr'?'Autres panoramas à essayer (disponibilité non garantie)':lang==='ar'?'مناظر أخرى للتجربة (التوفر غير مضمون)':'Other panoramas to try (availability not guaranteed)';
+for(const item of museumsToTry){
+ const link=document.createElement('a');
+ link.href='?'+new URLSearchParams({lang,museum:item.id});
+ link.textContent=item.label;
+ if(item.id===museumId)link.setAttribute('aria-current','page');
+ $('museum-list').append(link);
+}
 const source=params.get('source');
 if(source){try{const u=new URL(source);if(u.protocol==='https:'&&u.hostname==='artsandculture.google.com'&&u.pathname.startsWith('/streetview/')){$('official').href=u.href;$('official').hidden=false}}catch{}}
 let pilotToken='',ticket='',currentMeta=null,sphere=null,loading=false;
