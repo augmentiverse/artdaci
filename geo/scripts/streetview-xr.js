@@ -3,14 +3,14 @@ import {bearingVector} from './streetview-xr-core.mjs';
 const params=new URLSearchParams(location.search);
 const lang=['en','fr','ar'].includes(params.get('lang'))?params.get('lang'):'fr';
 const labels={
-fr:{title:'ARTDACI Museum XR',intro:'Exploration WebXR expérimentale. Les visites originales restent disponibles.',pilot:'Accès pilote',start:'Charger le panorama',demo:'Tester Street View 360° (vue non vérifiée)',demoReady:'Panorama de démonstration près du musée : il ne représente pas une salle d’exposition vérifiée.',enter:'Entrer en VR',exit:'Quitter la VR',reset:'Recentrer',official:'Visite officielle',disabled:'Pilote privé : entrez le code d’accès et chargez un panorama.',empty:'Aucun panorama intérieur équivalent confirmé. La visite officielle reste accessible.',ready:'Panorama disponible : exploration possible.',nearby:'Vue intérieure à proximité, salle et œuvre non vérifiées.',nearestOutdoor:'Google Maps Tiles propose une vue extérieure, pas une vue intérieure vérifiable.',error:'Accès indisponible ou limite atteinte.',bad:'Accès pilote refusé.',next:'Panorama voisin',credit:'Crédits de panorama',note:'Les panoramas Google Arts & Culture et Map Tiles ne sont pas nécessairement identiques.'},
-en:{title:'ARTDACI Museum XR',intro:'Experimental WebXR museum exploration. Official tours remain available.',pilot:'Pilot access',start:'Load panorama',demo:'Try Street View 360° (unverified view)',demoReady:'360° demo near the museum — not verified as an exhibition room.',enter:'Enter VR',exit:'Exit VR',reset:'Recenter',official:'Official tour',disabled:'Private pilot: enter the access code to load a panorama.',empty:'No matching indoor panorama confirmed. Official tour is still accessible.',ready:'Panorama available. Immersive exploration is ready.',nearby:'Nearby indoor view; exhibition room and artwork not verified.',nearestOutdoor:'Maps Tiles offers outdoor imagery here, not a verified indoor view.',error:'Unavailable or daily limit reached.',bad:'Pilot access denied.',next:'Adjacent panorama',credit:'Panorama credits',note:'Google Arts & Culture and Maps Tiles panoramas may be different.'},
-ar:{title:'ARTDACI Museum XR',intro:'استكشاف متاحف تجريبي عبر WebXR. الجولات الرسمية متاحة.',pilot:'الدخول التجريبي',start:'تحميل المشهد',demo:'تجربة ستريت فيو 360° (غير موثق)',demoReady:'عرض تجريبي قريب من المتحف؛ ليس قاعة عرض موثّقة.',enter:'الدخول إلى VR',exit:'الخروج من VR',reset:'إعادة التوجيه',official:'الجولة الرسمية',disabled:'نسخة تجريبية خاصة: أدخل رمز الوصول لتحميل المشهد.',empty:'لا يوجد مشهد داخلي مطابق مؤكد. الجولة الرسمية متاحة.',ready:'المشهد متاح للاستكشاف.',nearby:'مشهد داخلي قريب؛ لم يتم التحقق من القاعة أو اللوحة.',nearestOutdoor:'خرائط جوجل تعرض مشهداً خارجياً، وليس مشهداً داخلياً موثّقاً.',error:'الخدمة غير متاحة أو تجاوزت الحد اليومي.',bad:'الدخول التجريبي مرفوض.',next:'مشهد مجاور',credit:'حقوق الصورة',note:'قد تختلف مشاهد Google Arts & Culture عن Maps Tiles.'}
+fr:{title:'ARTDACI Museum XR',intro:'Exploration WebXR expérimentale. Les visites originales restent disponibles.',start:'Charger le panorama',demo:'Tester Street View 360° (vue non vérifiée)',demoReady:'Panorama de démonstration près du musée : il ne représente pas une salle d’exposition vérifiée.',enter:'Entrer en VR',exit:'Quitter la VR',reset:'Recentrer',official:'Visite officielle',disabled:'Preview privée : choisissez un mode et chargez un panorama.',empty:'Aucun panorama intérieur équivalent confirmé. La visite officielle reste accessible.',ready:'Panorama disponible : exploration possible.',nearby:'Vue intérieure à proximité, salle et œuvre non vérifiées.',nearestOutdoor:'Google Maps Tiles propose une vue extérieure, pas une vue intérieure vérifiable.',error:'Accès indisponible ou limite atteinte.',bad:'Authentification Vercel requise pour accéder à cette Preview.',next:'Panorama voisin',credit:'Crédits de panorama',note:'Les panoramas Google Arts & Culture et Map Tiles ne sont pas nécessairement identiques.'},
+en:{title:'ARTDACI Museum XR',intro:'Experimental WebXR museum exploration. Official tours remain available.',start:'Load panorama',demo:'Try Street View 360° (unverified view)',demoReady:'360° demo near the museum — not verified as an exhibition room.',enter:'Enter VR',exit:'Exit VR',reset:'Recenter',official:'Official tour',disabled:'Private Preview: choose a mode and load a panorama.',empty:'No matching indoor panorama confirmed. Official tour is still accessible.',ready:'Panorama available. Immersive exploration is ready.',nearby:'Nearby indoor view; exhibition room and artwork not verified.',nearestOutdoor:'Maps Tiles offers outdoor imagery here, not a verified indoor view.',error:'Unavailable or daily limit reached.',bad:'Vercel authentication is required to access this Preview.',next:'Adjacent panorama',credit:'Panorama credits',note:'Google Arts & Culture and Maps Tiles panoramas may be different.'},
+ar:{title:'ARTDACI Museum XR',intro:'استكشاف متاحف تجريبي عبر WebXR. الجولات الرسمية متاحة.',start:'تحميل المشهد',demo:'تجربة ستريت فيو 360° (غير موثق)',demoReady:'عرض تجريبي قريب من المتحف؛ ليس قاعة عرض موثّقة.',enter:'الدخول إلى VR',exit:'الخروج من VR',reset:'إعادة التوجيه',official:'الجولة الرسمية',disabled:'معاينة خاصة: اختر وضعاً وحمّل المشهد.',empty:'لا يوجد مشهد داخلي مطابق مؤكد. الجولة الرسمية متاحة.',ready:'المشهد متاح للاستكشاف.',nearby:'مشهد داخلي قريب؛ لم يتم التحقق من القاعة أو اللوحة.',nearestOutdoor:'خرائط جوجل تعرض مشهداً خارجياً، وليس مشهداً داخلياً موثّقاً.',error:'الخدمة غير متاحة أو تجاوزت الحد اليومي.',bad:'تتطلب المعاينة الخاصة مصادقة Vercel.',next:'مشهد مجاور',credit:'حقوق الصورة',note:'قد تختلف مشاهد Google Arts & Culture عن Maps Tiles.'}
 };
 const t=labels[lang],$=id=>document.getElementById(id);
 document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';
 $('title').textContent=t.title;$('intro').textContent=t.intro;
-$('start').textContent=t.start;$('demo').textContent=t.demo;$('enter-vr').textContent=t.enter;$('reset').textContent=t.reset;$('key-label').textContent=t.pilot;
+$('start').textContent=t.start;$('demo').textContent=t.demo;$('enter-vr').textContent=t.enter;$('reset').textContent=t.reset;
 $('disclaimer').textContent=t.note;$('official').textContent=t.official;$('back').href='index.html?lang='+lang;
 document.querySelectorAll('[data-lang]').forEach(a=>{const query=new URLSearchParams(location.search);query.set('lang',a.dataset.lang);a.href='?'+query;if(a.dataset.lang===lang)a.setAttribute('aria-current','page')});
 const museumId=params.get('museum')||'national-gallery-london';
@@ -31,7 +31,7 @@ for(const item of museumsToTry){
 }
 const source=params.get('source');
 if(source){try{const u=new URL(source);if(u.protocol==='https:'&&u.hostname==='artsandculture.google.com'&&u.pathname.startsWith('/streetview/')){$('official').href=u.href;$('official').hidden=false}}catch{}}
-let pilotToken='',ticket='',currentMeta=null,sphere=null,loading=false;
+let ticket='',currentMeta=null,sphere=null,loading=false;
 const canvas=$('xr-canvas'),renderer=new THREE.WebGLRenderer({canvas,antialias:true});
 renderer.xr.enabled=true;renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
 const scene=new THREE.Scene();scene.background=new THREE.Color(0x152634);
@@ -49,7 +49,8 @@ function size(){const b=canvas.getBoundingClientRect();renderer.setSize(Math.rou
 addEventListener('resize',size);size();renderer.setAnimationLoop(()=>renderer.render(scene,camera));
 function message(s){$('status').textContent=s}
 async function request(data,blob=false){
- const response=await fetch('../api/museum-xr',{method:'POST',headers:{'Content-Type':'application/json','X-Museum-XR-Preview':pilotToken},body:JSON.stringify({...data,museumId}),cache:'no-store'});
+ const response=await fetch('../api/museum-xr',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...data,museumId}),cache:'no-store'});
+ if(response.headers.get('content-type')?.includes('text/html')){const error=new Error('Vercel login required');error.status=401;throw error}
  if(!response.ok){let detail='';try{const data=await response.json();detail=String(data.code||data.stage||data.error||'').slice(0,100); if(data.nearestType)detail+=' · '+String(data.nearestType).slice(0,40)}catch{}const error=new Error('HTTP '+response.status);error.status=response.status;error.detail=detail;throw error}
  return blob?createImageBitmap(await response.blob()):response.json();
 }
@@ -73,12 +74,9 @@ async function showPanorama(result){
  $('enter-vr').disabled=!Boolean(await navigator.xr?.isSessionSupported?.('immersive-vr').catch(()=>false));
 }
 async function loadNeighbor(panoId){if(loading)return;loading=true;try{const data=await request({action:'neighbor',ticket,panoId});await showPanorama(data)}finally{loading=false}}
-function reportError(error){console.warn('Museum XR preview:',error.message);const empty=error.status===404&&error.detail?.includes('nearest-outdoor')?t.nearestOutdoor:t.empty;message((error.status===401?t.bad:error.status===404?empty:error.status===503?t.disabled:t.error)+(error.status?' · HTTP '+error.status:'')+(error.detail?' · '+error.detail:''))}
+function reportError(error){console.warn('Museum XR preview:',error.message);const empty=error.status===404&&error.detail?.includes('nearest-outdoor')?t.nearestOutdoor:t.empty;message((error.status===401||error.status===403?t.bad:error.status===404?empty:error.status===503?t.disabled:t.error)+(error.status?' · HTTP '+error.status:'')+(error.detail?' · '+error.detail:''))}
 async function startPanorama(action){
  if(loading)return;loading=true;
- const supplied=$('pilot-token').value.trim();$('pilot-token').value='';
- if(supplied)pilotToken=supplied;
- if(!pilotToken){message(t.bad);loading=false;return}
  try{
   const catalog=await request({action:'catalog'});
   const entry=catalog.museums.find(m=>m.id===museumId);
@@ -93,4 +91,5 @@ $('enter-vr').addEventListener('click',async()=>{try{const session=renderer.xr.g
 renderer.xr.addEventListener('sessionstart',()=>{$('enter-vr').textContent=t.exit});
 renderer.xr.addEventListener('sessionend',()=>{$('enter-vr').textContent=t.enter});
 $('reset').addEventListener('click',()=>{rig.rotation.set(0,0,0);camera.rotation.set(0,0,0)});
+$('preview-note').textContent=lang==='fr'?'Preview privée protégée par Vercel. Aucun code supplémentaire nécessaire.':lang==='ar'?'معاينة خاصة محمية بواسطة Vercel، دون رمز وصول إضافي.':'Private Preview protected by Vercel. No additional access code required.';
 message(t.disabled);
