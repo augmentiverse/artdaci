@@ -83,3 +83,66 @@ test('server configuration requires Preview and keeps Google credentials server-
  assert.match(source,/Google Street View upstream unavailable/);
  assert.match(source,/UPSTREAM_UNAVAILABLE/);
 });
+
+test('lower resolution tiles are accepted only with server-signed zoom authorization',async()=>{
+ const federation=require('../lib/museum-xr-oidc.cjs');
+ const originalGoogleToken=federation.googleServiceToken;
+ const originalFetch=global.fetch;
+ const envKeys=['MUSEUM_XR_ENABLED','MUSEUM_XR_GOOGLE_SERVICE_ACCOUNT_EMAIL','MUSEUM_XR_GOOGLE_PROJECT_NUMBER',
+ 'MUSEUM_XR_WORKLOAD_POOL_ID','MUSEUM_XR_WORKLOAD_PROVIDER_ID','MUSEUM_XR_GOOGLE_PROJECT_ID',
+ 'MUSEUM_XR_TICKET_SECRET','VERCEL_ENV','VERCEL_GIT_COMMIT_REF'];
+ const originalEnv=Object.fromEntries(envKeys.map(k=>[k,process.env[k]]));
+ const museum=security.museum('national-gallery-london');
+ const metadata={panoId:'pano_test_1234',lat:museum.lat,lng:museum.lng,imageryType:'outdoor',
+  imageHeight:6656,imageWidth:13312,tileHeight:512,tileWidth:512,heading:0,copyright:'© Google'};
+ const secret='test-secret-must-be-longer-than-32-chars!';
+ const initTicket=security.signTicket({
+  id:museum.id,session:'session123',panoId:metadata.panoId,dimensions:security.grid(metadata),
+  selectionMode:'location-demo-unverified',exp:Date.now()+20*60000
+ },secret);
+ const makeRes=()=>({
+  status(n){this.code=n;return this},
+  json(x){this.body=x;return this},
+  setHeader(){},
+  send(x){this.bytes=x;return this}
+ });
+ const req=(data)=>({method:'POST',headers:{origin:'https://artdaci-test-daci.vercel.app',host:'artdaci-test-daci.vercel.app'},
+  body:{museumId:museum.id,...data}});
+ try{
+  Object.assign(process.env,{
+   MUSEUM_XR_ENABLED:'true',MUSEUM_XR_GOOGLE_SERVICE_ACCOUNT_EMAIL:'artdaci-museum-xr@artdaci-museum-xr.iam.gserviceaccount.com',
+   MUSEUM_XR_GOOGLE_PROJECT_NUMBER:'1021521576659',MUSEUM_XR_WORKLOAD_POOL_ID:'artdaci-vercel',
+   MUSEUM_XR_WORKLOAD_PROVIDER_ID:'vercel-artdaci-preview',MUSEUM_XR_GOOGLE_PROJECT_ID:'artdaci-museum-xr',
+   MUSEUM_XR_TICKET_SECRET:secret,VERCEL_ENV:'preview',
+   VERCEL_GIT_COMMIT_REF:'feature/streetview-webxr-museums-v1'
+  });
+  federation.googleServiceToken=async()=> 'test-google-access';
+  global.fetch=async(url)=>{
+   if(url.includes('/streetview/metadata?'))return {ok:true,json:async()=>metadata};
+   if(url.includes('/streetview/tiles/1/0/0?'))return {
+    ok:true,headers:{get:()=> 'image/jpeg'},
+    arrayBuffer:async()=> Uint8Array.from([255,216,255,217]).buffer
+   };
+   throw Error('Unexpected upstream URL');
+  };
+  const down=makeRes();
+  await gateway(req({action:'rescale',ticket:initTicket,zoom:1}),down);
+  assert.equal(down.code,200);
+  assert.equal(down.body.dimension.zoom,1);
+  assert.equal(down.body.selectionMode,'location-demo-unverified');
+  assert.ok(security.readTicket(down.body.ticket,secret));
+  const tile=makeRes();
+  await gateway(req({action:'tile',ticket:down.body.ticket,zoom:1,x:0,y:0}),tile);
+  assert.equal(tile.code,200);
+  assert.ok(tile.bytes?.length>0);
+  const wrongZoom=makeRes();
+  await gateway(req({action:'tile',ticket:down.body.ticket,zoom:2,x:0,y:0}),wrongZoom);
+  assert.equal(wrongZoom.code,400);
+  const sameZoom=makeRes();
+  await gateway(req({action:'rescale',ticket:down.body.ticket,zoom:1}),sameZoom);
+  assert.equal(sameZoom.code,400);
+ }finally{
+  federation.googleServiceToken=originalGoogleToken;global.fetch=originalFetch;
+  for(const [k,value] of Object.entries(originalEnv))if(value===undefined)delete process.env[k];else process.env[k]=value;
+ }
+});
