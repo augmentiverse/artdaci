@@ -48,6 +48,19 @@ export function tileGrid(metadata,level=2) {
   return {outputWidth,outputHeight,tileWidth,tileHeight,columns,rows,level};
 }
 
+/**
+ * Equirectangular panorama orientation for the inverted-X inward-facing
+ * Three.js sphere. Its central image column points local -X. Rotate this
+ * center toward Google's compass heading (North is world -Z, East +X).
+ *
+ * Keeping this mapping in one helper ensures the linked-view hotspot
+ * bearings share the same world coordinate system.
+ */
+export function panoramaWorldYaw(heading=0) {
+  const bearing=Number(heading);
+  return (-90-(Number.isFinite(bearing)?bearing:0))*Math.PI/180;
+}
+
 export function bearingVector(heading,radius=3) {
   const rad=heading*Math.PI/180;
   return {x:Math.sin(rad)*radius,y:0,z:-Math.cos(rad)*radius};
