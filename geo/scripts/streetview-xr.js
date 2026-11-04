@@ -242,7 +242,9 @@ handLink.addEventListener('click',event=>{
  q.delete('xrControls');
  if(handMode)q.set('hands','1');else q.delete('hands');
  history.replaceState(null,'','?'+q.toString());
- handLink.href='?'+new URLSearchParams({...Object.fromEntries(q),hands:handMode?'0':'1'}).toString();
+ const nextQ=new URLSearchParams(q);
+ if(handMode)nextQ.delete('hands');else nextQ.set('hands','1');
+ handLink.href='?'+nextQ.toString();
 });
 const pinchTurn={key:null,state:{active:false,x:null},lastHands:false};
 function updateHandTurning(session,xrFrame){
