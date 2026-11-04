@@ -69,9 +69,9 @@ async function searchIndoorNearMuseum(m,session,google){
 }
 function validId(id){return typeof id==="string"&&/^[a-z0-9-]{1,64}$/.test(id)}
 function validPanoId(id){return typeof id==="string"&&/^[A-Za-z0-9_-]{5,256}$/.test(id)}
-function ticketResponse(res,payload,meta){
+function ticketResponse(res,payload,meta,mode="adjacent-unverified"){
   
-  res.status(200).json({ticket:security.signTicket(payload,env.MUSEUM_XR_TICKET_SECRET),metadata:security.safeMetadata(meta),dimension:security.grid(meta)});
+  res.status(200).json({ticket:security.signTicket(payload,env.MUSEUM_XR_TICKET_SECRET),metadata:security.safeMetadata(meta),dimension:security.grid(meta),selectionMode:mode});
 }
 module.exports=async function handler(req,res){
   res.setHeader("Cache-Control","no-store");
@@ -107,7 +107,7 @@ module.exports=async function handler(req,res){
       });
       const data=match.metadata;
       security.grid(data);
-      return ticketResponse(res,{id:m.id,session:session.session,panoId:data.panoId,dimensions:security.grid(data),exp:Date.now()+20*60000},data);
+      return ticketResponse(res,{id:m.id,session:session.session,panoId:data.panoId,dimensions:security.grid(data),exp:Date.now()+20*60000},data,match.mode);
     }
     if(!["neighbor","tile"].includes(action))return fail(res,400,"Unsupported action");
     const ticket=security.readTicket(body.ticket,env.MUSEUM_XR_TICKET_SECRET);
