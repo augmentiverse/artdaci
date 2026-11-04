@@ -154,5 +154,18 @@ test('museum XR is opt-in, uses official URLs and does not overwrite existing VR
  assert.match(viewer,/dim\.width\+' × '\+dim\.height/);
  assert.match(viewer,/Promise\.all\(\[worker\(\),worker\(\)\]\)/);
  assert.match(registry,/museum-xr\.html/);
+ assert.match(registry,/card\.append\(xr\)/);
+ assert.match(registry,/tableau non nécessairement visible/);
+ assert.match(viewer,/function renderMuseumCatalog\(items\)/);
+ assert.match(viewer,/catalog\.museums\|\|\[\]/);
+ assert.match(viewer,/artworkSearch\.addEventListener\('input',render\)/);
+ assert.match(viewer,/x\.sourceKind==='direct-panorama'/);
+ assert.match(viewer,/x\.sourceKind==='museum-tour'/);
+ assert.match(viewer,/entry\.source\)/);
+ assert.match(entry,/id="artwork-search"/);
+ assert.match(entry,/id="artwork-catalog-disclaimer"/);
+ assert.match(entry,/id="artwork-result-count"/);
+ assert.match(entry,/id="artwork-catalog"/);
+
  assert.match(louvre,/scripts\/louvre-xr\.js/);
 });
