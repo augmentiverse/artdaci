@@ -96,10 +96,12 @@ test('lower resolution tiles are accepted only with server-signed zoom authoriza
  const metadata={panoId:'pano_test_1234',lat:museum.lat,lng:museum.lng,imageryType:'outdoor',
   imageHeight:6656,imageWidth:13312,tileHeight:512,tileWidth:512,heading:0,copyright:'© Google'};
  const secret='test-secret-must-be-longer-than-32-chars!';
- assert.equal(security.grid(metadata,3).width,4096);
- assert.equal(security.grid(metadata,3).height,2048);
- assert.equal(security.grid(metadata,3).columns*security.grid(metadata,3).rows,32);
- assert.equal(security.grid(metadata,2).width,2048);
+ assert.equal(security.grid(metadata,3).width,3328);
+ assert.equal(security.grid(metadata,3).height,1664);
+ assert.equal(security.grid(metadata,3).columns,7);
+ assert.equal(security.grid(metadata,3).rows,4);
+ assert.equal(security.grid(metadata,3).columns*security.grid(metadata,3).rows,28);
+ assert.equal(security.grid(metadata,2).width,1664);
  assert.throws(()=>security.grid(metadata,4),/Zoom denied/);
  const initTicket=security.signTicket({
   id:museum.id,session:'session123',panoId:metadata.panoId,dimensions:security.grid(metadata),
