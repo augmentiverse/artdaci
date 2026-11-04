@@ -9,6 +9,13 @@ This feature is an **unreleased, Vercel Authentication-protected Preview**. The 
 - The user confirmed that stable-mode immersion launches, but controller selection was disabled in stable mode. Controller selection and A/X fallback have now been restored in stable mode. **These controls have not yet been validated on the physical Quest 3S** after the change. Only the stable mode should be tried first. Keep the older working preview available for comparison.
 - Continue to require Vercel Preview authentication and branch-only API configuration; do not merge to production.
 
+## Optional hands-free turning (2026-11-04)
+- Physical Quest 3S headset rotation already comes from **native WebXR head tracking** (left/right/up/down) without touching controllers. The user has confirmed stable VR immersive entry, working controller navigation, improved HD tiles and numbered markers.
+- The **experimental hand mode** is opt-in via `?hands=1` or the accessible “rotate with hands” link, separate from `?xrControls=enhanced`; normal Quest VR keeps the already-working `optionalFeatures:['local-floor']` configuration unchanged.
+- In hand mode only, WebXR requests optional `hand-tracking`; when supported and granted, each animation frame uses `XRFrame.getJointPose` for thumb-tip/index-finger-tip, measures a thumb-index **pinch** and turns the viewer when the pinched hand moves left/right. Releasing the pinch stops. Hysteresis and bounded per-frame yaw prevent shaking and large tracking-loss jumps. No artificial vertical head pitch is imposed.
+- A hand input's WebXR selection events do **not** activate controller links while using hand pinch-turn; controller input continues to work as a fallback. Hand tracking failure is caught and must not prevent WebXR rendering. Missing or ungranted hand tracking does not prevent natural head tracking.
+- The mode was syntax-checked and tested as a pure state machine, but **is not yet validated on a physical Quest 3S**. The browser may not return XRHand input sources, depending on browser and headset settings. The user should put down controllers, check Quest hand-tracking settings, then pinch thumb/index and move horizontally; controller navigation remains available in stable mode.
+
 ## What is ready
 - `geo/museum-xr.html?lang=fr&museum=national-gallery-london` loads the WebXR interface.
 - Four existing artwork links route to their distinct source museums.
