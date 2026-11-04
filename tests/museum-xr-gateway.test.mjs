@@ -70,6 +70,8 @@ test('private pilot has a best-effort guard without Redis (not a distributed glo
  let last;
  for(let i=0;i<65;i++)last=security.reserveProcessBudget();
  assert.equal(last.ok,false);
+ assert.equal(last.reason,'minute');
+ assert.ok(last.retryAfterSeconds>=1&&last.retryAfterSeconds<=60);
  const nextMinute=Date.now()+61000;
  assert.equal(security.reserveProcessBudget(nextMinute).ok,true);
 });
@@ -180,4 +182,17 @@ test('outdoor demo navigation is distinct from verified indoor painting-room tra
  assert.match(source,/security\.validateDemoNeighbor\(current,data,m,body\.panoId\)/);
  assert.match(source,/security\.validateIndoor\(current,m\)&&security\.validateIndoor\(data,m\)/);
  assert.match(source,/NEIGHBOR_OUT_OF_RANGE/);
+});
+
+test('429 budget reasons and retry window are explicit without increasing pilot limits',async()=>{
+ const gatewaySource=await readFile(new URL('../api/museum-xr.js',import.meta.url),'utf8');
+ const securitySource=await readFile(new URL('../lib/museum-xr-security.cjs',import.meta.url),'utf8');
+ assert.equal(security.MAX_DAILY_REQUESTS,300);
+ assert.match(securitySource,/reason:"daily"/);
+ assert.match(securitySource,/reason:"minute"/);
+ assert.match(gatewaySource,/PILOT_DAILY_CAP/);
+ assert.match(gatewaySource,/PILOT_MINUTE_CAP/);
+ assert.match(gatewaySource,/Retry-After/);
+ assert.match(gatewaySource,/retryAfterSeconds/);
+ assert.match(gatewaySource,/GOOGLE_RATE_LIMIT/);
 });
