@@ -9,6 +9,7 @@ This feature is an **unreleased and initially disabled** Vercel Preview. The pub
 - Panorama rendered on an inward-facing Three.js sphere, Meta Quest `immersive-vr` session and controller-ray hotspot selection.
 - A Node Vercel function `/api/museum-xr` acts as an opt-in backend to Google Maps Tile API. It uses **keyless Workload Identity Federation (Vercel Preview OIDC → Google STS → short-lived service account OAuth)**, not the browser API key or a Google private key.
 - The backend only accepts five museum records from the registry and the user-provided National Gallery example, refuses non-indoor panoramas, checks geographic proximity and restricts navigation to adjacent panoramas in a 35m radius.
+- Starting a museum view first checks the nearest panorama. If it is outdoor or missing, it now probes a fixed 13-point cluster around the supplied museum coordinates using `/streetview/panoIds`, then inspects up to 8 distinct candidates, accepting only `imageryType=indoor` within 35m. **Nearby is not proof of the exact room or artwork**. The UI labels any discovered nearby view as unverified and retains a link to the official Google Arts & Culture panorama.
 - Access requires a private preview passphrase. Sessions use signed 20-minute tickets; no Google OAuth bearer is included in those tickets.
 - The **small private pilot runs without Redis**. It applies a best-effort per-instance limit of 60 upstream requests/minute and 300 upstream requests/UTC day, including token-exchange requests. These limits reset after cold starts and apply separately to each server instance: **they are NOT global billing caps**. Redis may be added later to establish a globally shared daily limit. The Google Cloud API quotas and billing alerts remain separate controls.
 - No persistent panorama/image storage; transient canvas buffers exist only for active visualization.
@@ -43,7 +44,7 @@ The gateway uses Google STS and IAM Credentials `generateAccessToken`, limited t
 5. No current Google panorama access or Quest headset test has been performed. Activation and coverage verification require account-side setup and real hardware.
 
 ## Validation
-`node --test tests/geo-streetview-xr.test.mjs tests/museum-xr-gateway.test.mjs tests/museum-xr-oidc.test.mjs`
+`node --test tests/geo-streetview-xr.test.mjs tests/museum-xr-gateway.test.mjs tests/museum-xr-oidc.test.mjs tests/museum-xr-search.test.mjs`
 
 Test expected disabled behavior from Preview:
 `POST /api/museum-xr` -> 503 when `MUSEUM_XR_ENABLED` or secrets are absent.
