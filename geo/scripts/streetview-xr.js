@@ -393,19 +393,19 @@ const xrTexts={
   starting:'Autorisation WebXR reçue : initialisation du rendu VR…',ready:'Session VR activée.',ended:'Session VR terminée.',
   unavailable:'La VR immersive n’est pas disponible dans ce navigateur.',failed:'Impossible de démarrer la VR',
   stale:'Le Quest ne répond pas encore à la demande VR. Si nécessaire, fermez l’onglet puis rouvrez la Preview.',
-  basic:'Mode VR stable (priorité à l’affichage).',advanced:'Navigation manettes expérimentale. Retournez au mode stable si la VR bloque.',
+  basic:'Mode VR stable : manettes, gâchette et points de navigation.',advanced:'Mode avancé : affichage des indications dans le casque (expérimental). Retournez au mode stable si la VR bloque.',
   advancedLink:'Tester les commandes avancées',basicLink:'Revenir au mode VR stable'},
  en:{request:'VR request sent to Quest…',pending:'WebXR is waiting for headset confirmation. Check permissions in Meta Quest Browser.',
   starting:'WebXR permission granted: initializing VR renderer…',ready:'VR session active.',ended:'VR session ended.',
   unavailable:'Immersive VR is unavailable in this browser.',failed:'Could not start VR',
   stale:'Quest has not responded to VR request. Close and reopen the Preview tab if needed.',
-  basic:'Stable VR mode (rendering first).',advanced:'Experimental controller navigation. Return to stable mode if VR hangs.',
+  basic:'Stable VR mode: controllers, trigger and navigation points.',advanced:'Advanced mode: in-headset overlay (experimental). Return to stable mode if VR hangs.',
   advancedLink:'Try advanced controls',basicLink:'Return to stable VR mode'},
  ar:{request:'تم طلب تشغيل VR…',pending:'بانتظار موافقة النظارة على WebXR. راجع الصلاحيات في متصفح Quest.',
   starting:'تم منح إذن WebXR؛ يبدأ العرض…',ready:'تم تشغيل VR.',ended:'انتهت جلسة VR.',
   unavailable:'الوضع الغامر غير متاح في هذا المتصفح.',failed:'تعذر تشغيل VR',
   stale:'لم تستجب النظارة بعد لطلب VR. أغلق التبويب وافتح المعاينة مرة أخرى عند الحاجة.',
-  basic:'وضع VR المستقر أولاً.',advanced:'تجربة تحكم متقدمة. عد إلى الوضع المستقر إذا تعطل VR.',
+  basic:'وضع VR المستقر: وحدات التحكم والزناد ونقاط التنقل.',advanced:'تجربة تحكم متقدمة. عد إلى الوضع المستقر إذا تعطل VR.',
   advancedLink:'تجربة عناصر التحكم المتقدمة',basicLink:'العودة إلى وضع VR المستقر'}
 };
 const xrText=xrTexts[lang],vrButton=$('enter-vr'),vrStatus=$('xr-diagnostic'),modeLink=$('xr-mode-link');
