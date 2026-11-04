@@ -148,13 +148,18 @@ for(let i=0;i<2;i++){
    color:0xb5e7ff,transparent:true,opacity:.8,depthTest:false
  }));
  laser.renderOrder=15;laser.visible=false;laser.scale.z=4;controller.add(laser);
- const info={controller,laser,connected:false};
- controller.addEventListener('connected',()=>{info.connected=true});
- controller.addEventListener('disconnected',()=>{info.connected=false;laser.visible=false});
- // Touch controllers generally produce selectstart + select; the debounce
- // prevents two transitions for one squeeze.
- controller.addEventListener('selectstart',()=>activateXRHotspot(controller));
- controller.addEventListener('select',()=>activateXRHotspot(controller));
+ const info={controller,laser,connected:false,isHand:false};
+ controller.addEventListener('connected',event=>{
+   info.connected=true;
+   info.isHand=Boolean(event?.data?.hand);
+ });
+ controller.addEventListener('disconnected',()=>{
+   info.connected=false;info.isHand=false;laser.visible=false;
+ });
+ // Pinching is used for smooth hand turning, not for triggering navigation.
+ // Physical controller triggers retain their existing select behavior.
+ controller.addEventListener('selectstart',()=>{if(!(handMode&&info.isHand))activateXRHotspot(controller)});
+ controller.addEventListener('select',()=>{if(!(handMode&&info.isHand))activateXRHotspot(controller)});
  rig.add(controller);controllerRays.push(info);
 }
 function activateNextXRNeighbor(){
@@ -295,7 +300,7 @@ renderer.setAnimationLoop((time,xrFrame)=>{
      scene.updateMatrixWorld(true);
      const aimed=new Set();
      for(const info of controllerRays){
-       info.laser.visible=Boolean(info.connected);
+       info.laser.visible=Boolean(info.connected&&!info.isHand);
        if(!info.laser.visible)continue;
        const hit=controllerHit(info.controller);
        info.laser.material.color.setHex(hit?0x65ffe1:0xb5e7ff);
@@ -324,7 +329,7 @@ renderer.setAnimationLoop((time,xrFrame)=>{
      scene.updateMatrixWorld(true);
      const hovering=new Set();
      for(const {controller,laser,connected} of controllerRays){
-       laser.visible=Boolean(connected);
+       laser.visible=Boolean(connected&&!controllerRays.find(x=>x.controller===controller)?.isHand);
        if(!laser.visible)continue;
        const hit=controllerHit(controller);
        laser.material.color.setHex(hit?0x65ffe1:0xb5e7ff);
