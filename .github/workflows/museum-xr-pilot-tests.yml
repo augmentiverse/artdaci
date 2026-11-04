@@ -1,0 +1,22 @@
+name: Museum XR pilot tests
+
+on:
+  push:
+    branches:
+      - feature/streetview-webxr-museums-v1
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  museum-xr-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test Museum XR gateway, federation, discovery and UI links
+        run: node --test tests/geo-streetview-xr.test.mjs tests/museum-xr-gateway.test.mjs tests/museum-xr-oidc.test.mjs tests/museum-xr-search.test.mjs
