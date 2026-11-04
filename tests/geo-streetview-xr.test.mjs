@@ -40,6 +40,15 @@ test('museum XR is opt-in, uses official URLs and does not overwrite existing VR
  assert.match(viewer,/requestSession\('immersive-vr'/);
  assert.match(viewer,/canvas\.addEventListener\('pointerdown'/);
  assert.match(viewer,/canvas\.addEventListener\('pointermove'/);
+ assert.match(viewer,/addHotspots\(meta\)/);
+ assert.match(viewer,/loadNeighbor\(item\.panoId\)/);
+ assert.match(viewer,/function setDesktopZoom/);
+ assert.match(viewer,/zoom-in/);
+ assert.match(viewer,/zoom-out/);
+ assert.doesNotMatch(viewer,/if\(meta\.imageryType==='indoor'\)addHotspots/);
+ assert.match(entry,/id="zoom-in"/);
+ assert.match(entry,/id="zoom-out"/);
+ assert.match(entry,/id="links-help"/);
  assert.match(viewer,/canvas\.addEventListener\('wheel'/);
  assert.match(viewer,/session\.inputSources/);
  assert.match(viewer,/hdUnavailable/);
