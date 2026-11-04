@@ -22,6 +22,7 @@ test('unverified and outdoor Google viewpoints are not claimed as museum interio
 });
 test('tiled panoramas have a bounded resolution and request budget',()=>{
  const normal={imageWidth:13312,imageHeight:6656,tileWidth:512,tileHeight:512};
+ assert.deepEqual(tileGrid(normal,3),{outputWidth:4096,outputHeight:2048,tileWidth:512,tileHeight:512,columns:8,rows:4,level:3});
  assert.deepEqual(tileGrid(normal,2),{outputWidth:2048,outputHeight:1024,tileWidth:512,tileHeight:512,columns:4,rows:2,level:2});
  assert.deepEqual(tileGrid(normal,1),{outputWidth:1024,outputHeight:512,tileWidth:512,tileHeight:512,columns:2,rows:1,level:1});
  assert.deepEqual(tileGrid(normal,0),{outputWidth:512,outputHeight:256,tileWidth:512,tileHeight:512,columns:1,rows:1,level:0});
@@ -42,6 +43,10 @@ test('museum XR is opt-in, uses official URLs and does not overwrite existing VR
  assert.match(viewer,/reportProblemLink/);
  assert.match(viewer,/meta\.copyright/);
  assert.match(entry,/scripts\/streetview-xr\.js/);
+ assert.match(entry,/id="quality"/);
+ assert.match(viewer,/quality:\$\('quality'\)\.value/);
+ assert.match(viewer,/dim\.width\+' × '\+dim\.height/);
+ assert.match(viewer,/Promise\.all\(\[worker\(\),worker\(\)\]\)/);
  assert.match(registry,/museum-xr\.html/);
  assert.match(louvre,/scripts\/louvre-xr\.js/);
 });
