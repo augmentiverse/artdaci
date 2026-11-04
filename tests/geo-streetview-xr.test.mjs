@@ -39,6 +39,18 @@ test('museum XR is opt-in, uses official URLs and does not overwrite existing VR
  ]);
  assert.match(viewer,/requestSession\('immersive-vr'/);
  assert.match(viewer,/const enhancedXR=params\.get\('xrControls'\)==='enhanced'/);
+ assert.match(viewer,/if\(session&&!enhancedXR\)/);
+ assert.match(viewer,/function activateXRHotspot\(controller\)/);
+ assert.doesNotMatch(viewer,/function activateXRHotspot\(controller\)\{\s*if\(!enhancedXR\)return;/);
+ assert.doesNotMatch(viewer,/function activateNextXRNeighbor\(\)\{\s*if\(!enhancedXR\)return;/);
+ assert.match(viewer,/controllerHit\(controller\)\|\|gazeHit\(\)/);
+ assert.match(viewer,/hotspots\.position\.set\(0,1\.25,0\)/);
+ assert.match(viewer,/const aimed=new Set\(\)/);
+ assert.match(viewer,/selected\?0x65ffe1:0xe4bd7c/);
+ assert.match(viewer,/if\(pressed&&!buttonStates\.get\(key\)\)activateNextXRNeighbor\(\)/);
+ assert.match(viewer,/info\.laser\.visible=Boolean\(info\.connected\)/);
+ assert.match(viewer,/renderer\.render\(scene,camera\)/);
+ 
  assert.match(viewer,/if\(session&&enhancedXR\)/);
  assert.match(viewer,/renderer\.render\(scene,camera\)/);
  assert.match(viewer,/renderer\.xr\.addEventListener\('sessionstart'/);
