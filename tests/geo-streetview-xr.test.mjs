@@ -38,6 +38,21 @@ test('museum XR is opt-in, uses official URLs and does not overwrite existing VR
   readFile(new URL('../geo/louvre-xr.html',import.meta.url),'utf8')
  ]);
  assert.match(viewer,/requestSession\('immersive-vr'/);
+ assert.match(viewer,/import \{advancePinchTurn\} from '\.\/streetview-hand-turn\.mjs'/);
+ assert.match(viewer,/const handMode=params\.get\('hands'\)==='1'&&!enhancedXR/);
+ assert.match(viewer,/function updateHandTurning\(session,xrFrame\)/);
+ assert.match(viewer,/xrFrame\.getJointPose\(thumbJoint,referenceSpace\)/);
+ assert.match(viewer,/xrFrame\.getJointPose\(indexJoint,referenceSpace\)/);
+ assert.match(viewer,/advancePinchTurn\(pinchTurn\.key===key\?pinchTurn\.state:null,sample\)/);
+ assert.match(viewer,/renderer\.setAnimationLoop\(\(time,xrFrame\)=>/);
+ assert.match(viewer,/handMode\?\['local-floor','hand-tracking'\]:\['local-floor'\]/);
+ assert.match(viewer,/handMode&&info\.isHand/);
+ assert.match(viewer,/info\.isHand=Boolean\(event\?\.data\?\.hand\)/);
+ assert.match(viewer,/handLink\.href='\?'\+handParams\.toString\(\)/);
+ assert.match(entry,/id="hand-mode-link"/);
+ assert.match(entry,/id="hand-help"/);
+ assert.match(entry,/id="hand-status"/);
+ 
  assert.match(viewer,/const enhancedXR=params\.get\('xrControls'\)==='enhanced'/);
  assert.match(viewer,/if\(session&&!enhancedXR\)/);
  assert.match(viewer,/function activateXRHotspot\(controller\)/);
