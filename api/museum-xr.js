@@ -7,11 +7,14 @@ const LIMIT_BODY=2_000_000;
 const env=process.env;
 const fail=(res,code,message)=>res.status(code).json({error:message});
 function allowedOrigin(req){
+  // Same-origin browser calls. Vercel Authentication protects the Preview URL.
+  // Do not accept cross-site requests merely because they target a DACI host.
   const origin=req.headers.origin;
   if(!origin)return true;
   try{
     const u=new URL(origin);
-    return u.protocol==="https:"&&(u.hostname==="artdaci.com"||u.hostname==="www.artdaci.com"||u.hostname==="artdaci.vercel.app"||u.hostname.endsWith("-daci.vercel.app"));
+    return u.protocol==="https:"&&u.host===req.headers.host&&
+      (u.hostname==="artdaci.vercel.app"||u.hostname.endsWith("-daci.vercel.app"));
   }catch{return false}
 }
 async function quota(){
@@ -28,15 +31,28 @@ async function googleToken(req){
   return federation.googleServiceToken(fetch,req,env,quota);
 }
 async function googleFetch(path,token,opts={}){
-  await quota();
-  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),TIMEOUT);
-  try{
-    const response=await fetch(GOOGLE+path,{...opts,headers:{
-      ...(opts.body?{"Content-Type":"application/json"}:{}),Authorization:"Bearer "+token,"X-Goog-User-Project":env.MUSEUM_XR_GOOGLE_PROJECT_ID
-    },signal:controller.signal});
-    if(!response.ok){const error=new Error("Google Maps Tiles request failed: "+response.status);error.status=response.status;throw error;}
-    return response;
-  }finally{clearTimeout(timer)}
+  const route=path.split("?")[0].replace(/\/streetview\/tiles\/\d+\/\d+\/\d+$/,"/streetview/tiles");
+  const attempts=2; // a single bounded retry for transient Google 5xx errors
+  for(let attempt=0;attempt<attempts;attempt++){
+    await quota();
+    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),TIMEOUT);
+    try{
+      const response=await fetch(GOOGLE+path,{...opts,headers:{
+        ...(opts.body?{"Content-Type":"application/json"}:{}),
+        Authorization:"Bearer "+token,"X-Goog-User-Project":env.MUSEUM_XR_GOOGLE_PROJECT_ID
+      },signal:controller.signal});
+      if(response.ok)return response;
+      if(attempt+1<attempts&&[500,502,503,504].includes(response.status)){
+        await new Promise(resolve=>setTimeout(resolve,250));
+        continue;
+      }
+      const error=new Error("Google Maps Tiles upstream HTTP "+response.status);
+      error.status=response.status;
+      error.stage=route;
+      throw error;
+    }finally{clearTimeout(timer)}
+  }
+  throw Error("Google Maps Tiles retry exhausted");
 }
 async function searchIndoorNearMuseum(m,session,google){
   const rootQuery=new URLSearchParams({session,lat:String(m.lat),lng:String(m.lng),radius:"20"});
@@ -82,13 +98,14 @@ module.exports=async function handler(req,res){
   if(req.method!=="POST")return fail(res,405,"POST required");
   if((Number(req.headers["content-length"])||0)>8192)return fail(res,413,"Request too large");
   const body=req.body&&typeof req.body==="object"?req.body:{};
-  const configured=Boolean(env.MUSEUM_XR_ENABLED==="true"&&(!env.VERCEL_GIT_COMMIT_REF||env.VERCEL_GIT_COMMIT_REF==="feature/streetview-webxr-museums-v1")&&env.MUSEUM_XR_GOOGLE_SERVICE_ACCOUNT_EMAIL&&env.MUSEUM_XR_GOOGLE_PROJECT_NUMBER&&env.MUSEUM_XR_WORKLOAD_POOL_ID&&env.MUSEUM_XR_WORKLOAD_PROVIDER_ID&&env.MUSEUM_XR_GOOGLE_PROJECT_ID&&env.VERCEL_ENV==="preview"&&env.MUSEUM_XR_TICKET_SECRET?.length>=32&&env.MUSEUM_XR_PREVIEW_TOKEN?.length>=24);
+  const configured=Boolean(env.MUSEUM_XR_ENABLED==="true"&&(!env.VERCEL_GIT_COMMIT_REF||env.VERCEL_GIT_COMMIT_REF==="feature/streetview-webxr-museums-v1")&&env.MUSEUM_XR_GOOGLE_SERVICE_ACCOUNT_EMAIL&&env.MUSEUM_XR_GOOGLE_PROJECT_NUMBER&&env.MUSEUM_XR_WORKLOAD_POOL_ID&&env.MUSEUM_XR_WORKLOAD_PROVIDER_ID&&env.MUSEUM_XR_GOOGLE_PROJECT_ID&&env.VERCEL_ENV==="preview"&&env.MUSEUM_XR_TICKET_SECRET?.length>=32);
   if(!configured)return fail(res,503,"Museum XR pilot inactive");
   if(!allowedOrigin(req))return fail(res,403,"Origin not approved");
-  if(!security.isPilotAuthorized(req.headers["x-museum-xr-preview"],env.MUSEUM_XR_PREVIEW_TOKEN))return fail(res,401,"Pilot access required");
+  // No extra pilot passphrase: this is already a Vercel Authentication-protected
+  // branch-scoped Preview. Production has no Museum XR enablement variables.
   try{
     const action=body.action;
-    if(action==="diagnose")return res.status(200).json({status:"authorized",enabled:true,oidcTokenAvailable:Boolean(req.headers["x-vercel-oidc-token"]||env.VERCEL_OIDC_TOKEN)});
+    if(action==="diagnose")return res.status(200).json({status:"preview",enabled:true,oidcTokenAvailable:Boolean(req.headers["x-vercel-oidc-token"]||env.VERCEL_OIDC_TOKEN)});
     if(action==="catalog")return res.status(200).json({museums:security.catalog().map(x=>({id:x.id,title:x.title,museum:x.museum,source:x.source})),perInstanceDailyLimit:security.MAX_DAILY_REQUESTS,globalLimitGuaranteed:Boolean(env.UPSTASH_REDIS_REST_URL&&env.UPSTASH_REDIS_REST_TOKEN)});
     if(!validId(body.museumId))return fail(res,400,"Invalid museum");
     const m=security.museum(body.museumId);
@@ -146,7 +163,13 @@ module.exports=async function handler(req,res){
     if(bytes.length>LIMIT_BODY)throw Error("Tile too large");
     res.setHeader("Content-Type",mime);return res.status(200).send(bytes);
   }catch(error){
-    console.warn("Museum XR gateway failure:",error.status||502);
-    return fail(res,error.status||502,error.status===429?"Daily usage cap reached":"Panorama gateway unavailable");
+    const stage=typeof error.stage==="string"&&/^\/(?:createSession|streetview\/(?:metadata|panoIds|tiles))$/.test(error.stage)?error.stage:"gateway";
+    const status=Number.isInteger(error.status)?error.status:502;
+    // Log only fixed endpoint names and status; NEVER Google session IDs or tokens.
+    console.warn("Museum XR failure:",stage,"HTTP",status);
+    return res.status(status).json({
+      error:status===429?"Daily usage cap reached":status>=500?"Google Street View upstream unavailable":"Panorama gateway unavailable",
+      code:status>=500?"UPSTREAM_UNAVAILABLE":"GATEWAY_ERROR",stage
+    });
   }
 };
