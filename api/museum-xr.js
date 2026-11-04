@@ -1,6 +1,7 @@
 "use strict";
 const security=require("../lib/museum-xr-security.cjs");
 const federation=require("../lib/museum-xr-oidc.cjs");
+const finder=require("../lib/museum-xr-search.cjs");
 const GOOGLE="https://tile.googleapis.com/v1",TIMEOUT=12000;
 const LIMIT_BODY=2_000_000;
 const env=process.env;
@@ -33,9 +34,38 @@ async function googleFetch(path,token,opts={}){
     const response=await fetch(GOOGLE+path,{...opts,headers:{
       ...(opts.body?{"Content-Type":"application/json"}:{}),Authorization:"Bearer "+token,"X-Goog-User-Project":env.MUSEUM_XR_GOOGLE_PROJECT_ID
     },signal:controller.signal});
-    if(!response.ok)throw Error("Google Maps Tiles request failed: "+response.status);
+    if(!response.ok){const error=new Error("Google Maps Tiles request failed: "+response.status);error.status=response.status;throw error;}
     return response;
   }finally{clearTimeout(timer)}
+}
+async function searchIndoorNearMuseum(m,session,google){
+  const rootQuery=new URLSearchParams({session,lat:String(m.lat),lng:String(m.lng),radius:"20"});
+  let nearest=null;
+  try{
+    nearest=await(await googleFetch("/streetview/metadata?"+rootQuery,google)).json();
+    if(security.validateIndoor(nearest,m))return {metadata:nearest,mode:"nearest"};
+  }catch(error){if(error.status!==404)throw error}
+  const nearestType=finder.classify(nearest,m,security.validateIndoor);
+  // Google's lat/lng metadata returns the nearest panorama, not the nearest
+  // indoor panorama. A small fixed multi-point search may find other views.
+  let ids=[];
+  try{
+    const q=new URLSearchParams({session});
+    const r=await googleFetch("/streetview/panoIds?"+q,google,{method:"POST",body:JSON.stringify({
+      locations:finder.searchLocations(m),radius:12
+    })});
+    ids=finder.distinctPanoIds(await r.json()).filter(x=>x!==nearest?.panoId);
+  }catch(error){if(error.status!==404)throw error}
+  let inspected=0;
+  for(const panoId of ids){
+    inspected++;
+    try{
+      const q=new URLSearchParams({session,panoId});
+      const data=await(await googleFetch("/streetview/metadata?"+q,google)).json();
+      if(security.validateIndoor(data,m))return {metadata:data,mode:"nearby-unverified"};
+    }catch(error){if(error.status!==404)throw error}
+  }
+  return {metadata:null,mode:"none",nearestType,inspected};
 }
 function validId(id){return typeof id==="string"&&/^[a-z0-9-]{1,64}$/.test(id)}
 function validPanoId(id){return typeof id==="string"&&/^[A-Za-z0-9_-]{5,256}$/.test(id)}
@@ -70,9 +100,12 @@ module.exports=async function handler(req,res){
       });
       const session=await sessionResult.json();
       if(!session.session)throw Error("Invalid session");
-      const q=new URLSearchParams({session:session.session,lat:String(m.lat),lng:String(m.lng),radius:"20"});
-      const data=await(await googleFetch("/streetview/metadata?"+q,google)).json();
-      if(!security.validateIndoor(data,m))return fail(res,404,"No verified matching indoor panorama found");
+      const match=await searchIndoorNearMuseum(m,session.session,google);
+      if(!match.metadata)return res.status(404).json({
+        error:"No indoor Street View panorama found in Google Maps Tiles close to this museum.",
+        code:"INDOOR_PANORAMA_NOT_FOUND",nearestType:match.nearestType,inspected:match.inspected
+      });
+      const data=match.metadata;
       security.grid(data);
       return ticketResponse(res,{id:m.id,session:session.session,panoId:data.panoId,dimensions:security.grid(data),exp:Date.now()+20*60000},data);
     }
