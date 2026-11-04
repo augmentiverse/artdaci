@@ -43,8 +43,89 @@ const creditSurface=document.createElement('canvas');creditSurface.width=1024;cr
 const creditTexture=new THREE.CanvasTexture(creditSurface);
 const creditPlane=new THREE.Mesh(new THREE.PlaneGeometry(2.5,.625),new THREE.MeshBasicMaterial({map:creditTexture,transparent:true,depthTest:false}));
 creditPlane.position.set(0,-1.2,-2.4);creditPlane.renderOrder=10;rig.add(creditPlane);
-const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector3();
-for(let i=0;i<2;i++){const controller=renderer.xr.getController(i);rig.add(controller);controller.addEventListener('select',()=>{controller.updateWorldMatrix(true,false);raycaster.set(controller.getWorldPosition(pointer),new THREE.Vector3(0,0,-1).transformDirection(controller.matrixWorld));const hit=raycaster.intersectObjects(hotspots.children)[0];if(hit?.object.userData.panoId)loadNeighbor(hit.object.userData.panoId).catch(reportError)})}
+// Quest Touch controller target-ray spaces: visible lasers and hover highlights
+// clarify when the trigger can activate a nearby panorama. A gaze fallback and
+// A/X button navigation assist make hotspots usable without pixel-perfect aim.
+const raycaster=new THREE.Raycaster();
+const tempOrigin=new THREE.Vector3(),tempDirection=new THREE.Vector3();
+const tempQuaternion=new THREE.Quaternion(),rayOrigins=new THREE.Vector3();
+const controllerRays=[],buttonStates=new Map();
+let lastXRSelection=0,neighborCycleIndex=0,toastUntil=0;
+const toastCanvas=document.createElement('canvas');toastCanvas.width=1024;toastCanvas.height=180;
+const toastCtx=toastCanvas.getContext('2d');
+const toastTexture=new THREE.CanvasTexture(toastCanvas);
+const toastPanel=new THREE.Mesh(new THREE.PlaneGeometry(1.9,.34),new THREE.MeshBasicMaterial({
+  map:toastTexture,transparent:true,depthTest:false,side:THREE.DoubleSide
+}));
+toastPanel.visible=false;toastPanel.renderOrder=25;scene.add(toastPanel);
+function vrNotice(value){
+ if(!renderer.xr.isPresenting||!toastCtx)return;
+ const str=String(value||'').slice(0,110);
+ toastCtx.clearRect(0,0,1024,180);
+ toastCtx.fillStyle='rgba(8,20,31,0.94)';toastCtx.fillRect(0,0,1024,180);
+ toastCtx.strokeStyle='#e4bd7c';toastCtx.lineWidth=5;toastCtx.strokeRect(4,4,1016,172);
+ toastCtx.font='38px system-ui';toastCtx.fillStyle='#fff';
+ // Two short lines ensure the text remains readable in Quest optics.
+ const tokens=str.split(/\s+/),lines=[''];
+ for(const token of tokens){const idx=lines.length-1;
+  if(toastCtx.measureText(lines[idx]+' '+token).width>890&&lines.length<2)lines.push(token);
+  else lines[idx]+=(lines[idx]?' ':'')+token;
+ }
+ for(let n=0;n<lines.length;n++)toastCtx.fillText(lines[n].slice(0,55),32,68+n*60);
+ toastTexture.needsUpdate=true;toastPanel.visible=true;toastUntil=performance.now()+3600;
+}
+function controllerHit(controller){
+ controller.updateWorldMatrix(true,false);
+ const origin=controller.getWorldPosition(tempOrigin);
+ const dir=tempDirection.set(0,0,-1).transformDirection(controller.matrixWorld);
+ raycaster.set(origin,dir);
+ return raycaster.intersectObjects(hotspots.children,false)[0]||null;
+}
+function gazeHit(){
+ const headset=renderer.xr.getCamera();
+ if(!headset)return null;
+ headset.updateWorldMatrix(true,false);
+ const origin=headset.getWorldPosition(tempOrigin);
+ const dir=tempDirection.set(0,0,-1).applyQuaternion(headset.getWorldQuaternion(tempQuaternion));
+ raycaster.set(origin,dir);
+ return raycaster.intersectObjects(hotspots.children,false)[0]||null;
+}
+function activateXRHotspot(controller){
+ if(loading||!renderer.xr.isPresenting||performance.now()-lastXRSelection<500)return;
+ scene.updateMatrixWorld(true);
+ const selected=controllerHit(controller)||gazeHit();
+ if(!selected?.object?.userData?.panoId){vrNotice(t.aim);return}
+ lastXRSelection=performance.now();
+ vrNotice(t.opening);
+ loadNeighbor(selected.object.userData.panoId).then(()=>vrNotice(t.arrived)).catch(reportError);
+}
+const laserGeometry=new THREE.BufferGeometry().setFromPoints([
+ new THREE.Vector3(0,0,0),new THREE.Vector3(0,0,-1)
+]);
+for(let i=0;i<2;i++){
+ const controller=renderer.xr.getController(i);
+ const laser=new THREE.Line(laserGeometry,new THREE.LineBasicMaterial({
+   color:0xb5e7ff,transparent:true,opacity:.8,depthTest:false
+ }));
+ laser.renderOrder=15;laser.visible=false;laser.scale.z=4;controller.add(laser);
+ const info={controller,laser,connected:false};
+ controller.addEventListener('connected',()=>{info.connected=true});
+ controller.addEventListener('disconnected',()=>{info.connected=false;laser.visible=false});
+ // Touch controllers generally produce selectstart + select; the debounce
+ // prevents two transitions for one squeeze.
+ controller.addEventListener('selectstart',()=>activateXRHotspot(controller));
+ controller.addEventListener('select',()=>activateXRHotspot(controller));
+ rig.add(controller);controllerRays.push(info);
+}
+function activateNextXRNeighbor(){
+ if(loading||!currentMeta?.links?.length||performance.now()-lastXRSelection<500)return;
+ const options=currentMeta.links.filter(item=>typeof item.panoId==='string'&&Number.isFinite(item.heading)).slice(0,8);
+ if(!options.length)return;
+ lastXRSelection=performance.now();
+ const chosen=options[neighborCycleIndex++%options.length];
+ vrNotice(t.opening);
+ loadNeighbor(chosen.panoId).then(()=>vrNotice(t.arrived)).catch(reportError);
+}
 function drawCredits(text){const context=creditSurface.getContext('2d');context.clearRect(0,0,1024,256);context.fillStyle='rgba(8,18,27,0.88)';context.fillRect(0,0,1024,256);context.fillStyle='#fff';context.font='32px system-ui';const chunks=String(text||'© Google Street View').match(/.{1,58}/g)||[];chunks.slice(0,3).forEach((line,i)=>context.fillText(line,30,55+i*49));context.font='25px system-ui';context.fillText('Google Street View · ARTDACI Museum XR',30,220);creditTexture.needsUpdate=true}
 drawCredits('© Google Street View');
 function size(){const b=canvas.getBoundingClientRect();renderer.setSize(Math.round(b.width),Math.round(b.height),false);camera.aspect=b.width/Math.max(1,b.height);camera.updateProjectionMatrix()}
@@ -91,13 +172,51 @@ const renderClock=new THREE.Clock();
 renderer.setAnimationLoop(()=>{
  const dt=Math.min(renderClock.getDelta(),0.05);
  const session=renderer.xr.getSession();
+ const head=session?renderer.xr.getCamera():camera;
+ // Position nearby panorama markers at eye level rather than world-floor
+ // level, which otherwise makes a controller ray miss in a seated Quest.
+ head.getWorldPosition(rayOrigins);
+ hotspots.position.copy(rayOrigins);hotspots.position.y-=0.13;
  if(session){
-  // Quest thumbstick provides seated snap-free horizontal turn; head tracking
-  // always remains the primary direction of view.
+  // Quest thumbstick provides seated snap-free turning; head tracking remains
+  // the natural way to look up/down and around.
   const right=[...session.inputSources].find(x=>x.handedness==='right'&&x.gamepad);
   const axes=right?.gamepad?.axes||[];
   const axis=axes.length>=3?axes[2]:(axes[0]||0);
   if(Math.abs(axis)>0.24)rig.rotation.y-=axis*dt*1.4;
+ }
+ scene.updateMatrixWorld(true);
+ const hovering=new Set();
+ for(const {controller,laser,connected} of controllerRays){
+   laser.visible=Boolean(session&&connected);
+   if(!laser.visible)continue;
+   const hit=controllerHit(controller);
+   laser.material.color.setHex(hit?0x65ffe1:0xb5e7ff);
+   laser.scale.z=hit?Math.min(hit.distance,4.0):4.0;
+   if(hit)hovering.add(hit.object);
+ }
+ if(session){
+   const lookedAt=gazeHit();if(lookedAt)hovering.add(lookedAt.object);
+   // A/X on Quest Touch is a robust alternative when a small target cannot
+   // be selected by ray; it cycles through Google-linked panorama directions.
+   for(const [index,source] of [...session.inputSources].entries()){
+    const button=Boolean(source.gamepad?.buttons?.[4]?.pressed);
+    const key=source.handedness||String(index);
+    if(button&&!buttonStates.get(key))activateNextXRNeighbor();
+    buttonStates.set(key,button);
+   }
+   toastPanel.visible=toastUntil>performance.now();
+   if(toastPanel.visible){
+     head.getWorldPosition(tempOrigin);
+     head.getWorldQuaternion(tempQuaternion);
+     toastPanel.position.copy(tempOrigin).add(new THREE.Vector3(0,-.26,-1.4).applyQuaternion(tempQuaternion));
+     toastPanel.quaternion.copy(tempQuaternion);
+   }
+ }else{toastPanel.visible=false;buttonStates.clear()}
+ for(const target of hotspots.children){
+   const active=hovering.has(target);
+   target.material.color.setHex(active?0x65ffe1:0xe4bd7c);
+   target.scale.setScalar(active?1.20:1);
  }
  renderer.render(scene,camera);
 });
@@ -110,14 +229,14 @@ async function request(data,blob=false){
 }
 function clearHotspots(){for(const o of [...hotspots.children]){hotspots.remove(o);o.geometry.dispose();o.material.dispose()}$('links').replaceChildren()}
 function addHotspots(metadata){
- clearHotspots();
+ clearHotspots();neighborCycleIndex=0;
  // Only links supplied by Google metadata can be selected, never arbitrary IDs.
  const labels=['N','NE','E','SE','S','SW','W','NW'];
  for(const item of (metadata.links||[]).slice(0,8)){
   if(!item.panoId||!Number.isFinite(item.heading))continue;
   const position=bearingVector(item.heading,3);
-  const mesh=new THREE.Mesh(new THREE.SphereGeometry(.19,18,12),new THREE.MeshBasicMaterial({color:'#e4bd7c'}));
-  mesh.position.set(position.x,-.55,position.z);
+  const mesh=new THREE.Mesh(new THREE.SphereGeometry(.34,20,16),new THREE.MeshBasicMaterial({color:'#e4bd7c'}));
+  mesh.position.set(position.x,0,position.z);
   mesh.userData.panoId=item.panoId;
   hotspots.add(mesh);
   const direction=labels[Math.round((((item.heading%360)+360)%360)/45)%8];
@@ -184,6 +303,7 @@ async function showPanorama(result){
 }
 async function loadNeighbor(panoId){if(loading)return;loading=true;try{const data=await request({action:'neighbor',ticket,panoId});await showPanorama(data)}finally{loading=false}}
 function reportError(error){console.warn('Museum XR preview:',error.message);
+ if(renderer.xr.isPresenting)vrNotice(error.status===403?t.outside:t.loadFailed);
  if(error.status===403&&error.detail?.startsWith('NEIGHBOR_')){message(t.outside);return}
  if(error.hdUnavailable){message(t.hdError+(error.status?' · HTTP '+error.status:'')+(error.detail?' · '+error.detail:''));return}const empty=error.status===404&&error.detail?.includes('nearest-outdoor')?t.nearestOutdoor:t.empty;message((error.status===401?t.bad:error.status===404?empty:error.status===503?t.disabled:t.error)+(error.status?' · HTTP '+error.status:'')+(error.detail?' · '+error.detail:''))}
 async function startPanorama(action){
