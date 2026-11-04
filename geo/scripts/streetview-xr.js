@@ -94,14 +94,29 @@ function gazeHit(){
  return raycaster.intersectObjects(hotspots.children,false)[0]||null;
 }
 function activateXRHotspot(controller){
- if(!enhancedXR)return;
+ // The basic Quest mode MUST retain select handling. Only expensive gaze and
+ // head-following HUD calculations are gated behind enhancedXR.
  if(loading||!renderer.xr.isPresenting||performance.now()-lastXRSelection<500)return;
- scene.updateMatrixWorld(true);
- const selected=controllerHit(controller)||gazeHit();
- if(!selected?.object?.userData?.panoId){vrNotice(t.aim);return}
- lastXRSelection=performance.now();
- vrNotice(t.opening);
- loadNeighbor(selected.object.userData.panoId).then(()=>vrNotice(t.arrived)).catch(reportError);
+ try{
+  scene.updateMatrixWorld(true);
+  const selected=controllerHit(controller)||(enhancedXR?gazeHit():null);
+  if(!selected?.object?.userData?.panoId){
+   if(enhancedXR)vrNotice(t.aim);
+   else message(t.aim);
+   return;
+  }
+  lastXRSelection=performance.now();
+  message(t.opening);
+  if(enhancedXR)vrNotice(t.opening);
+  loadNeighbor(selected.object.userData.panoId).then(()=>{
+   message(t.arrived);
+   if(enhancedXR)vrNotice(t.arrived);
+  }).catch(reportError);
+ }catch(error){
+  // A controller input fault must not kill the WebXR render loop.
+  console.warn('Museum XR controller selection issue:',error?.name||'Error');
+  message(t.loadFailed);
+ }
 }
 const laserGeometry=new THREE.BufferGeometry().setFromPoints([
  new THREE.Vector3(0,0,0),new THREE.Vector3(0,0,-1)
@@ -122,14 +137,17 @@ for(let i=0;i<2;i++){
  rig.add(controller);controllerRays.push(info);
 }
 function activateNextXRNeighbor(){
- if(!enhancedXR)return;
  if(loading||!currentMeta?.links?.length||performance.now()-lastXRSelection<500)return;
  const options=currentMeta.links.filter(item=>typeof item.panoId==='string'&&Number.isFinite(item.heading)).slice(0,8);
  if(!options.length)return;
  lastXRSelection=performance.now();
  const chosen=options[neighborCycleIndex++%options.length];
- vrNotice(t.opening);
- loadNeighbor(chosen.panoId).then(()=>vrNotice(t.arrived)).catch(reportError);
+ message(t.opening);
+ if(enhancedXR)vrNotice(t.opening);
+ loadNeighbor(chosen.panoId).then(()=>{
+  message(t.arrived);
+  if(enhancedXR)vrNotice(t.arrived);
+ }).catch(reportError);
 }
 function drawCredits(text){const context=creditSurface.getContext('2d');context.clearRect(0,0,1024,256);context.fillStyle='rgba(8,18,27,0.88)';context.fillRect(0,0,1024,256);context.fillStyle='#fff';context.font='32px system-ui';const chunks=String(text||'© Google Street View').match(/.{1,58}/g)||[];chunks.slice(0,3).forEach((line,i)=>context.fillText(line,30,55+i*49));context.font='25px system-ui';context.fillText('Google Street View · ARTDACI Museum XR',30,220);creditTexture.needsUpdate=true}
 drawCredits('© Google Street View');
@@ -187,6 +205,25 @@ renderer.setAnimationLoop(()=>{
      const axis=axes.length>=3?axes[2]:(axes[0]||0);
      if(Math.abs(axis)>0.24)rig.rotation.y-=axis*dt*1.4;
    }
+   if(session&&!enhancedXR){
+     // Stable mode has a lightweight ray/trigger path and A/X gamepad fallback.
+     // Avoid headset-camera HUD calculations that previously blocked startup.
+     hotspots.position.set(0,1.25,0);
+     scene.updateMatrixWorld(true);
+     for(const info of controllerRays){
+       info.laser.visible=Boolean(info.connected);
+       if(!info.laser.visible)continue;
+       const hit=controllerHit(info.controller);
+       info.laser.material.color.setHex(hit?0x65ffe1:0xb5e7ff);
+       info.laser.scale.z=hit?Math.min(hit.distance,4):4;
+     }
+     for(const [index,source] of [...session.inputSources].entries()){
+       const pressed=Boolean(source.gamepad?.buttons?.[4]?.pressed);
+       const key=source.handedness||String(index);
+       if(pressed&&!buttonStates.get(key))activateNextXRNeighbor();
+       buttonStates.set(key,pressed);
+     }
+   }
    if(session&&enhancedXR){
      if(!sessionHelpShown){sessionHelpShown=true;vrNotice(t.aim)}
      const head=renderer.xr.getCamera();
@@ -221,9 +258,10 @@ renderer.setAnimationLoop(()=>{
        target.material.color.setHex(active?0x65ffe1:0xe4bd7c);
        target.scale.setScalar(active?1.20:1);
      }
-   }else{
-     if(!session)sessionHelpShown=false;
+   }else if(!session){
+     sessionHelpShown=false;
      toastPanel.visible=false;
+     hotspots.position.set(0,0,0);
      for(const {laser} of controllerRays)laser.visible=false;
      buttonStates.clear();
    }
