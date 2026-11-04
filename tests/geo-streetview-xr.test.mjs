@@ -100,7 +100,9 @@ test('museum XR is opt-in, uses official URLs and does not overwrite existing VR
  assert.match(viewer,/activateNextXRNeighbor\(\)/);
  assert.match(viewer,/vrNotice\(t\.aim\)/);
  assert.match(viewer,/if\(renderer\.xr\.isPresenting\)vrNotice/);
- assert.match(entry,/rayon lumineux/);
+ assert.match(entry,/petit repère doré numéroté/);
+ assert.match(viewer,/numéro|number|رقم/);
+ assert.match(viewer,/hoverCard\.visible=true/);
  assert.match(viewer,/hdUnavailable/);
  assert.match(entry,/id="controls-help"/);
  assert.match(viewer,/museum-xr/);
