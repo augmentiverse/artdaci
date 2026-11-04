@@ -223,9 +223,11 @@ renderer.setAnimationLoop(()=>{
      }
      for(const target of hotspots.children){
        const selected=aimed.has(target);
-       target.material.color.setHex(selected?0x65ffe1:0xe4bd7c);
-       target.scale.setScalar(selected?1.18:1);
+       // The invisible hit sphere stays large; only the numbered disc changes.
+       target.userData.badge?.material.color.setHex(selected?0x71ffff:0xffffff);
+       target.userData.badge?.scale.set(selected?.35:.30,selected?.35:.30,1);
      }
+     updateHoverCard(aimed.values().next().value||null);
      for(const [index,source] of [...session.inputSources].entries()){
        const pressed=Boolean(source.gamepad?.buttons?.[4]?.pressed);
        const key=source.handedness||String(index);
@@ -264,12 +266,14 @@ renderer.setAnimationLoop(()=>{
      }
      for(const target of hotspots.children){
        const active=hovering.has(target);
-       target.material.color.setHex(active?0x65ffe1:0xe4bd7c);
-       target.scale.setScalar(active?1.20:1);
+       target.userData.badge?.material.color.setHex(active?0x71ffff:0xffffff);
+       target.userData.badge?.scale.set(active?.35:.30,active?.35:.30,1);
      }
+     updateHoverCard(hovering.values().next().value||null);
    }else if(!session){
      sessionHelpShown=false;
      toastPanel.visible=false;
+     updateHoverCard(null);
      hotspots.position.set(0,0,0);
      for(const {laser} of controllerRays)laser.visible=false;
      buttonStates.clear();
