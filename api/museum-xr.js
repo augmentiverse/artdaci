@@ -86,8 +86,12 @@ async function searchIndoorNearMuseum(m,session,google){
 function validId(id){return typeof id==="string"&&/^[a-z0-9-]{1,64}$/.test(id)}
 function validPanoId(id){return typeof id==="string"&&/^[A-Za-z0-9_-]{5,256}$/.test(id)}
 function ticketResponse(res,payload,meta,mode="adjacent-unverified"){
-  
-  res.status(200).json({ticket:security.signTicket(payload,env.MUSEUM_XR_TICKET_SECRET),metadata:security.safeMetadata(meta),dimension:security.grid(meta),selectionMode:mode});
+  // All ticket dimensions and modes are created by our server, never client-supplied.
+  const signed={...payload,selectionMode:mode};
+  res.status(200).json({
+    ticket:security.signTicket(signed,env.MUSEUM_XR_TICKET_SECRET),
+    metadata:security.safeMetadata(meta),dimension:signed.dimensions,selectionMode:mode
+  });
 }
 module.exports=async function handler(req,res){
   res.setHeader("Cache-Control","no-store");
@@ -140,10 +144,23 @@ module.exports=async function handler(req,res){
       security.grid(data);
       return ticketResponse(res,{id:m.id,session:session.session,panoId:data.panoId,dimensions:security.grid(data),exp:Date.now()+20*60000},data,match.mode);
     }
-    if(!["neighbor","tile"].includes(action))return fail(res,400,"Unsupported action");
+    if(!["neighbor","tile","rescale"].includes(action))return fail(res,400,"Unsupported action");
     const ticket=security.readTicket(body.ticket,env.MUSEUM_XR_TICKET_SECRET);
     if(!ticket||ticket.id!==m.id)return fail(res,403,"Invalid or expired ticket");
     const google=await googleToken(req);
+    if(action==="rescale"){
+      // Signed ticket proves prior authorization for this specific panoId.
+      const z=Number(body.zoom);
+      if(!Number.isInteger(z)||z<0||z>1||z>=ticket.dimensions.zoom)
+        return fail(res,400,"Zoom must decrease from signed ticket");
+      const q=new URLSearchParams({session:ticket.session,panoId:ticket.panoId});
+      const data=await(await googleFetch("/streetview/metadata?"+q,google)).json();
+      const nearby=data?.panoId===ticket.panoId&&Number.isFinite(data.lat)&&Number.isFinite(data.lng)&&security.distance(data,m)<=35;
+      const permitted=nearby&&(ticket.selectionMode==="location-demo-unverified"||security.validateIndoor(data,m));
+      if(!permitted)return fail(res,403,"Panorama is no longer eligible");
+      const dims=security.grid(data,z);
+      return ticketResponse(res,{...ticket,dimensions:dims,exp:Date.now()+20*60000},data,ticket.selectionMode||"nearest");
+    }
     if(action==="neighbor"){
       if(!validPanoId(body.panoId))return fail(res,400,"Invalid pano");
       const current=await(await googleFetch("/streetview/metadata?"+new URLSearchParams({session:ticket.session,panoId:ticket.panoId}),google)).json();
@@ -151,7 +168,7 @@ module.exports=async function handler(req,res){
       const data=await(await googleFetch("/streetview/metadata?"+new URLSearchParams({session:ticket.session,panoId:body.panoId}),google)).json();
       if(!security.validateIndoor(data,m))return fail(res,403,"Pano outside allowed indoor area");
       security.grid(data);
-      return ticketResponse(res,{...ticket,panoId:data.panoId,dimensions:security.grid(data),exp:Date.now()+20*60000},data);
+      return ticketResponse(res,{...ticket,panoId:data.panoId,dimensions:security.grid(data),exp:Date.now()+20*60000},data,ticket.selectionMode||"nearby-unverified");
     }
     const x=Number(body.x),y=Number(body.y),z=Number(body.zoom);
     if(!Number.isInteger(x)||!Number.isInteger(y)||z!==2||!ticket.dimensions||x<0||y<0||x>=ticket.dimensions.columns||y>=ticket.dimensions.rows)return fail(res,400,"Invalid tile");
