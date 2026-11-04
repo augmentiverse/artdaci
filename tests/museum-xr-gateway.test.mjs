@@ -96,6 +96,11 @@ test('lower resolution tiles are accepted only with server-signed zoom authoriza
  const metadata={panoId:'pano_test_1234',lat:museum.lat,lng:museum.lng,imageryType:'outdoor',
   imageHeight:6656,imageWidth:13312,tileHeight:512,tileWidth:512,heading:0,copyright:'© Google'};
  const secret='test-secret-must-be-longer-than-32-chars!';
+ assert.equal(security.grid(metadata,3).width,4096);
+ assert.equal(security.grid(metadata,3).height,2048);
+ assert.equal(security.grid(metadata,3).columns*security.grid(metadata,3).rows,32);
+ assert.equal(security.grid(metadata,2).width,2048);
+ assert.throws(()=>security.grid(metadata,4),/Zoom denied/);
  const initTicket=security.signTicket({
   id:museum.id,session:'session123',panoId:metadata.panoId,dimensions:security.grid(metadata),
   selectionMode:'location-demo-unverified',exp:Date.now()+20*60000
@@ -145,4 +150,13 @@ test('lower resolution tiles are accepted only with server-signed zoom authoriza
   federation.googleServiceToken=originalGoogleToken;global.fetch=originalFetch;
   for(const [k,value] of Object.entries(originalEnv))if(value===undefined)delete process.env[k];else process.env[k]=value;
  }
+});
+
+test('private Preview enforces explicit quality choices and authorized tile zoom 3',async()=>{
+ const source=await readFile(new URL('../api/museum-xr.js',import.meta.url),'utf8');
+ assert.match(source,/\["hd","standard"\]\.includes\(body\.quality\)/);
+ assert.match(source,/requestedZoom=body\.quality==="hd"\?3:2/);
+ assert.match(source,/z<0\|\|z>3\|\|z!==ticket\.dimensions\.zoom/);
+ assert.match(source,/const dims=security\.grid\(data,requestedZoom\)/);
+ assert.match(source,/const dims=security\.grid\(scene,requestedZoom\)/);
 });
