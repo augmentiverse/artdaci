@@ -94,6 +94,7 @@ function gazeHit(){
  return raycaster.intersectObjects(hotspots.children,false)[0]||null;
 }
 function activateXRHotspot(controller){
+ if(!enhancedXR)return;
  if(loading||!renderer.xr.isPresenting||performance.now()-lastXRSelection<500)return;
  scene.updateMatrixWorld(true);
  const selected=controllerHit(controller)||gazeHit();
@@ -121,6 +122,7 @@ for(let i=0;i<2;i++){
  rig.add(controller);controllerRays.push(info);
 }
 function activateNextXRNeighbor(){
+ if(!enhancedXR)return;
  if(loading||!currentMeta?.links?.length||performance.now()-lastXRSelection<500)return;
  const options=currentMeta.links.filter(item=>typeof item.panoId==='string'&&Number.isFinite(item.heading)).slice(0,8);
  if(!options.length)return;
