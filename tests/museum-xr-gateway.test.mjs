@@ -162,3 +162,22 @@ test('private Preview enforces explicit quality choices and authorized tile zoom
  assert.match(source,/const dims=security\.grid\(data,requestedZoom\)/);
  assert.match(source,/const dims=security\.grid\(scene,requestedZoom\)/);
 });
+
+test('demo neighbor is bounded to linked Street View scenes close to the same museum',()=>{
+ const m=security.museum('van-gogh');
+ const current={panoId:'current_pano',lat:m.lat,lng:m.lng,imageryType:'outdoor',
+  links:[{panoId:'linked_pano',heading:80}],copyright:'© Google'};
+ const nearby={panoId:'linked_pano',lat:m.lat+0.00022,lng:m.lng,imageryType:'outdoor',copyright:'© Google'};
+ assert.equal(security.validateDemoNeighbor(current,nearby,m,'linked_pano'),true);
+ assert.equal(security.validateDemoNeighbor(current,{...nearby,lat:m.lat+0.003},m,'linked_pano'),false);
+ assert.equal(security.validateDemoNeighbor(current,{...nearby,panoId:'unlinked_pano'},m,'unlinked_pano'),false);
+ assert.equal(security.validateDemoNeighbor(current,{...nearby,copyright:''},m,'linked_pano'),false);
+ assert.equal(security.validateDemoNeighbor({...current,lat:0},nearby,m,'linked_pano'),false);
+ assert.equal(security.MAX_DEMO_NAV_RADIUS_METRES,90);
+});
+test('outdoor demo navigation is distinct from verified indoor painting-room traversal',async()=>{
+ const source=await readFile(new URL('../api/museum-xr.js',import.meta.url),'utf8');
+ assert.match(source,/security\.validateDemoNeighbor\(current,data,m,body\.panoId\)/);
+ assert.match(source,/security\.validateIndoor\(current,m\)&&security\.validateIndoor\(data,m\)/);
+ assert.match(source,/NEIGHBOR_OUT_OF_RANGE/);
+});
