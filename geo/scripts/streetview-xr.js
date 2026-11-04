@@ -224,7 +224,7 @@ renderer.setAnimationLoop(()=>{
      for(const target of hotspots.children){
        const selected=aimed.has(target);
        // The invisible hit sphere stays large; only the numbered disc changes.
-       target.userData.badge?.material.color.setHex(selected?0x71ffff:0xffffff);
+       target.userData.badge?.material.color.setHex(selected?0x65ffe1:0xe4bd7c);
        target.userData.badge?.scale.set(selected ? 0.35 : 0.30,selected ? 0.35 : 0.30,1);
      }
      updateHoverCard(aimed.values().next().value||null);
@@ -266,7 +266,7 @@ renderer.setAnimationLoop(()=>{
      }
      for(const target of hotspots.children){
        const active=hovering.has(target);
-       target.userData.badge?.material.color.setHex(active?0x71ffff:0xffffff);
+       target.userData.badge?.material.color.setHex(active?0x65ffe1:0xe4bd7c);
        target.userData.badge?.scale.set(active ? 0.35 : 0.30,active ? 0.35 : 0.30,1);
      }
      updateHoverCard(hovering.values().next().value||null);
@@ -324,13 +324,13 @@ function makeMarker(number){
  const canvas=document.createElement('canvas');canvas.width=256;canvas.height=256;
  const context=canvas.getContext('2d');
  context.beginPath();context.arc(128,128,112,0,Math.PI*2);
- context.fillStyle='#e4bd7c';context.fill();
+ context.fillStyle='#ffffff';context.fill();
  context.lineWidth=13;context.strokeStyle='#17202b';context.stroke();
  context.textAlign='center';context.textBaseline='middle';
  context.font='bold 132px system-ui';context.fillStyle='#17202b';
  context.fillText(String(number),128,139);
  const texture=new THREE.CanvasTexture(canvas);markerTextures.push(texture);
- const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map:texture,transparent:true,depthTest:false,depthWrite:false}));
+ const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map:texture,color:0xe4bd7c,transparent:true,depthTest:false,depthWrite:false}));
  sprite.scale.set(.30,.30,1);sprite.renderOrder=22;
  return sprite;
 }
