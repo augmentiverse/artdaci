@@ -227,6 +227,23 @@ handParams.delete('xrControls');
 if(handMode)handParams.delete('hands');else handParams.set('hands','1');
 handLink.href='?'+handParams.toString();
 handStatus.textContent=handMode?handText.waiting:'';
+handLink.addEventListener('click',event=>{
+ event.preventDefault();
+ if(renderer.xr.isPresenting||requestingVR){
+  handStatus.textContent=lang==='fr'?'Quittez d’abord la VR pour changer le suivi des mains. Le panorama restera chargé.':
+   lang==='ar'?'اخرج من VR لتبديل وضع اليدين دون إعادة تحميل الصورة.':
+   'Exit VR first to change hand tracking without reloading the panorama.';
+  return;
+ }
+ handMode=!handMode;
+ handLink.textContent=handMode?handText.off:handText.on;
+ handStatus.textContent=handMode?handText.waiting:'';
+ const q=new URLSearchParams(location.search);
+ q.delete('xrControls');
+ if(handMode)q.set('hands','1');else q.delete('hands');
+ history.replaceState(null,'','?'+q.toString());
+ handLink.href='?'+new URLSearchParams({...Object.fromEntries(q),hands:handMode?'0':'1'}).toString();
+});
 const pinchTurn={key:null,state:{active:false,x:null},lastHands:false};
 function updateHandTurning(session,xrFrame){
  if(!handMode||!session||!xrFrame||typeof xrFrame.getJointPose!=='function')return;
