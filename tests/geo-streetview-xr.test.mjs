@@ -46,9 +46,24 @@ test('museum XR is opt-in, uses official URLs and does not overwrite existing VR
  assert.match(viewer,/controllerHit\(controller\)\|\|gazeHit\(\)/);
  assert.match(viewer,/hotspots\.position\.set\(0,1\.25,0\)/);
  assert.match(viewer,/const aimed=new Set\(\)/);
- assert.match(viewer,/selected\?0x65ffe1:0xe4bd7c/);
+
  assert.match(viewer,/if\(pressed&&!buttonStates\.get\(key\)\)activateNextXRNeighbor\(\)/);
  assert.match(viewer,/info\.laser\.visible=Boolean\(info\.connected\)/);
+ assert.match(viewer,/new THREE\.SphereGeometry\(\.34,12,10\)/);
+ assert.match(viewer,/new THREE\.Sprite\(new THREE\.SpriteMaterial/);
+ assert.match(viewer,/sprite\.scale\.set\(\.30,\.30,1\)/);
+ assert.match(viewer,/hitArea\.userData\.navigation=nav/);
+ assert.match(viewer,/hitArea\.userData\.badge=badge/);
+ assert.match(viewer,/updateHoverCard\(aimed\.values\(\)\.next\(\)\.value\|\|null\)/);
+ assert.match(viewer,/updateHoverCard\(hovering\.values\(\)\.next\(\)\.value\|\|null\)/);
+ assert.match(viewer,/hoverCard\.position\.copy\(tempOrigin\)/);
+ assert.match(viewer,/hoverCard\.lookAt\(rayOrigins\)/);
+ assert.match(viewer,/t\.unknownRoom/);
+ assert.match(viewer,/t\.googleHint/);
+ assert.match(viewer,/button\.setAttribute\('aria-label',button\.title\)/);
+ assert.match(viewer,/hitArea\.add\(badge\)/);
+ assert.doesNotMatch(viewer,/target\.scale\.setScalar\(selected\?1\.18:1\)/);
+
  assert.match(viewer,/renderer\.render\(scene,camera\)/);
  
  assert.match(viewer,/if\(session&&enhancedXR\)/);
@@ -77,9 +92,9 @@ test('museum XR is opt-in, uses official URLs and does not overwrite existing VR
  assert.match(viewer,/controller\.addEventListener\('selectstart'/);
  assert.match(viewer,/controller\.addEventListener\('select'/);
  assert.match(viewer,/controller\.add\(laser\)/);
- assert.match(viewer,/new THREE\.SphereGeometry\(\.34,20,16\)/);
+
  assert.match(viewer,/head\.getWorldPosition\(rayOrigins\)/);
- assert.match(viewer,/laser\.material\.color\.setHex\(hit\?0x65ffe1/);
+
  assert.match(viewer,/gazeHit\(\)/);
  assert.match(viewer,/source\.gamepad\?\.buttons\?\.\[4\]/);
  assert.match(viewer,/activateNextXRNeighbor\(\)/);
