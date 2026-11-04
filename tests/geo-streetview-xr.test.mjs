@@ -63,7 +63,7 @@ test('museum XR is opt-in, uses official URLs and does not overwrite existing VR
  assert.match(viewer,/const aimed=new Set\(\)/);
 
  assert.match(viewer,/if\(pressed&&!buttonStates\.get\(key\)\)activateNextXRNeighbor\(\)/);
- assert.match(viewer,/info\.laser\.visible=Boolean\(info\.connected\)/);
+ assert.match(viewer,/info\.laser\.visible=Boolean\(info\.connected&&!info\.isHand\)/);
  assert.match(viewer,/new THREE\.SphereGeometry\(\.34,12,10\)/);
  assert.match(viewer,/new THREE\.Sprite\(new THREE\.SpriteMaterial/);
  assert.match(viewer,/sprite\.scale\.set\(\.30,\.30,1\)/);
