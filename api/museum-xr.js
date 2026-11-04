@@ -52,12 +52,13 @@ module.exports=async function handler(req,res){
   if(req.method!=="POST")return fail(res,405,"POST required");
   if((Number(req.headers["content-length"])||0)>8192)return fail(res,413,"Request too large");
   const body=req.body&&typeof req.body==="object"?req.body:{};
-  const configured=Boolean(env.MUSEUM_XR_ENABLED==="true"&&env.VERCEL_GIT_COMMIT_REF==="feature/streetview-webxr-museums-v1"&&env.MUSEUM_XR_GOOGLE_SERVICE_ACCOUNT_EMAIL&&env.MUSEUM_XR_GOOGLE_PROJECT_NUMBER&&env.MUSEUM_XR_WORKLOAD_POOL_ID&&env.MUSEUM_XR_WORKLOAD_PROVIDER_ID&&env.MUSEUM_XR_GOOGLE_PROJECT_ID&&env.VERCEL_ENV==="preview"&&env.MUSEUM_XR_TICKET_SECRET?.length>=32&&env.MUSEUM_XR_PREVIEW_TOKEN?.length>=24);
+  const configured=Boolean(env.MUSEUM_XR_ENABLED==="true"&&(!env.VERCEL_GIT_COMMIT_REF||env.VERCEL_GIT_COMMIT_REF==="feature/streetview-webxr-museums-v1")&&env.MUSEUM_XR_GOOGLE_SERVICE_ACCOUNT_EMAIL&&env.MUSEUM_XR_GOOGLE_PROJECT_NUMBER&&env.MUSEUM_XR_WORKLOAD_POOL_ID&&env.MUSEUM_XR_WORKLOAD_PROVIDER_ID&&env.MUSEUM_XR_GOOGLE_PROJECT_ID&&env.VERCEL_ENV==="preview"&&env.MUSEUM_XR_TICKET_SECRET?.length>=32&&env.MUSEUM_XR_PREVIEW_TOKEN?.length>=24);
   if(!configured)return fail(res,503,"Museum XR pilot inactive");
   if(!allowedOrigin(req))return fail(res,403,"Origin not approved");
   if(!security.isPilotAuthorized(req.headers["x-museum-xr-preview"],env.MUSEUM_XR_PREVIEW_TOKEN))return fail(res,401,"Pilot access required");
   try{
     const action=body.action;
+    if(action==="diagnose")return res.status(200).json({status:"authorized",enabled:true,oidcTokenAvailable:Boolean(req.headers["x-vercel-oidc-token"]||env.VERCEL_OIDC_TOKEN)});
     if(action==="catalog")return res.status(200).json({museums:security.catalog().map(x=>({id:x.id,title:x.title,museum:x.museum,source:x.source})),perInstanceDailyLimit:security.MAX_DAILY_REQUESTS,globalLimitGuaranteed:Boolean(env.UPSTASH_REDIS_REST_URL&&env.UPSTASH_REDIS_REST_TOKEN)});
     if(!validId(body.museumId))return fail(res,400,"Invalid museum");
     const m=security.museum(body.museumId);
