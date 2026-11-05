@@ -1,12 +1,14 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-02",
+  "updatedAt": "2026-11-05",
   "methodology": "Links are institutional discovery entry points. No exact indoor panorama is claimed without independent visual checking.",
   "statusDefinitions": {
     "artwork-linked": "An Arts & Culture artwork page advertises Street View; exact scene not verified.",
     "museum-tour": "An institutional museum tour exists; artwork visibility not verified.",
     "research-needed": "No verified institutional panorama source yet.",
-    "user-supplied-panorama": "Direct panorama URL supplied by project owner; artwork visibility and current installation not independently verified."
+    "user-supplied-panorama": "Direct panorama URL supplied by project owner; artwork visibility and current installation not independently verified.",
+    "museum-google-maps": "Owner-supplied museum-location Street View URL; artwork visibility not established.",
+    "artwork-asset": "Google Arts & Culture artwork detail URL is not a panoramic museum tour."
   },
   "items": [
     {
@@ -54,7 +56,9 @@
       "exactPanoramaUrl": null,
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": ""
+      "notes": "Owner-supplied artwork asset page is an artwork reference, not a 360° panorama. Owner-supplied Google Maps panorama concerns National Gallery of Art; visibility of this Monet painting is unverified.",
+      "museumGoogleMapsPanoramaUrl": "https://www.google.com/maps/place/National+Gallery+of+Art/@38.8912997,-77.0199021,33a,75y,232.32h,76.06t/data=!3m7!1e1!3m5!1syrLgZVKGIbwAAARXTGCytQ!2e0!6shttps:%2F%2Fstreetviewpixels-pa.clients6.google.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D13.935335138385923%26panoid%3DyrLgZVKGIbwAAARXTGCytQ%26yaw%3D232.31534592049337!7i13312!8i6656!4m16!1m8!3m7!1s0x89b7b79b3b528c49:0xa8ecd80f2bb2879b!2sNational+Gallery+of+Art!8m2!3d38.891298!4d-77.019965!10e5!16zL20vMDF6X2pq!3m6!1s0x89b7b79b3b528c49:0xa8ecd80f2bb2879b!8m2!3d38.891298!4d-77.019965!10e5!16zL20vMDF6X2pq?hl=en&entry=ttu&g_ep=EgoyMDI2MTEwMi4wIKXMDSoASAFQAw%3D%3D",
+      "artworkReferenceUrl": "https://artsandculture.google.com/asset/woman-with-a-parasol-madame-monet-and-her-son-claude-monet/EwHxeymQQnprMg"
     },
     {
       "slug": "pont-d-argenteuil",
@@ -147,8 +151,9 @@
       "exactPanoramaUrl": "https://artsandculture.google.com/streetview/3QFHLJgXCmQm2Q",
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": "Project owner confirmed the Google Arts & Culture default entry view faces Girl with a Pearl Earring; former URL pointed to a nearby, misoriented panorama. This link does not expose sv_pid; current hanging not independently confirmed.",
-      "panoramaSource": "owner-confirmed-entry-panorama"
+      "notes": "Project owner confirmed the Google Arts & Culture default entry view faces Girl with a Pearl Earring; former URL pointed to a nearby, misoriented panorama. This link does not expose sv_pid; current hanging not independently confirmed. Owner also supplied the Google Maps panorama ID fHwCjye_LWcAAAQrDCFU1A with camera direction; its image is not independently re-verified.",
+      "panoramaSource": "owner-confirmed-entry-panorama",
+      "googleMapsPanoramaUrl": "https://www.google.com/maps/@52.080385,4.3144288,-43a,75y,238.57h,77.26t/data=!3m7!1e1!3m5!1sfHwCjye_LWcAAAQrDCFU1A!2e0!6shttps:%2F%2Fstreetviewpixels-pa.clients6.google.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D12.737269492171038%26panoid%3DfHwCjye_LWcAAAQrDCFU1A%26yaw%3D238.56775377747482!7i13312!8i6656?entry=ttu&g_ep=EgoyMDI2MTEwMi4wIKXMDSoASAFQAw%3D%3D"
     },
     {
       "slug": "woman-holding-balance",
@@ -168,7 +173,8 @@
         "evidence": "National Gallery of Art identifies the correct Vermeer work; no oriented panorama yet.",
         "checkedAt": "2026-11-03",
         "exactPanoramaVerified": false
-      }
+      },
+      "museumGoogleMapsPanoramaUrl": "https://www.google.com/maps/place/National+Gallery+of+Art/@38.8912997,-77.0199021,33a,75y,232.32h,76.06t/data=!3m7!1e1!3m5!1syrLgZVKGIbwAAARXTGCytQ!2e0!6shttps:%2F%2Fstreetviewpixels-pa.clients6.google.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D13.935335138385923%26panoid%3DyrLgZVKGIbwAAARXTGCytQ%26yaw%3D232.31534592049337!7i13312!8i6656!4m16!1m8!3m7!1s0x89b7b79b3b528c49:0xa8ecd80f2bb2879b!2sNational+Gallery+of+Art!8m2!3d38.891298!4d-77.019965!10e5!16zL20vMDF6X2pq!3m6!1s0x89b7b79b3b528c49:0xa8ecd80f2bb2879b!8m2!3d38.891298!4d-77.019965!10e5!16zL20vMDF6X2pq?hl=en&entry=ttu&g_ep=EgoyMDI2MTEwMi4wIKXMDSoASAFQAw%3D%3D"
     },
     {
       "slug": "view-of-delft",
@@ -181,8 +187,9 @@
       "exactPanoramaUrl": "https://artsandculture.google.com/streetview/3QFHLJgXCmQm2Q?sv_lat=52.08041207139772&sv_lng=4.314509059383893&sv_pid=Qk3tjMU9r-IAAAQrDCFU0A&sv_h=56.085840547258194&sv_p=5.816453246720847&sv_z=0.11995524959896753",
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": "Project owner supplied corrected camera heading/pitch/zoom for View of Delft at Mauritshuis; visual verification pending.",
-      "panoramaSource": "user-provided"
+      "notes": "Project owner supplied corrected camera heading/pitch/zoom for View of Delft at Mauritshuis; visual verification pending. Owner also supplied Google Maps panorama ID Qk3tjMU9r-IAAAQrDCFU0A with camera heading.",
+      "panoramaSource": "user-provided",
+      "googleMapsPanoramaUrl": "https://www.google.com/maps/@52.0804121,4.3145091,-43a,75y,60.09h,94.17t/data=!3m7!1e1!3m5!1sQk3tjMU9r-IAAAQrDCFU0A!2e0!6shttps:%2F%2Fstreetviewpixels-pa.clients6.google.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D-4.173977242086892%26panoid%3DQk3tjMU9r-IAAAQrDCFU0A%26yaw%3D60.08637911330218!7i13312!8i6656?entry=ttu&g_ep=EgoyMDI2MTEwMi4wIKXMDSoASAFQAw%3D%3D"
     },
     {
       "slug": "vermeer-milkmaid",
@@ -192,10 +199,10 @@
       "city": "Amsterdam",
       "status": "user-supplied-panorama",
       "sourceUrl": "https://artsandculture.google.com/asset/the-milkmaid-0455/9AHrwZ3Av6Zhjg",
-      "exactPanoramaUrl": "https://artsandculture.google.com/streetview/rijksmuseum-second-floor/kgF3c2qIEYZR8g?sv_lng=4.885473582343728&sv_lat=52.36002500366842&sv_h=131.28520006601047&sv_p=-1.9022585674818941&sv_pid=X7fnicgWgMLKQ8my4feTfg&sv_z=1",
+      "exactPanoramaUrl": "https://artsandculture.google.com/streetview/rijksmuseum-second-floor/kgF3c2qIEYZR8g",
       "artworkVisible": null,
       "verifiedAt": null,
-      "notes": "Owner-provided camera-oriented panorama aiming at The Milkmaid. Direct view and current hanging not independently visually verified.",
+      "notes": "Owner-supplied Rijksmuseum second-floor Google Arts & Culture entry. The shortened museum URL is not guaranteed to start directly facing The Milkmaid.",
       "guidedPanoramaUrl": "https://artsandculture.google.com/story/can-you-find-vermeer-39-s-milkmaid-at-the-rijksmusem/mgWRovPAVXY1sQ?hl=en",
       "panoramaSource": "user-provided"
     },
@@ -269,7 +276,8 @@
         "evidence": "Institutional West Building tour identifies Ginevra de' Benci and includes a gallery view. No camera-oriented panorama URL established.",
         "checkedAt": "2026-11-03",
         "exactPanoramaVerified": false
-      }
+      },
+      "museumGoogleMapsPanoramaUrl": "https://www.google.com/maps/place/National+Gallery+of+Art/@38.8912997,-77.0199021,33a,75y,232.32h,76.06t/data=!3m7!1e1!3m5!1syrLgZVKGIbwAAARXTGCytQ!2e0!6shttps:%2F%2Fstreetviewpixels-pa.clients6.google.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D13.935335138385923%26panoid%3DyrLgZVKGIbwAAARXTGCytQ%26yaw%3D232.31534592049337!7i13312!8i6656!4m16!1m8!3m7!1s0x89b7b79b3b528c49:0xa8ecd80f2bb2879b!2sNational+Gallery+of+Art!8m2!3d38.891298!4d-77.019965!10e5!16zL20vMDF6X2pq!3m6!1s0x89b7b79b3b528c49:0xa8ecd80f2bb2879b!8m2!3d38.891298!4d-77.019965!10e5!16zL20vMDF6X2pq?hl=en&entry=ttu&g_ep=EgoyMDI2MTEwMi4wIKXMDSoASAFQAw%3D%3D"
     },
     {
       "slug": "annunciation",
