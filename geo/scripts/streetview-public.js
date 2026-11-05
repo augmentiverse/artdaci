@@ -21,7 +21,7 @@ const labels={
   helpTitle:'Deux façons de parcourir les musées',helpText:'Les liens institutionnels ouvrent les visites officielles. Les liens Street View ouvrent Google Maps près du musée : Google choisit le panorama le plus proche lorsqu’il en existe un.',
   quest:'Dans Meta Quest Browser, ouvrez les liens pour essayer l’affichage panoramique proposé par Google. Le suivi des mains personnalisé d’ARTDACI reste réservé à sa Preview de recherche.',
   open:'S’ouvre dans un nouvel onglet',credit:'Vues et photographies affichées sur les plateformes Google, avec leurs propres mentions et conditions. ARTDACI ne revendique pas ces images.',
-  count:'24 œuvres · 4 panoramas directs fournis · 17 musées de l’atlas et une institution à Tokyo.',
+  count:'24 œuvres · 6 panoramas directs fournis · 17 musées de l’atlas et une institution à Tokyo.',
   home:'Retour à ARTDACI GEO',gallery:'Catalogue des œuvres',goto:'Accéder aux œuvres',
   statusDirect:'Panorama lié à l’œuvre',statusTour:'Parcours du musée',statusNearby:'Recherche de proximité'
  },
@@ -38,7 +38,7 @@ const labels={
   helpTitle:'Two ways to explore museums',helpText:'Institutional links open official tours. Street View links open Google Maps near the museum; Google selects the nearest available panorama.',
   quest:'In Meta Quest Browser, open the links to try the panoramic view offered by Google. ARTDACI’s custom hand tracking remains in its research Preview.',
   open:'Opens in a new tab',credit:'Views and photos are displayed on Google platforms with their own notices and terms. ARTDACI does not claim ownership of the imagery.',
-  count:'24 artworks · 4 supplied direct panoramas · 17 atlas museums plus one Tokyo institution.',
+  count:'24 artworks · 6 supplied direct panoramas · 17 atlas museums plus one Tokyo institution.',
   home:'Back to ARTDACI GEO',gallery:'Artwork directory',goto:'Explore artworks',
   statusDirect:'Artwork-linked panorama',statusTour:'Museum tour',statusNearby:'Nearby search'
  },
@@ -55,7 +55,7 @@ const labels={
   helpTitle:'طريقتان لاستكشاف المتاحف',helpText:'تفتح الروابط المؤسسية الجولات الرسمية. وتفتح روابط Street View خرائط Google بالقرب من المتحف حيث يتم اختيار أقرب منظر متاح.',
   quest:'في متصفح Meta Quest يمكن تجربة العروض البانورامية التي توفرها Google. يظل التحكم المخصص باليدين في ARTDACI مقتصراً على معاينة البحث.',
   open:'يفتح في نافذة جديدة',credit:'تُعرض الصور على منصات Google وفق شروطها وإشعاراتها. لا تدّعي ARTDACI ملكية هذه الصور.',
-  count:'٢٤ عملاً · ٤ روابط بانورامية مباشرة · ١٧ متحفاً في الأطلس ومؤسسة واحدة في طوكيو.',
+  count:'٢٤ عملاً · ٦ روابط بانورامية مباشرة · ١٧ متحفاً في الأطلس ومؤسسة واحدة في طوكيو.',
   home:'العودة إلى ARTDACI GEO',gallery:'فهرس الأعمال',goto:'استكشف الأعمال',
   statusDirect:'منظر مرتبط بالعمل',statusTour:'جولة في المتحف',statusNearby:'بحث بالقرب من المتحف'
  }
