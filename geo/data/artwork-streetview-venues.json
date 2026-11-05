@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-11-05",
+  "methodology": "Artwork-to-venue geolocation mapping. Museum point coordinates are for nearby Street View discovery only: no claim that Google Maps Tiles imagery is indoors, or that the artwork appears in a photograph. Existing owner-supplied direct artwork panorama positions take precedence.",
+  "coordinateRegistry": "geo/data/museums.json",
+  "artworkToVenue": {
+    "water-lilies": "nmwa-tokyo",
+    "japanese-bridge": "orsay",
+    "woman-with-parasol": "national-gallery-of-art-washington",
+    "pont-d-argenteuil": "orsay",
+    "poppies": "orsay",
+    "monet-impression-sunrise": "marmottan",
+    "vermeer-astronomer": "louvre",
+    "art-of-painting": "kunsthistorisches",
+    "vermeer-girl-with-a-pearl-earring": "mauritshuis",
+    "woman-holding-balance": "national-gallery-of-art-washington",
+    "view-of-delft": "mauritshuis",
+    "vermeer-milkmaid": "rijksmuseum",
+    "mona-lisa": "louvre",
+    "last-supper": "cenacolo-vinciano",
+    "belle-ferronniere": "louvre",
+    "lady-with-an-ermine": "czartoryski",
+    "ginevra-de-benci": "national-gallery-of-art-washington",
+    "annunciation": "uffizi",
+    "van-gogh": "orsay",
+    "starry-night": "moma",
+    "van-gogh-bedroom": "van-gogh-museum",
+    "cafe-terrace": "kroller-muller",
+    "night-cafe": "yale-art-gallery",
+    "sunflowers": "national-gallery-london"
+  },
+  "additionalVenues": [
+    {
+      "id": "nmwa-tokyo",
+      "name": "National Museum of Western Art",
+      "city": "Tokyo",
+      "latitude": 35.715357,
+      "longitude": 139.77585,
+      "coordinateSource": "https://www.wikidata.org/wiki/Q1362629",
+      "precisionNote": "Approximate museum pin, not a confirmed exhibition room or available panorama."
+    }
+  ]
+}
