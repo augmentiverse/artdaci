@@ -16,7 +16,7 @@ const labels={
   directNote:'Point de départ panoramique fourni pour cette œuvre ; accrochage actuel non certifié.',
   tourNote:'Visite institutionnelle disponible ; présence du tableau non vérifiée.',
   nearNote:'Emplacement approximatif du musée ; panorama à proximité non garanti.',
-  visit:'Ouvrir le panorama du musée',maps:'Essayer Street View à proximité',source:'Visite / source institutionnelle',
+  visit:'Ouvrir le panorama du musée',maps:'Essayer Street View à proximité',mapsDirect:'Voir le panorama précis sur Google Maps',mapsMuseum:'Visiter le musée dans Google Street View',artwork:'Voir la fiche de l’œuvre',source:'Visite / source institutionnelle',
   tally:'œuvres affichées sur 24',noResults:'Aucune œuvre ne correspond à votre recherche.',
   helpTitle:'Deux façons de parcourir les musées',helpText:'Les liens institutionnels ouvrent les visites officielles. Les liens Street View ouvrent Google Maps près du musée : Google choisit le panorama le plus proche lorsqu’il en existe un.',
   quest:'Dans Meta Quest Browser, ouvrez les liens pour essayer l’affichage panoramique proposé par Google. Le suivi des mains personnalisé d’ARTDACI reste réservé à sa Preview de recherche.',
@@ -33,7 +33,7 @@ const labels={
   directNote:'A panorama starting point was supplied for this artwork; current display not certified.',
   tourNote:'An institutional tour is available; the artwork itself has not been verified in the panorama.',
   nearNote:'Approximate museum location; nearby panorama availability is not guaranteed.',
-  visit:'Open museum panorama',maps:'Try nearby Street View',source:'Institutional tour / source',
+  visit:'Open museum panorama',maps:'Try nearby Street View',mapsDirect:'Open exact Google Maps panorama',mapsMuseum:'Explore museum in Google Street View',artwork:'View artwork reference',source:'Institutional tour / source',
   tally:'artworks shown out of 24',noResults:'No artworks match your search.',
   helpTitle:'Two ways to explore museums',helpText:'Institutional links open official tours. Street View links open Google Maps near the museum; Google selects the nearest available panorama.',
   quest:'In Meta Quest Browser, open the links to try the panoramic view offered by Google. ARTDACI’s custom hand tracking remains in its research Preview.',
@@ -50,7 +50,7 @@ const labels={
   directNote:'تم توفير نقطة انطلاق بانورامية للعمل الفني، لكن موضع عرضه الحالي غير مؤكد.',
   tourNote:'تتوفر جولة رسمية؛ ظهور اللوحة فيها غير مؤكد.',
   nearNote:'موقع المتحف تقريبي، وقد لا يتوفر منظر بانورامي قريب.',
-  visit:'فتح منظر المتحف',maps:'تجربة Street View القريب',source:'الجولة أو المصدر الرسمي',
+  visit:'فتح منظر المتحف',maps:'تجربة Street View القريب',mapsDirect:'فتح المشهد المحدد في خرائط جوجل',mapsMuseum:'استكشاف المتحف في ستريت فيو',artwork:'عرض صفحة العمل الفني',source:'الجولة أو المصدر الرسمي',
   tally:'عملاً معروضاً من أصل ٢٤',noResults:'لا توجد أعمال مطابقة.',
   helpTitle:'طريقتان لاستكشاف المتاحف',helpText:'تفتح الروابط المؤسسية الجولات الرسمية. وتفتح روابط Street View خرائط Google بالقرب من المتحف حيث يتم اختيار أقرب منظر متاح.',
   quest:'في متصفح Meta Quest يمكن تجربة العروض البانورامية التي توفرها Google. يظل التحكم المخصص باليدين في ARTDACI مقتصراً على معاينة البحث.',
@@ -100,6 +100,26 @@ function providerLink(value){
  }catch{}
  return null;
 }
+// Only accept direct panoramas on Google's official Maps domain. Museum
+// locations are not misrepresented as views of a particular artwork.
+function verifiedMapsUrl(value){
+ if(typeof value!=='string')return null;
+ try{
+  const u=new URL(value);
+  if(u.protocol==='https:'&&u.hostname==='www.google.com'&&
+    u.pathname.startsWith('/maps/')&&/!1s[A-Za-z0-9_-]{8,}/.test(u.pathname))
+    return u.href;
+ }catch{}
+ return null;
+}
+function artworkReference(value){
+ if(typeof value!=='string')return null;
+ try{
+  const u=new URL(value);
+  return u.protocol==='https:'&&u.hostname==='artsandculture.google.com'&&
+    u.pathname.startsWith('/asset/')?u.href:null;
+ }catch{return null}
+}
 function sourceKind(item){
  if(providerLink(item.exactPanoramaUrl))return 'direct';
  if(providerLink(item.sourceUrl)||providerLink(item.floorPanoramaUrl))return 'tour';
@@ -136,11 +156,19 @@ function buildItem(item,point){
  article.append(element('p','museum-name',item.museum+' · '+item.city));
  article.append(element('p','card-note',t[kind==='direct'?'directNote':kind==='tour'?'tourNote':'nearNote']));
  const actions=element('div','card-actions');
+ const mapsArtwork=verifiedMapsUrl(item.googleMapsPanoramaUrl);
+ const mapsMuseum=verifiedMapsUrl(item.museumGoogleMapsPanoramaUrl);
  const direct=providerLink(item.exactPanoramaUrl);
- if(direct)actions.append(outbound(direct,t.visit,'action action-primary'));
+ // Prefer the user-supplied exact Google Maps viewpoint where available.
+ if(mapsArtwork)actions.append(outbound(mapsArtwork,t.mapsDirect,'action action-primary'));
+ if(direct)actions.append(outbound(direct,t.visit,mapsArtwork?'action action-secondary':'action action-primary'));
+ // Museum panoramas are explicitly labeled as museum views, not painting views.
+ if(mapsMuseum)actions.append(outbound(mapsMuseum,t.mapsMuseum,'action action-primary'));
  const museumTour=providerLink(item.floorPanoramaUrl)||providerLink(item.sourceUrl);
  if(museumTour&&museumTour!==direct)actions.append(outbound(museumTour,t.source,'action action-secondary'));
- if(point){
+ const reference=artworkReference(item.artworkReferenceUrl);
+ if(reference)actions.append(outbound(reference,t.artwork,'action action-secondary'));
+ if(point&&!mapsArtwork&&!mapsMuseum){
    actions.append(outbound(streetViewURL(point.latitude,point.longitude),t.maps,direct?'action action-secondary':'action action-primary'));
  }
  article.append(actions);
