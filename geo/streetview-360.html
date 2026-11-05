@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="ARTDACI GEO — Street View 360° : explorer 24 œuvres et les panoramas officiels des musées où elles sont conservées, avec des limites de localisation clairement indiquées.">
+<title>ARTDACI GEO · Street View 360°</title>
+<style>
+:root{color-scheme:dark;--bg:#071724;--panel:#102b38;--panel-alt:#0b2230;--line:#395563;--ink:#eff5f5;--muted:#b7cad0;--gold:#e7bc81;--blue:#bfe2e7;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--ink);background:radial-gradient(ellipse at 95% 2%,#26434b 0%,var(--bg) 47%) fixed}
+a{color:var(--blue)}
+a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+main{max-width:1260px;margin:auto;padding:28px clamp(16px,3.8vw,50px) 48px}
+header{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.wordmark{text-decoration:none;color:var(--ink);font-size:1.35rem;font-weight:760;letter-spacing:.08em}
+.toplinks{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.toplinks a{display:inline-block;padding:8px 10px;text-decoration:none;border:1px solid var(--line);border-radius:8px}
+.toplinks a[aria-current=page]{background:#e8d5b4;color:#142733}
+.return{font-size:.86rem;font-weight:600;letter-spacing:0}
+.hero{margin:48px 0 28px;padding:0 0 35px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:.76rem;text-transform:uppercase;letter-spacing:.21em;color:var(--gold);font-weight:760;margin:0 0 12px}
+h1{font-size:clamp(2.1rem,4.6vw,4.2rem);font-weight:570;letter-spacing:-.04em;line-height:1.09;max-width:790px;margin:0 0 16px}
+.hero-intro{font-size:clamp(1.02rem,1.5vw,1.24rem);color:var(--muted);line-height:1.58;max-width:800px;margin:0 0 22px}
+.hero-sub{font-size:.87rem;color:var(--gold);margin:0 0 25px}
+.disclaimer{max-width:920px;padding:14px 17px;border-left:3px solid var(--gold);background:#132e3a;border-radius:0 8px 8px 0;color:var(--muted);line-height:1.58;font-size:.93rem}
+.primary-nav{display:inline-flex;align-items:center;gap:9px;text-decoration:none;border-radius:8px;background:#e8d6b6;color:#162a32;padding:12px 18px;font-weight:750}
+.howto{padding:24px;border:1px solid var(--line);background:linear-gradient(118deg,#122d38,#0c2531);border-radius:16px;margin:26px 0 38px}
+.howto h2{font-size:1.2rem;font-weight:660;margin:0 0 9px}
+.howto p{color:var(--muted);line-height:1.62;max-width:1000px;margin:8px 0}
+.howto .quest{color:#e6d7bf}
+.catalog{scroll-margin-top:22px}
+.catalog-header{display:flex;justify-content:space-between;gap:16px;align-items:baseline;flex-wrap:wrap}
+.catalog h2{font-size:clamp(1.5rem,2.8vw,2rem);font-weight:610;margin:0}
+.catalog-count{font-size:.88rem;color:var(--muted)}
+.tools{display:grid;grid-template-columns:minmax(220px,2fr) minmax(180px,1fr);gap:14px;margin:22px 0 16px}
+.field label{display:block;color:var(--muted);font-weight:600;font-size:.86rem;margin-bottom:7px}
+.field input,.field select{background:#102c3b;border:1px solid #72919b;border-radius:9px;padding:12px 13px;color:var(--ink);font:inherit;width:100%}
+.field input::placeholder{color:#a9b9c3}
+.results{font-size:.87rem;color:var(--muted);margin:0 0 14px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,290px),1fr));gap:16px}
+.geo-street-card{border:1px solid var(--line);background:linear-gradient(145deg,#142f3d,#0d2633);border-radius:15px;padding:21px;display:flex;flex-direction:column;min-height:316px}
+.card-topline{display:flex;justify-content:space-between;align-items:flex-start;gap:9px;flex-wrap:wrap}
+.artwork-artist{font-size:.76rem;letter-spacing:.055em;text-transform:uppercase;color:var(--gold);font-weight:730}
+.kind{font-size:.68rem;line-height:1.3;color:#bcd7db;background:#183b48;border:1px solid #466674;border-radius:30px;padding:5px 8px}
+.kind-direct{color:#ecd5a9;border-color:#937655}
+.artwork-name{font-size:1.34rem;letter-spacing:-.02em;line-height:1.24;font-weight:640;margin:20px 0 7px}
+.museum-name{font-size:.85rem;color:#dce2e4;line-height:1.5;margin:0 0 8px}
+.card-note{color:var(--muted);font-size:.84rem;line-height:1.55;margin:0 0 18px}
+.card-actions{display:flex;flex-direction:column;gap:9px;margin-top:auto}
+.action{display:block;text-decoration:none;text-align:center;border-radius:8px;padding:10px 12px;font-size:.87rem;font-weight:730;border:1px solid #718992;transition:background .15s}
+.action-primary{background:#e9d4b4;border-color:#e9d4b4;color:#122b34}
+.action-primary:hover{background:#f7e4c5}
+.action-secondary{color:#e4f0f3;background:#163746}
+.action-secondary:hover{background:#214958}
+#empty[hidden]{display:none}
+#empty{padding:20px;color:var(--muted)}
+.footer{border-top:1px solid var(--line);padding:22px 0 0;margin-top:44px;line-height:1.55;color:var(--muted);font-size:.84rem}
+.footer p{max-width:850px}
+@media(max-width:680px){main{padding-top:18px}.hero{margin:34px 0}.tools{grid-template-columns:1fr}.toplinks{gap:5px}.toplinks a{padding:7px}.geo-street-card{min-height:0}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.action{transition:none}}
+</style>
+</head>
+<body>
+<main>
+<header>
+<a class="wordmark" href="../index-fr.html" aria-label="ARTDACI homepage">ARTDACI <span style="color:var(--gold)">GEO</span></a>
+<nav class="toplinks" aria-label="Navigation et langues">
+<a id="geo-return" class="return" href="index.html?lang=fr">Retour à ARTDACI GEO</a>
+<a href="?lang=fr" data-lang="fr" lang="fr">FR</a>
+<a href="?lang=en" data-lang="en" lang="en">EN</a>
+<a href="?lang=ar" data-lang="ar" lang="ar">العربية</a>
+</nav>
+</header>
+<section class="hero" aria-labelledby="page-title">
+<p class="eyebrow" id="page-kicker">ARTDACI GEO · STREET VIEW 360°</p>
+<h1 id="page-title">Explorer les œuvres au-delà du cadre</h1>
+<p class="hero-intro" id="page-lead">24 œuvres, des musées du monde entier et plusieurs chemins pour découvrir leur environnement à 360°.</p>
+<p class="hero-sub" id="catalog-count">24 œuvres · 4 panoramas directs fournis · 17 musées de l’atlas et une institution à Tokyo.</p>
+<p class="disclaimer" id="geo-disclaimer">Une vue panoramique proche d’un musée ne signifie pas que le tableau figure dans l’image. Les expositions peuvent changer.</p>
+<p><a class="primary-nav" id="jump-link" href="#artworks">Accéder aux œuvres</a></p>
+</section>
+<section class="howto" aria-labelledby="near-help-title">
+<h2 id="near-help-title">Deux façons de parcourir les musées</h2>
+<p id="near-help">Les liens institutionnels ouvrent les visites officielles. Les liens Street View ouvrent Google Maps près du musée : Google choisit le panorama le plus proche lorsqu’il en existe un.</p>
+<p class="quest" id="quest-notice">Dans Meta Quest Browser, ouvrez les liens pour essayer l’affichage panoramique proposé par Google. Le suivi des mains personnalisé d’ARTDACI reste réservé à sa Preview de recherche.</p>
+</section>
+<section class="catalog" id="artworks" aria-labelledby="artwork-heading">
+<div class="catalog-header">
+<h2 id="artwork-heading">Catalogue des œuvres</h2>
+</div>
+<div class="tools">
+<div class="field"><label id="search-label" for="q">Rechercher une œuvre, un artiste ou un musée</label><input id="q" name="q" type="search" autocomplete="off" placeholder="Monet, Vermeer, Louvre" aria-labelledby="search-label"></div>
+<div class="field"><label id="filter-label" for="kind">Filtrer les expériences</label><select id="kind"><option value="all">Toutes les œuvres</option><option value="direct">Panorama orienté</option><option value="tour">Visite institutionnelle</option><option value="nearby">Exploration du musée</option></select></div>
+</div>
+<p id="results" class="results" role="status" aria-live="polite">Chargement du catalogue…</p>
+<div class="cards" id="cards"></div>
+<p id="empty" hidden>Aucune œuvre ne correspond à votre recherche.</p>
+</section>
+<footer class="footer">
+<p id="provider-credit">Vues et photographies affichées sur les plateformes Google, avec leurs propres mentions et conditions. ARTDACI ne revendique pas ces images.</p>
+<p>ARTDACI · Art beyond the frame.</p>
+</footer>
+</main>
+<script type="module" src="scripts/streetview-public.js"></script>
+</body>
+</html>
