@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="styles/home-v2-adjustments.css?v=9" />
     <link rel="stylesheet" href="styles/smart-tv-cover.css?v=2" />
     <link rel="stylesheet" href="styles/home-art-first.css?v=1" />
+    <link rel="stylesheet" href="styles/smart-vision-effect.css?v=1" />
     <script src="scripts/smart-tv-cover.js?v=2"></script>
   </head>
   <body class="home-v2">
@@ -91,6 +92,31 @@
           <p class="hv2-book-signature">The ARTDACI Book · Print meets immersive culture</p>
           <a class="hv2-button hv2-book-scan" data-book-ar-v1="1" href="book-ar.html?lang=en" aria-label="Scan the book · AR">Scan the book · AR ↗</a>
           <button type="button" class="hv2-tv-toggle" data-show3d="Show interactive 3D book" data-show-cover="Show book cover (TV mode)">Show book cover (TV mode)</button>
+        </div>
+      </section>
+
+      <section class="artdaci-smart-vision" aria-label="Smart Art — layered visual exploration">
+        <div class="artdaci-smart-vision__stage" role="img" aria-label="Artwork revealed through animated spatial layers and visual analysis">
+          <div class="artdaci-smart-vision__assembly" aria-hidden="true">
+            <div class="artdaci-smart-vision__pane artdaci-smart-vision__pane--back">
+              <svg viewBox="0 0 500 300"><path d="M18 172Q93 62 150 125T260 105T460 85 M33 253Q155 171 235 236T476 183 M50 40L145 90L250 45L344 120L465 75"/></svg>
+            </div>
+            <div class="artdaci-smart-vision__pane artdaci-smart-vision__pane--art">
+              <img src="assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp" alt="" loading="lazy" decoding="async" />
+            </div>
+            <div class="artdaci-smart-vision__pane artdaci-smart-vision__pane--front">
+              <svg viewBox="0 0 500 300">
+                <path d="M21 192Q98 50 164 134T282 95T472 118 M40 237L130 165L215 205L300 98L451 176 M47 56Q130 19 202 67T460 56"/>
+                <path class="gold" d="M65 208Q164 166 240 177T442 143"/>
+                <path class="blue" d="M70 84L165 49L261 110L360 54"/>
+                <path class="green" d="M100 265L209 216L314 253L436 205"/>
+              </svg>
+              <span class="artdaci-smart-vision__scan"></span>
+              <span class="artdaci-smart-vision__marker one"></span>
+              <span class="artdaci-smart-vision__marker two"></span>
+              <span class="artdaci-smart-vision__marker three"></span>
+            </div>
+          </div>
         </div>
       </section>
 
