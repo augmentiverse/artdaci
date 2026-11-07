@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="styles/spatial-depth.css?v=1" />
     <link rel="stylesheet" href="styles/home-book-position.css?v=4" />
     <link rel="stylesheet" href="styles/home-gallery-nav.css?v=1" />
+    <link rel="stylesheet" href="styles/home-contrast-spatial.css?v=1" />
     <script src="scripts/smart-tv-cover.js?v=2"></script>
   </head>
   <body class="home-v2">
@@ -76,44 +77,6 @@
           </div>
         </div>
 
-<div class="hv2-smart-art" role="group" aria-label="Livre ARTDACI 3D interactif et commandes">
-          <div class="hv2-book-hero" aria-label="Livre ARTDACI en 3D">
-
-            <div class="hv2-book-controls" role="group" aria-label="Le livre ARTDACI · 3D">
-              <p class="hv2-book-controls-label">Le livre ARTDACI · 3D</p>
-              <p class="hv2-book-controls-hint" id="hv2-book-hint">Glisser pour tourner · Molette ou pincement pour zoomer</p>
-              <a class="hv2-button hv2-book-scan" data-book-ar-v1="1" href="book-ar.html?lang=fr" aria-label="Scanner le livre · AR">Scanner le livre · AR ↗</a>
-              <button type="button" class="hv2-tv-toggle" data-show3d="Afficher le livre 3D interactif" data-show-cover="Afficher la couverture (mode TV)">Afficher la couverture (mode TV)</button>
-              <div class="hv2-book-movement">
-                <button type="button" class="hv2-book-move" data-book-move aria-describedby="hv2-book-hint" title="Glisser ici ou utiliser les flèches du clavier pour déplacer le livre" aria-label="Glisser ici ou utiliser les flèches du clavier pour déplacer le livre">↔ <span>Déplacer le livre</span></button>
-                <button type="button" class="hv2-book-recenter" data-book-recenter aria-label="Recentrer" title="Recentrer">↺</button>
-              </div>
-            </div>
-            <div class="hv2-book-aura" aria-hidden="true"></div>
-            <model-viewer
-              class="hv2-book-model"
-              src="assets/environments/gallery/models/artdaci_book3d_v2.glb"
-              alt="Livre ARTDACI en 3D"
-              auto-rotate
-              auto-rotate-delay="0"
-              rotation-per-second="6deg"
-              camera-controls
-              interaction-prompt="none"
-              shadow-intensity="1.15"
-              shadow-softness="0.85"
-              exposure="1.08"
-              environment-image="neutral"
-              camera-orbit="32deg 68deg 92%"
-              min-camera-orbit="auto 20deg 18%"
-              max-camera-orbit="auto 96deg 320%"
-              loading="lazy"
-            ></model-viewer>
-            <img class="hv2-tv-book-cover" src="assets/varia/artdaci-book-cover.webp" alt="Couverture illustrée du livre ARTDACI" decoding="async" />
-            <p class="hv2-book-signature">Le livre ARTDACI · De l’imprimé à la culture immersive</p>
-
-          </div>
-
-        </div>
         <div class="hv2-smart-art-spotlight" aria-hidden="true">
           <div class="smart-art-stage" aria-hidden="true">
             <div class="smart-art-layer smart-art-rear">
@@ -138,13 +101,46 @@
 
       <section class="sd-feature" id="spatial-depth" aria-label="Création interactive ARTDACI Spatial Depth">
           <div class="sd-panel" data-spatial-depth aria-label="Une création visuelle interactive">
-            <div class="sd-copy">
-              <p class="sd-eyebrow">Une création visuelle interactive</p>
-              <h3>ARTDACI prend de la profondeur.</h3>
-              <p class="sd-description">Quatre maîtres, cinq univers technologiques et une même invitation à explorer l’art. Faites varier la perspective pour découvrir leurs liens.</p>
-              <p class="sd-instruction" id="sd-tip">Déplacez le pointeur sur la carte ou utilisez les flèches du clavier lorsqu’elle est sélectionnée.</p>
-              <a class="sd-link" href="3d/?lang=fr">Explorer les expériences 3D <span aria-hidden="true">↗</span></a>
-              <p class="sd-disclaimer">Une illustration en perspective CSS, sans caméra, reconnaissance d’image ni session WebXR active.</p>
+            <div class="sd-copy sd-book-slot">
+              <p class="sd-visually-hidden" id="sd-tip">Déplacez le pointeur sur la carte ou utilisez les flèches du clavier lorsqu’elle est sélectionnée.</p>
+              <div class="hv2-smart-art" role="group" aria-label="Livre ARTDACI 3D interactif et commandes">
+              <div class="hv2-book-hero" aria-label="Livre ARTDACI en 3D">
+              
+              <div class="hv2-book-controls" role="group" aria-label="Le livre ARTDACI · 3D">
+              <p class="hv2-book-controls-label">Le livre ARTDACI · 3D</p>
+              <p class="hv2-book-controls-hint" id="hv2-book-hint">Glisser pour tourner · Molette ou pincement pour zoomer</p>
+              <a class="hv2-button hv2-book-scan" data-book-ar-v1="1" href="book-ar.html?lang=fr" aria-label="Scanner le livre · AR">Scanner le livre · AR ↗</a>
+              <button type="button" class="hv2-tv-toggle" data-show3d="Afficher le livre 3D interactif" data-show-cover="Afficher la couverture (mode TV)">Afficher la couverture (mode TV)</button>
+              <div class="hv2-book-movement">
+              <button type="button" class="hv2-book-move" data-book-move aria-describedby="hv2-book-hint" title="Glisser ici ou utiliser les flèches du clavier pour déplacer le livre" aria-label="Glisser ici ou utiliser les flèches du clavier pour déplacer le livre">↔ <span>Déplacer le livre</span></button>
+              <button type="button" class="hv2-book-recenter" data-book-recenter aria-label="Recentrer" title="Recentrer">↺</button>
+              </div>
+              </div>
+              <div class="hv2-book-aura" aria-hidden="true"></div>
+              <model-viewer
+              class="hv2-book-model"
+              src="assets/environments/gallery/models/artdaci_book3d_v2.glb"
+              alt="Livre ARTDACI en 3D"
+              auto-rotate
+              auto-rotate-delay="0"
+              rotation-per-second="6deg"
+              camera-controls
+              interaction-prompt="none"
+              shadow-intensity="1.15"
+              shadow-softness="0.85"
+              exposure="1.08"
+              environment-image="neutral"
+              camera-orbit="32deg 68deg 92%"
+              min-camera-orbit="auto 20deg 18%"
+              max-camera-orbit="auto 96deg 320%"
+              loading="lazy"
+              ></model-viewer>
+              <img class="hv2-tv-book-cover" src="assets/varia/artdaci-book-cover.webp" alt="Couverture illustrée du livre ARTDACI" decoding="async" />
+              <p class="hv2-book-signature">Le livre ARTDACI · De l’imprimé à la culture immersive</p>
+              
+              </div>
+              
+              </div>
             </div>
             <div class="sd-scene">
               <div class="sd-card" tabindex="0" role="img" aria-label="Carte ARTDACI en profondeur. Utilisez les flèches du clavier pour modifier sa perspective." aria-describedby="sd-tip">

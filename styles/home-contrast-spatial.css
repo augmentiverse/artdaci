@@ -1,0 +1,223 @@
+/* ARTDACI homepage contrast + spatial book stage (November 2026).
+   Loaded last. Dark text on daylight surfaces; light text only on dark panels.
+   Spatial Depth now pairs ONE interactive 3D book with the original art card. */
+
+/* Daylight editorial surfaces: avoid inherited colors from the original dark skin. */
+.home-v2 .hv2-section .hv2-section-head h2,
+.home-v2 .hv2-section .hv2-section-head p,
+.home-v2 .hv2-about > p:not(.hv2-section-kicker) {color:#203c60;}
+.home-v2 .hv2-section .hv2-section-kicker {color:#1c5eaa;}
+.home-v2 .hv2-start-path,
+.home-v2 .hv2-start-path h3 {color:#193a5d;}
+.home-v2 .hv2-start-path ol {color:#344f71;}
+.home-v2 .hv2-start-path li {color:inherit;}
+.home-v2 .hv2-experience-card,
+.home-v2 .hv2-experience-card:hover,
+.home-v2 .hv2-experience-card:focus-visible {
+  color:#1b385d;
+}
+.home-v2 .hv2-experience-card h3 {color:#152e4f;}
+.home-v2 .hv2-experience-card p {color:#405c7c;}
+.home-v2 .hv2-experience-card .hv2-experience-type {color:#1858a0;}
+.home-v2 .hv2-experience-card .hv2-experience-no,
+.home-v2 .hv2-experience-card .hv2-arrow {color:#1357ae;}
+.home-v2 .hv2-ar-group .hv2-ar-links a {
+  color:#154e90;
+  border:1px solid #b7cde8;
+  background:rgba(229,239,253,.85);
+  font-weight:700;
+}
+.home-v2 .hv2-ar-group .hv2-ar-links a:hover,
+.home-v2 .hv2-ar-group .hv2-ar-links a:focus-visible {
+  color:#0b386a;
+  background:#cfe3fc;
+  border-color:#6c9bd8;
+}
+.home-v2 .hv2-guide-note strong {color:#243f61;}
+.home-v2 .hv2-guide-note .hv2-guide-label {color:#426284;}
+.home-v2 .hv2-guide-note a {color:#1858a1;}
+.home-v2 .hv2-faq .hv2-faq-item,
+.home-v2 .hv2-faq .hv2-faq-item summary {color:#1e3d61;}
+.home-v2 .hv2-faq .hv2-faq-item p {color:#415c7b;}
+.home-v2 .hv2-faq .hv2-faq-item {border-bottom-color:#c4d5e9;}
+.home-v2 .hv2-tribute .hv2-tribute-copy h2 {color:#1b3658;}
+.home-v2 .hv2-tribute .hv2-tribute-copy p {color:#405b77;}
+.home-v2 .hv2-tribute .hv2-tribute-quote {color:#815d1b;border-inline-start-color:#b98b2f;}
+.home-v2 .hv2-continuum-step strong {color:#183653;}
+.home-v2 .hv2-continuum-step span {color:#85404e;}
+.home-v2 .hv2-continuum-step::after {color:#476988;}
+.home-v2 .hv2-work .hv2-work-copy strong {color:#17345d;}
+.home-v2 .hv2-work .hv2-work-copy span,
+.home-v2 .hv2-work .hv2-work-copy small {color:#45617e;}
+/* The artists' cards have a DARK photo background: restore LIGHT copy there. */
+.home-v2 .hv2-master-card .hv2-master-copy strong {color:#f5f9ff;}
+.home-v2 .hv2-master-card .hv2-master-copy span {color:#c9dff5;}
+/* Museum discovery: the first block is dark; the second has a pale background. */
+.home-v2 .hv2-place-primary h3,
+.home-v2 .hv2-place-primary p {color:#fff;}
+.home-v2 .hv2-place-primary .hv2-place-cta {color:#fff4bd;}
+.home-v2 .hv2-place-secondary h3 {color:#143e5b;}
+.home-v2 .hv2-place-secondary p {color:#365f77;}
+.home-v2 .hv2-place-secondary .hv2-place-cta {color:#0b735c;}
+/* The book bridge remains dark; retain light text and legible QR captions. */
+.home-v2 .hv2-book-bridge h2 {color:#f2f8ff;}
+.home-v2 .hv2-book-bridge p {color:#ccddf1;}
+.home-v2 .hv2-book-bridge .hv2-qr-pair figcaption {color:#d6e7f7;}
+
+/* Hero: keep the Mona Lisa spotlight, but no full-width empty book field. */
+.home-v2 .hv2-hero {
+  grid-template-columns:minmax(0,1fr)!important;
+  padding-bottom:clamp(24px,3vw,44px);
+}
+.home-v2 .hv2-hero > .hv2-hero-copy {margin-bottom:0;}
+
+/* Spatial Depth: the left text column is replaced with the SAME book model. */
+.home-v2 .sd-panel {
+  grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+  gap:clamp(12px,2.5vw,38px);
+  padding:clamp(20px,3vw,42px);
+  align-items:center;
+}
+.home-v2 .sd-panel .sd-book-slot {position:relative;min-width:0;z-index:2;}
+.home-v2 .sd-panel .sd-book-slot > .hv2-smart-art {
+  box-sizing:border-box;
+  width:100%;
+  max-width:none;
+  height:clamp(330px,34vw,430px);
+  min-height:0!important;
+  margin:0;
+  padding:0!important;
+  overflow:visible;
+  background:transparent;
+}
+.home-v2 .sd-panel .sd-book-slot > .hv2-smart-art::before {
+  inset:0;
+  width:100%;
+  height:100%;
+  filter:blur(20px);
+  background:radial-gradient(ellipse at 54% 40%,rgba(98,165,250,.15),transparent 64%);
+}
+.home-v2 .sd-panel .hv2-smart-art > .hv2-book-hero {
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  transform:none!important;
+  overflow:visible!important;
+}
+.home-v2 .sd-panel .hv2-smart-art > .hv2-book-hero .hv2-book-model {
+  inset:0 0 82px!important;
+  width:100%!important;
+  height:calc(100% - 82px)!important;
+  min-height:0!important;
+  max-height:none!important;
+  margin:0!important;
+  display:block;
+  position:absolute!important;
+  pointer-events:auto;
+}
+.home-v2.artdaci-tv .sd-panel .hv2-book-model {display:none!important;}
+.home-v2 .sd-panel .hv2-smart-art > .hv2-book-hero .hv2-tv-book-cover {
+  box-sizing:border-box;
+  top:1%!important;
+  bottom:auto!important;
+  left:26%!important;
+  width:48%!important;
+  height:calc(100% - 92px)!important;
+  max-height:none!important;
+  object-fit:contain!important;
+}
+.home-v2 .sd-panel .hv2-smart-art > .hv2-book-hero .hv2-book-controls {
+  box-sizing:border-box;
+  position:absolute!important;
+  top:auto!important;
+  right:0!important;
+  bottom:0!important;
+  left:0!important;
+  width:100%!important;
+  max-width:none!important;
+  padding:9px!important;
+  transform:none!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,.92fr) minmax(0,1.15fr) minmax(0,1fr);
+  align-items:stretch;
+  gap:6px;
+  border:1px solid rgba(149,187,232,.29);
+  border-radius:12px;
+  background:rgba(9,25,49,.80);
+  box-shadow:0 9px 25px rgba(3,12,27,.15);
+}
+.home-v2 .sd-panel .hv2-book-controls-label {
+  grid-column:1/-1;
+  color:#e5f1ff;
+  font-size:11px;
+  margin:0 0 1px;
+  text-align:center;
+}
+.home-v2 .sd-panel .hv2-book-controls-hint {display:none;}
+.home-v2 .sd-panel .hv2-book-hero .hv2-book-controls .hv2-book-scan,
+.home-v2 .sd-panel .hv2-book-hero .hv2-book-controls .hv2-tv-toggle,
+.home-v2 .sd-panel .hv2-book-hero .hv2-book-controls .hv2-book-move,
+.home-v2 .sd-panel .hv2-book-hero .hv2-book-controls .hv2-book-recenter {
+  box-sizing:border-box;
+  min-height:40px;
+  font-size:10px;
+  padding:6px;
+  width:100%;
+}
+.home-v2 .sd-panel .hv2-book-movement {
+  display:flex;
+  grid-column:auto;
+  gap:5px;
+  justify-content:stretch;
+  min-width:0;
+}
+.home-v2 .sd-panel .hv2-book-hero .hv2-book-move {max-width:none;min-width:0;flex:1 1 auto;}
+.home-v2 .sd-panel .hv2-book-hero .hv2-book-recenter {flex:0 0 37px;width:37px;min-width:37px;}
+/* The original animated card remains on the right. */
+.home-v2 .sd-panel .sd-scene {min-height:340px;min-width:0;}
+.home-v2 .sd-panel .sd-card {width:min(340px,90%);}
+.home-v2 .sd-visually-hidden {
+  position:absolute!important;
+  width:1px!important;height:1px!important;
+  padding:0!important;margin:-1px!important;
+  overflow:hidden!important;clip-path:inset(50%)!important;
+  white-space:nowrap!important;border:0!important;
+}
+@media(max-width:900px) {
+  .home-v2 .sd-panel {grid-template-columns:1fr;gap:8px;padding:20px;}
+  .home-v2 .sd-panel .sd-book-slot > .hv2-smart-art {height:370px;}
+  .home-v2 .sd-panel .sd-scene {min-height:285px;}
+}
+@media(max-width:600px) {
+  .home-v2 .sd-panel {padding:16px 12px 20px;gap:6px;}
+  .home-v2 .sd-panel .sd-book-slot > .hv2-smart-art {height:340px;}
+  .home-v2 .sd-panel .hv2-smart-art > .hv2-book-hero .hv2-book-model {
+    inset:0 0 100px!important;
+    height:calc(100% - 100px)!important;
+    width:100%!important;
+  }
+  .home-v2 .sd-panel .hv2-smart-art > .hv2-book-hero .hv2-book-controls {
+    top:auto!important;bottom:0!important;left:0!important;right:0!important;
+    width:100%!important;transform:none!important;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  }
+  .home-v2 .sd-panel .hv2-book-controls-label {grid-column:1/-1;}
+  .home-v2 .sd-panel .hv2-book-movement {grid-column:1/-1;}
+  .home-v2 .sd-panel .sd-scene {min-height:250px;}
+  .home-v2 .sd-panel .sd-card {width:min(320px,90%);}
+}
+@media(max-width:370px) {
+  .home-v2 .sd-panel .sd-book-slot > .hv2-smart-art {height:352px;}
+  .home-v2 .sd-panel .hv2-book-hero .hv2-book-controls .hv2-tv-toggle {font-size:9px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .home-v2 .sd-panel .hv2-book-controls *,
+  .home-v2 .hv2-ar-group .hv2-ar-links a {transition:none;}
+}

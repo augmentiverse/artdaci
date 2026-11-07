@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="styles/spatial-depth.css?v=1" />
     <link rel="stylesheet" href="styles/home-book-position.css?v=4" />
     <link rel="stylesheet" href="styles/home-gallery-nav.css?v=1" />
+    <link rel="stylesheet" href="styles/home-contrast-spatial.css?v=1" />
     <script src="scripts/smart-tv-cover.js?v=2"></script>
   </head>
   <body class="home-v2">
@@ -76,44 +77,6 @@
           </div>
         </div>
 
-<div class="hv2-smart-art" role="group" aria-label="ARTDACI interactive 3D book and controls">
-          <div class="hv2-book-hero" aria-label="ARTDACI 3D book">
-
-            <div class="hv2-book-controls" role="group" aria-label="ARTDACI book · 3D">
-              <p class="hv2-book-controls-label">ARTDACI book · 3D</p>
-              <p class="hv2-book-controls-hint" id="hv2-book-hint">Drag the book to rotate · Scroll or pinch to zoom</p>
-              <a class="hv2-button hv2-book-scan" data-book-ar-v1="1" href="book-ar.html?lang=en" aria-label="Scan the book · AR">Scan the book · AR ↗</a>
-              <button type="button" class="hv2-tv-toggle" data-show3d="Show interactive 3D book" data-show-cover="Show book cover (TV mode)">Show book cover (TV mode)</button>
-              <div class="hv2-book-movement">
-                <button type="button" class="hv2-book-move" data-book-move aria-describedby="hv2-book-hint" title="Drag here or use arrow keys to move the book" aria-label="Drag here or use arrow keys to move the book">↔ <span>Move the book</span></button>
-                <button type="button" class="hv2-book-recenter" data-book-recenter aria-label="Recenter" title="Recenter">↺</button>
-              </div>
-            </div>
-            <div class="hv2-book-aura" aria-hidden="true"></div>
-            <model-viewer
-              class="hv2-book-model"
-              src="assets/environments/gallery/models/artdaci_book3d_v2.glb"
-              alt="ARTDACI 3D book"
-              auto-rotate
-              auto-rotate-delay="0"
-              rotation-per-second="6deg"
-              camera-controls
-              interaction-prompt="none"
-              shadow-intensity="1.15"
-              shadow-softness="0.85"
-              exposure="1.08"
-              environment-image="neutral"
-              camera-orbit="32deg 68deg 92%"
-              min-camera-orbit="auto 20deg 18%"
-              max-camera-orbit="auto 96deg 320%"
-              loading="lazy"
-            ></model-viewer>
-            <img class="hv2-tv-book-cover" src="assets/varia/artdaci-book-cover.webp" alt="ARTDACI illustrated book cover" decoding="async" />
-            <p class="hv2-book-signature">The ARTDACI Book · Print meets immersive culture</p>
-
-          </div>
-
-        </div>
         <div class="hv2-smart-art-spotlight" aria-hidden="true">
           <div class="smart-art-stage" aria-hidden="true">
             <div class="smart-art-layer smart-art-rear">
@@ -138,13 +101,46 @@
 
       <section class="sd-feature" id="spatial-depth" aria-label="Interactive ARTDACI Spatial Depth artwork">
           <div class="sd-panel" data-spatial-depth aria-label="An interactive visual">
-            <div class="sd-copy">
-              <p class="sd-eyebrow">An interactive visual</p>
-              <h3>ARTDACI, in spatial depth.</h3>
-              <p class="sd-description">Four artists, five digital pathways and one shared universe of art. Move the perspective to discover how the project brings these dimensions together.</p>
-              <p class="sd-instruction" id="sd-tip">Move your pointer over the card, or focus it and use the arrow keys.</p>
-              <a class="sd-link" href="3d/?lang=en">Explore the 3D experiences <span aria-hidden="true">↗</span></a>
-              <p class="sd-disclaimer">A CSS perspective illustration — no camera, image tracking or active WebXR session.</p>
+            <div class="sd-copy sd-book-slot">
+              <p class="sd-visually-hidden" id="sd-tip">Move your pointer over the card, or focus it and use the arrow keys.</p>
+              <div class="hv2-smart-art" role="group" aria-label="ARTDACI interactive 3D book and controls">
+              <div class="hv2-book-hero" aria-label="ARTDACI 3D book">
+              
+              <div class="hv2-book-controls" role="group" aria-label="ARTDACI book · 3D">
+              <p class="hv2-book-controls-label">ARTDACI book · 3D</p>
+              <p class="hv2-book-controls-hint" id="hv2-book-hint">Drag the book to rotate · Scroll or pinch to zoom</p>
+              <a class="hv2-button hv2-book-scan" data-book-ar-v1="1" href="book-ar.html?lang=en" aria-label="Scan the book · AR">Scan the book · AR ↗</a>
+              <button type="button" class="hv2-tv-toggle" data-show3d="Show interactive 3D book" data-show-cover="Show book cover (TV mode)">Show book cover (TV mode)</button>
+              <div class="hv2-book-movement">
+              <button type="button" class="hv2-book-move" data-book-move aria-describedby="hv2-book-hint" title="Drag here or use arrow keys to move the book" aria-label="Drag here or use arrow keys to move the book">↔ <span>Move the book</span></button>
+              <button type="button" class="hv2-book-recenter" data-book-recenter aria-label="Recenter" title="Recenter">↺</button>
+              </div>
+              </div>
+              <div class="hv2-book-aura" aria-hidden="true"></div>
+              <model-viewer
+              class="hv2-book-model"
+              src="assets/environments/gallery/models/artdaci_book3d_v2.glb"
+              alt="ARTDACI 3D book"
+              auto-rotate
+              auto-rotate-delay="0"
+              rotation-per-second="6deg"
+              camera-controls
+              interaction-prompt="none"
+              shadow-intensity="1.15"
+              shadow-softness="0.85"
+              exposure="1.08"
+              environment-image="neutral"
+              camera-orbit="32deg 68deg 92%"
+              min-camera-orbit="auto 20deg 18%"
+              max-camera-orbit="auto 96deg 320%"
+              loading="lazy"
+              ></model-viewer>
+              <img class="hv2-tv-book-cover" src="assets/varia/artdaci-book-cover.webp" alt="ARTDACI illustrated book cover" decoding="async" />
+              <p class="hv2-book-signature">The ARTDACI Book · Print meets immersive culture</p>
+              
+              </div>
+              
+              </div>
             </div>
             <div class="sd-scene">
               <div class="sd-card" tabindex="0" role="img" aria-label="Layered spatial ARTDACI card. Use arrow keys to adjust its perspective." aria-describedby="sd-tip">

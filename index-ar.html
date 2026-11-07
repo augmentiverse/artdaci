@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="styles/spatial-depth.css?v=1" />
     <link rel="stylesheet" href="styles/home-book-position.css?v=4" />
     <link rel="stylesheet" href="styles/home-gallery-nav.css?v=1" />
+    <link rel="stylesheet" href="styles/home-contrast-spatial.css?v=1" />
     <script src="scripts/smart-tv-cover.js?v=2"></script>
   </head>
   <body class="home-v2">
@@ -76,44 +77,6 @@
           </div>
         </div>
 
-<div class="hv2-smart-art" role="group" aria-label="كتاب ARTDACI التفاعلي ثلاثي الأبعاد وأدوات التحكم">
-          <div class="hv2-book-hero" aria-label="كتاب ARTDACI ثلاثي الأبعاد">
-
-            <div class="hv2-book-controls" role="group" aria-label="كتاب ARTDACI · ثلاثي الأبعاد">
-              <p class="hv2-book-controls-label">كتاب ARTDACI · ثلاثي الأبعاد</p>
-              <p class="hv2-book-controls-hint" id="hv2-book-hint">اسحب لتدوير الكتاب · استخدم عجلة الفأرة أو إصبعين للتكبير</p>
-              <a class="hv2-button hv2-book-scan" data-book-ar-v1="1" href="book-ar.html?lang=ar" dir="rtl" aria-label="امسح غلاف الكتاب · AR">امسح غلاف الكتاب · AR ↗</a>
-              <button type="button" class="hv2-tv-toggle" data-show3d="عرض الكتاب ثلاثي الأبعاد" data-show-cover="عرض غلاف الكتاب (وضع التلفاز)">عرض غلاف الكتاب (وضع التلفاز)</button>
-              <div class="hv2-book-movement">
-                <button type="button" class="hv2-book-move" data-book-move aria-describedby="hv2-book-hint" title="اسحب هنا أو استخدم أسهم لوحة المفاتيح لتحريك الكتاب" aria-label="اسحب هنا أو استخدم أسهم لوحة المفاتيح لتحريك الكتاب">↔ <span>حرّك الكتاب</span></button>
-                <button type="button" class="hv2-book-recenter" data-book-recenter aria-label="إعادة التمركز" title="إعادة التمركز">↺</button>
-              </div>
-            </div>
-            <div class="hv2-book-aura" aria-hidden="true"></div>
-            <model-viewer
-              class="hv2-book-model"
-              src="assets/environments/gallery/models/artdaci_book3d_v2.glb"
-              alt="كتاب ARTDACI ثلاثي الأبعاد"
-              auto-rotate
-              auto-rotate-delay="0"
-              rotation-per-second="6deg"
-              camera-controls
-              interaction-prompt="none"
-              shadow-intensity="1.15"
-              shadow-softness="0.85"
-              exposure="1.08"
-              environment-image="neutral"
-              camera-orbit="32deg 68deg 92%"
-              min-camera-orbit="auto 20deg 18%"
-              max-camera-orbit="auto 96deg 320%"
-              loading="lazy"
-            ></model-viewer>
-            <img class="hv2-tv-book-cover" src="assets/varia/artdaci-book-cover.webp" alt="غلاف كتاب ARTDACI المصور" decoding="async" />
-            <p class="hv2-book-signature">كتاب ARTDACI · من المطبوع إلى الثقافة الغامرة</p>
-
-          </div>
-
-        </div>
         <div class="hv2-smart-art-spotlight" aria-hidden="true">
           <div class="smart-art-stage" aria-hidden="true">
             <div class="smart-art-layer smart-art-rear">
@@ -138,13 +101,46 @@
 
       <section class="sd-feature" id="spatial-depth" aria-label="لوحة ARTDACI التفاعلية متعددة الأبعاد">
           <div class="sd-panel" data-spatial-depth aria-label="تصميم بصري تفاعلي">
-            <div class="sd-copy">
-              <p class="sd-eyebrow">تصميم بصري تفاعلي</p>
-              <h3>اكتشف أبعاد ARTDACI.</h3>
-              <p class="sd-description">أربعة فنّانين وخمسة مسارات تقنية تجمعها رحلة واحدة لاستكشاف الفن. حرّك المنظور لترى كيف تتصل هذه العوالم.</p>
-              <p class="sd-instruction" id="sd-tip">حرّك المؤشر فوق البطاقة أو حدّدها واستخدم أسهم لوحة المفاتيح لتغيير زاويتها.</p>
-              <a class="sd-link" href="3d/?lang=ar">استكشف تجارب 3D <span aria-hidden="true">↗</span></a>
-              <p class="sd-disclaimer">رسم تفاعلي بمنظور CSS، من دون كاميرا أو تتبّع للصور أو جلسة WebXR فعلية.</p>
+            <div class="sd-copy sd-book-slot">
+              <p class="sd-visually-hidden" id="sd-tip">حرّك المؤشر فوق البطاقة أو حدّدها واستخدم أسهم لوحة المفاتيح لتغيير زاويتها.</p>
+              <div class="hv2-smart-art" role="group" aria-label="كتاب ARTDACI التفاعلي ثلاثي الأبعاد وأدوات التحكم">
+              <div class="hv2-book-hero" aria-label="كتاب ARTDACI ثلاثي الأبعاد">
+              
+              <div class="hv2-book-controls" role="group" aria-label="كتاب ARTDACI · ثلاثي الأبعاد">
+              <p class="hv2-book-controls-label">كتاب ARTDACI · ثلاثي الأبعاد</p>
+              <p class="hv2-book-controls-hint" id="hv2-book-hint">اسحب لتدوير الكتاب · استخدم عجلة الفأرة أو إصبعين للتكبير</p>
+              <a class="hv2-button hv2-book-scan" data-book-ar-v1="1" href="book-ar.html?lang=ar" dir="rtl" aria-label="امسح غلاف الكتاب · AR">امسح غلاف الكتاب · AR ↗</a>
+              <button type="button" class="hv2-tv-toggle" data-show3d="عرض الكتاب ثلاثي الأبعاد" data-show-cover="عرض غلاف الكتاب (وضع التلفاز)">عرض غلاف الكتاب (وضع التلفاز)</button>
+              <div class="hv2-book-movement">
+              <button type="button" class="hv2-book-move" data-book-move aria-describedby="hv2-book-hint" title="اسحب هنا أو استخدم أسهم لوحة المفاتيح لتحريك الكتاب" aria-label="اسحب هنا أو استخدم أسهم لوحة المفاتيح لتحريك الكتاب">↔ <span>حرّك الكتاب</span></button>
+              <button type="button" class="hv2-book-recenter" data-book-recenter aria-label="إعادة التمركز" title="إعادة التمركز">↺</button>
+              </div>
+              </div>
+              <div class="hv2-book-aura" aria-hidden="true"></div>
+              <model-viewer
+              class="hv2-book-model"
+              src="assets/environments/gallery/models/artdaci_book3d_v2.glb"
+              alt="كتاب ARTDACI ثلاثي الأبعاد"
+              auto-rotate
+              auto-rotate-delay="0"
+              rotation-per-second="6deg"
+              camera-controls
+              interaction-prompt="none"
+              shadow-intensity="1.15"
+              shadow-softness="0.85"
+              exposure="1.08"
+              environment-image="neutral"
+              camera-orbit="32deg 68deg 92%"
+              min-camera-orbit="auto 20deg 18%"
+              max-camera-orbit="auto 96deg 320%"
+              loading="lazy"
+              ></model-viewer>
+              <img class="hv2-tv-book-cover" src="assets/varia/artdaci-book-cover.webp" alt="غلاف كتاب ARTDACI المصور" decoding="async" />
+              <p class="hv2-book-signature">كتاب ARTDACI · من المطبوع إلى الثقافة الغامرة</p>
+              
+              </div>
+              
+              </div>
             </div>
             <div class="sd-scene">
               <div class="sd-card" tabindex="0" role="img" aria-label="بطاقة ARTDACI متعددة الطبقات. استخدم أسهم لوحة المفاتيح لتغيير منظورها." aria-describedby="sd-tip">
