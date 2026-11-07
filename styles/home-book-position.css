@@ -41,6 +41,12 @@
   border-radius: 10px;
   cursor: pointer;
 }
+.home-v2 .hv2-book-hero .hv2-book-controls .hv2-book-expand {
+  background:#e5f0ff;
+  border:1px solid #80a9da;
+  color:#174979;
+  box-shadow:0 4px 12px rgba(23,86,157,.12);
+}
 .home-v2 .hv2-book-hero .hv2-book-controls .hv2-book-scan:focus-visible,
 .home-v2 .hv2-book-hero .hv2-book-controls .hv2-tv-toggle:focus-visible,
 .home-v2 .hv2-book-hero .hv2-book-controls .hv2-book-expand:focus-visible {
@@ -230,3 +236,28 @@
   .home-v2 .hv2-book-zoom-hint {font-size:12px;}
 }
 @media(prefers-reduced-motion:reduce){.home-v2 .hv2-book-zoom-dialog::backdrop{backdrop-filter:none;}}
+
+.home-v2 .hv2-book-zoom-head h2 {flex:1 1 auto;min-width:0;}
+.home-v2 .hv2-book-zoom-tools {display:flex;flex:0 0 auto;gap:6px;align-items:center;}
+.home-v2 .hv2-book-zoom-tools button {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:40px;
+  min-height:44px;
+  padding:5px 10px;
+  border:1px solid rgba(151,195,246,.55);
+  border-radius:9px;
+  background:#153a65;
+  color:#fff;
+  font:700 20px/1 Inter,"Segoe UI",Arial,sans-serif;
+  cursor:pointer;
+}
+.home-v2 .hv2-book-zoom-tools button:hover,
+.home-v2 .hv2-book-zoom-close:hover {background:#265c91;}
+.home-v2 .hv2-book-zoom-tools button:focus-visible {outline:3px solid #ffde79;outline-offset:3px;}
+@media(max-width:620px) {
+  .home-v2 .hv2-book-zoom-head {gap:7px;flex-wrap:wrap;}
+  .home-v2 .hv2-book-zoom-head h2 {flex-basis:100%;}
+  .home-v2 .hv2-book-zoom-tools button {min-width:42px;}
+}
