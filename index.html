@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="styles/home-art-first.css?v=1" />
     <link rel="stylesheet" href="styles/home-smart-art.css?v=1" />
     <link rel="stylesheet" href="styles/spatial-depth.css?v=1" />
-    <link rel="stylesheet" href="styles/home-book-position.css?v=1" />
+    <link rel="stylesheet" href="styles/home-book-position.css?v=2" />
     <script src="scripts/smart-tv-cover.js?v=2"></script>
   </head>
   <body class="home-v2">
@@ -80,6 +80,7 @@
             <div class="hv2-book-controls" role="group">
               <a class="hv2-button hv2-book-scan" data-book-ar-v1="1" href="book-ar.html?lang=en" aria-label="Scan the book · AR">Scan the book · AR ↗</a>
               <button type="button" class="hv2-tv-toggle" data-show3d="Show interactive 3D book" data-show-cover="Show book cover (TV mode)">Show book cover (TV mode)</button>
+              <button type="button" class="hv2-book-expand" aria-haspopup="dialog" data-zoom-title="ARTDACI book · Large 3D view" data-zoom-close="Close enlarged view" data-zoom-hint="Drag to rotate · Scroll or pinch to zoom · Press Esc to close">⤢ Enlarge the book</button>
             </div>
             <div class="hv2-book-aura" aria-hidden="true"></div>
             <model-viewer
@@ -96,8 +97,8 @@
               exposure="1.08"
               environment-image="neutral"
               camera-orbit="32deg 68deg 112%"
-              min-camera-orbit="auto 42deg 86%"
-              max-camera-orbit="auto 86deg 145%"
+              min-camera-orbit="auto 24deg 24%"
+              max-camera-orbit="auto 96deg 320%"
               loading="lazy"
             ></model-viewer>
             <img class="hv2-tv-book-cover" src="assets/varia/artdaci-book-cover.webp" alt="ARTDACI illustrated book cover" decoding="async" />
@@ -514,5 +515,6 @@
     <script type="module" src="scripts/visitor-guide.js?v=1"></script>
     <script src="scripts/pwa.js?v=1" defer></script>
     <script src="scripts/spatial-depth.js?v=1" defer></script>
+    <script src="scripts/book-zoom.js?v=1" defer></script>
   </body>
 </html>
