@@ -89,7 +89,8 @@ a{color:inherit}button{font:inherit;cursor:pointer}button:disabled{cursor:not-al
 .quiz-result-score{font-size:1.7rem;color:var(--accent);font-weight:800}
 .quiz-result-actions{display:flex;flex-wrap:wrap;gap:10px}
 @media(max-width:550px){.quiz-result-actions{flex-direction:column;align-items:stretch}.quiz-result-actions .quiz-primary{width:100%}.quiz-progress{flex-wrap:wrap}}
-.atlas-entry-wrap{text-align:center;margin:0 auto 26px}.atlas-entry{display:inline-flex;align-items:center;justify-content:center;min-height:47px;padding:12px 19px;border:1px solid var(--accent);border-radius:12px;background:#d8b87c17;color:var(--accent);font-weight:700;text-decoration:none;max-width:100%}.atlas-entry:hover,.atlas-entry:focus-visible{background:#d8b87c2d}
+.discovery-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 auto 24px}.atlas-entry-wrap{display:flex;text-align:center;margin:0}.atlas-entry{display:inline-flex;align-items:center;justify-content:center;width:100%;min-height:56px;padding:10px 13px;border:1px solid var(--accent);border-radius:12px;background:#d8b87c17;color:var(--accent);font-size:.82rem;font-weight:700;line-height:1.35;text-decoration:none}.atlas-entry:hover,.atlas-entry:focus-visible{background:#d8b87c2d}
+@media(max-width:660px){.discovery-links{gap:8px;margin-bottom:17px}.atlas-entry{min-height:44px;padding:8px 10px;font-size:.75rem}}
 
 </style>
   
@@ -100,7 +101,7 @@ a{color:inherit}button{font:inherit;cursor:pointer}button:disabled{cursor:not-al
     <header class="site-header">
       <a class="brand" href="index-fr.html" id="home-link" aria-label="ARTDACI — accueil">
         <span class="brand-monogram" aria-hidden="true">A</span>
-        <span><strong>ARTDACI</strong><small>Museum Explorer</small></span>
+        <span><strong>ARTDACI</strong><small id="brand-subtitle">Explorateur de musées</small></span>
       </a>
       <nav class="header-actions" aria-label="Language / Langue / اللغة">
         <div class="language-switch" role="group" aria-label="Language / Langue / اللغة">
@@ -116,9 +117,11 @@ a{color:inherit}button{font:inherit;cursor:pointer}button:disabled{cursor:not-al
         <h1 id="page-title">Des musées, mille histoires</h1>
         <p class="intro-description" id="intro-description">Explorez les musées liés aux chefs-d’œuvre d’ARTDACI, une découverte à la fois.</p>
         </section>
-      <div class="atlas-entry-wrap"><a class="atlas-entry" id="atlas-entry" href="museums-atlas.html" lang="fr">Découvrir l’atlas photographique des 17 musées ↗</a></div>
-      <div class="atlas-entry-wrap"><a class="atlas-entry" id="streetview-entry" href="geo/museum-streetview.html?lang=fr">👁 Explorer les musées en Street View ↗</a></div>
-      <div class="atlas-entry-wrap"><a class="atlas-entry" id="earth-entry" href="earth-explorer.html?lang=fr">🌍 Explorer les 17 musées sur Google Earth ↗</a></div>
+      <div class="discovery-links" id="discovery-links" aria-label="Autres explorations culturelles">
+        <div class="atlas-entry-wrap"><a class="atlas-entry" id="atlas-entry" href="museums-atlas.html" lang="fr">Atlas des 17 musées ↗</a></div>
+        <div class="atlas-entry-wrap"><a class="atlas-entry" id="streetview-entry" href="geo/museum-streetview.html?lang=fr">👁 Street View 360° ↗</a></div>
+        <div class="atlas-entry-wrap"><a class="atlas-entry" id="earth-entry" href="earth-explorer.html?lang=fr">🌍 Google Earth · 17 musées ↗</a></div>
+      </div>
       <nav class="museum-selector" id="museum-selector" aria-label="Choisir un musée"></nav>
       <section class="explorer" aria-labelledby="museum-title" id="museum-stage" aria-busy="true">
         <div class="photo-frame">
@@ -692,21 +695,21 @@ const EMBEDDED_MUSEUM_DATA={
 const DATA_URL = './content/museums/explorer.json';
 const UI = {
   fr: {
-    title: 'Des musées, mille histoires', intro: 'Explorez les musées liés aux chefs-d’œuvre d’ARTDACI, une découverte à la fois.', eyebrow: 'PARCOURS CULTUREL',
+    title: 'Des musées, mille histoires', intro: 'Explorez les musées liés aux chefs-d’œuvre d’ARTDACI, une découverte à la fois.', eyebrow: 'PARCOURS CULTUREL', brand:'Explorateur de musées', discoveryLabel:'Autres explorations culturelles',
     official: 'Site du musée ↗', artwork: 'Œuvres liées à ARTDACI', experience: 'Prolonger la visite',
     virtual: 'Visiter en VR', ar: 'Explorer en RA', space: 'Placer en 3D / RA', source: 'Source ↗', prev: '← Précédent', next: 'Suivant →',
     photograph: 'Photographie', fallback: 'Illustration ARTDACI (photographie momentanément indisponible)', keyboard: 'Utilisez aussi les touches ← et → du clavier.',
     gallery: 'Galerie des six musées', semantic: 'ARTDACI sémantique', skip: 'Aller au contenu', unavailable: 'Le parcours ne peut pas être chargé. Réessayez avec une connexion Internet.',
     photoAlt: 'Photographie du musée : ', portalEyebrow:'PORTAIL CULTUREL CONNECTÉ', portalTitle:'Approfondir la découverte', portalIntro:'Retrouvez les œuvres, les espaces immersifs et les liens de connaissance de ce musée.', portalTabs:['Œuvres','3D · RA · VR · GEO','Savoir & questions'], artworksDescription:'Ouvrez une œuvre liée à ce musée dans le livre connecté ARTDACI.', experiencesDescription:'Passez de la découverte photographique aux environnements immersifs déjà disponibles.', museumPreview:'Illustration ARTDACI du musée (non photographique)', knowledgeTitle:'Questions pour aller plus loin', knowledgeDescription:'Deux pistes d’exploration à copier pour un échange guidé ou un travail en classe.', copyQuestion:'Copier la question', copied:'Question copiée.', copyFailed:'Copie impossible. Sélectionnez la question manuellement.', semanticOpen:'Ouvrir ARTDACI Semantic ↗', knowledgeNote:'Le guide IA contextuel intégré au musée est envisagé pour une étape ultérieure ; le graphe sémantique existant est accessible ci-dessus.', selector:'Choisir un musée'},
   en: {
-    title: 'Museums, Countless Stories', intro: 'Discover the museums behind ARTDACI masterpieces, one fascinating stop at a time.', eyebrow: 'CULTURAL JOURNEY',
+    title: 'Museums, Countless Stories', intro: 'Discover the museums behind ARTDACI masterpieces, one fascinating stop at a time.', eyebrow: 'CULTURAL JOURNEY', brand:'Museum Explorer', discoveryLabel:'Other cultural explorations',
     official: 'Museum website ↗', artwork: 'Related ARTDACI artworks', experience: 'Continue exploring',
     virtual: 'Visit in VR', ar: 'Explore in AR', space: 'Place in 3D / AR', source: 'Source ↗', prev: '← Previous', next: 'Next →',
     photograph: 'Photograph', fallback: 'ARTDACI illustration (photograph temporarily unavailable)', keyboard: 'You can also navigate with the ← and → keys.',
     gallery: 'Six Museums Wing', semantic: 'ARTDACI Semantic', skip: 'Skip to content', unavailable: 'Unable to load the museum journey. Please try again while online.',
     photoAlt: 'Photograph of the museum: ', portalEyebrow:'CONNECTED CULTURAL PORTAL', portalTitle:'Explore further', portalIntro:'Explore the artworks, immersive experiences and linked knowledge behind this museum.', portalTabs:['Artworks','3D · AR · VR · GEO','Knowledge & questions'], artworksDescription:'Open an artwork associated with this museum in ARTDACI’s connected book.', experiencesDescription:'Move from the photographic journey to available immersive experiences.', museumPreview:'ARTDACI museum illustration (not a photograph)', knowledgeTitle:'Questions to explore', knowledgeDescription:'Copy either question for guided discussion or classroom activities.', copyQuestion:'Copy question', copied:'Question copied.', copyFailed:'Unable to copy. Select the question manually.', semanticOpen:'Open ARTDACI Semantic ↗', knowledgeNote:'An in-site contextual AI guide is planned for a later phase; the existing semantic graph is available through the link above.', selector:'Choose a museum'},
   ar: {
-    title: 'متاحف وحكايات لا تنتهي', intro: 'اكتشف المتاحف المرتبطة بروائع ARTDACI، متحفًا بعد آخر.', eyebrow: 'رحلة ثقافية',
+    title: 'متاحف وحكايات لا تنتهي', intro: 'اكتشف المتاحف المرتبطة بروائع ARTDACI، متحفًا بعد آخر.', eyebrow: 'رحلة ثقافية', brand:'مستكشف المتاحف', discoveryLabel:'استكشافات ثقافية أخرى',
     official: 'موقع المتحف ↗', artwork: 'الأعمال الفنية المرتبطة بـ ARTDACI', experience: 'تابع الاستكشاف',
     virtual: 'زيارة بالواقع الافتراضي', ar: 'استكشاف بالواقع المعزز', space: 'عرض ثلاثي الأبعاد / معزز', source: 'المصدر ↗', prev: '→ السابق', next: 'التالي ←',
     photograph: 'صورة فوتوغرافية', fallback: 'رسم من ARTDACI (الصورة غير متاحة مؤقتًا)', keyboard: 'يمكنك أيضًا التنقل باستخدام مفتاحَي السهمين.',
@@ -1004,14 +1007,16 @@ function render() {
   const museum=museums[index], u=UI[lang];
   document.documentElement.lang=lang;
   document.documentElement.dir=lang==='ar'?'rtl':'ltr';
-  document.title=`${local(museum.name)} — ARTDACI Museum Explorer`;
+  document.title=`${local(museum.name)} — ${u.brand} · ARTDACI`;
+  text('brand-subtitle',u.brand);
+  $('discovery-links').setAttribute('aria-label',u.discoveryLabel);
   text('intro-eyebrow',u.eyebrow);
   text('page-title',u.title);
   text('intro-description',u.intro);
-  text('atlas-entry',{fr:'ARTDACI — Atlas du patrimoine muséal ↗',en:'ARTDACI — Museum Heritage Atlas ↗',ar:'ARTDACI — أطلس التراث المتحفي ↗'}[lang]);
-  text('streetview-entry',{fr:'👁 Explorer les musées en Street View ↗',en:'👁 Explore Museums in Street View ↗',ar:'👁 استكشف المتاحف عبر ستريت فيو ↗'}[lang]);
+  text('atlas-entry',{fr:'Atlas des 17 musées ↗',en:'17-Museum Atlas ↗',ar:'أطلس ١٧ متحفًا ↗'}[lang]);
+  text('streetview-entry',{fr:'👁 Street View 360° ↗',en:'👁 Street View 360° ↗',ar:'👁 ستريت فيو ٣٦٠° ↗'}[lang]);
   $('streetview-entry').href='geo/museum-streetview.html?lang='+lang;
-  text('earth-entry',{fr:'🌍 Explorer les 17 musées sur Google Earth ↗',en:'🌍 Explore 17 museums on Google Earth ↗',ar:'🌍 استكشف ١٧ متحفًا عبر Google Earth ↗'}[lang]);
+  text('earth-entry',{fr:'🌍 Google Earth · 17 musées ↗',en:'🌍 Google Earth · 17 museums ↗',ar:'🌍 Google Earth · ١٧ متحفًا ↗'}[lang]);
   $('earth-entry').href='earth-explorer.html?lang='+lang;
   $('atlas-entry').href=lang==='fr'?'museums-atlas.html':lang==='en'?'museums-atlas-en.html':'museums-atlas-ar.html';
   $('atlas-entry').removeAttribute('lang');

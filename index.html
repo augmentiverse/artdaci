@@ -17,7 +17,11 @@
     <link rel="alternate" hreflang="x-default" href="https://artdaci.com/index.html" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="ARTDACI — Masterpieces Alive" />
+    <meta property="og:description" content="Discover masterpieces, artists, museums and ARTDACI immersive experiences." />
     <meta property="og:url" content="https://artdaci.com/index.html" />
+    <meta property="og:image" content="https://artdaci.com/assets/varia/artdaci-book-cover.webp" />
+    <meta property="og:image:alt" content="Illustrated cover of the ARTDACI book" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" href="assets/app/artdaci-app-icon.svg" type="image/svg+xml" />
     <title>ARTDACI — Masterpieces Alive</title>
@@ -27,6 +31,7 @@
     <link rel="stylesheet" href="styles/home-v2-adjustments.css?v=9" />
     <link rel="stylesheet" href="styles/smart-tv-cover.css?v=2" />
     <link rel="stylesheet" href="styles/home-art-first.css?v=1" />
+    <link rel="stylesheet" href="styles/home-ux.css?v=1" />
     <script src="scripts/smart-tv-cover.js?v=2"></script>
   </head>
   <body class="home-v2">
@@ -43,6 +48,18 @@
         <a href="semantic/?lang=en">Knowledge</a>
         <a class="hv2-nav-guide" href="atlas.html?lang=en">Guide</a>
       </nav>
+
+      <details class="hv2-mobile-menu">
+        <summary>Menu</summary>
+        <nav class="hv2-mobile-menu-nav" aria-label="Mobile navigation">
+          <a href="#painting-index">Collection</a>
+          <a href="#experiences">Experiences</a>
+          <a href="#masters">Masters</a>
+          <a href="museums.html?lang=en">Museums</a>
+          <a href="semantic/?lang=en">Knowledge</a>
+          <a href="atlas.html?lang=en">Guide</a>
+        </nav>
+      </details>
 
       <nav class="hv2-language" aria-label="Languages">
         <a href="index.html" aria-current="page">EN</a>
@@ -292,6 +309,7 @@
             </div>
           </a>
         </div>
+        <p class="hv2-curatorial-note">These portraits are digital interpretations created for ARTDACI experiences; they are not historical documents.</p>
       </section>
 
       <section class="hv2-continuum-wrap" aria-labelledby="continuum-title">
@@ -362,6 +380,7 @@
           id="catalogue-app"
           class="catalogue-app"
           data-lang="en"
+          data-compact="true"
           data-manifests="content/paintings/mona-lisa.json,content/paintings/lady-with-an-ermine.json,content/paintings/vermeer-girl-with-a-pearl-earring.json,content/paintings/view-of-delft.json,content/paintings/van-gogh.json?v=4,content/paintings/van-gogh-bedroom.json,content/paintings/monet-impression-sunrise.json,content/paintings/pont-d-argenteuil.json,content/paintings/additional-16.json"
           data-museums="content/museums/louvre.json?v=3,content/museums/mauritshuis.json,content/museums/czartoryski.json?v=2,content/museums/orsay.json,content/museums/van-gogh-museum.json,content/museums/national-gallery-of-art-washington.json?v=1"
           aria-live="polite">
@@ -438,8 +457,9 @@
       <span>Art · Knowledge · Print · AR · 3D · VR · GEO</span>
     </footer>
 
-    <script type="module" src="scripts/catalogue.js?v=17"></script>
+    <script type="module" src="scripts/catalogue.js?v=18"></script>
     <script type="module" src="scripts/visitor-guide.js?v=1"></script>
+    <script type="module" src="scripts/home-ux.js?v=1"></script>
     <script src="scripts/pwa.js?v=1" defer></script>
   </body>
 </html>

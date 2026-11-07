@@ -92,7 +92,9 @@ const UI = {
     palette: "Palette",
     technique: "Technique",
     context: "Context",
-    semantic: "Explore semantic graph"
+    semantic: "Explore semantic graph",
+    showAll: "Show all {count} artworks",
+    showLess: "Show fewer artworks"
     , museums: "MUSEUMS", museumsIntro: "Discover the institutions that preserve these paintings and open their architectural models in VR, image AR, or spatial AR.", museumVr: "Museum VR", museumAr: "Image AR", museumSpace: "Space AR"
   },
   fr: {
@@ -101,8 +103,8 @@ const UI = {
     reset: "Réinitialiser",
     results: "œuvres",
     print: "Ouvrir la page imprimable",
-    ar: "AR image",
-    space: "AR espace",
+    ar: "RA sur image",
+    space: "RA dans l’espace",
     audioOverview: "Aperçu audio",
     vocabulary: "Vocabulaire",
     noResults: "Aucune œuvre ne correspond à cette recherche.",
@@ -115,8 +117,10 @@ const UI = {
     palette: "Palette",
     technique: "Technique",
     context: "Contexte",
-    semantic: "Explorer le graphe sémantique"
-    , museums: "MUSÉES", museumsIntro: "Découvrez les institutions qui conservent ces tableaux et ouvrez leurs modèles architecturaux en VR, AR image ou AR espace.", museumVr: "VR du musée", museumAr: "AR image", museumSpace: "AR espace"
+    semantic: "Explorer le graphe sémantique",
+    showAll: "Afficher les {count} œuvres",
+    showLess: "Réduire la collection"
+    , museums: "MUSÉES", museumsIntro: "Découvrez les institutions qui conservent ces tableaux et ouvrez leurs modèles architecturaux en VR, RA sur image ou RA dans l’espace.", museumVr: "VR du musée", museumAr: "RA sur image", museumSpace: "RA dans l’espace"
   },
   ar: {
     search: "ابحث بالعنوان أو الفنان أو التقنية أو الفترة...",
@@ -138,17 +142,114 @@ const UI = {
     palette: "الألوان",
     technique: "التقنية",
     context: "السياق",
-    semantic: "استكشف الرسم البياني الدلالي"
+    semantic: "استكشف الرسم البياني الدلالي",
+    showAll: "عرض الأعمال الفنية وعددها {count}",
+    showLess: "عرض أعمال أقل"
     , museums: "المتاحف", museumsIntro: "اكتشف المتاحف التي تحفظ هذه اللوحات وافتح نماذجها المعمارية في الواقع الافتراضي أو المعزز.", museumVr: "واقع افتراضي", museumAr: "واقع معزز بالصورة", museumSpace: "واقع معزز مكاني"
   }
 };
 
 const FR_TITLES = {
+  "mona-lisa": "La Joconde",
   "van-gogh": "Autoportrait",
   "van-gogh-bedroom": "La Chambre",
   "vermeer-girl-with-a-pearl-earring": "La Jeune Fille à la perle",
   "monet-impression-sunrise": "Impression, soleil levant"
   ,"lady-with-an-ermine": "La Dame à l’hermine", "view-of-delft": "Vue de Delft", "pont-d-argenteuil": "Le Pont d’Argenteuil"
+};
+
+const FR_SUMMARIES = {
+  "mona-lisa": "De dimensions modestes mais d’une ambition immense, La Joconde réunit innovation technique, profondeur psychologique et observation scientifique. Son expression changeante, son paysage atmosphérique et ses transitions presque imperceptibles donnent au portrait une présence vivante.",
+  "last-supper": "L’annonce de la trahison par le Christ déclenche une succession de réactions distinctes parmi les apôtres, tandis que sa figure immobile ancre toute la composition.",
+  "belle-ferronniere": "Le regard latéral, le contour ferme et le modelé subtil de la jeune femme composent une présence attentive, assurée et psychologiquement immédiate.",
+  "lady-with-an-ermine": "Cecilia se tourne comme si quelqu’un venait d’entrer. Le mouvement de l’hermine, sa longue main et la lumière dirigée donnent au portrait la vivacité d’un instant saisi.",
+  "ginevra-de-benci": "Sa présence directe et son expression réservée remplacent le portrait de profil conventionnel par une immédiateté psychologique nouvelle.",
+  "annunciation": "La précision des plantes, la délicatesse des ailes et le paysage atmosphérique lointain unissent observation attentive et récit sacré.",
+  "vermeer-astronomer": "Le savant tend la main vers un globe céleste tandis que la lumière de la fenêtre transforme la pensée en action visible.",
+  "art-of-painting": "Un rideau nous introduit dans une rencontre mise en scène entre le peintre et un modèle qui incarne l’Histoire.",
+  "vermeer-girl-with-a-pearl-earring": "La jeune fille se retourne au moment même de la rencontre. Ses lèvres entrouvertes, son regard direct et les contours adoucis rendent sa présence immédiate tout en maintenant son identité insaisissable.",
+  "woman-holding-balance": "La balance vide, la main suspendue et le visage calme transforment la pesée matérielle en méditation sur le jugement.",
+  "view-of-delft": "Un vaste ciel domine la scène. Les nuages alternent ombre et lumière sur le front d’eau, tandis que les reflets et les petites figures ralentissent le regard.",
+  "vermeer-milkmaid": "Le filet de lait régulier et la concentration de la servante donnent l’impression que le temps s’est suspendu.",
+  "van-gogh": "Van Gogh place son visage devant un champ turquoise et vert. La barbe orangée forme un contrepoint complémentaire, tandis que les touches ondulantes intensifient la force psychologique du regard.",
+  "starry-night": "Les étoiles tourbillonnantes et le mouvement du ciel transforment le paysage observé en une puissante vision intérieure.",
+  "van-gogh-bedroom": "La perspective déformée, les angles accentués, les aplats colorés et les contours vigoureux transforment la chambre de la Maison jaune en un espace profondément subjectif et émotionnel.",
+  "cafe-terrace": "La terrasse jaune avance devant la rue bleue et le ciel étoilé, faisant de la couleur elle-même le véritable sujet du tableau.",
+  "night-cafe": "Les couleurs âpres, le sol presque vide et les figures isolées transforment la salle en une image de fatigue et de malaise.",
+  "sunflowers": "Les fleurs, montrées à différents stades d’épanouissement et de déclin, transforment un simple vase en méditation sur la vitalité et le temps.",
+  "water-lilies": "Le ciel, les arbres, les fleurs et l’eau se confondent jusqu’à donner au reflet autant de présence qu’au paysage.",
+  "japanese-bridge": "L’arche du pont apporte une structure calme au milieu du feuillage dense, des reflets et des nymphéas flottants.",
+  "woman-with-parasol": "Le point de vue bas, le voile en mouvement et l’ombrelle inclinée donnent à la rencontre une impression immédiate, traversée par le vent.",
+  "pont-d-argenteuil": "La géométrie ferme du pont traverse la composition, tandis que les voiles, les rides de l’eau et les reflets maintiennent la scène en mouvement.",
+  "poppies": "Les coquelicots rouges dispersés animent un champ balayé par la brise, où les figures semblent absorbées par la lumière et le temps.",
+  "monet-impression-sunrise": "Les barques sombres conduisent le regard vers les grues et les cheminées dissoutes dans la brume. Le soleil orange et son reflet vertical structurent les touches horizontales de l’eau."
+};
+
+const MOVEMENT_LABELS = {
+  fr: {
+    Renaissance: "Renaissance",
+    "High Renaissance": "Haute Renaissance",
+    "Dutch Golden Age": "Âge d’or néerlandais",
+    Baroque: "Baroque",
+    "Post-Impressionism": "Postimpressionnisme",
+    Impressionism: "Impressionnisme"
+  },
+  ar: {
+    Renaissance: "عصر النهضة",
+    "High Renaissance": "عصر النهضة العليا",
+    "Dutch Golden Age": "العصر الذهبي الهولندي",
+    Baroque: "الباروك",
+    "Post-Impressionism": "ما بعد الانطباعية",
+    Impressionism: "الانطباعية"
+  }
+};
+
+const FR_VOCABULARY = {
+  "atmospheric perspective": "perspective atmosphérique",
+  portraiture: "portrait",
+  "High Renaissance": "Haute Renaissance",
+  "poplar panel": "panneau de peuplier",
+  pentimenti: "repentirs",
+  "infrared reflectography": "réflectographie infrarouge",
+  "multispectral imaging": "imagerie multispectrale",
+  glaze: "glacis",
+  "conservation ethics": "déontologie de la conservation",
+  "peripheral vision": "vision périphérique",
+  Impressionism: "Impressionnisme",
+  "complementary colour": "couleurs complémentaires",
+  atmosphere: "atmosphère",
+  "Post-Impressionism": "Postimpressionnisme",
+  interior: "intérieur",
+  "complementary color": "couleurs complémentaires",
+  "expressive perspective": "perspective expressive",
+  "red lake pigment": "laque rouge",
+  lining: "rentoilage",
+  "technical imaging": "imagerie scientifique",
+  "Yellow House": "Maison jaune",
+  "Studio of the South": "Atelier du Midi",
+  "self-portrait": "autoportrait",
+  "complementary colors": "couleurs complémentaires",
+  "broken brushwork": "touche fragmentée",
+  "directional stroke": "touche directionnelle",
+  "Dutch Golden Age": "Âge d’or néerlandais",
+  ultramarine: "outremer",
+  highlight: "rehaut",
+  "camera obscura": "chambre noire",
+  "conservation imaging": "imagerie de conservation"
+};
+
+const FR_ARTIST_NAMES = {
+  "Leonardo da Vinci": "Léonard de Vinci"
+};
+
+const FR_LOCATION_LABELS = {
+  "Musee du Louvre": "Musée du Louvre",
+  "Uffizi Galleries": "Galeries des Offices",
+  "The Hague": "La Haye",
+  Netherlands: "Pays-Bas",
+  Poland: "Pologne",
+  Kraków: "Cracovie",
+  London: "Londres"
 };
 
 const AR_TITLES = {
@@ -202,9 +303,36 @@ function localizedLocationValue(localization, field) {
   return asLocalization(localization.currentLocation)[field] || localization[field];
 }
 
+function localizeMovementLabel(value, language) {
+  return MOVEMENT_LABELS[language]?.[value] || value;
+}
+
+function localizeVocabularyLabel(value, language) {
+  return language === "fr" ? (FR_VOCABULARY[value] || value) : value;
+}
+
+function localizeArtistLabel(value, language) {
+  return language === "fr" ? (FR_ARTIST_NAMES[value] || value) : value;
+}
+
+function localizeLocationLabel(value, language) {
+  return language === "fr" ? (FR_LOCATION_LABELS[value] || value) : value;
+}
+
+function localizeDateLabel(value, language) {
+  if (language !== "fr") return value;
+  if (value === "October 1888") return "octobre 1888";
+  return value.replace(/^c\.\s*/i, "vers ");
+}
+
 function getLegacyLocalization(manifest, language) {
   const slug = manifest.slug;
-  if (language === "fr") return { title: FR_TITLES[slug] };
+  if (language === "fr") {
+    return {
+      title: FR_TITLES[slug],
+      artisticAnalysis: FR_SUMMARIES[slug]
+    };
+  }
   if (language !== "ar") return {};
 
   const metadata = AR_METADATA[slug] || {};
@@ -227,15 +355,18 @@ export function localizeCatalogueEntry(source, requestedLanguage) {
   const result = { ...manifest };
 
   result.title = firstPresentText(requested.title, legacy.title, english.title, manifest.title);
-  result.date = firstPresentText(requested.date, legacy.date, english.date, manifest.date);
+  result.date = localizeDateLabel(
+    firstPresentText(requested.date, legacy.date, english.date, manifest.date),
+    language
+  );
   result.medium = firstPresentText(requested.medium, english.medium, manifest.medium);
 
-  const artistName = firstPresentText(
+  const artistName = localizeArtistLabel(firstPresentText(
     localizedArtistName(requested),
     legacy.artist,
     localizedArtistName(english),
     manifest.artist?.name
-  );
+  ), language);
   if (manifest.artist || artistName) result.artist = { ...asLocalization(manifest.artist), name: artistName };
 
   if (manifest.currentLocation || requested.currentLocation || english.currentLocation || legacy.location) {
@@ -244,11 +375,11 @@ export function localizeCatalogueEntry(source, requestedLanguage) {
       result.currentLocation = { ...result.currentLocation, museum: legacy.location, city: "", country: "" };
     } else {
       for (const field of ["museum", "city", "country"]) {
-        result.currentLocation[field] = firstPresentText(
+        result.currentLocation[field] = localizeLocationLabel(firstPresentText(
           localizedLocationValue(requested, field),
           localizedLocationValue(english, field),
           manifest.currentLocation?.[field]
-        );
+        ), language);
       }
     }
   }
@@ -267,6 +398,11 @@ export function localizeCatalogueEntry(source, requestedLanguage) {
     }
   }
 
+  result.localizedMovement = (manifest.movement || [])
+    .map((movement) => localizeMovementLabel(movement, language));
+  result.localizedVocabulary = (manifest.education?.vocabulary || [])
+    .map((term) => localizeVocabularyLabel(term, language));
+
   return result;
 }
 
@@ -280,7 +416,9 @@ async function initCatalogue(root) {
   const manifestPaths = root.dataset.manifests.split(",").map((item) => item.trim()).filter(Boolean);
 
   try {
-    const museumPaths = (root.dataset.museums || "").split(",").map((item) => item.trim()).filter(Boolean);
+    const museumPaths = root.dataset.compact === "true"
+      ? []
+      : (root.dataset.museums || "").split(",").map((item) => item.trim()).filter(Boolean);
     const [manifests, museums] = await Promise.all([
       Promise.all(manifestPaths.map(loadManifest)),
       Promise.all(museumPaths.map(loadManifest))
@@ -312,9 +450,12 @@ async function loadManifest(path) {
 
 function renderCatalogue(root, manifests, museums, lang, text) {
   const movements = [...new Set(manifests.flatMap((item) => item.movement || []))].sort();
+  const compact = root.dataset.compact === "true";
+  const compactLimit = 8;
   const state = {
     query: "",
-    movement: ""
+    movement: "",
+    expanded: !compact
   };
 
   root.innerHTML = `
@@ -327,24 +468,26 @@ function renderCatalogue(root, manifests, museums, lang, text) {
         <span>${text.allMovements}</span>
         <select>
           <option value="">${text.allMovements}</option>
-          ${movements.map((movement) => `<option value="${escapeHtml(movement)}">${escapeHtml(movement)}</option>`).join("")}
+          ${movements.map((movement) => `<option value="${escapeHtml(movement)}">${escapeHtml(localizeMovementLabel(movement, lang))}</option>`).join("")}
         </select>
       </label>
       <button class="button" type="button" data-action="reset">${text.reset}</button>
     </div>
     <div class="collection-stats"></div>
     <div class="catalogue-layout">
-      <div class="artwork-grid"></div>
+      <div class="artwork-grid" id="catalogue-artworks"></div>
     </div>
-    <section class="museum-index-section">
+    ${compact ? `<div class="catalogue-expand-row"><button class="button" type="button" data-action="expand" aria-controls="catalogue-artworks"></button></div>` : ""}
+    ${compact ? "" : `<section class="museum-index-section">
       <header><p class="eyebrow">ARTDACI</p><h2>${text.museums}</h2><p>${text.museumsIntro}</p></header>
       <div class="museum-index-grid">${museums.map((museum) => renderMuseumCard(museum, lang, text)).join("")}</div>
-    </section>
+    </section>`}
   `;
 
   const input = root.querySelector("input");
   const select = root.querySelector("select");
   const reset = root.querySelector("[data-action='reset']");
+  const expand = root.querySelector("[data-action='expand']");
 
   input.addEventListener("input", () => {
     state.query = input.value.trim().toLowerCase();
@@ -361,15 +504,32 @@ function renderCatalogue(root, manifests, museums, lang, text) {
     select.value = "";
     state.query = "";
     state.movement = "";
+    state.expanded = !compact;
+    update();
+  });
+
+  expand?.addEventListener("click", () => {
+    state.expanded = !state.expanded;
     update();
   });
 
   function update() {
     const filtered = manifests.filter((manifest) => matchesCatalogueEntry(manifest, state));
+    const filtering = Boolean(state.query || state.movement);
+    const visible = compact && !state.expanded && !filtering
+      ? filtered.slice(0, compactLimit)
+      : filtered;
     root.querySelector(".collection-stats").innerHTML = renderStats(manifests, filtered, text);
     root.querySelector(".artwork-grid").innerHTML = filtered.length
-      ? filtered.map((manifest) => renderCard(manifest, lang, text)).join("")
+      ? visible.map((manifest) => renderCard(manifest, lang, text)).join("")
       : `<p class="empty-results">${text.noResults}</p>`;
+    if (expand) {
+      expand.hidden = filtering || filtered.length <= compactLimit;
+      expand.textContent = state.expanded
+        ? text.showLess
+        : text.showAll.replace("{count}", String(filtered.length));
+      expand.setAttribute("aria-expanded", String(state.expanded));
+    }
   }
 
   update();
@@ -400,11 +560,13 @@ export function matchesCatalogueEntry(manifest, state) {
     manifest.date,
     manifest.medium,
     ...(manifest.movement || []),
+    ...(manifest.localizedMovement || []),
     manifest.texts?.historicalContext,
     manifest.texts?.artisticAnalysis,
     manifest.texts?.palette,
     manifest.texts?.perspectiveTechnique,
-    ...(manifest.education?.vocabulary || [])
+    ...(manifest.education?.vocabulary || []),
+    ...(manifest.localizedVocabulary || [])
   ].filter(Boolean).join(" ").toLowerCase();
 
   return (!query || haystack.includes(query))
@@ -428,7 +590,7 @@ function renderCard(manifest, lang, text) {
   const slug = manifest.slug;
   const title = manifest.title;
   const image = manifest.media?.image || manifest.print?.imageTargetSource;
-  const movement = (manifest.movement || []).join(", ");
+  const movement = (manifest.localizedMovement || manifest.movement || []).join(", ");
   const printUrl = PRINT_PAGES[lang]?.[slug] || PRINT_PAGES.en[slug] || `print-artwork.html?painting=${encodeURIComponent(slug)}&lang=${lang}`;
   const audioOverviewUrl = manifest.audioOverviewUrl;
   const location = [manifest.currentLocation?.museum, manifest.currentLocation?.city].filter(Boolean).join(", ");
@@ -436,6 +598,12 @@ function renderCard(manifest, lang, text) {
   const artist = manifest.artist?.name || "";
   const date = manifest.date || "";
   const displayLocation = location;
+  const height = manifest.dimensions?.heightCm;
+  const width = manifest.dimensions?.widthCm;
+  const facts = [
+    height && width ? `<div><dt>${text.dimensions}</dt><dd>${height} x ${width} cm</dd></div>` : "",
+    displayLocation || movement ? `<div><dt>${text.location}</dt><dd>${escapeHtml(displayLocation || movement)}</dd></div>` : ""
+  ].filter(Boolean).join("");
   const immersiveActions = getArtworkImmersiveActions(slug, lang, text)
     .map((action) => `<a class="button" href="${action.href}">${action.label}</a>`)
     .join("\n");
@@ -454,12 +622,9 @@ function renderCard(manifest, lang, text) {
         <h3>${escapeHtml(title)}</h3>
         <p class="card-meta">${escapeHtml(artist)}, ${escapeHtml(date)}</p>
         <p>${escapeHtml(shorten(summary, 210))}</p>
-        <dl class="mini-facts">
-          <div><dt>${text.dimensions}</dt><dd>${manifest.dimensions?.heightCm || "?"} x ${manifest.dimensions?.widthCm || "?"} cm</dd></div>
-          <div><dt>${text.location}</dt><dd>${escapeHtml(displayLocation || movement)}</dd></div>
-        </dl>
+        ${facts ? `<dl class="mini-facts">${facts}</dl>` : ""}
         <div class="tag-strip">
-          ${lang === "ar" ? "" : (manifest.education?.vocabulary || []).slice(0, 4).map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
+          ${lang === "ar" ? "" : (manifest.localizedVocabulary || manifest.education?.vocabulary || []).slice(0, 4).map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
         </div>
         <div class="card-actions">
           <a class="button primary" href="${printUrl}">${text.print}</a>
