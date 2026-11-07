@@ -1,0 +1,195 @@
+/* ARTDACI homepage usability refinements.
+   Loaded after the visual theme so it can improve navigation and disclosure
+   without changing the established art direction. */
+
+.home-v2 .hv2-mobile-menu {
+  display: none;
+}
+
+.home-v2 [id] {
+  scroll-margin-top: 96px;
+}
+
+.home-v2 .hv2-curatorial-note {
+  max-width: 820px;
+  margin: 24px auto 0;
+  color: var(--hv2-muted);
+  font-size: 12px;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.home-v2 .catalogue-expand-row {
+  display: flex;
+  justify-content: center;
+  margin: 26px 0 8px;
+}
+
+.home-v2 .catalogue-expand-row .button {
+  min-width: min(100%, 260px);
+}
+
+@media (max-width: 780px) {
+  .home-v2 .hv2-header {
+    grid-template-columns: 84px minmax(0, 1fr) auto;
+    grid-template-areas: "brand mobile language";
+    gap: 10px;
+    min-height: 70px;
+    padding: 7px 0;
+    overflow: visible;
+  }
+
+  .home-v2 .hv2-brand {
+    grid-area: brand;
+  }
+
+  .home-v2 .hv2-brand img {
+    width: 78px;
+    max-height: 54px;
+  }
+
+  .home-v2 .hv2-header > .hv2-nav {
+    display: none;
+  }
+
+  .home-v2 .hv2-mobile-menu {
+    display: block;
+    grid-area: mobile;
+    justify-self: center;
+  }
+
+  .home-v2 .hv2-mobile-menu summary {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    border: 1px solid rgba(125, 202, 239, 0.32);
+    border-radius: 999px;
+    color: #e8f6fd;
+    background: rgba(9, 42, 68, 0.76);
+    font-size: 12px;
+    font-weight: 750;
+    letter-spacing: 0.04em;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .home-v2 .hv2-mobile-menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .home-v2 .hv2-mobile-menu summary::after {
+    margin-inline-start: 7px;
+    content: "+";
+    color: var(--hv2-gold);
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .home-v2 .hv2-mobile-menu[open] summary::after {
+    content: "−";
+  }
+
+  .home-v2 .hv2-mobile-menu summary:focus-visible {
+    outline: 2px solid var(--hv2-gold);
+    outline-offset: 3px;
+  }
+
+  .home-v2 .hv2-mobile-menu-nav {
+    position: absolute;
+    top: calc(100% + 1px);
+    right: 0;
+    left: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding: 14px 12px 16px;
+    border: 1px solid rgba(125, 202, 239, 0.24);
+    border-top: 0;
+    border-radius: 0 0 18px 18px;
+    background: rgba(5, 24, 42, 0.98);
+    box-shadow: 0 22px 45px rgba(2, 20, 35, 0.46);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .home-v2 .hv2-mobile-menu-nav a {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    padding: 10px 12px;
+    border: 1px solid rgba(125, 202, 239, 0.16);
+    border-radius: 10px;
+    color: #e8f6fd;
+    background: rgba(17, 57, 87, 0.46);
+    font-size: 13px;
+    font-weight: 650;
+    text-decoration: none;
+  }
+
+  .home-v2 .hv2-mobile-menu-nav a:hover,
+  .home-v2 .hv2-mobile-menu-nav a:focus-visible {
+    border-color: rgba(112, 197, 239, 0.66);
+    background: rgba(24, 79, 116, 0.7);
+  }
+
+  .home-v2 .hv2-language {
+    grid-area: language;
+    gap: 7px;
+  }
+
+  .home-v2 [id] {
+    scroll-margin-top: 82px;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-v2 .visitor-guide-link {
+    right: 12px;
+    bottom: 12px;
+    width: 48px;
+    height: 48px;
+    justify-content: center;
+    gap: 0;
+    overflow: hidden;
+    padding: 0;
+    border-radius: 50%;
+    color: transparent;
+    font-size: 0;
+  }
+
+  .home-v2 .visitor-guide-link::before {
+    color: #e5be6c;
+    font-size: 18px;
+  }
+
+  html[dir="rtl"] .home-v2 .visitor-guide-link {
+    right: auto;
+    left: 12px;
+  }
+}
+
+@media (max-width: 430px) {
+  .home-v2 .hv2-header {
+    grid-template-columns: 74px minmax(0, 1fr) auto;
+  }
+
+  .home-v2 .hv2-brand img {
+    width: 68px;
+  }
+
+  .home-v2 .hv2-mobile-menu summary {
+    padding-inline: 11px;
+  }
+
+  .home-v2 .hv2-mobile-menu-nav {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-v2 {
+    scroll-behavior: auto;
+  }
+}

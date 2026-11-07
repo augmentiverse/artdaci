@@ -8,7 +8,7 @@ const content=async file=>readFile(new URL(file,here),'utf8');
 test('the homepage hero exposes VR Gallery and accurately names the Living Book in all languages',async()=>{
  for(const [page,lang,book,vr,scan] of [
   ['index.html','en','Explore the Living Book','Enter the VR Gallery','Scan the book cover in AR'],
-  ['index-fr.html','fr','Explorer le Livre vivant','Entrer dans la galerie VR','Scanner la couverture en AR'],
+  ['index-fr.html','fr','Explorer le Livre vivant','Entrer dans la galerie VR','Scanner la couverture en RA'],
   ['index-ar.html','ar','استكشف الكتاب الحي','ادخل معرض الواقع الافتراضي','امسح غلاف الكتاب بالواقع المعزز']
  ]){
   const html=await content(page);
