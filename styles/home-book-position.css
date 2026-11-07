@@ -19,9 +19,9 @@
 .home-v2 .hv2-smart-art {
   display:block !important;
   position:relative;
-  width:100%;
+  width:min(100%,1120px);
   max-width:none;
-  min-height:clamp(510px,53vw,750px);
+  min-height:clamp(420px,41vw,555px);
   margin:0 auto;
   padding:0 !important;
   isolation:isolate;
@@ -41,9 +41,9 @@
 .home-v2 .hv2-smart-art > .hv2-book-hero {
   box-sizing:border-box;
   position:absolute !important;
-  inset:0 !important;
+  inset:0 auto 0 5% !important;
   display:block !important;
-  width:100% !important;
+  width:73% !important;
   height:100% !important;
   min-width:0 !important;
   min-height:0 !important;
@@ -98,7 +98,7 @@
   box-sizing:border-box;
   position:absolute !important;
   z-index:9;
-  top:25% !important;
+  top:21% !important;
   bottom:auto !important;
   left:clamp(7px,2vw,28px) !important;
   right:auto !important;
@@ -106,7 +106,7 @@
   flex-direction:column !important;
   align-items:stretch;
   gap:9px;
-  width:clamp(148px,16vw,205px) !important;
+  width:clamp(144px,14vw,186px) !important;
   max-width:none !important;
   padding:12px;
   transform:none !important;
@@ -170,22 +170,23 @@
 .home-v2 .hv2-smart-art > .smart-art-stage {
   box-sizing:border-box;
   position:absolute !important;
-  right:clamp(0px,3vw,42px);
-  bottom:9%;
-  top:auto;
+  right:clamp(0px,1vw,16px);
+  bottom:auto;
+  top:0;
   left:auto;
   z-index:1;
-  width:min(33%,415px) !important;
+  width:min(29%,320px) !important;
   aspect-ratio:1.22;
-  transform:rotateY(-8deg) rotateX(4deg) scale(.92);
-  transform-origin:100% 100%;
+  transform:rotateY(-8deg) rotateX(4deg) scale(.93);
+  transform-origin:100% 0;
   pointer-events:none;
   animation:none;
 }
 .home-v2 .hv2-smart-art > .smart-art-caption {
   position:absolute;
-  bottom:3%;
-  right:clamp(0px,3vw,42px);
+  bottom:auto;
+  top:57%;
+  right:clamp(0px,1vw,16px);
   left:auto;
   z-index:1;
   font-size:10px;
@@ -194,15 +195,17 @@
   pointer-events:none;
 }
 @media (max-width:1050px) {
-  .home-v2 .hv2-smart-art {min-height:clamp(520px,70vw,680px);padding:0 !important;}
-  .home-v2 .hv2-smart-art > .hv2-book-hero {inset:0!important;width:100%!important;height:100%!important;}
-  .home-v2 .hv2-smart-art > .hv2-book-hero .hv2-book-controls {top:20%!important;}
-  .home-v2 .hv2-smart-art > .smart-art-stage {width:min(35%,330px)!important;bottom:10%;}
+  .home-v2 .hv2-smart-art {min-height:clamp(410px,51vw,520px);padding:0 !important;}
+  .home-v2 .hv2-smart-art > .hv2-book-hero {inset:0 auto 0 2%!important;width:76%!important;height:100%!important;}
+  .home-v2 .hv2-smart-art > .hv2-book-hero .hv2-book-controls {top:19%!important;}
+  .home-v2 .hv2-smart-art > .smart-art-stage {width:min(30%,285px)!important;top:0;bottom:auto;}
 }
 @media (max-width:690px) {
-  .home-v2 .hv2-smart-art {min-height:clamp(540px,115vw,690px);}
+  .home-v2 .hv2-smart-art {min-height:clamp(480px,103vw,575px);}
+  .home-v2 .hv2-smart-art > .hv2-book-hero {inset:0!important;width:100%!important;height:100%!important;}
+  .home-v2 .hv2-smart-art > .hv2-book-hero .hv2-book-model {inset:22% 0 0!important;height:76%!important;width:82%!important;}
   .home-v2 .hv2-smart-art > .hv2-book-hero .hv2-book-controls {
-    top:5% !important;
+    top:2% !important;
     left:50% !important;
     transform:translateX(-50%) !important;
     width:min(94%,380px) !important;
@@ -219,12 +222,12 @@
   .home-v2 .hv2-book-hero .hv2-book-controls .hv2-tv-toggle {font-size:10px;min-height:42px;}
   .home-v2 .hv2-book-hero .hv2-book-move {max-width:180px;min-height:42px;}
   .home-v2 .hv2-book-hero .hv2-book-recenter {min-height:42px;}
-  .home-v2 .hv2-smart-art > .smart-art-stage {width:min(40%,215px)!important;bottom:5%;right:0;}
-  .home-v2 .hv2-smart-art > .smart-art-caption {bottom:0;right:0;font-size:8px;}
+  .home-v2 .hv2-smart-art > .smart-art-stage {width:min(32%,168px)!important;top:30%;bottom:auto;right:0;}
+  .home-v2 .hv2-smart-art > .smart-art-caption {top:61%;bottom:auto;right:0;font-size:8px;}
   .home-v2 .hv2-smart-art > .hv2-book-hero .hv2-tv-book-cover {inset:22% 17% 5% !important;left:17% !important;top:22% !important;width:66%!important;height:72%!important;}
 }
 @media (max-width:390px) {
-  .home-v2 .hv2-smart-art {min-height:570px;}
+  .home-v2 .hv2-smart-art {min-height:505px;}
 }
 @media (prefers-reduced-motion:reduce) {
   .home-v2 .hv2-smart-art > .hv2-book-hero .hv2-book-model {transition:none;}
