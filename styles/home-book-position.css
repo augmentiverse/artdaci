@@ -4,7 +4,7 @@
   /* Shift farther left, toward the center of the full page rather than the Smart Art column. */
   inset-inline-start: auto;
   inset-inline-end: auto;
-  left: 32%;
+  left: 25%;
   right: auto;
   transform: translateX(-50%);
 }
@@ -55,7 +55,7 @@
 }
 @media (max-width:1250px) {
   .home-v2 .hv2-smart-art {padding-top:clamp(205px,19vw,260px);}
-  .home-v2 .hv2-smart-art > .hv2-book-hero {top:120px;left:38%;}
+  .home-v2 .hv2-smart-art > .hv2-book-hero {top:120px;left:31%;}
   .home-v2 .hv2-book-hero .hv2-book-controls {
     left:50%;
     top:auto;
