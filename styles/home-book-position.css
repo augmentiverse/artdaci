@@ -1,263 +1,231 @@
-/* Center the book on Mona Lisa; relocate AR/TV controls alongside it.
-   Above-book controls at smaller widths, preserving the current Smart TV toggle. */
-.home-v2 .hv2-smart-art > .hv2-book-hero {
-  /* Shift farther left, toward the center of the full page rather than the Smart Art column. */
-  inset-inline-start: auto;
-  inset-inline-end: auto;
-  left: 25%;
-  right: auto;
-  transform: translateX(-50%);
+/*
+ * ARTDACI book-first homepage — spacious inline 3D theatre.
+ * The original model-viewer remains in the page: no fullscreen modal,
+ * no WebGL duplication, no surrounding panels in front of the book.
+ */
+.home-v2 .hv2-hero {
+  grid-template-columns:minmax(0,1fr) !important;
+  gap:clamp(18px,3vw,38px);
+  min-height:0;
+  align-items:start;
+  padding:clamp(35px,5vw,74px) 0 clamp(45px,6vw,78px);
 }
-.home-v2 .hv2-book-hero .hv2-book-controls {
-  position: absolute;
-  z-index: 9;
-  left: calc(100% + 14px);
-  top: 50%;
-  transform: translateY(-50%);
-  width: clamp(145px,13vw,182px);
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
-  direction: inherit;
+.home-v2 .hv2-hero-copy {
+  width:100%;
+  max-width:1080px;
+  position:relative;
+  z-index:1;
+}
+.home-v2 .hv2-smart-art {
+  display:block !important;
+  position:relative;
+  width:100%;
+  max-width:none;
+  min-height:clamp(510px,53vw,750px);
+  margin:0 auto;
+  padding:0 !important;
+  isolation:isolate;
+  overflow:visible !important;
+  perspective:none;
+}
+.home-v2 .hv2-smart-art::before {
+  content:"";
+  position:absolute;
+  top:5%;left:12%;width:76%;height:90%;
+  border-radius:50%;
+  filter:blur(28px);
+  background:radial-gradient(ellipse,rgba(79,144,255,.20),rgba(244,191,91,.06) 45%,transparent 72%);
+  z-index:0;
+  pointer-events:none;
+}
+.home-v2 .hv2-smart-art > .hv2-book-hero {
+  box-sizing:border-box;
+  position:absolute !important;
+  inset:0 !important;
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  min-width:0 !important;
+  min-height:0 !important;
+  max-height:none !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  transform:none !important;
+  z-index:5;
+}
+.home-v2 .hv2-smart-art > .hv2-book-hero .hv2-book-model {
+  box-sizing:border-box;
+  position:absolute !important;
+  inset:0 !important;
+  display:block;
+  width:100% !important;
+  height:100% !important;
+  min-height:0 !important;
+  max-height:none !important;
+  margin:0 !important;
+  padding:0 !important;
+  transform:none !important;
+  translate:var(--hv2-book-pan-x,0px) var(--hv2-book-pan-y,0px);
+  z-index:3;
+  touch-action:pan-y;
+}
+.home-v2 .hv2-smart-art > .hv2-book-hero .hv2-book-aura {
+  inset:9% 24% 8% !important;
+  background:radial-gradient(ellipse,rgba(94,160,251,.16),transparent 68%) !important;
+  z-index:0;
+}
+.home-v2 .hv2-smart-art > .hv2-book-hero .hv2-tv-book-cover {
+  box-sizing:border-box;
+  position:absolute !important;
+  inset:6% 26% !important;
+  top:6% !important;
+  left:26% !important;
+  width:48% !important;
+  height:88% !important;
+  max-height:none !important;
+  object-fit:contain !important;
+  flex:none !important;
+  translate:var(--hv2-book-pan-x,0px) var(--hv2-book-pan-y,0px);
+  z-index:3;
+}
+.home-v2 .hv2-book-hero .hv2-book-signature { display:none !important; }
+
+/* Quiet, left-side reading rail; the 3D model remains the visual focus. */
+.home-v2 .hv2-smart-art > .hv2-book-hero .hv2-book-controls {
+  box-sizing:border-box;
+  position:absolute !important;
+  z-index:9;
+  top:25% !important;
+  bottom:auto !important;
+  left:clamp(7px,2vw,28px) !important;
+  right:auto !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:stretch;
+  gap:9px;
+  width:clamp(148px,16vw,205px) !important;
+  max-width:none !important;
+  padding:12px;
+  transform:none !important;
+  border:1px solid rgba(148,177,211,.38);
+  border-radius:13px;
+  background:rgba(237,245,253,.79);
+  box-shadow:0 10px 30px rgba(28,67,114,.07);
+  backdrop-filter:blur(8px);
+  direction:inherit;
+}
+.home-v2 .hv2-book-controls-label {
+  margin:0;
+  color:#1a4677;
+  font:700 12px/1.35 Inter,"Segoe UI",Arial,sans-serif;
+}
+.home-v2 .hv2-book-controls-hint {
+  margin:0 0 3px;
+  color:#476483;
+  font:400 11px/1.45 Inter,"Segoe UI",Arial,sans-serif;
 }
 .home-v2 .hv2-book-hero .hv2-book-controls .hv2-book-scan,
 .home-v2 .hv2-book-hero .hv2-book-controls .hv2-tv-toggle,
-.home-v2 .hv2-book-hero .hv2-book-controls .hv2-book-expand {
-  box-sizing: border-box;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width: 100%;
-  max-width: none;
-  min-height: 44px;
-  margin: 0 !important;
-  padding: 9px 12px;
-  text-align: center;
-  white-space: normal;
-  line-height: 1.4;
-  font-size: 12px;
-  font-weight: 700;
-  border-radius: 10px;
-  cursor: pointer;
-}
-.home-v2 .hv2-book-hero .hv2-book-controls .hv2-book-expand {
-  background:#e5f0ff;
-  border:1px solid #80a9da;
-  color:#174979;
-  box-shadow:0 4px 12px rgba(23,86,157,.12);
-}
-.home-v2 .hv2-book-hero .hv2-book-controls .hv2-book-scan:focus-visible,
-.home-v2 .hv2-book-hero .hv2-book-controls .hv2-tv-toggle:focus-visible,
-.home-v2 .hv2-book-hero .hv2-book-controls .hv2-book-expand:focus-visible {
-  outline: 3px solid #db9a21;
-  outline-offset: 3px;
-}
-@media (max-width:1250px) {
-  .home-v2 .hv2-smart-art {padding-top:clamp(205px,19vw,260px);}
-  .home-v2 .hv2-smart-art > .hv2-book-hero {top:120px;left:31%;}
-  .home-v2 .hv2-book-hero .hv2-book-controls {
-    left:50%;
-    top:auto;
-    bottom:calc(100% + 9px);
-    transform:translateX(-50%);
-    width:min(calc(100vw - 34px),390px);
-    display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    flex-direction:row;
-    justify-content:center;
-    gap:8px;
-  }
-  .home-v2 .hv2-book-hero .hv2-book-controls .hv2-book-scan,
-  .home-v2 .hv2-book-hero .hv2-book-controls .hv2-tv-toggle,
-  .home-v2 .hv2-book-hero .hv2-book-controls .hv2-book-expand {
-    flex:1 1 50%;width:100%;font-size:11px;padding:8px 9px;
-  }
-}
-@media (max-width:1050px) {
-  .home-v2 .hv2-smart-art {padding-top:126px;}
-  .home-v2 .hv2-smart-art > .hv2-book-hero {
-    position:relative;
-    top:auto;
-    left:auto;
-    right:auto;
-    transform:none;
-    align-self:center;
-    margin:0 auto !important;
-  }
-  .home-v2 .hv2-book-hero .hv2-book-controls {width:min(calc(100vw - 36px),390px);}
-}
-@media (max-width:600px) {
-  .home-v2 .hv2-smart-art {padding-top:142px;}
-  .home-v2 .hv2-smart-art > .hv2-book-hero {margin:0 auto !important;}
-  .home-v2 .hv2-book-hero .hv2-book-controls {bottom:calc(100% + 9px);width:min(calc(100vw - 30px),360px);}
-  .home-v2 .hv2-book-hero .hv2-book-controls .hv2-book-scan,
-  .home-v2 .hv2-book-hero .hv2-book-controls .hv2-tv-toggle,
-  .home-v2 .hv2-book-hero .hv2-book-controls .hv2-book-expand {font-size:10px;padding:8px 7px;min-height:44px;}
-}
-
-/* The third action spans the whole row when buttons sit above the book. */
-@media (max-width:1250px) {
-  .home-v2 .hv2-book-hero .hv2-book-controls .hv2-book-expand { grid-column:1 / -1; width:100%; }
-}
-/* True unclipped zoom: native <dialog> is promoted to the browser's top layer,
-   and we move the original model-viewer into it (no duplicate WebGL instance). */
-.home-v2 .hv2-book-zoom-dialog {
+.home-v2 .hv2-book-hero .hv2-book-move,
+.home-v2 .hv2-book-hero .hv2-book-recenter {
   box-sizing:border-box;
-  width:min(96vw,1120px);
-  height:min(94dvh,920px);
-  max-width:none;
-  max-height:none;
-  margin:auto;
-  padding:0;
-  border:1px solid rgba(191,219,254,.52);
-  border-radius:22px;
-  background:linear-gradient(150deg,#102b4c,#07172e 72%);
-  color:#f5faff;
-  box-shadow:0 38px 110px rgba(0,0,0,.55);
-  overflow:hidden;
-}
-.home-v2 .hv2-book-zoom-dialog[open] { display:flex; flex-direction:column; }
-.home-v2 .hv2-book-zoom-dialog::backdrop { background:rgba(4,15,35,.85); backdrop-filter:blur(9px); }
-.home-v2 .hv2-book-zoom-head {
-  box-sizing:border-box;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-  flex:0 0 auto;
-  min-height:67px;
-  padding:12px clamp(13px,2.7vw,30px);
-  border-bottom:1px solid rgba(176,217,255,.23);
-}
-.home-v2 .hv2-book-zoom-head h2 {
-  color:#f4f8ff;
-  font:750 clamp(16px,2vw,23px)/1.3 Inter,"Segoe UI",Arial,sans-serif;
-  margin:0;
-}
-.home-v2 .hv2-book-zoom-close {
-  min-height:44px;
-  min-width:44px;
-  padding:7px 14px;
-  border:1px solid #779ac5;
-  border-radius:10px;
-  background:#1b426c;
-  color:#fff;
-  font:650 13px/1.3 Inter,"Segoe UI",Arial,sans-serif;
-  cursor:pointer;
-}
-.home-v2 .hv2-book-zoom-view {
-  flex:1 1 auto;
-  display:flex;
-  align-items:stretch;
-  justify-content:center;
-  min-height:0;
-  padding:0 10px;
-  position:relative;
-}
-.home-v2 .hv2-book-zoom-dialog .hv2-book-hero {
-  box-sizing:border-box;
-  position:relative!important;
-  inset:auto!important;
-  display:flex!important;
-  flex-direction:column!important;
-  justify-content:center!important;
-  align-items:center!important;
-  flex:1 1 auto!important;
-  align-self:stretch!important;
-  width:100%!important;
-  height:100%!important;
-  min-height:0!important;
-  max-height:none!important;
-  margin:0!important;
-  padding:0!important;
-  transform:none!important;
-  border:0!important;
-  background:transparent!important;
-  box-shadow:none!important;
-}
-.home-v2 .hv2-book-zoom-dialog .hv2-book-hero .hv2-book-aura { inset:10% 10% 8%; }
-.home-v2 .hv2-book-zoom-dialog .hv2-book-hero .hv2-book-model {
-  box-sizing:border-box;
-  display:block;
-  flex:1 1 auto;
-  width:100%!important;
-  height:calc(100% - 80px)!important;
-  min-height:0!important;
-  max-height:none!important;
-  margin:75px 0 0!important;
-  touch-action:pan-y;
-}
-.home-v2 .hv2-book-zoom-dialog .hv2-book-hero .hv2-tv-book-cover {
-  position:absolute!important;
-  top:79px!important;
-  left:10%!important;
-  width:80%!important;
-  height:calc(100% - 86px)!important;
-  max-height:none!important;
-  object-fit:contain!important;
-  flex:none!important;
-}
-.home-v2 .hv2-book-zoom-dialog .hv2-book-hero .hv2-book-controls {
-  box-sizing:border-box;
-  position:absolute!important;
-  z-index:9;
-  top:12px!important;
-  bottom:auto!important;
-  left:50%!important;
-  right:auto!important;
-  width:min(calc(100% - 28px),560px)!important;
-  transform:translateX(-50%)!important;
-  display:grid!important;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:10px;
-}
-.home-v2 .hv2-book-zoom-dialog .hv2-book-hero .hv2-book-controls .hv2-book-expand {display:none!important;}
-.home-v2 .hv2-book-zoom-hint {
-  flex:0 0 auto;
-  box-sizing:border-box;
-  margin:0;
-  min-height:44px;
-  padding:10px 16px 15px;
-  border-top:1px solid rgba(176,217,255,.15);
-  color:#c5d8f0;
-  font:500 13px/1.45 Inter,"Segoe UI",Arial,sans-serif;
-  text-align:center;
-}
-.home-v2 .hv2-book-zoom-close:focus-visible {outline:3px solid #ffde79;outline-offset:4px;}
-@media(max-width:620px){
-  .home-v2 .hv2-book-zoom-dialog {width:100vw;height:100dvh;border-radius:0;border:0;}
-  .home-v2 .hv2-book-zoom-head {padding:10px 13px;}
-  .home-v2 .hv2-book-zoom-close {padding:7px 10px;font-size:12px;}
-  .home-v2 .hv2-book-zoom-dialog .hv2-book-hero .hv2-book-model {margin-top:85px!important;height:calc(100% - 90px)!important;}
-  .home-v2 .hv2-book-zoom-dialog .hv2-book-hero .hv2-book-controls {top:10px!important;}
-  .home-v2 .hv2-book-zoom-dialog .hv2-book-hero .hv2-book-controls .hv2-book-scan,
-  .home-v2 .hv2-book-zoom-dialog .hv2-book-hero .hv2-book-controls .hv2-tv-toggle {font-size:11px;}
-  .home-v2 .hv2-book-zoom-hint {font-size:12px;}
-}
-@media(prefers-reduced-motion:reduce){.home-v2 .hv2-book-zoom-dialog::backdrop{backdrop-filter:none;}}
-
-.home-v2 .hv2-book-zoom-head h2 {flex:1 1 auto;min-width:0;}
-.home-v2 .hv2-book-zoom-tools {display:flex;flex:0 0 auto;gap:6px;align-items:center;}
-.home-v2 .hv2-book-zoom-tools button {
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  min-width:40px;
-  min-height:44px;
-  padding:5px 10px;
-  border:1px solid rgba(151,195,246,.55);
-  border-radius:9px;
-  background:#153a65;
-  color:#fff;
-  font:700 20px/1 Inter,"Segoe UI",Arial,sans-serif;
+  width:100%;
+  min-height:40px;
+  position:relative;
+  z-index:1;
+  margin:0 !important;
+  padding:7px 9px;
+  border:1px solid #c2d5eb !important;
+  border-radius:8px;
+  background:rgba(255,255,255,.72) !important;
+  box-shadow:none !important;
+  color:#29527e !important;
+  font:600 11px/1.3 Inter,"Segoe UI",Arial,sans-serif;
+  text-decoration:none;
+  text-align:center;
+  white-space:normal;
   cursor:pointer;
 }
-.home-v2 .hv2-book-zoom-tools button:hover,
-.home-v2 .hv2-book-zoom-close:hover {background:#265c91;}
-.home-v2 .hv2-book-zoom-tools button:focus-visible {outline:3px solid #ffde79;outline-offset:3px;}
-@media(max-width:620px) {
-  .home-v2 .hv2-book-zoom-head {gap:7px;flex-wrap:wrap;}
-  .home-v2 .hv2-book-zoom-head h2 {flex-basis:100%;}
-  .home-v2 .hv2-book-zoom-tools button {min-width:42px;}
+.home-v2 .hv2-book-hero .hv2-book-controls .hv2-book-scan:hover,
+.home-v2 .hv2-book-hero .hv2-book-controls .hv2-tv-toggle:hover,
+.home-v2 .hv2-book-hero .hv2-book-move:hover,
+.home-v2 .hv2-book-hero .hv2-book-recenter:hover {
+  background:#e0edff !important;
+  border-color:#80aadb !important;
+}
+.home-v2 .hv2-book-movement {display:flex;gap:6px;align-items:stretch;min-width:0;}
+.home-v2 .hv2-book-hero .hv2-book-move {flex:1 1 auto;gap:6px;touch-action:none;cursor:grab;user-select:none;}
+.home-v2 .hv2-book-hero .hv2-book-move[data-dragging="true"] {cursor:grabbing;}
+.home-v2 .hv2-book-hero .hv2-book-recenter {flex:0 0 40px;width:40px;font-size:20px;}
+.home-v2 .hv2-book-hero .hv2-book-controls button:focus-visible,
+.home-v2 .hv2-book-hero .hv2-book-controls a:focus-visible {outline:3px solid #c58b1a;outline-offset:3px;}
+
+/* Mona Lisa remains visible, but clearly secondary and never intercepts book gestures. */
+.home-v2 .hv2-smart-art > .smart-art-stage {
+  box-sizing:border-box;
+  position:absolute !important;
+  right:clamp(0px,3vw,42px);
+  bottom:9%;
+  top:auto;
+  left:auto;
+  z-index:1;
+  width:min(33%,415px) !important;
+  aspect-ratio:1.22;
+  transform:rotateY(-8deg) rotateX(4deg) scale(.92);
+  transform-origin:100% 100%;
+  pointer-events:none;
+  animation:none;
+}
+.home-v2 .hv2-smart-art > .smart-art-caption {
+  position:absolute;
+  bottom:3%;
+  right:clamp(0px,3vw,42px);
+  left:auto;
+  z-index:1;
+  font-size:10px;
+  opacity:.68;
+  max-width:42%;
+  pointer-events:none;
+}
+@media (max-width:1050px) {
+  .home-v2 .hv2-smart-art {min-height:clamp(520px,70vw,680px);padding:0 !important;}
+  .home-v2 .hv2-smart-art > .hv2-book-hero {inset:0!important;width:100%!important;height:100%!important;}
+  .home-v2 .hv2-smart-art > .hv2-book-hero .hv2-book-controls {top:20%!important;}
+  .home-v2 .hv2-smart-art > .smart-art-stage {width:min(35%,330px)!important;bottom:10%;}
+}
+@media (max-width:690px) {
+  .home-v2 .hv2-smart-art {min-height:clamp(540px,115vw,690px);}
+  .home-v2 .hv2-smart-art > .hv2-book-hero .hv2-book-controls {
+    top:5% !important;
+    left:50% !important;
+    transform:translateX(-50%) !important;
+    width:min(94%,380px) !important;
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    align-items:stretch;
+    gap:7px;
+    padding:10px;
+  }
+  .home-v2 .hv2-book-controls-label {grid-column:1/-1;font-size:11px;text-align:center;}
+  .home-v2 .hv2-book-controls-hint {grid-column:1/-1;text-align:center;font-size:10px;margin:0;}
+  .home-v2 .hv2-book-movement {grid-column:1/-1;justify-content:center;}
+  .home-v2 .hv2-book-hero .hv2-book-controls .hv2-book-scan,
+  .home-v2 .hv2-book-hero .hv2-book-controls .hv2-tv-toggle {font-size:10px;min-height:42px;}
+  .home-v2 .hv2-book-hero .hv2-book-move {max-width:180px;min-height:42px;}
+  .home-v2 .hv2-book-hero .hv2-book-recenter {min-height:42px;}
+  .home-v2 .hv2-smart-art > .smart-art-stage {width:min(40%,215px)!important;bottom:5%;right:0;}
+  .home-v2 .hv2-smart-art > .smart-art-caption {bottom:0;right:0;font-size:8px;}
+  .home-v2 .hv2-smart-art > .hv2-book-hero .hv2-tv-book-cover {inset:22% 17% 5% !important;left:17% !important;top:22% !important;width:66%!important;height:72%!important;}
+}
+@media (max-width:390px) {
+  .home-v2 .hv2-smart-art {min-height:570px;}
+}
+@media (prefers-reduced-motion:reduce) {
+  .home-v2 .hv2-smart-art > .hv2-book-hero .hv2-book-model {transition:none;}
 }

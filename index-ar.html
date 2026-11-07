@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="styles/home-art-first.css?v=1" />
     <link rel="stylesheet" href="styles/home-smart-art.css?v=1" />
     <link rel="stylesheet" href="styles/spatial-depth.css?v=1" />
-    <link rel="stylesheet" href="styles/home-book-position.css?v=2" />
+    <link rel="stylesheet" href="styles/home-book-position.css?v=3" />
     <script src="scripts/smart-tv-cover.js?v=2"></script>
   </head>
   <body class="home-v2">
@@ -77,10 +77,16 @@
 
 <div class="hv2-smart-art" role="group" aria-label="فن ذكي · رؤية · معرفة: animated layered artwork with visual analysis, translucent panels and spatial connections">
           <div class="hv2-book-hero" aria-label="كتاب ARTDACI ثلاثي الأبعاد">
-            <div class="hv2-book-controls" role="group">
+
+            <div class="hv2-book-controls" role="group" aria-label="كتاب ARTDACI · ثلاثي الأبعاد">
+              <p class="hv2-book-controls-label">كتاب ARTDACI · ثلاثي الأبعاد</p>
+              <p class="hv2-book-controls-hint" id="hv2-book-hint">اسحب لتدوير الكتاب · استخدم عجلة الفأرة أو إصبعين للتكبير</p>
               <a class="hv2-button hv2-book-scan" data-book-ar-v1="1" href="book-ar.html?lang=ar" dir="rtl" aria-label="امسح غلاف الكتاب · AR">امسح غلاف الكتاب · AR ↗</a>
               <button type="button" class="hv2-tv-toggle" data-show3d="عرض الكتاب ثلاثي الأبعاد" data-show-cover="عرض غلاف الكتاب (وضع التلفاز)">عرض غلاف الكتاب (وضع التلفاز)</button>
-              <button type="button" class="hv2-book-expand" aria-haspopup="dialog" data-zoom-title="كتاب ARTDACI · عرض ثلاثي الأبعاد مكبّر" data-zoom-close="إغلاق العرض المكبّر" data-zoom-hint="اسحب للتدوير · استخدم عجلة الفأرة أو إصبعين للتكبير · اضغط Esc للإغلاق" data-zoom-in="تكبير" data-zoom-out="تصغير" data-zoom-reset="إعادة ضبط العرض ثلاثي الأبعاد">⤢ تكبير الكتاب</button>
+              <div class="hv2-book-movement">
+                <button type="button" class="hv2-book-move" data-book-move aria-describedby="hv2-book-hint" title="اسحب هنا أو استخدم أسهم لوحة المفاتيح لتحريك الكتاب" aria-label="اسحب هنا أو استخدم أسهم لوحة المفاتيح لتحريك الكتاب">↔ <span>حرّك الكتاب</span></button>
+                <button type="button" class="hv2-book-recenter" data-book-recenter aria-label="إعادة التمركز" title="إعادة التمركز">↺</button>
+              </div>
             </div>
             <div class="hv2-book-aura" aria-hidden="true"></div>
             <model-viewer
@@ -96,8 +102,8 @@
               shadow-softness="0.85"
               exposure="1.08"
               environment-image="neutral"
-              camera-orbit="32deg 68deg 112%"
-              min-camera-orbit="auto 24deg 24%"
+              camera-orbit="32deg 68deg 92%"
+              min-camera-orbit="auto 20deg 18%"
               max-camera-orbit="auto 96deg 320%"
               loading="lazy"
             ></model-viewer>
@@ -367,6 +373,6 @@
     <script type="module" src="scripts/visitor-guide.js?v=1"></script>
     <script src="scripts/pwa.js?v=1" defer></script>
     <script src="scripts/spatial-depth.js?v=1" defer></script>
-    <script src="scripts/book-zoom.js?v=1" defer></script>
+    <script src="scripts/book-interaction.js?v=1" defer></script>
   </body>
 </html>
