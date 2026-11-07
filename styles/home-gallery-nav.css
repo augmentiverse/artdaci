@@ -12,16 +12,20 @@
   width:min(calc(100% - 24px),1440px);
   min-height:76px;
   padding:8px clamp(12px,1.5vw,24px);
-  border:1px solid rgba(142,181,224,.27);
+  border:1px solid rgba(169,198,235,.36);
   border-top:0;
   border-radius:0 0 20px 20px;
+  /* Muted pigment washes: ultramarine, teal, rose madder and warm ochre.
+     Brighter than the former navy bar, yet legible against the pale page. */
   background:
-    radial-gradient(ellipse at 5% 8%, rgba(65,105,169,.28), transparent 39%),
-    radial-gradient(ellipse at 78% 145%, rgba(151,62,90,.16), transparent 38%),
-    linear-gradient(113deg,rgba(15,30,53,.98) 0%,rgba(19,40,66,.98) 55%,rgba(24,34,60,.98) 100%);
-  box-shadow:0 12px 30px rgba(19,39,74,.19),inset 0 1px rgba(255,255,255,.13);
-  backdrop-filter:blur(18px) saturate(135%);
-  -webkit-backdrop-filter:blur(18px) saturate(135%);
+    radial-gradient(ellipse at 8% 3%, rgba(107,173,232,.27) 0%,transparent 38%),
+    radial-gradient(ellipse at 34% 114%,rgba(57,183,165,.27) 0%,transparent 42%),
+    radial-gradient(ellipse at 70% 0%,rgba(167,116,200,.22) 0%,transparent 39%),
+    radial-gradient(ellipse at 97% 102%,rgba(224,132,109,.22) 0%,transparent 34%),
+    linear-gradient(112deg,rgba(47,75,109,.98) 0%,rgba(43,92,109,.98) 31%,rgba(69,76,118,.98) 66%,rgba(90,75,105,.98) 100%);
+  box-shadow:0 12px 30px rgba(19,39,74,.15),inset 0 1px rgba(255,255,255,.22);
+  backdrop-filter:blur(18px) saturate(123%);
+  -webkit-backdrop-filter:blur(18px) saturate(123%);
   isolation:isolate;
 }
 .home-v2 .hv2-header::after {
@@ -31,9 +35,9 @@
   height:3px;
   border-radius:8px;
   pointer-events:none;
-  background:linear-gradient(90deg,#529ef2 0%,#5fc69b 23%,#f5c34c 49%,#e77b78 72%,#a995ea 100%);
-  opacity:.88;
-  box-shadow:0 0 13px rgba(102,163,227,.23);
+  background:linear-gradient(90deg,#7eb3ee 0%,#67c7b4 23%,#f1c66d 49%,#e89589 72%,#b9a5df 100%);
+  opacity:.94;
+  box-shadow:0 0 12px rgba(126,177,230,.20);
 }
 .home-v2 .hv2-brand {
   position:relative;
@@ -86,8 +90,8 @@
 .home-v2 .hv2-nav a:hover,
 .home-v2 .hv2-nav a:focus-visible {
   color:#fff;
-  border-color:rgba(167,201,240,.24);
-  background:linear-gradient(135deg,rgba(75,127,194,.29),rgba(102,77,116,.16));
+  border-color:rgba(219,231,249,.38);
+  background:linear-gradient(115deg,rgba(151,195,239,.29),rgba(234,181,155,.17));
   box-shadow:0 4px 12px rgba(4,13,28,.12);
   transform:translateY(-1px);
 }
