@@ -231,3 +231,61 @@
 @media(prefers-reduced-motion:reduce) {
   .home-v2 .hv2-title-row h1,.home-v2 .hv2-title-row h1 span {animation:none;}
 }
+
+
+/* Refinement: preserve approved redesign, gently deepen page background.
+   Place the existing interactive 3D book in the free upper-right hero space,
+   above (not on top of) the Mona Lisa Smart Art visual. */
+.home-v2 {
+  background:
+    radial-gradient(ellipse at 81% 1%,rgba(44,129,255,.16),transparent 42rem),
+    radial-gradient(ellipse at 5% 20%,rgba(255,218,56,.10),transparent 36rem),
+    radial-gradient(ellipse at 80% 44%,rgba(47,191,123,.085),transparent 44rem),
+    linear-gradient(180deg,#e9f0f8 0%,#e5eef7 49%,#edf2f8 100%);
+}
+.home-v2 .hv2-smart-art {
+  min-height:clamp(560px,50vw,750px);
+  justify-content:flex-end;
+  padding-top:clamp(130px,14vw,205px);
+}
+.home-v2 .hv2-smart-art > .hv2-book-hero {
+  position:absolute;
+  z-index:5;
+  inset-block-start:clamp(0px,1.5vw,24px);
+  inset-inline-end:clamp(5px,4vw,62px);
+  margin:0!important;
+  width:clamp(155px,16vw,225px);
+  height:clamp(155px,17vw,225px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+}
+.home-v2 .hv2-smart-art > .smart-art-stage {
+  flex:0 0 auto;
+  width:min(100%,660px);
+}
+.home-v2 .hv2-smart-art > .smart-art-caption {
+  flex:0 0 auto;
+}
+@media(max-width:1050px) {
+  .home-v2 .hv2-smart-art {
+    padding-top:0;
+    min-height:0;
+    gap:12px;
+  }
+  .home-v2 .hv2-smart-art > .hv2-book-hero {
+    position:relative;
+    inset:auto;
+    width:clamp(165px,32vw,220px);
+    height:clamp(165px,32vw,220px);
+    align-self:flex-end;
+    margin:0 5% 0 0!important;
+  }
+}
+@media(max-width:600px) {
+  .home-v2 .hv2-smart-art > .hv2-book-hero {
+    align-self:center;
+    width:180px;height:190px;margin:0!important;
+  }
+}
