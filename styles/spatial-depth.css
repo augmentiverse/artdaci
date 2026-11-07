@@ -1,5 +1,5 @@
 /* ARTDACI Spatial Depth: isolated component, adapted from the supplied HTML animation.
-   Intentionally lives under the continuum, not in the artwork-first hero. */
+   Lives between the main hero and Start Here, before the educational pathways. */
 .home-v2 .sd-panel {
   position: relative;
   isolation: isolate;
@@ -137,3 +137,8 @@
   .home-v2 .sd-brand { animation: none!important; color: #ffd700; transform: translateZ(90px); }
   .home-v2 .sd-link { transition: none; }
 }
+
+/* Feature placement between main hero and Start Here (EN / FR / AR). */
+.home-v2 .sd-feature { position:relative;width:min(100% - 32px,1440px);margin:0 auto clamp(42px,6vw,82px);scroll-margin-top:90px; }
+.home-v2 .sd-feature > .sd-panel { margin-top:0; }
+@media(max-width:600px){.home-v2 .sd-feature{width:min(100% - 24px,1440px);margin-bottom:42px;}}

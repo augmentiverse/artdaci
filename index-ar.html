@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="styles/home-art-first.css?v=1" />
     <link rel="stylesheet" href="styles/home-smart-art.css?v=1" />
     <link rel="stylesheet" href="styles/spatial-depth.css?v=1" />
+    <link rel="stylesheet" href="styles/home-book-position.css?v=1" />
     <script src="scripts/smart-tv-cover.js?v=2"></script>
   </head>
   <body class="home-v2">
@@ -74,8 +75,12 @@
           </div>
         </div>
 
-<div class="hv2-smart-art" role="img" aria-label="فن ذكي · رؤية · معرفة: animated layered artwork with visual analysis, translucent panels and spatial connections">
+<div class="hv2-smart-art" role="group" aria-label="فن ذكي · رؤية · معرفة: animated layered artwork with visual analysis, translucent panels and spatial connections">
           <div class="hv2-book-hero" aria-label="كتاب ARTDACI ثلاثي الأبعاد">
+            <div class="hv2-book-controls" role="group">
+              <a class="hv2-button hv2-book-scan" data-book-ar-v1="1" href="book-ar.html?lang=ar" dir="rtl" aria-label="امسح غلاف الكتاب · AR">امسح غلاف الكتاب · AR ↗</a>
+              <button type="button" class="hv2-tv-toggle" data-show3d="عرض الكتاب ثلاثي الأبعاد" data-show-cover="عرض غلاف الكتاب (وضع التلفاز)">عرض غلاف الكتاب (وضع التلفاز)</button>
+            </div>
             <div class="hv2-book-aura" aria-hidden="true"></div>
             <model-viewer
               class="hv2-book-model"
@@ -97,8 +102,7 @@
             ></model-viewer>
             <img class="hv2-tv-book-cover" src="assets/varia/artdaci-book-cover.webp" alt="غلاف كتاب ARTDACI المصور" decoding="async" />
             <p class="hv2-book-signature">كتاب ARTDACI · من المطبوع إلى الثقافة الغامرة</p>
-            <a class="hv2-button hv2-book-scan" data-book-ar-v1="1" href="book-ar.html?lang=ar" dir="rtl" aria-label="امسح غلاف الكتاب · AR">امسح غلاف الكتاب · AR ↗</a>
-            <button type="button" class="hv2-tv-toggle" data-show3d="عرض الكتاب ثلاثي الأبعاد" data-show-cover="عرض غلاف الكتاب (وضع التلفاز)">عرض غلاف الكتاب (وضع التلفاز)</button>
+
           </div>
           <div class="smart-art-stage" aria-hidden="true">
             <div class="smart-art-layer smart-art-rear">
@@ -119,6 +123,46 @@
           </div>
           <p class="smart-art-caption"><b>ARTDACI</b> · فن ذكي · رؤية · معرفة</p>
         </div>
+      </section>
+
+      <section class="sd-feature" id="spatial-depth" aria-label="لوحة ARTDACI التفاعلية متعددة الأبعاد">
+          <div class="sd-panel" data-spatial-depth aria-label="تصميم بصري تفاعلي">
+            <div class="sd-copy">
+              <p class="sd-eyebrow">تصميم بصري تفاعلي</p>
+              <h3>اكتشف أبعاد ARTDACI.</h3>
+              <p class="sd-description">أربعة فنّانين وخمسة مسارات تقنية تجمعها رحلة واحدة لاستكشاف الفن. حرّك المنظور لترى كيف تتصل هذه العوالم.</p>
+              <p class="sd-instruction" id="sd-tip">حرّك المؤشر فوق البطاقة أو حدّدها واستخدم أسهم لوحة المفاتيح لتغيير زاويتها.</p>
+              <a class="sd-link" href="3d/?lang=ar">استكشف تجارب 3D <span aria-hidden="true">↗</span></a>
+              <p class="sd-disclaimer">رسم تفاعلي بمنظور CSS، من دون كاميرا أو تتبّع للصور أو جلسة WebXR فعلية.</p>
+            </div>
+            <div class="sd-scene">
+              <div class="sd-card" tabindex="0" role="img" aria-label="بطاقة ARTDACI متعددة الطبقات. استخدم أسهم لوحة المفاتيح لتغيير منظورها." aria-describedby="sd-tip">
+                <span class="sd-author">N. ELM.</span>
+                <span class="sd-accent">SPATIAL</span>
+                <div class="sd-tech-orbit" aria-hidden="true">
+                  <svg viewBox="0 0 270 130" focusable="false">
+                    <path id="sd-tech-path" d="M 135 10 A 120 55 0 1 1 134.9 10" fill="none" stroke="#93bfff" stroke-width="1" opacity=".4"></path>
+                    <text fill="#ff9cfc"><textPath href="#sd-tech-path" startOffset="5%" text-anchor="middle">AR</textPath></text>
+                    <text fill="#9cc2ff"><textPath href="#sd-tech-path" startOffset="25%" text-anchor="middle">VR</textPath></text>
+                    <text fill="#ffdf9c"><textPath href="#sd-tech-path" startOffset="45%" text-anchor="middle">3D</textPath></text>
+                    <text fill="#9cffda"><textPath href="#sd-tech-path" startOffset="65%" text-anchor="middle">GEO</textPath></text>
+                    <text fill="#d19cff"><textPath href="#sd-tech-path" startOffset="85%" text-anchor="middle">SEMANTIC</textPath></text>
+                  </svg>
+                </div>
+                <div class="sd-artists-orbit" aria-hidden="true">
+                  <svg viewBox="0 0 240 100" focusable="false">
+                    <path id="sd-artists-path" d="M 120 10 A 100 40 0 1 1 119.9 10" fill="none" stroke="#ffd14c" stroke-width="1.2" opacity=".7"></path>
+                    <text fill="#ff7676"><textPath href="#sd-artists-path" startOffset="12%" text-anchor="middle">DA VINCI</textPath></text>
+                    <text fill="#76caff"><textPath href="#sd-artists-path" startOffset="37%" text-anchor="middle">VERMEER</textPath></text>
+                    <text fill="#ffd14c"><textPath href="#sd-artists-path" startOffset="62%" text-anchor="middle">VAN GOGH</textPath></text>
+                    <text fill="#6bf1a3"><textPath href="#sd-artists-path" startOffset="87%" text-anchor="middle">MONET</textPath></text>
+                  </svg>
+                </div>
+                <span class="sd-symbol" aria-hidden="true">◈</span>
+                <span class="sd-brand" aria-hidden="true">ARTDACI</span>
+              </div>
+            </div>
+          </div>
       </section>
 
       <section class="hv2-section hv2-start" id="start-here" aria-labelledby="start-title">
@@ -243,43 +287,6 @@
             <div class="hv2-continuum-step"><span>07</span><strong>GEO</strong></div>
           </div>
 
-          <div class="sd-panel" data-spatial-depth aria-label="تصميم بصري تفاعلي">
-            <div class="sd-copy">
-              <p class="sd-eyebrow">تصميم بصري تفاعلي</p>
-              <h3>اكتشف أبعاد ARTDACI.</h3>
-              <p class="sd-description">أربعة فنّانين وخمسة مسارات تقنية تجمعها رحلة واحدة لاستكشاف الفن. حرّك المنظور لترى كيف تتصل هذه العوالم.</p>
-              <p class="sd-instruction" id="sd-tip">حرّك المؤشر فوق البطاقة أو حدّدها واستخدم أسهم لوحة المفاتيح لتغيير زاويتها.</p>
-              <a class="sd-link" href="3d/?lang=ar">استكشف تجارب 3D <span aria-hidden="true">↗</span></a>
-              <p class="sd-disclaimer">رسم تفاعلي بمنظور CSS، من دون كاميرا أو تتبّع للصور أو جلسة WebXR فعلية.</p>
-            </div>
-            <div class="sd-scene">
-              <div class="sd-card" tabindex="0" role="img" aria-label="بطاقة ARTDACI متعددة الطبقات. استخدم أسهم لوحة المفاتيح لتغيير منظورها." aria-describedby="sd-tip">
-                <span class="sd-author">N. ELM.</span>
-                <span class="sd-accent">SPATIAL</span>
-                <div class="sd-tech-orbit" aria-hidden="true">
-                  <svg viewBox="0 0 270 130" focusable="false">
-                    <path id="sd-tech-path" d="M 135 10 A 120 55 0 1 1 134.9 10" fill="none" stroke="#93bfff" stroke-width="1" opacity=".4"></path>
-                    <text fill="#ff9cfc"><textPath href="#sd-tech-path" startOffset="5%" text-anchor="middle">AR</textPath></text>
-                    <text fill="#9cc2ff"><textPath href="#sd-tech-path" startOffset="25%" text-anchor="middle">VR</textPath></text>
-                    <text fill="#ffdf9c"><textPath href="#sd-tech-path" startOffset="45%" text-anchor="middle">3D</textPath></text>
-                    <text fill="#9cffda"><textPath href="#sd-tech-path" startOffset="65%" text-anchor="middle">GEO</textPath></text>
-                    <text fill="#d19cff"><textPath href="#sd-tech-path" startOffset="85%" text-anchor="middle">SEMANTIC</textPath></text>
-                  </svg>
-                </div>
-                <div class="sd-artists-orbit" aria-hidden="true">
-                  <svg viewBox="0 0 240 100" focusable="false">
-                    <path id="sd-artists-path" d="M 120 10 A 100 40 0 1 1 119.9 10" fill="none" stroke="#ffd14c" stroke-width="1.2" opacity=".7"></path>
-                    <text fill="#ff7676"><textPath href="#sd-artists-path" startOffset="12%" text-anchor="middle">DA VINCI</textPath></text>
-                    <text fill="#76caff"><textPath href="#sd-artists-path" startOffset="37%" text-anchor="middle">VERMEER</textPath></text>
-                    <text fill="#ffd14c"><textPath href="#sd-artists-path" startOffset="62%" text-anchor="middle">VAN GOGH</textPath></text>
-                    <text fill="#6bf1a3"><textPath href="#sd-artists-path" startOffset="87%" text-anchor="middle">MONET</textPath></text>
-                  </svg>
-                </div>
-                <span class="sd-symbol" aria-hidden="true">◈</span>
-                <span class="sd-brand" aria-hidden="true">ARTDACI</span>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 

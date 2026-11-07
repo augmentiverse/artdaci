@@ -1,0 +1,82 @@
+/* Center the book on Mona Lisa; relocate AR/TV controls alongside it.
+   Above-book controls at smaller widths, preserving the current Smart TV toggle. */
+.home-v2 .hv2-smart-art > .hv2-book-hero {
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+}
+.home-v2 .hv2-book-hero .hv2-book-controls {
+  position: absolute;
+  z-index: 9;
+  left: calc(100% + 14px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(145px,13vw,182px);
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  direction: inherit;
+}
+.home-v2 .hv2-book-hero .hv2-book-controls .hv2-book-scan,
+.home-v2 .hv2-book-hero .hv2-book-controls .hv2-tv-toggle {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  max-width: none;
+  min-height: 44px;
+  margin: 0 !important;
+  padding: 9px 12px;
+  text-align: center;
+  white-space: normal;
+  line-height: 1.4;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.home-v2 .hv2-book-hero .hv2-book-controls .hv2-book-scan:focus-visible,
+.home-v2 .hv2-book-hero .hv2-book-controls .hv2-tv-toggle:focus-visible {
+  outline: 3px solid #db9a21;
+  outline-offset: 3px;
+}
+@media (max-width:1250px) {
+  .home-v2 .hv2-smart-art {padding-top:clamp(178px,18vw,220px);}
+  .home-v2 .hv2-smart-art > .hv2-book-hero {top:70px;}
+  .home-v2 .hv2-book-hero .hv2-book-controls {
+    left:50%;
+    top:auto;
+    bottom:calc(100% + 9px);
+    transform:translateX(-50%);
+    width:min(calc(100vw - 34px),390px);
+    flex-direction:row;
+    justify-content:center;
+    gap:8px;
+  }
+  .home-v2 .hv2-book-hero .hv2-book-controls .hv2-book-scan,
+  .home-v2 .hv2-book-hero .hv2-book-controls .hv2-tv-toggle {
+    flex:1 1 50%;width:50%;font-size:11px;padding:8px 9px;
+  }
+}
+@media (max-width:1050px) {
+  .home-v2 .hv2-smart-art {padding-top:68px;}
+  .home-v2 .hv2-smart-art > .hv2-book-hero {
+    position:relative;
+    top:auto;
+    left:auto;
+    right:auto;
+    transform:none;
+    align-self:center;
+    margin:0 auto !important;
+  }
+  .home-v2 .hv2-book-hero .hv2-book-controls {width:min(calc(100vw - 36px),390px);}
+}
+@media (max-width:600px) {
+  .home-v2 .hv2-smart-art {padding-top:72px;}
+  .home-v2 .hv2-smart-art > .hv2-book-hero {margin:0 auto !important;}
+  .home-v2 .hv2-book-hero .hv2-book-controls {bottom:calc(100% + 9px);width:min(calc(100vw - 30px),360px);}
+  .home-v2 .hv2-book-hero .hv2-book-controls .hv2-book-scan,
+  .home-v2 .hv2-book-hero .hv2-book-controls .hv2-tv-toggle {font-size:10px;padding:8px 7px;min-height:44px;}
+}
