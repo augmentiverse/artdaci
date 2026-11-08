@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="styles/home-art-cascade.css?v=1" />
     <link rel="stylesheet" href="styles/home-experiences-ten.css?v=1" />
     <link rel="stylesheet" href="styles/home-painterly-headings.css?v=1" />
+    <link rel="stylesheet" href="styles/home-painting-gallery.css?v=1" />
     <script src="scripts/smart-tv-cover.js?v=2"></script>
   </head>
   <body class="home-v2">
@@ -346,14 +347,15 @@
         </div>
       </section>
 
-      <section id="painting-index" class="painting-index" aria-labelledby="index-title">
+      <section id="painting-index" class="painting-index painting-index-gallery" aria-labelledby="index-title">
         <div class="section-heading">
           <p class="eyebrow">المجموعة</p><h2 id="index-title">فهرس اللوحات</h2>
-          <p class="section-dek">ابحث في مجموعة ARTDACI، قارن بين الأعمال، وافتح الصفحات المطبوعة ثم تابع إلى التجارب الرقمية والغامرة المتاحة.</p>
+          <p class="section-dek">اكتشف معرضًا منتقى من ثماني لوحات تمثل الفنانين الأربعة. يمكنك عرض بقية الأعمال عند الرغبة، كما يتيح البحث استكشاف المجموعة الكاملة.</p>
         </div>
         <div
           id="catalogue-app"
           class="catalogue-app"
+          data-home-gallery="true"
           data-lang="ar"
           data-manifests="content/paintings/mona-lisa.json,content/paintings/lady-with-an-ermine.json,content/paintings/vermeer-girl-with-a-pearl-earring.json,content/paintings/view-of-delft.json,content/paintings/van-gogh.json?v=4,content/paintings/van-gogh-bedroom.json,content/paintings/monet-impression-sunrise.json,content/paintings/pont-d-argenteuil.json,content/paintings/additional-16.json"
           data-museums="content/museums/louvre.json?v=3,content/museums/mauritshuis.json,content/museums/czartoryski.json?v=2,content/museums/orsay.json,content/museums/van-gogh-museum.json,content/museums/national-gallery-of-art-washington.json?v=1"
@@ -403,7 +405,7 @@
       <span>فن · معرفة · مطبوع · AR · 3D · VR · GEO</span>
     </footer>
 
-    <script type="module" src="scripts/catalogue.js?v=17"></script>
+    <script type="module" src="scripts/catalogue.js?v=18"></script>
     <script type="module" src="scripts/visitor-guide.js?v=1"></script>
     <script src="scripts/pwa.js?v=1" defer></script>
     <script src="scripts/spatial-depth.js?v=1" defer></script>

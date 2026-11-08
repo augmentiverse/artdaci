@@ -1,496 +1,556 @@
-<!doctype html>
-<html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#06192b" />
-    <meta name="application-name" content="ARTDACI" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta
-      name="description"
-      content="Découvrez les chefs-d’œuvre, les artistes, les musées, la 3D et les expériences immersives d’ARTDACI, avec ou sans le livre imprimé."
-    />
-    <link rel="canonical" href="https://artdaci.com/index-fr.html" />
-    <link rel="alternate" hreflang="en" href="https://artdaci.com/index.html" />
-    <link rel="alternate" hreflang="fr" href="https://artdaci.com/index-fr.html" />
-    <link rel="alternate" hreflang="ar" href="https://artdaci.com/index-ar.html" />
-    <link rel="alternate" hreflang="x-default" href="https://artdaci.com/index.html" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="ARTDACI — Chefs-d’œuvre vivants" />
-    <meta property="og:url" content="https://artdaci.com/index-fr.html" />
-    <link rel="manifest" href="manifest.webmanifest" />
-    <link rel="icon" href="assets/app/artdaci-app-icon.svg" type="image/svg+xml" />
-    <title>ARTDACI — Chefs-d’œuvre vivants</title>
-    <link rel="stylesheet" href="styles/site.css" />
-    <link rel="stylesheet" href="styles/visitor-guide.css?v=1" />
-    <link rel="stylesheet" href="styles/home-v2.css?v=1" />
-    <link rel="stylesheet" href="styles/home-v2-adjustments.css?v=9" />
-    <link rel="stylesheet" href="styles/smart-tv-cover.css?v=2" />
-    <link rel="stylesheet" href="styles/home-art-first.css?v=1" />
-    <link rel="stylesheet" href="styles/home-smart-art.css?v=1" />
-    <link rel="stylesheet" href="styles/spatial-depth.css?v=1" />
-    <link rel="stylesheet" href="styles/home-book-position.css?v=4" />
-    <link rel="stylesheet" href="styles/home-gallery-nav.css?v=2" />
-    <link rel="stylesheet" href="styles/home-contrast-spatial.css?v=1" />
-    <link rel="stylesheet" href="styles/home-art-cascade.css?v=1" />
-    <link rel="stylesheet" href="styles/home-experiences-ten.css?v=1" />
-    <link rel="stylesheet" href="styles/home-painterly-headings.css?v=1" />
-    <link rel="stylesheet" href="styles/home-painting-gallery.css?v=1" />
-    <script src="scripts/smart-tv-cover.js?v=2"></script>
-  </head>
-  <body class="home-v2">
-    <header class="hv2-header" aria-label="Navigation ARTDACI">
-      <a class="hv2-brand" href="index-fr.html" aria-label="Accueil ARTDACI">
-        <img src="assets/varia/artdaci-logo.png" alt="ARTDACI" />
+import { formatArtworkNumber } from "./artwork-numbering.js?v=1";
+import { resolveArtworkAudioOverview } from "./artwork-media-manifest.js?v=5";
+import { IMMERSIVE_ARTWORKS, classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./immersive-routing.js?v=1";
+
+export { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute };
+
+const PRINT_PAGES = {
+  en: {
+    "mona-lisa": "print-target.html",
+    "lady-with-an-ermine": "print-artwork.html?painting=lady-with-an-ermine&lang=en",
+    "van-gogh": "print-van-gogh.html",
+    "van-gogh-bedroom": "print-van-gogh-bedroom.html",
+    "vermeer-girl-with-a-pearl-earring": "print-vermeer-girl-with-a-pearl-earring.html",
+    "view-of-delft": "print-artwork.html?painting=view-of-delft&lang=en",
+    "monet-impression-sunrise": "print-monet-impression-sunrise.html",
+    "pont-d-argenteuil": "print-artwork.html?painting=pont-d-argenteuil&lang=en"
+  },
+  fr: {
+    "mona-lisa": "print-target-fr.html",
+    "lady-with-an-ermine": "print-artwork.html?painting=lady-with-an-ermine&lang=fr",
+    "van-gogh": "print-van-gogh-fr.html",
+    "van-gogh-bedroom": "print-van-gogh-bedroom-fr.html",
+    "vermeer-girl-with-a-pearl-earring": "print-vermeer-girl-with-a-pearl-earring-fr.html",
+    "view-of-delft": "print-artwork.html?painting=view-of-delft&lang=fr",
+    "monet-impression-sunrise": "print-monet-impression-sunrise-fr.html",
+    "pont-d-argenteuil": "print-artwork.html?painting=pont-d-argenteuil&lang=fr"
+  }
+  ,
+  ar: {
+    "mona-lisa": "print-ar.html?painting=mona-lisa",
+    "lady-with-an-ermine": "print-artwork.html?painting=lady-with-an-ermine&lang=ar",
+    "van-gogh": "print-ar.html?painting=van-gogh",
+    "van-gogh-bedroom": "print-ar.html?painting=van-gogh-bedroom",
+    "vermeer-girl-with-a-pearl-earring": "print-ar.html?painting=vermeer-girl-with-a-pearl-earring",
+    "view-of-delft": "print-artwork.html?painting=view-of-delft&lang=ar",
+    "monet-impression-sunrise": "print-ar.html?painting=monet-impression-sunrise",
+    "pont-d-argenteuil": "print-artwork.html?painting=pont-d-argenteuil&lang=ar"
+  }
+};
+const AUDIO_ARTWORK_IDS = Object.freeze({
+  "mona-lisa": "ld01",
+  "lady-with-an-ermine": "ld02",
+  "last-supper": "ld03",
+  "annunciation": "ld04",
+  "ginevra-de-benci": "ld05",
+  "belle-ferronniere": "ld06",
+  "vermeer-girl-with-a-pearl-earring": "ve01",
+  "view-of-delft": "ve02",
+  "vermeer-milkmaid": "ve03",
+  "art-of-painting": "ve04",
+  "vermeer-astronomer": "ve05",
+  "woman-holding-balance": "ve06",
+  "van-gogh": "vg01",
+  "van-gogh-bedroom": "vg02",
+  "starry-night": "vg03",
+  "sunflowers": "vg04",
+  "cafe-terrace": "vg05",
+  "night-cafe": "vg06",
+  "monet-impression-sunrise": "mo01",
+  "pont-d-argenteuil": "mo02",
+  "water-lilies": "mo03",
+  "japanese-bridge": "mo04",
+  "poppies": "mo05",
+  "woman-with-parasol": "mo06",
+});
+
+const SEMANTIC_ARTWORK_IDS = Object.freeze({
+  "mona-lisa": "ld01",
+  "vermeer-girl-with-a-pearl-earring": "ve01",
+  "van-gogh": "vg01",
+  "monet-impression-sunrise": "mo01"
+});
+
+const HOME_GALLERY_FEATURED_SLUGS = Object.freeze([
+  "mona-lisa", "lady-with-an-ermine",
+  "vermeer-girl-with-a-pearl-earring", "view-of-delft",
+  "van-gogh", "van-gogh-bedroom",
+  "monet-impression-sunrise", "pont-d-argenteuil"
+]);
+
+const UI = {
+  en: {
+    search: "Search by title, artist, technique, period...",
+    allMovements: "All movements",
+    reset: "Reset",
+    results: "artworks",
+    print: "Open printable artwork page",
+    ar: "Image AR",
+    space: "Room AR",
+    audioOverview: "Audio Overview",
+    vocabulary: "Vocabulary",
+    noResults: "No artwork matches that search.",
+    showMore: "Explore the remaining paintings",
+    showLess: "Hide the additional paintings",
+    gallerySelection: "Eight highlights · Four masters",
+    years: "years covered",
+    modes: "active modes",
+    printFirst: "printable artwork pages",
+    by: "by",
+    dimensions: "Dimensions",
+    location: "Location",
+    palette: "Palette",
+    technique: "Technique",
+    context: "Context",
+    semantic: "Explore semantic graph"
+    , museums: "MUSEUMS", museumsIntro: "Discover the institutions that preserve these paintings and open their architectural models in VR, image AR, or spatial AR.", museumVr: "Museum VR", museumAr: "Image AR", museumSpace: "Space AR"
+  },
+  fr: {
+    search: "Rechercher par titre, artiste, technique, période...",
+    allMovements: "Tous les mouvements",
+    reset: "Réinitialiser",
+    results: "œuvres",
+    print: "Ouvrir la page imprimable",
+    ar: "AR image",
+    space: "AR espace",
+    audioOverview: "Aperçu audio",
+    vocabulary: "Vocabulaire",
+    noResults: "Aucune œuvre ne correspond à cette recherche.",
+    showMore: "Découvrir les autres tableaux",
+    showLess: "Masquer les autres tableaux",
+    gallerySelection: "Huit œuvres à découvrir · Quatre maîtres",
+    years: "années couvertes",
+    modes: "modes actifs",
+    printFirst: "pages d’œuvres imprimables",
+    by: "par",
+    dimensions: "Dimensions",
+    location: "Lieu",
+    palette: "Palette",
+    technique: "Technique",
+    context: "Contexte",
+    semantic: "Explorer le graphe sémantique"
+    , museums: "MUSÉES", museumsIntro: "Découvrez les institutions qui conservent ces tableaux et ouvrez leurs modèles architecturaux en VR, AR image ou AR espace.", museumVr: "VR du musée", museumAr: "AR image", museumSpace: "AR espace"
+  },
+  ar: {
+    search: "ابحث بالعنوان أو الفنان أو التقنية أو الفترة...",
+    allMovements: "جميع الحركات الفنية",
+    reset: "إعادة الضبط",
+    results: "لوحات",
+    print: "فتح صفحة العمل القابلة للطباعة",
+    ar: "واقع معزز",
+    space: "وضع في المساحة",
+    audioOverview: "الدليل الصوتي",
+    vocabulary: "المفردات",
+    noResults: "لا توجد لوحة مطابقة لهذا البحث.",
+    showMore: "اكتشف بقية اللوحات",
+    showLess: "إخفاء اللوحات الإضافية",
+    gallerySelection: "ثماني لوحات مختارة · أربعة فنانين",
+    years: "سنة تغطيها المجموعة",
+    modes: "تجارب متاحة",
+    printFirst: "صفحات أعمال قابلة للطباعة",
+    by: "للفنان",
+    dimensions: "الأبعاد",
+    location: "الموقع",
+    palette: "الألوان",
+    technique: "التقنية",
+    context: "السياق",
+    semantic: "استكشف الرسم البياني الدلالي"
+    , museums: "المتاحف", museumsIntro: "اكتشف المتاحف التي تحفظ هذه اللوحات وافتح نماذجها المعمارية في الواقع الافتراضي أو المعزز.", museumVr: "واقع افتراضي", museumAr: "واقع معزز بالصورة", museumSpace: "واقع معزز مكاني"
+  }
+};
+
+const FR_TITLES = {
+  "van-gogh": "Autoportrait",
+  "van-gogh-bedroom": "La Chambre",
+  "vermeer-girl-with-a-pearl-earring": "La Jeune Fille à la perle",
+  "monet-impression-sunrise": "Impression, soleil levant"
+  ,"lady-with-an-ermine": "La Dame à l’hermine", "view-of-delft": "Vue de Delft", "pont-d-argenteuil": "Le Pont d’Argenteuil"
+};
+
+const AR_TITLES = {
+  "mona-lisa": "الموناليزا",
+  "van-gogh": "بورتريه ذاتي",
+  "van-gogh-bedroom": "غرفة النوم",
+  "vermeer-girl-with-a-pearl-earring": "الفتاة ذات القرط اللؤلؤي"
+  ,"lady-with-an-ermine": "السيدة ذات القاقم", "view-of-delft": "منظر دلفت", "monet-impression-sunrise": "انطباع، شروق الشمس", "pont-d-argenteuil": "جسر أرجنتوي"
+};
+
+const AR_SUMMARIES = {
+  "mona-lisa": "بورتريه يجمع بين السفوماتو والمنظور الجوي وتعبير يتغير مع النظرة. تكشف اليدان والمنظر الطبيعي والابتسامة عن بحث ليوناردو الطويل في الضوء والحضور الإنساني.",
+  "van-gogh": "يبني فان غوخ وجهه بضربات قصيرة وألوان متكاملة. يمنح التباين بين اللحية البرتقالية والخلفية الزرقاء الخضراء الصورة طاقة نفسية قوية.",
+  "van-gogh-bedroom": "حوّل فان غوخ غرفته في البيت الأصفر إلى مساحة عاطفية. تجعل الزوايا المائلة والألوان المسطحة والأثاث القوي المكان أكثر تعبيراً من الواقع.",
+  "vermeer-girl-with-a-pearl-earring": "هذه اللوحة دراسة لشخصية وليست بورتريهاً رسمياً. يخلق الضوء الناعم والأزرق الثمين والقرط اللامع لحظة لقاء مباشرة مع المشاهد."
+};
+
+const AR_METADATA = {
+  "mona-lisa": { artist: "ليوناردو دافنشي", date: "نحو 1503–1519", location: "متحف اللوفر، باريس" },
+  "van-gogh": { artist: "فنسنت فان غوخ", date: "1889", location: "متحف أورسي، باريس" },
+  "van-gogh-bedroom": { artist: "فنسنت فان غوخ", date: "أكتوبر 1888", location: "متحف فان غوخ، أمستردام" },
+  "vermeer-girl-with-a-pearl-earring": { artist: "يوهانس فيرمير", date: "نحو 1665", location: "موريتشهاوس، لاهاي" }
+};
+
+const LOCALIZABLE_TEXT_FIELDS = Object.freeze([
+  "historicalContext",
+  "artisticAnalysis",
+  "palette",
+  "perspectiveTechnique"
+]);
+
+export function normalizeCatalogueLanguage(value) {
+  const language = String(value || "").trim().toLowerCase().split(/[-_]/)[0];
+  return ["en", "fr", "ar"].includes(language) ? language : "en";
+}
+
+function asLocalization(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+}
+
+function firstPresentText(...values) {
+  return values.find((value) => typeof value === "string" && value.trim()) || "";
+}
+
+function localizedArtistName(localization) {
+  if (typeof localization.artist === "string") return localization.artist;
+  return asLocalization(localization.artist).name;
+}
+
+function localizedLocationValue(localization, field) {
+  return asLocalization(localization.currentLocation)[field] || localization[field];
+}
+
+function getLegacyLocalization(manifest, language) {
+  const slug = manifest.slug;
+  if (language === "fr") return { title: FR_TITLES[slug] };
+  if (language !== "ar") return {};
+
+  const metadata = AR_METADATA[slug] || {};
+  return {
+    title: AR_TITLES[slug],
+    artist: metadata.artist,
+    date: metadata.date,
+    location: metadata.location,
+    artisticAnalysis: AR_SUMMARIES[slug]
+  };
+}
+
+export function localizeCatalogueEntry(source, requestedLanguage) {
+  const manifest = asLocalization(source);
+  const language = normalizeCatalogueLanguage(requestedLanguage);
+  const localizations = asLocalization(manifest.localizations);
+  const requested = asLocalization(localizations[language]);
+  const english = asLocalization(localizations.en);
+  const legacy = getLegacyLocalization(manifest, language);
+  const result = { ...manifest };
+
+  result.title = firstPresentText(requested.title, legacy.title, english.title, manifest.title);
+  result.date = firstPresentText(requested.date, legacy.date, english.date, manifest.date);
+  result.medium = firstPresentText(requested.medium, english.medium, manifest.medium);
+
+  const artistName = firstPresentText(
+    localizedArtistName(requested),
+    legacy.artist,
+    localizedArtistName(english),
+    manifest.artist?.name
+  );
+  if (manifest.artist || artistName) result.artist = { ...asLocalization(manifest.artist), name: artistName };
+
+  if (manifest.currentLocation || requested.currentLocation || english.currentLocation || legacy.location) {
+    result.currentLocation = { ...asLocalization(manifest.currentLocation) };
+    if (legacy.location) {
+      result.currentLocation = { ...result.currentLocation, museum: legacy.location, city: "", country: "" };
+    } else {
+      for (const field of ["museum", "city", "country"]) {
+        result.currentLocation[field] = firstPresentText(
+          localizedLocationValue(requested, field),
+          localizedLocationValue(english, field),
+          manifest.currentLocation?.[field]
+        );
+      }
+    }
+  }
+
+  const requestedTexts = asLocalization(requested.texts);
+  const englishTexts = asLocalization(english.texts);
+  if (manifest.texts || requested.texts || english.texts || legacy.artisticAnalysis) {
+    result.texts = { ...asLocalization(manifest.texts) };
+    for (const field of LOCALIZABLE_TEXT_FIELDS) {
+      result.texts[field] = firstPresentText(
+        requestedTexts[field],
+        field === "artisticAnalysis" ? legacy.artisticAnalysis : "",
+        englishTexts[field],
+        manifest.texts?.[field]
+      );
+    }
+  }
+
+  return result;
+}
+
+const app = typeof document === "undefined" ? null : document.getElementById("catalogue-app");
+
+if (app) initCatalogue(app);
+
+async function initCatalogue(root) {
+  const lang = normalizeCatalogueLanguage(root.dataset.lang);
+  const text = UI[lang];
+  const manifestPaths = root.dataset.manifests.split(",").map((item) => item.trim()).filter(Boolean);
+
+  try {
+    const museumPaths = (root.dataset.museums || "").split(",").map((item) => item.trim()).filter(Boolean);
+    const [manifests, museums] = await Promise.all([
+      Promise.all(manifestPaths.map(loadManifest)),
+      Promise.all(museumPaths.map(loadManifest))
+    ]);
+    root.dataset.ready = "true";
+    document.querySelector(".static-index")?.setAttribute("hidden", "");
+    const localizedManifests = manifests
+      .flat()
+      .map((manifest) => localizeCatalogueEntry(manifest, lang))
+      .sort((a, b) => a.bookOrder - b.bookOrder);
+    const manifestsWithAudio = await Promise.all(localizedManifests.map(async (manifest) => ({
+      ...manifest,
+      audioOverviewUrl: await resolveArtworkAudioOverview({
+        artworkId: AUDIO_ARTWORK_IDS[manifest.slug],
+        language: lang,
+      }),
+    })));
+    renderCatalogue(root, manifestsWithAudio, museums, lang, text);
+  } catch (error) {
+    root.innerHTML = `<p class="catalogue-error">${escapeHtml(error.message)}</p>`;
+  }
+}
+
+async function loadManifest(path) {
+  const response = await fetch(path, { cache: "reload" });
+  if (!response.ok) throw new Error(`Could not load ${path}: ${response.status}`);
+  return response.json();
+}
+
+function renderCatalogue(root, manifests, museums, lang, text) {
+  const isHomeGallery = root.dataset.homeGallery === "true";
+  const movements = [...new Set(manifests.flatMap((item) => item.movement || []))].sort();
+  const state = {
+    query: "",
+    movement: ""
+  };
+
+  root.innerHTML = `
+    <div class="catalogue-toolbar">
+      <label class="search-field">
+        <span>${text.search}</span>
+        <input type="search" placeholder="${text.search}" />
+      </label>
+      <label class="filter-field">
+        <span>${text.allMovements}</span>
+        <select>
+          <option value="">${text.allMovements}</option>
+          ${movements.map((movement) => `<option value="${escapeHtml(movement)}">${escapeHtml(movement)}</option>`).join("")}
+        </select>
+      </label>
+      <button class="button" type="button" data-action="reset">${text.reset}</button>
+    </div>
+    <div class="collection-stats"></div>
+    <div class="catalogue-layout">
+      ${isHomeGallery ? `<p class="gallery-selection-kicker">${text.gallerySelection}</p>` : ""}
+      <div class="artwork-grid${isHomeGallery ? " artwork-grid-primary" : ""}"></div>
+      ${isHomeGallery ? `
+        <details class="artwork-more" hidden>
+          <summary class="artwork-more-toggle">
+            <span class="artwork-more-closed">${text.showMore}</span>
+            <span class="artwork-more-open">${text.showLess}</span>
+            <span class="artwork-more-total" aria-label="${text.results}">(<span class="artwork-more-count"></span>)</span>
+            <span class="artwork-more-chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="artwork-grid artwork-more-grid"></div>
+        </details>` : ""}
+    </div>
+    <section class="museum-index-section">
+      <header><p class="eyebrow">ARTDACI</p><h2>${text.museums}</h2><p>${text.museumsIntro}</p></header>
+      <div class="museum-index-grid">${museums.map((museum) => renderMuseumCard(museum, lang, text)).join("")}</div>
+    </section>
+  `;
+
+  const input = root.querySelector("input");
+  const select = root.querySelector("select");
+  const reset = root.querySelector("[data-action='reset']");
+
+  input.addEventListener("input", () => {
+    state.query = input.value.trim().toLowerCase();
+    update();
+  });
+
+  select.addEventListener("change", () => {
+    state.movement = select.value;
+    update();
+  });
+
+  reset.addEventListener("click", () => {
+    input.value = "";
+    select.value = "";
+    state.query = "";
+    state.movement = "";
+    update();
+  });
+
+  function update() {
+    const filtered = manifests.filter((manifest) => matchesCatalogueEntry(manifest, state));
+    const curatedMode = isHomeGallery && !state.query && !state.movement;
+    let visible = filtered;
+    let remaining = [];
+    if (curatedMode) {
+      const bySlug = new Map(filtered.map((manifest) => [manifest.slug, manifest]));
+      visible = HOME_GALLERY_FEATURED_SLUGS.map((slug) => bySlug.get(slug)).filter(Boolean);
+      const highlighted = new Set(visible.map((manifest) => manifest.slug));
+      remaining = filtered.filter((manifest) => !highlighted.has(manifest.slug));
+    }
+    root.querySelector(".collection-stats").innerHTML = renderStats(manifests, filtered, text);
+    root.querySelector(".artwork-grid-primary, .artwork-grid").innerHTML = visible.length
+      ? visible.map((manifest) => renderCard(manifest, lang, text)).join("")
+      : `<p class="empty-results">${text.noResults}</p>`;
+
+    if (isHomeGallery) {
+      root.classList.toggle("catalogue-filtering", !curatedMode);
+      const more = root.querySelector(".artwork-more");
+      more.hidden = !curatedMode || remaining.length === 0;
+      if (!curatedMode) more.open = false;
+      more.querySelector(".artwork-more-count").textContent = String(remaining.length);
+      more.querySelector(".artwork-more-grid").innerHTML = remaining.map((manifest) => renderCard(manifest, lang, text)).join("");
+    }
+  }
+
+  update();
+}
+
+function renderMuseumCard(museum, lang, text) {
+  const localized = museum.localizations?.[lang] || {};
+  const title = localized.title || museum.title;
+  const body = localized.texts?.artisticAnalysis || museum.texts?.artisticAnalysis || "";
+  const slug = museum.slug;
+  return `<article class="museum-index-card">
+    <img src="${escapeHtml(museum.media?.image)}" alt="${escapeHtml(title)}" loading="lazy" />
+    <div><h3>${escapeHtml(title)}</h3><p>${escapeHtml(shorten(body, 190))}</p>
+      <div class="card-actions">
+        <a class="button primary" href="gallery-vr.html?lang=${lang}&amp;room=museums&amp;museum=${slug}">${text.museumVr}</a>
+        <a class="button" href="ar.html?museum=${slug}&amp;lang=${lang}">${text.museumAr}</a>
+        <a class="button" href="space.html?museum=${slug}&amp;lang=${lang}">${text.museumSpace}</a>
+      </div>
+    </div>
+  </article>`;
+}
+
+export function matchesCatalogueEntry(manifest, state) {
+  const query = String(state.query || "").trim().toLowerCase();
+  const haystack = [
+    manifest.title,
+    manifest.artist?.name,
+    manifest.date,
+    manifest.medium,
+    ...(manifest.movement || []),
+    manifest.texts?.historicalContext,
+    manifest.texts?.artisticAnalysis,
+    manifest.texts?.palette,
+    manifest.texts?.perspectiveTechnique,
+    ...(manifest.education?.vocabulary || [])
+  ].filter(Boolean).join(" ").toLowerCase();
+
+  return (!query || haystack.includes(query))
+    && (!state.movement || (manifest.movement || []).includes(state.movement));
+}
+
+function renderStats(all, filtered, text) {
+  const years = all.map((item) => extractYear(item.date)).filter(Boolean);
+  const modes = new Set(all.flatMap((item) => item.ar?.availableModes || []));
+  const yearSpan = years.length ? Math.max(...years) - Math.min(...years) : 0;
+
+  return `
+    <div><strong>${filtered.length}</strong><span>${text.results}</span></div>
+    <div><strong>${yearSpan}</strong><span>${text.years}</span></div>
+    <div><strong>${modes.size}</strong><span>${text.modes}</span></div>
+    <div><strong>${all.length}</strong><span>${text.printFirst}</span></div>
+  `;
+}
+
+function renderCard(manifest, lang, text) {
+  const slug = manifest.slug;
+  const title = manifest.title;
+  const image = manifest.media?.image || manifest.print?.imageTargetSource;
+  const movement = (manifest.movement || []).join(", ");
+  const printUrl = PRINT_PAGES[lang]?.[slug] || PRINT_PAGES.en[slug] || `print-artwork.html?painting=${encodeURIComponent(slug)}&lang=${lang}`;
+  const audioOverviewUrl = manifest.audioOverviewUrl;
+  const location = [manifest.currentLocation?.museum, manifest.currentLocation?.city].filter(Boolean).join(", ");
+  const summary = manifest.texts?.artisticAnalysis || manifest.texts?.historicalContext || "";
+  const artist = manifest.artist?.name || "";
+  const date = manifest.date || "";
+  const displayLocation = location;
+  const immersiveActions = getArtworkImmersiveActions(slug, lang, text)
+    .map((action) => `<a class="button" href="${action.href}">${action.label}</a>`)
+    .join("\n");
+  const semanticArtworkId = SEMANTIC_ARTWORK_IDS[slug];
+  const semanticAction = semanticArtworkId
+    ? `<a class="button semantic-artwork-link" href="semantic/?artwork=${encodeURIComponent(semanticArtworkId)}&amp;lang=${encodeURIComponent(lang)}">${text.semantic}</a>`
+    : "";
+
+  return `
+    <article class="artwork-card">
+      <a class="artwork-image" href="${printUrl}">
+        <img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy" />
       </a>
-
-      <nav class="hv2-nav" aria-label="Navigation principale">
-        <a href="#painting-index">Collection</a>
-        <a href="#experiences">Expériences</a>
-        <a href="#masters">Maîtres</a>
-        <a href="museums.html?lang=fr">Musées</a>
-        <a href="semantic/?lang=fr">Connaissance</a>
-        <a class="hv2-nav-guide" href="atlas.html?lang=fr">Guide</a>
-      </nav>
-
-      <nav class="hv2-language" aria-label="Langues">
-        <a href="index.html" lang="en">EN</a>
-        <a href="index-fr.html" aria-current="page">FR</a>
-        <a href="index-ar.html" lang="ar" dir="rtl">العربية</a>
-      </nav>
-    </header>
-
-    <main class="home-shell hv2-main">
-      <section class="hv2-hero" aria-labelledby="book-title">
-        <div class="hv2-hero-copy">
-          <p class="hv2-kicker">ARTDACI · L’art au-delà du cadre</p>
-          <div class="hv2-title-row">
-            <h1 id="book-title">Chefs-d’œuvre <span>vivants</span></h1>
-
-          </div>
-          <p class="hv2-hero-lead">ARTDACI associe un livre d’art imprimé à un univers numérique consacré à la découverte artistique. Explorez les chefs-d’œuvre à travers leurs histoires, leurs relations, des modèles 3D interactifs et des expériences immersives, avec ou sans le livre.</p>
-          <p class="hv2-tech-line">Art · Histoires · Relations · AR · 3D · VR · Musées</p>
-
-
-
-          <div class="hv2-hero-actions">
-            <a class="hv2-button hv2-button-primary" href="#featured-title">Explorer les chefs-d’œuvre <span aria-hidden="true">↗</span></a>
-            <a class="hv2-button" href="3d/?lang=fr">Découvrir la 3D interactive <span aria-hidden="true">↗</span></a>
-            <a class="hv2-button hv2-museum-hero-link" href="book-3d.html?lang=fr">Explorer le Livre vivant <span aria-hidden="true">↗</span></a>
-            <a class="hv2-button" href="gallery-vr.html?lang=fr">Entrer dans la galerie VR <span aria-hidden="true">↗</span></a>
-          </div>
+      <div class="artwork-content">
+        <p class="eyebrow">${formatArtworkNumber(manifest.bookOrder, lang)}</p>
+        <h3>${escapeHtml(title)}</h3>
+        <p class="card-meta">${escapeHtml(artist)}, ${escapeHtml(date)}</p>
+        <p>${escapeHtml(shorten(summary, 210))}</p>
+        <dl class="mini-facts">
+          <div><dt>${text.dimensions}</dt><dd>${manifest.dimensions?.heightCm || "?"} x ${manifest.dimensions?.widthCm || "?"} cm</dd></div>
+          <div><dt>${text.location}</dt><dd>${escapeHtml(displayLocation || movement)}</dd></div>
+        </dl>
+        <div class="tag-strip">
+          ${lang === "ar" ? "" : (manifest.education?.vocabulary || []).slice(0, 4).map((item) => `<span>${escapeHtml(item)}</span>`).join("")}
         </div>
-
-        <div class="hv2-smart-art-spotlight" aria-hidden="true">
-          <div class="smart-art-stage" aria-hidden="true">
-            <div class="smart-art-layer smart-art-rear">
-              <svg viewBox="0 0 500 340" focusable="false"><path d="M25 210 Q80 115 138 174 T266 136 T471 100 M32 265 Q125 209 198 284 T458 226 M45 70 Q148 14 258 75 T458 52 M96 40 L130 125 L220 108 L300 190 L410 160"/></svg>
-            </div>
-            <div class="smart-art-layer smart-art-image"><img src="assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp" alt="" loading="eager" decoding="async" /></div>
-            <div class="smart-art-layer smart-art-front">
-              <svg viewBox="0 0 500 340" focusable="false">
-                <path d="M22 260 Q68 90 135 156 Q182 220 234 115 T370 142 Q426 182 478 70 M28 100 Q132 30 208 78 T466 92 M65 294 L131 201 L226 234 L305 139 L441 202 M75 46 L115 112 L193 98 L269 182 L381 125"/>
-                <path class="smart-accent" d="M142 135 Q210 78 278 140 T435 113 M50 238 L158 224 L212 168"/>
-                <path class="smart-accent-green" d="M63 286 Q150 236 234 273 T472 224"/>
-                <path class="smart-accent-red" d="M92 66 Q145 27 215 65 T355 63"/>
-                <g fill="none" stroke="#eaf6ff" stroke-opacity=".48" stroke-width="1"><rect x="72" y="48" width="344" height="238" rx="14" stroke-dasharray="5 8"/><circle cx="225" cy="160" r="72"/><path d="M225 25V308 M42 160H458"/></g>
-              </svg>
-              <div class="smart-art-scan"></div>
-              <i class="smart-art-node n1"></i><i class="smart-art-node n2"></i><i class="smart-art-node n3"></i><i class="smart-art-node n4"></i>
-            </div>
-          </div>
-          <div class="hv2-art-cascade" aria-hidden="true">
-            <span class="hv2-art-cascade-card hv2-art-cascade-vermeer" aria-hidden="true">
-              <img src="assets/artists/johannes-vermeer/collection/girl-with-a-pearl-earring-vermeer.webp" alt="" loading="lazy" decoding="async" />
-              <span class="hv2-art-cascade-scan" aria-hidden="true"></span>
-              <span class="hv2-art-cascade-dot" aria-hidden="true"></span>
-            </span>
-            <span class="hv2-art-cascade-card hv2-art-cascade-vangogh" aria-hidden="true">
-              <img src="assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp" alt="" loading="lazy" decoding="async" />
-              <span class="hv2-art-cascade-scan" aria-hidden="true"></span>
-              <span class="hv2-art-cascade-dot" aria-hidden="true"></span>
-            </span>
-            <span class="hv2-art-cascade-card hv2-art-cascade-monet" aria-hidden="true">
-              <img src="assets/artists/claude-monet/collection/impression-sunrise-monet.webp" alt="" loading="lazy" decoding="async" />
-              <span class="hv2-art-cascade-scan" aria-hidden="true"></span>
-              <span class="hv2-art-cascade-dot" aria-hidden="true"></span>
-            </span>
-          </div>
-          <p class="smart-art-caption"><b>ARTDACI</b> · SMART ART · VISION · CONNAISSANCE</p>
+        <div class="card-actions">
+          <a class="button primary" href="${printUrl}">${text.print}</a>
+          ${immersiveActions}
+          ${semanticAction}
+          ${audioOverviewUrl ? `<a class="button" href="${escapeHtml(audioOverviewUrl)}">${text.audioOverview}</a>` : ""}
         </div>
-      </section>
+      </div>
+    </article>
+  `;
+}
 
-      <section class="sd-feature" id="spatial-depth" aria-label="Création interactive ARTDACI Spatial Depth">
-          <div class="sd-panel" data-spatial-depth aria-label="Une création visuelle interactive">
-            <div class="sd-copy sd-book-slot">
-              <p class="sd-visually-hidden" id="sd-tip">Déplacez le pointeur sur la carte ou utilisez les flèches du clavier lorsqu’elle est sélectionnée.</p>
-              <div class="hv2-smart-art" role="group" aria-label="Livre ARTDACI 3D interactif et commandes">
-              <div class="hv2-book-hero" aria-label="Livre ARTDACI en 3D">
-              
-              <div class="hv2-book-controls" role="group" aria-label="Le livre ARTDACI · 3D">
-              <p class="hv2-book-controls-label">Le livre ARTDACI · 3D</p>
-              <p class="hv2-book-controls-hint" id="hv2-book-hint">Glisser pour tourner · Molette ou pincement pour zoomer</p>
-              <a class="hv2-button hv2-book-scan" data-book-ar-v1="1" href="book-ar.html?lang=fr" aria-label="Scanner le livre · AR">Scanner le livre · AR ↗</a>
-              <button type="button" class="hv2-tv-toggle" data-show3d="Afficher le livre 3D interactif" data-show-cover="Afficher la couverture (mode TV)">Afficher la couverture (mode TV)</button>
-              <div class="hv2-book-movement">
-              <button type="button" class="hv2-book-move" data-book-move aria-describedby="hv2-book-hint" title="Glisser ici ou utiliser les flèches du clavier pour déplacer le livre" aria-label="Glisser ici ou utiliser les flèches du clavier pour déplacer le livre">↔ <span>Déplacer le livre</span></button>
-              <button type="button" class="hv2-book-recenter" data-book-recenter aria-label="Recentrer" title="Recentrer">↺</button>
-              </div>
-              </div>
-              <div class="hv2-book-aura" aria-hidden="true"></div>
-              <model-viewer
-              class="hv2-book-model"
-              src="assets/environments/gallery/models/artdaci_book3d_v2.glb"
-              alt="Livre ARTDACI en 3D"
-              auto-rotate
-              auto-rotate-delay="0"
-              rotation-per-second="6deg"
-              camera-controls
-              interaction-prompt="none"
-              shadow-intensity="1.15"
-              shadow-softness="0.85"
-              exposure="1.08"
-              environment-image="neutral"
-              camera-orbit="32deg 68deg 92%"
-              min-camera-orbit="auto 20deg 18%"
-              max-camera-orbit="auto 96deg 320%"
-              loading="lazy"
-              ></model-viewer>
-              <img class="hv2-tv-book-cover" src="assets/varia/artdaci-book-cover.webp" alt="Couverture illustrée du livre ARTDACI" decoding="async" />
-              <p class="hv2-book-signature">Le livre ARTDACI · De l’imprimé à la culture immersive</p>
-              
-              </div>
-              
-              </div>
-            </div>
-            <div class="sd-scene">
-              <div class="sd-card" tabindex="0" role="img" aria-label="Carte ARTDACI en profondeur. Utilisez les flèches du clavier pour modifier sa perspective." aria-describedby="sd-tip">
-                <span class="sd-author">N. ELM.</span>
-                <span class="sd-accent">SPATIAL</span>
-                <div class="sd-tech-orbit" aria-hidden="true">
-                  <svg viewBox="0 0 270 130" focusable="false">
-                    <path id="sd-tech-path" d="M 135 10 A 120 55 0 1 1 134.9 10" fill="none" stroke="#93bfff" stroke-width="1" opacity=".4"></path>
-                    <text fill="#ff9cfc"><textPath href="#sd-tech-path" startOffset="5%" text-anchor="middle">AR</textPath></text>
-                    <text fill="#9cc2ff"><textPath href="#sd-tech-path" startOffset="25%" text-anchor="middle">VR</textPath></text>
-                    <text fill="#ffdf9c"><textPath href="#sd-tech-path" startOffset="45%" text-anchor="middle">3D</textPath></text>
-                    <text fill="#9cffda"><textPath href="#sd-tech-path" startOffset="65%" text-anchor="middle">GEO</textPath></text>
-                    <text fill="#d19cff"><textPath href="#sd-tech-path" startOffset="85%" text-anchor="middle">SEMANTIC</textPath></text>
-                  </svg>
-                </div>
-                <div class="sd-artists-orbit" aria-hidden="true">
-                  <svg viewBox="0 0 240 100" focusable="false">
-                    <path id="sd-artists-path" d="M 120 10 A 100 40 0 1 1 119.9 10" fill="none" stroke="#ffd14c" stroke-width="1.2" opacity=".7"></path>
-                    <text fill="#ff7676"><textPath href="#sd-artists-path" startOffset="12%" text-anchor="middle">DA VINCI</textPath></text>
-                    <text fill="#76caff"><textPath href="#sd-artists-path" startOffset="37%" text-anchor="middle">VERMEER</textPath></text>
-                    <text fill="#ffd14c"><textPath href="#sd-artists-path" startOffset="62%" text-anchor="middle">VAN GOGH</textPath></text>
-                    <text fill="#6bf1a3"><textPath href="#sd-artists-path" startOffset="87%" text-anchor="middle">MONET</textPath></text>
-                  </svg>
-                </div>
-                <span class="sd-symbol" aria-hidden="true">◈</span>
-                <span class="sd-brand" aria-hidden="true">ARTDACI</span>
-              </div>
-            </div>
-          </div>
-      </section>
+export function getArtworkImmersiveActions(slug, lang, text = UI[lang] || UI.en) {
+  if (slug === "monet-impression-sunrise") {
+    return [{
+      experience: "gallery",
+      href: `gallery-vr.html?lang=${lang}&amp;artist=monet`,
+      label: lang === "fr" ? "Salle Monet" : "Monet Room"
+    }];
+  }
 
-      <section class="hv2-section hv2-start" id="start-here" aria-labelledby="start-title">
-        <div class="hv2-section-head"><div><p class="hv2-section-kicker">Pour commencer</p><h2 id="start-title">Votre découverte de l’art commence ici.</h2></div><p>Découvrez ARTDACI avec son livre imprimé ou explorez directement les œuvres en ligne.</p></div>
-        <div class="hv2-start-grid">
-          <article class="hv2-start-path"><span class="hv2-start-icon" aria-hidden="true">▤</span><h3>Je possède le livre</h3><ol><li>Ouvrez une page du livre qui propose une expérience numérique.</li><li>Suivez le QR code ou les instructions de réalité augmentée avec votre téléphone.</li><li>Découvrez les récits, modèles et expériences immersives disponibles.</li></ol><a class="hv2-button" href="book-ar.html?lang=fr">Scanner la couverture en AR <span aria-hidden="true">↗</span></a></article>
-          <article class="hv2-start-path"><span class="hv2-start-icon" aria-hidden="true">◎</span><h3>J’explore en ligne</h3><ol><li>Choisissez un chef-d’œuvre ou un artiste.</li><li>Découvrez son histoire, ses techniques et ses relations artistiques.</li><li>Poursuivez dans les environnements 3D, les musées et les expériences disponibles.</li></ol><a class="hv2-button" href="#featured-title">Explorer les tableaux <span aria-hidden="true">↗</span></a></article>
-        </div>
-      </section>
+  const artwork = IMMERSIVE_ARTWORKS.find((candidate) => candidate.runtimeSlug === slug);
+  if (!artwork) return [];
 
-      <section class="hv2-section" aria-labelledby="featured-title">
-        <div class="hv2-section-head">
-          <div>
-            <p class="hv2-section-kicker">Chefs-d’œuvre à découvrir</p>
-            <h2 id="featured-title">Commencez par une œuvre.</h2>
-          </div>
-          <p>Chaque œuvre invite à regarder autrement. Découvrez ces peintures à travers leurs détails, leurs contextes historiques et leurs expériences interactives disponibles.</p>
-        </div>
+  return [
+    artwork.ar && { experience: "ar", href: `ar.html?painting=${slug}&amp;lang=${lang}`, label: text.ar },
+    artwork.space && { experience: "space", href: `space.html?painting=${slug}&amp;lang=${lang}`, label: text.space }
+  ].filter(Boolean);
+}
 
-        <div class="hv2-featured-grid">
-          <a class="hv2-work" href="print-target-fr.html">
-            <span class="hv2-work-visual"><img class="hv2-frameless-crop hv2-artwork-trim-mona" src="assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp" alt="La Joconde" loading="lazy" /></span>
-            <div class="hv2-work-copy"><span>Léonard de Vinci · vers 1503–1519</span><strong>La Joconde</strong><small>Imprimé · Sémantique · AR · 3D · VR</small></div>
-          </a>
-          <a class="hv2-work" href="print-vermeer-girl-with-a-pearl-earring-fr.html">
-            <span class="hv2-work-visual"><img class="hv2-frameless-crop hv2-artwork-trim-vermeer" src="assets/artists/johannes-vermeer/collection/girl-with-a-pearl-earring-vermeer.webp" alt="La Jeune Fille à la perle" loading="lazy" /></span>
-            <div class="hv2-work-copy"><span>Johannes Vermeer · vers 1665</span><strong>La Jeune Fille à la perle</strong><small>Imprimé · Sémantique · AR · 3D</small></div>
-          </a>
-          <a class="hv2-work" href="print-van-gogh-fr.html">
-            <span class="hv2-work-visual"><img src="assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp" alt="Autoportrait de Vincent van Gogh, Musée d’Orsay, 1889" loading="lazy" /></span>
-            <div class="hv2-work-copy"><span>Vincent van Gogh · 1889</span><strong>Autoportrait</strong><small>Imprimé · Sémantique · 3D · Guide immersif</small></div>
-          </a>
-          <a class="hv2-work" href="print-monet-impression-sunrise-fr.html">
-            <span class="hv2-work-visual"><img class="hv2-frameless-crop hv2-artwork-trim-monet" src="assets/artists/claude-monet/collection/impression-sunrise-monet.webp" alt="Impression, soleil levant de Claude Monet" loading="lazy" /></span>
-            <div class="hv2-work-copy"><span>Claude Monet · 1872</span><strong>Impression, soleil levant</strong><small>Imprimé · Interprétation · Multimédia · Exploration spatiale</small></div>
-          </a>
-        </div>
-      </section>
+function extractYear(value = "") {
+  const match = String(value).match(/\d{4}/);
+  return match ? Number(match[0]) : null;
+}
 
-      <section id="experiences" class="hv2-section hv2-experiences" aria-labelledby="experiences-title">
-        <div class="hv2-section-head">
-          <div>
-            <p class="hv2-section-kicker">Explorer ARTDACI</p>
-            <h2 id="experiences-title">Dix façons de vivre la collection.</h2>
-          </div>
-          <p>Explorez la collection, les connaissances, la 3D, le Livre Vivant, les mondes virtuels, la Galerie VR, les lieux de l’art avec GEO, les maîtres, le cinéma VR et les expériences par QR codes et AR.</p>
-        </div>
+function shorten(value, limit) {
+  if (value.length <= limit) return value;
+  return `${value.slice(0, limit - 1).trim()}...`;
+}
 
-        <div class="hv2-experience-grid">
-          <a class="hv2-experience-card" href="#painting-index">
-            <span class="hv2-experience-no">01</span>
-            <span class="hv2-experience-type">Collection</span>
-            <h3>Index des peintures</h3>
-            <p>Recherchez la collection et ouvrez les couches imprimées, numériques et immersives de chaque œuvre.</p>
-            <span class="hv2-arrow" aria-hidden="true">↗</span>
-          </a>
-
-          <a class="hv2-experience-card semantic-entry-link" href="semantic/?lang=fr">
-            <span class="hv2-experience-no">02</span>
-            <span class="hv2-experience-type">Graphe de connaissance</span>
-            <h3>Sémantique ARTDACI</h3>
-            <p>Naviguez entre œuvres, artistes, musées, lieux, thèmes, techniques et relations culturelles.</p>
-            <span class="hv2-arrow" aria-hidden="true">↗</span>
-          </a>
-
-          <a class="hv2-experience-card" href="3d/?lang=fr">
-            <span class="hv2-experience-no">03</span>
-            <span class="hv2-experience-type">3D interactive</span>
-            <h3>Modèles 3D</h3>
-            <p>Examinez les œuvres, les artistes, les objets ARTDACI et l’architecture des musées en 3D.</p>
-            <span class="hv2-arrow" aria-hidden="true">↗</span>
-          </a>
-
-          <a class="hv2-experience-card" href="book-3d.html?lang=fr">
-            <span class="hv2-experience-no">04</span>
-            <span class="hv2-experience-type">Livre interactif</span>
-            <h3>Livre Vivant</h3>
-            <p>Tournez les pages d’ARTDACI en 3D et lancez médias, modèles et couches immersives depuis le livre.</p>
-            <span class="hv2-arrow" aria-hidden="true">↗</span>
-          </a>
-
-          <a class="hv2-experience-card" href="worlds/?lang=fr">
-            <span class="hv2-experience-no">05</span>
-            <span class="hv2-experience-type">Mondes génératifs</span>
-            <h3>Mondes virtuels</h3>
-            <p>Entrez dans des mondes inspirés du Louvre, de l’atelier de Léonard et de La Chambre de Van Gogh.</p>
-            <span class="hv2-arrow" aria-hidden="true">↗</span>
-          </a>
-
-          <a class="hv2-experience-card" href="gallery-vr.html?lang=fr">
-            <span class="hv2-experience-no">06</span>
-            <span class="hv2-experience-type">Galerie immersive</span>
-            <h3>Galerie VR</h3>
-            <p>Entrez dans des expositions virtuelles, des musées et des expériences spatiales centrées sur les œuvres.</p>
-            <span class="hv2-arrow" aria-hidden="true">↗</span>
-          </a>
-
-          <a class="hv2-experience-card hv2-geo-entry" href="geo/index.html?lang=fr">
-            <span class="hv2-experience-no">07</span>
-            <span class="hv2-experience-type">Géographie de l’art</span>
-            <h3>Exploration GEO</h3>
-            <p>Explorez les lieux des œuvres et les musées grâce aux cartes, à Google Earth et aux vues Street View disponibles.</p>
-            <span class="hv2-arrow" aria-hidden="true">↗</span>
-          </a>
-
-          <a class="hv2-experience-card masters-hub-entry-link" href="geo/masters-hub.html?lang=fr">
-            <span class="hv2-experience-no">08</span>
-            <span class="hv2-experience-type">Maîtres</span>
-            <h3>Hub des Maîtres</h3>
-            <p>Rencontrez Léonard, Vermeer, Van Gogh et Monet à travers des expériences guidées en 3D.</p>
-            <span class="hv2-arrow" aria-hidden="true">↗</span>
-          </a>
-
-          <a class="hv2-experience-card" href="cinema-vr.html?lang=fr">
-            <span class="hv2-experience-no">09</span>
-            <span class="hv2-experience-type">Cinéma</span>
-            <h3>Cinéma VR</h3>
-            <p>Regardez récits artistiques, animations et contenus interprétatifs dans un cinéma immersif dédié.</p>
-            <span class="hv2-arrow" aria-hidden="true">↗</span>
-          </a>
-
-          <article class="hv2-experience-card hv2-ar-group"><span class="hv2-experience-no">10</span>
-            <span class="hv2-experience-type">QR codes · Réalité augmentée</span><h3>Donnez une nouvelle dimension aux peintures avec les QR codes et l’AR.</h3>
-            <p>Les QR codes du livre donnent accès à des contenus numériques. Avec un smartphone compatible, reconnaissez les œuvres prises en charge pour découvrir leurs expériences AR. Choisissez un artiste :</p><div class="hv2-ar-links">
-              <a href="ar/leonardo">Léonard AR <span aria-hidden="true">↗</span></a>
-              <a href="ar/vermeer">Vermeer AR <span aria-hidden="true">↗</span></a>
-              <a href="ar/van-gogh">Van Gogh AR <span aria-hidden="true">↗</span></a>
-              <a href="ar/monet">Monet AR <span aria-hidden="true">↗</span></a>
-            </div>
-          </article>
-
-        </div>
-
-        <aside class="hv2-guide-note" aria-label="Guide ARTDACI">
-          <div>
-            <span class="hv2-guide-label">Vous découvrez ARTDACI ?</span>
-            <strong>Voyez comment le livre imprimé et ses couches numériques fonctionnent ensemble.</strong>
-          </div>
-          <a href="atlas.html?lang=fr">Ouvrir le guide ARTDACI <span aria-hidden="true">→</span></a>
-        </aside>
-      </section>
-
-      <section id="masters" class="hv2-section hv2-masters" aria-labelledby="masters-title">
-        <div class="hv2-section-head">
-          <div>
-            <p class="hv2-section-kicker">Les Maîtres</p>
-            <h2 id="masters-title">Quatre artistes. Quatre manières de voir.</h2>
-          </div>
-          <p>
-            ARTDACI commence avec quatre grandes figures dont les œuvres ouvrent des voies différentes
-            vers le portrait, la lumière, la perception, l’émotion et la peinture moderne.
-          </p>
-        </div>
-
-        <div class="hv2-master-grid">
-          <a class="hv2-master-card" href="geo/masters-hub.html?lang=fr">
-            <span class="hv2-master-photo"><img src="assets/artists/leonardo-da-vinci/profile/home-portrait.webp" alt="Léonard de Vinci" loading="lazy" /></span>
-            <div class="hv2-master-copy"><span>Renaissance · Italie</span><strong>Léonard de Vinci</strong></div>
-          </a>
-          <a class="hv2-master-card" href="geo/masters-hub.html?lang=fr">
-            <span class="hv2-master-photo"><img src="assets/artists/johannes-vermeer/profile/home-portrait.webp" alt="Johannes Vermeer" loading="lazy" /></span>
-            <div class="hv2-master-copy"><span>Âge d’or néerlandais</span><strong>Johannes Vermeer</strong></div>
-          </a>
-          <a class="hv2-master-card" href="geo/masters-hub.html?lang=fr">
-            <span class="hv2-master-photo"><img src="assets/artists/vincent-van-gogh/profile/home-portrait.webp" alt="Vincent van Gogh" loading="lazy" /></span>
-            <div class="hv2-master-copy"><span>Postimpressionnisme</span><strong>Vincent van Gogh</strong></div>
-          </a>
-          <a class="hv2-master-card" href="geo/masters-hub.html?lang=fr">
-            <span class="hv2-master-photo"><img src="assets/artists/claude-monet/profile/home-portrait.webp" alt="Claude Monet" loading="lazy" /></span>
-            <div class="hv2-master-copy"><span>Impressionnisme</span><strong>Claude Monet</strong></div>
-          </a>
-        </div>
-      </section>
-
-      <section class="hv2-continuum-wrap" aria-labelledby="continuum-title">
-        <div class="hv2-continuum">
-          <p class="hv2-section-kicker">De la page à l’espace</p>
-          <h2 id="continuum-title">Une œuvre. Plusieurs dimensions de découverte.</h2>
-          <p class="hv2-continuum-lead">
-            ARTDACI relie la stabilité de la page imprimée à un continuum spatial et sémantique en expansion.
-            Le lecteur peut approfondir sans perdre l’œuvre comme point de référence.
-          </p>
-          <div class="hv2-continuum-track" aria-label="Continuum de contenu ARTDACI">
-            <div class="hv2-continuum-step"><span>01</span><strong>Imprimé</strong></div>
-            <div class="hv2-continuum-step"><span>02</span><strong>Connaissance</strong></div>
-            <div class="hv2-continuum-step"><span>03</span><strong>Sémantique</strong></div>
-            <div class="hv2-continuum-step"><span>04</span><strong>AR</strong></div>
-            <a class="hv2-continuum-step hv2-continuum-link" href="3d/?lang=fr"><span>05</span><strong>3D</strong></a>
-            <div class="hv2-continuum-step"><span>06</span><strong>VR</strong></div>
-            <div class="hv2-continuum-step"><span>07</span><strong>GEO</strong></div>
-          </div>
-
-        </div>
-      </section>
-
-      <section id="places" class="hv2-section" aria-labelledby="places-title">
-        <div class="hv2-section-head">
-          <div>
-            <p class="hv2-section-kicker">Musées & lieux</p>
-            <h2 id="places-title">L’art appartient aussi aux lieux.</h2>
-          </div>
-          <p>
-            ARTDACI relie les peintures aux musées, salles et contextes géographiques
-            qui façonnent leur rencontre dans le monde réel.
-          </p>
-        </div>
-        <div class="hv2-hero-actions hv2-museum-explorer-entry">
-          <a class="hv2-button hv2-button-primary" href="museums.html?lang=fr">Découvrir les six musées : photographies, histoires et œuvres ↗</a>
-          <a class="hv2-button" href="museums-atlas.html">Atlas photographique · 17 musées ↗</a>
-        </div>
-        <div class="hv2-places">
-          <a class="hv2-place-primary" href="gallery-vr.html?lang=fr">
-            <p class="hv2-section-kicker">Musées virtuels</p>
-            <h3>Entrez dans des galeries construites autour de la collection.</h3>
-            <p>Explorez des environnements muséaux, des salles dédiées et des expériences inter-musées en VR.</p>
-            <span class="hv2-place-cta">Visiter la galerie VR →</span>
-          </a>
-          <a class="hv2-place-secondary" href="geo/index.html?lang=fr">
-            <p class="hv2-section-kicker">ARTDACI GEO</p>
-            <h3>Reliez la culture numérique aux lieux réels.</h3>
-            <p>Passez des œuvres aux musées et aux expériences spatiales conçues autour du lieu.</p>
-            <span class="hv2-place-cta">Explorer GEO →</span>
-          </a>
-        </div>
-      </section>
-
-      <section id="painting-index" class="painting-index painting-index-gallery" aria-labelledby="index-title">
-        <div class="section-heading">
-          <p class="eyebrow">Collection</p>
-          <h2 id="index-title">Index des peintures</h2>
-          <p class="section-dek">Une sélection de huit œuvres des quatre maîtres ouvre la visite. Les autres peintures restent accessibles d’un geste, et la recherche explore toujours la collection complète.</p>
-        </div>
-        <div
-          id="catalogue-app"
-          class="catalogue-app"
-          data-home-gallery="true"
-          data-lang="fr"
-          data-manifests="content/paintings/mona-lisa.json,content/paintings/lady-with-an-ermine.json,content/paintings/vermeer-girl-with-a-pearl-earring.json,content/paintings/view-of-delft.json,content/paintings/van-gogh.json?v=4,content/paintings/van-gogh-bedroom.json,content/paintings/monet-impression-sunrise.json,content/paintings/pont-d-argenteuil.json,content/paintings/additional-16.json"
-          data-museums="content/museums/louvre.json?v=3,content/museums/mauritshuis.json,content/museums/czartoryski.json?v=2,content/museums/orsay.json,content/museums/van-gogh-museum.json,content/museums/national-gallery-of-art-washington.json?v=1"
-          aria-live="polite">
-        </div>
-        <noscript><div class="section-heading"><p class="section-dek">JavaScript est nécessaire pour l’index de collection.</p></div></noscript>
-      </section>
-
-      <section class="hv2-section hv2-tribute" aria-labelledby="tribute-title">
-        <div class="hv2-tribute-copy">
-          <p class="hv2-section-kicker">L’esprit derrière ARTDACI</p>
-          <h2 id="tribute-title">Un hommage à Léonard et à la curiosité qui relie les disciplines.</h2>
-          <p>
-            ARTDACI est dédié à Léonard de Vinci — non comme inventeur des technologies actuelles,
-            mais comme visionnaire dont les recherches sur l’art, l’optique, l’anatomie, les machines,
-            le mouvement et l’espace incarnent la curiosité qui donne du sens aux nouvelles formes de découverte culturelle.
-          </p>
-          <blockquote class="hv2-tribute-quote">« Que pouvons-nous encore découvrir ? »</blockquote>
-          <div class="hv2-hero-actions">
-            <a class="hv2-button hv2-button-primary" href="print-leonardo-tribute.html?lang=fr">Lire la dédicace</a>
-            <a class="hv2-button" href="book-3d.html?lang=fr">Ouvrir le Livre Vivant</a>
-          </div>
-        </div>
-        <figure>
-          <img src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/davinci-monalisa.png" alt="Rencontre réinventée entre Léonard de Vinci et La Joconde" loading="lazy" />
-        </figure>
-      </section>
-
-      <section class="hv2-section" aria-labelledby="book-bridge-title">
-        <div class="hv2-book-bridge">
-          <div>
-            <p class="hv2-section-kicker">Continuer depuis le livre imprimé</p>
-            <h2 id="book-bridge-title">Le papier d’abord. Le numérique quand vous voulez aller plus loin.</h2>
-            <p>
-              Scannez depuis le livre ARTDACI pour continuer en ligne, accéder aux couches multimédias
-              et passer de la lecture aux expériences connectées et immersives.
-            </p>
-            <div class="hv2-hero-actions">
-              <a class="hv2-button" href="print-multimedia-qr-fr.html">Ouvrir la page QR multimédia imprimable</a>
-            </div>
-          </div>
-          <div class="hv2-qr-pair" aria-label="Codes QR ARTDACI">
-            <figure><img src="assets/qr/index-fr.png" alt="Code QR du compagnon ARTDACI en français" loading="lazy" /><figcaption>Français</figcaption></figure>
-            <figure><img src="assets/qr/index-en.png" alt="Code QR du compagnon ARTDACI en anglais" loading="lazy" /><figcaption>English</figcaption></figure>
-          </div>
-        </div>
-      </section>
-      <section class="hv2-section hv2-faq" id="faq" aria-labelledby="faq-title"><div class="hv2-section-head"><div><p class="hv2-section-kicker">Informations pratiques</p><h2 id="faq-title">Questions fréquentes</h2></div></div><div class="hv2-faq-list"><details class="hv2-faq-item"><summary>Qu’est-ce qu’ARTDACI ?</summary><p>ARTDACI est un livre d’art et un site indépendant pour découvrir les peintures et l’histoire de l’art grâce aux connaissances reliées et à certaines expériences AR, 3D et VR.</p></details>
-<details class="hv2-faq-item"><summary>Faut-il posséder le livre ?</summary><p>Non. Le site et de nombreuses expériences sont accessibles sans le livre. Le livre imprimé propose un parcours complémentaire.</p></details>
-<details class="hv2-faq-item"><summary>De quel équipement ai-je besoin ?</summary><p>Un navigateur moderne suffit pour de nombreuses pages. La réalité augmentée avec caméra exige un appareil compatible et les autorisations nécessaires. Certaines fonctions VR nécessitent un matériel adapté.</p></details>
-<details class="hv2-faq-item"><summary>Combien coûte ARTDACI ?</summary><p>Vous pouvez explorer le site public sans acheter le livre. Les conditions d’achat et les éventuels frais propres à certaines expériences doivent être confirmés séparément.</p></details>
-<details class="hv2-faq-item"><summary>Quelles œuvres sont proposées ?</summary><p>ARTDACI présente des œuvres de Léonard de Vinci, Vermeer, Van Gogh et Monet. Consultez l’Index des peintures pour découvrir la collection actuelle et ses expériences.</p></details></div></section>
-      <section class="hv2-section hv2-about" id="about-artdaci" aria-labelledby="about-title"><p class="hv2-section-kicker">À propos d’ARTDACI</p><h2 id="about-title">Relier le patrimoine artistique aux nouvelles façons d’apprendre.</h2><p>ARTDACI associe l’histoire de l’art, l’interprétation et l’exploration numérique. Le projet encourage l’observation attentive, la curiosité intellectuelle et la découverte des relations entre œuvres, artistes, techniques et lieux.</p><div class="hv2-hero-actions"><a class="hv2-button" href="print-leonardo-tribute.html?lang=fr">Lire la dédicace <span aria-hidden="true">↗</span></a><a class="hv2-button" href="#painting-index">Explorer l’Index <span aria-hidden="true">↗</span></a></div></section>
-    </main>
-
-    <footer class="hv2-footer">
-      <strong>ARTDACI</strong>
-      <span>Art · Connaissance · Imprimé · AR · 3D · VR · GEO</span>
-    </footer>
-
-    <script type="module" src="scripts/catalogue.js?v=18"></script>
-    <script type="module" src="scripts/visitor-guide.js?v=1"></script>
-    <script src="scripts/pwa.js?v=1" defer></script>
-    <script src="scripts/spatial-depth.js?v=1" defer></script>
-    <script src="scripts/book-interaction.js?v=1" defer></script>
-  </body>
-</html>
+function escapeHtml(value = "") {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
