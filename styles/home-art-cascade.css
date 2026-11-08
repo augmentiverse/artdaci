@@ -1,0 +1,156 @@
+/* ARTDACI — four masters, one living Smart Art cascade. November 2026.
+   3 existing canonical images below the animated Mona Lisa. Decorative,
+   GPU-light CSS overlays only; zero extra WebGL, SVG ids or JS. */
+.home-v2 .hv2-hero > .hv2-smart-art-spotlight {
+  overflow:visible;
+  perspective:1200px;
+}
+/* Keep Mona Lisa's existing smart-art-stage animation intact. */
+.home-v2 .hv2-smart-art-spotlight > .smart-art-stage {
+  position:relative;
+  z-index:2;
+}
+.home-v2 .hv2-smart-art-spotlight > .hv2-art-cascade {
+  position:relative;
+  z-index:3;
+  box-sizing:border-box;
+  width:100%;
+  height:clamp(150px,18vw,220px);
+  margin-top:-12%;
+  perspective:950px;
+  pointer-events:none;
+}
+.home-v2 .hv2-art-cascade-card {
+  --cascade-glow:rgba(81,168,227,.5);
+  --cascade-turn:-6deg;
+  --cascade-shift:0px;
+  box-sizing:border-box;
+  position:absolute;
+  display:block;
+  margin:0;
+  padding:0;
+  border:1px solid rgba(207,231,253,.65);
+  border-radius:clamp(10px,1.4vw,16px);
+  overflow:hidden;
+  background:#122b46;
+  box-shadow:
+    0 14px 30px rgba(23,52,84,.2),
+    0 0 15px var(--cascade-glow),
+    inset 0 1px 0 rgba(255,255,255,.4);
+  transform-origin:50% 50%;
+  transform:translate3d(0,0,0) rotate(var(--cascade-turn));
+  animation:hv2-cascade-drift 10s ease-in-out infinite alternate;
+  pointer-events:none;
+  isolation:isolate;
+}
+.home-v2 .hv2-art-cascade-card::before {
+  content:"";
+  position:absolute;
+  z-index:3;
+  inset:5%;
+  border:1px solid rgba(225,242,255,.43);
+  border-radius:10px;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,transparent 49.7%,rgba(240,248,255,.19) 50%,transparent 50.3%),
+    linear-gradient(0deg,transparent 49.7%,rgba(240,248,255,.16) 50%,transparent 50.3%);
+}
+.home-v2 .hv2-art-cascade-card::after {
+  content:"";
+  position:absolute;
+  z-index:2;
+  inset:0;
+  pointer-events:none;
+  background:
+    linear-gradient(113deg,rgba(109,173,240,.23),transparent 49%,rgba(237,186,103,.18)),
+    repeating-linear-gradient(0deg,transparent 0 18px,rgba(243,249,255,.09) 19px,transparent 20px);
+  opacity:.68;
+}
+.home-v2 .hv2-art-cascade-card img {
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:saturate(.99) contrast(1.04);
+}
+.home-v2 .hv2-art-cascade-scan {
+  position:absolute;
+  z-index:4;
+  inset:8% 0 auto;
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--cascade-glow),rgba(255,241,197,.8),transparent);
+  box-shadow:0 0 8px var(--cascade-glow);
+  opacity:.63;
+  animation:hv2-cascade-sweep 7.4s ease-in-out infinite alternate;
+}
+.home-v2 .hv2-art-cascade-dot {
+  position:absolute;
+  z-index:5;
+  top:12%;right:12%;
+  width:7px;height:7px;border-radius:50%;
+  background:#f1d28e;
+  box-shadow:0 0 0 4px rgba(244,207,136,.22),0 0 10px var(--cascade-glow);
+}
+.home-v2 .hv2-art-cascade-vermeer {
+  z-index:3;
+  top:0;
+  left:2%;
+  width:64%;
+  aspect-ratio:1.04;
+  --cascade-glow:rgba(84,167,235,.55);
+  --cascade-turn:-6deg;
+  animation-delay:-1.7s;
+}
+.home-v2 .hv2-art-cascade-vermeer img {object-position:50% 22%;}
+.home-v2 .hv2-art-cascade-vangogh {
+  z-index:2;
+  top:22%;
+  left:32%;
+  width:54%;
+  aspect-ratio:1.09;
+  --cascade-glow:rgba(74,207,192,.48);
+  --cascade-turn:7deg;
+  animation-delay:-5.2s;
+}
+.home-v2 .hv2-art-cascade-vangogh img {object-position:50% 27%;}
+.home-v2 .hv2-art-cascade-monet {
+  z-index:1;
+  top:48%;
+  left:54%;
+  width:44%;
+  aspect-ratio:1.42;
+  --cascade-glow:rgba(237,166,107,.48);
+  --cascade-turn:11deg;
+  animation-delay:-3s;
+}
+.home-v2 .hv2-art-cascade-monet img {object-position:center;}
+.home-v2 .hv2-art-cascade-card:nth-child(2) .hv2-art-cascade-scan {animation-delay:-2.1s;}
+.home-v2 .hv2-art-cascade-card:nth-child(3) .hv2-art-cascade-scan {animation-delay:-4.3s;}
+@keyframes hv2-cascade-drift {
+  0% {transform:translate3d(0,3px,0) rotate(var(--cascade-turn));}
+  100% {transform:translate3d(0,-4px,0) rotate(calc(var(--cascade-turn) + 2deg));}
+}
+@keyframes hv2-cascade-sweep {
+  from {top:9%;opacity:.2;}
+  to {top:89%;opacity:.67;}
+}
+/* The hero reserves the stack's footprint without covering the 3D book
+   now residing in the following Spatial Depth card. */
+@media(min-width:921px) {
+  .home-v2 .hv2-hero {min-height:clamp(525px,52vw,620px);}
+  .home-v2 .hv2-smart-art-spotlight > .hv2-art-cascade {height:clamp(155px,18vw,220px);}
+}
+@media(max-width:920px) {
+  .home-v2 .hv2-hero > .hv2-hero-copy {padding-top:clamp(385px,48vw,445px);}
+}
+@media(max-width:600px) {
+  .home-v2 .hv2-hero > .hv2-hero-copy {padding-top:clamp(320px,83vw,395px);}
+  .home-v2 .hv2-smart-art-spotlight > .hv2-art-cascade {margin-top:-10%;height:150px;}
+  .home-v2 .hv2-art-cascade-card {border-radius:10px;}
+  .home-v2 .hv2-art-cascade-card::before {border-radius:7px;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .home-v2 .hv2-art-cascade-card,
+  .home-v2 .hv2-art-cascade-scan {animation:none!important;}
+  .home-v2 .hv2-art-cascade-card {transform:rotate(var(--cascade-turn));}
+}

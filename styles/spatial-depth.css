@@ -1,0 +1,144 @@
+/* ARTDACI Spatial Depth: isolated component, adapted from the supplied HTML animation.
+   Lives between the main hero and Start Here, before the educational pathways. */
+.home-v2 .sd-panel {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  align-items: center;
+  gap: clamp(18px, 4vw, 66px);
+  margin-top: clamp(42px, 5vw, 74px);
+  padding: clamp(24px, 4vw, 58px);
+  border: 1px solid rgba(128, 182, 241, .48);
+  border-radius: 28px;
+  background: linear-gradient(118deg, #132a48 0%, #163761 55%, #0c2347 100%);
+  color: #eaf4ff;
+  box-shadow: 0 25px 60px rgba(16, 41, 79, .18), inset 0 1px rgba(255,255,255,.09);
+  overflow: hidden;
+}
+.home-v2 .sd-panel::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -28% -12% -20% 36%;
+  background: radial-gradient(ellipse at 58% 46%,rgba(53,132,237,.31),transparent 59%);
+  pointer-events: none;
+}
+.home-v2 .sd-copy { position: relative; z-index: 1; min-width: 0; }
+.home-v2 .sd-eyebrow {
+  margin: 0 0 13px;
+  font-size: 12px; font-weight: 800; letter-spacing: .14em;
+  text-transform: uppercase; color: #f4cd77;
+}
+.home-v2 .sd-copy h3 {
+  margin: 0; color: #f6faff;
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  font-weight: 800;
+  font-size: clamp(25px, 2.65vw, 41px);
+  line-height: 1.15; letter-spacing: -.025em;
+}
+.home-v2 .sd-description {
+  margin: 17px 0 0; max-width: 47ch;
+  font-size: clamp(15px, 1.3vw, 18px);
+  line-height: 1.7; color: #cbdcf1;
+}
+.home-v2 .sd-instruction { margin: 19px 0 0; font-size: 13px; line-height: 1.6; color: #f2dba2; }
+.home-v2 .sd-disclaimer { margin: 14px 0 0; font-size: 12px; line-height: 1.6; color: #a9c4df; }
+.home-v2 .sd-link {
+  display: inline-flex; align-items: center; min-height: 44px; gap: 8px;
+  margin-top: 20px; padding: 10px 17px;
+  border-radius: 11px; border: 1px solid rgba(177, 212, 252, .55);
+  background: rgba(138, 185, 239, .12); color: #fff;
+  text-decoration: none; font-size: 14px; font-weight: 730;
+  transition: background .18s, border-color .18s;
+}
+.home-v2 .sd-link:hover { background: rgba(138, 185, 239, .25); border-color: #b5d8ff; }
+.home-v2 .sd-link:focus-visible, .home-v2 .sd-card:focus-visible {
+  outline: 3px solid #ffdc73; outline-offset: 5px;
+}
+.home-v2 .sd-scene {
+  position: relative; display: grid; place-items: center;
+  min-width: 0; min-height: 350px; perspective: 950px;
+  touch-action: pan-y;
+}
+.home-v2 .sd-scene::before {
+  content: ""; position: absolute; pointer-events: none; width: min(95%, 510px);
+  aspect-ratio: 1.5; border-radius: 50%;
+  background: radial-gradient(ellipse,rgba(73,152,255,.23),transparent 68%);
+  filter: blur(22px);
+}
+.home-v2 .sd-card {
+  --sd-rx: -8deg; --sd-ry: 13deg;
+  position: relative;
+  box-sizing: border-box; direction: ltr;
+  display: grid; place-items: center;
+  width: min(340px, 88%); aspect-ratio: 1.32;
+  border: 1px solid #81bfff; border-radius: 23px;
+  background: linear-gradient(135deg, #285caa, #172b5b);
+  box-shadow: 0 32px 65px rgba(3, 8, 20, .64), 0 0 40px rgba(78,155,247,.25);
+  transform-style: preserve-3d;
+  transform: rotateX(var(--sd-rx)) rotateY(var(--sd-ry));
+  transition: transform .19s ease-out;
+  will-change: transform;
+}
+.home-v2 .sd-author {
+  position: absolute; inset-inline-start: 18px; top: 17px;
+  color: #b0cfeb; font-size: 11px; letter-spacing: .1em; font-style: italic;
+  transform: translateZ(40px);
+}
+.home-v2 .sd-accent {
+  position: absolute; inset-inline-end: 17px; top: 16px;
+  padding: 5px 10px; border-radius: 100px;
+  background: #eb536b; color: #fff; font-size: 11px; font-weight: 720;
+  transform: translateZ(35px);
+}
+.home-v2 .sd-tech-orbit,
+.home-v2 .sd-artists-orbit { position: absolute; pointer-events: none; transform-style: preserve-3d; }
+.home-v2 .sd-tech-orbit { width: 81%; aspect-ratio: 270/130; transform: translateZ(30px) rotate(18deg); }
+.home-v2 .sd-artists-orbit { width: 72%; aspect-ratio: 240/100; transform: translateZ(70px) rotate(-24deg); }
+.home-v2 .sd-tech-orbit svg, .home-v2 .sd-artists-orbit svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.home-v2 .sd-artists-orbit text { font-family: Inter,"Segoe UI",Arial,sans-serif; font-size: 10px; font-weight: 800; letter-spacing: .7px; }
+.home-v2 .sd-tech-orbit text { font-family: Inter,"Segoe UI",Arial,sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 1px; }
+.home-v2 .sd-symbol {
+  font-size: clamp(48px, 6vw, 66px);
+  line-height: 1; color: #fff;
+  text-shadow: 0 0 26px #76caff;
+  transform: translateZ(70px);
+}
+.home-v2 .sd-brand {
+  position: absolute; bottom: 23px; z-index: 2;
+  color: #ffd700; font-family: Inter, "Segoe UI", Arial, sans-serif;
+  font-size: clamp(19px, 2vw, 26px); font-weight: 900; letter-spacing: .19em;
+  text-shadow: 0 2px 5px rgba(0,0,0,.75),0 0 12px #ffcb05,0 0 25px #ff9900;
+  transform: translateZ(90px);
+  animation: sd-spectrum 6s infinite ease-in-out;
+  user-select: none;
+}
+@keyframes sd-spectrum {
+  0%,100% { color:#ffd700; text-shadow:0 2px 5px #000b,0 0 12px #ffcb05,0 0 25px #ff9900; transform:translateZ(90px) scale(1); }
+  25% { color:#55ff99; text-shadow:0 2px 5px #000b,0 0 14px #00ff66,0 0 28px #00b33c; transform:translateZ(90px) scale(1.035); }
+  50% { color:#ff4d6d; text-shadow:0 2px 5px #000b,0 0 14px #ff1a40,0 0 28px #b3001b; transform:translateZ(90px) scale(1); }
+  75% { color:#4cc9ff; text-shadow:0 2px 5px #000b,0 0 14px #00a6ff,0 0 28px #0055b3; transform:translateZ(90px) scale(1.035); }
+}
+@media (max-width: 900px) {
+  .home-v2 .sd-panel { grid-template-columns: 1fr; text-align: center; gap: 9px; }
+  .home-v2 .sd-description { margin-inline: auto; }
+  .home-v2 .sd-scene { min-height: 324px; }
+}
+@media (max-width: 420px) {
+  .home-v2 .sd-panel { padding: 23px 15px 28px; border-radius: 19px; }
+  .home-v2 .sd-scene { min-height: 280px; }
+  .home-v2 .sd-card { width: min(310px, 86%); }
+  .home-v2 .sd-brand { font-size: 20px; letter-spacing: .15em; bottom: 17px; }
+  .home-v2 .sd-symbol { font-size: 49px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-v2 .sd-card { transform: none!important; transition: none!important; will-change: auto; }
+  .home-v2 .sd-brand { animation: none!important; color: #ffd700; transform: translateZ(90px); }
+  .home-v2 .sd-link { transition: none; }
+}
+
+/* Feature placement between main hero and Start Here (EN / FR / AR). */
+.home-v2 .sd-feature { position:relative;width:min(100% - 32px,1440px);margin:0 auto clamp(42px,6vw,82px);scroll-margin-top:90px; }
+.home-v2 .sd-feature > .sd-panel { margin-top:0; }
+@media(max-width:600px){.home-v2 .sd-feature{width:min(100% - 24px,1440px);margin-bottom:42px;}}

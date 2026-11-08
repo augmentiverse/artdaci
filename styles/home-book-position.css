@@ -1,0 +1,234 @@
+/*
+ * ARTDACI book-first homepage — spacious inline 3D theatre.
+ * The original model-viewer remains in the page: no fullscreen modal,
+ * no WebGL duplication, no surrounding panels in front of the book.
+ */
+.home-v2 .hv2-hero {
+  grid-template-columns:minmax(0,1fr) !important;
+  gap:clamp(18px,3vw,38px);
+  min-height:0;
+  align-items:start;
+  padding:clamp(35px,5vw,74px) 0 clamp(45px,6vw,78px);
+}
+.home-v2 .hv2-hero-copy {
+  width:100%;
+  max-width:1080px;
+  position:relative;
+  z-index:1;
+}
+.home-v2 .hv2-smart-art {
+  display:block !important;
+  position:relative;
+  width:min(100%,1120px);
+  max-width:none;
+  min-height:clamp(420px,41vw,555px);
+  margin:0 auto;
+  padding:0 !important;
+  isolation:isolate;
+  overflow:visible !important;
+  perspective:none;
+}
+.home-v2 .hv2-smart-art::before {
+  content:"";
+  position:absolute;
+  top:5%;left:12%;width:76%;height:90%;
+  border-radius:50%;
+  filter:blur(28px);
+  background:radial-gradient(ellipse,rgba(79,144,255,.20),rgba(244,191,91,.06) 45%,transparent 72%);
+  z-index:0;
+  pointer-events:none;
+}
+.home-v2 .hv2-smart-art > .hv2-book-hero {
+  box-sizing:border-box;
+  position:absolute !important;
+  inset:0 auto 0 5% !important;
+  display:block !important;
+  width:73% !important;
+  height:100% !important;
+  min-width:0 !important;
+  min-height:0 !important;
+  max-height:none !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  transform:none !important;
+  z-index:5;
+}
+.home-v2 .hv2-smart-art > .hv2-book-hero .hv2-book-model {
+  box-sizing:border-box;
+  position:absolute !important;
+  inset:0 !important;
+  display:block;
+  width:100% !important;
+  height:100% !important;
+  min-height:0 !important;
+  max-height:none !important;
+  margin:0 !important;
+  padding:0 !important;
+  transform:none !important;
+  translate:var(--hv2-book-pan-x,0px) var(--hv2-book-pan-y,0px);
+  z-index:3;
+  touch-action:pan-y;
+}
+.home-v2 .hv2-smart-art > .hv2-book-hero .hv2-book-aura {
+  inset:9% 24% 8% !important;
+  background:radial-gradient(ellipse,rgba(94,160,251,.16),transparent 68%) !important;
+  z-index:0;
+}
+.home-v2 .hv2-smart-art > .hv2-book-hero .hv2-tv-book-cover {
+  box-sizing:border-box;
+  position:absolute !important;
+  inset:6% 26% !important;
+  top:6% !important;
+  left:26% !important;
+  width:48% !important;
+  height:88% !important;
+  max-height:none !important;
+  object-fit:contain !important;
+  flex:none !important;
+  translate:var(--hv2-book-pan-x,0px) var(--hv2-book-pan-y,0px);
+  z-index:3;
+}
+.home-v2 .hv2-book-hero .hv2-book-signature { display:none !important; }
+
+/* Quiet, left-side reading rail; the 3D model remains the visual focus. */
+.home-v2 .hv2-smart-art > .hv2-book-hero .hv2-book-controls {
+  box-sizing:border-box;
+  position:absolute !important;
+  z-index:9;
+  top:21% !important;
+  bottom:auto !important;
+  left:clamp(7px,2vw,28px) !important;
+  right:auto !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:stretch;
+  gap:9px;
+  width:clamp(144px,14vw,186px) !important;
+  max-width:none !important;
+  padding:12px;
+  transform:none !important;
+  border:1px solid rgba(148,177,211,.38);
+  border-radius:13px;
+  background:rgba(237,245,253,.79);
+  box-shadow:0 10px 30px rgba(28,67,114,.07);
+  backdrop-filter:blur(8px);
+  direction:inherit;
+}
+.home-v2 .hv2-book-controls-label {
+  margin:0;
+  color:#1a4677;
+  font:700 12px/1.35 Inter,"Segoe UI",Arial,sans-serif;
+}
+.home-v2 .hv2-book-controls-hint {
+  margin:0 0 3px;
+  color:#476483;
+  font:400 11px/1.45 Inter,"Segoe UI",Arial,sans-serif;
+}
+.home-v2 .hv2-book-hero .hv2-book-controls .hv2-book-scan,
+.home-v2 .hv2-book-hero .hv2-book-controls .hv2-tv-toggle,
+.home-v2 .hv2-book-hero .hv2-book-move,
+.home-v2 .hv2-book-hero .hv2-book-recenter {
+  box-sizing:border-box;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  min-height:40px;
+  position:relative;
+  z-index:1;
+  margin:0 !important;
+  padding:7px 9px;
+  border:1px solid #c2d5eb !important;
+  border-radius:8px;
+  background:rgba(255,255,255,.72) !important;
+  box-shadow:none !important;
+  color:#29527e !important;
+  font:600 11px/1.3 Inter,"Segoe UI",Arial,sans-serif;
+  text-decoration:none;
+  text-align:center;
+  white-space:normal;
+  cursor:pointer;
+}
+.home-v2 .hv2-book-hero .hv2-book-controls .hv2-book-scan:hover,
+.home-v2 .hv2-book-hero .hv2-book-controls .hv2-tv-toggle:hover,
+.home-v2 .hv2-book-hero .hv2-book-move:hover,
+.home-v2 .hv2-book-hero .hv2-book-recenter:hover {
+  background:#e0edff !important;
+  border-color:#80aadb !important;
+}
+.home-v2 .hv2-book-movement {display:flex;gap:6px;align-items:stretch;min-width:0;}
+.home-v2 .hv2-book-hero .hv2-book-move {flex:1 1 auto;gap:6px;touch-action:none;cursor:grab;user-select:none;}
+.home-v2 .hv2-book-hero .hv2-book-move[data-dragging="true"] {cursor:grabbing;}
+.home-v2 .hv2-book-hero .hv2-book-recenter {flex:0 0 40px;width:40px;font-size:20px;}
+.home-v2 .hv2-book-hero .hv2-book-controls button:focus-visible,
+.home-v2 .hv2-book-hero .hv2-book-controls a:focus-visible {outline:3px solid #c58b1a;outline-offset:3px;}
+
+/* Mona Lisa remains visible, but clearly secondary and never intercepts book gestures. */
+.home-v2 .hv2-smart-art > .smart-art-stage {
+  box-sizing:border-box;
+  position:absolute !important;
+  right:clamp(0px,1vw,16px);
+  bottom:auto;
+  top:0;
+  left:auto;
+  z-index:1;
+  width:min(29%,320px) !important;
+  aspect-ratio:1.22;
+  transform:rotateY(-8deg) rotateX(4deg) scale(.93);
+  transform-origin:100% 0;
+  pointer-events:none;
+  animation:none;
+}
+.home-v2 .hv2-smart-art > .smart-art-caption {
+  position:absolute;
+  bottom:auto;
+  top:57%;
+  right:clamp(0px,1vw,16px);
+  left:auto;
+  z-index:1;
+  font-size:10px;
+  opacity:.68;
+  max-width:42%;
+  pointer-events:none;
+}
+@media (max-width:1050px) {
+  .home-v2 .hv2-smart-art {min-height:clamp(410px,51vw,520px);padding:0 !important;}
+  .home-v2 .hv2-smart-art > .hv2-book-hero {inset:0 auto 0 2%!important;width:76%!important;height:100%!important;}
+  .home-v2 .hv2-smart-art > .hv2-book-hero .hv2-book-controls {top:19%!important;}
+  .home-v2 .hv2-smart-art > .smart-art-stage {width:min(30%,285px)!important;top:0;bottom:auto;}
+}
+@media (max-width:690px) {
+  .home-v2 .hv2-smart-art {min-height:clamp(480px,103vw,575px);}
+  .home-v2 .hv2-smart-art > .hv2-book-hero {inset:0!important;width:100%!important;height:100%!important;}
+  .home-v2 .hv2-smart-art > .hv2-book-hero .hv2-book-model {inset:22% 0 0!important;height:76%!important;width:82%!important;}
+  .home-v2 .hv2-smart-art > .hv2-book-hero .hv2-book-controls {
+    top:2% !important;
+    left:50% !important;
+    transform:translateX(-50%) !important;
+    width:min(94%,380px) !important;
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    align-items:stretch;
+    gap:7px;
+    padding:10px;
+  }
+  .home-v2 .hv2-book-controls-label {grid-column:1/-1;font-size:11px;text-align:center;}
+  .home-v2 .hv2-book-controls-hint {grid-column:1/-1;text-align:center;font-size:10px;margin:0;}
+  .home-v2 .hv2-book-movement {grid-column:1/-1;justify-content:center;}
+  .home-v2 .hv2-book-hero .hv2-book-controls .hv2-book-scan,
+  .home-v2 .hv2-book-hero .hv2-book-controls .hv2-tv-toggle {font-size:10px;min-height:42px;}
+  .home-v2 .hv2-book-hero .hv2-book-move {max-width:180px;min-height:42px;}
+  .home-v2 .hv2-book-hero .hv2-book-recenter {min-height:42px;}
+  .home-v2 .hv2-smart-art > .smart-art-stage {width:min(32%,168px)!important;top:30%;bottom:auto;right:0;}
+  .home-v2 .hv2-smart-art > .smart-art-caption {top:61%;bottom:auto;right:0;font-size:8px;}
+  .home-v2 .hv2-smart-art > .hv2-book-hero .hv2-tv-book-cover {inset:22% 17% 5% !important;left:17% !important;top:22% !important;width:66%!important;height:72%!important;}
+}
+@media (max-width:390px) {
+  .home-v2 .hv2-smart-art {min-height:505px;}
+}
+@media (prefers-reduced-motion:reduce) {
+  .home-v2 .hv2-smart-art > .hv2-book-hero .hv2-book-model {transition:none;}
+}

@@ -71,6 +71,13 @@ const SEMANTIC_ARTWORK_IDS = Object.freeze({
   "monet-impression-sunrise": "mo01"
 });
 
+const HOME_GALLERY_FEATURED_SLUGS = Object.freeze([
+  "mona-lisa", "lady-with-an-ermine",
+  "vermeer-girl-with-a-pearl-earring", "view-of-delft",
+  "van-gogh", "van-gogh-bedroom",
+  "monet-impression-sunrise", "pont-d-argenteuil"
+]);
+
 const UI = {
   en: {
     search: "Search by title, artist, technique, period...",
@@ -83,6 +90,9 @@ const UI = {
     audioOverview: "Audio Overview",
     vocabulary: "Vocabulary",
     noResults: "No artwork matches that search.",
+    showMore: "Explore the remaining paintings",
+    showLess: "Hide the additional paintings",
+    gallerySelection: "Eight highlights · Four masters",
     years: "years covered",
     modes: "active modes",
     printFirst: "printable artwork pages",
@@ -106,6 +116,9 @@ const UI = {
     audioOverview: "Aperçu audio",
     vocabulary: "Vocabulaire",
     noResults: "Aucune œuvre ne correspond à cette recherche.",
+    showMore: "Découvrir les autres tableaux",
+    showLess: "Masquer les autres tableaux",
+    gallerySelection: "Huit œuvres à découvrir · Quatre maîtres",
     years: "années couvertes",
     modes: "modes actifs",
     printFirst: "pages d’œuvres imprimables",
@@ -129,6 +142,9 @@ const UI = {
     audioOverview: "الدليل الصوتي",
     vocabulary: "المفردات",
     noResults: "لا توجد لوحة مطابقة لهذا البحث.",
+    showMore: "اكتشف بقية اللوحات",
+    showLess: "إخفاء اللوحات الإضافية",
+    gallerySelection: "ثماني لوحات مختارة · أربعة فنانين",
     years: "سنة تغطيها المجموعة",
     modes: "تجارب متاحة",
     printFirst: "صفحات أعمال قابلة للطباعة",
@@ -311,6 +327,7 @@ async function loadManifest(path) {
 }
 
 function renderCatalogue(root, manifests, museums, lang, text) {
+  const isHomeGallery = root.dataset.homeGallery === "true";
   const movements = [...new Set(manifests.flatMap((item) => item.movement || []))].sort();
   const state = {
     query: "",
@@ -334,7 +351,18 @@ function renderCatalogue(root, manifests, museums, lang, text) {
     </div>
     <div class="collection-stats"></div>
     <div class="catalogue-layout">
-      <div class="artwork-grid"></div>
+      ${isHomeGallery ? `<p class="gallery-selection-kicker">${text.gallerySelection}</p>` : ""}
+      <div class="artwork-grid${isHomeGallery ? " artwork-grid-primary" : ""}"></div>
+      ${isHomeGallery ? `
+        <details class="artwork-more" hidden>
+          <summary class="artwork-more-toggle">
+            <span class="artwork-more-closed">${text.showMore}</span>
+            <span class="artwork-more-open">${text.showLess}</span>
+            <span class="artwork-more-total" aria-label="${text.results}">(<span class="artwork-more-count"></span>)</span>
+            <span class="artwork-more-chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="artwork-grid artwork-more-grid"></div>
+        </details>` : ""}
     </div>
     <section class="museum-index-section">
       <header><p class="eyebrow">ARTDACI</p><h2>${text.museums}</h2><p>${text.museumsIntro}</p></header>
@@ -366,10 +394,28 @@ function renderCatalogue(root, manifests, museums, lang, text) {
 
   function update() {
     const filtered = manifests.filter((manifest) => matchesCatalogueEntry(manifest, state));
+    const curatedMode = isHomeGallery && !state.query && !state.movement;
+    let visible = filtered;
+    let remaining = [];
+    if (curatedMode) {
+      const bySlug = new Map(filtered.map((manifest) => [manifest.slug, manifest]));
+      visible = HOME_GALLERY_FEATURED_SLUGS.map((slug) => bySlug.get(slug)).filter(Boolean);
+      const highlighted = new Set(visible.map((manifest) => manifest.slug));
+      remaining = filtered.filter((manifest) => !highlighted.has(manifest.slug));
+    }
     root.querySelector(".collection-stats").innerHTML = renderStats(manifests, filtered, text);
-    root.querySelector(".artwork-grid").innerHTML = filtered.length
-      ? filtered.map((manifest) => renderCard(manifest, lang, text)).join("")
+    root.querySelector(".artwork-grid-primary, .artwork-grid").innerHTML = visible.length
+      ? visible.map((manifest) => renderCard(manifest, lang, text)).join("")
       : `<p class="empty-results">${text.noResults}</p>`;
+
+    if (isHomeGallery) {
+      root.classList.toggle("catalogue-filtering", !curatedMode);
+      const more = root.querySelector(".artwork-more");
+      more.hidden = !curatedMode || remaining.length === 0;
+      if (!curatedMode) more.open = false;
+      more.querySelector(".artwork-more-count").textContent = String(remaining.length);
+      more.querySelector(".artwork-more-grid").innerHTML = remaining.map((manifest) => renderCard(manifest, lang, text)).join("");
+    }
   }
 
   update();
