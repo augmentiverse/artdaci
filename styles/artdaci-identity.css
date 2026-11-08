@@ -1,0 +1,327 @@
+/* ARTDACI — shared painterly identity (2026-11).
+   Decorative SVG icons are aria-hidden; native text remains fully accessible.
+   Palette and signature shared across Home, Museums, GEO, 3D and Semantic. */
+
+/* The main menu: color-coded pigments, crisp glyphs, calm modern type. */
+.home-v2 .hv2-header .hv2-nav a {
+  --artdaci-nav-color:#e5f0ff;
+  --artdaci-nav-spot:rgba(158,196,245,.18);
+  display:inline-flex;
+  align-items:center;
+  gap:clamp(5px,.52vw,9px);
+  color:var(--artdaci-nav-color)!important;
+  font-family:Inter,"Segoe UI",Arial,sans-serif;
+  font-weight:760;
+  letter-spacing:-.008em;
+  text-shadow:0 1px 12px rgba(9,29,53,.26);
+}
+.home-v2 .hv2-header .hv2-nav a:nth-child(1) {--artdaci-nav-color:#d6eaff;--artdaci-nav-spot:rgba(118,184,255,.24);}
+.home-v2 .hv2-header .hv2-nav a:nth-child(2) {--artdaci-nav-color:#c3f9e8;--artdaci-nav-spot:rgba(87,208,170,.23);}
+.home-v2 .hv2-header .hv2-nav a:nth-child(3) {--artdaci-nav-color:#f7dbea;--artdaci-nav-spot:rgba(227,136,176,.21);}
+.home-v2 .hv2-header .hv2-nav a:nth-child(4) {--artdaci-nav-color:#fce6be;--artdaci-nav-spot:rgba(234,192,118,.24);}
+.home-v2 .hv2-header .hv2-nav a:nth-child(5) {--artdaci-nav-color:#e3dcff;--artdaci-nav-spot:rgba(168,150,237,.23);}
+.home-v2 .hv2-header .hv2-nav a:nth-child(6) {--artdaci-nav-color:#ffedc9;--artdaci-nav-spot:rgba(228,177,104,.24);}
+.home-v2 .hv2-header .hv2-nav a:hover,
+.home-v2 .hv2-header .hv2-nav a:focus-visible {
+  color:#fff!important;
+  background:linear-gradient(125deg,var(--artdaci-nav-spot),rgba(255,255,255,.10));
+  border-color:rgba(237,245,255,.42);
+}
+.home-v2 .hv2-header .hv2-nav .hv2-nav-guide {
+  color:#fff0c4!important;
+  border-color:rgba(247,214,152,.53);
+  background:linear-gradient(130deg,rgba(186,126,86,.22),rgba(122,98,177,.18));
+}
+.home-v2 .hv2-header .hv2-nav .artdaci-nav-icon {
+  display:block;
+  width:clamp(14px,1.27vw,19px);
+  height:clamp(14px,1.27vw,19px);
+  flex:0 0 auto;
+  overflow:visible;
+  filter:drop-shadow(0 0 5px var(--artdaci-nav-spot));
+}
+.home-v2 .hv2-header .hv2-nav .artdaci-nav-label {display:inline-block;}
+.home-v2 .hv2-header .hv2-brand {
+  isolation:isolate;
+  padding:7px 14px;
+  border:1px solid rgba(243,249,255,.95);
+  border-radius:15px;
+  background:linear-gradient(130deg,#fffdf7 0%,#edf6ff 57%,#f9effa 100%);
+  box-shadow:0 5px 19px rgba(10,36,66,.25),0 0 0 2px rgba(215,230,255,.12),inset 0 1px #fff;
+}
+.home-v2 .hv2-header .hv2-brand::before {
+  content:"";position:absolute;z-index:-1;
+  inset:-6px;border-radius:18px;
+  background:conic-gradient(from 25deg,rgba(84,163,236,.4),rgba(223,127,161,.3),rgba(229,197,89,.36),rgba(65,179,150,.34),rgba(84,163,236,.4));
+  filter:blur(8px);
+  opacity:.82;pointer-events:none;
+}
+.home-v2 .hv2-header .hv2-brand img {
+  display:block;
+  width:clamp(101px,9vw,124px);
+  max-height:46px;
+  object-fit:contain;
+}
+.home-v2 .hv2-header .hv2-brand:hover,
+.home-v2 .hv2-header .hv2-brand:focus-visible {
+  transform:translateY(-2px) scale(1.025);
+  box-shadow:0 8px 22px rgba(10,36,66,.30),0 0 0 2px rgba(217,233,253,.22);
+}
+@media(max-width:1180px) {
+  .home-v2 .hv2-header .hv2-brand img {width:102px;}
+  .home-v2 .hv2-header .hv2-nav a {gap:6px;}
+}
+@media(max-width:780px) {
+  .home-v2 .hv2-header .hv2-brand {padding:5px 8px;}
+  .home-v2 .hv2-header .hv2-brand img {width:87px;}
+  .home-v2 .hv2-header .hv2-nav .artdaci-nav-icon {width:16px;height:16px;}
+  .home-v2 .hv2-header .hv2-nav a {min-height:42px;gap:6px;}
+}
+
+/* Ten discovery routes: meaningful category pictograms, never emoji or web fonts. */
+.home-v2 .hv2-experience-grid .hv2-experience-card {isolation:isolate;}
+.home-v2 .hv2-experience-card .hv2-exp-icon {
+  position:absolute;
+  inset-block-start:27px;
+  inset-inline-end:63px;
+  display:grid;
+  place-items:center;
+  width:34px;height:34px;
+  color:#1e67a6;
+  background:linear-gradient(145deg,rgba(226,238,253,.95),rgba(238,244,251,.78));
+  border:1px solid rgba(72,120,179,.24);
+  border-radius:11px;
+  box-shadow:0 4px 10px rgba(30,76,130,.07);
+  pointer-events:none;
+}
+.home-v2 .hv2-experience-card .artdaci-exp-icon {width:20px;height:20px;display:block;}
+.home-v2 .hv2-experience-card:nth-child(3n + 2) .hv2-exp-icon {color:#196f62;background:#e6f5ed;}
+.home-v2 .hv2-experience-card:nth-child(3n) .hv2-exp-icon {color:#865092;background:#f6ecfa;}
+.home-v2 .hv2-experience-card:nth-child(7) .hv2-exp-icon {color:#a06628;background:#fff0d5;}
+.home-v2 .hv2-experience-card:nth-child(10) .hv2-exp-icon {color:#974b6b;background:#faecf3;}
+@media(max-width:500px) {
+  .home-v2 .hv2-experience-card .hv2-exp-icon {width:31px;height:31px;inset-inline-end:56px;}
+  .home-v2 .hv2-experience-card .artdaci-exp-icon {width:18px;height:18px;}
+}
+
+/* Recognizable, restrained personal mark; actual text, not pseudo-content. */
+.artdaci-signature {
+  box-sizing:border-box;
+  direction:ltr!important;
+  unicode-bidi:isolate;
+  display:inline-flex;
+  position:relative;
+  flex:0 0 auto;
+  align-items:center;
+  justify-content:center;
+  min-width:89px;
+  min-height:45px;
+  padding:6px 17px 10px;
+  border:1px solid rgba(206,213,241,.46);
+  border-radius:13px;
+  background:linear-gradient(115deg,rgba(26,60,92,.97),rgba(63,57,100,.97) 60%,rgba(91,56,90,.96));
+  box-shadow:0 8px 22px rgba(16,30,56,.18),inset 0 1px 0 rgba(255,255,255,.15);
+  user-select:text;
+  white-space:nowrap;
+  vertical-align:middle;
+}
+.artdaci-signature::after {
+  content:"";
+  position:absolute;
+  bottom:7px;left:19%;right:19%;height:3px;
+  border-radius:50%;
+  transform:rotate(-5deg);
+  background:linear-gradient(90deg,#70b8f8,#f2b69c 45%,#efd784 69%,#92ceba);
+  box-shadow:0 0 12px rgba(119,195,234,.38);
+  pointer-events:none;
+}
+.artdaci-signature-mark {
+  color:#fff1d9;
+  font-family:"Palatino Linotype","Book Antiqua",Georgia,serif;
+  font-style:italic;
+  font-weight:800;
+  font-size:clamp(20px,1.55vw,24px);
+  line-height:1.05;
+  letter-spacing:-.07em;
+  text-shadow:1px 1px rgba(15,27,53,.65),0 0 12px rgba(248,211,161,.28);
+  transform:rotate(-4deg);
+}
+.home-v2 .hv2-footer {
+  align-items:center;
+  flex-wrap:wrap;
+  row-gap:12px;
+}
+.home-v2 .hv2-footer .artdaci-signature {margin-inline-start:auto;}
+
+/* Main other portals use different dark headers and footer architectures. */
+.site-header .artdaci-portal-logo,
+.geo-header .artdaci-portal-logo {
+  display:block;
+  width:82px;
+  height:42px;
+  object-fit:contain;
+  padding:4px 6px;
+  border:1px solid rgba(235,245,253,.62);
+  border-radius:10px;
+  background:linear-gradient(130deg,#fff,#ebf2ff);
+  box-shadow:0 5px 17px rgba(0,0,0,.2),0 0 12px rgba(131,186,235,.13);
+}
+.geo-header .brand {align-items:center;}
+.geo-header .brand-main {font-size:20px;}
+@media(max-width:480px) {
+  .geo-header .artdaci-portal-logo {width:58px;height:35px;padding:3px;}
+  .geo-header .brand-main {font-size:17px;}
+  .geo-header .brand {gap:5px;}
+}
+.museums .artdaci-signature,
+.site-footer .artdaci-signature,
+.geo-footer .artdaci-signature,
+.d3-footer .artdaci-signature,
+.semantic-footer .artdaci-signature {margin-inline-start:auto;}
+.geo-home .primary-navigation a[href="#oeuvres"],
+.geo-home .primary-navigation a[href="#musees"] {display:inline-flex;align-items:center;gap:7px;}
+.geo-home .primary-navigation a[href="#oeuvres"]::before,
+.geo-home .primary-navigation a[href="#musees"]::before {
+  display:inline-grid;place-items:center;
+  font-weight:900;
+  font-size:17px;line-height:1;
+  color:#9ad9ff;
+}
+.geo-home .primary-navigation a[href="#oeuvres"]::before {content:"◈";}
+.geo-home .primary-navigation a[href="#musees"]::before {content:"⌂";}
+.d3-header .d3-brand img {
+  border-radius:9px;
+  padding:4px 8px;
+  background:linear-gradient(120deg,#fff,#ecf3ff);
+  box-shadow:0 0 18px rgba(130,181,234,.23);
+}
+.semantic-topbar .artdaci-semantic-brand {
+  display:inline-flex;align-items:center;gap:9px;
+}
+.semantic-topbar .artdaci-semantic-brand img {
+  display:block;
+  width:76px;height:36px;object-fit:contain;
+  padding:4px 7px;border-radius:9px;
+  background:linear-gradient(120deg,#fff,#edf4ff);
+  box-shadow:0 0 13px rgba(155,184,235,.23);
+}
+@media(max-width:640px) {
+  .semantic-topbar .artdaci-semantic-brand img {width:57px;height:30px;}
+  .artdaci-signature {min-width:80px;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .home-v2 .hv2-header .hv2-brand,
+  .home-v2 .hv2-header .hv2-nav a {transition:none!important;}
+}
+
+/* Enlarged brand artwork: maximum practical presence without hiding navigation
+   or language links.  Header automatically becomes two rows as soon as the
+   six illustrated nav links need more horizontal room. */
+@media(min-width:1361px) {
+  .home-v2 .hv2-header {
+    grid-template-columns:270px minmax(0,1fr) 132px;
+    min-height:118px;
+    gap:12px;
+    padding-block:10px;
+  }
+}
+.home-v2 .hv2-header .hv2-brand {
+  min-width:0;
+  justify-self:start;
+  padding:8px 13px;
+  border-radius:18px;
+}
+.home-v2 .hv2-header .hv2-brand img {
+  width:clamp(204px,17vw,246px);
+  max-width:none;
+  max-height:none;
+  height:clamp(73px,6.8vw,91px);
+  object-fit:contain;
+  object-position:center;
+}
+@media(min-width:781px) and (max-width:1360px) {
+  .home-v2 .hv2-header {
+    grid-template-columns:270px minmax(0,1fr) 142px;
+    grid-template-areas:"brand spacer language" "nav nav nav";
+    min-height:145px;
+    gap:3px 14px;
+    padding-block:9px 11px;
+  }
+  .home-v2 .hv2-header .hv2-brand {grid-area:brand;}
+  .home-v2 .hv2-header .hv2-nav {grid-area:nav;justify-content:center;gap:clamp(5px,1.1vw,14px);}
+  .home-v2 .hv2-header .hv2-language {grid-area:language;}
+}
+@media(max-width:780px) {
+  .home-v2 .hv2-header {
+    grid-template-columns:167px minmax(0,1fr) auto;
+    grid-template-areas:"brand spacer language" "nav nav nav";
+    min-height:129px;
+    gap:4px 8px;
+    padding-block:9px;
+  }
+  .home-v2 .hv2-header .hv2-brand {grid-area:brand;padding:6px 9px;}
+  .home-v2 .hv2-header .hv2-brand img {
+    width:147px;
+    height:60px;
+    max-width:100%;
+    max-height:none;
+  }
+  .home-v2 .hv2-header .hv2-language {grid-area:language;}
+  .home-v2 .hv2-header .hv2-nav {grid-area:nav;}
+}
+@media(max-width:420px) {
+  .home-v2 .hv2-header {
+    grid-template-columns:135px minmax(0,1fr) auto;
+    min-height:118px;
+    padding-inline:6px;
+  }
+  .home-v2 .hv2-header .hv2-brand {padding:5px 6px;}
+  .home-v2 .hv2-header .hv2-brand img {
+    width:120px;
+    height:52px;
+  }
+}
+
+/* The same brand remains coherent in the separate museum, GEO, 3D and
+   semantic experiences; each respects its own compact/mobile header. */
+@media(min-width:721px) {
+  .site-header .artdaci-portal-logo,
+  .geo-header .artdaci-portal-logo {
+    width:142px;
+    height:68px;
+    padding:7px 10px;
+  }
+}
+@media(max-width:720px) {
+  .site-header .artdaci-portal-logo {
+    width:74px;
+    height:43px;
+    padding:4px 5px;
+  }
+  .geo-header .artdaci-portal-logo {
+    width:105px;
+    height:49px;
+    padding:4px 6px;
+  }
+}
+@media(max-width:480px) {
+  .geo-header .artdaci-portal-logo {
+    width:75px;
+    height:40px;
+  }
+}
+@media(min-width:721px) {
+  .d3-header .d3-brand img {
+    width:160px;
+    max-height:78px;
+    height:70px;
+    object-fit:contain;
+  }
+}
+@media(min-width:641px) {
+  .semantic-topbar .artdaci-semantic-brand img {
+    width:138px;
+    height:62px;
+    padding:5px 9px;
+  }
+}
