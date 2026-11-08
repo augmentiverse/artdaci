@@ -1,0 +1,318 @@
+/* ARTDACI home · atelier-galerie: eight curated works then an accessible
+   folded collection. Loaded last; other catalogue routes keep their style. */
+.home-v2 .painting-index-gallery {
+  box-sizing:border-box;
+  position:relative;
+  isolation:isolate;
+  width:min(100% - 32px,1440px);
+  margin:clamp(40px,5vw,72px) auto;
+  overflow:hidden;
+  padding:clamp(12px,1.4vw,20px);
+  border:1px solid #c7cbd4;
+  border-radius:clamp(18px,2.6vw,34px);
+  color:#1e354f;
+  background:
+    radial-gradient(ellipse at 7% 12%,rgba(226,198,142,.22),transparent 38%),
+    radial-gradient(ellipse at 91% 42%,rgba(132,168,197,.19),transparent 48%),
+    linear-gradient(155deg,#f7f3eb 0%,#e9edf0 53%,#f6f3eb 100%);
+  box-shadow:0 25px 65px rgba(28,52,80,.12),inset 0 1px rgba(255,255,255,.8);
+}
+.home-v2 .painting-index-gallery::before {
+  content:"";
+  position:absolute;z-index:-1;
+  inset:0;
+  opacity:.2;pointer-events:none;
+  background-image:repeating-linear-gradient(110deg,transparent 0 39px,rgba(67,88,107,.045) 40px 41px);
+}
+.home-v2 .painting-index-gallery > .section-heading {
+  position:relative;
+  display:grid;
+  gap:clamp(7px,1vw,13px);
+  padding:clamp(26px,4.5vw,58px) clamp(18px,3.5vw,49px);
+  border:0;
+  background:transparent;
+}
+.home-v2 .painting-index-gallery > .section-heading::after {
+  content:"";
+  width:min(82%,500px);
+  height:5px;
+  border-radius:99px;
+  margin-top:4px;
+  background:linear-gradient(90deg,#356eae,#4aada6,#bc6383,#c6994d,#7665aa);
+  transform:skewX(-18deg);
+}
+.home-v2 .painting-index-gallery .section-heading .eyebrow {
+  color:#8e673a;
+  font:750 12px/1.4 Inter,"Segoe UI",Arial,sans-serif;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+.home-v2 .painting-index-gallery .section-heading h2 {
+  max-width:none;
+  margin:0;
+  color:#203954;
+  font:500 clamp(40px,5.2vw,78px)/1.06 Georgia,"Times New Roman",serif;
+  letter-spacing:-.05em;
+  text-wrap:balance;
+}
+.home-v2 .painting-index-gallery .section-heading .section-dek {
+  max-width:890px;
+  margin:0;
+  color:#405b72;
+  font:400 clamp(15px,1.4vw,18px)/1.68 Inter,"Segoe UI",Arial,sans-serif;
+}
+.home-v2 .painting-index-gallery .catalogue-app[data-ready="true"] {
+  box-sizing:border-box;
+  padding:0 clamp(7px,2.6vw,38px) clamp(26px,4vw,55px);
+  border:0;
+  background:transparent;
+}
+.home-v2 .painting-index-gallery .catalogue-toolbar {
+  padding:clamp(12px,1.7vw,20px);
+  border:1px solid #d1d7df;
+  border-radius:18px;
+  background:rgba(255,255,255,.65);
+  box-shadow:0 7px 23px rgba(45,69,95,.06);
+}
+.home-v2 .painting-index-gallery .catalogue-toolbar label span {
+  color:#375674;
+}
+.home-v2 .painting-index-gallery .catalogue-toolbar input,
+.home-v2 .painting-index-gallery .catalogue-toolbar select {
+  border:1px solid #bcc8d7;
+  border-radius:10px;
+  color:#1b3c5d;
+  background:#fff;
+  font-family:Inter,"Segoe UI",Arial,sans-serif;
+}
+.home-v2 .painting-index-gallery .catalogue-toolbar .button {
+  border-radius:10px;
+  color:#1b4d7a;
+  border-color:#aac0d8;
+  background:#f5f9ff;
+}
+.home-v2 .painting-index-gallery .collection-stats {
+  margin-top:16px;
+  border:1px solid #d1d8e2;
+  border-radius:14px;
+  overflow:hidden;
+  background:rgba(255,255,255,.57);
+}
+.home-v2 .painting-index-gallery .collection-stats strong {color:#234664;}
+.home-v2 .painting-index-gallery .collection-stats span {color:#4c6983;}
+.home-v2 .painting-index-gallery .gallery-selection-kicker {
+  margin:clamp(27px,3vw,42px) 0 23px;
+  color:#81663f;
+  font:750 12px/1.4 Inter,"Segoe UI",Arial,sans-serif;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+.home-v2 .painting-index-gallery .artwork-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  align-items:stretch;
+  gap:clamp(13px,1.9vw,26px);
+}
+.home-v2 .painting-index-gallery .artwork-card {
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  min-height:0;
+  overflow:visible;
+  border:1px solid rgba(187,198,210,.8);
+  border-radius:15px;
+  background:rgba(255,255,255,.83);
+  box-shadow:0 14px 34px rgba(48,66,87,.10);
+  transition:transform .28s ease,box-shadow .28s ease;
+}
+.home-v2 .painting-index-gallery .artwork-card:hover,
+.home-v2 .painting-index-gallery .artwork-card:focus-within {
+  transform:translateY(-5px);
+  box-shadow:0 20px 44px rgba(42,70,101,.16);
+  z-index:3;
+}
+.home-v2 .painting-index-gallery .artwork-image {
+  display:grid;
+  place-items:center;
+  position:relative;
+  box-sizing:border-box;
+  min-height:215px;
+  height:220px;
+  margin:clamp(12px,1.6vw,22px) clamp(13px,1.6vw,21px) 4px;
+  padding:0;
+  border:0;
+  border-radius:4px;
+  background:radial-gradient(ellipse at center,#e9e5df 0%,#d8dde4 72%,transparent 100%);
+  transition:transform .28s ease;
+}
+.home-v2 .painting-index-gallery .artwork-image::after {
+  content:"";
+  position:absolute;
+  inset:8px;
+  border:1px solid rgba(255,255,255,.6);
+  pointer-events:none;
+}
+.home-v2 .painting-index-gallery .artwork-image img {
+  display:block;
+  width:100%;
+  height:100%;
+  min-height:0!important;
+  max-width:100%;
+  object-fit:contain;
+  object-position:center;
+  box-shadow:0 11px 24px rgba(34,44,56,.18);
+  filter:saturate(.97) contrast(1.02);
+}
+.home-v2 .painting-index-gallery .artwork-grid-primary .artwork-card:nth-child(5n + 1) .artwork-image {transform:rotate(-1.65deg) translateY(2px);}
+.home-v2 .painting-index-gallery .artwork-grid-primary .artwork-card:nth-child(5n + 2) .artwork-image {transform:rotate(1.25deg) translateX(2px);}
+.home-v2 .painting-index-gallery .artwork-grid-primary .artwork-card:nth-child(5n + 3) .artwork-image {transform:rotate(-.75deg) translateY(-3px);}
+.home-v2 .painting-index-gallery .artwork-grid-primary .artwork-card:nth-child(5n + 4) .artwork-image {transform:rotate(1.8deg) translateY(3px);}
+.home-v2 .painting-index-gallery .artwork-grid-primary .artwork-card:nth-child(5n) .artwork-image {transform:rotate(-1.1deg) translateX(-3px);}
+.home-v2 .painting-index-gallery .artwork-card:hover .artwork-image,
+.home-v2 .painting-index-gallery .artwork-card:focus-within .artwork-image {transform:translateY(-4px) rotate(0deg);}
+.home-v2 .painting-index-gallery .artwork-content {
+  display:flex;
+  flex:1;
+  flex-direction:column;
+  min-width:0;
+  padding:clamp(15px,1.7vw,23px);
+  font-family:Inter,"Segoe UI",Arial,sans-serif;
+}
+.home-v2 .painting-index-gallery .artwork-content .eyebrow {
+  color:#967441;
+  font:760 11px/1.4 Inter,"Segoe UI",Arial,sans-serif;
+  letter-spacing:.1em;
+}
+.home-v2 .painting-index-gallery .artwork-content h3 {
+  color:#203f5c;
+  font:570 clamp(24px,2.35vw,36px)/1.11 Georgia,"Times New Roman",serif;
+  letter-spacing:-.035em;
+}
+.home-v2 .painting-index-gallery .artwork-content p:not(.eyebrow) {
+  color:#425d77;
+  font:400 13px/1.55 Inter,"Segoe UI",Arial,sans-serif;
+}
+.home-v2 .painting-index-gallery .artwork-content .card-meta {
+  color:#775a39!important;
+  font-weight:720!important;
+}
+.home-v2 .painting-index-gallery .artwork-content > p:not(.eyebrow):not(.card-meta) {
+  display:-webkit-box;
+  -webkit-line-clamp:3;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.home-v2 .painting-index-gallery .mini-facts {
+  margin:12px 0 0;
+  gap:7px;
+}
+.home-v2 .painting-index-gallery .mini-facts div {border-top-color:#d6dce3;}
+.home-v2 .painting-index-gallery .mini-facts dt {color:#6c7788;}
+.home-v2 .painting-index-gallery .mini-facts dd {
+  color:#294765;
+  font:650 12px/1.4 Inter,"Segoe UI",Arial,sans-serif;
+  overflow-wrap:anywhere;
+}
+.home-v2 .painting-index-gallery .tag-strip {display:none;}
+.home-v2 .painting-index-gallery .card-actions {
+  margin-top:auto;
+  padding-top:16px;
+  gap:6px;
+}
+.home-v2 .painting-index-gallery .card-actions .button {
+  box-sizing:border-box;
+  min-height:34px;
+  padding:7px 10px;
+  border:1px solid #c1d0e2;
+  border-radius:9px;
+  color:#224b72;
+  background:#f2f6fa;
+  font:720 11px/1.35 Inter,"Segoe UI",Arial,sans-serif;
+  text-decoration:none;
+}
+.home-v2 .painting-index-gallery .card-actions .button.primary {
+  color:#fff;
+  border-color:#255f98;
+  background:linear-gradient(115deg,#225c9c,#4b789f);
+}
+.home-v2 .painting-index-gallery .artwork-more {
+  margin-top:clamp(22px,3vw,36px);
+  border:1px solid #becbd8;
+  border-radius:19px;
+  padding:0;
+  background:rgba(255,255,255,.64);
+}
+.home-v2 .painting-index-gallery .artwork-more[hidden] {display:none!important;}
+.home-v2 .painting-index-gallery .artwork-more-toggle {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  box-sizing:border-box;
+  min-height:62px;
+  padding:15px 18px;
+  border-radius:17px;
+  color:#1f4e78;
+  background:linear-gradient(105deg,rgba(207,224,243,.68),rgba(252,244,224,.76));
+  font:750 clamp(13px,1.1vw,16px)/1.4 Inter,"Segoe UI",Arial,sans-serif;
+  text-align:center;
+  cursor:pointer;
+  list-style:none;
+}
+.home-v2 .painting-index-gallery .artwork-more-toggle::-webkit-details-marker {display:none;}
+.home-v2 .painting-index-gallery .artwork-more-toggle:hover {background:#dce9f7;}
+.home-v2 .painting-index-gallery .artwork-more-toggle:focus-visible {
+  outline:3px solid #16559d;outline-offset:4px;
+}
+.home-v2 .painting-index-gallery .artwork-more-total {color:#806135;}
+.home-v2 .painting-index-gallery .artwork-more-chevron {
+  display:inline-block;
+  font-size:23px;
+  transition:transform .2s ease;
+}
+.home-v2 .painting-index-gallery .artwork-more[open] .artwork-more-chevron {transform:rotate(180deg);}
+.home-v2 .painting-index-gallery .artwork-more .artwork-more-open {display:none;}
+.home-v2 .painting-index-gallery .artwork-more[open] .artwork-more-closed {display:none;}
+.home-v2 .painting-index-gallery .artwork-more[open] .artwork-more-open {display:inline;}
+.home-v2 .painting-index-gallery .artwork-more-grid {
+  padding:clamp(15px,2vw,25px);
+  border-top:1px solid #d2dce7;
+}
+/* The highlighted first painting reads like a feature in an art catalogue. */
+@media(min-width:1101px) {
+  .home-v2 .painting-index-gallery:not(.catalogue-filtering) .artwork-grid-primary > .artwork-card:first-child {
+    grid-column:span 2;
+    display:grid;
+    grid-template-columns:minmax(0,1.07fr) minmax(0,.93fr);
+    min-height:470px;
+  }
+  .home-v2 .painting-index-gallery:not(.catalogue-filtering) .artwork-grid-primary > .artwork-card:first-child .artwork-image {
+    height:auto;min-height:380px;
+    margin:25px 12px 25px 24px;
+  }
+  .home-v2 .painting-index-gallery:not(.catalogue-filtering) .artwork-grid-primary > .artwork-card:first-child .artwork-content {
+    justify-content:center;
+    padding:26px 27px 26px 14px;
+  }
+  .home-v2 .painting-index-gallery:not(.catalogue-filtering) .artwork-grid-primary > .artwork-card:first-child .artwork-content h3 {font-size:clamp(35px,3.1vw,47px);}
+}
+@media(max-width:1100px) {
+  .home-v2 .painting-index-gallery .artwork-grid {grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:720px) {
+  .home-v2 .painting-index-gallery {width:min(100% - 20px,1440px);padding:9px;border-radius:20px;}
+  .home-v2 .painting-index-gallery .catalogue-app[data-ready="true"] {padding:0 7px 22px;}
+  .home-v2 .painting-index-gallery .catalogue-toolbar {grid-template-columns:1fr;gap:10px;}
+  .home-v2 .painting-index-gallery .collection-stats {grid-template-columns:repeat(2,minmax(0,1fr));}
+  .home-v2 .painting-index-gallery .artwork-grid {grid-template-columns:minmax(0,1fr);}
+  .home-v2 .painting-index-gallery .artwork-image {height:245px;}
+  .home-v2 .painting-index-gallery .artwork-content {padding:17px;}
+  .home-v2 .painting-index-gallery .artwork-content h3 {font-size:clamp(26px,7vw,37px);}
+  .home-v2 .painting-index-gallery .artwork-more-grid {padding:12px;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .home-v2 .painting-index-gallery .artwork-card,
+  .home-v2 .painting-index-gallery .artwork-image,
+  .home-v2 .painting-index-gallery .artwork-more-chevron {transition:none!important;}
+}
