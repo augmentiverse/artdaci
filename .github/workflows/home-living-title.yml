@@ -9,6 +9,11 @@ on:
       - "styles/home-immersive-museums.css"
       - "tests/home-immersive-museums.test.mjs"
       - "scripts/check-home-immersive-museums.mjs"
+      - "scripts/catalogue-museum-expansion.mjs"
+      - "styles/home-museum-more.css"
+      - "tests/catalogue-museum-expansion.test.mjs"
+      - "scripts/check-home-extra-museums.mjs"
+      - "scripts/catalogue.js"
       - "styles/home-living-title.css"
       - "tests/home-living-title.test.mjs"
       - "scripts/check-home-living-title.mjs"
@@ -30,7 +35,9 @@ jobs:
         run: |
           node --check scripts/check-home-living-title.mjs
           node --check scripts/check-home-immersive-museums.mjs
-          node --test tests/home-living-title.test.mjs tests/home-immersive-museums.test.mjs
+          node --check scripts/check-home-extra-museums.mjs
+          node --check scripts/catalogue.js
+          node --test tests/home-living-title.test.mjs tests/home-immersive-museums.test.mjs tests/catalogue-museum-expansion.test.mjs
       - name: Prepare isolated Chromium inspection
         run: |
           npm install --prefix /tmp/artdaci-living-qa --no-save --no-package-lock --ignore-scripts playwright-core@1.56.1
@@ -54,6 +61,13 @@ jobs:
           node scripts/check-home-immersive-museums.mjs \
             --output visual-review/immersive-museums.json \
             --screenshots visual-review/immersive-museums-screenshots
+      - name: Inspect eleven extra museums with accessible keyboard expansion
+        env:
+          ARTDACI_PLAYWRIGHT_CORE: /tmp/artdaci-living-qa/node_modules/playwright-core
+        run: |
+          node scripts/check-home-extra-museums.mjs \
+            --output visual-review/extra-museums.json \
+            --screenshots visual-review/extra-museums-screenshots
       - name: Preserve visual comparison screenshots
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
