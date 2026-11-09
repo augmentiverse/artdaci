@@ -532,7 +532,7 @@ function renderCard(manifest, lang, text, imageOverride) {
   return `
     <article class="artwork-card${imageOverride ? " artwork-card--frameless" : ""}" data-artwork-slug="${escapeHtml(slug)}">
       <a class="artwork-image" href="${printUrl}">
-        <img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy" />
+        <img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy" decoding="async" />
       </a>
       <div class="artwork-content">
         <p class="eyebrow">${formatArtworkNumber(manifest.bookOrder, lang)}</p>

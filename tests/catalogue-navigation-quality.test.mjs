@@ -56,6 +56,6 @@ test("all 24 artwork records format available dimensions without fabricated valu
 test("all three homepages point to the updated catalogue renderer", async () => {
   for (const page of ["index.html", "index-fr.html", "index-ar.html"]) {
     const html = await readFile(new URL("../" + page, import.meta.url), "utf8");
-    assert.ok(html.includes('scripts/catalogue.js?v=22'), page);
+    assert.ok(html.includes('scripts/catalogue.js?v=23'), page);
   }
 });

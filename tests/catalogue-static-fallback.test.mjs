@@ -77,7 +77,7 @@ test("all homepages expose the 24-artwork searchable catalogue and module", asyn
     assert.ok(html.includes('id="catalogue-app"'), c.page);
     assert.ok(html.includes('data-lang="' + c.language + '"'), c.page);
     assert.ok(html.includes("content/paintings/additional-16.json"), c.page);
-    assert.ok(html.includes('scripts/catalogue.js?v=22'), c.page);
+    assert.ok(html.includes('scripts/catalogue.js?v=23'), c.page);
     assert.ok(html.includes("<noscript>"), c.page + " provides a no-JS explanation");
   }
 });
