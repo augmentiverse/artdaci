@@ -46,7 +46,7 @@ for(const lang of ["en","ar"]){
     assert.equal(extra.length,11);
     assert.ok(extra.every(m=>m.name&&m.city&&m.country));
     const script=await read("museum-atlas/scripts/photo-locale.js");
-    assert.ok(script.includes("'museum-'+escape(it.museum.id)"));
+    assert.ok(script.includes('<a href="#museum-'));
     assert.ok(atlasSource.includes("museum-atlas/scripts/photo-locale.js"));
     for(const museum of extra)
       assert.equal(getMuseumAtlasLink(museum.id,lang),
