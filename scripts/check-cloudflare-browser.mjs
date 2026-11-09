@@ -144,6 +144,22 @@ async function inspectMediaPlayback(page,item,kind){
   return {...item,status,...raw};
 }
 
+export function classifySpatialModelResult(result){
+  const remote=typeof result.src==="string" &&
+    result.src.startsWith("https://media.artdaci.com/artworks/");
+  if(result.state==="error")
+    return {status:"error",reason:"Model viewer raised an error"};
+  if(result.state!=="loaded")
+    return {status:"inconclusive",reason:"Viewer did not report a completed model load"};
+  if(!remote)
+    return {status:"warning",reason:"Model loaded from local source (Cloudflare fallback or local selection)"};
+  if(result.loaded===false)
+    return {status:"warning",reason:"Viewer reports load event but loaded property is false"};
+  if(result.visible===false)
+    return {status:"warning",reason:"Cloudflare model loaded but is not visible in this headless browser"};
+  return {status:"ok",reason:"Cloudflare model successfully loaded in the ARTDACI viewer"};
+}
+
 async function inspectModelViewer(page){
   const model={kind:"site-model-viewer",site:VIEWER_URL,status:"inconclusive"};
   try{
@@ -167,14 +183,9 @@ async function inspectModelViewer(page){
       src:el.getAttribute("src"),
       loaded:typeof el.loaded==="boolean"?el.loaded:null,
       visible:typeof el.modelIsVisible==="boolean"?el.modelIsVisible:null,
-      status:document.getElementById("space-status")?.textContent?.trim()||"",
+      statusText:document.getElementById("space-status")?.textContent?.trim()||"",
     }));
-    const remote=result.src?.startsWith("https://media.artdaci.com/");
-    model.status=result.state==="loaded" && remote && result.loaded!==false?"ok":
-      result.state==="loaded"?"warning":"error";
-    model.reason=remote?"Loaded the Cloudflare model":"The page used a local model or fallback";
-    if(result.state==="error")model.reason="Model viewer raised an error";
-    Object.assign(model,result);
+    Object.assign(model,result,classifySpatialModelResult(result));
     return model;
   }catch(error){
     return {...model,reason:"Site model test did not finish in headless Chrome: "+String(error?.name||error)};
@@ -244,7 +255,8 @@ async function main(args){
   for(const row of report.results||[]){
     console.log(row.status?.toUpperCase()+" "+(row.family||row.kind)+" "+
       (row.artworkId||"") +" "+(row.url||row.site||"")+
-      " "+(row.reason||row.note||row.outcome||""));
+      " "+(row.reason||row.note||row.outcome||"")+
+      (row.kind==="site-model-viewer"?" (loaded="+row.loaded+", visible="+row.visible+", src="+row.src+")":""));
   }
   if(report.error)console.error(report.error);
 }
