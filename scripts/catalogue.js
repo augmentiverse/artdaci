@@ -81,9 +81,30 @@ const HOME_GALLERY_FEATURED_SLUGS = Object.freeze([
 /* Homepage thumbnails supplied by the ARTDACI editor. Print, AR, 3D, VR and
    manifest artwork sources remain unchanged. */
 const HOME_GALLERY_IMAGE_OVERRIDES = Object.freeze({
-  "pont-d-argenteuil": "assets/home-gallery/monet-bridge-at-argenteuil-frameless.webp",
+  "mona-lisa": "assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp",
+  "lady-with-an-ermine": "assets/home-gallery/leonardo-lady-with-ermine-frameless.webp",
+  "last-supper": "assets/artists/leonardo-da-vinci/collection/the-last-supper-davinci.webp",
+  "annunciation": "assets/artists/leonardo-da-vinci/collection/the-annunciation-davinci.webp",
+  "ginevra-de-benci": "assets/artists/leonardo-da-vinci/collection/ginevra-de-benci.webp",
   "belle-ferronniere": "assets/home-gallery/leonardo-belle-ferronniere-frameless.webp",
-  "lady-with-an-ermine": "assets/home-gallery/leonardo-lady-with-ermine-frameless.webp"
+  "vermeer-girl-with-a-pearl-earring": "assets/artists/johannes-vermeer/collection/girl-with-a-pearl-earring-vermeer.webp",
+  "view-of-delft": "assets/artists/johannes-vermeer/collection/view-of-delft-vermeer.webp",
+  "vermeer-milkmaid": "assets/artists/johannes-vermeer/collection/the-milkmaid-vermeer.webp",
+  "art-of-painting": "assets/artists/johannes-vermeer/collection/the-art-of-painting-vermeer.webp",
+  "vermeer-astronomer": "assets/artists/johannes-vermeer/collection/the-astronomer-vermeer.webp",
+  "woman-holding-balance": "assets/artists/johannes-vermeer/collection/woman-holding-a-balance-vermeer.webp",
+  "van-gogh": "assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp",
+  "van-gogh-bedroom": "assets/artists/vincent-van-gogh/artworks/the-bedroom/images/bed-van-gogh.jpeg",
+  "starry-night": "assets/artists/vincent-van-gogh/collection/the-starry-night-vangogh.webp",
+  "sunflowers": "assets/artists/vincent-van-gogh/collection/tournesols-vangogh.webp",
+  "cafe-terrace": "assets/artists/vincent-van-gogh/collection/café-terrasse-at-night-vangogh.webp",
+  "night-cafe": "assets/artists/vincent-van-gogh/collection/the-night-café-vangogh.webp",
+  "monet-impression-sunrise": "assets/artists/claude-monet/collection/impression-sunrise-monet.webp",
+  "pont-d-argenteuil": "assets/home-gallery/monet-bridge-at-argenteuil-frameless.webp",
+  "water-lilies": "assets/artists/claude-monet/collection/water-lilies-monet.webp",
+  "japanese-bridge": "assets/artists/claude-monet/collection/the-japanese-bridge-monet.webp",
+  "poppies": "assets/artists/claude-monet/collection/poppies-monet.webp",
+  "woman-with-parasol": "assets/artists/claude-monet/artworks/the-woman-with-a-parasol/images/woman-with-a-parasol.webp"
 });
 
 const UI = {
@@ -500,7 +521,7 @@ function renderCard(manifest, lang, text, imageOverride) {
     : "";
 
   return `
-    <article class="artwork-card${imageOverride ? " artwork-card--frameless" : ""}">
+    <article class="artwork-card${imageOverride ? " artwork-card--frameless" : ""}" data-artwork-slug="${escapeHtml(slug)}">
       <a class="artwork-image" href="${printUrl}">
         <img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy" />
       </a>
