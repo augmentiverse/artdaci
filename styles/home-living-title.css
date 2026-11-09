@@ -82,3 +82,30 @@ html:is([lang="fr"],[lang="en"]) .home-v2 .hv2-hero .hv2-title-row #book-title .
     will-change: auto;
   }
 }
+
+
+/* Replace the standalone underline with a four-color light trail on the
+   same baseline as "vivants" / "Alive". The trail lives inside the animated
+   word's line and never takes an extra row or adds a font/asset request. */
+html:is([lang="fr"],[lang="en"]) .home-v2 .hv2-hero .hv2-title-row::after {
+  content: none;
+  display: none;
+}
+html:is([lang="fr"],[lang="en"]) .home-v2 .hv2-hero .hv2-title-row #book-title .hv2-title-alive {
+  position: relative;
+}
+html:is([lang="fr"],[lang="en"]) .home-v2 .hv2-hero .hv2-title-row #book-title .hv2-title-alive::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: calc(100% + clamp(9px, 1.4vw, 18px));
+  width: clamp(30px, 8.2vw, 100px);
+  height: clamp(4px, .42vw, 6px);
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: linear-gradient(90deg,#2563eb 0 26%,#ef4444 26% 51%,#facc15 51% 76%,#22c55e 76% 100%);
+  background-clip: border-box;
+  -webkit-background-clip: border-box;
+  box-shadow: 0 3px 15px rgba(37, 99, 235, .18);
+  pointer-events: none;
+}
