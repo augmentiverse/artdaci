@@ -26,6 +26,8 @@ test("QR brand styling includes mobile and print layouts",async()=>{
   const css=await read("styles/qr-directory-brand.css");
   assert.match(css,/\.qr-directory-header \.qr-directory-logo/);
   assert.match(css,/position:\s*static/);
+  assert.match(css,/@media \(max-width: 640px\)/);
+  assert.match(css,/grid-template-columns: minmax\(0, 1fr\)/);
   assert.match(css,/@media print/);
 });
 for(const [path,homepage,label] of [

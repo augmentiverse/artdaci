@@ -51,6 +51,60 @@
   }
 }
 
+/* Phone-width QR cards need one readable column. Two columns plus 92px
+   images caused horizontal overflow even though the header was correct. */
+@media (max-width: 640px) {
+  .qr-directory {
+    width: calc(100% - 16px);
+    padding: 24px 17px 28px;
+  }
+
+  .qr-directory-header h1 {
+    font-size: clamp(30px, 9vw, 38px);
+    line-height: 1.08;
+  }
+
+  .qr-directory-header > p:last-child {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .qr-directory-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  .qr-directory-card {
+    grid-template-columns: 88px minmax(0, 1fr);
+    min-width: 0;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .qr-directory-card > div {
+    min-width: 0;
+  }
+
+  .qr-directory-card img {
+    width: 88px;
+    height: 88px;
+  }
+
+  .qr-directory-card h2 {
+    overflow-wrap: anywhere;
+  }
+
+  .qr-directory-footer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .qr-directory-footer .button {
+    white-space: normal;
+    text-align: center;
+  }
+}
+
 @media print {
   .qr-directory-header {
     padding-right: 0;
