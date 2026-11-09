@@ -50,7 +50,7 @@ const PRINT_FRAMELESS_IMAGES = Object.freeze({
   "ginevra-de-benci": "assets/artists/leonardo-da-vinci/collection/ginevra-de-benci.webp",
   "belle-ferronniere": "assets/home-gallery/leonardo-belle-ferronniere-frameless.webp",
   "vermeer-girl-with-a-pearl-earring": "assets/artists/johannes-vermeer/collection/girl-with-a-pearl-earring-vermeer.webp",
-  "view-of-delft": "assets/artists/johannes-vermeer/collection/view-of-delft-vermeer.webp",
+  "view-of-delft": "assets/artists/johannes-vermeer/artworks/view_of_delft/images/ve02-view-of-delft-web.webp",
   "vermeer-milkmaid": "assets/artists/johannes-vermeer/collection/the-milkmaid-vermeer.webp",
   "art-of-painting": "assets/artists/johannes-vermeer/collection/the-art-of-painting-vermeer.webp",
   "vermeer-astronomer": "assets/artists/johannes-vermeer/collection/the-astronomer-vermeer.webp",

@@ -9,7 +9,8 @@
   // images not packaged with a decorative border. Never crop these.
   const unframed = new Set([
     "lady-with-an-ermine", "belle-ferronniere", "pont-d-argenteuil",
-    "van-gogh", "van-gogh-bedroom", "woman-with-parasol"
+    "van-gogh", "van-gogh-bedroom", "woman-with-parasol",
+    "view-of-delft"
   ]);
 
   // The first three have measured painted-area boundaries from the existing
@@ -26,7 +27,6 @@
     "last-supper": [.055, .065, .055, .065],
     "annunciation": [.085, .085, .085, .085],
     "ginevra-de-benci": [.105, .105, .105, .105],
-    "view-of-delft": [.075, .08, .075, .08],
     "vermeer-milkmaid": [.095, .095, .095, .095],
     "art-of-painting": [.095, .095, .095, .095],
     "vermeer-astronomer": [.095, .095, .095, .095],
