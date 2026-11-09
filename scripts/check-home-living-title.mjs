@@ -42,9 +42,28 @@ async function inspectTitle(page,pageSpec,reduce){
       indent:parseFloat(getComputedStyle(live).marginInlineStart),
       intrinsicWidth:live.offsetWidth,
       transform:getComputedStyle(live).transform,
+      trail:{
+        content:getComputedStyle(live,"::before").content,
+        position:getComputedStyle(live,"::before").position,
+        width:parseFloat(getComputedStyle(live,"::before").width),
+        height:parseFloat(getComputedStyle(live,"::before").height),
+        right:parseFloat(getComputedStyle(live,"::before").right),
+        background:getComputedStyle(live,"::before").backgroundImage,
+        oldUnderlineContent:getComputedStyle(document.querySelector(".hv2-title-row"),"::after").content,
+      },
     };
   });
   check(outcome.title===pageSpec.title,"Wrong accessible heading text: "+outcome.title);
+  check(outcome.trail.content!=="none" && outcome.trail.position==="absolute",
+    "The four-color trail must be attached to the living word");
+  check(outcome.trail.width>=25 && outcome.trail.height>=4,
+    "Colored trail must remain visible on this viewport");
+  check(outcome.trail.right>outcome.intrinsicWidth,
+    "Colored trail should be immediately to the left of the living word");
+  check(outcome.trail.background.includes("linear-gradient"),
+    "The colored trail gradient is absent");
+  check(outcome.trail.oldUnderlineContent==="none",
+    "The old title underline must be removed");
   const optimal=Math.max(0,Math.min(outcome.first.width-2,
     outcome.hero.right-outcome.first.left-outcome.intrinsicWidth-6));
   check(Math.abs(outcome.indent-optimal)<9,

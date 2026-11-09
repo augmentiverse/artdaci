@@ -43,3 +43,12 @@ for(const [home,guide] of [
     assert.ok(html.includes('class="hv2-section" aria-labelledby="featured-title"'));
   });
 }
+
+
+test("The colored title trail shares the living word's row instead of taking its own row",async()=>{
+  const css=await file("styles/home-living-title.css");
+  assert.match(css,/\.hv2-title-row::after\s*\{\s*content:\s*none;\s*display:\s*none;/);
+  assert.match(css,/\.hv2-title-alive::before\s*\{/);
+  assert.match(css,/background:\s*linear-gradient\(90deg,#2563eb/);
+  assert.match(css,/position:\s*absolute/);
+});

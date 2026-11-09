@@ -5,6 +5,10 @@ on:
     paths:
       - "index-fr.html"
       - "index.html"
+      - "index-ar.html"
+      - "styles/home-immersive-museums.css"
+      - "tests/home-immersive-museums.test.mjs"
+      - "scripts/check-home-immersive-museums.mjs"
       - "styles/home-living-title.css"
       - "tests/home-living-title.test.mjs"
       - "scripts/check-home-living-title.mjs"
@@ -25,7 +29,8 @@ jobs:
       - name: Validate localized title markup and accessibility styles
         run: |
           node --check scripts/check-home-living-title.mjs
-          node --test tests/home-living-title.test.mjs
+          node --check scripts/check-home-immersive-museums.mjs
+          node --test tests/home-living-title.test.mjs tests/home-immersive-museums.test.mjs
       - name: Prepare isolated Chromium inspection
         run: |
           npm install --prefix /tmp/artdaci-living-qa --no-save --no-package-lock --ignore-scripts playwright-core@1.56.1
@@ -42,6 +47,13 @@ jobs:
           node scripts/check-home-living-title.mjs \
             --output visual-review/living-title.json \
             --screenshots visual-review/living-title-screenshots
+      - name: Check immersive museum color contrast, links and layout
+        env:
+          ARTDACI_PLAYWRIGHT_CORE: /tmp/artdaci-living-qa/node_modules/playwright-core
+        run: |
+          node scripts/check-home-immersive-museums.mjs \
+            --output visual-review/immersive-museums.json \
+            --screenshots visual-review/immersive-museums-screenshots
       - name: Preserve visual comparison screenshots
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
