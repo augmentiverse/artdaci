@@ -78,6 +78,14 @@ const HOME_GALLERY_FEATURED_SLUGS = Object.freeze([
   "monet-impression-sunrise", "pont-d-argenteuil"
 ]);
 
+/* Homepage thumbnails supplied by the ARTDACI editor. Print, AR, 3D, VR and
+   manifest artwork sources remain unchanged. */
+const HOME_GALLERY_IMAGE_OVERRIDES = Object.freeze({
+  "pont-d-argenteuil": "assets/home-gallery/monet-bridge-at-argenteuil-frameless.webp",
+  "belle-ferronniere": "assets/home-gallery/leonardo-belle-ferronniere-frameless.webp",
+  "lady-with-an-ermine": "assets/home-gallery/leonardo-lady-with-ermine-frameless.webp"
+});
+
 const UI = {
   en: {
     search: "Search by title, artist, technique, period...",
@@ -328,6 +336,7 @@ async function loadManifest(path) {
 
 function renderCatalogue(root, manifests, museums, lang, text) {
   const isHomeGallery = root.dataset.homeGallery === "true";
+  const galleryImages = isHomeGallery ? HOME_GALLERY_IMAGE_OVERRIDES : {};
   const movements = [...new Set(manifests.flatMap((item) => item.movement || []))].sort();
   const state = {
     query: "",
@@ -405,7 +414,7 @@ function renderCatalogue(root, manifests, museums, lang, text) {
     }
     root.querySelector(".collection-stats").innerHTML = renderStats(manifests, filtered, text);
     root.querySelector(".artwork-grid-primary, .artwork-grid").innerHTML = visible.length
-      ? visible.map((manifest) => renderCard(manifest, lang, text)).join("")
+      ? visible.map((manifest) => renderCard(manifest, lang, text, galleryImages[manifest.slug])).join("")
       : `<p class="empty-results">${text.noResults}</p>`;
 
     if (isHomeGallery) {
@@ -414,7 +423,7 @@ function renderCatalogue(root, manifests, museums, lang, text) {
       more.hidden = !curatedMode || remaining.length === 0;
       if (!curatedMode) more.open = false;
       more.querySelector(".artwork-more-count").textContent = String(remaining.length);
-      more.querySelector(".artwork-more-grid").innerHTML = remaining.map((manifest) => renderCard(manifest, lang, text)).join("");
+      more.querySelector(".artwork-more-grid").innerHTML = remaining.map((manifest) => renderCard(manifest, lang, text, galleryImages[manifest.slug])).join("");
     }
   }
 
@@ -470,10 +479,10 @@ function renderStats(all, filtered, text) {
   `;
 }
 
-function renderCard(manifest, lang, text) {
+function renderCard(manifest, lang, text, imageOverride) {
   const slug = manifest.slug;
   const title = manifest.title;
-  const image = manifest.media?.image || manifest.print?.imageTargetSource;
+  const image = imageOverride || manifest.media?.image || manifest.print?.imageTargetSource;
   const movement = (manifest.movement || []).join(", ");
   const printUrl = PRINT_PAGES[lang]?.[slug] || PRINT_PAGES.en[slug] || `print-artwork.html?painting=${encodeURIComponent(slug)}&lang=${lang}`;
   const audioOverviewUrl = manifest.audioOverviewUrl;
@@ -491,7 +500,7 @@ function renderCard(manifest, lang, text) {
     : "";
 
   return `
-    <article class="artwork-card">
+    <article class="artwork-card${imageOverride ? " artwork-card--frameless" : ""}">
       <a class="artwork-image" href="${printUrl}">
         <img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy" />
       </a>
