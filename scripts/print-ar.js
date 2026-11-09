@@ -127,9 +127,17 @@ const PAINTINGS_AR = {
   }
 };
 
+const PRINT_FRAMELESS_IMAGES = Object.freeze({
+  "mona-lisa": "assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp",
+  "van-gogh": "assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp",
+  "van-gogh-bedroom": "assets/artists/vincent-van-gogh/artworks/the-bedroom/images/bed-van-gogh.jpeg",
+  "vermeer-girl-with-a-pearl-earring": "assets/artists/johannes-vermeer/collection/girl-with-a-pearl-earring-vermeer.webp",
+  "monet-impression-sunrise": "assets/artists/claude-monet/collection/impression-sunrise-monet.webp"
+});
 const slug = new URLSearchParams(location.search).get("painting");
 const paintingSlug = PAINTINGS_AR[slug] ? slug : "mona-lisa";
 const painting = PAINTINGS_AR[paintingSlug];
+const displayImage = PRINT_FRAMELESS_IMAGES[paintingSlug] || painting.image;
 const PRINT_PAGE_LINKS = {
   "mona-lisa": { en: "print-target.html", fr: "print-target-fr.html" },
   "van-gogh": { en: "print-van-gogh.html", fr: "print-van-gogh-fr.html" },
@@ -146,8 +154,8 @@ document.title = `${painting.title} — الصفحة المطبوعة`;
 root.innerHTML = `
   <section class="catalogue-plate">
     <p class="eyebrow">ARTDACI — صفحة فنية مطبوعة</p>
-    <figure class="target-art">
-      <img src="${painting.image}" alt="${painting.title} للفنان ${painting.artist}" />
+    <figure class="target-art" data-artwork-slug="${paintingSlug}">
+      <span class="frameless-artwork-media"><img src="${displayImage}" alt="${painting.title} للفنان ${painting.artist}" loading="eager" decoding="async" /></span>
       <figcaption><strong>${painting.title}</strong><span>${painting.artist}، ${painting.date} — ${painting.medium} — ${painting.dimensions} — ${painting.location}</span></figcaption>
     </figure>
   </section>

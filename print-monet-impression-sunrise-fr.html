@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Monet — Impression, soleil levant — Page imprimable de l’œuvre</title>
     <link rel="stylesheet" href="styles/site.css" />
+    <link rel="stylesheet" href="styles/print-frameless.css?v=1" />
   </head>
   <body class="target-body">
     <main
@@ -12,8 +13,8 @@
       data-artwork-media-manifest="https://media.artdaci.com/artworks/mo01/manifest.json">
       <section class="catalogue-plate">
         <p class="eyebrow">Œuvre 024 · Impressionnisme</p>
-        <figure class="target-art">
-          <img src="assets/artists/claude-monet/collection/impression-sunrise-monet.png" alt="Impression, soleil levant de Claude Monet" />
+        <figure class="target-art" data-artwork-slug="monet-impression-sunrise">
+          <span class="frameless-artwork-media"><img src="assets/artists/claude-monet/collection/impression-sunrise-monet.webp" alt="Impression, soleil levant de Claude Monet"  loading="eager" decoding="async" /></span>
           <figcaption><strong>Impression, soleil levant</strong><span>Claude Monet, 1872 · Huile sur toile · Musée Marmottan Monet, Paris</span></figcaption>
         </figure>
       </section>
@@ -42,5 +43,6 @@
     </main>
     <script type="module" src="scripts/artwork-media-manifest.js?v=3"></script>
     <script type="module" src="scripts/painting-museum.js?v=1"></script>
+      <script src="scripts/trim-baked-frames.js?v=1" defer></script>
   </body>
 </html>

@@ -1,0 +1,45 @@
+/* ARTDACI homepage Painting Index: pictures displayed without a
+   decorative frame; 24 art reproductions have canonical collection images.
+   The 3 known ornamented source images are cropped to their painted area.
+   The gallery layout and its text/action cards remain unchanged. */
+.home-v2 .painting-index-gallery .artwork-card--frameless .artwork-image {
+  border:0!important;
+  border-radius:2px;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.home-v2 .painting-index-gallery .artwork-card--frameless .artwork-image::after {
+  content:none!important;display:none!important;
+}
+.home-v2 .painting-index-gallery .artwork-card--frameless .artwork-image img {
+  border:0!important;border-radius:0!important;
+  outline:none!important;box-shadow:none!important;
+  object-fit:contain;
+}
+.home-v2 .painting-index-gallery .artwork-card[data-artwork-slug="mona-lisa"] .artwork-image,
+.home-v2 .painting-index-gallery .artwork-card[data-artwork-slug="vermeer-girl-with-a-pearl-earring"] .artwork-image,
+.home-v2 .painting-index-gallery .artwork-card[data-artwork-slug="monet-impression-sunrise"] .artwork-image {
+  overflow:hidden;
+}
+.home-v2 .painting-index-gallery .artwork-card[data-artwork-slug="mona-lisa"] .artwork-image img {
+  clip-path:inset(10% 13.1% 10% 13.1%);transform:scale(1.25);
+}
+.home-v2 .painting-index-gallery .artwork-card[data-artwork-slug="vermeer-girl-with-a-pearl-earring"] .artwork-image img {
+  clip-path:inset(13.1% 13.5% 16.6% 13.5%);transform:scale(1.38);
+}
+.home-v2 .painting-index-gallery .artwork-card[data-artwork-slug="monet-impression-sunrise"] .artwork-image img {
+  clip-path:inset(13% 10.2% 15% 10.2%);transform:scale(1.32);
+}
+@media(prefers-reduced-motion:reduce) {
+  .home-v2 .painting-index-gallery .artwork-card--frameless .artwork-image img {transition:none!important;}
+}
+/* When the display-only trim has physically extracted the painted pixels,
+   remove the initial clip/scale fallback to avoid cropping twice. */
+.home-v2 .painting-index-gallery .artwork-card[data-artwork-slug] .artwork-image img[data-frameless-processed="true"] {
+  clip-path:none!important;
+  transform:none!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  object-fit:contain!important;
+}

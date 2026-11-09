@@ -41,6 +41,33 @@ const TEXTS = {
     "pont-d-argenteuil": ["Monet peint le pont en 1874, dans une banlieue où se rencontrent loisirs, navigation, industrie et modernité.", "L’horizontale du pont dialogue avec les mâts, les voiles et les reflets. L’eau conduit le regard vers les arches et le lointain lumineux.", "Des touches visibles de bleu, de vert, de blanc et de couleurs chaudes laissent l’œil recomposer l’éclat mouvant de l’eau.", "Conservé au Musée d’Orsay, le tableau est un jalon de l’impressionnisme et de la représentation de la vie moderne autour de Paris."]
   }
 };
+/* Print display images; original manifests remain unchanged for AR. */
+const PRINT_FRAMELESS_IMAGES = Object.freeze({
+  "mona-lisa": "assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp",
+  "lady-with-an-ermine": "assets/home-gallery/leonardo-lady-with-ermine-frameless.webp",
+  "last-supper": "assets/artists/leonardo-da-vinci/collection/the-last-supper-davinci.webp",
+  "annunciation": "assets/artists/leonardo-da-vinci/collection/the-annunciation-davinci.webp",
+  "ginevra-de-benci": "assets/artists/leonardo-da-vinci/collection/ginevra-de-benci.webp",
+  "belle-ferronniere": "assets/home-gallery/leonardo-belle-ferronniere-frameless.webp",
+  "vermeer-girl-with-a-pearl-earring": "assets/artists/johannes-vermeer/collection/girl-with-a-pearl-earring-vermeer.webp",
+  "view-of-delft": "assets/artists/johannes-vermeer/artworks/view_of_delft/images/ve02-view-of-delft-web.webp",
+  "vermeer-milkmaid": "assets/artists/johannes-vermeer/collection/the-milkmaid-vermeer.webp",
+  "art-of-painting": "assets/artists/johannes-vermeer/collection/the-art-of-painting-vermeer.webp",
+  "vermeer-astronomer": "assets/artists/johannes-vermeer/collection/the-astronomer-vermeer.webp",
+  "woman-holding-balance": "assets/artists/johannes-vermeer/collection/woman-holding-a-balance-vermeer.webp",
+  "van-gogh": "assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp",
+  "van-gogh-bedroom": "assets/artists/vincent-van-gogh/artworks/the-bedroom/images/bed-van-gogh.jpeg",
+  "starry-night": "assets/artists/vincent-van-gogh/collection/the-starry-night-vangogh.webp",
+  "sunflowers": "assets/artists/vincent-van-gogh/collection/tournesols-vangogh.webp",
+  "cafe-terrace": "assets/artists/vincent-van-gogh/collection/café-terrasse-at-night-vangogh.webp",
+  "night-cafe": "assets/artists/vincent-van-gogh/collection/the-night-café-vangogh.webp",
+  "monet-impression-sunrise": "assets/artists/claude-monet/collection/impression-sunrise-monet.webp",
+  "pont-d-argenteuil": "assets/home-gallery/monet-bridge-at-argenteuil-frameless.webp",
+  "water-lilies": "assets/artists/claude-monet/collection/water-lilies-monet.webp",
+  "japanese-bridge": "assets/artists/claude-monet/collection/the-japanese-bridge-monet.webp",
+  "poppies": "assets/artists/claude-monet/collection/poppies-monet.webp",
+  "woman-with-parasol": "assets/artists/claude-monet/artworks/the-woman-with-a-parasol/images/woman-with-a-parasol.webp"
+});
 const DEFAULT_SLUG = "lady-with-an-ermine";
 const root = document.getElementById("dynamic-artwork-spread");
 
@@ -63,6 +90,7 @@ const museum = museumConfig
   : null;
 if (museum && museum.slug !== museumConfig.slug) throw new Error("Museum identity mismatch.");
 const copy = COPY[lang]; const localized = manifest.localizations?.[lang] || {}; const museumLocalized = museum?.localizations?.[lang] || {};
+const displayImage = PRINT_FRAMELESS_IMAGES[slug] || manifest.media?.image || manifest.print?.imageTargetSource;
 const title = localized.title || manifest.title; const locationName = museumLocalized.title || museum?.title || manifest.currentLocation?.museum || "";
 const base = manifest.texts; const selected = TEXTS[lang]?.[slug] || [base.historicalContext, base.artisticAnalysis, `${base.palette || ""} ${base.perspectiveTechnique || ""}`, `${base.culturalSignificance || ""} ${base.influence || ""}`];
 const audioOverviewUrl = await resolveArtworkAudioOverview({
@@ -72,7 +100,7 @@ const audioOverviewUrl = await resolveArtworkAudioOverview({
 const artworkNumber = formatArtworkNumber(manifest.bookOrder, lang);
 document.title = `${title} — ${copy.pageTitle}`; const indexUrl = lang === "fr" ? "index-fr.html" : lang === "ar" ? "index-ar.html" : "index.html";
 root.innerHTML = `
-  <section class="catalogue-plate"><p class="eyebrow"${artworkNumber ? "" : " hidden"}>${esc(artworkNumber)}</p><figure class="target-art"><img src="${esc(manifest.media.image)}" alt="${esc(title)}"/><figcaption><strong>${esc(title)}</strong><span>${esc(manifest.artist.name)} · ${esc(manifest.date)} · ${esc(locationName)}</span></figcaption></figure></section>
+  <section class="catalogue-plate"><p class="eyebrow"${artworkNumber ? "" : " hidden"}>${esc(artworkNumber)}</p><figure class="target-art" data-artwork-slug="${esc(slug)}"><span class="frameless-artwork-media"><img src="${esc(displayImage)}" alt="${esc(title)}" loading="eager" decoding="async" /></span><figcaption><strong>${esc(title)}</strong><span>${esc(manifest.artist.name)} · ${esc(manifest.date)} · ${esc(locationName)}</span></figcaption></figure></section>
   <section class="catalogue-text"><header><p class="eyebrow">${copy.entry}</p><h1>${esc(title)}</h1><p class="artist">${esc(manifest.artist.name)}</p></header>
   <dl class="catalogue-meta"><div><dt>${copy.date}</dt><dd>${esc(manifest.date)}</dd></div><div><dt>${copy.medium}</dt><dd>${esc(manifest.medium)}</dd></div><div><dt>${copy.dimensions}</dt><dd>${manifest.dimensions?.heightCm || "—"} × ${manifest.dimensions?.widthCm || "—"} cm</dd></div><div><dt>${copy.location}</dt><dd>${esc(manifest.currentLocation?.museum || locationName)}</dd></div></dl>
   <div class="catalogue-grid"><section><h2>${copy.context}</h2><p>${esc(selected[0])}</p></section><section><h2>${copy.analysis}</h2><p>${esc(selected[1])}</p></section><section><h2>${copy.technique}</h2><p>${esc(selected[2])}</p></section><section><h2>${copy.legacy}</h2><p>${esc(selected[3])}</p></section></div>

@@ -1,0 +1,198 @@
+/* ARTDACI — the ten ways to experience the collection, distinguished by
+   an individual pigment palette rather than ten lookalike white tiles.
+   A subtle wash, museum-style typographic hierarchy and a painted edge.
+   Scope: homepage experience grid only, FR / EN / AR. */
+
+/* Each palette has an accessible dark foreground color and a pale background.
+   Set colors directly on the card so text and icon treatments stay in sync. */
+.home-v2 .hv2-experiences .hv2-experience-grid > :nth-child(1) {
+  --ex-ink:#194e8b; --ex-strong:#193e6b; --ex-border:#b5d3f3;
+  --ex-top:#e8f3ff; --ex-bottom:#f8fbff; --ex-wash:rgba(82,152,225,.20);
+  --ex-chip:#dcecff; --ex-stroke:#3986d7;
+}
+.home-v2 .hv2-experiences .hv2-experience-grid > :nth-child(2) {
+  --ex-ink:#126f59; --ex-strong:#165544; --ex-border:#a9dcca;
+  --ex-top:#e7f7ef; --ex-bottom:#f8fcfa; --ex-wash:rgba(45,170,130,.19);
+  --ex-chip:#d6f2e6; --ex-stroke:#289777;
+}
+.home-v2 .hv2-experiences .hv2-experience-grid > :nth-child(3) {
+  --ex-ink:#7250a7; --ex-strong:#50377c; --ex-border:#cfc0eb;
+  --ex-top:#f1ecfd; --ex-bottom:#fcfaff; --ex-wash:rgba(145,102,204,.18);
+  --ex-chip:#e7ddfa; --ex-stroke:#9673ce;
+}
+.home-v2 .hv2-experiences .hv2-experience-grid > :nth-child(4) {
+  --ex-ink:#935225; --ex-strong:#75401f; --ex-border:#e6c3a7;
+  --ex-top:#fef0e2; --ex-bottom:#fffbf5; --ex-wash:rgba(214,128,69,.18);
+  --ex-chip:#fae1c9; --ex-stroke:#c17c42;
+}
+.home-v2 .hv2-experiences .hv2-experience-grid > :nth-child(5) {
+  --ex-ink:#116b7d; --ex-strong:#174e62; --ex-border:#a9dbe2;
+  --ex-top:#e6f6fa; --ex-bottom:#f8fcfd; --ex-wash:rgba(72,171,197,.19);
+  --ex-chip:#d7f0f4; --ex-stroke:#3d9fb8;
+}
+.home-v2 .hv2-experiences .hv2-experience-grid > :nth-child(6) {
+  --ex-ink:#445baa; --ex-strong:#303e79; --ex-border:#bbc9ee;
+  --ex-top:#e9eefe; --ex-bottom:#fbfcff; --ex-wash:rgba(94,114,208,.18);
+  --ex-chip:#dfe6fd; --ex-stroke:#637fcb;
+}
+.home-v2 .hv2-experiences .hv2-experience-grid > :nth-child(7) {
+  --ex-ink:#a35e21; --ex-strong:#704719; --ex-border:#ebd19b;
+  --ex-top:#fff3dc; --ex-bottom:#fffdf6; --ex-wash:rgba(235,177,70,.21);
+  --ex-chip:#fbe9bd; --ex-stroke:#cc973f;
+}
+.home-v2 .hv2-experiences .hv2-experience-grid > :nth-child(8) {
+  --ex-ink:#a54370; --ex-strong:#703553; --ex-border:#e9c0d2;
+  --ex-top:#fcecf3; --ex-bottom:#fffbfd; --ex-wash:rgba(215,110,159,.18);
+  --ex-chip:#f8dce9; --ex-stroke:#cf6795;
+}
+.home-v2 .hv2-experiences .hv2-experience-grid > :nth-child(9) {
+  --ex-ink:#ab4b4a; --ex-strong:#793735; --ex-border:#efbfb5;
+  --ex-top:#fff0eb; --ex-bottom:#fffaf8; --ex-wash:rgba(222,113,94,.18);
+  --ex-chip:#fbe0dc; --ex-stroke:#d77b67;
+}
+.home-v2 .hv2-experiences .hv2-experience-grid > :nth-child(10) {
+  --ex-ink:#5c741f; --ex-strong:#495d22; --ex-border:#cddda1;
+  --ex-top:#f0f7e3; --ex-bottom:#fcfdf5; --ex-wash:rgba(157,181,77,.22);
+  --ex-chip:#e6f0cc; --ex-stroke:#97ac4d;
+}
+.home-v2 .hv2-experiences .hv2-experience-grid {
+  gap:clamp(10px,1.4vw,18px);
+  border:0;
+  padding-block:clamp(9px,1.6vw,20px);
+}
+.home-v2 .hv2-experiences .hv2-experience-grid > .hv2-experience-card {
+  box-sizing:border-box;
+  position:relative;
+  isolation:isolate;
+  min-width:0;
+  overflow:hidden;
+  padding:clamp(22px,2.4vw,32px);
+  border:1px solid var(--ex-border);
+  border-radius:clamp(14px,1.6vw,20px);
+  color:var(--ex-strong);
+  background:
+    radial-gradient(ellipse at 100% 0,var(--ex-wash),transparent 62%),
+    linear-gradient(154deg,var(--ex-top) 0%,var(--ex-bottom) 100%);
+  box-shadow:0 9px 24px rgba(38,64,94,.07),inset 0 1px rgba(255,255,255,.92);
+  transform:translateY(0);
+  transition:transform .24s ease,box-shadow .24s ease,border-color .24s ease;
+}
+.home-v2 .hv2-experiences .hv2-experience-grid > .hv2-experience-card::before {
+  content:"";
+  display:block;
+  position:absolute;
+  top:0;
+  inset-inline-start:0;
+  width:46%;
+  height:5px;
+  border-radius:0 0 70% 12%;
+  background:linear-gradient(90deg,var(--ex-stroke),var(--ex-wash),transparent);
+  clip-path:polygon(0 0,100% 0,93% 75%,62% 100%,30% 65%,0 100%);
+  pointer-events:none;
+}
+.home-v2 .hv2-experiences .hv2-experience-grid > .hv2-experience-card::after {
+  content:"";
+  position:absolute;
+  z-index:-1;
+  width:180px;
+  height:180px;
+  inset-block-end:-96px;
+  inset-inline-end:-91px;
+  border-radius:50%;
+  background:radial-gradient(circle,var(--ex-wash) 0%,transparent 71%);
+  pointer-events:none;
+}
+.home-v2 .hv2-experiences .hv2-experience-card .hv2-experience-no {
+  box-sizing:border-box;
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  width:max-content;
+  min-height:30px;
+  margin:0 0 clamp(22px,2.6vw,34px);
+  padding:6px 10px;
+  border:1px solid var(--ex-border);
+  border-radius:9px;
+  background:var(--ex-chip);
+  color:var(--ex-ink);
+  font:760 12px/1.1 Inter,"Segoe UI",Arial,sans-serif;
+  letter-spacing:.09em;
+}
+.home-v2 .hv2-experiences .hv2-experience-card .hv2-experience-type {
+  color:var(--ex-ink);
+  font:760 10px/1.4 Inter,"Segoe UI",Arial,sans-serif;
+  letter-spacing:.095em;
+}
+.home-v2 .hv2-experiences .hv2-experience-card h3 {
+  max-width:100%;
+  margin:7px 0 0;
+  color:var(--ex-strong);
+  font-weight:710;
+  line-height:1.16;
+}
+.home-v2 .hv2-experiences .hv2-experience-card p {
+  color:#3d5267;
+  font-size:14px;
+  line-height:1.58;
+}
+.home-v2 .hv2-experiences .hv2-experience-card .hv2-arrow {
+  color:var(--ex-ink);
+}
+.home-v2 .hv2-experiences .hv2-experience-card .hv2-exp-icon {
+  color:var(--ex-ink);
+  border-color:var(--ex-border);
+  background:var(--ex-chip);
+  box-shadow:0 3px 11px rgba(35,65,96,.08);
+}
+.home-v2 .hv2-experiences .hv2-experience-grid > a.hv2-experience-card:hover,
+.home-v2 .hv2-experiences .hv2-experience-grid > a.hv2-experience-card:focus-visible,
+.home-v2 .hv2-experiences .hv2-experience-grid > .hv2-ar-group:focus-within {
+  z-index:2;
+  border-color:var(--ex-stroke);
+  background:
+    radial-gradient(ellipse at 100% 0,var(--ex-wash),transparent 65%),
+    linear-gradient(150deg,var(--ex-top),var(--ex-bottom));
+  box-shadow:0 18px 37px rgba(36,63,92,.14),0 0 0 2px var(--ex-chip);
+  transform:translateY(-4px);
+}
+.home-v2 .hv2-experiences .hv2-experience-grid > a.hv2-experience-card:focus-visible {
+  outline:3px solid #173f76;
+  outline-offset:3px;
+}
+.home-v2 .hv2-experiences .hv2-ar-group .hv2-ar-links a {
+  box-sizing:border-box;
+  border-color:var(--ex-border);
+  border-radius:10px;
+  color:var(--ex-strong);
+  background:var(--ex-chip);
+  font-weight:750;
+}
+.home-v2 .hv2-experiences .hv2-ar-group .hv2-ar-links a:hover,
+.home-v2 .hv2-experiences .hv2-ar-group .hv2-ar-links a:focus-visible {
+  color:#273b18;
+  border-color:var(--ex-stroke);
+  background:var(--ex-top);
+}
+.home-v2 .hv2-experiences .hv2-ar-group .hv2-ar-links a:focus-visible {
+  outline:2px solid var(--ex-ink);
+  outline-offset:2px;
+}
+@media(max-width:700px) {
+  .home-v2 .hv2-experiences .hv2-experience-grid {
+    gap:13px;
+    padding-block:12px;
+  }
+  .home-v2 .hv2-experiences .hv2-experience-grid > .hv2-experience-card {
+    min-height:0;
+    padding:clamp(21px,5vw,29px);
+  }
+  .home-v2 .hv2-experiences .hv2-experience-card .hv2-experience-no {
+    margin-bottom:19px;
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  .home-v2 .hv2-experiences .hv2-experience-grid > .hv2-experience-card {
+    transition:none!important;
+    transform:none!important;
+  }
+}

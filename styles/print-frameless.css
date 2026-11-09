@@ -1,0 +1,54 @@
+/* ARTDACI — unframed artwork on printable sheets (FR / EN / AR).
+   Keep QR targets, museum images, and close-look markers unchanged. */
+.target-body .catalogue-spread .target-art {
+  box-sizing:border-box;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;min-width:0;margin:0;
+}
+.target-body .catalogue-spread .target-art .frameless-artwork-media {
+  box-sizing:border-box;display:block;overflow:hidden;
+  width:min(520px,100%);margin-inline:auto;
+  border:0;border-radius:0;outline:0;background:transparent;box-shadow:none;
+}
+.target-body .catalogue-spread .target-art .frameless-artwork-media img {
+  display:block;box-sizing:border-box;width:100%;height:auto;min-height:0;
+  margin:0;border:0!important;border-radius:0!important;
+  box-shadow:none!important;outline:0!important;background:transparent!important;
+  object-fit:contain;object-position:center;
+}
+/* Crop only known baked-in decorative frames, using the measured insets
+   already employed on the ARTDACI homepage. Never crop unknown images. */
+.target-body .catalogue-spread .target-art[data-artwork-slug="mona-lisa"] .frameless-artwork-media img {
+  clip-path:inset(10% 13.1% 10% 13.1%);transform:scale(1.25);
+}
+.target-body .catalogue-spread .target-art[data-artwork-slug="vermeer-girl-with-a-pearl-earring"] .frameless-artwork-media img {
+  clip-path:inset(13.1% 13.5% 16.6% 13.5%);transform:scale(1.38);
+}
+.target-body .catalogue-spread .target-art[data-artwork-slug="monet-impression-sunrise"] .frameless-artwork-media img {
+  clip-path:inset(13% 10.2% 15% 10.2%);transform:scale(1.32);
+}
+/* Close-looking illustrations can contain annotation positions. Remove only
+   the CSS frame, not the original image pixels, so coordinates stay aligned. */
+.target-body .catalogue-spread .close-look-stage,
+.target-body .catalogue-spread .close-look-stage > img {
+  border:0;border-radius:0;box-shadow:none;
+}
+.target-body .catalogue-spread .close-look-stage {background:transparent;}
+@media(max-width:720px) {
+  .target-body .catalogue-spread .target-art .frameless-artwork-media {width:min(100%,480px);}
+}
+@media print {
+  .target-body .catalogue-spread .target-art,
+  .target-body .catalogue-spread .target-art .frameless-artwork-media {
+    break-inside:avoid;page-break-inside:avoid;
+  }
+}
+/* Once the browser has created the real cropped reproduction, stop applying
+   any fallback clip/scale. Printing retains only the painting itself. */
+.target-body .catalogue-spread .target-art[data-artwork-slug] .frameless-artwork-media img[data-frameless-processed="true"] {
+  clip-path:none!important;
+  transform:none!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  object-fit:contain!important;
+}

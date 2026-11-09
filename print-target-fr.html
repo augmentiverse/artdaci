@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Mona Lisa - Page imprimable de l’œuvre</title>
     <link rel="stylesheet" href="styles/site.css" />
+    <link rel="stylesheet" href="styles/print-frameless.css?v=1" />
   </head>
   <body class="target-body">
     <main
@@ -12,8 +13,8 @@
       data-artwork-media-manifest="https://media.artdaci.com/artworks/ld01/manifest.json">
       <section class="catalogue-plate">
         <p class="eyebrow">Œuvre 001 - Haute Renaissance</p>
-        <figure class="target-art">
-          <img data-artwork-media="images.main" src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg" alt="Mona Lisa de Léonard de Vinci" />
+        <figure class="target-art" data-artwork-slug="mona-lisa">
+          <span class="frameless-artwork-media"><img src="assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp" alt="Mona Lisa de Léonard de Vinci"  loading="eager" decoding="async" /></span>
           <figcaption>
             <strong>Mona Lisa</strong>
             <span>Léonard de Vinci, vers 1503-1519 - Huile sur panneau de peuplier - 77 x 53 cm - Musée du Louvre, Paris</span>
@@ -134,6 +135,7 @@
     </main>
     <script type="module" src="scripts/artwork-media-manifest.js?v=1"></script>
     <script type="module" src="scripts/painting-museum.js?v=2"></script>
+      <script src="scripts/trim-baked-frames.js?v=1" defer></script>
   </body>
 </html>
 

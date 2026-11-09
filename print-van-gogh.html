@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Van Gogh Self-Portrait - Printable Artwork Page</title>
     <link rel="stylesheet" href="styles/site.css" />
+    <link rel="stylesheet" href="styles/print-frameless.css?v=1" />
   </head>
   <body class="target-body">
     <main
@@ -12,8 +13,8 @@
       data-artwork-media-manifest="https://media.artdaci.com/artworks/vg01/manifest.json">
       <section class="catalogue-plate">
         <p class="eyebrow">Artwork 013 - Post-Impressionism</p>
-        <figure class="target-art">
-          <img data-artwork-media="images.main" src="assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp" alt="Self-Portrait by Vincent van Gogh, Musée d’Orsay, 1889" />
+        <figure class="target-art" data-artwork-slug="van-gogh">
+          <span class="frameless-artwork-media"><img src="assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp" alt="Self-Portrait by Vincent van Gogh, Musée d’Orsay, 1889"  loading="eager" decoding="async" /></span>
           <figcaption>
             <strong>Self-Portrait</strong>
             <span>Vincent van Gogh, September 1889 - Oil on canvas - Musée d’Orsay, Paris - Post-Impressionism</span>
@@ -162,5 +163,6 @@
     </main>
     <script type="module" src="scripts/artwork-media-manifest.js?v=3"></script>
     <script type="module" src="scripts/painting-museum.js?v=3"></script>
+      <script src="scripts/trim-baked-frames.js?v=1" defer></script>
   </body>
 </html>
