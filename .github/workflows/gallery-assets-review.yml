@@ -8,6 +8,8 @@ on:
       - "tests/gallery-image-quality.test.mjs"
       - "tests/media-storage-inventory.test.mjs"
       - "scripts/audit-media-storage.mjs"
+      - "scripts/probe-cloudflare-media.mjs"
+      - "tests/cloudflare-head-probe.test.mjs"
       - "content/media-manifests/**"
       - "tools/prepare-gallery-visuals.py"
       - "assets/home-gallery/**"
@@ -29,9 +31,13 @@ jobs:
       - name: Validate gallery sources and intrinsic dimensions
         run: |
           node --check scripts/audit-gallery-images.mjs
-          node --test tests/gallery-image-quality.test.mjs tests/media-storage-inventory.test.mjs
+          node --test tests/gallery-image-quality.test.mjs tests/media-storage-inventory.test.mjs tests/cloudflare-head-probe.test.mjs
           node scripts/audit-media-storage.mjs
           node scripts/audit-gallery-images.mjs
+      - name: Sample Cloudflare R2 response headers without media downloads
+        continue-on-error: true
+        run: |
+          node scripts/probe-cloudflare-media.mjs --output visual-review/cloudflare-head-report.json
       - name: Create an optimized logo candidate and artwork comparison sheets
         run: |
           python3 -m pip install --disable-pip-version-check Pillow==11.3.0

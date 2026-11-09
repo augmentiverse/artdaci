@@ -16,6 +16,13 @@ Run `node scripts/audit-media-storage.mjs` for a repeatable inventory and `node 
 
 **Storage policy:** Do not copy existing Cloudflare-hosted originals into GitHub/Vercel, silently rewrite Cloudflare URLs, alter R2 object keys, or re-encode AR tracking targets/GLB/long-form media as part of homepage image optimization. Keep remote media URLs and fallback behaviors intact. Assess performance separately for local thumbnail loading and for CDN-delivered remote media.
 
+### Live R2 header sampling (non-destructive)
+
+Use `node scripts/probe-cloudflare-media.mjs` to inspect a bounded representative sample of **published manifest references** via `HEAD` requests: 2 images, 3 audio, 1 video, 2 models, 1 AR target, and four R2 manifest URLs. `HEAD` does not transfer media bodies. Results report status, MIME, CORS for `https://artdaci.com`, Content-Length, Cache-Control, CF-Cache-Status (when present), Accept-Ranges, and elapsed time.
+
+Because the check is performed from the GitHub Actions environment rather than a visitor browser, an HTTP `HEAD` result is **not** a guarantee of successful image rendering, audio playback, GLB loading, image tracking, correct CDN caching or frontend performance. In particular, some servers disallow HEAD even when GET works. A missing CORS header should be investigated in the browser before changing production settings. The check is deliberately non-blocking and never updates Cloudflare R2.
+
+Review `cloudflare-head-report.json` in the GitHub Actions artifact `artdaci-visual-assets-review`. The CLI also supports `--json`, `--strict` and `--output <file>` for manual investigations; `--strict` flags warnings and inconclusive responses as nonzero.
 Three already-frameless thumbnails need higher pixel density before they can be displayed sharply on high-DPI screens:
 
 | Artwork slug | Current pixels | Current file | Higher-resolution candidate (uncropped) |
