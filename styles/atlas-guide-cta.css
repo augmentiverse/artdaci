@@ -1,0 +1,166 @@
+/* ARTDACI Visitor Guide — accessible, distinctive Atlas discovery control.
+   The summary retains native <details> behaviour with no JavaScript. */
+.artdaci-guide .guide-concept-details {
+  border: 1.5px solid #bb914b;
+  border-radius: 18px;
+  background: linear-gradient(118deg, #fff7e2 0%, #ffefc8 57%, #f2f8f8 100%);
+  box-shadow: 0 12px 29px rgba(84, 64, 33, .12);
+  scroll-margin-top: 16px;
+}
+
+.artdaci-guide .guide-concept-details > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(12px, 2.8vw, 22px);
+  min-height: 88px;
+  padding: clamp(16px, 2.7vw, 27px);
+  border-radius: 17px;
+  background: transparent;
+  transition: background .2s ease, box-shadow .2s ease;
+}
+
+.artdaci-guide .guide-concept-details > summary::after {
+  display: none;
+  content: none;
+}
+
+.artdaci-guide .guide-concept-details > summary:is(:hover, :focus-visible) {
+  background: rgba(255, 251, 235, .8);
+  box-shadow: inset 0 0 0 1px rgba(159, 105, 41, .21);
+}
+
+.artdaci-guide .guide-concept-details[open] > summary {
+  border-radius: 17px 17px 0 0;
+  border-bottom: 1px solid #d9c49b;
+}
+
+.artdaci-guide .guide-concept-trigger-main {
+  display: inline-flex;
+  align-items: center;
+  flex: 1 1 auto;
+  gap: clamp(12px, 2vw, 18px);
+  min-width: 0;
+}
+
+.artdaci-guide .guide-concept-icon {
+  display: grid;
+  place-items: center;
+  width: clamp(45px, 5.4vw, 56px);
+  height: clamp(45px, 5.4vw, 56px);
+  flex: 0 0 auto;
+  border-radius: 15px;
+  color: #fff5da;
+  background: linear-gradient(140deg, #8e6329, #bd9144);
+  box-shadow: 0 5px 13px rgba(88, 58, 25, .2);
+}
+
+.artdaci-guide .guide-concept-icon svg {
+  width: 29px;
+  height: 29px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.artdaci-guide .guide-concept-label {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  text-align: start;
+}
+
+.artdaci-guide .guide-concept-label strong {
+  color: #503617;
+  font: 800 clamp(16px, 1.65vw, 20px)/1.3 Inter, "Segoe UI", system-ui, sans-serif;
+}
+
+.artdaci-guide .guide-concept-label small {
+  color: #705b40;
+  font: 500 clamp(12px, 1.12vw, 14px)/1.52 Inter, "Segoe UI", system-ui, sans-serif;
+}
+
+.artdaci-guide .guide-concept-chevron {
+  display: grid;
+  place-items: center;
+  width: 35px;
+  height: 35px;
+  flex: 0 0 35px;
+  border-radius: 50%;
+  color: #fffdf3;
+  background: #274e60;
+  transition: transform .2s ease, background .2s ease;
+}
+
+.artdaci-guide .guide-concept-chevron svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.artdaci-guide .guide-concept-details[open] .guide-concept-chevron {
+  transform: rotate(180deg);
+  background: #6d5129;
+}
+
+.artdaci-guide #atlas-content {
+  background: #fffefa;
+}
+
+.artdaci-guide .guide-concept-editorial ul {
+  margin-block: 11px 0;
+  padding-inline-start: 22px;
+  columns: 2;
+  column-gap: clamp(18px, 4vw, 45px);
+}
+
+.artdaci-guide .guide-concept-editorial li {
+  break-inside: avoid;
+  padding-inline-start: 4px;
+  margin-bottom: 7px;
+}
+
+.artdaci-guide .guide-faq-item p a {
+  color: #275c80;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  font-weight: 720;
+}
+
+.artdaci-guide .guide-faq-item p a:is(:hover, :focus-visible) {
+  color: #704a24;
+}
+
+@media (max-width: 600px) {
+  .artdaci-guide .guide-concept-editorial ul {
+    columns: 1;
+  }
+  .artdaci-guide .guide-concept-label strong {
+    font-size: 16px;
+  }
+  .artdaci-guide .guide-concept-label small {
+    font-size: 12px;
+  }
+  .artdaci-guide .guide-concept-icon {
+    width: 44px;
+    height: 44px;
+  }
+  .artdaci-guide .guide-concept-chevron {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .artdaci-guide .guide-concept-chevron,
+  .artdaci-guide .guide-concept-details > summary {
+    transition: none;
+  }
+}
