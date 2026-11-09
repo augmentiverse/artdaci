@@ -1,0 +1,131 @@
+/* ARTDACI mobile homepage, 2026-11.
+   Four iconic paintings share one compact panoramic strip on phones:
+   Mona Lisa on the physical LEFT, three smaller paintings overlapping
+   to the right and slightly below (not a tall vertical stack).
+   All existing images, desktop composition and gallery links remain intact. */
+@media(max-width:600px) {
+  .home-v2 .hv2-hero {
+    display:block;
+    min-height:0!important;
+    padding-top:10px;
+    padding-bottom:clamp(20px,5vw,31px);
+  }
+  .home-v2 .hv2-hero > .hv2-hero-copy {
+    box-sizing:border-box;
+    width:100%;
+    max-width:100%;
+    padding-top:clamp(154px,41vw,182px)!important;
+  }
+  .home-v2 .hv2-hero > .hv2-smart-art-spotlight,
+  html[lang="ar"] .home-v2 .hv2-hero > .hv2-smart-art-spotlight {
+    box-sizing:border-box;
+    position:absolute;
+    top:4px;
+    left:7px;
+    right:auto;
+    width:calc(100% - 14px);
+    height:clamp(140px,39vw,171px);
+    margin:0;
+    padding:0;
+    direction:ltr;
+    pointer-events:none;
+  }
+  .home-v2 .hv2-smart-art-spotlight > .smart-art-stage {
+    position:absolute!important;
+    top:0;
+    left:0;
+    right:auto;
+    width:clamp(96px,28vw,138px)!important;
+    height:auto;
+    aspect-ratio:.95;
+    max-width:none;
+    margin:0;
+  }
+  .home-v2 .hv2-smart-art-spotlight > .hv2-art-cascade {
+    box-sizing:border-box;
+    position:absolute;
+    top:clamp(29px,8vw,43px);
+    left:clamp(86px,26vw,130px);
+    width:calc(100% - clamp(86px,26vw,130px));
+    height:clamp(86px,25vw,125px);
+    margin:0;
+    padding:0;
+    perspective:670px;
+    direction:ltr;
+  }
+  .home-v2 .hv2-art-cascade-card {
+    border-radius:7px;
+    box-shadow:0 7px 16px rgba(23,52,84,.23),0 0 8px var(--cascade-glow);
+  }
+  .home-v2 .hv2-art-cascade-card::before {
+    inset:4%;
+    border-radius:5px;
+  }
+  .home-v2 .hv2-art-cascade-vermeer {
+    top:0;
+    left:0;
+    width:min(39%,124px);
+    aspect-ratio:1.05;
+  }
+  .home-v2 .hv2-art-cascade-vangogh {
+    top:11%;
+    left:29%;
+    width:min(38%,116px);
+    aspect-ratio:1.04;
+  }
+  .home-v2 .hv2-art-cascade-monet {
+    top:23%;
+    left:59%;
+    width:min(40%,120px);
+    aspect-ratio:1.4;
+  }
+  .home-v2 .hv2-smart-art-spotlight > .smart-art-caption {
+    position:absolute;
+    top:clamp(130px,35vw,151px);
+    left:0;
+    right:0;
+    width:100%;
+    margin:0;
+    padding:0;
+    font-size:8px;
+    letter-spacing:.045em;
+    line-height:1.3;
+    text-align:center;
+  }
+}
+@media(max-width:360px) {
+  .home-v2 .hv2-hero > .hv2-hero-copy {padding-top:151px!important;}
+  .home-v2 .hv2-smart-art-spotlight > .smart-art-caption {top:130px;}
+}
+
+/* Spatial Depth: a genuine animated response on touch-only devices.
+   CSS movement runs only while the scene is visible; JS adds that class
+   and suspends it during direct touch interaction or hidden tabs.
+   Motion accessibility settings always override this. */
+@media(hover:none) and (pointer:coarse) {
+  .home-v2 .sd-scene .sd-card {
+    touch-action:pan-y;
+    backface-visibility:hidden;
+  }
+  .home-v2 .sd-scene.sd-mobile-ambient .sd-card:not(.sd-touch-active) {
+    animation:sd-mobile-orbit 8.5s ease-in-out infinite alternate;
+    transition:none;
+  }
+  .home-v2 .sd-scene .sd-card.sd-touch-active {
+    animation:none!important;
+    transition:transform .07s linear;
+  }
+}
+@keyframes sd-mobile-orbit {
+  0% {transform:translate3d(0,5px,0) rotateX(-7deg) rotateY(-14deg) rotateZ(-1deg);}
+  50% {transform:translate3d(0,-4px,0) rotateX(4deg) rotateY(0deg) rotateZ(.2deg);}
+  100% {transform:translate3d(0,3px,0) rotateX(-4deg) rotateY(14deg) rotateZ(1deg);}
+}
+@media(prefers-reduced-motion:reduce) {
+  .home-v2 .sd-scene.sd-mobile-ambient .sd-card,
+  .home-v2 .sd-scene .sd-card.sd-touch-active {
+    animation:none!important;
+    transform:none!important;
+    transition:none!important;
+  }
+}
