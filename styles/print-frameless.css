@@ -42,3 +42,13 @@
     break-inside:avoid;page-break-inside:avoid;
   }
 }
+/* Once the browser has created the real cropped reproduction, stop applying
+   any fallback clip/scale. Printing retains only the painting itself. */
+.target-body .catalogue-spread .target-art[data-artwork-slug] .frameless-artwork-media img[data-frameless-processed="true"] {
+  clip-path:none!important;
+  transform:none!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  object-fit:contain!important;
+}
