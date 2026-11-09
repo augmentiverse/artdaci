@@ -1,0 +1,31 @@
+name: Validate multilingual visitor guide and catalogue
+
+on:
+  pull_request:
+    paths:
+      - "atlas.html"
+      - "atlas-en.html"
+      - "atlas-ar.html"
+      - "scripts/catalogue.js"
+      - "index.html"
+      - "index-fr.html"
+      - "index-ar.html"
+      - "content/paintings/**"
+      - "tests/catalogue-navigation-quality.test.mjs"
+      - "tests/catalogue-static-fallback.test.mjs"
+      - ".github/workflows/catalogue-navigation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  visitor-guide-and-catalogue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Check language navigation and catalogue rendering
+        run: node --test tests/catalogue-navigation-quality.test.mjs tests/catalogue-localization.test.mjs tests/catalogue-static-fallback.test.mjs
