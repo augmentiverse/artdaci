@@ -39,17 +39,21 @@ async function inspectTitle(page,pageSpec,reduce){
       live:{left:b.left,right:b.right,top:b.top,bottom:b.bottom,width:b.width},
       hero:{left:c.left,right:c.right},
       animation:getComputedStyle(live).animationName,
+      indent:parseFloat(getComputedStyle(live).marginInlineStart),
+      intrinsicWidth:live.offsetWidth,
       transform:getComputedStyle(live).transform,
     };
   });
   check(outcome.title===pageSpec.title,"Wrong accessible heading text: "+outcome.title);
-  const startDistance=outcome.first.right-outcome.live.left;
-  check(outcome.live.left>outcome.first.left+outcome.first.width*.47,
-    "Living word should begin toward the end of the first line");
-  check(startDistance>=-5,
-    "Living word starts beyond the first line's end: "+startDistance);
-  check(startDistance<outcome.first.width*.55,
-    "Living word begins too far to the left: "+startDistance);
+  const optimal=Math.max(0,Math.min(outcome.first.width-2,
+    outcome.hero.right-outcome.first.left-outcome.intrinsicWidth-6));
+  check(Math.abs(outcome.indent-optimal)<9,
+    "Living word must start as close to first-line end as available width permits: actual="+
+      outcome.indent+", optimal="+optimal);
+  check(outcome.live.left>=outcome.first.left-3,
+    "Living word must not start to the left of the first line");
+  check(outcome.live.left<=outcome.first.right+8,
+    "Living word should not begin past the end of the first line");
   check(outcome.live.top>=outcome.first.bottom-2,"Living word must be below first line");
   check(outcome.first.left>=outcome.hero.left-3,"First word starts outside the hero");
   check(outcome.first.right<=outcome.hero.right+3,
