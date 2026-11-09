@@ -386,6 +386,7 @@ function renderCatalogue(root, manifests, museums, lang, text) {
       ${isHomeGallery ? `
         <details class="artwork-more" hidden>
           <summary class="artwork-more-toggle">
+            <span class="artwork-more-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.3"/><rect x="14" y="3" width="7" height="7" rx="1.3"/><rect x="3" y="14" width="7" height="7" rx="1.3"/><path d="M17.5 14v7M14 17.5h7"/></svg></span>
             <span class="artwork-more-closed">${text.showMore}</span>
             <span class="artwork-more-open">${text.showLess}</span>
             <span class="artwork-more-total" aria-label="${text.results}">(<span class="artwork-more-count"></span>)</span>
