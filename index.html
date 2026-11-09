@@ -40,6 +40,13 @@
     <link rel="stylesheet" href="styles/artdaci-compact-logo.css?v=1" />
     <link rel="stylesheet" href="styles/home-ar-gallery-fixes.css?v=1" />
     <script src="scripts/smart-tv-cover.js?v=2"></script>
+  <style>
+.hv2-reimagined{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(1.2rem,4vw,3rem);align-items:center;border:1px solid rgba(201,163,97,.28);border-radius:22px;padding:clamp(1.2rem,4vw,2.5rem);background:linear-gradient(115deg,rgba(192,153,79,.08),rgba(10,24,38,.05))}
+.hv2-reimagined-video{width:100%;height:auto;display:block;border-radius:14px;background:#09121d}
+.hv2-reimagined .hv2-section-kicker{color:#c8a96e}
+.hv2-reimagined h2{margin:.3rem 0 1rem}
+@media(max-width:760px){.hv2-reimagined{grid-template-columns:1fr}}
+</style>
   </head>
   <body class="home-v2">
     <header class="hv2-header" aria-label="ARTDACI navigation">
@@ -251,6 +258,11 @@
           </a>
         </div>
       </section>
+      <section class="hv2-section hv2-reimagined" id="reimagined" aria-labelledby="reimagined-title">
+        <div><p class="hv2-section-kicker">Reimagined art</p><h2 id="reimagined-title">When masterpieces come alive.</h2><p>Discover a new artistic interpretation of Leonardo da Vinci’s Mona Lisa: an invitation to see art beyond the frame.</p><div class="hv2-hero-actions"><a class="hv2-button hv2-button-primary" href="reimagined.html?lang=en">Explore ARTDACI Reimagined <span aria-hidden="true">↗</span></a></div></div>
+        <video class="hv2-reimagined-video" src="assets/varia/mona-lisa_out-of-the-book.mp4" muted loop playsinline preload="none" controls aria-label="ARTDACI Mona Lisa emerging from a book"></video>
+      </section>
+
 
       <section id="experiences" class="hv2-section hv2-experiences" aria-labelledby="experiences-title">
         <div class="hv2-section-head">
