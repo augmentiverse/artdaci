@@ -42,6 +42,8 @@ export function summarizeMediaManifests(manifests) {
           scope: asset.scope ?? "artwork",
           migrationStatus: asset.migrationStatus,
           available: asset.available,
+          mimeType: typeof asset.mimeType === "string" ? asset.mimeType : null,
+          sha256: typeof asset.sha256 === "string" ? asset.sha256 : null,
           bytes: Number.isSafeInteger(asset.bytes) && asset.bytes >= 0 ? asset.bytes : null,
           url: asset.available ? resolveMediaAsset(manifest, asset) : null,
         };
