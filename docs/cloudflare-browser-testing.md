@@ -10,6 +10,25 @@ This diagnostic covers a production-origin browser session against https://artda
 - The `model-viewer`'s software WebGL capabilities in a CI Chromium browser may be different from a modern phone or VR headset. This check is not proof of native AR, headset VR or iOS Quick Look support.
 - Browser network failures and autoplay/codec restrictions are recorded as non-blocking findings rather than treated as confirmed production outages.
 
+## Verified headless Chromium result — 9 November 2026
+
+GitHub Actions [run 42681094065](https://github.com/augmentiverse/artdaci/actions/runs/42681094065), job 129375499348, commit `1b906226af1d776e65fff0a769074d5e4c340bfd`, completed successfully at approximately 19:13 UTC.
+
+**Seven diagnostic checks succeeded: zero warnings, zero errors and zero inconclusive cases.**
+
+| Check | Observed result |
+| --- | --- |
+| Production Mona Lisa `model-viewer` | Loaded the Cloudflare R2 GLB `https://media.artdaci.com/artworks/ld01/models/main-v2.glb`, `loaded=true`, `visible=true` — not the local fallback |
+| Leonardo Annunciation French audio | `HTMLMediaElement.play()` succeeded and the element reported `playing` |
+| Vermeer animation MP4 | `HTMLMediaElement.play()` succeeded and the element reported `playing` |
+| MP3 browser Range request | HTTP `206 Partial Content` |
+| MP4 browser Range request | HTTP `206 Partial Content` |
+| GLB browser Range request | HTTP `206 Partial Content` |
+| MindAR `.mind` browser Range request | HTTP `206 Partial Content` |
+
+The automation recorded playback in Chromium under GitHub Actions and made requests from the existing production `artdaci.com` browser origin. It used only a short reading interval and canceled the Range response after the first received chunk. The full machine-readable report is available in the short-lived GitHub Actions artifact `artdaci-cloudflare-browser-diagnostics`.
+
+**Limitations:** The check does not exercise native phone camera permissions, image recognition on a physical printed target, interactive room placement on a mobile device, WebXR in a headset, actual video seeking, or cross-browser compatibility. These are future device/browser acceptance checks, not defects established by this report. No changes were made to R2 settings, object bytes, media URLs or production site code.
 ## Run and inspect
 
 The workflow `.github/workflows/cloudflare-browser-diagnostics.yml` installs the test-only `playwright-core` outside the project, uses the runner's Chrome/Chromium and uploads the resulting `cloudflare-browser-report.json` JSON as a seven-day GitHub Actions artifact.
