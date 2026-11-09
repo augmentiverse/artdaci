@@ -4,116 +4,86 @@ import test from "node:test";
 
 const cases = [
   {
-    file: "index.html",
-    message: "Featured printable artwork pages",
-    numbers: ["Artwork 001", "Artwork 009", "Artwork 013", "Artwork 015"],
-    titles: ["Mona Lisa", "Girl with a Pearl Earring", "Self-Portrait", "The Bedroom"],
-    cta: "Open printable artwork page",
+    page: "index.html",
+    language: "en",
     routes: [
       "print-target.html",
       "print-vermeer-girl-with-a-pearl-earring.html",
       "print-van-gogh.html",
-      "print-van-gogh-bedroom.html",
+      "print-monet-impression-sunrise.html",
     ],
+    titles: ["Mona Lisa", "Girl with a Pearl Earring", "Self-Portrait", "Impression, Sunrise"],
   },
   {
-    file: "index-fr.html",
-    message: "Sélection de pages d’œuvres imprimables",
-    numbers: ["Œuvre 001", "Œuvre 009", "Œuvre 013", "Œuvre 015"],
-    titles: ["La Joconde", "La Jeune Fille à la perle", "Autoportrait", "La Chambre"],
-    cta: "Ouvrir la page imprimable",
+    page: "index-fr.html",
+    language: "fr",
     routes: [
       "print-target-fr.html",
       "print-vermeer-girl-with-a-pearl-earring-fr.html",
       "print-van-gogh-fr.html",
-      "print-van-gogh-bedroom-fr.html",
+      "print-monet-impression-sunrise-fr.html",
     ],
+    titles: ["La Joconde", "La Jeune Fille à la perle", "Autoportrait", "Impression, soleil levant"],
   },
   {
-    file: "index-ar.html",
-    message: "مجموعة مختارة من صفحات الأعمال القابلة للطباعة",
-    numbers: ["العمل ٠٠١", "العمل ٠٠٩", "العمل ٠١٣", "العمل ٠١٥"],
-    titles: ["الموناليزا", "الفتاة ذات القرط اللؤلؤي", "بورتريه ذاتي", "غرفة النوم"],
-    cta: "فتح صفحة العمل القابلة للطباعة",
+    page: "index-ar.html",
+    language: "ar",
     routes: [
       "print-ar.html?painting=mona-lisa",
       "print-ar.html?painting=vermeer-girl-with-a-pearl-earring",
       "print-ar.html?painting=van-gogh",
-      "print-ar.html?painting=van-gogh-bedroom",
+      "print-ar.html?painting=monet-impression-sunrise",
     ],
+    titles: ["الموناليزا", "الفتاة ذات القرط اللؤلؤي", "بورتريه ذاتي", "انطباع، شروق الشمس"],
   },
 ];
 
-const imagePaths = [
-  "assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/mona-lisa.jpg",
-  "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg",
+const images = [
+  "assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp",
+  "assets/artists/johannes-vermeer/collection/girl-with-a-pearl-earring-vermeer.webp",
   "assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp",
-  "assets/artists/vincent-van-gogh/artworks/the-bedroom/images/bed-van-gogh.jpeg",
+  "assets/artists/claude-monet/collection/impression-sunrise-monet.webp",
 ];
 
-function extractFallback(source) {
-  const start = source.indexOf('<div class="static-index">');
-  assert.notEqual(start, -1, "static fallback exists");
-  const end = source.indexOf("</section>", start);
-  assert.notEqual(end, -1, "static fallback stays inside the catalogue section");
-  return source.slice(start, end);
-}
-
-test("static catalogue fallbacks expose the same four featured artworks in all languages", async () => {
-  for (const expected of cases) {
-    const source = await readFile(new URL(`../${expected.file}`, import.meta.url), "utf8");
-    const fallback = extractFallback(source);
-    const cards = [...fallback.matchAll(/<article class="artwork-card">([\s\S]*?)<\/article>/g)].map((match) => match[1]);
-
-    assert.equal(cards.length, 4, expected.file);
-    assert.ok(fallback.includes(expected.message), expected.message);
-    assert.deepEqual(
-      cards.map((card) => card.match(/<p class="eyebrow">([^<]+)<\/p>/)?.[1]),
-      expected.numbers,
-      `${expected.file} artwork order`,
-    );
-    assert.deepEqual(
-      cards.map((card) => card.match(/<h3>([^<]+)<\/h3>/)?.[1]),
-      expected.titles,
-      `${expected.file} titles`,
-    );
-
-    cards.forEach((card, index) => {
-      const route = expected.routes[index].replaceAll("&", "&amp;");
-      assert.ok(card.includes(`<a class="artwork-image" href="${route}">`), `${expected.file} image route ${route}`);
-      assert.ok(card.includes(`<a class="button primary" href="${route}">${expected.cta}</a>`), `${expected.file} CTA ${route}`);
-      assert.ok(card.includes(`src="${imagePaths[index]}"`), `${expected.file} image ${imagePaths[index]}`);
-      assert.match(card, /<img [^>]*alt="[^"]+"/);
+test("the current four featured masterpieces remain visible and linked in each language", async () => {
+  for (const c of cases) {
+    const html = await readFile(new URL("../" + c.page, import.meta.url), "utf8");
+    const section = html.match(/<div class="hv2-featured-grid">([\s\S]*?)<\/div>\s*<\/section>/)?.[1];
+    assert.ok(section, c.page + " featured artwork section exists");
+    const cards = [...section.matchAll(/<a class="hv2-work" href="([^"]+)">([\s\S]*?)<\/a>/g)];
+    assert.equal(cards.length, 4, c.page + " contains exactly four featured works");
+    cards.forEach((card, i) => {
+      assert.equal(card[1], c.routes[i], c.page + " artwork route " + i);
+      assert.ok(card[2].includes("<strong>" + c.titles[i] + "</strong>"), c.page + " title " + i);
+      assert.ok(card[2].includes('src="' + images[i] + '"'), c.page + " image " + i);
+      assert.match(card[2], /<img [^>]*alt="[^"]+"/, c.page + " accessible alt " + i);
     });
-
-    assert.doesNotMatch(fallback, /(?:Spread|Double page) 00[234]/);
-    assert.equal((source.match(/scripts\/catalogue\.js\?v=22/g) || []).length, 1, expected.file);
-    assert.doesNotMatch(source, /scripts\/catalogue\.js\?v=21/);
   }
 });
 
-test("all static fallback image sources and print destinations exist locally", async () => {
-  for (const path of imagePaths) await access(new URL(`../${path}`, import.meta.url));
-  for (const expected of cases) {
-    for (const route of expected.routes) {
-      const pathname = route.split("?")[0];
-      await access(new URL(`../${pathname}`, import.meta.url));
+test("featured thumbnails and destination files exist", async () => {
+  for (const image of images) await access(new URL("../" + image, import.meta.url));
+  for (const c of cases) {
+    for (const route of c.routes) {
+      await access(new URL("../" + route.split("?")[0], import.meta.url));
     }
   }
 });
 
-test("dynamic print route mappings remain aligned with the static selection", async () => {
-  const source = await readFile(new URL("../scripts/catalogue.js", import.meta.url), "utf8");
-  const printPages = source.match(/const PRINT_PAGES = \{[\s\S]*?\n\};/)?.[0] || "";
-  const slugs = ["mona-lisa", "vermeer-girl-with-a-pearl-earring", "van-gogh", "van-gogh-bedroom"];
-
-  for (const [languageIndex, expected] of cases.entries()) {
-    expected.routes.forEach((route, routeIndex) => {
-      assert.ok(
-        printPages.includes(`"${slugs[routeIndex]}": "${route}"`),
-        `${expected.file} keeps its dynamic ${slugs[routeIndex]} route`,
-      );
-    });
-    assert.equal(expected.routes.length, 4, `language ${languageIndex + 1}`);
+test("all homepages expose the 24-artwork searchable catalogue and module", async () => {
+  for (const c of cases) {
+    const html = await readFile(new URL("../" + c.page, import.meta.url), "utf8");
+    assert.ok(html.includes('id="painting-index"'), c.page);
+    assert.ok(html.includes('id="catalogue-app"'), c.page);
+    assert.ok(html.includes('data-lang="' + c.language + '"'), c.page);
+    assert.ok(html.includes("content/paintings/additional-16.json"), c.page);
+    assert.ok(html.includes('scripts/catalogue.js?v=22'), c.page);
+    assert.ok(html.includes("<noscript>"), c.page + " provides a no-JS explanation");
   }
+});
+
+test("dynamic printable routes are provided for non-featured artworks", async () => {
+  const catalogue = await readFile(new URL("../scripts/catalogue.js", import.meta.url), "utf8");
+  assert.ok(catalogue.includes('print-artwork.html?painting='));
+  assert.match(catalogue, /print-artwork\.html\?painting=\$\{encodeURIComponent\(slug\)\}&lang=\$\{lang\}/);
 });
