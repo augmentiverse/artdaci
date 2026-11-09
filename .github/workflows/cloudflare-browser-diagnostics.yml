@@ -1,0 +1,43 @@
+name: Validate ARTDACI Cloudflare media in Chromium
+
+on:
+  pull_request:
+    paths:
+      - "scripts/check-cloudflare-browser.mjs"
+      - "tests/cloudflare-browser-diagnostics.test.mjs"
+      - "scripts/audit-media-storage.mjs"
+      - ".github/workflows/cloudflare-browser-diagnostics.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-media-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Validate read-only diagnostic selection and Range classification
+        run: |
+          node --check scripts/check-cloudflare-browser.mjs
+          node --test tests/cloudflare-browser-diagnostics.test.mjs
+      - name: Install isolated browser test dependency
+        run: |
+          npm install --prefix /tmp/artdaci-playwright --no-save --no-package-lock --ignore-scripts playwright-core@1.56.1
+          command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser
+      - name: Test real media loading in headless Chromium
+        continue-on-error: true
+        env:
+          ARTDACI_PLAYWRIGHT_CORE: /tmp/artdaci-playwright/node_modules/playwright-core
+        run: node scripts/check-cloudflare-browser.mjs --output browser-review/cloudflare-browser-report.json
+      - name: Upload diagnostic report without modifying media
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: artdaci-cloudflare-browser-diagnostics
+          path: browser-review/
+          retention-days: 7
+          if-no-files-found: warn

@@ -1,0 +1,51 @@
+name: Prepare ARTDACI gallery image review assets
+
+on:
+  pull_request:
+    paths:
+      - "scripts/audit-gallery-images.mjs"
+      - "scripts/catalogue.js"
+      - "tests/gallery-image-quality.test.mjs"
+      - "tests/media-storage-inventory.test.mjs"
+      - "scripts/audit-media-storage.mjs"
+      - "scripts/probe-cloudflare-media.mjs"
+      - "tests/cloudflare-head-probe.test.mjs"
+      - "content/media-manifests/**"
+      - "tools/prepare-gallery-visuals.py"
+      - "assets/home-gallery/**"
+      - "assets/varia/artdaci-logo.png"
+      - ".github/workflows/gallery-assets-review.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gallery-asset-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Validate gallery sources and intrinsic dimensions
+        run: |
+          node --check scripts/audit-gallery-images.mjs
+          node --test tests/gallery-image-quality.test.mjs tests/media-storage-inventory.test.mjs tests/cloudflare-head-probe.test.mjs
+          node scripts/audit-media-storage.mjs
+          node scripts/audit-gallery-images.mjs
+      - name: Sample Cloudflare R2 response headers without media downloads
+        continue-on-error: true
+        run: |
+          node scripts/probe-cloudflare-media.mjs --output visual-review/cloudflare-head-report.json
+      - name: Create an optimized logo candidate and artwork comparison sheets
+        run: |
+          python3 -m pip install --disable-pip-version-check Pillow==11.3.0
+          python3 tools/prepare-gallery-visuals.py --output visual-review
+      - name: Upload review files without altering the site
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: artdaci-visual-assets-review
+          path: visual-review/
+          retention-days: 7
+          if-no-files-found: error

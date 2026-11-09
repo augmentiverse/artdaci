@@ -1,0 +1,78 @@
+name: Validate ARTDACI living hero title
+
+on:
+  pull_request:
+    paths:
+      - "index-fr.html"
+      - "index.html"
+      - "index-ar.html"
+      - "styles/home-immersive-museums.css"
+      - "tests/home-immersive-museums.test.mjs"
+      - "scripts/check-home-immersive-museums.mjs"
+      - "scripts/catalogue-museum-expansion.mjs"
+      - "styles/home-museum-more.css"
+      - "tests/catalogue-museum-expansion.test.mjs"
+      - "scripts/check-home-extra-museums.mjs"
+      - "scripts/catalogue.js"
+      - "styles/home-living-title.css"
+      - "tests/home-living-title.test.mjs"
+      - "scripts/check-home-living-title.mjs"
+      - ".github/workflows/home-living-title.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  hero-title-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Validate localized title markup and accessibility styles
+        run: |
+          node --check scripts/check-home-living-title.mjs
+          node --check scripts/check-home-immersive-museums.mjs
+          node --check scripts/check-home-extra-museums.mjs
+          node --check scripts/catalogue.js
+          node --test tests/home-living-title.test.mjs tests/home-immersive-museums.test.mjs tests/catalogue-museum-expansion.test.mjs
+      - name: Prepare isolated Chromium inspection
+        run: |
+          npm install --prefix /tmp/artdaci-living-qa --no-save --no-package-lock --ignore-scripts playwright-core@1.56.1
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/artdaci-living-http.log 2>&1 &
+          for attempt in 1 2 3 4 5; do
+            if curl -fsSI http://127.0.0.1:8765/index-fr.html; then break; fi
+            sleep 1
+          done
+          curl -fsSI http://127.0.0.1:8765/index.html
+      - name: Check typography, position, heartbeat and reduced-motion
+        env:
+          ARTDACI_PLAYWRIGHT_CORE: /tmp/artdaci-living-qa/node_modules/playwright-core
+        run: |
+          node scripts/check-home-living-title.mjs \
+            --output visual-review/living-title.json \
+            --screenshots visual-review/living-title-screenshots
+      - name: Check immersive museum color contrast, links and layout
+        env:
+          ARTDACI_PLAYWRIGHT_CORE: /tmp/artdaci-living-qa/node_modules/playwright-core
+        run: |
+          node scripts/check-home-immersive-museums.mjs \
+            --output visual-review/immersive-museums.json \
+            --screenshots visual-review/immersive-museums-screenshots
+      - name: Inspect eleven extra museums with accessible keyboard expansion
+        env:
+          ARTDACI_PLAYWRIGHT_CORE: /tmp/artdaci-living-qa/node_modules/playwright-core
+        run: |
+          node scripts/check-home-extra-museums.mjs \
+            --output visual-review/extra-museums.json \
+            --screenshots visual-review/extra-museums-screenshots
+      - name: Preserve visual comparison screenshots
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: artdaci-living-title-visual-review
+          path: visual-review/
+          retention-days: 7
+          if-no-files-found: warn

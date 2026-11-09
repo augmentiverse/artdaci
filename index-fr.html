@@ -18,6 +18,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="ARTDACI — Chefs-d’œuvre vivants" />
     <meta property="og:url" content="https://artdaci.com/index-fr.html" />
+    <link rel="preload" as="image" href="assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp" fetchpriority="high" />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" href="assets/app/artdaci-app-icon.svg" type="image/svg+xml" />
     <title>ARTDACI — Chefs-d’œuvre vivants</title>
@@ -39,15 +40,20 @@
     <link rel="stylesheet" href="styles/artdaci-identity.css?v=2" />
     <link rel="stylesheet" href="styles/artdaci-compact-logo.css?v=1" />
     <link rel="stylesheet" href="styles/home-ar-gallery-fixes.css?v=1" />
-    <link rel="stylesheet" href="styles/home-mobile-smart-art.css?v=1" />
+    <link rel="stylesheet" href="styles/home-mobile-smart-art.css?v=2" />
     <link rel="stylesheet" href="styles/home-experience-palettes.css?v=1" />
     <link rel="stylesheet" href="styles/home-index-frameless.css?v=1" />
     <link rel="stylesheet" href="styles/home-index-monument-title.css?v=2" />
     <link rel="stylesheet" href="styles/home-late-sections.css?v=1" />
     <link rel="stylesheet" href="styles/home-guide-invite.css?v=1" />
-    <script src="scripts/smart-tv-cover.js?v=2"></script>
+    <link rel="stylesheet" href="styles/home-living-title.css?v=1" />
+    <link rel="stylesheet" href="styles/home-immersive-museums.css?v=1" />
+    <link rel="stylesheet" href="styles/home-museum-more.css?v=1" />
+    <script src="scripts/home-living-title-align.js?v=1" defer></script>
+    <script src="scripts/smart-tv-cover.js?v=3"></script>
   </head>
   <body class="home-v2">
+    <a class="artdaci-skip-link" href="#main-content">Aller au contenu principal</a>
     <header class="hv2-header" aria-label="Navigation ARTDACI">
       <a class="hv2-brand" href="index-fr.html" aria-label="Accueil ARTDACI">
         <img src="assets/varia/artdaci-logo.png" alt="ARTDACI" />
@@ -69,12 +75,12 @@
       </nav>
     </header>
 
-    <main class="home-shell hv2-main">
+    <main id="main-content" class="home-shell hv2-main" tabindex="-1">
       <section class="hv2-hero" aria-labelledby="book-title">
         <div class="hv2-hero-copy">
           <p class="hv2-kicker">ARTDACI · L’art au-delà du cadre</p>
           <div class="hv2-title-row">
-            <h1 id="book-title">Chefs-d’œuvre <span>vivants</span></h1>
+            <h1 id="book-title"><span class="hv2-title-first">Chefs-d’œuvre</span> <span class="hv2-title-alive">vivants</span></h1>
 
           </div>
           <p class="hv2-hero-lead">ARTDACI associe un livre d’art imprimé à un univers numérique consacré à la découverte artistique. Explorez les chefs-d’œuvre à travers leurs histoires, leurs relations, des modèles 3D interactifs et des expériences immersives, avec ou sans le livre.</p>
@@ -95,7 +101,7 @@
             <div class="smart-art-layer smart-art-rear">
               <svg viewBox="0 0 500 340" focusable="false"><path d="M25 210 Q80 115 138 174 T266 136 T471 100 M32 265 Q125 209 198 284 T458 226 M45 70 Q148 14 258 75 T458 52 M96 40 L130 125 L220 108 L300 190 L410 160"/></svg>
             </div>
-            <div class="smart-art-layer smart-art-image"><img src="assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp" alt="" loading="eager" decoding="async" /></div>
+            <div class="smart-art-layer smart-art-image"><img src="assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp" alt="" loading="eager" decoding="async" fetchpriority="high" /></div>
             <div class="smart-art-layer smart-art-front">
               <svg viewBox="0 0 500 340" focusable="false">
                 <path d="M22 260 Q68 90 135 156 Q182 220 234 115 T370 142 Q426 182 478 70 M28 100 Q132 30 208 78 T466 92 M65 294 L131 201 L226 234 L305 139 L441 202 M75 46 L115 112 L193 98 L269 182 L381 125"/>
@@ -202,13 +208,6 @@
           </div>
       </section>
 
-      <section class="hv2-section hv2-start" id="start-here" aria-labelledby="start-title">
-        <div class="hv2-section-head"><div><p class="hv2-section-kicker">Pour commencer</p><h2 id="start-title">Votre découverte de l’art commence ici.</h2></div><p>Découvrez ARTDACI avec son livre imprimé ou explorez directement les œuvres en ligne.</p></div>
-        <div class="hv2-start-grid">
-          <article class="hv2-start-path"><span class="hv2-start-icon" aria-hidden="true">▤</span><h3>Je possède le livre sur papier</h3><ol><li>Ouvrez une page du livre qui propose une expérience numérique.</li><li>Suivez le QR code ou les instructions de réalité augmentée avec votre téléphone.</li><li>Découvrez les récits, modèles et expériences immersives disponibles.</li></ol><a class="hv2-button" href="book-ar.html?lang=fr">Vous pouvez scanner la couverture en AR <span aria-hidden="true">↗</span></a></article>
-          <article class="hv2-start-path"><span class="hv2-start-icon" aria-hidden="true">◎</span><h3>J’explore en ligne</h3><ol><li>Choisissez un chef-d’œuvre, un artiste ou un musée.</li><li>Découvrez l’histoire et les techniques des œuvres, le parcours des artistes ou les collections et les lieux des musées.</li><li>Poursuivez avec les visites de musées, les modèles 3D et les expériences immersives disponibles.</li></ol><a class="hv2-button" href="#experiences">Explorer les œuvres et les musées <span aria-hidden="true">↗</span></a></article>
-        </div>
-      </section>
 
       <section class="hv2-section" aria-labelledby="featured-title">
         <div class="hv2-section-head">
@@ -395,33 +394,37 @@
         </div>
       </section>
 
-      <section id="places" class="hv2-section" aria-labelledby="places-title">
+      <section id="places" class="hv2-section hv2-museum-immersive" aria-labelledby="places-title">
         <div class="hv2-section-head">
           <div>
-            <p class="hv2-section-kicker">Musées & lieux</p>
-            <h2 id="places-title">L’art appartient aussi aux lieux.</h2>
+            <p class="hv2-section-kicker">17 musées · 24 œuvres</p>
+            <h2 id="places-title">Les musées à vivre en <em class="hv2-museum-tech">AR &amp; VR</em>.</h2>
           </div>
-          <p>
-            ARTDACI relie les peintures aux musées, salles et contextes géographiques
-            qui façonnent leur rencontre dans le monde réel.
-          </p>
+          <p>Les 24 œuvres d’ARTDACI sont liées à 17 musées. Ici, découvrez les expériences immersives proposées pour une sélection de lieux : réalité augmentée, visites virtuelles et exploration géographique.</p>
         </div>
-        <div class="hv2-hero-actions hv2-museum-explorer-entry">
-          <a class="hv2-button hv2-button-primary" href="museums.html?lang=fr">Découvrir les six musées : photographies, histoires et œuvres ↗</a>
-          <a class="hv2-button" href="museums-atlas.html">Atlas photographique · 17 musées ↗</a>
+        <div class="hv2-hero-actions hv2-museum-explorer-entry" aria-label="Accès aux expériences et à l’Atlas des musées">
+          <a class="hv2-button hv2-button-primary" href="museums.html?lang=fr"><span aria-hidden="true">⌂</span> Découvrir les musées : photographies, histoires, œuvres et exploration 3D/GEO <span aria-hidden="true">↗</span></a>
+          <a class="hv2-button" href="museums-atlas.html">Parcourir l’Atlas photographique des 17 musées <span aria-hidden="true">↗</span></a>
         </div>
         <div class="hv2-places">
           <a class="hv2-place-primary" href="gallery-vr.html?lang=fr">
             <p class="hv2-section-kicker">Musées virtuels</p>
-            <h3>Entrez dans des galeries construites autour de la collection.</h3>
-            <p>Explorez des environnements muséaux, des salles dédiées et des expériences inter-musées en VR.</p>
-            <span class="hv2-place-cta">Visiter la galerie VR →</span>
+            <h3>Entrez dans des galeries au-delà des murs.</h3>
+            <p>Parcourez les salles et les expériences virtuelles conçues autour des chefs-d’œuvre de la collection.</p>
+            <span class="hv2-place-cta">Visiter la galerie VR <span aria-hidden="true">→</span></span>
           </a>
           <a class="hv2-place-secondary" href="geo/index.html?lang=fr">
             <p class="hv2-section-kicker">ARTDACI GEO</p>
-            <h3>Reliez la culture numérique aux lieux réels.</h3>
-            <p>Passez des œuvres aux musées et aux expériences spatiales conçues autour du lieu.</p>
-            <span class="hv2-place-cta">Explorer GEO →</span>
+            <h3>Reliez les œuvres aux lieux réels.</h3>
+            <p>Explorez les emplacements des musées et les parcours cartographiques et panoramiques disponibles.</p>
+            <span class="hv2-place-cta">Explorer ARTDACI GEO <span aria-hidden="true">→</span></span>
+          </a>
+        </div>
+        <div class="hv2-museum-immersive-footer" role="group" aria-label="Parcours immersifs des musées">
+          <a class="hv2-museum-immersive-link" href="museums.html?lang=fr&amp;tab=immersive">
+            <span class="hv2-museum-immersive-link-icon" aria-hidden="true">✦</span>
+            <span>Explorer les expériences muséales AR / VR</span>
+            <span class="hv2-museum-immersive-link-arrow" aria-hidden="true">↗</span>
           </a>
         </div>
       </section>
@@ -503,11 +506,11 @@
           <span class="artdaci-signature" aria-label="Signature N.E."><span class="artdaci-signature-mark">N.E.</span></span>
     </footer>
 
-    <script type="module" src="scripts/catalogue.js?v=21"></script>
+    <script type="module" src="scripts/catalogue.js?v=23"></script>
     <script type="module" src="scripts/visitor-guide.js?v=1"></script>
     <script src="scripts/pwa.js?v=1" defer></script>
     <script src="scripts/spatial-depth.js?v=2" defer></script>
     <script src="scripts/book-interaction.js?v=1" defer></script>
-      <script src="scripts/trim-baked-frames.js?v=1" defer></script>
+      <script src="scripts/trim-baked-frames.js?v=2" defer></script>
   </body>
 </html>

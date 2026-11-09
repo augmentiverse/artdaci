@@ -1,0 +1,130 @@
+/* ARTDACI printed QR guide: the original wordmark is inline at the
+   upper-left, immediately before the book-companion heading.
+   Scoped stylesheet leaves other pages and assets unchanged. */
+.qr-directory-header .qr-directory-brand {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: clamp(10px, 1.8vw, 17px);
+  min-width: 0;
+  margin-bottom: 10px;
+}
+
+.qr-directory-header .qr-directory-logo {
+  position: static;
+  inset: auto;
+  display: block;
+  flex: 0 0 auto;
+  width: clamp(58px, 6.5vw, 72px);
+  height: 60px;
+  max-height: none;
+  margin: 0;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.qr-directory-header .qr-directory-brand .eyebrow {
+  grid-column: auto;
+  min-width: 0;
+  margin: 0;
+  color: #79572f;
+  font: 800 clamp(10px, 1.1vw, 13px)/1.4 Inter, "Segoe UI", system-ui, sans-serif;
+  letter-spacing: .095em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 550px) {
+  .qr-directory-header .qr-directory-logo {
+    width: 55px;
+    height: 48px;
+  }
+
+  .qr-directory-header .qr-directory-brand {
+    gap: 9px;
+    margin-bottom: 14px;
+  }
+
+  .qr-directory-header .qr-directory-brand .eyebrow {
+    font-size: 10px;
+    letter-spacing: .06em;
+  }
+}
+
+/* Phone-width QR cards need one readable column. Two columns plus 92px
+   images caused horizontal overflow even though the header was correct. */
+@media (max-width: 640px) {
+  .qr-directory {
+    width: calc(100% - 16px);
+    padding: 24px 17px 28px;
+  }
+
+  .qr-directory-header h1 {
+    font-size: clamp(30px, 9vw, 38px);
+    line-height: 1.08;
+  }
+
+  .qr-directory-header > p:last-child {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .qr-directory-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  .qr-directory-card {
+    grid-template-columns: 88px minmax(0, 1fr);
+    min-width: 0;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .qr-directory-card > div {
+    min-width: 0;
+  }
+
+  .qr-directory-card img {
+    width: 88px;
+    height: 88px;
+  }
+
+  .qr-directory-card h2 {
+    overflow-wrap: anywhere;
+  }
+
+  .qr-directory-footer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .qr-directory-footer .button {
+    white-space: normal;
+    text-align: center;
+  }
+}
+
+@media print {
+  .qr-directory-header {
+    padding-right: 0;
+  }
+
+  .qr-directory-header .qr-directory-brand {
+    display: flex;
+    margin-bottom: 4px;
+    gap: 10px;
+    break-inside: avoid;
+  }
+
+  .qr-directory-header .qr-directory-logo {
+    width: 56px;
+    height: 48px;
+  }
+
+  .qr-directory-header .qr-directory-brand .eyebrow {
+    font-size: 10px;
+    line-height: 1.2;
+    color: #654823;
+  }
+}

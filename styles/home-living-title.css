@@ -1,0 +1,111 @@
+/* ARTDACI homepage — animated yet readable "living" masterpiece title.
+   Keep the approved spectrum lettering and two-line editorial composition.
+   "vivants" / "Alive" begins near the end of the first line, rather than
+   ending there. A tiny resize-aware enhancement positions it without clipping. */
+html:is([lang="fr"],[lang="en"]) .home-v2 .hv2-hero .hv2-title-row #book-title {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: 100%;
+  margin: 0;
+  font-size: clamp(34px, 4.7vw, 72px);
+  line-height: 1.07;
+  letter-spacing: -.065em;
+  text-wrap: nowrap;
+}
+
+html:is([lang="fr"],[lang="en"]) .home-v2 .hv2-hero .hv2-title-row #book-title .hv2-title-first,
+html:is([lang="fr"],[lang="en"]) .home-v2 .hv2-hero .hv2-title-row #book-title .hv2-title-alive {
+  box-sizing: border-box;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  font-size: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  white-space: nowrap;
+}
+
+html:is([lang="fr"],[lang="en"]) .home-v2 .hv2-hero .hv2-title-row #book-title .hv2-title-alive {
+  align-self: flex-start;
+  margin-inline-start: var(--artdaci-alive-indent, 0px);
+  transform-origin: 83% 55%;
+  /* Retain the existing color shimmer and add a slow, paired "heart beat". */
+  animation:
+    artdaci-title-shimmer 12s ease-in-out infinite alternate,
+    artdaci-living-heartbeat 5.6s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes artdaci-living-heartbeat {
+  0%, 33%, 44%, 54%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 4px 10px rgba(43, 99, 172, .12));
+  }
+  38% {
+    transform: scale(1.045);
+    filter: drop-shadow(0 0 12px rgba(222, 169, 27, .28));
+  }
+  48% {
+    transform: scale(1.02);
+    filter: drop-shadow(0 0 8px rgba(43, 125, 178, .21));
+  }
+}
+
+/* A single-column hero has room for stronger lettering on tablet. */
+@media (min-width: 601px) and (max-width: 1050px) {
+  html:is([lang="fr"],[lang="en"]) .home-v2 .hv2-hero .hv2-title-row #book-title {
+    font-size: clamp(43px, 7vw, 68px);
+  }
+}
+
+@media (max-width: 600px) {
+  html:is([lang="fr"],[lang="en"]) .home-v2 .hv2-hero .hv2-title-row #book-title {
+    font-size: clamp(29px, 9.4vw, 46px);
+    line-height: 1.1;
+  }
+
+  html:is([lang="fr"],[lang="en"]) .home-v2 .hv2-hero .hv2-title-row #book-title .hv2-title-alive {
+    transform-origin: 88% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:is([lang="fr"],[lang="en"]) .home-v2 .hv2-hero .hv2-title-row #book-title,
+  html:is([lang="fr"],[lang="en"]) .home-v2 .hv2-hero .hv2-title-row #book-title .hv2-title-first,
+  html:is([lang="fr"],[lang="en"]) .home-v2 .hv2-hero .hv2-title-row #book-title .hv2-title-alive {
+    animation: none;
+    transition: none;
+    transform: none;
+    will-change: auto;
+  }
+}
+
+
+/* Replace the standalone underline with a four-color light trail on the
+   same baseline as "vivants" / "Alive". The trail lives inside the animated
+   word's line and never takes an extra row or adds a font/asset request. */
+html:is([lang="fr"],[lang="en"]) .home-v2 .hv2-hero .hv2-title-row::after {
+  content: none;
+  display: none;
+}
+html:is([lang="fr"],[lang="en"]) .home-v2 .hv2-hero .hv2-title-row #book-title .hv2-title-alive {
+  position: relative;
+}
+html:is([lang="fr"],[lang="en"]) .home-v2 .hv2-hero .hv2-title-row #book-title .hv2-title-alive::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: calc(100% + clamp(9px, 1.4vw, 18px));
+  width: clamp(30px, 8.2vw, 100px);
+  height: clamp(4px, .42vw, 6px);
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: linear-gradient(90deg,#2563eb 0 26%,#ef4444 26% 51%,#facc15 51% 76%,#22c55e 76% 100%);
+  background-clip: border-box;
+  -webkit-background-clip: border-box;
+  box-shadow: 0 3px 15px rgba(37, 99, 235, .18);
+  pointer-events: none;
+}

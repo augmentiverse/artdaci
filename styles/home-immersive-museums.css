@@ -1,0 +1,208 @@
+/* ARTDACI homepage — museum experiences rather than a second museum index.
+   17 museums / 24 artworks are the collection context, not a claim that
+   AR and VR exist for every institution. Designed for FR, EN and RTL AR. */
+.home-v2 #places.hv2-museum-immersive {
+  position: relative;
+  isolation: isolate;
+  scroll-margin-top: 120px;
+}
+.home-v2 #places.hv2-museum-immersive .hv2-section-head {
+  position: relative;
+  padding: clamp(18px, 3vw, 34px) clamp(20px, 3.2vw, 40px);
+  margin-bottom: clamp(17px, 2.5vw, 28px);
+  border: 1px solid #bfd9cd;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 97% 10%,rgba(62,176,129,.17),transparent 41%),
+    linear-gradient(110deg,#e9f7ef 0%,#f7fbf6 57%,#e9f6eb 100%);
+  box-shadow: 0 11px 26px rgba(24, 79, 56, .07);
+}
+.home-v2 #places .hv2-section-head .hv2-section-kicker {
+  color: #27644a;
+  font-weight: 850;
+  letter-spacing: .12em;
+}
+.home-v2 #places .hv2-section-head h2 {
+  color: #174834;
+  line-height: 1.13;
+  max-width: 940px;
+  text-wrap: balance;
+}
+.home-v2 #places .hv2-section-head h2 .hv2-museum-tech {
+  display: inline-block;
+  font-style: normal;
+  font-weight: 790;
+  font-size: .82em;
+  letter-spacing: -.025em;
+  white-space: nowrap;
+  color: #9b641d;
+}
+.home-v2 #places .hv2-section-head > p {
+  color: #355c4c;
+  line-height: 1.67;
+}
+.home-v2 #places .hv2-museum-explorer-entry {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: clamp(12px, 2vw, 20px) 0 clamp(19px, 2.7vw, 30px);
+}
+.home-v2 #places .hv2-museum-explorer-entry .hv2-button {
+  border-radius: 12px;
+  white-space: normal;
+  min-height: 48px;
+  line-height: 1.4;
+  text-align: center;
+  padding: 12px 17px;
+}
+.home-v2 #places .hv2-museum-explorer-entry .hv2-button-primary {
+  color: #f8fff8;
+  background: #1b6248;
+  border-color: #1b6248;
+  box-shadow: 0 6px 15px rgba(24, 83, 61, .16);
+}
+.home-v2 #places .hv2-museum-explorer-entry .hv2-button-primary:is(:hover,:focus-visible) {
+  color: #fff;
+  background: #124e38;
+}
+.home-v2 #places .hv2-museum-explorer-entry .hv2-button:not(.hv2-button-primary) {
+  color: #20553e;
+  border-color: #8fb9a0;
+  background: rgba(231, 246, 235, .77);
+}
+.home-v2 #places .hv2-museum-explorer-entry .hv2-button:not(.hv2-button-primary):is(:hover,:focus-visible) {
+  background: #d9f2e1;
+}
+.home-v2 #places .hv2-place-primary {
+  background:
+    radial-gradient(circle at 88% 15%, rgba(198, 246, 179, .2),transparent 45%),
+    linear-gradient(128deg, #103f33 0%, #17634a 56%, #124b3e 100%);
+  border: 1px solid #5d9c7f;
+  border-radius: 18px;
+  box-shadow: 0 14px 32px rgba(14, 76, 49, .15);
+}
+.home-v2 #places .hv2-place-primary .hv2-section-kicker {
+  display: inline-block;
+  width: max-content;
+  max-width: 100%;
+  margin: 0 0 15px;
+  padding: 7px 12px;
+  border-radius: 99px;
+  color: #e9ffd0;
+  background: rgba(232, 255, 214, .16);
+  border: 1px solid rgba(232, 255, 214, .4);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: .09em;
+  line-height: 1.3;
+}
+.home-v2 #places .hv2-place-primary h3 {
+  color: #fffdf6;
+  font-size: clamp(28px, 3.4vw, 52px);
+  line-height: 1.12;
+}
+.home-v2 #places .hv2-place-primary p:not(.hv2-section-kicker) {
+  color: #e0f7e9;
+}
+.home-v2 #places .hv2-place-primary .hv2-place-cta {
+  color: #fff1a8;
+}
+.home-v2 #places .hv2-place-primary:is(:hover,:focus-visible) {
+  background:
+    radial-gradient(circle at 88% 15%, rgba(198, 246, 179, .28),transparent 45%),
+    linear-gradient(128deg,#135642 0%,#1a7555 56%,#165a49 100%);
+  border-color: #afe4be;
+}
+.home-v2 #places .hv2-place-secondary {
+  border: 1px solid #afd0bf;
+  border-radius: 18px;
+  background: linear-gradient(128deg, #e8f5e8, #e2f3f0);
+  box-shadow: 0 9px 24px rgba(32, 84, 63, .07);
+}
+.home-v2 #places .hv2-place-secondary h3 {color: #173f33;}
+.home-v2 #places .hv2-place-secondary p:not(.hv2-section-kicker) {color: #345e50;}
+.home-v2 #places .hv2-place-secondary .hv2-section-kicker {color:#1f6546;}
+.home-v2 #places .hv2-place-secondary .hv2-place-cta {color:#176146;}
+.home-v2 #places .hv2-place-primary:focus-visible,
+.home-v2 #places .hv2-place-secondary:focus-visible,
+.home-v2 #places .hv2-museum-explorer-entry a:focus-visible {
+  outline: 3px solid #c49239;
+  outline-offset: 4px;
+}
+@media (max-width: 680px) {
+  .home-v2 #places .hv2-museum-explorer-entry {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .home-v2 #places .hv2-museum-explorer-entry .hv2-button {width: 100%;}
+  .home-v2 #places .hv2-places {grid-template-columns: minmax(0,1fr);}
+  .home-v2 #places :is(.hv2-place-primary,.hv2-place-secondary) {
+    min-height: 275px;
+    padding: clamp(22px,5vw,31px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-v2 #places * {transition: none;}
+}
+
+
+/* Specific immersive CTA belongs at the END of the museum section.
+   The lead CTA introduces the full museum portal (photos, history, works,
+   3D/GEO), while this second action opens the immersive experience tab. */
+.home-v2 #places .hv2-museum-immersive-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: clamp(15px, 2.4vw, 22px) 0 0;
+}
+.home-v2 #places .hv2-museum-immersive-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 100%;
+  min-height: 50px;
+  padding: 12px 19px;
+  border: 1px solid #2b7855;
+  border-radius: 13px;
+  background: linear-gradient(112deg, #1b654c, #257b5e);
+  color: #fffdf4;
+  font: 780 clamp(13px, 1.17vw, 15px)/1.48 Inter, "Segoe UI", system-ui, sans-serif;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(17, 84, 58, .14);
+  transition: background-color .2s, box-shadow .2s, transform .2s;
+}
+.home-v2 #places .hv2-museum-immersive-link .hv2-museum-immersive-link-icon {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 25px;
+  width: 25px;
+  height: 25px;
+  color: #fff1af;
+  background: rgba(255, 255, 255, .15);
+  border-radius: 8px;
+}
+.home-v2 #places .hv2-museum-immersive-link .hv2-museum-immersive-link-arrow {
+  color: #fff1af;
+  font-size: 17px;
+  flex: 0 0 auto;
+}
+.home-v2 #places .hv2-museum-immersive-link:is(:hover, :focus-visible) {
+  background: linear-gradient(112deg, #154d3b, #196247);
+  box-shadow: 0 11px 25px rgba(17, 84, 58, .2);
+}
+.home-v2 #places .hv2-museum-immersive-link:focus-visible {
+  outline: 3px solid #c49239;
+  outline-offset: 4px;
+}
+@media (max-width: 680px) {
+  .home-v2 #places .hv2-museum-immersive-footer {
+    justify-content: stretch;
+  }
+  .home-v2 #places .hv2-museum-immersive-link {
+    width: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-v2 #places .hv2-museum-immersive-link { transition: none; }
+}

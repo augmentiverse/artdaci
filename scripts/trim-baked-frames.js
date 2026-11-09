@@ -114,15 +114,23 @@
     const sw = img.naturalWidth - sx - Math.round(img.naturalWidth * right);
     const sh = img.naturalHeight - sy - Math.round(img.naturalHeight * bottom);
     if (sw < 50 || sh < 50) return;
+    // The homepage displays thumbnails, not print-sized artwork.
+    // Keep the same crop coordinates but avoid encoding full-resolution
+    // image blobs for every catalogue card. Printable artwork remains full size.
+    const thumbnail = !!img.closest(".painting-index-gallery");
+    const scale = thumbnail ? Math.min(1, 1280 / Math.max(sw, sh)) : 1;
     const canvas = document.createElement("canvas");
-    canvas.width = sw; canvas.height = sh;
+    canvas.width = Math.max(1, Math.round(sw * scale));
+    canvas.height = Math.max(1, Math.round(sh * scale));
     const ctx=canvas.getContext("2d",{alpha:false});
     if (!ctx) return;
-    ctx.drawImage(img,sx,sy,sw,sh,0,0,sw,sh);
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
+    ctx.drawImage(img,sx,sy,sw,sh,0,0,canvas.width,canvas.height);
     canvas.toBlob(blob => {
       canvas.width = 0; canvas.height = 0;
       if (blob) callback(blob);
-    }, "image/webp", .93);
+    }, "image/webp", thumbnail ? .88 : .93);
   }
 
   function prepare(img) {

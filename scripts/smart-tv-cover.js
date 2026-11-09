@@ -15,6 +15,12 @@
     var model = hero.querySelector('model-viewer');
     var cover = hero.querySelector('.hv2-tv-book-cover');
     var toggle = hero.querySelector('.hv2-tv-toggle');
+    // Only fetch the Web Component when the 3D experience is near the viewport.
+    // TV cover mode still avoids it entirely unless visitors switch to 3D.
+    var modelObserver = null;
+    if (model && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      model.removeAttribute('auto-rotate');
+    }
     function loadModel() {
       if (!model || customElements.get('model-viewer') || document.querySelector('script[data-artdaci-model-viewer]')) return;
       var script = document.createElement('script');
@@ -23,9 +29,30 @@
       script.dataset.artdaciModelViewer = '1';
       document.head.appendChild(script);
     }
-    function activate(enabled) {
+    function scheduleModel() {
+      if (!model || customElements.get('model-viewer')) return;
+      if (!('IntersectionObserver' in window)) { loadModel(); return; }
+      if (modelObserver) return;
+      var observer = new IntersectionObserver(function (entries) {
+        if (!entries.some(function (entry) { return entry.isIntersecting; })) return;
+        observer.disconnect();
+        if (modelObserver === observer) modelObserver = null;
+        if (!document.documentElement.classList.contains('artdaci-tv')) loadModel();
+      }, { rootMargin: '350px 0px' });
+      modelObserver = observer;
+      observer.observe(hero);
+    }
+    function activate(enabled, userInitiated) {
       document.documentElement.classList.toggle('artdaci-tv', enabled);
-      if (!enabled) loadModel();
+      if (enabled && modelObserver) { modelObserver.disconnect(); modelObserver = null; }
+      if (!enabled) {
+        if (userInitiated) {
+          if (modelObserver) { modelObserver.disconnect(); modelObserver = null; }
+          loadModel();
+        } else {
+          scheduleModel();
+        }
+      }
       if (toggle) {
         toggle.textContent = enabled ? toggle.dataset.show3d : toggle.dataset.showCover;
         toggle.setAttribute('aria-pressed', String(enabled));
@@ -38,7 +65,7 @@
     if (toggle) toggle.addEventListener('click', function () {
       var next = !document.documentElement.classList.contains('artdaci-tv');
       try { localStorage.setItem('artdaci-tv-mode', next ? '1' : '0'); } catch (_) {}
-      activate(next);
+      activate(next, true);
     });
     activate(tv);
   });
