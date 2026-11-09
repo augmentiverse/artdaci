@@ -1,5 +1,6 @@
 import { formatArtworkNumber } from "./artwork-numbering.js?v=1";
 import { resolveArtworkAudioOverview } from "./artwork-media-manifest.js?v=5";
+import { getOtherMuseums, getMuseumAtlasLink } from "./catalogue-museum-expansion.mjs?v=1";
 import { IMMERSIVE_ARTWORKS, classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute } from "./immersive-routing.js?v=1";
 
 export { classifyUnresolvedArtworkRoute, resolveImmersiveArtworkRoute };
@@ -132,7 +133,12 @@ const UI = {
     technique: "Technique",
     context: "Context",
     semantic: "Explore semantic graph"
-    , museums: "MUSEUMS", museumsIntro: "Discover the institutions that preserve these paintings and open their architectural models in VR, image AR, or spatial AR.", museumVr: "Museum VR", museumAr: "Image AR", museumSpace: "Space AR"
+    , museums: "MUSEUMS", museumsIntro: "Six featured museums offer artwork and immersive discovery links. The 24 artworks connect to 17 museums altogether; discover eleven more below.", museumVr: "Museum VR", museumAr: "Image AR", museumSpace: "Space AR",
+      museumMore: "See the other museums", museumLess: "Hide the other museums",
+      museumMoreIntro: "Discover eleven more museums through their heritage profiles, architecture and photographs. These links do not imply that AR or VR is available at every institution.",
+      museumMoreVisit: "Explore this museum in the Atlas", museumMoreLoading: "Loading the other museums…",
+      museumMoreError: "The other museums could not be loaded. Open the photographic Atlas directly.",
+      museumMoreAtlas: "Explore all 17 museums in the Atlas"
   },
   fr: {
     search: "Rechercher par titre, artiste, technique, période...",
@@ -158,7 +164,12 @@ const UI = {
     technique: "Technique",
     context: "Contexte",
     semantic: "Explorer le graphe sémantique"
-    , museums: "MUSÉES", museumsIntro: "Découvrez les institutions qui conservent ces tableaux et ouvrez leurs modèles architecturaux en VR, AR image ou AR espace.", museumVr: "VR du musée", museumAr: "AR image", museumSpace: "AR espace"
+    , museums: "MUSÉES", museumsIntro: "Six musées sont mis en avant avec leurs œuvres et leurs liens immersifs. Les 24 tableaux d’ARTDACI sont associés à 17 musées : découvrez les 11 autres ci-dessous.", museumVr: "VR du musée", museumAr: "AR image", museumSpace: "AR espace",
+      museumMore: "Voir les autres musées", museumLess: "Masquer les autres musées",
+      museumMoreIntro: "Explorez les 11 autres musées à travers leur histoire, leur architecture et leurs photographies. Ces fiches ne signifient pas que des expériences AR ou VR sont disponibles pour chacun.",
+      museumMoreVisit: "Découvrir ce musée dans l’Atlas", museumMoreLoading: "Chargement des autres musées…",
+      museumMoreError: "Impossible de charger les autres musées. Ouvrez directement l’Atlas photographique.",
+      museumMoreAtlas: "Parcourir les 17 musées dans l’Atlas"
   },
   ar: {
     search: "ابحث بالعنوان أو الفنان أو التقنية أو الفترة...",
@@ -184,7 +195,12 @@ const UI = {
     technique: "التقنية",
     context: "السياق",
     semantic: "استكشف الرسم البياني الدلالي"
-    , museums: "المتاحف", museumsIntro: "اكتشف المتاحف التي تحفظ هذه اللوحات وافتح نماذجها المعمارية في الواقع الافتراضي أو المعزز.", museumVr: "واقع افتراضي", museumAr: "واقع معزز بالصورة", museumSpace: "واقع معزز مكاني"
+    , museums: "المتاحف", museumsIntro: "تُعرض ستة متاحف مميزة مع روابط الأعمال والتجارب الغامرة المتاحة. ترتبط أعمال ARTDACI الأربعة والعشرون بسبعة عشر متحفًا؛ استكشف المتاحف الأحد عشر الأخرى أدناه.", museumVr: "واقع افتراضي", museumAr: "واقع معزز بالصورة", museumSpace: "واقع معزز مكاني",
+      museumMore: "عرض المتاحف الأخرى", museumLess: "إخفاء المتاحف الأخرى",
+      museumMoreIntro: "تعرّف إلى المتاحف الأحد عشر الأخرى عبر ملفاتها التراثية وصورها ومعلوماتها المعمارية. لا تعني هذه الروابط توفر تجارب الواقع المعزز أو الافتراضي في كل متحف.",
+      museumMoreVisit: "اكتشف هذا المتحف في الأطلس", museumMoreLoading: "جارٍ تحميل المتاحف الأخرى…",
+      museumMoreError: "تعذّر تحميل المتاحف الأخرى. يمكنك فتح الأطلس المصوّر مباشرة.",
+      museumMoreAtlas: "استكشف المتاحف السبعة عشر في الأطلس"
   }
 };
 
@@ -398,9 +414,52 @@ function renderCatalogue(root, manifests, museums, lang, text) {
     <section class="museum-index-section">
       <header><p class="eyebrow">ARTDACI</p><h2>${text.museums}</h2><p>${text.museumsIntro}</p></header>
       <div class="museum-index-grid">${museums.map((museum) => renderMuseumCard(museum, lang, text)).join("")}</div>
+      ${isHomeGallery ? `
+        <details class="museum-more" data-expanded-loaded="false">
+          <summary class="museum-more-toggle">
+            <span class="museum-more-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-6 9 6M4 10h16M6 10v10m6-10v10m6-10v10M3 20h18"/></svg></span>
+            <span class="museum-more-closed">${text.museumMore}</span>
+            <span class="museum-more-open">${text.museumLess}</span>
+            <span class="museum-more-total" aria-hidden="true">(${Math.max(0,17-museums.length)})</span>
+            <span class="museum-more-chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="museum-more-content">
+            <p class="museum-more-intro">${text.museumMoreIntro}</p>
+            <ul class="museum-more-grid" aria-live="polite"></ul>
+            <a class="museum-more-atlas" href="${getMuseumAtlasLink(null,lang)}">${text.museumMoreAtlas} <span aria-hidden="true">↗</span></a>
+          </div>
+        </details>` : ""}
     </section>
   `;
 
+  const museumMore = root.querySelector(".museum-more");
+  if (museumMore) {
+    museumMore.addEventListener("toggle", async () => {
+      if (!museumMore.open || museumMore.dataset.expandedLoaded === "true" ||
+          museumMore.dataset.expandedLoading === "true") return;
+      const list = museumMore.querySelector(".museum-more-grid");
+      museumMore.dataset.expandedLoading = "true";
+      list.innerHTML = `<li class="museum-more-status" role="status">${text.museumMoreLoading}</li>`;
+      try {
+        const base = await loadManifest("museum-atlas/data/museums.json");
+        const translated = lang === "fr" ? null : await loadManifest(`museum-atlas/data/${lang}.json`);
+        const additional = getOtherMuseums(base.museums, museums, translated?.museums);
+        list.innerHTML = additional.map((museum) => `<li class="museum-more-item">
+          <a href="${getMuseumAtlasLink(museum.id,lang)}" aria-label="${escapeHtml(text.museumMoreVisit)} : ${escapeHtml(museum.name)}">
+            <span class="museum-more-item-icon" aria-hidden="true">⌂</span>
+            <span class="museum-more-item-copy"><strong>${escapeHtml(museum.name)}</strong><small>${escapeHtml([museum.city,museum.country].filter(Boolean).join(" · "))}</small></span>
+            <span class="museum-more-item-arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>`).join("");
+        museumMore.dataset.expandedLoaded = "true";
+      } catch (error) {
+        console.warn("ARTDACI extra museum index could not load",error);
+        list.innerHTML = `<li class="museum-more-status" role="status">${text.museumMoreError}</li>`;
+      } finally {
+        delete museumMore.dataset.expandedLoading;
+      }
+    });
+  }
   const input = root.querySelector("input");
   const select = root.querySelector("select");
   const reset = root.querySelector("[data-action='reset']");
