@@ -1,0 +1,31 @@
+/* Arabic home: with RTL the copy begins on the right. Keep the entire
+   animated Mona Lisa + Vermeer / Van Gogh / Monet stack on the LEFT.
+   The physical left position intentionally does not mirror in RTL. */
+html[lang="ar"] .home-v2 .hv2-hero > .hv2-smart-art-spotlight {
+  left:clamp(7px,1.5vw,24px);
+  right:auto;
+}
+@media(max-width:600px) {
+  html[lang="ar"] .home-v2 .hv2-hero > .hv2-smart-art-spotlight {
+    left:9px;
+    right:auto;
+  }
+}
+
+/* Images explicitly provided without frames for the homepage index.
+   The museum-like editorial card and its caption remain in place; only the
+   decorative frame effect around the actual painting is removed. */
+.home-v2 .painting-index-gallery .artwork-card--frameless .artwork-image {
+  border:0;
+  background:transparent;
+}
+.home-v2 .painting-index-gallery .artwork-card--frameless .artwork-image::after {
+  content:none;
+  display:none;
+}
+.home-v2 .painting-index-gallery .artwork-card--frameless .artwork-image img {
+  border:0;
+  border-radius:0;
+  box-shadow:0 9px 22px rgba(35,47,62,.13);
+  object-fit:contain;
+}
