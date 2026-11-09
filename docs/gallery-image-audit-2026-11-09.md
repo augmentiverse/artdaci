@@ -16,6 +16,8 @@ Run `node scripts/audit-media-storage.mjs` for a repeatable inventory and `node 
 
 **Storage policy:** Do not copy existing Cloudflare-hosted originals into GitHub/Vercel, silently rewrite Cloudflare URLs, alter R2 object keys, or re-encode AR tracking targets/GLB/long-form media as part of homepage image optimization. Keep remote media URLs and fallback behaviors intact. Assess performance separately for local thumbnail loading and for CDN-delivered remote media.
 
+For the verified 9 November 2026 header sample and cache-rule recommendations, see `docs/cloudflare-r2-live-head-audit-2026-11-09.md`.
+
 ### Live R2 header sampling (non-destructive)
 
 Use `node scripts/probe-cloudflare-media.mjs` to inspect a bounded representative sample of **published manifest references** via `HEAD` requests: 2 images, 3 audio, 1 video, 2 models, 1 AR target, and four R2 manifest URLs. `HEAD` does not transfer media bodies. Results report status, MIME, CORS for `https://artdaci.com`, Content-Length, Cache-Control, CF-Cache-Status (when present), Accept-Ranges, and elapsed time.
