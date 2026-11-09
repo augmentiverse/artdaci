@@ -501,6 +501,13 @@ function renderStats(all, filtered, text) {
   `;
 }
 
+export function formatArtworkDimensions(dimensions) {
+  const height = dimensions?.heightCm;
+  const width = dimensions?.widthCm;
+  if (!Number.isFinite(height) || !Number.isFinite(width) || height <= 0 || width <= 0) return "";
+  return `${height} × ${width} cm`;
+}
+
 function renderCard(manifest, lang, text, imageOverride) {
   const slug = manifest.slug;
   const title = manifest.title;
@@ -513,6 +520,7 @@ function renderCard(manifest, lang, text, imageOverride) {
   const artist = manifest.artist?.name || "";
   const date = manifest.date || "";
   const displayLocation = location;
+  const dimensions = formatArtworkDimensions(manifest.dimensions);
   const immersiveActions = getArtworkImmersiveActions(slug, lang, text)
     .map((action) => `<a class="button" href="${action.href}">${action.label}</a>`)
     .join("\n");
@@ -532,7 +540,7 @@ function renderCard(manifest, lang, text, imageOverride) {
         <p class="card-meta">${escapeHtml(artist)}, ${escapeHtml(date)}</p>
         <p>${escapeHtml(shorten(summary, 210))}</p>
         <dl class="mini-facts">
-          <div><dt>${text.dimensions}</dt><dd>${manifest.dimensions?.heightCm || "?"} x ${manifest.dimensions?.widthCm || "?"} cm</dd></div>
+          ${dimensions ? `<div><dt>${text.dimensions}</dt><dd>${dimensions}</dd></div>` : ""}
           <div><dt>${text.location}</dt><dd>${escapeHtml(displayLocation || movement)}</dd></div>
         </dl>
         <div class="tag-strip">
