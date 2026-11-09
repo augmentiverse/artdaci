@@ -4,6 +4,18 @@
 
 All 24 source image paths used by the painting Index exist in the GitHub repository. Their total size is approximately 5.84 MiB. The original wordmark image assets/varia/artdaci-logo.png weighs approximately 2.43 MiB, making it a strong optimization candidate.
 
+## Hosting scope: GitHub/Vercel versus Cloudflare R2
+
+**This report's 24 images and 5.84 MiB refer only to the GitHub-hosted homepage Painting Index thumbnails. They are not a global media inventory.**
+
+ARTDACI also delivers a substantial media library through the Cloudflare R2 custom domain `https://media.artdaci.com/` (per-artwork `artworks/{id}/` and shared `shared/` prefixes). The runtime reads `content/media-manifests/artworks/{id}/manifest.json` and `scripts/artwork-media-manifest.js`, which selects a published R2 asset when available and retains selective local fallbacks. These manifests reference images, audio, videos, 3D models and AR files.
+
+At the time of this audit, the 24 source-ready artwork media manifests declare **107 media references**, including **90 marked available** and **17 not marked available**. The available references are **10 images, 70 audio files, 1 video, 5 models and 4 AR assets**. The sum of **recorded** bytes is about **310.43 MiB**, but one available image has no recorded size. These are metadata declarations, not a live inventory of Cloudflare R2 or proof that each URL currently responds. Other assets referenced outside this registry may exist.
+
+Run `node scripts/audit-media-storage.mjs` for a repeatable inventory and `node scripts/audit-media-storage.mjs --json` for the detailed declarations. Check public URLs, HTTP status, MIME, CORS, size and integrity independently as needed using narrowly scoped verification such as `scripts/check-vg01-orsay-media.mjs --remote`, without pulling entire videos or models during routine CI.
+
+**Storage policy:** Do not copy existing Cloudflare-hosted originals into GitHub/Vercel, silently rewrite Cloudflare URLs, alter R2 object keys, or re-encode AR tracking targets/GLB/long-form media as part of homepage image optimization. Keep remote media URLs and fallback behaviors intact. Assess performance separately for local thumbnail loading and for CDN-delivered remote media.
+
 Three already-frameless thumbnails need higher pixel density before they can be displayed sharply on high-DPI screens:
 
 | Artwork slug | Current pixels | Current file | Higher-resolution candidate (uncropped) |

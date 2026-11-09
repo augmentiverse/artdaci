@@ -23,6 +23,14 @@ This repository is a GitHub Pages-ready augmented-reality art book for four mast
 - `vendor/` - local copies of Three.js, GLTFLoader, and MindAR used by the AR viewer.
 - `docs/art-book-concept.md` - full product and editorial concept.
 
+## Media hosting (GitHub/Vercel and Cloudflare)
+
+The website is deployed from GitHub, but not all its media resides in this repository. The artwork media manifests under `content/media-manifests/` declare selected remote resources served from Cloudflare R2 through `https://media.artdaci.com/`. The resolver `scripts/artwork-media-manifest.js` uses these manifests to select remote media and provides local fallbacks for some image and audio elements.
+
+**Do not treat the GitHub assets folder as a complete media inventory.** The Cloudflare object store and any other remote URLs need separate checks for availability, integrity, bandwidth and caching. Use `node scripts/audit-media-storage.mjs` for an offline audit of remote media *declarations*; it never queries the bucket or proves that objects are online. Use `node scripts/audit-gallery-images.mjs` for the distinct set of 24 GitHub-hosted homepage thumbnails. Neither script uploads, rewrites, or deletes remote media.
+
+Before optimizing or migrating media, preserve stable R2 URLs and metadata, CORS policies, origin access and publication flags; never change AR targets or 3D model bytes solely to optimize homepage performance.
+
 ## Repository Structure
 
 ```text
