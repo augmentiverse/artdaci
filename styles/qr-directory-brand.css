@@ -1,0 +1,76 @@
+/* ARTDACI printed QR guide: the original wordmark is inline at the
+   upper-left, immediately before the book-companion heading.
+   Scoped stylesheet leaves other pages and assets unchanged. */
+.qr-directory-header .qr-directory-brand {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: clamp(10px, 1.8vw, 17px);
+  min-width: 0;
+  margin-bottom: 10px;
+}
+
+.qr-directory-header .qr-directory-logo {
+  position: static;
+  inset: auto;
+  display: block;
+  flex: 0 0 auto;
+  width: clamp(58px, 6.5vw, 72px);
+  height: 60px;
+  max-height: none;
+  margin: 0;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.qr-directory-header .qr-directory-brand .eyebrow {
+  grid-column: auto;
+  min-width: 0;
+  margin: 0;
+  color: #79572f;
+  font: 800 clamp(10px, 1.1vw, 13px)/1.4 Inter, "Segoe UI", system-ui, sans-serif;
+  letter-spacing: .095em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 550px) {
+  .qr-directory-header .qr-directory-logo {
+    width: 55px;
+    height: 48px;
+  }
+
+  .qr-directory-header .qr-directory-brand {
+    gap: 9px;
+    margin-bottom: 14px;
+  }
+
+  .qr-directory-header .qr-directory-brand .eyebrow {
+    font-size: 10px;
+    letter-spacing: .06em;
+  }
+}
+
+@media print {
+  .qr-directory-header {
+    padding-right: 0;
+  }
+
+  .qr-directory-header .qr-directory-brand {
+    display: flex;
+    margin-bottom: 4px;
+    gap: 10px;
+    break-inside: avoid;
+  }
+
+  .qr-directory-header .qr-directory-logo {
+    width: 56px;
+    height: 48px;
+  }
+
+  .qr-directory-header .qr-directory-brand .eyebrow {
+    font-size: 10px;
+    line-height: 1.2;
+    color: #654823;
+  }
+}
