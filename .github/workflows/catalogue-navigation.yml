@@ -1,4 +1,4 @@
-name: Validate multilingual visitor guide and catalogue
+name: Validate ARTDACI homepage, visitor guide and catalogue
 
 on:
   pull_request:
@@ -7,6 +7,10 @@ on:
       - "atlas-en.html"
       - "atlas-ar.html"
       - "scripts/catalogue.js"
+      - "styles/home-mobile-smart-art.css"
+      - "scripts/smart-tv-cover.js"
+      - "scripts/trim-baked-frames.js"
+      - "tests/home-mobile-accessibility.test.mjs"
       - "index.html"
       - "index-fr.html"
       - "index-ar.html"
@@ -28,4 +32,4 @@ jobs:
         with:
           persist-credentials: false
       - name: Check language navigation and catalogue rendering
-        run: node --test tests/catalogue-navigation-quality.test.mjs tests/catalogue-localization.test.mjs tests/catalogue-static-fallback.test.mjs
+        run: node --test tests/catalogue-navigation-quality.test.mjs tests/catalogue-localization.test.mjs tests/catalogue-static-fallback.test.mjs tests/home-mobile-accessibility.test.mjs
