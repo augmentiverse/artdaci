@@ -8,17 +8,24 @@
   <link rel="icon" href="assets/app/artdaci-app-icon.svg" type="image/svg+xml" />
   <title>ARTDACI — Concept d’Atlas augmenté</title>
   <link rel="stylesheet" href="styles/site.css" />
+  <link rel="stylesheet" href="styles/atlas-visitor-guide.css?v=1" />
 </head>
-<body>
+<body class="artdaci-guide">
   <main class="home-shell">
     <article class="concept-page">
       <header class="concept-hero">
         <p class="eyebrow" id="atlas-eyebrow"></p>
         <h1 id="atlas-title"></h1>
         <p class="dek" id="atlas-dek"></p>
-        <div class="actions" id="atlas-actions" aria-label="Atlas navigation"></div>
+        <nav class="guide-actions" id="atlas-actions" aria-label="Guide navigation"></nav>
       </header>
-      <div id="atlas-content"></div>
+      <section class="guide-start" id="start" aria-labelledby="guide-start-title"></section>
+      <section class="guide-faq" id="faq" aria-labelledby="guide-faq-title"></section>
+      <details class="guide-concept-details" id="atlas-concept">
+        <summary id="guide-concept-summary"></summary>
+        <div id="atlas-content"></div>
+      </details>
+      <footer class="guide-footer" id="guide-footer"></footer>
     </article>
   </main>
 
@@ -119,6 +126,208 @@
       }
     };
 
+
+    /* Reader-facing layer. FAQ answers and the two paths are copied directly
+       from the three ARTDACI homepages, preserving all original claims. */
+    const VISITOR = {
+  "fr": {
+    "pageTitle": "ARTDACI — Guide de découverte",
+    "eyebrow": "GUIDE · L'ART POUR TOUS",
+    "title": "Votre guide pour explorer ARTDACI",
+    "dek": "Commencez avec le livre imprimé ou explorez librement les œuvres, les artistes, les musées et les expériences numériques disponibles.",
+    "back": "Retour à l’accueil",
+    "faqLink": "Questions fréquentes",
+    "startLink": "Comment commencer",
+    "startEyebrow": "Deux façons de découvrir",
+    "startTitle": "Choisissez votre parcours",
+    "startLead": "Quelques étapes simples pour profiter d’ARTDACI, avec ou sans le livre papier.",
+    "faqEyebrow": "Réponses pratiques",
+    "faqTitle": "Questions fréquentes",
+    "faqLead": "Les informations utiles sur le livre, l’accès aux expériences et la collection.",
+    "conceptTitle": "En savoir plus sur l’Atlas augmenté",
+    "footer": "Le site ARTDACI reste accessible sans achat du livre.",
+    "cards": [
+      {
+        "title": "Je possède le livre sur papier",
+        "steps": [
+          "Ouvrez une page du livre qui propose une expérience numérique.",
+          "Suivez le QR code ou les instructions de réalité augmentée avec votre téléphone.",
+          "Découvrez les récits, modèles et expériences immersives disponibles."
+        ],
+        "href": "book-ar.html?lang=fr",
+        "label": "Vous pouvez scanner la couverture en AR ↗",
+        "kind": "book"
+      },
+      {
+        "title": "J’explore en ligne",
+        "steps": [
+          "Choisissez un chef-d’œuvre, un artiste ou un musée.",
+          "Découvrez l’histoire et les techniques des œuvres, le parcours des artistes ou les collections et les lieux des musées.",
+          "Poursuivez avec les visites de musées, les modèles 3D et les expériences immersives disponibles."
+        ],
+        "href": "index-fr.html#experiences",
+        "label": "Explorer les œuvres et les musées ↗",
+        "kind": "online"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "Qu’est-ce qu’ARTDACI ?",
+        "answer": "ARTDACI est un livre d’art et un site indépendant pour découvrir les peintures et l’histoire de l’art grâce aux connaissances reliées et à certaines expériences AR, 3D et VR."
+      },
+      {
+        "question": "Faut-il posséder le livre ?",
+        "answer": "Non. Le site et de nombreuses expériences sont accessibles sans le livre. Le livre imprimé propose un parcours complémentaire."
+      },
+      {
+        "question": "De quel équipement ai-je besoin ?",
+        "answer": "Un navigateur moderne suffit pour de nombreuses pages. La réalité augmentée avec caméra exige un appareil compatible et les autorisations nécessaires. Certaines fonctions VR nécessitent un matériel adapté."
+      },
+      {
+        "question": "Combien coûte ARTDACI ?",
+        "answer": "Vous pouvez explorer le site public sans acheter le livre. Les conditions d’achat et les éventuels frais propres à certaines expériences doivent être confirmés séparément."
+      },
+      {
+        "question": "Quelles œuvres sont proposées ?",
+        "answer": "ARTDACI présente des œuvres de Léonard de Vinci, Vermeer, Van Gogh et Monet. Consultez l’Index des peintures pour découvrir la collection actuelle et ses expériences."
+      }
+    ],
+    "homeUrl": "index-fr.html"
+  },
+  "en": {
+    "pageTitle": "ARTDACI — Visitor Guide",
+    "eyebrow": "GUIDE · ART FOR EVERYONE",
+    "title": "Your guide to exploring ARTDACI",
+    "dek": "Start with the printed book or explore artworks, artists, museums and available digital experiences freely online.",
+    "back": "Back to the homepage",
+    "faqLink": "Frequently asked questions",
+    "startLink": "How to begin",
+    "startEyebrow": "Two ways to explore",
+    "startTitle": "Choose your path",
+    "startLead": "A few simple steps to enjoy ARTDACI, with or without the printed book.",
+    "faqEyebrow": "Practical answers",
+    "faqTitle": "Frequently asked questions",
+    "faqLead": "Useful information about the book, accessing experiences and the collection.",
+    "conceptTitle": "Explore the Augmented Atlas concept",
+    "footer": "The ARTDACI website is accessible without purchasing the book.",
+    "cards": [
+      {
+        "title": "I have the printed book",
+        "steps": [
+          "Open a supported page of your ARTDACI book.",
+          "Follow the QR code or AR instructions with your phone.",
+          "Discover the available stories, models and immersive experiences."
+        ],
+        "href": "book-ar.html?lang=en",
+        "label": "You can scan the book cover in AR ↗",
+        "kind": "book"
+      },
+      {
+        "title": "Explore online",
+        "steps": [
+          "Choose a masterpiece, an artist, or a museum.",
+          "Explore artworks’ stories and techniques, artists’ journeys, or museums’ collections and locations.",
+          "Continue through museum visits, interactive 3D and available immersive experiences."
+        ],
+        "href": "index.html#experiences",
+        "label": "Explore artworks and museums ↗",
+        "kind": "online"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "What is ARTDACI?",
+        "answer": "ARTDACI is a printed art book and an independent website for discovering paintings and art history through connected knowledge and selected AR, 3D and VR experiences."
+      },
+      {
+        "question": "Do I need the printed book?",
+        "answer": "No. You can explore the website and many of its digital experiences without owning the book. The printed book offers an additional reading and discovery journey."
+      },
+      {
+        "question": "What equipment do I need?",
+        "answer": "A modern browser is sufficient for many pages. Camera-based AR requires a compatible device and camera permission. Some immersive VR features may require suitable hardware."
+      },
+      {
+        "question": "How much does it cost?",
+        "answer": "You can explore the public website without buying the printed book. Any book purchase terms or experience-specific charges must be confirmed separately."
+      },
+      {
+        "question": "Which artworks are included?",
+        "answer": "ARTDACI features works by Leonardo da Vinci, Johannes Vermeer, Vincent van Gogh and Claude Monet. Visit the Painting Index to discover the collection and individual experiences."
+      }
+    ],
+    "homeUrl": "index.html"
+  },
+  "ar": {
+    "pageTitle": "ARTDACI — دليل الاستكشاف",
+    "eyebrow": "دليل · الفن للجميع",
+    "title": "دليلك لاستكشاف ARTDACI",
+    "dek": "ابدأ بالكتاب المطبوع أو استكشف الأعمال الفنية والفنانين والمتاحف والتجارب الرقمية المتاحة عبر الإنترنت.",
+    "back": "العودة إلى الصفحة الرئيسية",
+    "faqLink": "الأسئلة الشائعة",
+    "startLink": "كيف تبدأ",
+    "startEyebrow": "طريقتان للاستكشاف",
+    "startTitle": "اختر مسارك",
+    "startLead": "خطوات بسيطة للاستفادة من ARTDACI، مع الكتاب الورقي أو بدونه.",
+    "faqEyebrow": "إجابات عملية",
+    "faqTitle": "الأسئلة الشائعة",
+    "faqLead": "معلومات مفيدة عن الكتاب والوصول إلى التجارب والمجموعة الفنية.",
+    "conceptTitle": "اكتشف مفهوم الأطلس المعزّز",
+    "footer": "يمكنك استكشاف موقع ARTDACI دون شراء الكتاب.",
+    "cards": [
+      {
+        "title": "لديّ كتاب ARTDACI الورقي",
+        "steps": [
+          "افتح صفحة من الكتاب تتضمن تجربة رقمية مدعومة.",
+          "اتبع رمز QR أو تعليمات الواقع المعزز باستخدام هاتفك.",
+          "اكتشف القصص والنماذج والتجارب الغامرة المتاحة."
+        ],
+        "href": "book-ar.html?lang=ar",
+        "label": "يمكنك مسح غلاف الكتاب بالواقع المعزز ↗",
+        "kind": "book"
+      },
+      {
+        "title": "أستكشف عبر الإنترنت",
+        "steps": [
+          "اختر تحفة فنية أو فنانًا أو متحفًا.",
+          "تعرّف إلى تاريخ الأعمال وتقنياتها، ومسارات الفنانين، ومجموعات المتاحف ومواقعها.",
+          "واصل الاستكشاف عبر جولات المتاحف والنماذج ثلاثية الأبعاد والتجارب الغامرة المتاحة."
+        ],
+        "href": "index-ar.html#experiences",
+        "label": "استكشف الأعمال الفنية والمتاحف ↗",
+        "kind": "online"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "ما هو ARTDACI؟",
+        "answer": "ARTDACI كتاب فني وموقع مستقل لاكتشاف اللوحات وتاريخ الفن عبر المعرفة المترابطة وتجارب مختارة في الواقع المعزز والنماذج ثلاثية الأبعاد والواقع الافتراضي."
+      },
+      {
+        "question": "هل يجب أن أمتلك الكتاب؟",
+        "answer": "لا. يمكنك استكشاف الموقع والعديد من التجارب الرقمية دون امتلاك الكتاب. ويقدّم الكتاب المطبوع رحلة إضافية للقراءة والاكتشاف."
+      },
+      {
+        "question": "ما الأجهزة التي أحتاج إليها؟",
+        "answer": "يكفي متصفح حديث للعديد من الصفحات. ويتطلب الواقع المعزز المعتمد على الكاميرا جهازًا متوافقًا وإذن الوصول إليها، بينما قد تتطلب بعض وظائف الواقع الافتراضي أجهزة مناسبة."
+      },
+      {
+        "question": "كم تبلغ تكلفة ARTDACI؟",
+        "answer": "يمكنك استكشاف الموقع العام دون شراء الكتاب. ويجب تأكيد شروط شراء الكتاب وأي رسوم خاصة ببعض التجارب بشكل منفصل."
+      },
+      {
+        "question": "ما الأعمال الفنية المتوفرة؟",
+        "answer": "يقدّم ARTDACI أعمالًا لليوناردو دافنشي وفيرمير وفان غوخ ومونيه. تصفّح فهرس اللوحات للتعرف على المجموعة الحالية والتجارب المرتبطة بها."
+      }
+    ],
+    "homeUrl": "index-ar.html"
+  }
+};
+    const GUIDE_ICON = {
+      book: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5c-3-2-6-2-9-1v15c3-1 6-1 9 1 3-2 6-2 9-1V4c-3-1-6-1-9 1Zm0 0v15"/><path d="m16 10 2 2 3-3"/></svg>',
+      online: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-3 3-3.5 15 0 18M12 3c3 3 3.5 15 0 18"/></svg>'
+    };
+
     const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (ch) => ({
       "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
     })[ch]);
@@ -136,20 +345,45 @@
     const requested = (new URLSearchParams(location.search).get("lang") || "fr").toLowerCase().split(/[-_]/)[0];
     const lang = ["en", "fr", "ar"].includes(requested) ? requested : "fr";
     const t = COPY[lang];
+    const v = VISITOR[lang];
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
-    document.title = t.pageTitle;
-    document.getElementById("atlas-eyebrow").textContent = t.eyebrow;
-    document.getElementById("atlas-title").textContent = t.title;
-    document.getElementById("atlas-dek").textContent = t.dek;
-
-    const switches = [
-      ["en", "English"], ["fr", "Français"], ["ar", "العربية"]
-    ].filter(([code]) => code !== lang)
-      .map(([code, label]) => '<a class="button" href="atlas.html?lang=' + code + '" lang="' + code + '"' + (code === "ar" ? ' dir="rtl"' : '') + '>' + label + '</a>')
-      .join("");
-    document.getElementById("atlas-actions").innerHTML = '<a class="button primary" href="' + t.backUrl + '">' + t.back + '</a>' + switches;
+    document.title = v.pageTitle;
+    document.getElementById("atlas-eyebrow").textContent = v.eyebrow;
+    document.getElementById("atlas-title").textContent = v.title;
+    document.getElementById("atlas-dek").textContent = v.dek;
+    const keepFAQ = location.hash === "#faq" ? "#faq" : "";
+    const switches = [["en","English"],["fr","Français"],["ar","العربية"]]
+      .filter(([code]) => code !== lang)
+      .map(([code,label]) => '<a href="atlas.html?lang=' + code + keepFAQ + '" lang="' + code + '"' + (code === "ar" ? ' dir="rtl"' : '') + '>' + escapeHtml(label) + '</a>').join("");
+    document.getElementById("atlas-actions").innerHTML =
+      '<a class="guide-home-button" href="' + v.homeUrl + '">' + escapeHtml(v.back) + '</a>' +
+      '<a href="#start">' + escapeHtml(v.startLink) + '</a>' +
+      '<a href="#faq">' + escapeHtml(v.faqLink) + '</a>' + switches;
+    document.getElementById("guide-start").innerHTML =
+      '<p class="guide-eyebrow">' + escapeHtml(v.startEyebrow) + '</p>' +
+      '<h2 id="guide-start-title">' + escapeHtml(v.startTitle) + '</h2>' +
+      '<p class="guide-start-lead">' + escapeHtml(v.startLead) + '</p>' +
+      '<div class="guide-start-grid">' +
+      v.cards.map(card => '<article class="guide-start-card"><span class="guide-step-icon" aria-hidden="true">' +
+        GUIDE_ICON[card.kind] + '</span><h3>' + escapeHtml(card.title) + '</h3>' +
+        '<ol>' + card.steps.map(step => '<li>' + escapeHtml(step) + '</li>').join("") + '</ol>' +
+        '<a href="' + escapeHtml(card.href) + '">' + escapeHtml(card.label) + '</a></article>').join("") +
+      '</div>';
+    document.getElementById("faq").innerHTML =
+      '<p class="guide-eyebrow">' + escapeHtml(v.faqEyebrow) + '</p>' +
+      '<h2 id="guide-faq-title">' + escapeHtml(v.faqTitle) + '</h2>' +
+      '<p class="guide-faq-lead">' + escapeHtml(v.faqLead) + '</p>' +
+      '<div class="guide-faq-list">' +
+      v.faqs.map(item => '<details class="guide-faq-item"><summary>' + escapeHtml(item.question) +
+        '</summary><p>' + escapeHtml(item.answer) + '</p></details>').join("") + '</div>';
+    document.getElementById("guide-concept-summary").textContent = v.conceptTitle;
     document.getElementById("atlas-content").innerHTML = t.sections.map(renderSection).join("");
+    document.getElementById("guide-footer").innerHTML =
+      '<p>' + escapeHtml(v.footer) + ' <a href="' + v.homeUrl + '">' + escapeHtml(v.back) + '</a></p>';
+    if (location.hash === "#faq" || location.hash === "#start") {
+      requestAnimationFrame(() => document.getElementById(location.hash.slice(1))?.scrollIntoView());
+    }
   </script>
 </body>
 </html>
