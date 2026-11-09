@@ -144,3 +144,65 @@
 @media (prefers-reduced-motion: reduce) {
   .home-v2 #places * {transition: none;}
 }
+
+
+/* Specific immersive CTA belongs at the END of the museum section.
+   The lead CTA introduces the full museum portal (photos, history, works,
+   3D/GEO), while this second action opens the immersive experience tab. */
+.home-v2 #places .hv2-museum-immersive-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: clamp(15px, 2.4vw, 22px) 0 0;
+}
+.home-v2 #places .hv2-museum-immersive-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 100%;
+  min-height: 50px;
+  padding: 12px 19px;
+  border: 1px solid #2b7855;
+  border-radius: 13px;
+  background: linear-gradient(112deg, #1b654c, #257b5e);
+  color: #fffdf4;
+  font: 780 clamp(13px, 1.17vw, 15px)/1.48 Inter, "Segoe UI", system-ui, sans-serif;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(17, 84, 58, .14);
+  transition: background-color .2s, box-shadow .2s, transform .2s;
+}
+.home-v2 #places .hv2-museum-immersive-link .hv2-museum-immersive-link-icon {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 25px;
+  width: 25px;
+  height: 25px;
+  color: #fff1af;
+  background: rgba(255, 255, 255, .15);
+  border-radius: 8px;
+}
+.home-v2 #places .hv2-museum-immersive-link .hv2-museum-immersive-link-arrow {
+  color: #fff1af;
+  font-size: 17px;
+  flex: 0 0 auto;
+}
+.home-v2 #places .hv2-museum-immersive-link:is(:hover, :focus-visible) {
+  background: linear-gradient(112deg, #154d3b, #196247);
+  box-shadow: 0 11px 25px rgba(17, 84, 58, .2);
+}
+.home-v2 #places .hv2-museum-immersive-link:focus-visible {
+  outline: 3px solid #c49239;
+  outline-offset: 4px;
+}
+@media (max-width: 680px) {
+  .home-v2 #places .hv2-museum-immersive-footer {
+    justify-content: stretch;
+  }
+  .home-v2 #places .hv2-museum-immersive-link {
+    width: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-v2 #places .hv2-museum-immersive-link { transition: none; }
+}

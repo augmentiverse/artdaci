@@ -73,10 +73,21 @@ async function checkPage(page,p){
   ensure(data.labelInside,"Virtual-museum heading clips outside the green panel");
   ensure(data.cardWidth>250,"Virtual museum card too narrow to read");
   ensure(data.scrollWidth<=data.viewport+2,"Homepage has horizontal scroll overflow");
-  const immersive=section.locator(".hv2-museum-explorer-entry .hv2-button-primary");
+  const general=section.locator(".hv2-museum-explorer-entry .hv2-button-primary");
+  const museumUrl=await general.getAttribute("href");
+  ensure(museumUrl==="museums.html?lang="+p.lang,
+    "General museum button must open the full museum portal; got "+museumUrl);
+  const immersive=section.locator(".hv2-museum-immersive-footer .hv2-museum-immersive-link");
+  ensure(await immersive.count()===1,"AR/VR CTA must appear once at the section's end");
   const url=await immersive.getAttribute("href");
   ensure(url==="museums.html?lang="+p.lang+"&tab=immersive",
-    "Museum button should open the AR/VR tab; got "+url);
+    "Bottom immersive button should open the AR/VR tab; got "+url);
+  const bottomAligned=await page.evaluate(()=>{
+    const card=document.querySelector("#places .hv2-place-secondary");
+    const cta=document.querySelector("#places .hv2-museum-immersive-footer");
+    return cta.getBoundingClientRect().top>=card.getBoundingClientRect().bottom-2;
+  });
+  ensure(bottomAligned,"Immersive CTA should be below both VR and GEO cards");
   const atlas=section.locator('.hv2-museum-explorer-entry a[href="'+p.atlas+'"]');
   ensure(await atlas.count()===1,"Atlas link missing: "+p.atlas);
   const res=await page.request.head(HOST+"/"+p.atlas);
