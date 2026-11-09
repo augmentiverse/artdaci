@@ -1,6 +1,7 @@
 /* ARTDACI homepage — animated yet readable "living" masterpiece title.
    Keep the approved spectrum lettering and two-line editorial composition.
-   "vivants" / "Alive" ends at the right edge of the first line, not beneath its start. */
+   "vivants" / "Alive" begins near the end of the first line, rather than
+   ending there. A tiny resize-aware enhancement positions it without clipping. */
 html:is([lang="fr"],[lang="en"]) .home-v2 .hv2-hero .hv2-title-row #book-title {
   display: inline-flex;
   flex-direction: column;
@@ -28,7 +29,8 @@ html:is([lang="fr"],[lang="en"]) .home-v2 .hv2-hero .hv2-title-row #book-title .
 }
 
 html:is([lang="fr"],[lang="en"]) .home-v2 .hv2-hero .hv2-title-row #book-title .hv2-title-alive {
-  align-self: flex-end;
+  align-self: flex-start;
+  margin-inline-start: var(--artdaci-alive-indent, 0px);
   transform-origin: 83% 55%;
   /* Retain the existing color shimmer and add a slow, paired "heart beat". */
   animation:

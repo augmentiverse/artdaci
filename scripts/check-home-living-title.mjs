@@ -43,8 +43,13 @@ async function inspectTitle(page,pageSpec,reduce){
     };
   });
   check(outcome.title===pageSpec.title,"Wrong accessible heading text: "+outcome.title);
-  const delta=Math.abs(outcome.live.right-outcome.first.right);
-  check(delta<4,"Living word must align with right edge of first line: "+delta);
+  const startDistance=outcome.first.right-outcome.live.left;
+  check(outcome.live.left>outcome.first.left+outcome.first.width*.47,
+    "Living word should begin toward the end of the first line");
+  check(startDistance>=-5,
+    "Living word starts beyond the first line's end: "+startDistance);
+  check(startDistance<outcome.first.width*.55,
+    "Living word begins too far to the left: "+startDistance);
   check(outcome.live.top>=outcome.first.bottom-2,"Living word must be below first line");
   check(outcome.first.left>=outcome.hero.left-3,"First word starts outside the hero");
   check(outcome.first.right<=outcome.hero.right+3,
