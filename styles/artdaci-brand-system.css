@@ -1,0 +1,262 @@
+/* ARTDACI shared visual identity — inspired by the printed book and Art Comes Alive.
+   Intentionally scoped: documentary, accessibility, and immersive UI retain their own layout. */
+:root{
+  --artdaci-night:#101c2f;
+  --artdaci-slate:#23314b;
+  --artdaci-midnight:#0c1625;
+  --artdaci-antique-gold:#e8c483;
+  --artdaci-gold-light:#fff1c1;
+  --artdaci-ivory:#eee6d7;
+  --artdaci-parchment:#faf5e9;
+  --artdaci-focus:#ffdf9b;
+}
+html:focus-within{scroll-behavior:smooth}
+a:focus-visible,button:focus-visible,[role=button]:focus-visible{outline:3px solid var(--artdaci-focus);outline-offset:3px}
+body.home-v2 {
+  --hv2-bg:#101c2f;
+  --hv2-bg-soft:#1b2b41;
+  --hv2-panel:#20354d;
+  --hv2-gold:#e8c483;
+  --hv2-gold-soft:#cda367;
+  --hv2-line:rgba(239,204,148,.28);
+  --hv2-muted:#b9c8d9;
+  background:
+    radial-gradient(circle at 82% 10%,rgba(210,164,88,.15),transparent 35rem),
+    radial-gradient(circle at 18% 36%,rgba(90,137,165,.17),transparent 37rem),
+    linear-gradient(180deg,#101c2f 0%,#192c45 45%,#101c2f 100%);
+}
+body.home-v2 .hv2-header {
+  background:rgba(14,25,41,.9)!important;
+  border-bottom:1px solid rgba(232,196,131,.35)!important;
+  box-shadow:0 10px 30px rgba(7,17,30,.13);
+}
+body.home-v2 .hv2-header .hv2-nav a:focus-visible,
+body.home-v2 .hv2-header .hv2-language a:focus-visible {outline-color:#f4d28f}
+body.home-v2 .hv2-kicker,
+body.home-v2 .hv2-section .hv2-section-kicker {letter-spacing:.13em}
+body.home-v2 .hv2-hero {
+  background-image:radial-gradient(ellipse at 67% 27%,rgba(224,174,96,.14),transparent 50%)!important;
+}
+body.home-v2 .hv2-hero h1 .hv2-title-alive,
+body.home-v2 .hv2-hero h1 span:last-child {
+  background-image:linear-gradient(96deg,#fff2d1 0%,#e2b974 56%,#fff0c1 100%);
+  background-clip:text;
+  -webkit-background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+}
+body.home-v2 .hv2-hero .hv2-hero-lead {max-width:780px;line-height:1.75;color:#dde6ee}
+body.home-v2 .hv2-hero .hv2-tech-line{color:#e1bc7b}
+body.home-v2 .hv2-button-primary,
+body.home-v2 .hv2-alive-entry{
+  border-color:rgba(255,230,175,.75);
+  box-shadow:0 12px 27px rgba(7,19,32,.22),inset 0 1px 0 rgba(255,245,220,.12);
+}
+body.home-v2 .hv2-section:where(.hv2-book-journey,.hv2-about,.hv2-experiences,.hv2-museum-immersive),
+body.home-v2 .hv2-continuum {
+  border-color:rgba(212,170,105,.28);
+}
+body.home-v2 .hv2-section :where(h2,h3) {text-wrap:balance}
+body.home-v2 .hv2-work img{object-fit:contain}
+body.home-v2 .hv2-work:focus-visible,
+body.home-v2 .hv2-experience-card:focus-visible {outline-color:#b47d3c;outline-offset:5px}
+body.home-v2 .hv2-work:hover {transform:translateY(-3px)}
+body.home-v2 .hv2-footer {border-top:1px solid rgba(232,196,131,.35)}
+/* A consistent portal invitation, without imposing dark panels on documentary content */
+.artdaci-reimagined-portal {
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:18px 30px;
+  align-items:center;
+  padding:clamp(22px,3vw,38px);
+  margin:clamp(16px,3vw,36px) auto;
+  border:1px solid rgba(241,206,147,.55);
+  border-radius:23px;
+  background:
+    radial-gradient(circle at 80% 25%,rgba(222,163,69,.18),transparent 47%),
+    linear-gradient(110deg,#19273c 0%,#253c55 60%,#18263d 100%);
+  color:#fff3da;
+  box-shadow:0 18px 44px rgba(5,16,28,.18),inset 0 1px rgba(255,245,225,.16);
+}
+.artdaci-reimagined-portal .portal-kicker{
+  color:#f5d293;font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;font-weight:750;margin:0 0 7px;
+}
+.artdaci-reimagined-portal h2 {
+  font:500 clamp(1.5rem,3.1vw,2.8rem)/1.15 Georgia,"Times New Roman",serif!important;
+  color:#fff3dc!important;
+  margin:0 0 9px!important;max-width:unset!important;background:none!important;
+  -webkit-text-fill-color:currentColor!important;
+}
+.artdaci-reimagined-portal h2:after{display:none!important}
+.artdaci-reimagined-portal p:not(.portal-kicker){color:#dfdce2!important;font-size:clamp(.9rem,1.4vw,1rem);line-height:1.6;margin:0}
+.artdaci-reimagined-portal .portal-actions{display:flex;flex-direction:column;gap:11px;align-items:stretch}
+.artdaci-reimagined-portal a{
+  display:inline-flex;align-items:center;justify-content:space-between;gap:15px;
+  min-width:220px;padding:11px 18px;border-radius:999px;text-decoration:none;font-weight:760;font-size:.9rem;
+  border:1px solid #e7c68b;color:#fff1ce;background:rgba(20,36,56,.7);
+}
+.artdaci-reimagined-portal a:first-child{color:#171f2b;background:linear-gradient(110deg,#f1d69f,#d9af70)}
+.artdaci-reimagined-portal a:hover{filter:brightness(1.1)}
+/* Museum explorer and its photographic atlas: richer midnight-blue surfaces. */
+body:has(.museum-hero) {
+  --bg:#101c2f;--surface:#1d3047;--surface-2:#26394e;
+  --gold:#e8c483;
+}
+body:has(.museum-hero) :where(.museum-card,.museum-featured,.museum-panel){border-color:rgba(232,196,131,.28)}
+/* GEO: use same gold highlights, while keeping maps and controls untouched. */
+body.geo-home{
+  --bg:#101c2f;--bg-2:#1a3148;--panel:#20394f;--panel-2:#294258;
+  --gold:#e8c483;--gold-pale:#fff1c1;--line:rgba(232,196,131,.25);
+  background:linear-gradient(170deg,#101c2f,#1d3549 56%,#122439);
+}
+body.geo-home .geo-header{border-bottom-color:rgba(232,196,131,.35)}
+body.geo-home .geo-hero h1{color:#fff0d0}
+body.geo-home .geo-hero :is(a,button):focus-visible{outline-color:var(--artdaci-focus)}
+/* 3D gallery and immersive entrances — common backdrop, not engine controls. */
+:root:has(.d3-app),:root:has(.d3-shell) {
+  --d3-bg:#101c2f;--d3-panel:#1b2e43;--d3-panel-2:#243b52;
+  --d3-paper:#eee6d7;--d3-gold:#e8c483;--d3-muted:#becbd7;
+  --d3-line:rgba(232,196,131,.28);
+}
+body:has(.book-toolbar){background:radial-gradient(circle at 50% 28%,rgba(217,171,91,.23),transparent 37%),linear-gradient(145deg,#23314b,#0c1625 75%)}
+body:has(.gallery-toolbar){background-color:#101c2f}
+body:has(.worlds-shell){background-color:#101c2f}
+body:has(.space-shell){background-color:#101c2f}
+/* Semantic stays light; its parchment-and-navy information hierarchy is intentional. */
+html:has(.semantic-shell),html:has(.semantic-app),html:has(.semantic-workspace) {
+  --semantic-bg:#f5f1e8;--semantic-surface:#fffefa;
+  --semantic-surface-soft:#faf6ed;--semantic-ink:#142a40;
+  --semantic-muted:#526579;--semantic-line:#dcd5c7;--semantic-line-strong:#c6bca7;
+  --semantic-accent:#996b35;--semantic-accent-soft:#f5e9d3;--semantic-dark:#172b42;
+}
+body:has(.semantic-shell),body:has(.semantic-app),body:has(.semantic-workspace){color:#142a40}
+html[dir=rtl] .artdaci-reimagined-portal{text-align:right}
+@media(max-width:750px){.artdaci-reimagined-portal{grid-template-columns:1fr}.artdaci-reimagined-portal .portal-actions{flex-direction:row;flex-wrap:wrap}.artdaci-reimagined-portal a{flex:1 1 190px}}
+@media(prefers-reduced-motion:reduce){html:focus-within{scroll-behavior:auto}body.home-v2 .hv2-work:hover{transform:none}}
+
+/* Museum Explorer: actual page structure uses #museum-panel, not a .museum-hero wrapper. */
+body:has(#museum-panel){
+  --bg:#101c2f;--surface:#1b2e45;--surface-2:#263a50;
+  --line:#43536a;--ink:#f6f0e6;--muted:#c0ccda;--accent:#e8c483;
+  background:radial-gradient(ellipse at 50% -18%,#2d4460,#101c2f 60%);
+}
+body:has(#museum-panel) .site-header{border-bottom-color:rgba(232,196,131,.34)}
+body:has(#museum-panel) .explorer{box-shadow:0 26px 60px rgba(4,11,23,.3)}
+body:has(#museum-panel) .museum-info{background:linear-gradient(135deg,rgba(232,196,131,.045),transparent 58%)}
+body:has(#museum-panel) .museum-choice:focus-visible{outline-color:#ffdf9b}
+/* Seventeen documentary museum pages share the same deep-blue and antique-gold palette. */
+body[data-page]:has(.page-wrap){
+  --bg:#101c2f;--surface:#1a2c42;--surface2:#253b53;--border:#45566c;
+  --gold:#e8c483;--gold2:#b99359;--ink:#f4eee1;--muted:#c0cbd8;
+  background:radial-gradient(circle at 70% 0%,rgba(199,155,88,.13),transparent 36rem),#101c2f;
+}
+body[data-page]:has(.page-wrap) .site-header{border-bottom-color:rgba(232,196,131,.35)}
+body[data-page]:has(.page-wrap) .brand-mark{border-color:#e8c483;background:rgba(232,196,131,.08)}
+body[data-page]:has(.page-wrap) :is(.museum-card,.museum-tile,.filter-panel){border-color:rgba(232,196,131,.25)}
+/* Soft paper reading environment: do not darken the semantic graph or printed catalogues. */
+body:has(.semantic-shell){background:var(--semantic-bg,#f5f1e8)}
+body:has(.semantic-shell) .semantic-topbar{border-bottom-color:#d6c2a1}
+body.target-body{--paper:#f6f0e6;--panel:#fffaf1;--ink:#202c37;--accent:#986e3e}
+@media print {
+  body.target-body {background:white!important;color:black!important}
+  .artdaci-reimagined-portal{display:none!important}
+}
+
+
+/* 2026-11-10 — Contrast correction for the book-inspired midnight homepage.
+   Previous daylight-palette selectors were inherited by midnight-blue sections.
+   Dark scenes use ivory, ice-blue and warm gold; light documentary cards keep
+   their dark text. Intended contrast is >= 4.5:1 for normal-sized copy. */
+body.home-v2 {
+  --artdaci-on-night:#edf2f9;
+  --artdaci-copy-on-night:#dce6f2;
+  --artdaci-eyebrow-on-night:#f1d49e;
+  --artdaci-ink-on-paper:#243d59;
+  --artdaci-copy-on-paper:#334e69;
+}
+/* These chapter introductions live directly on the dark page background. */
+body.home-v2 :is(.hv2-start, section[aria-labelledby="featured-title"], #experiences, #masters)
+  > .hv2-section-head > p {
+  color:var(--artdaci-copy-on-night);
+}
+body.home-v2 :is(.hv2-start, section[aria-labelledby="featured-title"], #experiences, #masters)
+  > .hv2-section-head .hv2-section-kicker {
+  color:var(--artdaci-eyebrow-on-night);
+}
+body.home-v2 :is(.hv2-start, section[aria-labelledby="featured-title"], #experiences, #masters)
+  > .hv2-section-head h2 {
+  color:var(--artdaci-on-night);
+}
+/* Keep the painterly multicolor typography, but swap the low-contrast
+   pigments for luminous hues designed for the actual midnight background.
+   The continuum title and museum introduction remain dark on light panels. */
+body.home-v2 :is(#start-title,#featured-title,#experiences-title,#masters-title){
+  color:#e9edf8;
+  background-image:linear-gradient(104deg,
+    #bcdcfb 0%,#bfd4fa 17%,#f2bfd7 38%,
+    #ffe3a0 58%,#afe5d5 78%,#d4c8fa 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 2px 8px rgba(0,0,0,.12));
+}
+/* Frameless painting cards are dark, too: restore high-contrast captions. */
+body.home-v2 .hv2-featured-grid .hv2-work .hv2-work-copy strong {
+  color:#f6f1e9;
+}
+body.home-v2 .hv2-featured-grid .hv2-work .hv2-work-copy span,
+body.home-v2 .hv2-featured-grid .hv2-work .hv2-work-copy small {
+  color:#dce6f2;
+}
+/* Introductory pathway cards may use a dark, translucent night-blue wash. */
+body.home-v2 .hv2-start .hv2-start-path,
+body.home-v2 .hv2-start .hv2-start-path h3,
+body.home-v2 .hv2-start .hv2-start-path ol,
+body.home-v2 .hv2-start .hv2-start-path li {
+  color:var(--artdaci-on-night);
+}
+/* The guide bridge is a deep-blue surface, not an ivory reading card. */
+body.home-v2 .hv2-experiences > .hv2-guide-note .hv2-guide-label {
+  color:#f1d49e;
+}
+body.home-v2 .hv2-experiences > .hv2-guide-note strong {
+  color:#edf2f9;
+}
+body.home-v2 .hv2-experiences > .hv2-guide-note a {
+  color:#ffe3a0;
+}
+/* Restore a dependable ink palette on actual daylight/paper sections;
+   this specifically excludes all dark cards and the cinematic panels. */
+body.home-v2 .hv2-continuum-wrap .hv2-continuum-lead,
+body.home-v2 .painting-index .section-dek {
+  color:var(--artdaci-copy-on-paper);
+}
+body.home-v2 #places > .hv2-section-head > p {
+  color:#334f43;
+}
+body.home-v2 .hv2-about > p:not(.hv2-section-kicker) {
+  color:#345d64;
+}
+/* Make sure that decorative backgrounds never render the text invisible
+   if a browser does not support gradient text clipping. */
+@supports not ((background-clip:text) or (-webkit-background-clip:text)) {
+  body.home-v2 :is(#start-title,#featured-title,#experiences-title,#masters-title) {
+    background-image:none;
+    color:var(--artdaci-on-night);
+    -webkit-text-fill-color:currentColor;
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  body.home-v2 :is(#start-title,#featured-title,#experiences-title,#masters-title) {
+    animation:none;
+    background-position:50% 50%;
+  }
+}
+@media print {
+  body.home-v2 :is(#start-title,#featured-title,#experiences-title,#masters-title) {
+    background:none;
+    -webkit-text-fill-color:currentColor;
+    color:#203850;
+    filter:none;
+  }
+}

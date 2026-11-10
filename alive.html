@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0c1625" />
+  <meta name="description" content="Open an art book and watch the Mona Lisa step beyond its pages. Discover Leonardo's masterpiece and explore its available ARTDACI 3D and AR experiences." />
+  <link rel="canonical" href="https://artdaci.com/alive.html" />
+  <link rel="alternate" hreflang="en" href="https://artdaci.com/alive.html?lang=en" />
+  <link rel="alternate" hreflang="fr" href="https://artdaci.com/alive.html?lang=fr" />
+  <link rel="alternate" hreflang="ar" href="https://artdaci.com/alive.html?lang=ar" />
+  <link rel="icon" href="assets/app/artdaci-app-icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles/alive.css?v=1" />
+  <title>ARTDACI — Art Comes Alive · The Gallery Reimagined</title>
+  <script src="scripts/alive.js?v=1" defer></script>
+
+<link rel="stylesheet" href="styles/artdaci-brand-system.css?v=1">
+</head>
+<body>
+  <a class="skip-link" href="#experience" data-i18n="skip">Skip to experience</a>
+  <header class="alive-header">
+    <a id="home-logo" class="alive-brand" href="index.html" aria-label="ARTDACI home">
+      <img src="assets/varia/artdaci-logo.png" width="174" height="60" alt="ARTDACI" />
+    </a>
+    <nav class="alive-languages" aria-label="Languages">
+      <a href="alive.html?lang=en" lang="en" data-lang="en">EN</a>
+      <a href="alive.html?lang=fr" lang="fr" data-lang="fr">FR</a>
+      <a href="alive.html?lang=ar" lang="ar" data-lang="ar">العربية</a>
+    </nav>
+    <a class="back-link" id="back-home" href="index.html"><span aria-hidden="true">↖</span> <span data-i18n="home">Back to ARTDACI</span></a>
+  </header>
+
+  <main id="experience" tabindex="-1">
+    <section class="alive-intro" aria-labelledby="alive-title">
+      <div class="alive-kicker"><span class="kicker-star" aria-hidden="true">✦</span> <span data-i18n="kicker">AN ARTDACI IMMERSIVE ENCOUNTER</span></div>
+      <h1 id="alive-title"><span data-i18n="headline">ART COMES ALIVE</span><small data-i18n="subheadline">THE GALLERY REIMAGINED</small></h1>
+      <p class="alive-lead" data-i18n="intro">Open the book. Watch a masterpiece move beyond the printed page.</p>
+
+      <div class="alive-stage" id="alive-stage" data-state="ready" role="group" aria-label="An interactive art-book experience">
+        <div class="alive-stage-glow" aria-hidden="true"></div>
+        <div class="alive-particles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="book-scene" aria-hidden="true">
+          <div class="artbook">
+            <div class="artbook-pages"></div>
+            <div class="artbook-cover"><img src="assets/varia/artdaci-book-cover.webp" alt="" width="460" height="630" /></div>
+          </div>
+          <span class="book-shadow"></span>
+        </div>
+        <video id="mona-video" class="mona-video" preload="metadata" playsinline muted disablepictureinpicture aria-label="Mona Lisa emerging from an art book">
+          <source src="assets/varia/mona-lisa_out-of-the-book.mp4" type="video/mp4" />
+        </video>
+        <img class="alive-still" id="alive-still" src="assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp" alt="Mona Lisa by Leonardo da Vinci" hidden />
+        <div class="stage-caption" id="stage-caption"><span class="caption-orbit" aria-hidden="true">✦</span> <span data-i18n="stageReady">A masterpiece awaits inside.</span></div>
+      </div>
+
+      <div class="alive-controls" role="group" aria-label="Experience controls">
+        <button type="button" id="open-book" class="action-primary"><span aria-hidden="true">✦</span> <span data-i18n="open">OPEN THE BOOK</span></button>
+        <button type="button" id="skip-animation" class="action-quiet"><span data-i18n="skipAnimation">Skip animation</span> <span aria-hidden="true">→</span></button>
+        <button type="button" id="replay-animation" class="action-quiet" hidden><span aria-hidden="true">↻</span> <span data-i18n="replay">Watch again</span></button>
+      </div>
+      <p class="screen-reader" id="alive-status" role="status" aria-live="polite" aria-atomic="true"></p>
+
+      <div id="alive-reveal" class="alive-reveal" hidden>
+        <span class="reveal-spark" aria-hidden="true">✧</span>
+        <h2 data-i18n="reveal">Some masterpieces deserve to step beyond their frames.</h2>
+        <p data-i18n="revealDescription">The encounter is an artistic interpretation. The painting, its history and its digital models are yours to explore.</p>
+        <div class="reveal-actions">
+          <a id="meet-link" class="action-primary" href="print-target.html"><span data-i18n="meet">MEET THE MONA LISA</span> <span aria-hidden="true">↗</span></a>
+          <a id="space-link" class="action-secondary" href="space.html?painting=mona-lisa&amp;lang=en"><span data-i18n="place">PLACE HER IN MY SPACE</span> <span aria-hidden="true">↗</span></a>
+          <a id="reimagined-link" class="action-secondary" href="reimagined.html?lang=en"><span data-i18n="gallery">EXPLORE ARTDACI REIMAGINED</span> <span aria-hidden="true">↗</span></a>
+        </div>
+        <p class="device-note" data-i18n="deviceNote">Spatial AR requires a compatible device and browser. The 3D preview can still be explored without AR.</p>
+      </div>
+    </section>
+
+    <section class="alive-dialogue" id="alive-dialogue" aria-labelledby="dialogue-title" hidden>
+      <div class="dialogue-heading">
+        <span class="alive-kicker" data-i18n="dialogueKicker">LOOK CLOSER · ASK THE ARTWORK</span>
+        <h2 id="dialogue-title" data-i18n="dialogueTitle">Every detail has a story.</h2>
+        <p data-i18n="dialogueIntro">Choose a question to explore the painting. The answers are ARTDACI's educational explanations, not words spoken by the historical sitter.</p>
+      </div>
+      <div class="question-layout">
+        <div class="question-list" role="group" aria-label="Questions about the Mona Lisa">
+          <button type="button" data-question="smile" aria-pressed="false" data-i18n="qSmile">Why are you smiling?</button>
+          <button type="button" data-question="painter" aria-pressed="false" data-i18n="qPainter">Who painted you?</button>
+          <button type="button" data-question="background" aria-pressed="false" data-i18n="qBackground">What is hidden in the background?</button>
+          <button type="button" data-question="room" aria-pressed="false" data-i18n="qRoom">Can I see you in my room?</button>
+        </div>
+        <div class="answer-panel" aria-live="polite" aria-atomic="true">
+          <p class="answer-label" data-i18n="answerLabel">ARTDACI · ARTWORK INSIGHT</p>
+          <h3 id="answer-title" data-i18n="answerDefaultTitle">Start with a question.</h3>
+          <p id="answer-text" data-i18n="answerDefault">Look at the smile, the hands and the mysterious landscape. What do you notice first?</p>
+          <a id="answer-link" href="print-target.html" hidden><span data-i18n="learnMore">Explore the artwork</span> <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+    <footer class="alive-footer">
+      <p data-i18n="footer">ARTDACI · Art beyond the frame. The printed book and the digital collection can be explored independently.</p>
+      <a id="living-book" href="book-3d.html?lang=en"><span data-i18n="livingBook">Explore the interactive Living Book</span> <span aria-hidden="true">↗</span></a>
+    </footer>
+  </main>
+  <noscript><div class="no-script">JavaScript is needed to play the interactive introduction. <a href="print-target.html">Discover the Mona Lisa</a>.</div></noscript>
+</body>
+</html>

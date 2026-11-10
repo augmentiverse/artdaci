@@ -1,0 +1,347 @@
+/* ARTDACI · Petrol Heritage / photographic museum palette
+   Based on the other-museums disclosure: grey-green slate, deep petrol,
+   antique sand-gold and warm ivory. Loaded LAST on the three homepages.
+   Existing links, numbering, AR links, 3D stage and page semantics are intact. */
+
+body.home-v2{
+  --heritage-slate:#4b615b;
+  --heritage-petrol:#305155;
+  --heritage-deep:#1b393e;
+  --heritage-gold:#e3c17f;
+  --heritage-ivory:#fff1d6;
+  --heritage-body:#e0e9e7;
+  --heritage-stroke:rgba(230,194,128,.55);
+}
+
+/* Give the primary navigation a quiet echo of the museum palette.
+   Leave its menu structure, glyphs, hover behavior and responsive logic intact. */
+body.home-v2 .hv2-header{
+  border-color:rgba(226,194,129,.46)!important;
+  background:
+    radial-gradient(ellipse at 16% 0%,rgba(128,151,131,.24),transparent 43%),
+    linear-gradient(110deg,rgba(33,63,65,.97),rgba(60,86,81,.97) 52%,rgba(27,56,64,.97))!important;
+  box-shadow:0 13px 29px rgba(8,28,34,.23),inset 0 1px rgba(243,229,189,.10);
+}
+body.home-v2 .hv2-header::after{
+  height:2px;
+  background:linear-gradient(90deg,transparent 0%,#d4ba83 18%,#f4d89a 49%,#90b7ac 84%,transparent 100%);
+  opacity:.8;
+}
+body.home-v2 .hv2-header .hv2-nav a:focus-visible,
+body.home-v2 .hv2-header .hv2-language a:focus-visible{
+  outline-color:var(--heritage-gold);
+}
+body.home-v2 .hv2-header .hv2-language{
+  border-color:rgba(233,208,160,.34);
+  background:rgba(14,44,48,.34);
+}
+body.home-v2 .hv2-header .hv2-language a[aria-current=page]{
+  background:rgba(228,191,122,.17);
+  color:#fff0cc;
+}
+
+/* Hero: framed as an elegant museum entrance, not a floating website banner.
+   Preserve the Mona Lisa spotlight positioning (absolutely positioned in the
+   original responsive layout) and do not clip overflow. */
+body.home-v2 .hv2-hero{
+  box-sizing:border-box;
+  min-height:clamp(505px,69svh,760px);
+  width:min(calc(100% - 32px),1440px);
+  margin:clamp(13px,2vw,25px) auto clamp(24px,3vw,42px);
+  padding:clamp(34px,4.7vw,74px) clamp(24px,4.7vw,72px) clamp(33px,4.5vw,69px);
+  border:1px solid rgba(228,191,123,.63);
+  border-radius:clamp(19px,2.5vw,31px);
+  background:
+    radial-gradient(ellipse at 26% 8%,rgba(219,194,143,.13),transparent 48%),
+    radial-gradient(ellipse at 90% 15%,rgba(35,88,95,.34),transparent 42%),
+    linear-gradient(144deg,#495f59 0%,#355457 45%,#203f45 100%)!important;
+  box-shadow:0 28px 65px rgba(6,20,27,.24),inset 0 1px rgba(248,231,191,.16);
+}
+body.home-v2 .hv2-hero::before{
+  top:0;
+  left:auto;
+  right:0;
+  width:min(45vw,560px);
+  height:min(45vw,560px);
+  background:radial-gradient(circle,rgba(227,191,127,.16),transparent 69%);
+}
+body.home-v2 .hv2-hero .hv2-kicker{color:#ffe2a7}
+body.home-v2 .hv2-hero .hv2-title-first{
+  color:#fff5df;
+  text-shadow:0 6px 32px rgba(6,23,29,.25);
+}
+body.home-v2 .hv2-hero .hv2-hero-lead{
+  color:#f0f3ee;
+  max-width:770px;
+  line-height:1.72;
+  text-shadow:0 1px 5px rgba(8,26,29,.15);
+}
+body.home-v2 .hv2-hero .hv2-tech-line{color:#f4daa7}
+body.home-v2 .hv2-hero .hv2-button:not(.hv2-button-primary){
+  border-color:rgba(237,211,162,.6);
+  border-radius:12px;
+  color:#fff2d6;
+  background:rgba(19,54,57,.50);
+}
+body.home-v2 .hv2-hero .hv2-button:not(.hv2-button-primary):is(:hover,:focus-visible){
+  background:rgba(27,69,71,.85);
+  border-color:#f2d694;
+}
+body.home-v2 .hv2-hero .hv2-button-primary{
+  border-color:#f2d396;
+  border-radius:12px;
+  background:linear-gradient(118deg,#f2d59b,#dcb676);
+  color:#20383b;
+}
+body.home-v2 .hv2-hero .hv2-button-primary:is(:hover,:focus-visible){
+  background:linear-gradient(118deg,#ffe4aa,#efc88c);
+  color:#18353a;
+}
+body.home-v2 .hv2-hero .hv2-alive-entry{
+  border-color:rgba(234,205,150,.75);
+  background:linear-gradient(113deg,rgba(29,65,66,.90),rgba(44,76,74,.94));
+  box-shadow:0 10px 28px rgba(12,31,34,.22);
+}
+body.home-v2 .hv2-hero .hv2-alive-entry:hover{
+  background:linear-gradient(113deg,rgba(37,76,74,.96),rgba(53,91,81,.96));
+}
+
+/* Ten experiences become an immersive museum hall.
+   Keep the existing 4+4+2 responsive grid and the ten real destinations. */
+body.home-v2 #experiences{
+  box-sizing:border-box;
+  width:min(calc(100% - 32px),1440px);
+  margin:clamp(36px,5vw,72px) auto;
+  padding:clamp(25px,4vw,55px);
+  border:1px solid rgba(229,193,126,.62);
+  border-radius:clamp(20px,2.5vw,31px);
+  background:
+    radial-gradient(ellipse at 17% 0%,rgba(226,191,120,.10),transparent 46%),
+    linear-gradient(180deg,#4b615b 0%,#315255 31%,#29464b 73%,#233f45 100%);
+  box-shadow:0 24px 56px rgba(8,27,32,.2),inset 0 1px rgba(250,234,195,.16);
+}
+body.home-v2 #experiences > .hv2-section-head{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  align-items:start;
+  gap:clamp(12px,1.6vw,22px);
+  margin-bottom:clamp(20px,2.5vw,33px);
+  padding:0 0 clamp(18px,2.8vw,29px);
+  border-bottom:1px solid rgba(236,209,153,.33);
+}
+body.home-v2 #experiences > .hv2-section-head .hv2-section-kicker{
+  color:#f4d69a;
+  font-size:clamp(11px,.9vw,13px);
+  letter-spacing:.16em;
+}
+body.home-v2 #experiences > .hv2-section-head #experiences-title{
+  color:#fff0d3;
+  background-image:linear-gradient(102deg,#fff7e9 4%,#f2d496 54%,#c9e4dc 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  filter:none;
+  text-shadow:none;
+  line-height:1.22;
+}
+body.home-v2 #experiences > .hv2-section-head > p{
+  max-width:980px;
+  margin:0;
+  color:#e8efeb;
+  font-size:clamp(15px,1.3vw,18px);
+  line-height:1.72;
+}
+body.home-v2 #experiences .hv2-experience-grid{
+  gap:clamp(12px,1.25vw,19px);
+  border:0;
+  padding:0;
+}
+body.home-v2 #experiences .hv2-experience-grid > .hv2-experience-card{
+  --ex-ink:#f4d697;
+  --ex-strong:#fff2db;
+  --ex-border:rgba(229,193,126,.39);
+  --ex-top:#27484b;
+  --ex-bottom:#18363c;
+  --ex-wash:rgba(216,189,135,.11);
+  --ex-chip:rgba(232,194,127,.13);
+  --ex-stroke:#e5c47f;
+  --card-glow:rgba(207,190,147,.13);
+  box-sizing:border-box;
+  min-width:0;
+  min-height:clamp(260px,19vw,308px);
+  padding:clamp(22px,2.05vw,30px);
+  border:1px solid rgba(223,198,150,.33);
+  border-radius:18px;
+  color:#f6f0e1;
+  background:
+    radial-gradient(ellipse at 100% 0%,var(--card-glow),transparent 65%),
+    linear-gradient(153deg,#23464a 0%,#1b393e 73%,#183338 100%)!important;
+  box-shadow:0 13px 30px rgba(11,34,39,.16),inset 0 1px rgba(255,244,219,.07);
+  transition:border-color .22s ease,background .22s ease,box-shadow .22s ease,transform .22s ease;
+}
+body.home-v2 #experiences .hv2-experience-grid > :nth-child(4n + 2){
+  --card-glow:rgba(128,180,160,.15);
+}
+body.home-v2 #experiences .hv2-experience-grid > :nth-child(4n + 3){
+  --card-glow:rgba(151,181,184,.13);
+}
+body.home-v2 #experiences .hv2-experience-grid > :nth-child(4n + 4){
+  --card-glow:rgba(217,168,118,.14);
+}
+body.home-v2 #experiences .hv2-experience-grid > .hv2-experience-card::before{
+  width:58%;
+  height:4px;
+  background:linear-gradient(90deg,#d8b577,#f0d49a 55%,transparent);
+  opacity:.92;
+}
+body.home-v2 #experiences .hv2-experience-card .hv2-experience-no{
+  min-height:31px;
+  padding:6px 10px;
+  margin:0 0 clamp(27px,3.2vw,43px);
+  border-color:rgba(230,195,133,.38);
+  border-radius:10px;
+  background:rgba(219,180,110,.15);
+  color:#ffdfa0;
+  font:760 12px/1.2 Inter,"Segoe UI",Arial,sans-serif;
+  letter-spacing:.10em;
+}
+body.home-v2 #experiences .hv2-experience-card .hv2-exp-icon,
+body.home-v2 #experiences .hv2-experience-card:nth-child(n) .hv2-exp-icon{
+  width:41px;
+  height:41px;
+  inset-block-start:21px;
+  inset-inline-end:60px;
+  border:1px solid rgba(232,195,129,.43);
+  border-radius:12px;
+  color:#ffe2a6;
+  background:rgba(224,192,134,.15);
+  box-shadow:0 5px 13px rgba(7,27,30,.12);
+}
+body.home-v2 #experiences .hv2-experience-card .artdaci-exp-icon{
+  width:22px;
+  height:22px;
+}
+body.home-v2 #experiences .hv2-experience-card .hv2-experience-type{
+  margin-bottom:9px;
+  color:#f2d49d;
+  font-size:11px;
+  font-weight:750;
+  letter-spacing:.10em;
+}
+body.home-v2 #experiences .hv2-experience-card h3{
+  color:#fff2d9;
+  font-family:Inter,"Segoe UI",Arial,sans-serif;
+  font-size:clamp(19px,1.55vw,24px);
+  font-weight:730;
+  line-height:1.27;
+  letter-spacing:-.02em;
+}
+body.home-v2 #experiences .hv2-experience-card p{
+  max-width:68ch;
+  margin:12px 0 0;
+  color:#dce8e6;
+  font-size:clamp(13px,1.07vw,15px);
+  line-height:1.68;
+}
+body.home-v2 #experiences .hv2-experience-card .hv2-arrow{
+  top:20px;
+  right:auto;
+  inset-inline-end:22px;
+  color:#f2d090;
+  font-size:24px;
+}
+body.home-v2 #experiences .hv2-experience-grid > a.hv2-experience-card:is(:hover,:focus-visible),
+body.home-v2 #experiences .hv2-experience-grid > .hv2-ar-group:focus-within{
+  z-index:1;
+  border-color:#e8c582;
+  background:
+    radial-gradient(ellipse at 100% 0%,rgba(234,205,149,.18),transparent 60%),
+    linear-gradient(150deg,#31555a,#214349 85%)!important;
+  box-shadow:0 20px 36px rgba(8,30,34,.26),0 0 0 1px rgba(239,211,159,.16);
+  transform:translateY(-3px);
+}
+body.home-v2 #experiences .hv2-experience-grid > a.hv2-experience-card:focus-visible{
+  outline:3px solid #f6d992;
+  outline-offset:3px;
+}
+body.home-v2 #experiences .hv2-ar-group .hv2-ar-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-top:17px;
+}
+body.home-v2 #experiences .hv2-ar-group .hv2-ar-links a{
+  min-height:40px;
+  padding:8px 12px;
+  border:1px solid rgba(240,211,151,.56);
+  border-radius:10px;
+  color:#ffedca;
+  background:rgba(208,173,107,.16);
+  font-weight:750;
+  text-decoration:none;
+}
+body.home-v2 #experiences .hv2-ar-group .hv2-ar-links a:is(:hover,:focus-visible){
+  color:#18383d;
+  background:linear-gradient(110deg,#f5dda8,#deb97e);
+  border-color:#f3dda8;
+}
+body.home-v2 #experiences .hv2-ar-group .hv2-ar-links a:focus-visible{
+  outline:3px solid #f7db97;
+  outline-offset:3px;
+}
+/* The guide is part of the experience hall, but uses a quieter step. */
+body.home-v2 #experiences > .hv2-guide-note{
+  margin-top:clamp(16px,2.4vw,29px);
+  padding:clamp(16px,2vw,25px);
+  border:1px solid rgba(232,196,131,.31);
+  border-radius:16px;
+  background:linear-gradient(115deg,rgba(24,59,63,.82),rgba(31,65,65,.78));
+}
+body.home-v2 #experiences > .hv2-guide-note strong{color:#f6f2e9}
+body.home-v2 #experiences > .hv2-guide-note .hv2-guide-label{color:#f1d39e}
+body.home-v2 #experiences > .hv2-guide-note a{color:#ffdf9e}
+
+/* Responsive: gallery cards preserve the existing 4+4+2, 2-column and
+   1-column layouts without requiring changes to the ten experiences. */
+@media(max-width:1100px){
+  body.home-v2 #experiences .hv2-experience-grid > .hv2-experience-card{min-height:245px}
+}
+@media(max-width:700px){
+  body.home-v2 .hv2-hero{
+    width:calc(100% - 22px);
+    margin-top:11px;
+    padding:clamp(16px,4.5vw,25px) clamp(16px,4.2vw,23px) 28px;
+    min-height:0;
+    border-radius:21px;
+  }
+  body.home-v2 #experiences{
+    width:calc(100% - 22px);
+    margin:35px auto;
+    padding:21px 15px 26px;
+    border-radius:21px;
+  }
+  body.home-v2 #experiences > .hv2-section-head{margin-bottom:19px}
+  body.home-v2 #experiences .hv2-experience-grid > .hv2-experience-card{
+    padding:22px 19px;
+    min-height:235px;
+  }
+  body.home-v2 #experiences .hv2-experience-card .hv2-experience-no{margin-bottom:25px}
+  body.home-v2 #experiences .hv2-experience-card h3{font-size:21px}
+  body.home-v2 #experiences .hv2-experience-card p{font-size:14px}
+}
+@media(max-width:400px){
+  body.home-v2 #experiences .hv2-experience-card .hv2-exp-icon{
+    inset-inline-end:53px;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  body.home-v2 #experiences .hv2-experience-grid > .hv2-experience-card{
+    transition:none;
+    transform:none;
+  }
+}
+@media print{
+  body.home-v2 .hv2-hero,body.home-v2 #experiences{background:#fff!important;color:#173437!important;border-color:#666}
+  body.home-v2 #experiences .hv2-experience-grid > .hv2-experience-card{background:#fff!important;color:#173437!important}
+  body.home-v2 #experiences .hv2-experience-card :is(h3,p){color:#173437}
+}
