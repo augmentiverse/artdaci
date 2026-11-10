@@ -133,3 +133,31 @@ body:has(.semantic-shell),body:has(.semantic-app),body:has(.semantic-workspace){
 html[dir=rtl] .artdaci-reimagined-portal{text-align:right}
 @media(max-width:750px){.artdaci-reimagined-portal{grid-template-columns:1fr}.artdaci-reimagined-portal .portal-actions{flex-direction:row;flex-wrap:wrap}.artdaci-reimagined-portal a{flex:1 1 190px}}
 @media(prefers-reduced-motion:reduce){html:focus-within{scroll-behavior:auto}body.home-v2 .hv2-work:hover{transform:none}}
+
+/* Museum Explorer: actual page structure uses #museum-panel, not a .museum-hero wrapper. */
+body:has(#museum-panel){
+  --bg:#101c2f;--surface:#1b2e45;--surface-2:#263a50;
+  --line:#43536a;--ink:#f6f0e6;--muted:#c0ccda;--accent:#e8c483;
+  background:radial-gradient(ellipse at 50% -18%,#2d4460,#101c2f 60%);
+}
+body:has(#museum-panel) .site-header{border-bottom-color:rgba(232,196,131,.34)}
+body:has(#museum-panel) .explorer{box-shadow:0 26px 60px rgba(4,11,23,.3)}
+body:has(#museum-panel) .museum-info{background:linear-gradient(135deg,rgba(232,196,131,.045),transparent 58%)}
+body:has(#museum-panel) .museum-choice:focus-visible{outline-color:#ffdf9b}
+/* Seventeen documentary museum pages share the same deep-blue and antique-gold palette. */
+body[data-page]:has(.page-wrap){
+  --bg:#101c2f;--surface:#1a2c42;--surface2:#253b53;--border:#45566c;
+  --gold:#e8c483;--gold2:#b99359;--ink:#f4eee1;--muted:#c0cbd8;
+  background:radial-gradient(circle at 70% 0%,rgba(199,155,88,.13),transparent 36rem),#101c2f;
+}
+body[data-page]:has(.page-wrap) .site-header{border-bottom-color:rgba(232,196,131,.35)}
+body[data-page]:has(.page-wrap) .brand-mark{border-color:#e8c483;background:rgba(232,196,131,.08)}
+body[data-page]:has(.page-wrap) :is(.museum-card,.museum-tile,.filter-panel){border-color:rgba(232,196,131,.25)}
+/* Soft paper reading environment: do not darken the semantic graph or printed catalogues. */
+body:has(.semantic-shell){background:var(--semantic-bg,#f5f1e8)}
+body:has(.semantic-shell) .semantic-topbar{border-bottom-color:#d6c2a1}
+body.target-body{--paper:#f6f0e6;--panel:#fffaf1;--ink:#202c37;--accent:#986e3e}
+@media print {
+  body.target-body {background:white!important;color:black!important}
+  .artdaci-reimagined-portal{display:none!important}
+}
