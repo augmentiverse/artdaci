@@ -55,6 +55,7 @@
   
 <link rel="stylesheet" href="styles/artdaci-brand-system.css?v=1">
     <link rel="stylesheet" href="styles/home-petrol-heritage.css?v=1" />
+    <link rel="stylesheet" href="styles/home-spatial-gateway.css?v=1" />
 </head>
   <body class="home-v2">
     <a class="artdaci-skip-link" href="#main-content">Skip to main content</a>
@@ -145,9 +146,8 @@
       </section>
 
       <section class="sd-feature" id="spatial-depth" aria-label="Interactive ARTDACI Spatial Depth artwork">
-          <div class="sd-panel" data-spatial-depth aria-label="An interactive visual">
+          <div class="sd-panel" aria-label="ARTDACI interactive 3D book">
             <div class="sd-copy sd-book-slot">
-              <p class="sd-visually-hidden" id="sd-tip">Move your pointer over the card, or focus it and use the arrow keys.</p>
               <div class="hv2-smart-art" role="group" aria-label="ARTDACI interactive 3D book and controls">
               <div class="hv2-book-hero" aria-label="ARTDACI 3D book">
               
@@ -187,9 +187,18 @@
               
               </div>
             </div>
+          </div>
+      </section>
+      <section class="spatial-gateway" id="artdaci-spatial-gateway" data-spatial-depth aria-labelledby="spatial-gateway-title">
+        <div class="spatial-gateway-heading">
+          <p class="spatial-gateway-kicker">ARTDACI · SPATIAL</p>
+          <h2 id="spatial-gateway-title">Explore the dimensions of ARTDACI</h2>
+          <p class="spatial-gateway-intro">The original animated spatial artwork, with direct access to the experiences below.</p>
+        </div>
+        <p class="sd-visually-hidden" id="spatial-tip">Move the pointer over the illustration, or focus it and use the arrow keys to change perspective. Select a link below to explore.</p>
             <div class="sd-scene">
-              <div class="sd-card" tabindex="0" role="img" aria-label="Layered spatial ARTDACI card. Use arrow keys to adjust its perspective." aria-describedby="sd-tip">
-                <span class="sd-author">N. ELM.</span>
+              <div class="sd-card" tabindex="0" role="img" aria-label="Layered spatial ARTDACI card. Use arrow keys to adjust its perspective." aria-describedby="spatial-tip">
+                <span class="sd-author">N.E.</span>
                 <span class="sd-accent">SPATIAL</span>
                 <div class="sd-tech-orbit" aria-hidden="true">
                   <svg viewBox="0 0 270 130" focusable="false">
@@ -214,8 +223,17 @@
                 <span class="sd-brand" aria-hidden="true">ARTDACI</span>
               </div>
             </div>
-          </div>
+<nav class="spatial-direct-links" aria-label="Explore ARTDACI experiences">
+          <a href="atlas-en.html" data-experience="print">Print · Guide <span aria-hidden="true">↗</span></a>
+          <a href="#artdaci-ar-experience" data-experience="ar">AR <span aria-hidden="true">↗</span></a>
+          <a href="gallery-vr.html?lang=en" data-experience="vr">VR gallery <span aria-hidden="true">↗</span></a>
+          <a href="3d/?lang=en" data-experience="3d">Interactive 3D <span aria-hidden="true">↗</span></a>
+          <a href="geo/index.html?lang=en" data-experience="geo">GEO <span aria-hidden="true">↗</span></a>
+          <a href="semantic/?lang=en" data-experience="semantic">Semantic <span aria-hidden="true">↗</span></a>
+          <a href="reimagined.html?lang=en" data-experience="reimagined">Reimagined <span aria-hidden="true">↗</span></a>
+        </nav>
       </section>
+
 
 
 
@@ -361,7 +379,7 @@
             <span class="hv2-arrow" aria-hidden="true">↗</span>
           </a>
 
-          <article class="hv2-experience-card hv2-ar-group"><span class="hv2-experience-no">10</span>
+          <article class="hv2-experience-card hv2-ar-group" id="artdaci-ar-experience" tabindex="-1"><span class="hv2-experience-no">10</span>
             <span class="hv2-experience-type">QR codes · Augmented reality</span><span class="hv2-exp-icon" aria-hidden="true"><svg class="artdaci-exp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 3H4a1 1 0 0 0-1 1v3m14-4h3a1 1 0 0 1 1 1v3M3 17v3a1 1 0 0 0 1 1h3m14-4v3a1 1 0 0 1-1 1h-3M3 12h18M8 8h8v8H8z"/></svg></span><h3>Bring paintings to life with QR codes and AR.</h3>
             <p>The book’s QR codes open digital content. On a compatible smartphone, image recognition can reveal available AR experiences for supported paintings. Choose an artist:</p><div class="hv2-ar-links">
               <a href="ar/leonardo">Leonardo AR <span aria-hidden="true">↗</span></a>
@@ -429,27 +447,7 @@
         </div>
       </section>
 
-      <section class="hv2-continuum-wrap" aria-labelledby="continuum-title">
-        <div class="hv2-continuum">
-          <p class="hv2-section-kicker">From Page to Space</p>
-          <h2 id="continuum-title">One artwork. Multiple dimensions of discovery.</h2>
-          <p class="hv2-continuum-lead">
-            ARTDACI connects the stability of the printed page with a growing spatial and semantic
-            continuum. Readers can move deeper without losing the artwork as their point of reference.
-          </p>
 
-          <div class="hv2-continuum-track" aria-label="ARTDACI content continuum">
-            <div class="hv2-continuum-step"><span>01</span><strong>Print</strong></div>
-            <div class="hv2-continuum-step"><span>02</span><strong>Knowledge</strong></div>
-            <div class="hv2-continuum-step"><span>03</span><strong>Semantic</strong></div>
-            <div class="hv2-continuum-step"><span>04</span><strong>AR</strong></div>
-            <a class="hv2-continuum-step hv2-continuum-link" href="3d/?lang=en"><span>05</span><strong>3D</strong></a>
-            <div class="hv2-continuum-step"><span>06</span><strong>VR</strong></div>
-            <div class="hv2-continuum-step"><span>07</span><strong>GEO</strong></div>
-          </div>
-
-        </div>
-      </section>
 
       <section id="places" class="hv2-section hv2-museum-immersive" aria-labelledby="places-title">
         <div class="hv2-section-head">

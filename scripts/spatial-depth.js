@@ -46,7 +46,7 @@
     }
 
     scene.addEventListener('pointerdown', event => {
-      if (event.pointerType !== 'touch' || reducedMotion.matches) return;
+      if (event.pointerType !== 'touch' || reducedMotion.matches || event.target.closest('a, button')) return;
       touchId = event.pointerId;
       card.classList.add('sd-touch-active');
       syncAmbient();
@@ -81,7 +81,7 @@
     });
 
     card.addEventListener('keydown', event => {
-      if (reducedMotion.matches || !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
+      if (event.target !== card || reducedMotion.matches || !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
       event.preventDefault();
       scene.classList.remove('sd-mobile-ambient');
       if (event.key === 'ArrowLeft') x -= .15;
