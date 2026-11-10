@@ -4,16 +4,6 @@ const COPY = {
     back: "Back to ARTDACI",
     pages: [
       {
-        eyebrow: "INTRODUCING ARTDACI",
-        title: "A printed book. A living museum.",
-        lead: "Art, knowledge, and immersive discovery",
-        paragraphs: [
-          "ARTDACI is more than a collection of extraordinary paintings. It is an invitation to rediscover the world’s artistic heritage through the tools of the twenty-first century while honouring the genius of the Renaissance.",
-          "Every printed page is designed to stand on its own as a space for reading, learning, and close observation. It can then become a gateway to Artificial Intelligence, Augmented Reality, Virtual Reality, interactive 3D experiences, immersive storytelling, sound, video, and spatial computing.",
-          "These technologies are not merely technical achievements or visual effects. They are instruments for curiosity, accessibility, learning, and creativity. They allow us to experience art as well as observe it, to explore knowledge rather than merely read about it, and to engage with history in ways earlier generations could scarcely imagine."
-        ]
-      },
-      {
         eyebrow: "TO LEONARDO DA VINCI",
         title: "A mind that changed its era—and the future",
         lead: "More than five centuries later, Leonardo’s curiosity still illuminates our world.",
@@ -41,16 +31,6 @@ const COPY = {
     back: "Retour à ARTDACI",
     pages: [
       {
-        eyebrow: "PRÉSENTATION D’ARTDACI",
-        title: "Un livre imprimé. Un musée vivant.",
-        lead: "Art, connaissance et découverte immersive",
-        paragraphs: [
-          "ARTDACI est bien davantage qu’une collection de peintures extraordinaires. C’est une invitation à redécouvrir le patrimoine artistique mondial avec les outils du XXIe siècle, tout en honorant le génie de la Renaissance.",
-          "Chaque page imprimée forme un espace autonome de lecture, d’apprentissage et d’observation attentive. Elle peut ensuite devenir une porte vers l’intelligence artificielle, la réalité augmentée, la réalité virtuelle, les expériences 3D interactives, le récit immersif, le son, la vidéo et l’informatique spatiale.",
-          "Ces technologies ne sont pas de simples prouesses ou effets visuels. Elles deviennent des instruments de curiosité, d’accessibilité, d’apprentissage et de créativité. Elles permettent d’expérimenter l’art autant que de le contempler, d’explorer le savoir et d’entrer dans l’histoire."
-        ]
-      },
-      {
         eyebrow: "À LÉONARD DE VINCI",
         title: "Un esprit qui transforma son époque et l’avenir",
         lead: "Plus de cinq siècles plus tard, la curiosité de Léonard éclaire encore notre monde.",
@@ -77,16 +57,6 @@ const COPY = {
     documentTitle: "ARTDACI — تحية إلى ليوناردو دافنشي",
     back: "العودة إلى ARTDACI",
     pages: [
-      {
-        eyebrow: "تقديم ARTDACI",
-        title: "كتاب مطبوع. متحف حي.",
-        lead: "الفن والمعرفة والاكتشاف الغامر",
-        paragraphs: [
-          "ARTDACI ليس مجرد مجموعة من اللوحات الاستثنائية، بل دعوة إلى إعادة اكتشاف التراث الفني العالمي بأدوات القرن الحادي والعشرين مع تكريم عبقرية عصر النهضة.",
-          "تشكل كل صفحة مطبوعة مساحة مستقلة للقراءة والتعلم والتأمل، ثم تتحول إلى بوابة نحو الذكاء الاصطناعي والواقع المعزز والواقع الافتراضي والتجارب التفاعلية ثلاثية الأبعاد والسرد الغامر والصوت والفيديو والحوسبة المكانية.",
-          "ليست هذه التقنيات مجرد إنجازات تقنية أو مؤثرات بصرية، بل أدوات للفضول والإتاحة والتعلم والإبداع، تتيح لنا اختبار الفن إلى جانب تأمله، واستكشاف المعرفة، والتفاعل مع التاريخ بطرق لم تكن متاحة للأجيال السابقة."
-        ]
-      },
       {
         eyebrow: "إلى ليوناردو دافنشي",
         title: "عقل غيّر عصره والمستقبل",
@@ -123,6 +93,13 @@ document.title = copy.documentTitle;
 document.getElementById("tribute-back").textContent = copy.back;
 document.getElementById("tribute-back").href = lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html";
 
+// Art direction for the two dedication pages (the general introduction is omitted).
+const IMAGE_TEXT = {
+  en: { gif: "Artistic animation of Leonardo da Vinci painting the Mona Lisa", atelier: "Artistic animation of Leonardo da Vinci bringing his workshop to life", finale: "Artistic representation of Leonardo da Vinci painting the Mona Lisa in his studio" },
+  fr: { gif: "Animation artistique de Léonard de Vinci peignant La Joconde", atelier: "Animation artistique de Léonard de Vinci donnant vie à son atelier", finale: "Représentation artistique de Léonard de Vinci peignant La Joconde dans son atelier" },
+  ar: { gif: "رسم متحرك فني يظهر ليوناردو دافنشي وهو يرسم الموناليزا", atelier: "رسوم متحركة فنية لليوناردو دافنشي وهو يحيي مرسمه", finale: "تصوير فني لليوناردو دافنشي وهو يرسم الموناليزا في مرسمه" }
+};
+
 copy.pages.forEach((page, index) => {
   const article = document.createElement("article");
   article.className = `tribute-print-page tribute-print-page-${index + 1}`;
@@ -135,11 +112,15 @@ copy.pages.forEach((page, index) => {
       ${page.paragraphs.map((paragraph) => `<p>${paragraph}</p>`).join("")}
       ${page.closing ? `<div class="tribute-print-closing">${page.closing.map((line) => `<strong>${line}</strong>`).join("")}</div>` : ""}
     </div>
-    ${index < 2 ? `
-      <figure>
-        <img src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/davinci-monalisa.png" alt="" />
+    ${index === 0 ? `
+      <figure class="tribute-animated-figure">
+        <img src="assets/artists/leonardo-da-vinci/profile/leonard_peint_la_joconde.gif" alt="${IMAGE_TEXT[lang].gif}" loading="eager" decoding="async" />
+        <img class="tribute-atelier-animation" src="assets/artists/leonardo-da-vinci/profile/L%C3%A9onard%20de%20Vinci%20anime%20son%20atelier.gif" alt="${IMAGE_TEXT[lang].atelier}" loading="eager" decoding="async" />
+      </figure>` : `
+      <figure class="tribute-finale-figure">
+        <img src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/davinci-monalisa.png" alt="${IMAGE_TEXT[lang].finale}" loading="lazy" decoding="async" />
         <figcaption>ARTDACI · MASTERPIECES ALIVE</figcaption>
-      </figure>` : ""}
+      </figure>`}
     <footer>ARTDACI · ${String(index + 1).padStart(2, "0")}</footer>
   `;
   root.appendChild(article);
