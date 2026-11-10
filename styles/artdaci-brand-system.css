@@ -161,3 +161,102 @@ body.target-body{--paper:#f6f0e6;--panel:#fffaf1;--ink:#202c37;--accent:#986e3e}
   body.target-body {background:white!important;color:black!important}
   .artdaci-reimagined-portal{display:none!important}
 }
+
+
+/* 2026-11-10 — Contrast correction for the book-inspired midnight homepage.
+   Previous daylight-palette selectors were inherited by midnight-blue sections.
+   Dark scenes use ivory, ice-blue and warm gold; light documentary cards keep
+   their dark text. Intended contrast is >= 4.5:1 for normal-sized copy. */
+body.home-v2 {
+  --artdaci-on-night:#edf2f9;
+  --artdaci-copy-on-night:#dce6f2;
+  --artdaci-eyebrow-on-night:#f1d49e;
+  --artdaci-ink-on-paper:#243d59;
+  --artdaci-copy-on-paper:#334e69;
+}
+/* These chapter introductions live directly on the dark page background. */
+body.home-v2 :is(.hv2-start, section[aria-labelledby="featured-title"], #experiences, #masters)
+  > .hv2-section-head > p {
+  color:var(--artdaci-copy-on-night);
+}
+body.home-v2 :is(.hv2-start, section[aria-labelledby="featured-title"], #experiences, #masters)
+  > .hv2-section-head .hv2-section-kicker {
+  color:var(--artdaci-eyebrow-on-night);
+}
+body.home-v2 :is(.hv2-start, section[aria-labelledby="featured-title"], #experiences, #masters)
+  > .hv2-section-head h2 {
+  color:var(--artdaci-on-night);
+}
+/* Keep the painterly multicolor typography, but swap the low-contrast
+   pigments for luminous hues designed for the actual midnight background.
+   The continuum title and museum introduction remain dark on light panels. */
+body.home-v2 :is(#start-title,#featured-title,#experiences-title,#masters-title){
+  color:#e9edf8;
+  background-image:linear-gradient(104deg,
+    #bcdcfb 0%,#bfd4fa 17%,#f2bfd7 38%,
+    #ffe3a0 58%,#afe5d5 78%,#d4c8fa 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 2px 8px rgba(0,0,0,.12));
+}
+/* Frameless painting cards are dark, too: restore high-contrast captions. */
+body.home-v2 .hv2-featured-grid .hv2-work .hv2-work-copy strong {
+  color:#f6f1e9;
+}
+body.home-v2 .hv2-featured-grid .hv2-work .hv2-work-copy span,
+body.home-v2 .hv2-featured-grid .hv2-work .hv2-work-copy small {
+  color:#dce6f2;
+}
+/* Introductory pathway cards may use a dark, translucent night-blue wash. */
+body.home-v2 .hv2-start .hv2-start-path,
+body.home-v2 .hv2-start .hv2-start-path h3,
+body.home-v2 .hv2-start .hv2-start-path ol,
+body.home-v2 .hv2-start .hv2-start-path li {
+  color:var(--artdaci-on-night);
+}
+/* The guide bridge is a deep-blue surface, not an ivory reading card. */
+body.home-v2 .hv2-experiences > .hv2-guide-note .hv2-guide-label {
+  color:#f1d49e;
+}
+body.home-v2 .hv2-experiences > .hv2-guide-note strong {
+  color:#edf2f9;
+}
+body.home-v2 .hv2-experiences > .hv2-guide-note a {
+  color:#ffe3a0;
+}
+/* Restore a dependable ink palette on actual daylight/paper sections;
+   this specifically excludes all dark cards and the cinematic panels. */
+body.home-v2 .hv2-continuum-wrap .hv2-continuum-lead,
+body.home-v2 .painting-index .section-dek {
+  color:var(--artdaci-copy-on-paper);
+}
+body.home-v2 #places > .hv2-section-head > p {
+  color:#334f43;
+}
+body.home-v2 .hv2-about > p:not(.hv2-section-kicker) {
+  color:#345d64;
+}
+/* Make sure that decorative backgrounds never render the text invisible
+   if a browser does not support gradient text clipping. */
+@supports not ((background-clip:text) or (-webkit-background-clip:text)) {
+  body.home-v2 :is(#start-title,#featured-title,#experiences-title,#masters-title) {
+    background-image:none;
+    color:var(--artdaci-on-night);
+    -webkit-text-fill-color:currentColor;
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  body.home-v2 :is(#start-title,#featured-title,#experiences-title,#masters-title) {
+    animation:none;
+    background-position:50% 50%;
+  }
+}
+@media print {
+  body.home-v2 :is(#start-title,#featured-title,#experiences-title,#masters-title) {
+    background:none;
+    -webkit-text-fill-color:currentColor;
+    color:#203850;
+    filter:none;
+  }
+}
