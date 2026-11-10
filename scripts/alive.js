@@ -151,8 +151,12 @@
     if(isFinished)return;
     const canSeek=Number.isFinite(video.duration)&&video.duration>0&&video.readyState>=1;
     if(canSeek){
-      try{video.currentTime=Math.max(0,video.duration-.08);video.pause();complete(false);}
-      catch(error){complete(true);}
+      try{
+        video.addEventListener("seeked",()=>complete(false),{once:true});
+        video.currentTime=Math.max(0,video.duration-.08);
+        video.pause();
+        window.setTimeout(()=>{if(!isFinished)complete(false);},800);
+      }catch(error){complete(true);}
     }else complete(true);
   }
   openBtn.addEventListener("click",playSequence);
