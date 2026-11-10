@@ -55,6 +55,7 @@
   
 <link rel="stylesheet" href="styles/artdaci-brand-system.css?v=1">
     <link rel="stylesheet" href="styles/home-petrol-heritage.css?v=1" />
+    <link rel="stylesheet" href="styles/spatial-explorer.css?v=1" />
 </head>
   <body class="home-v2">
     <a class="artdaci-skip-link" href="#main-content">Aller au contenu principal</a>
@@ -144,10 +145,8 @@
         </div>
       </section>
 
-      <section class="sd-feature" id="spatial-depth" aria-label="Création interactive ARTDACI Spatial Depth">
-          <div class="sd-panel" data-spatial-depth aria-label="Une création visuelle interactive">
-            <div class="sd-copy sd-book-slot">
-              <p class="sd-visually-hidden" id="sd-tip">Déplacez le pointeur sur la carte ou utilisez les flèches du clavier lorsqu’elle est sélectionnée.</p>
+      <section class="sd-feature sd-feature-book" id="spatial-depth" aria-label="Livre ARTDACI interactif 3D">
+        <div class="sd-panel sd-book-only"><div class="sd-copy sd-book-slot">
               <div class="hv2-smart-art" role="group" aria-label="Livre ARTDACI 3D interactif et commandes">
               <div class="hv2-book-hero" aria-label="Livre ARTDACI en 3D">
               
@@ -186,38 +185,47 @@
               </div>
               
               </div>
-            </div>
-            <div class="sd-scene">
-              <div class="sd-card" tabindex="0" role="img" aria-label="Carte ARTDACI en profondeur. Utilisez les flèches du clavier pour modifier sa perspective." aria-describedby="sd-tip">
-                <span class="sd-author">N. ELM.</span>
-                <span class="sd-accent">SPATIAL</span>
-                <div class="sd-tech-orbit" aria-hidden="true">
-                  <svg viewBox="0 0 270 130" focusable="false">
-                    <path id="sd-tech-path" d="M 135 10 A 120 55 0 1 1 134.9 10" fill="none" stroke="#93bfff" stroke-width="1" opacity=".4"></path>
-                    <text fill="#ff9cfc"><textPath href="#sd-tech-path" startOffset="5%" text-anchor="middle">AR</textPath></text>
-                    <text fill="#9cc2ff"><textPath href="#sd-tech-path" startOffset="25%" text-anchor="middle">VR</textPath></text>
-                    <text fill="#ffdf9c"><textPath href="#sd-tech-path" startOffset="45%" text-anchor="middle">3D</textPath></text>
-                    <text fill="#9cffda"><textPath href="#sd-tech-path" startOffset="65%" text-anchor="middle">GEO</textPath></text>
-                    <text fill="#d19cff"><textPath href="#sd-tech-path" startOffset="85%" text-anchor="middle">SEMANTIC</textPath></text>
-                  </svg>
-                </div>
-                <div class="sd-artists-orbit" aria-hidden="true">
-                  <svg viewBox="0 0 240 100" focusable="false">
-                    <path id="sd-artists-path" d="M 120 10 A 100 40 0 1 1 119.9 10" fill="none" stroke="#ffd14c" stroke-width="1.2" opacity=".7"></path>
-                    <text fill="#ff7676"><textPath href="#sd-artists-path" startOffset="12%" text-anchor="middle">DA VINCI</textPath></text>
-                    <text fill="#76caff"><textPath href="#sd-artists-path" startOffset="37%" text-anchor="middle">VERMEER</textPath></text>
-                    <text fill="#ffd14c"><textPath href="#sd-artists-path" startOffset="62%" text-anchor="middle">VAN GOGH</textPath></text>
-                    <text fill="#6bf1a3"><textPath href="#sd-artists-path" startOffset="87%" text-anchor="middle">MONET</textPath></text>
-                  </svg>
-                </div>
-                <span class="sd-symbol" aria-hidden="true">◈</span>
-                <span class="sd-brand" aria-hidden="true">ARTDACI</span>
-              </div>
+            </div></div>
+      </section>
+      <section class="sd-explore" id="spatial-explore" data-spatial-depth aria-labelledby="sd-explore-title">
+        <div class="sd-explore-heading">
+          <p class="sd-eyebrow">✦ ARTDACI SPATIAL · EXPLORER</p>
+          <h2 id="sd-explore-title">Explorez l’art dans toutes ses dimensions.</h2>
+          <p class="sd-explore-lead">Choisissez une destination sur l’orbite animée d’ARTDACI : œuvre imprimée, réalité augmentée, VR, 3D interactive, géographie ou connaissance reliée.</p>
+        </div>
+        <div class="sd-explore-layout">
+          <div class="sd-scene">
+            <div class="sd-card sd-explore-card" tabindex="0" role="group" aria-label="Illustration spatiale ARTDACI avec six destinations cliquables" aria-describedby="sd-tip">
+              <span class="sd-author">N. ELM.</span><span class="sd-accent">SPATIAL</span>
+              <div class="sd-tech-orbit" aria-hidden="true"><svg viewBox="0 0 270 130" focusable="false"><path id="sd-tech-path" d="M 135 10 A 120 55 0 1 1 134.9 10" fill="none" stroke="#93bfff" stroke-width="1.1" opacity=".7"/></svg></div>
+                <div class="sd-artists-orbit" aria-hidden="true"><svg viewBox="0 0 240 100" focusable="false"><path id="sd-artists-path" d="M 120 10 A 100 40 0 1 1 119.9 10" fill="none" stroke="#ffd14c" stroke-width="1.2" opacity=".8"/><text fill="#ff868b"><textPath href="#sd-artists-path" startOffset="12%" text-anchor="middle">DA VINCI</textPath></text><text fill="#82d1ff"><textPath href="#sd-artists-path" startOffset="37%" text-anchor="middle">VERMEER</textPath></text><text fill="#ffe18c"><textPath href="#sd-artists-path" startOffset="62%" text-anchor="middle">VAN GOGH</textPath></text><text fill="#85f4bb"><textPath href="#sd-artists-path" startOffset="87%" text-anchor="middle">MONET</textPath></text></svg></div>
+              <span class="sd-symbol" aria-hidden="true">◈</span>
+              <nav class="sd-orbit-links" aria-label="CHOISISSEZ UN PARCOURS">
+                  <a class="sd-orbit-link sd-orbit-print" href="print-target-fr.html" aria-label="Œuvre imprimée : Explorer la peinture et son lien avec le livre">PRINT</a>
+                  <a class="sd-orbit-link sd-orbit-ar" href="book-ar.html?lang=fr" aria-label="Réalité augmentée : Accéder à l’expérience AR du livre">AR</a>
+                  <a class="sd-orbit-link sd-orbit-vr" href="gallery-vr.html?lang=fr" aria-label="Galerie virtuelle : Entrer dans une galerie immersive">VR</a>
+                  <a class="sd-orbit-link sd-orbit-three-d" href="3d/?lang=fr" aria-label="Collection 3D : Explorer les œuvres et musées en 3D">3D</a>
+                  <a class="sd-orbit-link sd-orbit-geo" href="geo/index.html?lang=fr" aria-label="Art et géographie : Explorer les lieux des œuvres et des musées">GEO</a>
+                  <a class="sd-orbit-link sd-orbit-semantic" href="semantic/?lang=fr" aria-label="Graphe de connaissances : Relier les artistes, les œuvres et leurs histoires">SEMANTIC</a>
+              </nav>
+              <span class="sd-brand" aria-hidden="true">ARTDACI</span>
             </div>
           </div>
+          <div class="sd-explore-guide">
+            <p id="sd-tip" class="sd-explore-instruction">Cliquez sur un intitulé lumineux dans l’illustration. Sur ordinateur, déplacez le pointeur ou sélectionnez la carte, puis utilisez les flèches pour modifier sa perspective.</p>
+            <p class="sd-explore-guide-title">CHOISISSEZ UN PARCOURS</p>
+            <div class="sd-routes">
+            <a class="sd-route sd-route-print" href="print-target-fr.html"><span class="sd-route-code" aria-hidden="true">PRINT</span><span class="sd-route-content"><strong>Œuvre imprimée</strong><small>Explorer la peinture et son lien avec le livre</small></span><span class="sd-route-arrow" aria-hidden="true">↗</span></a>
+            <a class="sd-route sd-route-ar" href="book-ar.html?lang=fr"><span class="sd-route-code" aria-hidden="true">AR</span><span class="sd-route-content"><strong>Réalité augmentée</strong><small>Accéder à l’expérience AR du livre</small></span><span class="sd-route-arrow" aria-hidden="true">↗</span></a>
+            <a class="sd-route sd-route-vr" href="gallery-vr.html?lang=fr"><span class="sd-route-code" aria-hidden="true">VR</span><span class="sd-route-content"><strong>Galerie virtuelle</strong><small>Entrer dans une galerie immersive</small></span><span class="sd-route-arrow" aria-hidden="true">↗</span></a>
+            <a class="sd-route sd-route-three-d" href="3d/?lang=fr"><span class="sd-route-code" aria-hidden="true">3D</span><span class="sd-route-content"><strong>Collection 3D</strong><small>Explorer les œuvres et musées en 3D</small></span><span class="sd-route-arrow" aria-hidden="true">↗</span></a>
+            <a class="sd-route sd-route-geo" href="geo/index.html?lang=fr"><span class="sd-route-code" aria-hidden="true">GEO</span><span class="sd-route-content"><strong>Art et géographie</strong><small>Explorer les lieux des œuvres et des musées</small></span><span class="sd-route-arrow" aria-hidden="true">↗</span></a>
+            <a class="sd-route sd-route-semantic" href="semantic/?lang=fr"><span class="sd-route-code" aria-hidden="true">SEMANTIC</span><span class="sd-route-content"><strong>Graphe de connaissances</strong><small>Relier les artistes, les œuvres et leurs histoires</small></span><span class="sd-route-arrow" aria-hidden="true">↗</span></a>
+            </div>
+            <p class="sd-explore-note">L’AR et la VR nécessitent des appareils et navigateurs compatibles. PRINT ouvre une fiche associée au livre imprimé.</p>
+          </div>
+        </div>
       </section>
-
-
 
       <section class="artdaci-reimagined-portal" aria-labelledby="artdaci-reimagined-portal-title">
         <div>
@@ -395,27 +403,6 @@
         </div>
       </section>
 
-      <section class="hv2-continuum-wrap" aria-labelledby="continuum-title">
-        <div class="hv2-continuum">
-          <p class="hv2-section-kicker">De la page à l’espace</p>
-          <h2 id="continuum-title">Une œuvre. Plusieurs dimensions de découverte.</h2>
-          <p class="hv2-continuum-lead">
-            ARTDACI relie la stabilité de la page imprimée à un continuum spatial et sémantique en expansion.
-            Le lecteur peut approfondir sans perdre l’œuvre comme point de référence.
-          </p>
-          <div class="hv2-continuum-track" aria-label="Continuum de contenu ARTDACI">
-            <div class="hv2-continuum-step"><span>01</span><strong>Imprimé</strong></div>
-            <div class="hv2-continuum-step"><span>02</span><strong>Connaissance</strong></div>
-            <div class="hv2-continuum-step"><span>03</span><strong>Sémantique</strong></div>
-            <div class="hv2-continuum-step"><span>04</span><strong>AR</strong></div>
-            <a class="hv2-continuum-step hv2-continuum-link" href="3d/?lang=fr"><span>05</span><strong>3D</strong></a>
-            <div class="hv2-continuum-step"><span>06</span><strong>VR</strong></div>
-            <div class="hv2-continuum-step"><span>07</span><strong>GEO</strong></div>
-          </div>
-
-        </div>
-      </section>
-
       <section id="places" class="hv2-section hv2-museum-immersive" aria-labelledby="places-title">
         <div class="hv2-section-head">
           <div>
@@ -531,7 +518,7 @@
     <script type="module" src="scripts/catalogue.js?v=23"></script>
     <script type="module" src="scripts/visitor-guide.js?v=1"></script>
     <script src="scripts/pwa.js?v=1" defer></script>
-    <script src="scripts/spatial-depth.js?v=2" defer></script>
+    <script src="scripts/spatial-depth.js?v=3" defer></script>
     <script src="scripts/book-interaction.js?v=1" defer></script>
       <script src="scripts/trim-baked-frames.js?v=2" defer></script>
   </body>
