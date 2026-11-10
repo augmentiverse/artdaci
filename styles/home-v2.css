@@ -1113,3 +1113,12 @@
     width: 108px;
   }
 }
+
+/* Animated Leonardo tribute image: fit whole composition without cropping. */
+.hv2-tribute figure img.hv2-tribute-animation {
+  width: 100%;
+  height: auto;
+  max-height: 650px;
+  object-fit: contain;
+  background: rgba(17, 32, 47, .35);
+}
