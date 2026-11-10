@@ -1552,6 +1552,10 @@ html[dir="rtl"] .leonardo-introduction {
   min-width: 0;
 }
 .tribute-print-page-1 .tribute-animated-figure {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  gap: 5mm;
   margin: 5mm 0 0;
   align-self: start;
   min-width: 0;
@@ -1560,10 +1564,13 @@ html[dir="rtl"] .leonardo-introduction {
   display: block;
   width: 100%;
   height: auto;
-  max-height: 152mm;
+  max-height: 73mm;
   object-fit: contain;
   border: 1.4mm solid #d2b78e;
   background: #e6d8c1;
+}
+.tribute-print-page-1 .tribute-animated-figure img.tribute-atelier-animation {
+  max-height: 73mm;
 }
 
 /* Large original atelier artwork at the very end of the dedication,
