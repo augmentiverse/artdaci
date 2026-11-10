@@ -17,7 +17,7 @@
       answerDefaultTitle:"Start with a question.",
       answerDefault:"Look at the smile, the hands and the mysterious landscape. What do you notice first?",
       learnMore:"Explore the artwork",footer:"ARTDACI · Art beyond the frame. The printed book and the digital collection can be explored independently.",
-      livingBook:"Explore the interactive Living Book",
+      gallery:"EXPLORE ARTDACI REIMAGINED",livingBook:"Explore the interactive Living Book",
       playing:"The book is open. The Mona Lisa is emerging.",complete:"The Mona Lisa has emerged. Continue to artwork discovery, spatial AR or close looking.",
       noVideo:"The video is unavailable. You can still explore the artwork and its 3D experience.",
       questions:{
@@ -42,7 +42,7 @@
       answerLabel:"ARTDACI · ÉCLAIRAGE SUR L’ŒUVRE",answerDefaultTitle:"Commencez par une question.",
       answerDefault:"Observez le sourire, les mains et le paysage mystérieux. Que remarquez-vous en premier ?",
       learnMore:"Explorer l’œuvre",footer:"ARTDACI · L’art au-delà du cadre. Le livre imprimé et la collection numérique se découvrent indépendamment.",
-      livingBook:"Découvrir le Livre vivant interactif",
+      gallery:"DÉCOUVRIR ARTDACI REIMAGINED",livingBook:"Découvrir le Livre vivant interactif",
       playing:"Le livre s’ouvre. La Joconde émerge de ses pages.",complete:"La Joconde est apparue. Explorez son histoire, la réalité augmentée ou ses détails.",
       noVideo:"La vidéo est indisponible. L’œuvre et son expérience 3D restent accessibles.",
       questions:{
@@ -67,7 +67,7 @@
       answerLabel:"ARTDACI · تأملات فنية",answerDefaultTitle:"ابدأ بسؤال.",
       answerDefault:"تأمّل الابتسامة واليدين والمشهد الطبيعي الغامض. ما أول تفصيل يجذب انتباهك؟",
       learnMore:"استكشف اللوحة",footer:"ARTDACI · الفن أبعد من الإطار. يمكن استكشاف الكتاب المطبوع والمجموعة الرقمية بصورة مستقلة.",
-      livingBook:"استكشف الكتاب الحي التفاعلي",
+      gallery:"اكتشف ARTDACI REIMAGINED",livingBook:"استكشف الكتاب الحي التفاعلي",
       playing:"يُفتح الكتاب وتنبثق الموناليزا من صفحاته.",complete:"ظهرت الموناليزا. تابع استكشاف تاريخ اللوحة أو تجربة الواقع المعزز أو تفاصيلها.",
       noVideo:"تعذّر تشغيل الفيديو، لكن يمكنك استكشاف اللوحة وتجربتها ثلاثية الأبعاد.",
       questions:{
@@ -99,6 +99,7 @@
   document.getElementById("back-home").href=home;
   document.getElementById("meet-link").href=print;
   document.getElementById("space-link").href=space;
+  document.getElementById("reimagined-link").href=`reimagined.html?lang=${lang}`;
   document.getElementById("living-book").href=`book-3d.html?lang=${lang}`;
 
   const stage=document.getElementById("alive-stage");
