@@ -123,7 +123,14 @@ document.title = copy.documentTitle;
 document.getElementById("tribute-back").textContent = copy.back;
 document.getElementById("tribute-back").href = lang === "ar" ? "index-ar.html" : lang === "fr" ? "index-fr.html" : "index.html";
 
-copy.pages.forEach((page, index) => {
+// Art direction for the two dedication pages (the general introduction is omitted).
+const IMAGE_TEXT = {
+  en: { gif: "Artistic animation of Leonardo da Vinci painting the Mona Lisa", finale: "Artistic representation of Leonardo da Vinci painting the Mona Lisa in his studio" },
+  fr: { gif: "Animation artistique de Léonard de Vinci peignant La Joconde", finale: "Représentation artistique de Léonard de Vinci peignant La Joconde dans son atelier" },
+  ar: { gif: "رسم متحرك فني يظهر ليوناردو دافنشي وهو يرسم الموناليزا", finale: "تصوير فني لليوناردو دافنشي وهو يرسم الموناليزا في مرسمه" }
+};
+
+copy.pages.slice(1).forEach((page, index) => {
   const article = document.createElement("article");
   article.className = `tribute-print-page tribute-print-page-${index + 1}`;
   article.innerHTML = `
@@ -135,11 +142,14 @@ copy.pages.forEach((page, index) => {
       ${page.paragraphs.map((paragraph) => `<p>${paragraph}</p>`).join("")}
       ${page.closing ? `<div class="tribute-print-closing">${page.closing.map((line) => `<strong>${line}</strong>`).join("")}</div>` : ""}
     </div>
-    ${index === 1 ? `
-      <figure>
-        <img src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/davinci-monalisa.png" alt="" />
+    ${index === 0 ? `
+      <figure class="tribute-animated-figure">
+        <img src="assets/artists/leonardo-da-vinci/profile/leonard_peint_la_joconde.gif" alt="${IMAGE_TEXT[lang].gif}" loading="eager" decoding="async" />
+      </figure>` : `
+      <figure class="tribute-finale-figure">
+        <img src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/davinci-monalisa.png" alt="${IMAGE_TEXT[lang].finale}" loading="lazy" decoding="async" />
         <figcaption>ARTDACI · MASTERPIECES ALIVE</figcaption>
-      </figure>` : ""}
+      </figure>`}
     <footer>ARTDACI · ${String(index + 1).padStart(2, "0")}</footer>
   `;
   root.appendChild(article);
