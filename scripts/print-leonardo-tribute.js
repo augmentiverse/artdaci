@@ -135,7 +135,7 @@ copy.pages.forEach((page, index) => {
       ${page.paragraphs.map((paragraph) => `<p>${paragraph}</p>`).join("")}
       ${page.closing ? `<div class="tribute-print-closing">${page.closing.map((line) => `<strong>${line}</strong>`).join("")}</div>` : ""}
     </div>
-    ${index < 2 ? `
+    ${index === 1 ? `
       <figure>
         <img src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/davinci-monalisa.png" alt="" />
         <figcaption>ARTDACI · MASTERPIECES ALIVE</figcaption>
