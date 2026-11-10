@@ -1539,24 +1539,64 @@ html[dir="rtl"] .leonardo-introduction {
   height: 16mm;
 }
 
-/* Keep the Leonardo studio artwork only once, on the dedication's second page.
-   The opening page becomes a full-width editorial introduction. */
+/* Leonardo dedication opens with the painting animation beside the title,
+   in the unused side of the original print-layout composition. */
 .tribute-print-page-1 {
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, .94fr);
+  align-items: start;
+  gap: 8mm;
+  padding-top: 30mm;
 }
 .tribute-print-page-1 .tribute-print-copy {
+  align-self: start;
+  min-width: 0;
+}
+.tribute-print-page-1 .tribute-animated-figure {
+  margin: 5mm 0 0;
+  align-self: start;
+  min-width: 0;
+}
+.tribute-print-page-1 .tribute-animated-figure img {
+  display: block;
   width: 100%;
-  max-width: 165mm;
-  margin-inline: auto;
+  height: auto;
+  max-height: 152mm;
+  object-fit: contain;
+  border: 1.4mm solid #d2b78e;
+  background: #e6d8c1;
 }
 
-.tribute-print-page-3 {
-  display: block;
-  padding-inline: 28mm;
+/* Large original atelier artwork at the very end of the dedication,
+   after the closing quotation. No duplicate image in the opening. */
+.tribute-print-page-2 {
+  display: flex;
+  flex-direction: column;
+  padding: 24mm 24mm 17mm;
   color: #fff4df;
   background:
     radial-gradient(circle at 50% 18%, rgba(213, 169, 91, .24), transparent 32%),
     linear-gradient(145deg, #6a2d32, #281719 68%);
+}
+.tribute-print-page-2 .tribute-print-copy {
+  align-self: stretch;
+}
+.tribute-print-page-2 .tribute-finale-figure {
+  width: 100%;
+  max-width: 155mm;
+  margin: auto auto 13mm;
+  padding-top: 8mm;
+  text-align: center;
+}
+.tribute-print-page-2 .tribute-finale-figure img {
+  width: 100%;
+  height: auto;
+  max-height: 120mm;
+  object-fit: contain;
+  border: 1.4mm solid #e0c697;
+  background: #201b1d;
+}
+.tribute-print-page-2 .tribute-finale-figure figcaption {
+  color: #e7ce9b;
 }
 
 .tribute-print-copy {
@@ -1578,7 +1618,7 @@ html[dir="rtl"] .leonardo-introduction {
   letter-spacing: .16em;
 }
 
-.tribute-print-page-3 .eyebrow {
+.tribute-print-page-2 .eyebrow {
   color: #e4bd75;
 }
 
@@ -1588,7 +1628,7 @@ html[dir="rtl"] .leonardo-introduction {
   font-weight: 700 !important;
 }
 
-.tribute-print-page-3 .tribute-print-lead {
+.tribute-print-page-2 .tribute-print-lead {
   color: #e3cda7;
 }
 
@@ -1630,7 +1670,7 @@ html[dir="rtl"] .leonardo-introduction {
   letter-spacing: .14em;
 }
 
-.tribute-print-page-3 footer {
+.tribute-print-page-2 footer {
   color: #cbb48d;
 }
 
@@ -1652,6 +1692,19 @@ html[dir="rtl"] .tribute-print-page {
     width: 100%;
     min-height: auto;
     padding: 32px 24px 54px;
+  }
+  .tribute-print-page-1 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .tribute-print-page-1 .tribute-animated-figure {
+    max-width: 440px;
+    margin: 16px auto 12px;
+  }
+  .tribute-print-page-2 {
+    padding: 36px 24px 60px;
+  }
+  .tribute-print-page-2 .tribute-finale-figure {
+    margin: 22px auto 18px;
   }
 }
 
