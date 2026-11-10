@@ -1539,6 +1539,17 @@ html[dir="rtl"] .leonardo-introduction {
   height: 16mm;
 }
 
+/* Keep the Leonardo studio artwork only once, on the dedication's second page.
+   The opening page becomes a full-width editorial introduction. */
+.tribute-print-page-1 {
+  grid-template-columns: minmax(0, 1fr);
+}
+.tribute-print-page-1 .tribute-print-copy {
+  width: 100%;
+  max-width: 165mm;
+  margin-inline: auto;
+}
+
 .tribute-print-page-3 {
   display: block;
   padding-inline: 28mm;
