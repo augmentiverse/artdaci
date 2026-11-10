@@ -27,7 +27,7 @@
       scene.classList.toggle(
         'sd-mobile-ambient',
         coarsePointer.matches && !reducedMotion.matches && visible &&
-          !document.hidden && touchId === null && !card.matches(':focus-visible')
+          !document.hidden && touchId === null && !card.matches(':focus-within')
       );
     }
 
@@ -38,6 +38,7 @@
     }
 
     function updateFromPointer(event) {
+      if (event.target.closest('a')) return;
       const rect = scene.getBoundingClientRect();
       if (!rect.width || !rect.height) return;
       x = clamp((event.clientX - rect.left) / rect.width * 2 - 1);
@@ -46,7 +47,7 @@
     }
 
     scene.addEventListener('pointerdown', event => {
-      if (event.pointerType !== 'touch' || reducedMotion.matches) return;
+      if (event.target.closest('a') || event.pointerType !== 'touch' || reducedMotion.matches) return;
       touchId = event.pointerId;
       card.classList.add('sd-touch-active');
       syncAmbient();
@@ -81,7 +82,7 @@
     });
 
     card.addEventListener('keydown', event => {
-      if (reducedMotion.matches || !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
+      if (event.target !== card || reducedMotion.matches || !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) return;
       event.preventDefault();
       scene.classList.remove('sd-mobile-ambient');
       if (event.key === 'ArrowLeft') x -= .15;
@@ -92,8 +93,8 @@
       y = clamp(y);
       apply(x, y);
     });
-    card.addEventListener('focus', syncAmbient);
-    card.addEventListener('blur', () => { reset(); syncAmbient(); });
+    card.addEventListener('focusin', syncAmbient);
+    card.addEventListener('focusout', () => { if (!card.contains(document.activeElement)) reset(); syncAmbient(); });
 
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver(entries => {
