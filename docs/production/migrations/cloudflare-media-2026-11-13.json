@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "1.0",
+  "publishedAt": "2026-11-13",
+  "bucket": "artdaci-media",
+  "publicBaseUrl": "https://media.artdaci.com/",
+  "cacheControl": "public, max-age=31536000, immutable",
+  "resources": [
+    {
+      "source": "assets/environments/gallery/models/museums/National_Gallery_of_Art_Washington.glb",
+      "key": "shared/museums/national-gallery-of-art-washington/models/main--sha256-b1e51bdc7563.glb",
+      "mimeType": "model/gltf-binary",
+      "bytes": 6735432,
+      "sha256": "b1e51bdc75633bb64d9445b1f5a098afc3fff18e9cf14ee3ad40bdf6860698fb"
+    },
+    {
+      "source": "assets/targets/National_Gallery_of_Art_Washington.mind",
+      "key": "shared/museums/national-gallery-of-art-washington/ar/target--sha256-84d3a3b035e7.mind",
+      "mimeType": "application/octet-stream",
+      "bytes": 928508,
+      "sha256": "84d3a3b035e7177c15477837c8ae37d9ee82099f152ed963858634fd9a28518f"
+    },
+    {
+      "source": "geo/media/vg02/van-gogh-bedroom-en.mp3",
+      "key": "artworks/vg02/audio/en/presentation--sha256-49061a1e7f6e.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 1711469,
+      "sha256": "49061a1e7f6ec3aa1c21cad5dc3ac12b8ab45cec544617a4d05e5253d12624e8"
+    },
+    {
+      "source": "geo/media/vg02/van-gogh-bedroom-fr.mp3",
+      "key": "artworks/vg02/audio/fr/presentation--sha256-e72e425638cd.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 1428929,
+      "sha256": "e72e425638cdfc53aa1954fc710168891d5be3f182a6bc98f3b2b33aa0dbeb9b"
+    },
+    {
+      "source": "geo/media/vg02/van-gogh-bedroom-ar.mp3",
+      "key": "artworks/vg02/audio/ar/presentation--sha256-7cc12cc2979e.mp3",
+      "mimeType": "audio/mpeg",
+      "bytes": 1523806,
+      "sha256": "7cc12cc2979e43089a969c34cb084859204ddce45811fc39d8cba633a511a403"
+    },
+    {
+      "source": "assets/artists/leonardo-da-vinci/profile/leonard_peint_la_joconde.gif",
+      "key": "shared/images/artists/leonardo-da-vinci/profile/painting-mona-lisa--sha256-1813c0127cda.gif",
+      "mimeType": "image/gif",
+      "bytes": 891665,
+      "sha256": "1813c0127cda2e90375494bd21966a5989a1bebb4f686b2b39043d9c267118a5"
+    },
+    {
+      "source": "assets/artists/leonardo-da-vinci/profile/leonardo_atelier_animation_une_seule_fois.gif",
+      "key": "shared/images/artists/leonardo-da-vinci/profile/atelier-animation--sha256-af354c8b94d2.gif",
+      "mimeType": "image/gif",
+      "bytes": 1000679,
+      "sha256": "af354c8b94d2a850b53a10377c14d04019766e4bec49ea4662913413a536b551"
+    }
+  ]
+}

@@ -53,13 +53,13 @@ test('Mona Lisa and Parasol reuse the exact user-selected captioned images on th
   }
 });
 
-test('Bedroom prefers canonical exact-language audio, then verified same-language local fallback including Arabic',()=>{
+test('Bedroom prefers canonical exact-language presentation audio, then verified same-language local fallback',()=>{
   const w=work('vg02'),m=manifest('vg02');assert.equal(m.media.audio.overview.ar,undefined);
   for(const language of ['fr','en','ar']){
     const selected=w.audioPresentation[language];
     assert.equal(createHash('sha256').update(readFileSync(new URL(selected.path,root))).digest('hex'),selected.sha256);
     for(const source of [m,null]){
-      const canonical=Boolean(source&&language!=='ar'),expected=canonical?`https://media.artdaci.com/artworks/vg02/audio/${language}/overview.mp3`:selected.path;
+      const canonical=Boolean(source),expected=canonical?`https://media.artdaci.com/artworks/vg02/${m.media.audio.presentation[language].path}`:selected.path;
       const media=resolveHubMedia(w,source,language);
       assert.equal(media.audio,expected);
       assert.deepEqual(media.audioCandidates.map(candidate=>candidate.status),canonical?['available','local-fallback']:['local-fallback']);
@@ -67,10 +67,10 @@ test('Bedroom prefers canonical exact-language audio, then verified same-languag
       assert.equal(caps.audio.url,expected);assert.equal(caps.audio.status,canonical?'available':'local-fallback');
     }
   }
-  const missing=structuredClone(w);delete missing.audioPresentation.ar;
-  assert.equal(resolveHubMedia(missing,m,'ar').audio,null);
+  const missing=structuredClone(w),withoutArabic=structuredClone(m);delete missing.audioPresentation.ar;delete withoutArabic.media.audio.presentation.ar;
+  assert.equal(resolveHubMedia(missing,withoutArabic,'ar').audio,null);
   missing.audioPresentation.ar={...w.audioPresentation.en};
-  assert.equal(resolveHubMedia(missing,m,'ar').audio,null);
+  assert.equal(resolveHubMedia(missing,withoutArabic,'ar').audio,null);
   const invalid=structuredClone(hub);invalid.artists[2].works[1].audioPresentation.ar.path='../en.mp3';
   assert.ok(validateHub(invalid,catalog).includes('Invalid local audio presentation'));
 });

@@ -26,7 +26,9 @@ export function resolveArtworkCapabilities({entry,work,manifest,language}){
   if(!entry||entry.status!=='active'||entry.id!==work?.artworkId)throw new Error('Unrecognised canonical artwork');
   const valid=manifest?.id===entry.id;
   const imageResolved=resolveHubImage(work,manifest);
-  const canonicalAudio=valid?assetCapability(manifest,[manifest.media?.audio?.overview?.[lang]?.language===lang?manifest.media.audio.overview[lang]:null],['audio/mpeg','audio/mp4']):capability('missing');
+  const presentation=manifest?.media?.audio?.presentation?.[lang];
+  const overview=manifest?.media?.audio?.overview?.[lang];
+  const canonicalAudio=valid?assetCapability(manifest,[presentation?.language===lang?presentation:null,overview?.language===lang?overview:null],['audio/mpeg','audio/mp4']):capability('missing');
   const audio=canonicalAudio.status==='available'?canonicalAudio:(localHubAudio(work,lang)||canonicalAudio);
   const models=valid?assetCapability(manifest,Object.values(manifest.media?.models||{}),['model/gltf-binary']):capability('missing');
   const video=valid?assetCapability(manifest,Object.values(manifest.media?.videos||{}),['video/mp4','video/webm']):capability('missing');

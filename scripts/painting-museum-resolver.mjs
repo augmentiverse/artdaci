@@ -11,8 +11,8 @@ const MUSEUMS = Object.freeze({
   "princes czartoryski museum": { slug: "czartoryski", url: "content/museums/czartoryski.json?v=2" },
   "musee d'orsay": { slug: "orsay", url: "content/museums/orsay.json" },
   "van gogh museum": { slug: "van-gogh-museum", url: "content/museums/van-gogh-museum.json" },
-  "national gallery of art": { slug: "national-gallery-of-art-washington", url: "content/museums/national-gallery-of-art-washington.json?v=1" },
-  "national gallery of art, washington": { slug: "national-gallery-of-art-washington", url: "content/museums/national-gallery-of-art-washington.json?v=1" }
+  "national gallery of art": { slug: "national-gallery-of-art-washington", url: "content/museums/national-gallery-of-art-washington.json?v=2" },
+  "national gallery of art, washington": { slug: "national-gallery-of-art-washington", url: "content/museums/national-gallery-of-art-washington.json?v=2" }
 });
 
 export function normalizeMuseumName(value) {

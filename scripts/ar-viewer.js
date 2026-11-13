@@ -58,7 +58,7 @@ const MUSEUMS = {
   "czartoryski": "content/museums/czartoryski.json?v=2",
   "orsay": "content/museums/orsay.json",
   "van-gogh-museum": "content/museums/van-gogh-museum.json",
-  "national-gallery-of-art-washington": "content/museums/national-gallery-of-art-washington.json?v=1"
+  "national-gallery-of-art-washington": "content/museums/national-gallery-of-art-washington.json?v=2"
 };
 
 const UI_TEXT = {

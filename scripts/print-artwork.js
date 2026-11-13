@@ -1,5 +1,5 @@
 import { formatArtworkNumber } from "./artwork-numbering.js?v=1";
-import { resolvePaintingMuseum } from "./painting-museum-resolver.mjs?v=1";
+import { resolvePaintingMuseum } from "./painting-museum-resolver.mjs?v=2";
 import { resolveArtworkAudioOverview } from "./artwork-media-manifest.js?v=5";
 
 const SOURCES = {
