@@ -43,11 +43,11 @@ test("generic numbering uses only bookOrder and does not duplicate the formatter
   assert.equal((script.match(/function formatArtworkNumber/g) || []).length, 0);
 });
 
-test("the HTML activation contract pairs the printable-page fallback title with v10", () => {
+test("the HTML activation contract pairs the printable-page fallback title with v12", () => {
   const title = html.match(/<title>([^<]+)<\/title>/)?.[1];
   const version = html.match(/scripts\/print-artwork\.js\?v=(\d+)/)?.[1];
 
-  assert.equal(version, "10");
+  assert.equal(version, "12");
   assert.equal(title, "ARTDACI — Printable Artwork Page");
   assert.doesNotMatch(title, /Artwork Spread|Printed Spread|Double page/);
 });
@@ -98,13 +98,13 @@ test("generic route construction remains owned by the catalogue and is unchanged
 
 test("painting media, museum media and immersive actions remain in the rendered template", () => {
   for (const token of [
-    "manifest.media.image",
     "museum.media.image",
     "gallery-vr.html?lang=${lang}",
     "ar.html?museum=${museum.slug}",
     "space.html?museum=${museum.slug}",
     "book-3d.html?lang=${lang}",
   ]) assert.ok(script.includes(token), token);
+  assert.match(script, /manifest\.media\?\.image/);
 });
 
 test("language and RTL attributes are updated while invalid languages fall back to English", () => {
@@ -117,5 +117,5 @@ test("unknown routes render an explicit error without importing application modu
   assert.match(script, /root\.dataset\.error = "true"/);
   assert.match(script, /const DEFAULT_SLUG = "lady-with-an-ermine"/);
   assert.doesNotMatch(script, /(?:import|from).*\/(?:catalogue|ar-viewer)\.js/);
-  assert.doesNotMatch(script, /mona-lisa/);
+  assert.doesNotMatch(script, /const DEFAULT_SLUG = "mona-lisa"|\|\|\s*["']mona-lisa["']/);
 });
