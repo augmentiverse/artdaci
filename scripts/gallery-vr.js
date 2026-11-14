@@ -249,7 +249,7 @@ const MUSEUM_ROOMS = [
     plan: "assets/environments/gallery/images/National Gallery of Art Washington/National Gallery of Art Washington_building_plan/National Gallery of Art Washington_building_plan_{lang}.webp",
     timeline: "assets/environments/gallery/images/National Gallery of Art Washington/National Gallery of Art Washington_timeline/National Gallery of Art Washington_timeline_{lang}.webp",
     facade: "assets/environments/gallery/images/National Gallery of Art Washington/National Gallery of Art Washington_building_plan/National Gallery of Art Washington.webp",
-    model: "assets/environments/gallery/models/museums/National_Gallery_of_Art_Washington.glb",
+    model: "https://media.artdaci.com/shared/museums/national-gallery-of-art-washington/models/main--sha256-b1e51bdc7563.glb",
     displaySize: 6.1,
     colors: [0x142847, 0xc6a35b]
   }

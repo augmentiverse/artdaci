@@ -22,12 +22,12 @@ test('every work resolves to its canonical catalogue identity and local manifest
 test('all twelve thumbnail and fallback references exist in shared assets or isolated Hub media',()=>{
   for(const work of works)for(const key of ['thumbnail','imageFallback']){assert.ok(existsSync(new URL(work[key],root)),work[key]);assert.match(work[key],/^(assets\/artists|geo\/media)\//);}
 });
-test('audio is exact-language: canonical overview or explicitly configured Hub narration',()=>{
+test('audio is exact-language: canonical presentation, overview or configured Hub narration',()=>{
   let available=0;
-  for(const w of works)for(const lang of HUB_LANGUAGES){const media=resolveHubMedia(w,manifest(w.artworkId),lang);if(w.artworkId==='vg01'){assert.equal(media.audio,null);assert.equal(artworkActions(media,lang).some(a=>a.id==='audio'),false);continue;}assert.ok(media.audio,`${w.artworkId}/${lang}`);available++;if(w.artworkId==='vg02'&&lang==='ar')assert.equal(media.audio,w.audioPresentation.ar.path);else assert.match(media.audio,new RegExp(`/audio/${lang}/overview\\.mp3$`));assert.ok(artworkActions(media,lang).some(a=>a.id==='audio'));}
+  for(const w of works)for(const lang of HUB_LANGUAGES){const media=resolveHubMedia(w,manifest(w.artworkId),lang);if(w.artworkId==='vg01'){assert.equal(media.audio,null);assert.equal(artworkActions(media,lang).some(a=>a.id==='audio'),false);continue;}assert.ok(media.audio,`${w.artworkId}/${lang}`);available++;if(w.artworkId==='vg02')assert.match(media.audio,new RegExp(`/audio/${lang}/presentation--sha256-[a-f0-9]{12}\\.mp3$`));else assert.match(media.audio,new RegExp(`/audio/${lang}/overview\\.mp3$`));assert.ok(artworkActions(media,lang).some(a=>a.id==='audio'));}
   assert.equal(available,33);
   const canonicalBedroom={...works.find(w=>w.artworkId==='vg02'),audioPresentation:undefined};
-  assert.equal(resolveHubMedia(canonicalBedroom,manifest('vg02'),'ar').audio,null);
+  assert.match(resolveHubMedia(canonicalBedroom,manifest('vg02'),'ar').audio,/\/audio\/ar\/presentation--sha256-[a-f0-9]{12}\.mp3$/);
 });
 test('planned, wrong-language and wrong-artwork media cannot enable an audio action',()=>{
   const work=works[0],m=structuredClone(manifest('ld01'));m.media.audio.overview.ar.available=false;assert.equal(resolveHubMedia(work,m,'ar').audio,null);

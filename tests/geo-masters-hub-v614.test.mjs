@@ -80,7 +80,7 @@ test('resource slot releases owned geometries, materials and textures exactly on
   slot.dispose();assert.deepEqual(calls,{geometry:2,material:2,texture:2});
 });
 
-test('the twelve capability maps use canonical manifests and exact-language overview audio',()=>{
+test('the twelve capability maps use canonical manifests and exact-language presentation audio when available',()=>{
   assert.equal(MAX_ACTIVE_ARTWORK_MODELS,1);assert.equal(works.length,12);
   for(const {entry,work} of works){
     assert.equal(entry.id,work.artworkId);
@@ -90,29 +90,29 @@ test('the twelve capability maps use canonical manifests and exact-language over
       assert.ok(Object.values(caps).every(value=>CAPABILITY_STATES.includes(value.status)));
       assert.equal(caps.info.status,'available');
       assert.ok(['available','local-fallback'].includes(caps.image.status));
-      const expectedAudioStatus = work.artworkId === 'vg01'
-        ? 'missing'
-        : work.artworkId === 'vg02' && language === 'ar'
-          ? 'local-fallback'
-          : 'available';
+      const expectedAudioStatus = work.artworkId === 'vg01' ? 'missing' : 'available';
       assert.equal(caps.audio.status, expectedAudioStatus);
-      if(caps.audio.status==='local-fallback')assert.equal(caps.audio.url,work.audioPresentation[language].path);
-      else if(caps.audio.status==='missing')assert.equal(caps.audio.url,null);
-      else if(caps.audio.url)assert.match(caps.audio.url,new RegExp(`/audio/${language}/overview\\.mp3$`));
+      if(caps.audio.status==='missing')assert.equal(caps.audio.url,null);
+      else if(work.artworkId==='vg02')assert.match(caps.audio.url,new RegExp(`/audio/${language}/presentation--sha256-[a-f0-9]{12}\\.mp3$`));
+      else if(caps.audio.url)assert.match(caps.audio.url,new RegExp(`/audio/${language}/overview\\.(?:mp3|m4a)$`));
       assert.equal(caps.museum.status,work.museumId?'available':'missing');
     }
   }
 });
 
-test('vg02 Arabic remains an explicit local audio fallback in the opened artwork panel',async()=>{
+test('vg02 Arabic resolves its published presentation and retains the local fallback candidate',async()=>{
   const experience=createArtworkExperience({catalog,artists:hub.artists,language:'ar',rootUrl:root,fetchImpl:async()=>({ok:true,json:async()=>manifest('vg02')})});
   const opened=await experience.open('vg02');
-  assert.equal(opened.capabilities.audio.status,'local-fallback');
-  assert.equal(opened.media.audio,'geo/media/vg02/van-gogh-bedroom-ar.mp3');
-  assert.deepEqual(opened.media.audioCandidates,[{status:'local-fallback',url:opened.media.audio}]);
+  assert.equal(opened.capabilities.audio.status,'available');
+  assert.equal(opened.media.audio,'https://media.artdaci.com/artworks/vg02/audio/ar/presentation--sha256-7cc12cc2979e.mp3');
+  assert.deepEqual(opened.media.audioCandidates,[
+    {status:'available',url:opened.media.audio},
+    {status:'local-fallback',url:'geo/media/vg02/van-gogh-bedroom-ar.mp3'},
+  ]);
   assert.ok(artworkExperienceActions(opened.capabilities,'ar').some(action=>action.id==='audio'));
   assert.match(HUB_LOCAL_AUDIO_COPY.ar,/محلي/);
   assert.equal(manifest('vg02').media.audio.overview.ar,undefined);
+  assert.equal(manifest('vg02').media.audio.presentation.ar.available,true);
   experience.dispose();
 });
 
@@ -132,9 +132,13 @@ test('unavailable, planned, invalid and unsupported media never create active bu
 });
 
 test('AR, Space and VR URLs derive only from the existing immersive resolver',()=>{
-  const supported=new Set(['ld01','ve01','vg01','vg02']);
+  const supported={
+    ar:new Set(['ld01','ve01','ve02','vg01','vg02']),
+    space:new Set(['ld01','ve01','ve02','vg01','vg02']),
+    vr:new Set(['ld01','ve01','vg01','vg02']),
+  };
   for(const {entry,work} of works){const caps=resolveArtworkCapabilities({entry,work,manifest:manifest(entry.id),language:'ar'});
-    for(const kind of ['ar','space','vr']){assert.equal(caps[kind].status,supported.has(entry.id)?'available':'unsupported');if(caps[kind].url){assert.match(caps[kind].url,/&lang=ar$/);assert.ok(caps[kind].url.includes(`../${{ar:'ar.html',space:'space.html',vr:'vr.html'}[kind]}?painting=`));}}
+    for(const kind of ['ar','space','vr']){assert.equal(caps[kind].status,supported[kind].has(entry.id)?'available':'unsupported');if(caps[kind].url){assert.match(caps[kind].url,/&lang=ar$/);assert.ok(caps[kind].url.includes(`../${{ar:'ar.html',space:'space.html',vr:'vr.html'}[kind]}?painting=`));}}
   }
 });
 

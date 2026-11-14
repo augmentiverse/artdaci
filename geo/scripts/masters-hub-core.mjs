@@ -71,10 +71,14 @@ export function hubAudioCandidates(work,manifest,language){
   const valid=manifest?.id===work.artworkId;
   let audio=null;
   if(valid){
-    const key=`audio.overview.${language}`,asset=selectMediaAsset(manifest,key,language);
-    // Deliberately exact-language: never substitute defaultLanguage for Arabic.
-    if(asset?.available===true&&asset.language===language&&['audio/mpeg','audio/mp4'].includes(asset.mimeType)){
-      try{audio=resolveManifestMedia(manifest,key,language);}catch{}
+    // Prefer the concise Masters Hub presentation, then the canonical overview.
+    // Both lookups are exact-language: never substitute defaultLanguage for Arabic.
+    for(const role of ['presentation','overview']){
+      const key=`audio.${role}.${language}`,asset=selectMediaAsset(manifest,key,language);
+      if(asset?.available===true&&asset.language===language&&['audio/mpeg','audio/mp4'].includes(asset.mimeType)){
+        try{audio=resolveManifestMedia(manifest,key,language);}catch{}
+      }
+      if(audio)break;
     }
   }
   const local=localHubAudio(work,language);

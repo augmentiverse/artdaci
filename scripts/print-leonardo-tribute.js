@@ -115,7 +115,7 @@ copy.pages.forEach((page, index) => {
     ${index === 0 ? `
       <figure class="tribute-animated-figure">
         <img class="tribute-leonardo-portrait" src="assets/artists/leonardo-da-vinci/profile/portrait.png" alt="${IMAGE_TEXT[lang].portrait}" loading="eager" decoding="async" />
-        <img class="tribute-atelier-animation" src="assets/artists/leonardo-da-vinci/profile/L%C3%A9onard%20de%20Vinci%20anime%20son%20atelier.gif" alt="${IMAGE_TEXT[lang].atelier}" loading="eager" decoding="async" />
+        <img class="tribute-atelier-animation" src="https://media.artdaci.com/shared/images/artists/leonardo-da-vinci/profile/atelier-animation--sha256-af354c8b94d2.gif" alt="${IMAGE_TEXT[lang].atelier}" loading="eager" decoding="async" />
       </figure>` : `
       <figure class="tribute-finale-figure">
         <img src="assets/artists/leonardo-da-vinci/artworks/mona-lisa/images/davinci-monalisa.png" alt="${IMAGE_TEXT[lang].finale}" loading="lazy" decoding="async" />
