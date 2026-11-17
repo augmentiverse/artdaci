@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0",
+  "status": "published-and-verified",
+  "publishedAt": "2026-11-17",
+  "description": "Reimagined artist scenes and group portraits published for the ARTDACI Reimagined page.",
+  "destinationRoot": "artdaci-r2:artdaci-media",
+  "publicBaseUrl": "https://media.artdaci.com",
+  "resources": [
+    { "source": "assets/artists/reimagined/davinci_painting_monalisa.webp", "destination": "shared/images/artists/reimagined/leonardo-painting-mona-lisa.webp", "bytes": 174430, "sha256": "1c5e9e2110b7d7c76c26672033c9f96f6beb0d50de7048fa30c476e94b815b8b", "mimeType": "image/webp" },
+    { "source": "assets/artists/reimagined/davinci-françois1er-2.webp", "destination": "shared/images/artists/reimagined/leonardo-francis-i.webp", "bytes": 167184, "sha256": "7992111ebd489f6d7bb26a6bd2dbb7ab4989abca2f48eb71a341c0505332f24f", "mimeType": "image/webp" },
+    { "source": "assets/artists/reimagined/mona-lisa-out-of-frame.webp", "destination": "shared/images/artists/reimagined/mona-lisa-beyond-the-frame.webp", "bytes": 772460, "sha256": "fd7fcd7a08bacec8310b879affc5c35acbc28e42a0a445321efb7c0b18b8b302", "mimeType": "image/webp" },
+    { "source": "assets/artists/reimagined/vermeer-girl-with-a-pearl-earring-room.webp", "destination": "shared/images/artists/reimagined/vermeer-girl-with-a-pearl-earring-room.webp", "bytes": 716068, "sha256": "38c2a162a9431963cefc4969f4eff39773e989d1b2bcea036de270881879d275", "mimeType": "image/webp" },
+    { "source": "assets/artists/reimagined/vermeer-girl-with-a-pearl-earring-sitting.webp", "destination": "shared/images/artists/reimagined/vermeer-girl-with-a-pearl-earring-seated.webp", "bytes": 78302, "sha256": "fdc9569bb6c0c0b3cb2a9b96876dceb7016d8aa3c904ff4f29a696600834fb8a", "mimeType": "image/webp" },
+    { "source": "assets/artists/reimagined/vermeer-pieter-maria.webp", "destination": "shared/images/artists/reimagined/vermeer-with-pieter-and-maria.webp", "bytes": 126938, "sha256": "4e1ecfbfe13798695085dd02326047cda22a7b97d913e127aabbe1f1a76e329a", "mimeType": "image/webp" },
+    { "source": "assets/artists/reimagined/vangogh-jo-van-gogh-bonger.webp", "destination": "shared/images/artists/reimagined/van-gogh-and-jo-bonger-standing.webp", "bytes": 102882, "sha256": "db0d9b05204d84d3b32702189bf15e7ff1df86a861971fee7af01d7ac4c90fd4", "mimeType": "image/webp" },
+    { "source": "assets/artists/reimagined/vincent-van-gogh-jo-van-gogh-bonger.webp", "destination": "shared/images/artists/reimagined/van-gogh-and-jo-bonger-portrait.webp", "bytes": 113528, "sha256": "f7e614908f9bb8aefdfeb4a1656acfe9971445819576c611729c9bec73c8c7e6", "mimeType": "image/webp" },
+    { "source": "assets/artists/reimagined/monet-paul-durand-ruel-2.webp", "destination": "shared/images/artists/reimagined/monet-and-paul-durand-ruel-gallery.webp", "bytes": 1093462, "sha256": "2edf753bc4337dde2876358ffe665c6e7066923dcc71030fe1668e494d43989d", "mimeType": "image/webp" },
+    { "source": "assets/artists/reimagined/monet-paul-durand-ruel.webp", "destination": "shared/images/artists/reimagined/monet-and-paul-durand-ruel-portrait.webp", "bytes": 451374, "sha256": "1d5ab842aa6aa8b3c53af493500cc0be263dd5ba497165e123ddff78cb0fb734", "mimeType": "image/webp" },
+    { "source": "assets/artists/groups/images/DaVici_Monet_vanGogh_Vermeer_supporters.png", "destination": "shared/images/groups/reimagined/four-masters-and-supporters.png", "bytes": 2656809, "sha256": "292bd41b087f70845c412dd22f9896d6dc97e201e8eddc5d148672690c07ee78", "mimeType": "image/png" },
+    { "source": "assets/artists/groups/images/Davinci_vanGogh_Vermeer_Monet_standing.png", "destination": "shared/images/groups/reimagined/four-masters-standing.png", "bytes": 2246042, "sha256": "8fcb4fd451363e004d708e60a28524bf5fdb88638d67dbcdb1574c0113768c8e", "mimeType": "image/png" },
+    { "source": "assets/artists/groups/images/Davinci_vanGogh_Vermeer_Monet.png", "destination": "shared/images/groups/reimagined/four-masters-portrait.png", "bytes": 2363903, "sha256": "c28ee8664ce737fef48b0a4f65e2d406fb5b3d23a4797b96e95aa18be80b74ea", "mimeType": "image/png" },
+    { "source": "assets/artists/groups/images/dvvm_places_names_d.png", "destination": "shared/images/groups/reimagined/four-masters-and-places.png", "bytes": 2584244, "sha256": "cba5b3d9201d347a9e15f410d6ac78d91720a129d46d94e3882dd7e7eab67ecf", "mimeType": "image/png" },
+    { "source": "assets/artists/groups/images/dvvm_transparent.png", "destination": "shared/images/groups/reimagined/four-masters-cutout.png", "bytes": 2055789, "sha256": "6d6d4756850bab446679c2bb5566380bf4be3ef16cc53431fe1a095fe0b6f057", "mimeType": "image/png" }
+  ]
+}
+
+

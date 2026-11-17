@@ -10,15 +10,16 @@
 <link rel="alternate" hreflang="fr" href="https://artdaci.com/reimagined.html?lang=fr">
 <link rel="alternate" hreflang="ar" href="https://artdaci.com/reimagined.html?lang=ar">
 <link rel="icon" href="assets/app/artdaci-app-icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="styles/reimagined.css?v=1">
-<script src="scripts/reimagined.js?v=1" defer></script>
+<link rel="stylesheet" href="styles/reimagined.css?v=2">
+<script src="scripts/reimagined.js?v=2" defer></script>
 <title>ARTDACI Reimagined — Art Beyond the Frame</title>
 </head>
 <body>
-<a class="skip-link" href="#collection" data-l10n="skip">Skip to the exhibition</a>
+<a class="skip-link" href="#stills" data-l10n="skip">Skip to the exhibition</a>
 <header class="r-header">
   <a class="r-brand" href="index.html" id="r-home" aria-label="ARTDACI homepage"><img src="assets/varia/artdaci-logo.png" alt="ARTDACI" width="164" height="65"></a>
   <nav aria-label="Exhibition navigation" class="r-nav">
+    <a href="#stills" data-l10n="navGallery">The gallery</a>
     <a href="#collection" data-l10n="navCollection">The films</a>
     <a href="alive.html?lang=en" id="r-book-nav" data-l10n="navBook">The Magical Book</a>
     <a id="r-back" href="index.html" data-l10n="navHome">ARTDACI home</a>
@@ -31,82 +32,214 @@
 </header>
 <main>
 <section class="r-intro" aria-labelledby="r-title">
-  <p class="r-eyebrow"><span aria-hidden="true">✦</span> ART BEYOND THE FRAME</p>
+  <p class="r-eyebrow" data-l10n="heroKicker"><span aria-hidden="true">✦</span> ART BEYOND THE FRAME</p>
   <h1 id="r-title">ARTDACI <em>REIMAGINED</em></h1>
-  <div class="r-film-lead">
-    <video id="r-leading-film" controls playsinline preload="metadata" poster="assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp" aria-label="Mona Lisa emerging from a book">
-      <source src="assets/varia/mona-lisa_out-of-the-book.mp4" type="video/mp4">
-      <a href="assets/varia/mona-lisa_out-of-the-book.mp4" data-l10n="videoFallback">Open the film</a>
-    </video>
+  <p class="r-intro-copy" data-l10n="heroText">Four masters step beyond their canvases through imagined encounters, still images and film.</p>
+  <div class="r-hero-visual">
+    <img src="https://media.artdaci.com/shared/images/artists/reimagined/leonardo-painting-mona-lisa.webp" alt="Leonardo painting Mona Lisa in an imagined Renaissance studio" data-l10n-alt="heroImageAlt" decoding="async" fetchpriority="high">
+    <span data-l10n="heroImageCaption">Leonardo’s studio — imagined beyond the canvas</span>
   </div>
   <div class="r-hero-actions">
-    <a class="r-button r-button-gold" id="r-magic" href="alive.html?lang=en"><span aria-hidden="true">✦</span> <span data-l10n="experience">OPEN THE MAGICAL BOOK</span></a>
-    <a class="r-button" href="#collection"><span data-l10n="explore">DISCOVER THE REIMAGINED WORKS</span> <span aria-hidden="true">↓</span></a>
+    <a class="r-button r-button-gold" href="#stills"><span data-l10n="exploreGallery">ENTER THE IMAGE GALLERY</span> <span aria-hidden="true">↓</span></a>
+    <a class="r-button" id="r-magic" href="alive.html?lang=en"><span aria-hidden="true">✦</span> <span data-l10n="experience">OPEN THE MAGICAL BOOK</span></a>
   </div>
+  <ol class="r-master-list" aria-label="Featured artists" data-l10n-aria="featuredArtists">
+    <li><span>01</span> Leonardo da Vinci</li>
+    <li><span>02</span> Johannes Vermeer</li>
+    <li><span>03</span> Vincent van Gogh</li>
+    <li><span>04</span> Claude Monet</li>
+  </ol>
 </section>
+
+<section class="r-stills" id="stills" aria-labelledby="r-stills-title">
+  <div class="r-section-head">
+    <div><p class="r-eyebrow" data-l10n="galleryKicker">THE IMAGINED ENCOUNTERS</p><h2 id="r-stills-title" data-l10n="galleryTitle">Four masters. Stories beyond the frame.</h2></div>
+    <p data-l10n="galleryDesc">These contemporary images create poetic encounters around the artists and their works. They are artistic interpretations, not historical documents.</p>
+  </div>
+  <nav class="r-artist-index" aria-label="Artists in the image gallery" data-l10n-aria="galleryArtists">
+    <a href="#leonardo-stills"><span>01</span> Leonardo</a>
+    <a href="#vermeer-stills"><span>02</span> Vermeer</a>
+    <a href="#vangogh-stills"><span>03</span> Van Gogh</a>
+    <a href="#monet-stills"><span>04</span> Monet</a>
+    <a href="#group-stills"><span>05</span> <span data-l10n="togetherNav">Together</span></a>
+  </nav>
+
+  <article class="r-artist-story" id="leonardo-stills">
+    <header class="r-story-copy">
+      <span class="r-story-number">01</span>
+      <p class="r-story-era" data-l10n="leonardoEra">THE RENAISSANCE · REIMAGINED</p>
+      <h3>Leonardo da Vinci</h3>
+      <p data-l10n="leonardoStory">The studio becomes a stage: Mona Lisa steps into the room, while Francis I meets the artist at the end of his journey.</p>
+      <a id="r-mona-still" href="print-target.html"><span data-l10n="workLink">Explore the original artwork</span> <span aria-hidden="true">↗</span></a>
+    </header>
+    <div class="r-still-grid r-still-grid-three">
+      <figure class="r-still r-still-feature">
+        <button class="r-still-open" type="button" data-caption-key="leonardoCaption1" data-l10n-aria="openLeonardo1">
+          <img src="https://media.artdaci.com/shared/images/artists/reimagined/leonardo-painting-mona-lisa.webp" alt="Leonardo painting Mona Lisa in an imagined Renaissance studio" data-l10n-alt="leonardoAlt1" loading="lazy" decoding="async">
+        </button>
+        <figcaption data-l10n="leonardoCaption1">Leonardo at work — an imagined studio</figcaption>
+      </figure>
+      <figure class="r-still r-still-portrait">
+        <button class="r-still-open" type="button" data-caption-key="leonardoCaption2" data-l10n-aria="openLeonardo2">
+          <img src="https://media.artdaci.com/shared/images/artists/reimagined/leonardo-francis-i.webp" alt="Leonardo da Vinci speaking with Francis I in an imagined royal room" data-l10n-alt="leonardoAlt2" loading="lazy" decoding="async">
+        </button>
+        <figcaption data-l10n="leonardoCaption2">Leonardo and Francis I — imagined encounter</figcaption>
+      </figure>
+      <figure class="r-still r-still-portrait">
+        <button class="r-still-open" type="button" data-caption-key="leonardoCaption3" data-l10n-aria="openLeonardo3">
+          <img src="https://media.artdaci.com/shared/images/artists/reimagined/mona-lisa-beyond-the-frame.webp" alt="Mona Lisa stepping out of her frame" data-l10n-alt="leonardoAlt3" loading="lazy" decoding="async">
+        </button>
+        <figcaption data-l10n="leonardoCaption3">Mona Lisa — beyond the frame</figcaption>
+      </figure>
+    </div>
+  </article>
+
+  <article class="r-artist-story" id="vermeer-stills">
+    <header class="r-story-copy">
+      <span class="r-story-number">02</span>
+      <p class="r-story-era" data-l10n="vermeerEra">DELFT LIGHT · REIMAGINED</p>
+      <h3>Johannes Vermeer</h3>
+      <p data-l10n="vermeerStory">Delft interiors open around the Girl with a Pearl Earring, Vermeer and the patrons associated with his carefully observed world.</p>
+      <a id="r-vermeer-still" href="print-vermeer-girl-with-a-pearl-earring.html"><span data-l10n="workLink">Explore the original artwork</span> <span aria-hidden="true">↗</span></a>
+    </header>
+    <div class="r-still-grid r-still-grid-three">
+      <figure class="r-still r-still-feature r-still-tall">
+        <button class="r-still-open" type="button" data-caption-key="vermeerCaption1" data-l10n-aria="openVermeer1">
+          <img src="https://media.artdaci.com/shared/images/artists/reimagined/vermeer-girl-with-a-pearl-earring-room.webp" alt="Girl with a Pearl Earring standing in an imagined Delft interior" data-l10n-alt="vermeerAlt1" loading="lazy" decoding="async">
+        </button>
+        <figcaption data-l10n="vermeerCaption1">The girl enters Vermeer’s room</figcaption>
+      </figure>
+      <figure class="r-still r-still-portrait">
+        <button class="r-still-open" type="button" data-caption-key="vermeerCaption2" data-l10n-aria="openVermeer2">
+          <img src="https://media.artdaci.com/shared/images/artists/reimagined/vermeer-girl-with-a-pearl-earring-seated.webp" alt="Girl with a Pearl Earring seated beside a table" data-l10n-alt="vermeerAlt2" loading="lazy" decoding="async">
+        </button>
+        <figcaption data-l10n="vermeerCaption2">Girl with a Pearl Earring — seated</figcaption>
+      </figure>
+      <figure class="r-still r-still-wide">
+        <button class="r-still-open" type="button" data-caption-key="vermeerCaption3" data-l10n-aria="openVermeer3">
+          <img src="https://media.artdaci.com/shared/images/artists/reimagined/vermeer-with-pieter-and-maria.webp" alt="Vermeer presenting a painting to Pieter van Ruijven and Maria de Knuijt" data-l10n-alt="vermeerAlt3" loading="lazy" decoding="async">
+        </button>
+        <figcaption data-l10n="vermeerCaption3">Vermeer and his patrons — imagined presentation</figcaption>
+      </figure>
+    </div>
+  </article>
+
+  <article class="r-artist-story" id="vangogh-stills">
+    <header class="r-story-copy">
+      <span class="r-story-number">03</span>
+      <p class="r-story-era" data-l10n="vangoghEra">A LEGACY IN COLOUR · REIMAGINED</p>
+      <h3>Vincent van Gogh</h3>
+      <p data-l10n="vangoghStory">An imagined studio portrait brings Vincent together with Jo van Gogh-Bonger, whose work later helped introduce his art to the world.</p>
+      <a id="r-vangogh-still" href="print-van-gogh.html"><span data-l10n="workLink">Explore the original artwork</span> <span aria-hidden="true">↗</span></a>
+    </header>
+    <div class="r-still-grid r-still-grid-two">
+      <figure class="r-still r-still-portrait">
+        <button class="r-still-open" type="button" data-caption-key="vangoghCaption1" data-l10n-aria="openVangogh1">
+          <img src="https://media.artdaci.com/shared/images/artists/reimagined/van-gogh-and-jo-bonger-standing.webp" alt="Vincent van Gogh and Jo van Gogh-Bonger standing in an imagined studio" data-l10n-alt="vangoghAlt1" loading="lazy" decoding="async">
+        </button>
+        <figcaption data-l10n="vangoghCaption1">Vincent and Jo — imagined studio portrait</figcaption>
+      </figure>
+      <figure class="r-still r-still-wide">
+        <button class="r-still-open" type="button" data-caption-key="vangoghCaption2" data-l10n-aria="openVangogh2">
+          <img src="https://media.artdaci.com/shared/images/artists/reimagined/van-gogh-and-jo-bonger-portrait.webp" alt="Close imagined portrait of Vincent van Gogh and Jo van Gogh-Bonger" data-l10n-alt="vangoghAlt2" loading="lazy" decoding="async">
+        </button>
+        <figcaption data-l10n="vangoghCaption2">The artist and the keeper of his legacy</figcaption>
+      </figure>
+    </div>
+  </article>
+
+  <article class="r-artist-story" id="monet-stills">
+    <header class="r-story-copy">
+      <span class="r-story-number">04</span>
+      <p class="r-story-era" data-l10n="monetEra">IMPRESSIONISM · REIMAGINED</p>
+      <h3>Claude Monet</h3>
+      <p data-l10n="monetStory">Monet and the art dealer Paul Durand-Ruel meet within rooms shaped by the paintings their collaboration helped bring to new audiences.</p>
+      <a id="r-monet-still" href="print-monet-impression-sunrise.html"><span data-l10n="workLink">Explore the original artwork</span> <span aria-hidden="true">↗</span></a>
+    </header>
+    <div class="r-still-grid r-still-grid-two">
+      <figure class="r-still r-still-feature">
+        <button class="r-still-open" type="button" data-caption-key="monetCaption1" data-l10n-aria="openMonet1">
+          <img src="https://media.artdaci.com/shared/images/artists/reimagined/monet-and-paul-durand-ruel-gallery.webp" alt="Claude Monet and Paul Durand-Ruel in an imagined gallery of water lilies" data-l10n-alt="monetAlt1" loading="lazy" decoding="async">
+        </button>
+        <figcaption data-l10n="monetCaption1">Monet and Durand-Ruel — the gallery</figcaption>
+      </figure>
+      <figure class="r-still r-still-portrait">
+        <button class="r-still-open" type="button" data-caption-key="monetCaption2" data-l10n-aria="openMonet2">
+          <img src="https://media.artdaci.com/shared/images/artists/reimagined/monet-and-paul-durand-ruel-portrait.webp" alt="Claude Monet and Paul Durand-Ruel in an imagined office portrait" data-l10n-alt="monetAlt2" loading="lazy" decoding="async">
+        </button>
+        <figcaption data-l10n="monetCaption2">Monet and Durand-Ruel — imagined portrait</figcaption>
+      </figure>
+    </div>
+  </article>
+
+  <article class="r-group-story" id="group-stills">
+    <header class="r-group-copy">
+      <p class="r-eyebrow" data-l10n="groupKicker">BEYOND TIME · TOGETHER</p>
+      <h3 data-l10n="groupTitle">The four masters, in one imagined world.</h3>
+      <p data-l10n="groupStory">These collective portraits bring Leonardo, Monet, Van Gogh and Vermeer together across centuries, places and artistic movements.</p>
+    </header>
+    <div class="r-group-grid">
+      <figure class="r-still r-group-photo r-group-photo-hero">
+        <button class="r-still-open" type="button" data-caption-key="groupCaption1" data-l10n-aria="openGroup1">
+          <img src="https://media.artdaci.com/shared/images/groups/reimagined/four-masters-and-supporters.png" alt="Leonardo, Monet, Van Gogh and Vermeer gathered with people connected to their stories" data-l10n-alt="groupAlt1" loading="lazy" decoding="async">
+        </button>
+        <figcaption data-l10n="groupCaption1">Four masters and the people who carried their stories</figcaption>
+      </figure>
+      <figure class="r-still r-group-photo r-group-photo-standing">
+        <button class="r-still-open" type="button" data-caption-key="groupCaption2" data-l10n-aria="openGroup2">
+          <img src="https://media.artdaci.com/shared/images/groups/reimagined/four-masters-standing.png" alt="Leonardo, Monet, Van Gogh and Vermeer standing in an imagined shared studio" data-l10n-alt="groupAlt2" loading="lazy" decoding="async">
+        </button>
+        <figcaption data-l10n="groupCaption2">Four painters — one imagined studio</figcaption>
+      </figure>
+      <figure class="r-still r-group-photo r-group-photo-portrait">
+        <button class="r-still-open" type="button" data-caption-key="groupCaption3" data-l10n-aria="openGroup3">
+          <img src="https://media.artdaci.com/shared/images/groups/reimagined/four-masters-portrait.png" alt="Close collective portrait of Leonardo, Monet, Van Gogh and Vermeer" data-l10n-alt="groupAlt3" loading="lazy" decoding="async">
+        </button>
+        <figcaption data-l10n="groupCaption3">A portrait beyond chronology</figcaption>
+      </figure>
+      <figure class="r-still r-group-photo r-group-photo-places">
+        <button class="r-still-open" type="button" data-caption-key="groupCaption4" data-l10n-aria="openGroup4">
+          <img src="https://media.artdaci.com/shared/images/groups/reimagined/four-masters-and-places.png" alt="The four painters placed before landmarks connected to their artistic stories" data-l10n-alt="groupAlt4" loading="lazy" decoding="async">
+        </button>
+        <figcaption data-l10n="groupCaption4">A journey through the places of their stories</figcaption>
+      </figure>
+      <figure class="r-still r-group-photo r-group-photo-cutout">
+        <button class="r-still-open" type="button" data-caption-key="groupCaption5" data-l10n-aria="openGroup5">
+          <img src="https://media.artdaci.com/shared/images/groups/reimagined/four-masters-cutout.png" alt="Cutout portrait of Leonardo, Monet, Van Gogh and Vermeer" data-l10n-alt="groupAlt5" loading="lazy" decoding="async">
+        </button>
+        <figcaption data-l10n="groupCaption5">The four masters — collective study</figcaption>
+      </figure>
+    </div>
+  </article>
+</section>
+
 <section class="r-collection" id="collection" aria-labelledby="r-collection-title">
   <div class="r-section-head">
-    <div><p class="r-eyebrow" data-l10n="sectionKicker">CINEMATIC INTERPRETATIONS</p><h2 id="r-collection-title" data-l10n="sectionTitle">Four masters. New ways of seeing.</h2></div>
+    <div><p class="r-eyebrow" data-l10n="sectionKicker">FROM STILL IMAGE TO MOTION</p><h2 id="r-collection-title" data-l10n="sectionTitle">Four masters. New ways of seeing.</h2></div>
     <p data-l10n="sectionDesc">These moving artworks are contemporary interpretations, not historical recordings. Each entry links back to the painting and its documented story.</p>
   </div>
   <div class="r-grid">
     <article class="r-art" data-artist="leonardo">
-      <div class="r-video">
-        <video controls playsinline preload="none" poster="assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp" aria-label="An artistic animation of Leonardo painting the Mona Lisa">
-          <source src="assets/animations/artdaci-Mona_Lisa_animation.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="r-art-copy">
-        <span class="r-counter">01 · LEONARDO DA VINCI</span>
-        <h3 data-l10n="monaTitle">Mona Lisa</h3>
-        <p data-l10n="monaText">An artistic reimagining of Leonardo at work.</p>
-        <a id="r-mona" href="print-target.html"><span data-l10n="workLink">Explore the original artwork</span> <span aria-hidden="true">↗</span></a>
-      </div>
+      <div class="r-video"><video controls playsinline preload="none" poster="assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp" aria-label="An artistic animation of Leonardo painting the Mona Lisa" data-l10n-aria="monaVideoLabel"><source src="assets/animations/artdaci-Mona_Lisa_animation.mp4" type="video/mp4"></video></div>
+      <div class="r-art-copy"><span class="r-counter">01 · LEONARDO DA VINCI</span><h3 data-l10n="monaTitle">Mona Lisa</h3><p data-l10n="monaText">An artistic reimagining of Leonardo at work.</p><a id="r-mona" href="print-target.html"><span data-l10n="workLink">Explore the original artwork</span> <span aria-hidden="true">↗</span></a></div>
     </article>
     <article class="r-art" data-artist="vermeer">
-      <div class="r-video">
-        <video controls playsinline preload="none" poster="assets/artists/johannes-vermeer/collection/girl-with-a-pearl-earring-vermeer.webp" aria-label="An artistic animation of Girl with a Pearl Earring">
-          <source src="assets/animations/artdaci-girl-pearl-earring_animation.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="r-art-copy">
-        <span class="r-counter">02 · JOHANNES VERMEER</span>
-        <h3 data-l10n="vermeerTitle">Girl with a Pearl Earring</h3>
-        <p data-l10n="vermeerText">A moving interpretation of an enigmatic portrait.</p>
-        <a id="r-vermeer" href="print-vermeer-girl-with-a-pearl-earring.html"><span data-l10n="workLink">Explore the original artwork</span> <span aria-hidden="true">↗</span></a>
-      </div>
+      <div class="r-video"><video controls playsinline preload="none" poster="assets/artists/johannes-vermeer/collection/girl-with-a-pearl-earring-vermeer.webp" aria-label="An artistic animation of Girl with a Pearl Earring" data-l10n-aria="vermeerVideoLabel"><source src="assets/animations/artdaci-girl-pearl-earring_animation.mp4" type="video/mp4"></video></div>
+      <div class="r-art-copy"><span class="r-counter">02 · JOHANNES VERMEER</span><h3 data-l10n="vermeerTitle">Girl with a Pearl Earring</h3><p data-l10n="vermeerText">A moving interpretation of an enigmatic portrait.</p><a id="r-vermeer" href="print-vermeer-girl-with-a-pearl-earring.html"><span data-l10n="workLink">Explore the original artwork</span> <span aria-hidden="true">↗</span></a></div>
     </article>
     <article class="r-art" data-artist="vangogh">
-      <div class="r-video">
-        <video controls playsinline preload="none" poster="assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp" aria-label="An artistic animation of Van Gogh">
-          <source src="assets/animations/artdaci-Van_Gogh_animation.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="r-art-copy">
-        <span class="r-counter">03 · VINCENT VAN GOGH</span>
-        <h3 data-l10n="vangoghTitle">Van Gogh</h3>
-        <p data-l10n="vangoghText">A contemporary moving tribute to the painter.</p>
-        <a id="r-vangogh" href="print-van-gogh.html"><span data-l10n="workLink">Explore the original artwork</span> <span aria-hidden="true">↗</span></a>
-      </div>
+      <div class="r-video"><video controls playsinline preload="none" poster="assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp" aria-label="An artistic animation of Van Gogh" data-l10n-aria="vangoghVideoLabel"><source src="assets/animations/artdaci-Van_Gogh_animation.mp4" type="video/mp4"></video></div>
+      <div class="r-art-copy"><span class="r-counter">03 · VINCENT VAN GOGH</span><h3 data-l10n="vangoghTitle">Van Gogh</h3><p data-l10n="vangoghText">A contemporary moving tribute to the painter.</p><a id="r-vangogh" href="print-van-gogh.html"><span data-l10n="workLink">Explore the original artwork</span> <span aria-hidden="true">↗</span></a></div>
     </article>
     <article class="r-art" data-artist="monet">
-      <div class="r-video">
-        <video controls playsinline preload="none" poster="assets/artists/claude-monet/collection/impression-sunrise-monet.webp" aria-label="An artistic animation of Impression, Sunrise">
-          <source src="assets/animations/artdaci-Impression_Sunrise_animation.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="r-art-copy">
-        <span class="r-counter">04 · CLAUDE MONET</span>
-        <h3 data-l10n="monetTitle">Impression, Sunrise</h3>
-        <p data-l10n="monetText">Light and atmosphere interpreted through motion.</p>
-        <a id="r-monet" href="print-monet-impression-sunrise.html"><span data-l10n="workLink">Explore the original artwork</span> <span aria-hidden="true">↗</span></a>
-      </div>
+      <div class="r-video"><video controls playsinline preload="none" poster="assets/artists/claude-monet/collection/impression-sunrise-monet.webp" aria-label="An artistic animation of Impression, Sunrise" data-l10n-aria="monetVideoLabel"><source src="assets/animations/artdaci-Impression_Sunrise_animation.mp4" type="video/mp4"></video></div>
+      <div class="r-art-copy"><span class="r-counter">04 · CLAUDE MONET</span><h3 data-l10n="monetTitle">Impression, Sunrise</h3><p data-l10n="monetText">Light and atmosphere interpreted through motion.</p><a id="r-monet" href="print-monet-impression-sunrise.html"><span data-l10n="workLink">Explore the original artwork</span> <span aria-hidden="true">↗</span></a></div>
     </article>
   </div>
 </section>
 <section class="r-outro" aria-labelledby="r-outro-title">
   <p class="r-eyebrow" data-l10n="outroKicker">FROM IMAGINATION TO EXPLORATION</p>
-  <h2 id="r-outro-title" data-l10n="outroTitle">Beyond motion, into the world of art.</h2>
+  <h2 id="r-outro-title" data-l10n="outroTitle">Beyond the frame, into the world of art.</h2>
   <div class="r-outro-actions">
     <a id="r-to-book" href="alive.html?lang=en" data-l10n="outroBook">The Magical Book ↗</a>
     <a id="r-to-3d" href="3d/?lang=en" data-l10n="outro3d">Explore in 3D ↗</a>
@@ -115,5 +248,10 @@
 </section>
 </main>
 <footer class="r-footer"><span data-l10n="disclaimer">ARTDACI Reimagined is an artistic and educational reinterpretation. It is not an official museum reproduction or a historical reconstruction.</span><span>ARTDACI · ART BEYOND THE FRAME</span></footer>
+
+<dialog class="r-lightbox" id="r-lightbox" aria-labelledby="r-lightbox-caption">
+  <button class="r-lightbox-close" type="button" data-l10n-aria="closeImage" aria-label="Close image"><span aria-hidden="true">×</span></button>
+  <figure><img id="r-lightbox-image" alt=""><figcaption id="r-lightbox-caption"></figcaption></figure>
+</dialog>
 </body>
 </html>
