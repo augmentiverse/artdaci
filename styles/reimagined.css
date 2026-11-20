@@ -205,3 +205,118 @@ html[dir=rtl] .r-cinema-item.is-selected{box-shadow:inset -3px 0 0 #ffe2ad}
 @media(prefers-reduced-motion:reduce){
   .r-cinema-item{transition:none}
 }
+
+
+/* Home-page heritage gold edges and matching navigation header proportions.
+   Reference: index-fr.html, .hv2-header / .hv2-brand (home-v2,
+   artdaci-compact-logo and home-petrol-heritage). Blue gallery retained. */
+:root{
+  --line:rgba(230,194,128,.44);
+  --gold:#e3c17f;
+  --gold-bright:#f4d89a;
+}
+.r-header{
+  box-sizing:border-box;
+  width:min(calc(100% - 32px),1440px);
+  min-height:78px;
+  margin-inline:auto;
+  padding:6px clamp(9px,1.1vw,17px);
+  gap:clamp(9px,1.5vw,23px);
+  border-bottom:1px solid rgba(226,194,129,.54);
+  background:linear-gradient(110deg,rgba(38,84,115,.97),rgba(54,108,139,.97) 52%,rgba(32,77,110,.97));
+  box-shadow:0 13px 29px rgba(13,43,68,.22),inset 0 1px rgba(243,229,189,.1);
+}
+.r-header::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:0;
+  height:2px;
+  pointer-events:none;
+  opacity:.85;
+  background:linear-gradient(90deg,transparent,#d4ba83 18%,#f4d89a 49%,#90b7cb 84%,transparent);
+}
+.r-brand{
+  width:clamp(142px,13.8vw,174px);
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  justify-content:flex-start;
+  padding:2px 3px;
+}
+.r-brand img{
+  display:block;
+  width:100%;
+  height:clamp(53px,5.4vw,67px);
+  max-height:none;
+  object-fit:contain;
+  filter:drop-shadow(0 4px 7px rgba(3,21,40,.25));
+}
+.r-nav{justify-content:center;flex-wrap:nowrap;min-width:0;gap:clamp(8px,1.25vw,18px)}
+.r-nav a,.r-lang a{font-size:clamp(.74rem,.89vw,.82rem);letter-spacing:.02em}
+.r-nav a{
+  border-bottom:1px solid transparent;
+  transition:color .2s,border-color .2s;
+}
+.r-nav a:hover,.r-nav a:focus-visible{border-bottom-color:#e3c17f}
+.r-lang{gap:clamp(4px,.8vw,11px);flex-shrink:0}
+.r-lang a[aria-current=page]{
+  color:#fff0cc;
+  background:rgba(228,191,122,.17);
+  border-color:rgba(233,208,160,.48);
+}
+.r-intro{
+  margin:18px clamp(14px,3vw,44px) 0;
+  border:1px solid rgba(230,194,128,.5);
+  border-radius:clamp(16px,2vw,26px);
+  box-shadow:0 16px 35px rgba(14,46,73,.14),inset 0 1px rgba(248,225,176,.09);
+}
+.r-stills,.r-collection,.r-outro,.r-footer{border-top-color:rgba(230,194,128,.46)}
+.r-master-list,.r-artist-index{border-color:rgba(230,194,128,.42)}
+.r-master-list li,.r-artist-index a{border-color:rgba(230,194,128,.3)}
+.r-artist-index a:hover{background:rgba(233,194,124,.1)}
+.r-story-number{border-color:rgba(241,205,142,.61)}
+.r-still,.r-art{border-color:rgba(230,194,128,.45)}
+.r-cinema-feature,.r-cinema-catalog{border-color:rgba(230,194,128,.53)}
+.r-cinema-filter{border-color:rgba(230,194,128,.43)}
+.r-cinema-item{border-color:rgba(230,194,128,.31)}
+.r-cinema-item:hover{border-color:rgba(244,216,154,.72)}
+.r-featured-film{border-color:rgba(244,216,154,.78)}
+.r-outro-actions a{border-color:rgba(230,194,128,.48)}
+html{scroll-padding-top:96px}
+@media(max-width:920px){
+  .r-header{
+    flex-wrap:wrap;
+    align-items:center;
+    min-height:0;
+    padding:7px 10px 5px;
+    gap:2px 12px;
+  }
+  .r-brand{width:clamp(142px,19vw,158px)}
+  .r-brand img{height:clamp(53px,6.7vw,62px)}
+  .r-nav{
+    order:3;
+    width:100%;
+    padding:4px 2px 7px;
+    justify-content:flex-start;
+    gap:clamp(11px,2vw,22px);
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .r-nav::-webkit-scrollbar{display:none}
+  .r-lang{margin-inline-start:auto}
+  html{scroll-padding-top:134px}
+}
+@media(max-width:790px){
+  .r-header{width:calc(100% - 24px);padding:7px 10px 5px}
+  .r-brand{width:clamp(119px,23vw,149px)}
+  .r-brand img{height:clamp(44px,10vw,56px)}
+  .r-nav{gap:16px;padding:4px 2px 7px}
+  html{scroll-padding-top:125px}
+}
+@media(max-width:420px){
+  .r-header{padding:6px}
+  .r-brand{width:115px}
+  .r-brand img{height:43px}
+  .r-nav{gap:13px}
+  html{scroll-padding-top:115px}
+}
