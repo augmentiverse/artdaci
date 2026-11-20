@@ -10,9 +10,9 @@
   <link rel="alternate" hreflang="fr" href="https://artdaci.com/alive.html?lang=fr" />
   <link rel="alternate" hreflang="ar" href="https://artdaci.com/alive.html?lang=ar" />
   <link rel="icon" href="assets/app/artdaci-app-icon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="styles/alive.css?v=1" />
+  <link rel="stylesheet" href="styles/alive.css?v=2" />
   <title>ARTDACI — Art Comes Alive · The Gallery Reimagined</title>
-  <script src="scripts/alive.js?v=1" defer></script>
+  <script src="scripts/alive.js?v=2" defer></script>
 
 <link rel="stylesheet" href="styles/artdaci-brand-system.css?v=1">
 </head>
@@ -57,6 +57,10 @@
         <button type="button" id="open-book" class="action-primary"><span aria-hidden="true">✦</span> <span data-i18n="open">OPEN THE BOOK</span></button>
         <button type="button" id="skip-animation" class="action-quiet"><span data-i18n="skipAnimation">Skip animation</span> <span aria-hidden="true">→</span></button>
         <button type="button" id="replay-animation" class="action-quiet" hidden><span aria-hidden="true">↻</span> <span data-i18n="replay">Watch again</span></button>
+      </div>
+      <div id="book-transition" class="book-transition" hidden>
+        <p data-i18n="transitionBook">The Mona Lisa has emerged. The Living Book is opening…</p>
+        <a id="book-transition-link" class="action-primary" href="book-3d.html?lang=en"><span aria-hidden="true">✦</span> <span data-i18n="continueBook">ENTER THE LIVING 3D BOOK</span> <span aria-hidden="true">↗</span></a>
       </div>
       <p class="screen-reader" id="alive-status" role="status" aria-live="polite" aria-atomic="true"></p>
 
