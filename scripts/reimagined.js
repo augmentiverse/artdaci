@@ -97,21 +97,9 @@
     });
   }
 
-  // The cinema selection contains the 12 VR films plus this page’s featured film.
+  // The 12 VR cinema films appear in the playlist; Graal is featured separately above.
   // in scripts/gallery-vr.js. Keep the paths and order aligned with the VR cinema.
   const cinemaFilms = [
-
-  {
-    "id": "artdaci-graal-featured",
-    "group": "together",
-    "title": {
-      "en": "ARTDACI Graal — The Four Masters",
-      "fr": "Le Graal ARTDACI — les quatre maîtres",
-      "ar": "كأس ARTDACI — الفنانون الأربعة"
-    },
-    "src": "https://media.artdaci.com/shared/videos/reimagined/dvvm_graal_artdaci.mp4",
-    "poster": "https://media.artdaci.com/shared/images/groups/reimagined/four-masters-standing.png"
-  },
   {
     "id": "four-painters-intro",
     "group": "together",
