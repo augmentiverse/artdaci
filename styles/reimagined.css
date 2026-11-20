@@ -109,3 +109,99 @@ html{scroll-padding-top:74px}
   .r-intro h1{font-size:clamp(2rem,8vw,2.5rem)}
   .r-intro-copy{font-size:.93rem}
 }
+
+
+/* ARTDACI REIMAGINED · brighter blue gallery palette.
+   The exhibition is predominantly medium blues; dark surfaces remain only
+   behind video/images, where they improve legibility and visual focus. */
+:root{
+  --bg:#244e6c;
+  --panel:#315e7d;
+  --panel2:#3c7193;
+  --ivory:#f4f8fc;
+  --gold:#f0d19a;
+  --gold-bright:#ffe3ad;
+  --line:rgba(186,222,240,.34);
+  --muted:#d3e5f0;
+  --ink:#102b42;
+  --blue-haze:#b9e6f6;
+}
+body{
+  color:var(--ivory);
+  background:
+    radial-gradient(ellipse at 12% 5%,rgba(122,196,229,.3),transparent 38rem),
+    radial-gradient(ellipse at 93% 35%,rgba(109,168,212,.19),transparent 42rem),
+    linear-gradient(155deg,#285575 0%,#35698c 38%,#2c5777 72%,#234b68 100%);
+}
+body::before{opacity:.23;background-image:linear-gradient(rgba(228,245,255,.052) 1px,transparent 1px),linear-gradient(90deg,rgba(228,245,255,.042) 1px,transparent 1px)}
+.r-header{
+  background:rgba(31,69,99,.95);
+  border-bottom:1px solid rgba(187,223,241,.4);
+  box-shadow:0 6px 25px rgba(11,35,58,.13);
+}
+.r-nav a,.r-lang a{color:#eef7ff}
+.r-nav a:hover,.r-lang a:hover,.r-lang [aria-current=page]{color:#ffdea4}
+.r-lang a[aria-current=page]{background:rgba(138,191,224,.19)}
+.r-intro{
+  background:
+    radial-gradient(ellipse at 50% 0%,rgba(150,207,236,.23),transparent 62%),
+    linear-gradient(180deg,rgba(55,119,160,.27),rgba(55,119,160,0));
+}
+.r-intro h1{color:#f5faff;text-shadow:0 4px 22px rgba(21,55,81,.2)}
+.r-intro h1 em{color:#ffe3ad;text-shadow:0 0 32px rgba(245,202,133,.28)}
+.r-intro-copy{color:#e1f0fa}
+.r-eyebrow,.r-story-era,.r-counter{color:#ffe0a7}
+.r-button:not(.r-button-gold){
+  color:#f6fbff;background:#366b8e;border-color:rgba(198,231,248,.48);
+}
+.r-button:not(.r-button-gold):hover{background:#477f9e}
+.r-master-list{border-top-color:rgba(205,233,247,.36)}
+.r-master-list li{border-color:rgba(207,234,247,.27)}
+.r-stills{
+  background:linear-gradient(180deg,rgba(29,73,107,.13),rgba(73,134,171,.075) 45%,transparent);
+}
+.r-collection{
+  background:linear-gradient(180deg,rgba(91,149,185,.14),rgba(28,72,106,.045));
+}
+.r-section-head>p,.r-group-copy>p:last-child,.r-story-copy>p:not(.r-story-era),.r-art-copy p{color:#d8e9f2}
+.r-artist-index{border-color:rgba(205,236,252,.38)}
+.r-artist-index a{color:#f2f9ff;border-color:rgba(205,236,252,.29)}
+.r-artist-index a:hover{color:#fff0ca;background:rgba(168,217,241,.18)}
+.r-artist-index span{color:#ffe1a7}
+.r-story-number{background:rgba(126,188,226,.21);border-color:rgba(218,238,251,.49);color:#ffe2a8}
+.r-story-copy h3,.r-group-copy h3{color:#f7fbff}
+.r-still,.r-art{border-color:rgba(189,228,247,.42)}
+.r-still{background:#234862;box-shadow:0 15px 38px rgba(14,42,67,.19)}
+.r-art{background:linear-gradient(145deg,#3d7392,#2c5878)}
+.r-cinema-feature{
+  background:linear-gradient(150deg,#407596,#2c5575);
+  border-color:rgba(221,240,251,.43);
+  box-shadow:0 17px 48px rgba(15,49,76,.24);
+}
+.r-cinema-screen{background:radial-gradient(ellipse at center,#285573,#132d46 75%)}
+.r-cinema-catalog{
+  background:linear-gradient(150deg,rgba(65,115,148,.97),rgba(45,88,121,.98));
+  border-color:rgba(191,229,248,.38);
+  box-shadow:0 12px 34px rgba(20,55,80,.16);
+}
+.r-cinema-filter{color:#f1f8fc;background:#335f81;border-color:rgba(210,232,244,.35)}
+.r-cinema-filter:hover{background:#4b83a4}
+.r-cinema-filter.is-active{background:#f0d19a;color:#172e45;border-color:#ffe0a6}
+.r-cinema-item{color:#f5faff;background:#305c7e;border-color:rgba(195,224,241,.24)}
+.r-cinema-item:hover{background:#457a9a;border-color:rgba(224,240,251,.61)}
+.r-cinema-item.is-selected{background:#5284a3;border-color:#ffe2ad;box-shadow:inset 3px 0 0 #ffe2ad}
+.r-cinema-item-kind,.r-cinema-catalog-head span{color:#ffe0a8}
+html[dir=rtl] .r-cinema-item.is-selected{box-shadow:inset -3px 0 0 #ffe2ad}
+.r-featured-film{
+  background:linear-gradient(140deg,rgba(133,195,227,.59),#376b8d 36%,#285573 79%,rgba(240,209,154,.45));
+  border-color:rgba(245,219,172,.75);
+  box-shadow:0 16px 43px rgba(15,52,78,.26),0 0 32px rgba(183,222,241,.11);
+}
+.r-featured-meta strong{color:#fff7e9}
+.r-featured-duration{color:#ddebf5}
+.r-outro-actions a{background:#386e90;color:#f7fbff;border-color:rgba(191,229,248,.48)}
+.r-outro-actions a:hover{background:#4b84a5}
+.r-footer{background:rgba(27,66,98,.24);color:#d2e6f1;border-top-color:rgba(188,222,241,.4)}
+@media(prefers-reduced-motion:reduce){
+  .r-cinema-item{transition:none}
+}
