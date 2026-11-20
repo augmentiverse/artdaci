@@ -17,7 +17,7 @@
       answerDefaultTitle:"Start with a question.",
       answerDefault:"Look at the smile, the hands and the mysterious landscape. What do you notice first?",
       learnMore:"Explore the artwork",footer:"ARTDACI · Art beyond the frame. The printed book and the digital collection can be explored independently.",
-      gallery:"EXPLORE ARTDACI REIMAGINED",livingBook:"Explore the interactive Living Book",
+      gallery:"EXPLORE ARTDACI REIMAGINED",livingBook:"Explore the interactive Living Book",continueBook:"ENTER THE LIVING 3D BOOK",transitionBook:"The Mona Lisa has emerged. The Living Book is opening…",
       playing:"The book is open. The Mona Lisa is emerging.",complete:"The Mona Lisa has emerged. Continue to artwork discovery, spatial AR or close looking.",
       noVideo:"The video is unavailable. You can still explore the artwork and its 3D experience.",
       questions:{
@@ -42,7 +42,7 @@
       answerLabel:"ARTDACI · ÉCLAIRAGE SUR L’ŒUVRE",answerDefaultTitle:"Commencez par une question.",
       answerDefault:"Observez le sourire, les mains et le paysage mystérieux. Que remarquez-vous en premier ?",
       learnMore:"Explorer l’œuvre",footer:"ARTDACI · L’art au-delà du cadre. Le livre imprimé et la collection numérique se découvrent indépendamment.",
-      gallery:"DÉCOUVRIR ARTDACI REIMAGINED",livingBook:"Découvrir le Livre vivant interactif",
+      gallery:"DÉCOUVRIR ARTDACI REIMAGINED",livingBook:"Découvrir le Livre vivant interactif",continueBook:"ENTRER DANS LE LIVRE VIVANT 3D",transitionBook:"La Joconde a jailli du livre. Ouverture du Livre vivant…",
       playing:"Le livre s’ouvre. La Joconde émerge de ses pages.",complete:"La Joconde est apparue. Explorez son histoire, la réalité augmentée ou ses détails.",
       noVideo:"La vidéo est indisponible. L’œuvre et son expérience 3D restent accessibles.",
       questions:{
@@ -67,7 +67,7 @@
       answerLabel:"ARTDACI · تأملات فنية",answerDefaultTitle:"ابدأ بسؤال.",
       answerDefault:"تأمّل الابتسامة واليدين والمشهد الطبيعي الغامض. ما أول تفصيل يجذب انتباهك؟",
       learnMore:"استكشف اللوحة",footer:"ARTDACI · الفن أبعد من الإطار. يمكن استكشاف الكتاب المطبوع والمجموعة الرقمية بصورة مستقلة.",
-      gallery:"اكتشف ARTDACI REIMAGINED",livingBook:"استكشف الكتاب الحي التفاعلي",
+      gallery:"اكتشف ARTDACI REIMAGINED",livingBook:"استكشف الكتاب الحي التفاعلي",continueBook:"الدخول إلى الكتاب الحي ثلاثي الأبعاد",transitionBook:"خرجت الموناليزا من الكتاب. يتم الآن فتح الكتاب الحي…",
       playing:"يُفتح الكتاب وتنبثق الموناليزا من صفحاته.",complete:"ظهرت الموناليزا. تابع استكشاف تاريخ اللوحة أو تجربة الواقع المعزز أو تفاصيلها.",
       noVideo:"تعذّر تشغيل الفيديو، لكن يمكنك استكشاف اللوحة وتجربتها ثلاثية الأبعاد.",
       questions:{
@@ -100,7 +100,9 @@
   document.getElementById("meet-link").href=print;
   document.getElementById("space-link").href=space;
   document.getElementById("reimagined-link").href=`reimagined.html?lang=${lang}`;
-  document.getElementById("living-book").href=`book-3d.html?lang=${lang}`;
+  const livingBookUrl=`book-3d.html?lang=${lang}`;
+  document.getElementById("living-book").href=livingBookUrl;
+  document.getElementById("book-transition-link").href=livingBookUrl;
 
   const stage=document.getElementById("alive-stage");
   const video=document.getElementById("mona-video");
@@ -112,29 +114,37 @@
   const dialogue=document.getElementById("alive-dialogue");
   const status=document.getElementById("alive-status");
   const reducedMotion=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const transition = document.getElementById("book-transition");
   let isFinished=false;
   let playbackAttempt=0;
-  function complete(fallback=false,announcement=copy.complete){
+  let navigationTimer=null;
+  const goToLivingBook = () => { window.location.assign(livingBookUrl); };
+  function complete(fallback=false,announcement=copy.transitionBook,delay=reducedMotion?450:1700){
     if(isFinished)return;
     isFinished=true;
     stage.dataset.state="complete";
     stage.dataset.fallback=fallback?"true":"false";
     still.hidden=!fallback;
     if(fallback){video.pause();video.style.opacity="0";}
-    openBtn.hidden=true;skipBtn.hidden=true;replayBtn.hidden=false;
-    reveal.hidden=false;dialogue.hidden=false;status.textContent=announcement;
+    openBtn.hidden=true;skipBtn.hidden=true;replayBtn.hidden=true;
+    reveal.hidden=true;dialogue.hidden=true;
+    transition.hidden=false;
+    status.textContent=announcement;
+    window.clearTimeout(navigationTimer);
+    navigationTimer=window.setTimeout(goToLivingBook,delay);
   }
   async function playSequence(){
     const attempt=++playbackAttempt;
+    window.clearTimeout(navigationTimer);
     isFinished=false;
     video.pause();
     stage.dataset.state="opening";
     stage.dataset.fallback="false";
     video.style.opacity="";
-    still.hidden=true;reveal.hidden=true;dialogue.hidden=true;
+    still.hidden=true;reveal.hidden=true;dialogue.hidden=true;transition.hidden=true;
     openBtn.hidden=true;skipBtn.hidden=false;replayBtn.hidden=true;
     status.textContent=copy.playing;
-    if(reducedMotion){complete(true);return;}
+    if(reducedMotion){complete(true,copy.transitionBook,450);return;}
     try{
       video.currentTime=0;
       const started=video.play();
@@ -144,27 +154,20 @@
         if(attempt===playbackAttempt&&!isFinished&&stage.dataset.state==="opening")stage.dataset.state="playing";
       },650);
     }catch(error){
-      if(attempt===playbackAttempt)complete(true,copy.noVideo);
+      if(attempt===playbackAttempt)complete(true,copy.noVideo,1800);
     }
   }
   function skipSequence(){
     ++playbackAttempt;
     if(isFinished)return;
-    const canSeek=Number.isFinite(video.duration)&&video.duration>0&&video.readyState>=1;
-    if(canSeek){
-      try{
-        video.addEventListener("seeked",()=>complete(false),{once:true});
-        video.currentTime=Math.max(0,video.duration-.08);
-        video.pause();
-        window.setTimeout(()=>{if(!isFinished)complete(false);},800);
-      }catch(error){complete(true);}
-    }else complete(true);
+    video.pause();
+    complete(true,copy.transitionBook,350);
   }
   openBtn.addEventListener("click",playSequence);
   skipBtn.addEventListener("click",skipSequence);
   replayBtn.addEventListener("click",playSequence);
   video.addEventListener("ended",()=>complete(false));
-  video.addEventListener("error",()=>{if(!isFinished&&stage.dataset.state!=="ready")complete(true,copy.noVideo);});
+  video.addEventListener("error",()=>{if(!isFinished&&stage.dataset.state!=="ready")complete(true,copy.noVideo,1800);});
   const answerTitle=document.getElementById("answer-title");
   const answerText=document.getElementById("answer-text");
   const answerLink=document.getElementById("answer-link");
