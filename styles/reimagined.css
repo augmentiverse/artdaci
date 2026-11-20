@@ -320,3 +320,59 @@ html{scroll-padding-top:96px}
   .r-nav{gap:13px}
   html{scroll-padding-top:115px}
 }
+
+
+/* Visual exhibition: compact on-page photographs, full detail on click. */
+.r-still-open{position:relative}
+.r-still-open::after{
+  content:"⤢";position:absolute;top:12px;right:12px;z-index:4;pointer-events:none;
+  display:grid;place-items:center;width:31px;height:31px;border-radius:50%;
+  border:1px solid rgba(241,211,157,.66);background:rgba(24,57,82,.84);
+  color:#ffe2aa;font-size:1.05rem;line-height:1;box-shadow:0 2px 12px rgba(4,20,34,.2)
+}
+html[dir=rtl] .r-still-open::after{right:auto;left:12px}
+.r-still-open:hover::after,.r-still-open:focus-visible::after{background:rgba(101,76,43,.92);color:#fff1d3}
+@media(min-width:791px){
+  .r-artist-story{max-width:1170px;margin-inline:auto;gap:clamp(24px,3.5vw,55px);padding-bottom:clamp(48px,7vw,95px)}
+  .r-still-grid{max-width:930px;gap:12px}
+  .r-still-grid-three{grid-template-rows:repeat(2,minmax(0,185px));grid-auto-rows:minmax(0,185px)}
+  .r-still-grid-three .r-still-open{height:100%;min-height:0}
+  .r-still-grid-two{grid-template-rows:minmax(0,320px);grid-auto-rows:minmax(0,320px)}
+  .r-still-grid-two .r-still-feature{grid-row:auto}
+  .r-still-grid-two .r-still-open{height:100%;min-height:0}
+  .r-group-grid{
+    max-width:1060px;margin-inline:auto;gap:12px;
+    grid-template-rows:minmax(0,380px) repeat(2,minmax(0,275px));
+    grid-auto-rows:minmax(0,275px)
+  }
+  .r-group-grid .r-still-open{height:100%;min-height:0;aspect-ratio:auto}
+}
+.r-group-photo-hero img,.r-group-photo-cutout img{object-fit:contain}
+@media(max-width:790px){
+  .r-still-grid,.r-group-grid{width:min(100%,590px);margin-inline:auto}
+  .r-still-grid .r-still-open{max-height:390px}
+  .r-group-grid .r-still-open{max-height:335px}
+  .r-group-photo-hero .r-still-open{aspect-ratio:2/1}
+}
+
+/* Cinema: scale the player card to compact or portrait-oriented films. */
+.r-cinema.is-compact{
+  grid-template-columns:minmax(0,370px) minmax(300px,385px);
+  justify-content:center;
+  gap:clamp(16px,2vw,26px)
+}
+.r-cinema.is-compact .r-cinema-feature{position:static;top:auto}
+.r-cinema.is-compact .r-cinema-screen{display:grid;place-items:center;padding:12px;background:#183952}
+.r-cinema.is-compact .r-cinema-screen video{
+  width:min(100%,310px);height:auto;max-height:420px;
+  aspect-ratio:var(--cinema-aspect,4 / 5);object-fit:contain;
+  background:#132c44;
+}
+.r-cinema.is-compact .r-cinema-now{padding:15px;gap:12px}
+.r-cinema.is-compact .r-cinema-now h3{font-size:clamp(1.2rem,2vw,1.55rem)}
+.r-cinema.is-compact .r-cinema-vr-link{padding:10px 13px;font-size:.72rem}
+@media(max-width:950px){
+  .r-cinema.is-compact{grid-template-columns:minmax(0,1fr)}
+  .r-cinema.is-compact .r-cinema-feature{width:min(100%,430px);margin-inline:auto}
+  .r-cinema.is-compact .r-cinema-catalog{width:min(100%,790px);margin-inline:auto}
+}
