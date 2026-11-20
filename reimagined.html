@@ -10,8 +10,8 @@
 <link rel="alternate" hreflang="fr" href="https://artdaci.com/reimagined.html?lang=fr">
 <link rel="alternate" hreflang="ar" href="https://artdaci.com/reimagined.html?lang=ar">
 <link rel="icon" href="assets/app/artdaci-app-icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="styles/reimagined.css?v=3">
-<script src="scripts/reimagined.js?v=3" defer></script>
+<link rel="stylesheet" href="styles/reimagined.css?v=4">
+<script src="scripts/reimagined.js?v=4" defer></script>
 <title>ARTDACI Reimagined — Art Beyond the Frame</title>
 </head>
 <body>
@@ -34,11 +34,24 @@
 <section class="r-intro" aria-labelledby="r-title">
   <p class="r-eyebrow" data-l10n="heroKicker"><span aria-hidden="true">✦</span> ART BEYOND THE FRAME</p>
   <h1 id="r-title">ARTDACI <em>REIMAGINED</em></h1>
-  <p class="r-intro-copy" data-l10n="heroText">Four masters step beyond their canvases through imagined encounters, still images and film.</p>
-  <div class="r-hero-visual">
-    <img src="https://media.artdaci.com/shared/images/artists/reimagined/leonardo-painting-mona-lisa.webp" alt="Leonardo painting Mona Lisa in an imagined Renaissance studio" data-l10n-alt="heroImageAlt" decoding="async" fetchpriority="high">
-    <span data-l10n="heroImageCaption">Leonardo’s studio — imagined beyond the canvas</span>
+
+  <div class="r-featured-film" aria-labelledby="r-featured-title">
+    <div class="r-featured-frame">
+      <video id="r-featured-video" controls playsinline preload="none" poster="https://media.artdaci.com/shared/images/groups/reimagined/four-masters-standing.png" aria-label="ARTDACI Graal — a reimagined encounter of four masters" data-l10n-aria="featuredFilmAria">
+        <source src="assets/varia/dvvm_graal_artdaci.mp4" type="video/mp4">
+      </video>
+      <button type="button" class="r-featured-play" id="r-featured-play" aria-label="Play the featured film" data-l10n-aria="featuredFilmPlay" title="Play">
+        <span aria-hidden="true">▶</span>
+      </button>
+    </div>
+    <div class="r-featured-meta">
+      <span class="r-featured-eyebrow" data-l10n="featuredFilmBadge">✦ FEATURED FILM</span>
+      <strong id="r-featured-title" data-l10n="featuredFilmTitle">ARTDACI Graal — The Four Masters</strong>
+      <span class="r-featured-duration">00:26</span>
+    </div>
+    <p class="r-featured-error" id="r-featured-error" role="status" data-l10n="featuredFilmError" hidden>This film is temporarily unavailable.</p>
   </div>
+  <p class="r-intro-copy" data-l10n="heroText">Four masters step beyond their canvases through imagined encounters, still images and film.</p>
   <div class="r-hero-actions">
     <a class="r-button r-button-gold" href="#stills"><span data-l10n="exploreGallery">ENTER THE IMAGE GALLERY</span> <span aria-hidden="true">↓</span></a>
     <a class="r-button" id="r-magic" href="alive.html?lang=en"><span aria-hidden="true">✦</span> <span data-l10n="experience">OPEN THE MAGICAL BOOK</span></a>
