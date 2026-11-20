@@ -109,7 +109,7 @@
       "fr": "Le Graal ARTDACI — les quatre maîtres",
       "ar": "كأس ARTDACI — الفنانون الأربعة"
     },
-    "src": "assets/varia/dvvm_graal_artdaci.mp4",
+    "src": "https://media.artdaci.com/shared/videos/reimagined/dvvm_graal_artdaci.mp4",
     "poster": "https://media.artdaci.com/shared/images/groups/reimagined/four-masters-standing.png"
   },
   {
