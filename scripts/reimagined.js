@@ -275,7 +275,6 @@
       button.append(image, information, icon);
       button.addEventListener("click", () => {
         showCinemaFilm(film, true);
-        renderCinemaFilms();
         if (window.matchMedia("(max-width: 950px)").matches) {
           cinemaFeature.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
         }
