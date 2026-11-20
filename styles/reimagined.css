@@ -43,3 +43,20 @@ main{margin:0 auto;max-width:1500px}.r-intro{text-align:center;padding:clamp(38p
 @media(max-width:620px){.r-cinema-list{grid-template-columns:1fr}.r-cinema-now{gap:14px}.r-cinema-item{grid-template-columns:94px minmax(0,1fr) 18px}.r-cinema-item img{width:94px;height:62px}.r-cinema-catalog-head h3{font-size:1.4rem}}
 @media(prefers-reduced-motion:reduce){.r-cinema-item{transition:none}}
 html[dir=rtl] .r-cinema-item{text-align:right}html[dir=rtl] .r-cinema-item.is-selected{box-shadow:inset -3px 0 0 var(--gold)}
+
+/* The Graal film is the visual centerpiece immediately under the page title. */
+.r-featured-film{position:relative;width:min(100%,1120px);margin:clamp(25px,4vw,46px) auto 30px;padding:clamp(5px,.8vw,9px);border:1px solid rgba(245,203,128,.7);border-radius:clamp(15px,2.6vw,28px);background:linear-gradient(140deg,rgba(224,172,87,.45),#14243a 33%,#081322 77%,rgba(221,160,71,.35));box-shadow:0 24px 65px rgba(2,8,17,.52),0 0 52px rgba(219,174,101,.13);overflow:hidden}
+.r-featured-film:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 7%,rgba(246,209,145,.06) 38%,transparent 65%)}
+.r-featured-frame{position:relative;overflow:hidden;border-radius:clamp(10px,2vw,19px);background:radial-gradient(ellipse at 50% 35%,#354053,#071220)}
+.r-featured-frame video{display:block;width:100%;aspect-ratio:16/9;height:auto;max-height:70vh;background:#07121f;object-fit:contain}
+.r-featured-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:clamp(65px,8vw,92px);height:clamp(65px,8vw,92px);border-radius:50%;border:2px solid rgba(255,237,202,.78);color:#28202b;background:linear-gradient(135deg,#fff0c9,#d7ac68);font-size:clamp(1.5rem,2.4vw,2rem);cursor:pointer;box-shadow:0 4px 25px rgba(0,0,0,.55),0 0 40px rgba(241,188,93,.22);transition:transform .2s ease,filter .2s ease}
+.r-featured-play span{margin-left:.15em}.r-featured-play:hover{transform:translate(-50%,-50%) scale(1.075);filter:brightness(1.09)}
+.r-featured-play[hidden]{display:none}
+.r-featured-meta{display:flex;align-items:center;justify-content:center;gap:10px 20px;flex-wrap:wrap;padding:15px 18px 12px;color:#f5e4c9;text-align:center}
+.r-featured-eyebrow{display:inline-block;padding:4px 11px;border:1px solid rgba(244,205,142,.38);border-radius:999px;letter-spacing:.11em;font-size:.64rem;color:#f5d39a;font-weight:800;white-space:nowrap}
+.r-featured-meta strong{font:500 clamp(1.06rem,2vw,1.45rem)/1.25 Georgia,"Times New Roman",serif;color:#fff0d7}
+.r-featured-duration{font-size:.75rem;letter-spacing:.09em;color:#b9c8d7;font-weight:680}
+.r-featured-error{margin:0 15px 12px;padding:8px 16px;color:#ffe2b9;background:rgba(85,39,29,.7);border-radius:10px;font-size:.86rem}
+.r-intro .r-featured-film+.r-intro-copy{margin-top:23px;margin-bottom:26px}
+@media(max-width:790px){.r-featured-film{margin:23px auto 25px}.r-featured-meta{padding:13px 8px 8px;gap:7px 12px}.r-featured-eyebrow{font-size:.6rem}}
+@media(prefers-reduced-motion:reduce){.r-featured-play{transition:none}}
