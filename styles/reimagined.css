@@ -44,7 +44,7 @@ main{margin:0 auto;max-width:1500px}.r-intro{text-align:center;padding:clamp(38p
 @media(prefers-reduced-motion:reduce){.r-cinema-item{transition:none}}
 html[dir=rtl] .r-cinema-item{text-align:right}html[dir=rtl] .r-cinema-item.is-selected{box-shadow:inset -3px 0 0 var(--gold)}
 
-/* The Graal film is the visual centerpiece immediately under the page title. */
+/* The Graal film opens the Films section, before the twelve-video VR cinema catalog. */
 .r-featured-film{position:relative;width:min(100%,1120px);margin:clamp(25px,4vw,46px) auto 30px;padding:clamp(5px,.8vw,9px);border:1px solid rgba(245,203,128,.7);border-radius:clamp(15px,2.6vw,28px);background:linear-gradient(140deg,rgba(224,172,87,.45),#14243a 33%,#081322 77%,rgba(221,160,71,.35));box-shadow:0 24px 65px rgba(2,8,17,.52),0 0 52px rgba(219,174,101,.13);overflow:hidden}
 .r-featured-film:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 7%,rgba(246,209,145,.06) 38%,transparent 65%)}
 .r-featured-frame{position:relative;overflow:hidden;border-radius:clamp(10px,2vw,19px);background:radial-gradient(ellipse at 50% 35%,#354053,#071220)}
@@ -57,6 +57,8 @@ html[dir=rtl] .r-cinema-item{text-align:right}html[dir=rtl] .r-cinema-item.is-se
 .r-featured-meta strong{font:500 clamp(1.06rem,2vw,1.45rem)/1.25 Georgia,"Times New Roman",serif;color:#fff0d7}
 .r-featured-duration{font-size:.75rem;letter-spacing:.09em;color:#b9c8d7;font-weight:680}
 .r-featured-error{margin:0 15px 12px;padding:8px 16px;color:#ffe2b9;background:rgba(85,39,29,.7);border-radius:10px;font-size:.86rem}
-.r-intro .r-featured-film+.r-intro-copy{margin-top:23px;margin-bottom:26px}
+.r-collection>.r-featured-film{width:min(100%,1180px);margin:0 auto clamp(38px,5vw,66px)}
 @media(max-width:790px){.r-featured-film{margin:23px auto 25px}.r-featured-meta{padding:13px 8px 8px;gap:7px 12px}.r-featured-eyebrow{font-size:.6rem}}
 @media(prefers-reduced-motion:reduce){.r-featured-play{transition:none}}
+
+@media(max-width:790px){.r-collection>.r-featured-film{margin:0 auto 33px}}
