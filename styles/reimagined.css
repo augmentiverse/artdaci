@@ -62,3 +62,50 @@ html[dir=rtl] .r-cinema-item{text-align:right}html[dir=rtl] .r-cinema-item.is-se
 @media(prefers-reduced-motion:reduce){.r-featured-play{transition:none}}
 
 @media(max-width:790px){.r-collection>.r-featured-film{margin:0 auto 33px}}
+
+
+/* REIMAGINED exhibition-first layout: compact identity, precise anchors, half-size film. */
+html{scroll-padding-top:74px}
+.r-header{padding:6px clamp(12px,2.2vw,29px);gap:clamp(10px,1.5vw,19px)}
+.r-brand{width:86px}
+.r-nav,.r-lang{gap:clamp(8px,1.35vw,18px)}
+.r-nav a,.r-lang a{font-size:.75rem}
+.r-lang a{padding:4px 6px}
+.r-intro{padding:clamp(20px,2.75vw,38px) clamp(14px,3vw,44px) clamp(22px,3vw,40px)}
+.r-intro .r-eyebrow{font-size:.65rem;letter-spacing:.16em;margin-bottom:0}
+.r-intro h1{font-size:clamp(2.45rem,5.1vw,5.05rem);line-height:1.02;margin:8px 0 10px}
+.r-intro-copy{max-width:640px;font-size:clamp(.95rem,1.4vw,1.1rem);line-height:1.45;margin:0 auto 18px}
+.r-hero-actions{margin:14px auto 0;gap:9px}
+.r-hero-actions .r-button{padding:9px 16px;font-size:.72rem}
+.r-master-list{max-width:775px;margin:22px auto 0;padding:12px 0 0}
+.r-master-list li{font-size:clamp(.75rem,1.04vw,.91rem);padding:0 clamp(7px,1vw,15px)}
+.r-master-list span{margin-bottom:3px}
+.r-collection{padding-top:clamp(30px,4.2vw,54px)}
+.r-collection .r-section-head{margin-bottom:clamp(22px,3vw,34px);gap:18px}
+.r-collection .r-section-head h2{font-size:clamp(2rem,3.45vw,3.25rem)}
+.r-collection>.r-featured-film{width:min(100%,590px);max-width:590px;margin:0 auto clamp(26px,3.7vw,44px)}
+.r-featured-frame video{max-height:none}
+.r-featured-meta{padding:10px 12px 8px;gap:6px 12px}
+.r-featured-meta strong{font-size:clamp(.98rem,1.6vw,1.2rem)}
+.r-featured-play{width:clamp(56px,6vw,72px);height:clamp(56px,6vw,72px)}
+@media(max-width:790px){
+  html{scroll-padding-top:112px}
+  .r-header{padding:6px 12px;gap:5px 11px}
+  .r-brand{width:78px}
+  .r-nav{gap:15px;padding:3px 0 2px}
+  .r-intro{padding-top:22px;padding-bottom:26px}
+  .r-intro h1{font-size:clamp(2.15rem,6.8vw,3.5rem)}
+  .r-master-list{margin-top:17px;gap:11px 0}
+  .r-collection>.r-featured-film{width:100%;max-width:590px;margin-bottom:28px}
+  .r-collection .r-section-head h2{font-size:clamp(1.9rem,5vw,2.8rem)}
+}
+@media(max-width:460px){
+  html{scroll-padding-top:108px}
+  .r-header{padding:5px 10px}
+  .r-nav{gap:12px}
+  .r-nav a,.r-lang a{font-size:.7rem}
+  .r-hero-actions .r-button{padding:8px 11px;font-size:.66rem}
+  .r-intro .r-eyebrow{font-size:.59rem}
+  .r-intro h1{font-size:clamp(2rem,8vw,2.5rem)}
+  .r-intro-copy{font-size:.93rem}
+}
