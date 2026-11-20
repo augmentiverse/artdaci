@@ -14,3 +14,15 @@ main{max-width:1440px;margin:auto}.alive-intro{text-align:center;padding:32px cl
 @media(max-width:690px){.alive-header{gap:7px;padding:12px 15px;flex-wrap:wrap}.alive-brand img{width:112px}.back-link{font-size:.78rem}.alive-languages{order:3;width:100%;justify-content:center}.alive-intro{padding-top:20px}.alive-intro h1 small{letter-spacing:.12em}.alive-stage{border-radius:16px;min-height:260px;aspect-ratio:4/3}.book-shadow{bottom:8%}.artbook{height:60%}.alive-controls{gap:9px}.action-primary,.action-secondary,.action-quiet{padding:12px 16px;font-size:.77rem}.question-layout{grid-template-columns:1fr}.alive-dialogue{padding-top:28px}.alive-footer{padding-top:20px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.alive-stage-glow{filter:blur(30px)}.alive-particles{display:none}}
 html[dir=rtl] .book-scene{direction:ltr}html[dir=rtl] .back-link span[aria-hidden]{display:inline-block;transform:scaleX(-1)}html[dir=rtl] .question-list button{text-align:right}html[dir=rtl] .answer-panel{text-align:right}
+
+/* After the Mona Lisa emerges, reveal the destination before opening the Living Book. */
+.book-transition[hidden]{display:none}
+.book-transition{
+  width:min(100%,750px);margin:16px auto 28px;padding:20px 22px;text-align:center;
+  border:1px solid rgba(232,196,131,.6);border-radius:18px;
+  background:linear-gradient(140deg,rgba(52,89,116,.72),rgba(26,50,78,.93));
+  box-shadow:0 12px 28px rgba(5,18,37,.2)
+}
+.book-transition p{margin:0 0 14px;color:#fff0d4;font-weight:650}
+.book-transition a{display:inline-flex;justify-content:center}
+@media(max-width:690px){.book-transition{padding:16px 12px}.book-transition a{width:100%}}
