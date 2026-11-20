@@ -9,7 +9,7 @@
       vangoghEra: "A LEGACY IN COLOUR · REIMAGINED", vangoghStory: "An imagined studio portrait brings Vincent together with Jo van Gogh-Bonger, whose work later helped introduce his art to the world.", vangoghCaption1: "Vincent and Jo — imagined studio portrait", vangoghCaption2: "The artist and the keeper of his legacy", vangoghAlt1: "Vincent van Gogh and Jo van Gogh-Bonger standing in an imagined studio", vangoghAlt2: "Close imagined portrait of Vincent van Gogh and Jo van Gogh-Bonger", openVangogh1: "Enlarge Vincent and Jo in the studio", openVangogh2: "Enlarge the portrait of Vincent and Jo",
       monetEra: "IMPRESSIONISM · REIMAGINED", monetStory: "Monet and the art dealer Paul Durand-Ruel meet within rooms shaped by the paintings their collaboration helped bring to new audiences.", monetCaption1: "Monet and Durand-Ruel — the gallery", monetCaption2: "Monet and Durand-Ruel — imagined portrait", monetAlt1: "Claude Monet and Paul Durand-Ruel in an imagined gallery of water lilies", monetAlt2: "Claude Monet and Paul Durand-Ruel in an imagined office portrait", openMonet1: "Enlarge Monet and Durand-Ruel in the gallery", openMonet2: "Enlarge the portrait of Monet and Durand-Ruel",
       togetherNav: "Together", groupKicker: "BEYOND TIME · TOGETHER", groupTitle: "The four masters, in one imagined world.", groupStory: "These collective portraits bring Leonardo, Monet, Van Gogh and Vermeer together across centuries, places and artistic movements.", groupCaption1: "Four masters and the people who carried their stories", groupCaption2: "Four painters — one imagined studio", groupCaption3: "A portrait beyond chronology", groupCaption4: "A journey through the places of their stories", groupCaption5: "The four masters — collective study", groupAlt1: "Leonardo, Monet, Van Gogh and Vermeer gathered with people connected to their stories", groupAlt2: "Leonardo, Monet, Van Gogh and Vermeer standing in an imagined shared studio", groupAlt3: "Close collective portrait of Leonardo, Monet, Van Gogh and Vermeer", groupAlt4: "The four painters placed before landmarks connected to their artistic stories", groupAlt5: "Cutout portrait of Leonardo, Monet, Van Gogh and Vermeer", openGroup1: "Enlarge the four masters with their circle", openGroup2: "Enlarge the four painters standing", openGroup3: "Enlarge the collective portrait", openGroup4: "Enlarge the journey through their places", openGroup5: "Enlarge the four-master study",
-      sectionKicker: "FROM STILL IMAGE TO MOTION", sectionTitle: "Four masters. New ways of seeing.", sectionDesc: "These moving artworks are contemporary interpretations, not historical recordings. Each entry links back to the painting and its documented story.", monaTitle: "Mona Lisa", monaText: "An artistic reimagining of Leonardo at work.", vermeerTitle: "Girl with a Pearl Earring", vermeerText: "A moving interpretation of an enigmatic portrait.", vangoghTitle: "Van Gogh", vangoghText: "A contemporary moving tribute to the painter.", monetTitle: "Impression, Sunrise", monetText: "Light and atmosphere interpreted through motion.", workLink: "Explore the original artwork", monaVideoLabel: "An artistic animation of Leonardo painting the Mona Lisa", vermeerVideoLabel: "An artistic animation of Girl with a Pearl Earring", vangoghVideoLabel: "An artistic animation of Van Gogh", monetVideoLabel: "An artistic animation of Impression, Sunrise", outroKicker: "FROM IMAGINATION TO EXPLORATION", outroTitle: "Beyond the frame, into the world of art.", outroBook: "The Magical Book ↗", outro3d: "Explore in 3D ↗", outroMuseum: "Explore the museums ↗", disclaimer: "ARTDACI Reimagined is an artistic and educational reinterpretation. It is not an official museum reproduction or a historical reconstruction.", closeImage: "Close image"
+      sectionKicker: "VR CINEMA · ON SCREEN", sectionTitle: "The films of ARTDACI Cinema.", sectionDesc: "Discover the same 12 films as in our VR cinema, playable here without a headset: imagined encounters, Mona Lisa in motion and the artists’ supporters.", cinemaNote: "Artistic interpretations, not historical footage.", cinemaVisit: "Enter the VR cinema ↗", cinemaPlaylist: "Explore the films", cinemaPlaylistLabel: "Cinema film playlist", cinemaFilterLabel: "Film categories", cinemaAll: "All films", cinemaTogether: "Four artists", cinemaLeonardo: "Leonardo & Mona Lisa", cinemaEncounters: "Encounters", cinemaCount: "films", cinemaError: "This film is temporarily unavailable on this device. You can also try the VR cinema.", cinemaPlay: "Play", outroKicker: "FROM IMAGINATION TO EXPLORATION", outroTitle: "Beyond the frame, into the world of art.", outroBook: "The Magical Book ↗", outro3d: "Explore in 3D ↗", outroMuseum: "Explore the museums ↗", disclaimer: "ARTDACI Reimagined is an artistic and educational reinterpretation. It is not an official museum reproduction or a historical reconstruction.", closeImage: "Close image"
     },
     fr: {
       skip: "Aller à l’exposition", navGallery: "La galerie", navCollection: "Les films", navBook: "Le livre magique", navHome: "Accueil ARTDACI", heroKicker: "✦ L’ART AU-DELÀ DU CADRE", heroText: "Quatre maîtres sortent de leurs tableaux à travers des rencontres imaginées, des images et des films.", heroImageAlt: "Léonard peignant la Joconde dans un atelier Renaissance imaginé", heroImageCaption: "L’atelier de Léonard — imaginé au-delà de la toile", exploreGallery: "ENTRER DANS LA GALERIE D’IMAGES", experience: "OUVRIR LE LIVRE MAGIQUE", featuredArtists: "Artistes présentés", galleryKicker: "LES RENCONTRES IMAGINÉES", galleryTitle: "Quatre maîtres. Des histoires au-delà du cadre.", galleryDesc: "Ces images contemporaines créent des rencontres poétiques autour des artistes et de leurs œuvres. Ce sont des interprétations artistiques, et non des documents historiques.", galleryArtists: "Artistes de la galerie d’images",
@@ -18,7 +18,7 @@
       vangoghEra: "UN HÉRITAGE EN COULEUR · RÉIMAGINÉ", vangoghStory: "Un portrait d’atelier imaginé réunit Vincent et Jo van Gogh-Bonger, dont le travail contribua plus tard à faire connaître son art dans le monde.", vangoghCaption1: "Vincent et Jo — portrait d’atelier imaginé", vangoghCaption2: "L’artiste et la gardienne de son héritage", vangoghAlt1: "Vincent van Gogh et Jo van Gogh-Bonger debout dans un atelier imaginé", vangoghAlt2: "Portrait rapproché imaginé de Vincent van Gogh et Jo van Gogh-Bonger", openVangogh1: "Agrandir Vincent et Jo dans l’atelier", openVangogh2: "Agrandir le portrait de Vincent et Jo",
       monetEra: "L’IMPRESSIONNISME · RÉIMAGINÉ", monetStory: "Monet et le marchand d’art Paul Durand-Ruel se retrouvent dans des espaces façonnés par les tableaux que leur collaboration a contribué à faire connaître.", monetCaption1: "Monet et Durand-Ruel — la galerie", monetCaption2: "Monet et Durand-Ruel — portrait imaginé", monetAlt1: "Claude Monet et Paul Durand-Ruel dans une galerie de nymphéas imaginée", monetAlt2: "Claude Monet et Paul Durand-Ruel dans un portrait de bureau imaginé", openMonet1: "Agrandir Monet et Durand-Ruel dans la galerie", openMonet2: "Agrandir le portrait de Monet et Durand-Ruel",
       togetherNav: "Ensemble", groupKicker: "AU-DELÀ DU TEMPS · ENSEMBLE", groupTitle: "Les quatre maîtres, dans un même monde imaginé.", groupStory: "Ces portraits collectifs réunissent Léonard, Monet, Van Gogh et Vermeer par-delà les siècles, les lieux et les mouvements artistiques.", groupCaption1: "Quatre maîtres et ceux qui ont porté leurs histoires", groupCaption2: "Quatre peintres — un atelier imaginé", groupCaption3: "Un portrait au-delà de la chronologie", groupCaption4: "Un voyage à travers les lieux de leurs histoires", groupCaption5: "Les quatre maîtres — étude collective", groupAlt1: "Léonard, Monet, Van Gogh et Vermeer réunis avec des personnes liées à leurs histoires", groupAlt2: "Léonard, Monet, Van Gogh et Vermeer debout dans un atelier commun imaginé", groupAlt3: "Portrait collectif rapproché de Léonard, Monet, Van Gogh et Vermeer", groupAlt4: "Les quatre peintres devant des monuments liés à leurs histoires artistiques", groupAlt5: "Portrait détouré de Léonard, Monet, Van Gogh et Vermeer", openGroup1: "Agrandir les quatre maîtres et leur entourage", openGroup2: "Agrandir les quatre peintres debout", openGroup3: "Agrandir le portrait collectif", openGroup4: "Agrandir le voyage à travers leurs lieux", openGroup5: "Agrandir l’étude des quatre maîtres",
-      sectionKicker: "DE L’IMAGE FIXE AU MOUVEMENT", sectionTitle: "Quatre maîtres. D’autres façons de voir.", sectionDesc: "Ces œuvres animées sont des interprétations artistiques contemporaines, et non des enregistrements historiques. Chaque expérience donne accès à la fiche documentée du tableau.", monaTitle: "La Joconde", monaText: "Une réinterprétation de Léonard au travail.", vermeerTitle: "La Jeune Fille à la perle", vermeerText: "Une interprétation animée d’un portrait énigmatique.", vangoghTitle: "Van Gogh", vangoghText: "Un hommage contemporain en mouvement au peintre.", monetTitle: "Impression, soleil levant", monetText: "La lumière et l’atmosphère réinventées par le mouvement.", workLink: "Découvrir l’œuvre originale", monaVideoLabel: "Une animation artistique de Léonard peignant la Joconde", vermeerVideoLabel: "Une animation artistique de la Jeune Fille à la perle", vangoghVideoLabel: "Une animation artistique de Van Gogh", monetVideoLabel: "Une animation artistique d’Impression, soleil levant", outroKicker: "DE L’IMAGINAIRE À L’EXPLORATION", outroTitle: "Au-delà du cadre, explorer le monde de l’art.", outroBook: "Le livre magique ↗", outro3d: "Explorer en 3D ↗", outroMuseum: "Explorer les musées ↗", disclaimer: "ARTDACI Reimagined est une réinterprétation artistique et pédagogique. Il ne s’agit ni d’une reproduction officielle d’un musée ni d’une reconstitution historique.", closeImage: "Fermer l’image"
+      sectionKicker: "CINÉMA VR · EN ACCÈS DIRECT", sectionTitle: "Les films du Cinéma ARTDACI.", sectionDesc: "Retrouvez les 12 films du Cinéma VR et visionnez-les ici, même sans casque : rencontres imaginées, Joconde animée et histoires des artistes et de leurs mécènes.", cinemaNote: "Des interprétations artistiques, pas des archives historiques.", cinemaVisit: "Entrer dans le Cinéma VR ↗", cinemaPlaylist: "Choisir un film", cinemaPlaylistLabel: "Liste des films du cinéma", cinemaFilterLabel: "Catégories de films", cinemaAll: "Tous les films", cinemaTogether: "Quatre artistes", cinemaLeonardo: "Léonard & la Joconde", cinemaEncounters: "Rencontres", cinemaCount: "films", cinemaError: "Cette vidéo n’est pas disponible sur cet appareil. Vous pouvez aussi essayer le Cinéma VR.", cinemaPlay: "Lire", outroKicker: "DE L’IMAGINAIRE À L’EXPLORATION", outroTitle: "Au-delà du cadre, explorer le monde de l’art.", outroBook: "Le livre magique ↗", outro3d: "Explorer en 3D ↗", outroMuseum: "Explorer les musées ↗", disclaimer: "ARTDACI Reimagined est une réinterprétation artistique et pédagogique. Il ne s’agit ni d’une reproduction officielle d’un musée ni d’une reconstitution historique.", closeImage: "Fermer l’image"
     },
     ar: {
       skip: "الانتقال إلى المعرض", navGallery: "معرض الصور", navCollection: "الأفلام", navBook: "الكتاب السحري", navHome: "الصفحة الرئيسية", heroKicker: "✦ الفن أبعد من الإطار", heroText: "أربعة من كبار الفنانين يتجاوزون لوحاتهم عبر لقاءات متخيلة وصور وأفلام.", heroImageAlt: "ليوناردو يرسم الموناليزا في مرسم متخيل من عصر النهضة", heroImageCaption: "مرسم ليوناردو — خيال يتجاوز اللوحة", exploreGallery: "ادخل معرض الصور", experience: "افتح الكتاب السحري", featuredArtists: "الفنانون المشاركون", galleryKicker: "لقاءات متخيلة", galleryTitle: "أربعة أساتذة. حكايات تتجاوز الإطار.", galleryDesc: "تبتكر هذه الصور المعاصرة لقاءات شعرية حول الفنانين وأعمالهم. إنها تفسيرات فنية وليست وثائق تاريخية.", galleryArtists: "فنانو معرض الصور",
@@ -27,7 +27,7 @@
       vangoghEra: "إرث من الألوان · برؤية جديدة", vangoghStory: "تجمع صورة متخيلة في المرسم بين فنسنت وجو فان غوخ-بونغر التي ساعد عملها لاحقاً في تعريف العالم بفنه.", vangoghCaption1: "فنسنت وجو — صورة متخيلة في المرسم", vangoghCaption2: "الفنان وحافظة إرثه", vangoghAlt1: "فنسنت فان غوخ وجو فان غوخ-بونغر واقفان في مرسم متخيل", vangoghAlt2: "صورة متخيلة مقربة لفنسنت فان غوخ وجو فان غوخ-بونغر", openVangogh1: "تكبير صورة فنسنت وجو في المرسم", openVangogh2: "تكبير صورة فنسنت وجو",
       monetEra: "الانطباعية · برؤية جديدة", monetStory: "يلتقي مونيه وتاجر الفن بول دوران-رويل في فضاءات صنعتها اللوحات التي ساهم تعاونهما في تقديمها إلى جمهور جديد.", monetCaption1: "مونيه ودوران-رويل — المعرض", monetCaption2: "مونيه ودوران-رويل — صورة متخيلة", monetAlt1: "كلود مونيه وبول دوران-رويل في معرض متخيل لزنابق الماء", monetAlt2: "كلود مونيه وبول دوران-رويل في صورة مكتبية متخيلة", openMonet1: "تكبير صورة مونيه ودوران-رويل في المعرض", openMonet2: "تكبير صورة مونيه ودوران-رويل",
       togetherNav: "معاً", groupKicker: "ما وراء الزمن · معاً", groupTitle: "الأساتذة الأربعة في عالم متخيل واحد.", groupStory: "تجمع هذه الصور الجماعية ليوناردو ومونيه وفان غوخ وفيرمير عبر القرون والأماكن والحركات الفنية.", groupCaption1: "أربعة أساتذة ومن حملوا حكاياتهم", groupCaption2: "أربعة رسامين — مرسم واحد متخيل", groupCaption3: "صورة تتجاوز التسلسل الزمني", groupCaption4: "رحلة عبر أماكن حكاياتهم", groupCaption5: "الأساتذة الأربعة — دراسة جماعية", groupAlt1: "ليوناردو ومونيه وفان غوخ وفيرمير مع أشخاص مرتبطين بحكاياتهم", groupAlt2: "ليوناردو ومونيه وفان غوخ وفيرمير واقفون في مرسم مشترك متخيل", groupAlt3: "صورة جماعية مقربة لليوناردو ومونيه وفان غوخ وفيرمير", groupAlt4: "الرسامون الأربعة أمام معالم مرتبطة بحكاياتهم الفنية", groupAlt5: "صورة مفرغة لليوناردو ومونيه وفان غوخ وفيرمير", openGroup1: "تكبير صورة الأساتذة الأربعة ومن حولهم", openGroup2: "تكبير صورة الرسامين الأربعة واقفين", openGroup3: "تكبير الصورة الجماعية", openGroup4: "تكبير رحلة أماكنهم", openGroup5: "تكبير دراسة الأساتذة الأربعة",
-      sectionKicker: "من الصورة الثابتة إلى الحركة", sectionTitle: "أربعة فنانين كبار ورؤى جديدة.", sectionDesc: "هذه الأعمال المتحركة تفسيرات فنية معاصرة وليست تسجيلات تاريخية. يرتبط كل عمل بمعلومات موثقة عن اللوحة الأصلية.", monaTitle: "الموناليزا", monaText: "تفسير فني متخيّل لليوناردو أثناء الرسم.", vermeerTitle: "الفتاة ذات القرط اللؤلؤي", vermeerText: "تفسير متحرك لبورتريه غامض.", vangoghTitle: "فان غوخ", vangoghText: "تحية فنية معاصرة للرسام في صور متحركة.", monetTitle: "انطباع، شروق الشمس", monetText: "إعادة تخيل الضوء والأجواء عبر الحركة.", workLink: "استكشف اللوحة الأصلية", monaVideoLabel: "رسوم متحركة فنية لليوناردو يرسم الموناليزا", vermeerVideoLabel: "رسوم متحركة فنية للفتاة ذات القرط اللؤلؤي", vangoghVideoLabel: "رسوم متحركة فنية لفان غوخ", monetVideoLabel: "رسوم متحركة فنية لانطباع، شروق الشمس", outroKicker: "من الخيال إلى الاستكشاف", outroTitle: "ما وراء الإطار، اكتشف عالم الفن.", outroBook: "الكتاب السحري ↗", outro3d: "استكشف الأبعاد الثلاثية ↗", outroMuseum: "استكشف المتاحف ↗", disclaimer: "ARTDACI Reimagined تجربة فنية وتعليمية وليست نسخة رسمية من متحف أو إعادة بناء تاريخية.", closeImage: "إغلاق الصورة"
+      sectionKicker: "سينما الواقع الافتراضي · مشاهدة مباشرة", sectionTitle: "أفلام سينما ARTDACI.", sectionDesc: "شاهد هنا الأفلام الاثني عشر المتاحة في سينما الواقع الافتراضي، حتى من دون خوذة: لقاءات متخيلة والموناليزا المتحركة وقصص الفنانين وداعميهم.", cinemaNote: "أعمال فنية متخيلة وليست لقطات تاريخية.", cinemaVisit: "الدخول إلى سينما الواقع الافتراضي ↗", cinemaPlaylist: "اختر فيلماً", cinemaPlaylistLabel: "قائمة أفلام السينما", cinemaFilterLabel: "فئات الأفلام", cinemaAll: "جميع الأفلام", cinemaTogether: "أربعة فنانين", cinemaLeonardo: "ليوناردو والموناليزا", cinemaEncounters: "لقاءات", cinemaCount: "فيلماً", cinemaError: "هذا الفيديو غير متاح على هذا الجهاز حالياً. يمكنك تجربته أيضاً في سينما الواقع الافتراضي.", cinemaPlay: "تشغيل", outroKicker: "من الخيال إلى الاستكشاف", outroTitle: "ما وراء الإطار، اكتشف عالم الفن.", outroBook: "الكتاب السحري ↗", outro3d: "استكشف الأبعاد الثلاثية ↗", outroMuseum: "استكشف المتاحف ↗", disclaimer: "ARTDACI Reimagined تجربة فنية وتعليمية وليست نسخة رسمية من متحف أو إعادة بناء تاريخية.", closeImage: "إغلاق الصورة"
     }
   };
 
@@ -53,7 +53,7 @@
 
   const home = lang === "fr" ? "index-fr.html" : lang === "ar" ? "index-ar.html" : "index.html";
   const links = {
-    "r-home": home, "r-back": home, "r-book-nav": `alive.html?lang=${lang}`, "r-magic": `alive.html?lang=${lang}`, "r-to-book": `alive.html?lang=${lang}`, "r-to-3d": `3d/?lang=${lang}`, "r-to-museums": `museums.html?lang=${lang}`,
+    "r-home": home, "r-back": home, "r-cinema-link": `cinema-vr.html?lang=${lang}`, "r-book-nav": `alive.html?lang=${lang}`, "r-magic": `alive.html?lang=${lang}`, "r-to-book": `alive.html?lang=${lang}`, "r-to-3d": `3d/?lang=${lang}`, "r-to-museums": `museums.html?lang=${lang}`,
     "r-mona": lang === "fr" ? "print-target-fr.html" : lang === "ar" ? "print-ar.html?painting=mona-lisa" : "print-target.html",
     "r-mona-still": lang === "fr" ? "print-target-fr.html" : lang === "ar" ? "print-ar.html?painting=mona-lisa" : "print-target.html",
     "r-vermeer": lang === "fr" ? "print-vermeer-girl-with-a-pearl-earring-fr.html" : lang === "ar" ? "print-ar.html?painting=vermeer-girl-with-a-pearl-earring" : "print-vermeer-girl-with-a-pearl-earring.html",
@@ -67,6 +67,243 @@
     const element = document.getElementById(id);
     if (element) element.href = url;
   });
+
+
+  // This curated playlist mirrors the 12 films returned by getCinemaVideoLibrary()
+  // in scripts/gallery-vr.js. Keep the paths and order aligned with the VR cinema.
+  const cinemaFilms = [
+  {
+    "id": "four-painters-intro",
+    "group": "together",
+    "title": {
+      "en": "Four Painters — Intro",
+      "fr": "Quatre peintres — Présentation",
+      "ar": "الرسامون الأربعة — تقديم"
+    },
+    "src": "assets/shared/four-painters/introduction.mp4",
+    "poster": "https://media.artdaci.com/shared/images/groups/reimagined/four-masters-portrait.png"
+  },
+  {
+    "id": "four-painters-selfie-ii",
+    "group": "together",
+    "title": {
+      "en": "Four Painters — Selfie II",
+      "fr": "Quatre peintres — Selfie II",
+      "ar": "الرسامون الأربعة — سيلفي II"
+    },
+    "src": "assets/shared/groups/audio-video/dvvm-n-selfy.mp4",
+    "poster": "https://media.artdaci.com/shared/images/groups/reimagined/four-masters-standing.png"
+  },
+  {
+    "id": "four-painters-selfie",
+    "group": "together",
+    "title": {
+      "en": "Four Painters — Selfie",
+      "fr": "Quatre peintres — Selfie",
+      "ar": "الرسامون الأربعة — سيلفي"
+    },
+    "src": "assets/shared/groups/audio-video/dvvm-selfy.mp4",
+    "poster": "https://media.artdaci.com/shared/images/groups/reimagined/four-masters-standing.png"
+  },
+  {
+    "id": "leonardo-paris",
+    "group": "leonardo",
+    "title": {
+      "en": "Leonardo & Mona Lisa — Paris",
+      "fr": "Léonard & La Joconde — Paris",
+      "ar": "ليوناردو والموناليزا — باريس"
+    },
+    "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/davinci-monalisa-paris.mp4",
+    "poster": "https://media.artdaci.com/shared/images/artists/reimagined/mona-lisa-beyond-the-frame.webp"
+  },
+  {
+    "id": "painting-mona-lisa",
+    "group": "leonardo",
+    "title": {
+      "en": "Painting Mona Lisa",
+      "fr": "Peindre La Joconde",
+      "ar": "رسم الموناليزا"
+    },
+    "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/davinci-painting-monalisa.mp4",
+    "poster": "https://media.artdaci.com/shared/images/artists/reimagined/leonardo-painting-mona-lisa.webp"
+  },
+  {
+    "id": "mona-lisa-reimagined",
+    "group": "leonardo",
+    "title": {
+      "en": "Mona Lisa Reimagined",
+      "fr": "Joconde réimaginée",
+      "ar": "الموناليزا المتخيلة"
+    },
+    "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/mona-lisa-video.mp4",
+    "poster": "https://media.artdaci.com/shared/images/artists/reimagined/mona-lisa-beyond-the-frame.webp"
+  },
+  {
+    "id": "leonardo-vision-ii",
+    "group": "leonardo",
+    "title": {
+      "en": "Leonardo’s Vision II",
+      "fr": "Vision de Léonard II",
+      "ar": "رؤية ليوناردو II"
+    },
+    "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/dv2.mp4",
+    "poster": "https://media.artdaci.com/shared/images/artists/reimagined/leonardo-painting-mona-lisa.webp"
+  },
+  {
+    "id": "mona-lisa-in-motion",
+    "group": "leonardo",
+    "title": {
+      "en": "Mona Lisa in Motion",
+      "fr": "Joconde en mouvement",
+      "ar": "الموناليزا تتحرك"
+    },
+    "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/media/m2vmg.mp4",
+    "poster": "https://media.artdaci.com/shared/images/artists/reimagined/mona-lisa-beyond-the-frame.webp"
+  },
+  {
+    "id": "leonardo-francis",
+    "group": "encounters",
+    "title": {
+      "en": "Leonardo da Vinci — Leonardo Thanks King Francis I",
+      "fr": "Léonard de Vinci — Léonard remercie le roi François Ier",
+      "ar": "ليوناردو دافنشي — ليوناردو يشكر الملك فرانسوا الأول"
+    },
+    "src": "assets/artists/leonardo-da-vinci/supporters/video/leonardo-da-vinci-thanking-king-202608151400.mp4",
+    "poster": "https://media.artdaci.com/shared/images/artists/reimagined/leonardo-francis-i.webp"
+  },
+  {
+    "id": "vincent-theo-jo",
+    "group": "encounters",
+    "title": {
+      "en": "Vincent van Gogh — Vincent, Theo and Jo — Last Words",
+      "fr": "Vincent van Gogh — Vincent, Theo et Jo — dernières paroles",
+      "ar": "فنسنت فان غوخ — فنسنت وثيو وجو — الكلمات الأخيرة"
+    },
+    "src": "assets/artists/vincent-van-gogh/supporters/video/vincent-theo-jo-last-words.mp4",
+    "poster": "https://media.artdaci.com/shared/images/artists/reimagined/van-gogh-and-jo-bonger-portrait.webp"
+  },
+  {
+    "id": "vermeer-thanks",
+    "group": "encounters",
+    "title": {
+      "en": "Johannes Vermeer — Vermeer Thanks Pieter and Maria",
+      "fr": "Johannes Vermeer — Vermeer remercie Pieter et Maria",
+      "ar": "يوهانس فيرمير — فيرمير يشكر بيتر وماريا"
+    },
+    "src": "assets/artists/johannes-vermeer/supporters/video/animating-vermeer-thanking-patrons-pieter-van-ruijven-maria-de-knuijt.mp4",
+    "poster": "https://media.artdaci.com/shared/images/artists/reimagined/vermeer-with-pieter-and-maria.webp"
+  },
+  {
+    "id": "vermeer-patrons",
+    "group": "encounters",
+    "title": {
+      "en": "Johannes Vermeer — Vermeer and His Patrons",
+      "fr": "Johannes Vermeer — Vermeer et ses mécènes",
+      "ar": "يوهانس فيرمير — فيرمير ورعاته"
+    },
+    "src": "assets/artists/johannes-vermeer/supporters/video/vermeer-thanking-pieter-an-maria-for-support.mp4",
+    "poster": "https://media.artdaci.com/shared/images/artists/reimagined/vermeer-with-pieter-and-maria.webp"
+  }
+];
+  const cinemaPlayer = document.getElementById("r-cinema-player");
+  const cinemaList = document.getElementById("r-cinema-list");
+  const cinemaTitle = document.getElementById("r-cinema-film-title");
+  const cinemaCategory = document.getElementById("r-cinema-category");
+  const cinemaCount = document.getElementById("r-cinema-count");
+  const cinemaFeedback = document.getElementById("r-cinema-feedback");
+  const cinemaFeature = document.querySelector(".r-cinema-feature");
+  const cinemaFilters = [...document.querySelectorAll("[data-cinema-filter]")];
+  const filmGroups = {
+    together: copy.cinemaTogether,
+    leonardo: copy.cinemaLeonardo,
+    encounters: copy.cinemaEncounters
+  };
+  let activeCinemaFilm = "";
+  let activeCinemaFilter = "all";
+
+  function showCinemaFilm(film, shouldPlay = false) {
+    if (!film || !cinemaPlayer) return;
+    const changed = activeCinemaFilm !== film.id;
+    activeCinemaFilm = film.id;
+    cinemaTitle.textContent = film.title[lang] || film.title.en;
+    cinemaCategory.textContent = filmGroups[film.group];
+    cinemaFeedback.hidden = true;
+    if (changed) {
+      cinemaPlayer.pause();
+      cinemaPlayer.poster = film.poster;
+      cinemaPlayer.src = film.src;
+      cinemaPlayer.setAttribute("aria-label", film.title[lang] || film.title.en);
+      cinemaPlayer.load();
+    }
+    cinemaList.querySelectorAll("[data-film-id]").forEach((button) => {
+      const selected = button.dataset.filmId === film.id;
+      button.classList.toggle("is-selected", selected);
+      button.setAttribute("aria-pressed", String(selected));
+    });
+    if (shouldPlay) cinemaPlayer.play().catch(() => {});
+  }
+
+  function renderCinemaFilms() {
+    const shown = cinemaFilms.filter((film) => activeCinemaFilter === "all" || film.group === activeCinemaFilter);
+    cinemaList.replaceChildren();
+    cinemaCount.textContent = `${shown.length} ${copy.cinemaCount}`;
+    shown.forEach((film) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "r-cinema-item";
+      button.dataset.filmId = film.id;
+      button.setAttribute("aria-pressed", String(film.id === activeCinemaFilm));
+      if (film.id === activeCinemaFilm) button.classList.add("is-selected");
+      const image = document.createElement("img");
+      image.src = film.poster;
+      image.alt = "";
+      image.loading = "lazy";
+      image.decoding = "async";
+      const information = document.createElement("span");
+      information.className = "r-cinema-item-details";
+      const kind = document.createElement("span");
+      kind.className = "r-cinema-item-kind";
+      kind.textContent = filmGroups[film.group];
+      const title = document.createElement("strong");
+      title.textContent = film.title[lang] || film.title.en;
+      information.append(kind, title);
+      const icon = document.createElement("span");
+      icon.className = "r-cinema-play-icon";
+      icon.setAttribute("aria-hidden", "true");
+      icon.textContent = "▶";
+      button.setAttribute("aria-label", `${copy.cinemaPlay} — ${title.textContent}`);
+      button.append(image, information, icon);
+      button.addEventListener("click", () => {
+        showCinemaFilm(film, true);
+        renderCinemaFilms();
+        if (window.matchMedia("(max-width: 950px)").matches) {
+          cinemaFeature.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+        }
+      });
+      cinemaList.append(button);
+    });
+  }
+
+  cinemaPlayer.addEventListener("error", () => {
+    cinemaFeedback.textContent = copy.cinemaError;
+    cinemaFeedback.hidden = false;
+  });
+  cinemaPlayer.addEventListener("loadedmetadata", () => {
+    cinemaFeedback.hidden = true;
+  });
+  cinemaFilters.forEach((button) => button.addEventListener("click", () => {
+    activeCinemaFilter = button.dataset.cinemaFilter;
+    cinemaFilters.forEach((filter) => {
+      const selected = filter === button;
+      filter.classList.toggle("is-active", selected);
+      filter.setAttribute("aria-pressed", String(selected));
+    });
+    const shown = cinemaFilms.filter((film) => activeCinemaFilter === "all" || film.group === activeCinemaFilter);
+    if (!shown.some((film) => film.id === activeCinemaFilm)) showCinemaFilm(shown[0]);
+    renderCinemaFilms();
+  }));
+  showCinemaFilm(cinemaFilms[0]);
+  renderCinemaFilms();
 
   const movies = [...document.querySelectorAll("video")];
   movies.forEach((video) => video.addEventListener("play", () => movies.forEach((other) => {
