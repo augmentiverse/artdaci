@@ -354,25 +354,3 @@ html[dir=rtl] .r-still-open::after{right:auto;left:12px}
   .r-group-grid .r-still-open{max-height:335px}
   .r-group-photo-hero .r-still-open{aspect-ratio:2/1}
 }
-
-/* Cinema: scale the player card to compact or portrait-oriented films. */
-.r-cinema.is-compact{
-  grid-template-columns:minmax(0,370px) minmax(300px,385px);
-  justify-content:center;
-  gap:clamp(16px,2vw,26px)
-}
-.r-cinema.is-compact .r-cinema-feature{position:static;top:auto}
-.r-cinema.is-compact .r-cinema-screen{display:grid;place-items:center;padding:12px;background:#183952}
-.r-cinema.is-compact .r-cinema-screen video{
-  width:min(100%,310px);height:auto;max-height:420px;
-  aspect-ratio:var(--cinema-aspect,4 / 5);object-fit:contain;
-  background:#132c44;
-}
-.r-cinema.is-compact .r-cinema-now{padding:15px;gap:12px}
-.r-cinema.is-compact .r-cinema-now h3{font-size:clamp(1.2rem,2vw,1.55rem)}
-.r-cinema.is-compact .r-cinema-vr-link{padding:10px 13px;font-size:.72rem}
-@media(max-width:950px){
-  .r-cinema.is-compact{grid-template-columns:minmax(0,1fr)}
-  .r-cinema.is-compact .r-cinema-feature{width:min(100%,430px);margin-inline:auto}
-  .r-cinema.is-compact .r-cinema-catalog{width:min(100%,790px);margin-inline:auto}
-}
