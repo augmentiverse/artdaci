@@ -240,7 +240,6 @@
   const cinemaCount = document.getElementById("r-cinema-count");
   const cinemaFeedback = document.getElementById("r-cinema-feedback");
   const cinemaFeature = document.querySelector(".r-cinema-feature");
-  const cinemaLayout = document.querySelector(".r-cinema");
   const cinemaFilters = [...document.querySelectorAll("[data-cinema-filter]")];
   const filmGroups = {
     together: copy.cinemaTogether,
@@ -254,10 +253,6 @@
     if (!film || !cinemaPlayer) return;
     const changed = activeCinemaFilm !== film.id;
     activeCinemaFilm = film.id;
-    // The introductory film is presented in a compact, portrait-friendly frame.
-    // Other films switch to that layout when their actual metadata is portrait/square.
-    cinemaLayout.classList.toggle("is-compact", film.id === "four-painters-intro");
-    cinemaPlayer.style.removeProperty("--cinema-aspect");
     cinemaTitle.textContent = film.title[lang] || film.title.en;
     cinemaCategory.textContent = filmGroups[film.group];
     cinemaFeedback.hidden = true;
@@ -322,13 +317,6 @@
   });
   cinemaPlayer.addEventListener("loadedmetadata", () => {
     cinemaFeedback.hidden = true;
-    const width = cinemaPlayer.videoWidth;
-    const height = cinemaPlayer.videoHeight;
-    if (width > 0 && height > 0) {
-      cinemaPlayer.style.setProperty("--cinema-aspect", `${width} / ${height}`);
-      const isCompact = activeCinemaFilm === "four-painters-intro" || width / height < 1.15;
-      cinemaLayout.classList.toggle("is-compact", isCompact);
-    }
   });
   cinemaFilters.forEach((button) => button.addEventListener("click", () => {
     activeCinemaFilter = button.dataset.cinemaFilter;
