@@ -972,7 +972,10 @@
     .hero h1{font-size:clamp(30px,3.7vw,47px);}
     .hero p{color:#e1edf5;}
     .art-thumb,.mini-work img,.timeline-thumb{object-fit:contain;}
-    .art-thumb-wrap{background:#263c4c;}
+    .art-thumb-wrap{background:var(--bg-muted);}
+    /* Display the reproduction itself, never add a decorative picture frame. */
+    .art-thumb,.mini-work img,.timeline-thumb,.compare-img,#modalImg{border:0!important;outline:0!important;box-shadow:none!important;border-radius:0!important;object-fit:contain!important;}
+    .art-card:hover .art-thumb{transform:none;}
     .art-master-line{filter:none;}
     body.dark .art-master-line{color:#e5c88b!important;}
     .art-card:focus-within,.mini-work:focus-within{outline:2px solid var(--accent);}
@@ -1053,7 +1056,7 @@
           </div>
         </div>
 
-        <div class="spec-grid" id="modalSpecs"></div><a id="artworkSiteLink" class="filter-pill" style="text-decoration:none;text-align:center" href="print-artwork.html">Explore this work in ARTDACI ↗</a>
+        <div class="spec-grid" id="modalSpecs"></div><a id="artworkSiteLink" class="filter-pill" style="text-decoration:none;text-align:center" href="print-artwork.html">Explore this work in ARTDACI ↗</a><a id="reproductionSourceLink" class="filter-pill" style="text-decoration:none;text-align:center" target="_blank" rel="noopener noreferrer" href="https://commons.wikimedia.org/">Image source · Wikimedia Commons ↗</a>
 
         <div class="subtabs" id="modalSubtabs">
           <button class="subtab active" data-tab="context">Historical Context</button>
@@ -1187,7 +1190,7 @@ const ARTWORKS = [
     museum: 'Musée du Louvre',
     city: 'Paris, France',
     movement: 'High Renaissance',
-    file: 'Mona_Lisa,_by_Leonardo_da_Vinci,_from_C2RMF_retouched.jpg',
+    file: "Mona_Lisa,_by_Leonardo_da_Vinci,_from_C2RMF_retouched.jpg",
     wiki: 'Mona_Lisa',
     concepts: ['Sfumato', 'Atmospheric Perspective', 'Portrait', 'Optical Perception', 'Psychological Presence'],
     palette: ['#c8a675', '#5b4d34', '#6d8485', '#2a2219', '#947c54'],
@@ -1215,7 +1218,7 @@ const ARTWORKS = [
     museum: 'Santa Maria delle Grazie',
     city: 'Milan, Italy',
     movement: 'High Renaissance',
-    file: 'The-Last-Supper-Restored-Da-Vinci_32x16.jpg',
+    file: "The-Last-Supper-Restored-Da-Vinci_32x16.jpg",
     wiki: 'The_Last_Supper_(Leonardo)',
     concepts: ['Linear Perspective', 'Psychological Drama', 'Sacred Narrative', 'Compositional Rhythm'],
     palette: ['#8b6948', '#486a84', '#9e4738', '#d4c3a3', '#302b24'],
@@ -1243,7 +1246,7 @@ const ARTWORKS = [
     museum: 'Musée du Louvre',
     city: 'Paris, France',
     movement: 'High Renaissance',
-    file: 'La_Belle_Ferronière_-_Google_Arts.jpg',
+    file: "La_Belle_Ferronière_-_Google_Arts.jpg",
     wiki: 'La_Belle_Ferronnière',
     concepts: ['Portrait', 'Chiaroscuro', 'Parapet Framing', 'Psychological Presence'],
     palette: ['#a63a31', '#211c19', '#d7b28a', '#63482d', '#493c34'],
@@ -1271,7 +1274,7 @@ const ARTWORKS = [
     museum: 'Princes Czartoryski Museum',
     city: 'Kraków, Poland',
     movement: 'High Renaissance',
-    file: 'Lady_with_an_Ermine_-_Leonardo_da_Vinci_(adjusted_levels).jpg',
+    file: "Lady_with_an_Ermine_-_Leonardo_da_Vinci_(adjusted_levels).jpg",
     wiki: 'Lady_with_an_Ermine',
     concepts: ['Spiral Pose', 'Motion in Portraiture', 'Symbolism', 'Anatomy'],
     palette: ['#d8be98', '#983d2e', '#325163', '#161515', '#dcd6cc'],
@@ -1327,7 +1330,7 @@ const ARTWORKS = [
     museum: 'Uffizi Galleries',
     city: 'Florence, Italy',
     movement: 'Early Renaissance',
-    file: 'Annunciation_(Leonardo_c._1472–1476).jpg',
+    file: "Leonardo_Da_Vinci_-_Annunciazione.jpeg",
     wiki: 'Annunciation_(Leonardo)',
     concepts: ['Botanical Observation', 'Linear Perspective', 'Sacred Narrative', 'Atmospheric Perspective'],
     palette: ['#2e4b3c', '#8e2b2e', '#325178', '#c8a96e', '#92aab4'],
@@ -1357,7 +1360,7 @@ const ARTWORKS = [
     museum: 'Musée du Louvre',
     city: 'Paris, France',
     movement: 'Dutch Golden Age',
-    file: 'Johannes_Vermeer_-_The_Astronomer_-_WGA24685.jpg',
+    file: "Johannes_Vermeer_-_The_Astronomer_-_WGA24685.jpg",
     wiki: 'The_Astronomer_(Vermeer)',
     concepts: ['Scientific Inquiry', 'Side-Window Light', 'Interior', 'Quiet Gesture'],
     palette: ['#31585c', '#c89b55', '#8d5b3e', '#d6cdb8', '#1b1d1c'],
@@ -1385,7 +1388,7 @@ const ARTWORKS = [
     museum: 'Kunsthistorisches Museum',
     city: 'Vienna, Austria',
     movement: 'Dutch Golden Age',
-    file: 'Jan_Vermeer_-_The_Art_of_Painting_-_Google_Art_Project.jpg',
+    file: "Jan_Vermeer_-_The_Art_of_Painting_-_Google_Art_Project.jpg",
     wiki: 'The_Art_of_Painting',
     concepts: ['Allegory', 'Studio Interior', 'Optical Illusion', 'Drapery Curtain'],
     palette: ['#3d5c84', '#d8b464', '#9e5334', '#dcd8ce', '#211c19'],
@@ -1413,7 +1416,7 @@ const ARTWORKS = [
     museum: 'Mauritshuis',
     city: 'The Hague, Netherlands',
     movement: 'Dutch Golden Age',
-    file: 'Meisje_met_de_parel.jpg',
+    file: "Meisje_met_de_parel.jpg",
     wiki: 'Girl_with_a_Pearl_Earring',
     concepts: ['Tronie', 'Ultramarine', 'Glaze', 'Psychological Presence', 'Optical Softness'],
     palette: ['#215395', '#e4c254', '#d9b597', '#0e0e0e', '#e7e2d8'],
@@ -1441,7 +1444,7 @@ const ARTWORKS = [
     museum: 'National Gallery of Art',
     city: 'Washington, D.C., USA',
     movement: 'Dutch Golden Age',
-    file: 'Johannes_Vermeer_-_Woman_Holding_a_Balance_-_Google_Art_Project.jpg',
+    file: "Johannes_Vermeer_-_Woman_Holding_a_Balance_-_Google_Art_Project.jpg",
     wiki: 'Woman_Holding_a_Balance',
     concepts: ['Moral Allegory', 'Equilibrium', 'Side-Window Light', 'Interior'],
     palette: ['#2b4162', '#c8a363', '#8c7d6b', '#d9d3c4', '#1a1917'],
@@ -1469,7 +1472,7 @@ const ARTWORKS = [
     museum: 'Mauritshuis',
     city: 'The Hague, Netherlands',
     movement: 'Dutch Golden Age',
-    file: 'Vermeer-view-of-delft.jpg',
+    file: "Vermeer-view-of-delft.jpg",
     wiki: 'View_of_Delft',
     concepts: ['Cityscape', 'Pointillé', 'Atmospheric Light', 'Cloud Shadow'],
     palette: ['#728ba3', '#d4b47e', '#9c4e36', '#333b42', '#e4ddc8'],
@@ -1497,7 +1500,7 @@ const ARTWORKS = [
     museum: 'Rijksmuseum',
     city: 'Amsterdam, Netherlands',
     movement: 'Dutch Golden Age',
-    file: 'Johannes_Vermeer_-_Het_melkmeisje_-_Google_Art_Project.jpg',
+    file: "Johannes_Vermeer_-_Het_melkmeisje_-_Google_Art_Project.jpg",
     wiki: 'The_Milkmaid_(Vermeer)',
     concepts: ['Pointillé', 'Everyday Dignity', 'Lead-Tin Yellow', 'Side-Window Light'],
     palette: ['#e0b83d', '#244b85', '#c8c4b8', '#8d5634', '#2e251c'],
@@ -1527,7 +1530,7 @@ const ARTWORKS = [
     museum: "Musée d'Orsay",
     city: 'Paris, France',
     movement: 'Post-Impressionism',
-    file: 'Self-Portrait_(Van_Gogh_September_1889).jpg',
+    file: "Self-Portrait_(Van_Gogh_September_1889).jpg",
     wiki: 'Van_Gogh_self-portrait_(1889)',
     concepts: ['Self-Portrait', 'Complementary Colors', 'Broken Brushwork', 'Psychological Presence'],
     palette: ['#679b9b', '#b85e2a', '#4d6f89', '#d6b479', '#25394c'],
@@ -1555,7 +1558,7 @@ const ARTWORKS = [
     museum: 'Museum of Modern Art (MoMA)',
     city: 'New York, USA',
     movement: 'Post-Impressionism',
-    file: 'Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg',
+    file: "Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg",
     wiki: 'The_Starry_Night',
     concepts: ['Nocturne', 'Impasto', 'Inner Vision', 'Cosmic Rhythm'],
     palette: ['#1e3b7a', '#f2cd48', '#22332a', '#7098c9', '#d48d28'],
@@ -1583,7 +1586,7 @@ const ARTWORKS = [
     museum: 'Van Gogh Museum',
     city: 'Amsterdam, Netherlands',
     movement: 'Post-Impressionism',
-    file: 'Vincent_van_Gogh_-_De_slaapkamer_-_Google_Art_Project.jpg',
+    file: "Vincent_van_Gogh_-_De_slaapkamer_-_Google_Art_Project.jpg",
     wiki: 'Bedroom_in_Arles',
     concepts: ['Interior', 'Expressive Perspective', 'Complementary Colors', 'Color Symbolism'],
     palette: ['#5f83ba', '#d8a63c', '#9e4434', '#7ca16f', '#c9bc9a'],
@@ -1611,7 +1614,7 @@ const ARTWORKS = [
     museum: 'Kröller-Müller Museum',
     city: 'Otterlo, Netherlands',
     movement: 'Post-Impressionism',
-    file: 'Vincent_Willem_van_Gogh_015.jpg',
+    file: "Vincent_Willem_van_Gogh_-_Cafe_Terrace_at_Night_(Yorck).jpg",
     wiki: 'Café_Terrace_at_Night',
     concepts: ['Nocturne', 'Complementary Colors', 'En Plein Air', 'Night Light'],
     palette: ['#f0c140', '#1c3b72', '#4c7399', '#8a522a', '#d7e3ee'],
@@ -1639,7 +1642,7 @@ const ARTWORKS = [
     museum: 'Yale University Art Gallery',
     city: 'New Haven, USA',
     movement: 'Post-Impressionism',
-    file: 'Vincent_van_Gogh_-_The_Night_Café_-_WGA25285.jpg',
+    file: "Van_Gogh_The_Night_Cafe.jpg",
     wiki: 'The_Night_Café',
     concepts: ['Psychological Color', 'Expressive Perspective', 'Complementary Clash', 'Interior'],
     palette: ['#b52f28', '#528c4b', '#f2cf46', '#4a3628', '#8a9276'],
@@ -1667,7 +1670,7 @@ const ARTWORKS = [
     museum: 'National Gallery',
     city: 'London, United Kingdom',
     movement: 'Post-Impressionism',
-    file: 'Vincent_Willem_van_Gogh_128.jpg',
+    file: "Vincent_van_Gogh_-_Sunflowers_(1888,_National_Gallery_London).jpg",
     wiki: 'Sunflowers_(Van_Gogh_series)',
     concepts: ['Still Life', 'Monochrome Harmony', 'Impasto', 'Vitality & Time'],
     palette: ['#f2c22e', '#d69222', '#e8d78e', '#758246', '#9e5d24'],
@@ -1697,7 +1700,7 @@ const ARTWORKS = [
     museum: 'National Museum of Western Art',
     city: 'Tokyo, Japan',
     movement: 'Impressionism',
-    file: 'Nymphéas_1916_Claude_Monet_NMWA.jpg',
+    file: "Monet_Water_Lilies_1916.jpg",
     wiki: 'Water_Lilies_(Monet_series)',
     concepts: ['Reflection', 'Horizonless Space', 'Serial Painting', 'Broken Brushwork'],
     palette: ['#4b6a7a', '#63835a', '#b69cc2', '#df9ba4', '#263835'],
@@ -1725,7 +1728,7 @@ const ARTWORKS = [
     museum: "Musée d'Orsay",
     city: 'Paris, France',
     movement: 'Impressionism',
-    file: 'Claude_Monet_-_Water_Lilies_and_Japanese_Bridge.jpg',
+    file: "2007_Musee_Orsay_Work_Kraft_067.jpg",
     wiki: 'Water_Lilies_(Monet_series)',
     concepts: ['Giverny Garden', 'Japanese Bridge', 'Reflection', 'Color Harmony'],
     palette: ['#457b54', '#7ea372', '#a8b79f', '#df9b97', '#264438'],
@@ -1753,7 +1756,7 @@ const ARTWORKS = [
     museum: 'National Gallery of Art',
     city: 'Washington, D.C., USA',
     movement: 'Impressionism',
-    file: 'Claude_Monet_-_Woman_with_a_Parasol_-_Madame_Monet_and_Her_Son_-_Google_Art_Project.jpg',
+    file: "Claude_Monet_-_Woman_with_a_Parasol_-_Madame_Monet_and_Her_Son_-_Google_Art_Project.jpg",
     wiki: 'Woman_with_a_Parasol_–_Madame_Monet_and_Her_Son',
     concepts: ['En Plein Air', 'Movement & Wind', 'Low Viewpoint', 'Broken Brushwork'],
     palette: ['#72a0cc', '#f0eee8', '#688c52', '#c8be96', '#334d3a'],
@@ -1781,7 +1784,7 @@ const ARTWORKS = [
     museum: "Musée d'Orsay",
     city: 'Paris, France',
     movement: 'Impressionism',
-    file: "Claude_Monet_-_The_Bridge_at_Argenteuil_(Musée_d'Orsay).jpg",
+    file: "Claude_Monet_-_The_Argenteuil_Bridge_-_Google_Art_Project.jpg",
     wiki: 'Argenteuil_(Monet)',
     concepts: ['Modernity & Leisure', 'Water Reflections', 'En Plein Air', 'Geometric Contrast'],
     palette: ['#4e78a6', '#d6c89e', '#587846', '#e6e4de', '#8e6248'],
@@ -1809,7 +1812,7 @@ const ARTWORKS = [
     museum: "Musée d'Orsay",
     city: 'Paris, France',
     movement: 'Impressionism',
-    file: 'Claude_Monet_-_Poppy_Field_-_Google_Art_Project.jpg',
+    file: "Claude_Monet_-_Poppy_Field_-_Google_Art_Project.jpg",
     wiki: 'The_Poppy_Field_near_Argenteuil',
     concepts: ['Complementary Colors', 'En Plein Air', 'Atmospheric Light', 'Diagonal Rhythm'],
     palette: ['#d83c35', '#5b7c4f', '#89a8c6', '#e2d7c5', '#34472c'],
@@ -1837,7 +1840,7 @@ const ARTWORKS = [
     museum: 'Musée Marmottan Monet',
     city: 'Paris, France',
     movement: 'Impressionism',
-    file: 'Monet_-_Impression,_Sunrise.jpg',
+    file: "Monet_-_Impression,_Sunrise.jpg",
     wiki: 'Impression,_Sunrise',
     concepts: ['Impressionism Origin', 'Atmosphere', 'Complementary Colors', 'En Plein Air'],
     palette: ['#ed6b32', '#647f94', '#8e9ba6', '#28343e', '#d68f5e'],
@@ -1958,11 +1961,39 @@ function handleImgError(imgEl, wikiSlug, title, masterName, paletteJson) {
   }
 }
 
-function showMissingImage(img, num) { const art=getArtwork(num); img.onerror=null; img.src=makeFallbackSvg(art.title,'Image unavailable',art.palette); if(img.id==='modalImg'){document.getElementById('hotspotLayer').replaceChildren();document.getElementById('hotspotCallout').style.display='none';} }
-function imgAttrs(art, width = 800) {
-  const m = getMaster(art.masterId);
-  const pal = encodeURIComponent(JSON.stringify(art.palette));
-  return `src="${SITE_ARTWORKS[art.num].image}" alt="${escapeXml(art.title)} by ${escapeXml(m.name)}" loading="lazy" decoding="async" onerror="showMissingImage(this,'${art.num}')"`;
+// Exact documentary reproductions, using the supplied Commons filenames
+// and corrected identifiers where the catalogue refers to a specific version.
+// Never fall back to the framed decorative collection files.
+const COMMONS_HASHES = ["ec","22","4d","bf","39","d9","0e","5e","d7","68","a2","20","ee","ea","76","21","7c","fe","5d","fb","1b","c9","89","59"];
+const DOCUMENTARY_LOCAL = {
+  '009':'assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg',
+  '011':SITE_ARTWORKS['011'].image, '013':SITE_ARTWORKS['013'].image,
+  '015':SITE_ARTWORKS['015'].image, '021':SITE_ARTWORKS['021'].image
+};
+function documentaryUrl(art, width=960) {
+  const hash=COMMONS_HASHES[Number(art.num)-1];
+  const file=encodeURIComponent(art.file.replace(/ /g,'_'));
+  const base='https://upload.wikimedia.org/wikipedia/commons/';
+  const path=hash[0]+'/'+hash+'/'+file;
+  // Small source files: avoid requesting a thumbnail larger than the original.
+  if(['007','019'].includes(art.num))return base+path;
+  const size=width<=330?330:960;
+  return base+'thumb/'+path+'/'+size+'px-'+file;
+}
+function documentarySource(art){return 'https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(art.file);}
+function showMissingImage(img, num) {
+  const art=getArtwork(num);
+  if(!art || (img.id==='modalImg' && state.modalNum!==num))return;
+  const stage=Number(img.dataset.imageFallback||0);
+  img.dataset.imageFallback=String(stage+1);
+  if(stage===0){img.src=getCommonsUrl(art.file,960);return;}
+  if(stage===1 && DOCUMENTARY_LOCAL[num]){img.src=DOCUMENTARY_LOCAL[num];return;}
+  img.onerror=null;
+  img.src=makeFallbackSvg(art.title,'Reproduction temporarily unavailable',art.palette);
+  if(img.id==='modalImg'){document.getElementById('hotspotLayer').replaceChildren();document.getElementById('hotspotCallout').style.display='none';}
+}
+function imgAttrs(art,width=800){
+  return `src="${documentaryUrl(art,width)}" alt="${escapeXml(art.title)} by ${escapeXml(getMaster(art.masterId).name)}" loading="lazy" decoding="async" onerror="showMissingImage(this,'${art.num}')"`;
 }
 
 // ============================================================================
@@ -2562,7 +2593,7 @@ function renderQuizView() {
 
       ${qState.answered ? `
         <div style="margin:14px 0; display:flex; gap:14px; align-items:center; background:var(--accent-soft); padding:12px; border-radius:12px;">
-          <img style="width:90px; height:68px; object-fit:cover; border-radius:8px;" ${imgAttrs(q.target, 300)} />
+          <img style="width:90px; height:68px; object-fit:contain; border-radius:0;" ${imgAttrs(q.target, 300)} />
           <div style="font-size:13px;">
             <strong>${q.target.title}</strong> by ${q.masterName} (${q.target.dateDisplay})<br/>
             <span style="color:var(--text-muted);">${q.target.museum}, ${q.target.city}</span>
@@ -2638,12 +2669,14 @@ function populateModal() {
   const img = document.getElementById('modalImg');
   delete img.dataset.fallbackStage;
   const pal = encodeURIComponent(JSON.stringify(art.palette));
-  img.src = SITE_ARTWORKS[art.num].image;
-  img.alt = `${art.title} by ${m.name}`;
+  delete img.dataset.imageFallback;
   img.onerror = () => showMissingImage(img, art.num);
+  img.src = documentaryUrl(art,960);
+  img.alt = `${art.title} by ${m.name}`;
 
   document.getElementById('modalEyebrow').textContent = `Artwork ${art.num}${art.hubCode ? ' · ARTDACI Hub ' + art.hubCode : ''} · ${art.movement}`;
   document.getElementById('modalTitle').textContent = art.title;
+  document.getElementById('reproductionSourceLink').href=documentarySource(art);
   document.getElementById('artworkSiteLink').href='print-artwork.html?painting='+encodeURIComponent(SITE_ARTWORKS[art.num].slug)+'&lang='+returnLang;
   document.getElementById('modalSubtitle').textContent = `${art.originalTitle} · ${m.name} (${m.years})`;
 
