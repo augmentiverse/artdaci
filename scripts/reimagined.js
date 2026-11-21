@@ -355,4 +355,168 @@
     lightboxImage.removeAttribute("src");
     lightboxImage.alt = "";
   });
+  (function initThreeDimensionalPhotoAlbums() {
+  const translations = {
+    en: { guide:"Turn the 3D photo albums with the arrows or a swipe. Click any photo to see it full-size.", tag:"3D PHOTO ALBUM", page:"PHOTO", prev:"Previous photo", next:"Next photo", zoom:"Enlarge photo", choose:"Show photo", together:"The Four Masters" },
+    fr: { guide:"Tournez les albums photo 3D à l’aide des flèches ou d’un glissement. Cliquez sur une image pour l’agrandir.", tag:"ALBUM PHOTO 3D", page:"PHOTO", prev:"Photo précédente", next:"Photo suivante", zoom:"Agrandir la photo", choose:"Afficher la photo", together:"Les quatre maîtres" },
+    ar: { guide:"قلّب صفحات ألبومات الصور ثلاثية الأبعاد باستخدام الأسهم أو السحب. انقر على الصورة لتكبيرها.", tag:"ألبوم صور ثلاثي الأبعاد", page:"الصورة", prev:"الصورة السابقة", next:"الصورة التالية", zoom:"تكبير الصورة", choose:"عرض الصورة", together:"الأساتذة الأربعة" }
+  };
+  const words = translations[lang];
+  const guide = document.querySelector("[data-album-guide]");
+  if (guide) guide.textContent=words.guide;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const albums = Array.from(document.querySelectorAll(".r-photo-album"));
+  albums.forEach((album) => {
+    const source = album.querySelector(".r-album-source");
+    const ui = album.querySelector(".r-album-ui");
+    if (!source || !ui) return;
+    const photos = Array.from(source.querySelectorAll(".r-still")).map((figure) => {
+      const button = figure.querySelector(".r-still-open");
+      const image = button?.querySelector("img");
+      if (!image || !button) return null;
+      const caption = copy[button.dataset.captionKey] || figure.querySelector("figcaption")?.textContent?.trim() || "";
+      const alt = copy[image.dataset.l10nAlt] || image.alt || caption;
+      return { src:image.getAttribute("src"), alt, caption };
+    }).filter((photo) => photo?.src);
+    if (!photos.length) return;
+
+    const albumName = album.dataset.album === "together" ? words.together : (album.dataset.albumName || "ARTDACI");
+    const ordinal = album.closest("article")?.querySelector(".r-story-number")?.textContent?.trim() || "05";
+    ui.innerHTML = `
+      <div class="r-album-topline"><span class="r-album-top-label"></span><span class="r-album-counter" role="status" aria-live="polite"></span></div>
+      <div class="r-album-viewport">
+        <div class="r-album-book" tabindex="0">
+          <div class="r-album-left">
+            <div class="r-album-cover-ornament">✦</div>
+            <div class="r-album-cover-label">ARTDACI <span>REIMAGINED</span></div>
+            <div class="r-album-cover-number"></div>
+            <strong class="r-album-cover-title"></strong>
+            <span class="r-album-cover-foil"></span>
+          </div>
+          <div class="r-album-right">
+            <button class="r-album-photo" type="button"><img alt="" loading="lazy" decoding="async"><span class="r-album-photo-caption"></span><span class="r-album-enlarge" aria-hidden="true">⤢</span></button>
+          </div>
+          <div class="r-album-spine" aria-hidden="true"></div>
+          <div class="r-album-flip-sheet" aria-hidden="true" hidden>
+            <div class="r-album-flip-front"><img alt=""><span></span></div>
+            <div class="r-album-flip-back"><span>ARTDACI</span><small>REIMAGINED</small></div>
+          </div>
+        </div>
+      </div>
+      <div class="r-album-bottom">
+        <div class="r-album-controls">
+          <button class="r-album-prev" type="button"><span aria-hidden="true">←</span><span class="r-album-prev-text"></span></button>
+          <button class="r-album-next" type="button"><span class="r-album-next-text"></span><span aria-hidden="true">→</span></button>
+        </div>
+        <div class="r-album-thumbs" role="group"></div>
+      </div>`;
+    ui.querySelector(".r-album-top-label").textContent=words.tag;
+    ui.querySelector(".r-album-cover-title").textContent=albumName;
+    ui.querySelector(".r-album-cover-number").textContent=ordinal;
+    const book=ui.querySelector(".r-album-book");
+    const photoButton=ui.querySelector(".r-album-photo");
+    const photoImage=photoButton.querySelector("img");
+    const photoCaption=ui.querySelector(".r-album-photo-caption");
+    const counter=ui.querySelector(".r-album-counter");
+    const turnPage=ui.querySelector(".r-album-flip-sheet");
+    const flipImage=turnPage.querySelector(".r-album-flip-front img");
+    const flipCaption=turnPage.querySelector(".r-album-flip-front span");
+    const thumbs=ui.querySelector(".r-album-thumbs");
+    const prev=ui.querySelector(".r-album-prev");
+    const next=ui.querySelector(".r-album-next");
+    prev.querySelector(".r-album-prev-text").textContent=words.prev;
+    next.querySelector(".r-album-next-text").textContent=words.next;
+    prev.setAttribute("aria-label",words.prev);
+    next.setAttribute("aria-label",words.next);
+    book.setAttribute("aria-label",`${words.tag} · ${albumName}`);
+    let index=0, busy=false, swipeClickGuard=0, start=null;
+    const thumbButtons=photos.map((photo,i)=>{
+      const button=document.createElement("button");
+      button.type="button";
+      button.className="r-album-thumb";
+      button.setAttribute("aria-label",`${words.choose} ${i+1}/${photos.length} : ${photo.caption}`);
+      button.setAttribute("aria-pressed","false");
+      const image=document.createElement("img");
+      image.src=photo.src;
+      image.alt="";
+      image.loading="lazy";
+      image.decoding="async";
+      button.append(image);
+      thumbs.append(button);
+      button.addEventListener("click",()=>turnTo(i));
+      return button;
+    });
+    function showPhoto(i) {
+      const photo=photos[i];
+      photoImage.src=photo.src;
+      photoImage.alt=photo.alt;
+      photoCaption.textContent=photo.caption;
+      counter.textContent=`${words.page} ${i+1} / ${photos.length}`;
+      photoButton.setAttribute("aria-label",`${words.zoom} : ${photo.caption}`);
+      thumbButtons.forEach((button,n)=>{
+        button.classList.toggle("is-current",n===i);
+        button.setAttribute("aria-pressed",String(n===i));
+      });
+    }
+    function turnTo(target) {
+      if (busy || target===index) return;
+      const newIndex=(target+photos.length)%photos.length;
+      const forward = (newIndex===0 && index===photos.length-1) || (newIndex>index && !(newIndex===photos.length-1&&index===0));
+      if(reducedMotion){index=newIndex;showPhoto(index);return;}
+      busy=true;
+      flipImage.src=(forward?photos[index]:photos[newIndex]).src;
+      flipCaption.textContent=(forward?photos[index]:photos[newIndex]).caption;
+      if(forward){index=newIndex;showPhoto(index);}
+      turnPage.hidden=false;
+      book.classList.remove("is-turning-next","is-turning-prev");
+      void turnPage.offsetWidth;
+      book.classList.add(forward?"is-turning-next":"is-turning-prev");
+      window.setTimeout(()=>{
+        if(!forward){index=newIndex;showPhoto(index);}
+        book.classList.remove("is-turning-next","is-turning-prev");
+        turnPage.hidden=true;
+        busy=false;
+      },640);
+    }
+    prev.addEventListener("click",()=>turnTo((index-1+photos.length)%photos.length));
+    next.addEventListener("click",()=>turnTo((index+1)%photos.length));
+    photoButton.addEventListener("click",()=>{
+      if(Date.now()<swipeClickGuard || busy)return;
+      const photo=photos[index];
+      lightboxImage.src=photo.src;
+      lightboxImage.alt=photo.alt;
+      lightboxCaption.textContent=photo.caption;
+      lightbox.showModal();
+    });
+    book.addEventListener("keydown",(event)=>{
+      if(["ArrowRight","ArrowLeft","Home","End"].includes(event.key)){
+        event.preventDefault();
+        if(event.key==="Home") turnTo(0);
+        else if(event.key==="End") turnTo(photos.length-1);
+        else turnTo((index+(event.key==="ArrowRight"?1:-1)+photos.length)%photos.length);
+      }
+    });
+    book.addEventListener("pointerdown",(event)=>{
+      if(event.button!==0) return;
+      start={x:event.clientX,y:event.clientY};
+    });
+    book.addEventListener("pointerup",(event)=>{
+      if(!start)return;
+      const dx=event.clientX-start.x,dy=event.clientY-start.y;
+      start=null;
+      if(Math.abs(dx)>44 && Math.abs(dx)>Math.abs(dy)*1.25) {
+        swipeClickGuard=Date.now()+450;
+        turnTo((index+(dx<0?1:-1)+photos.length)%photos.length);
+      }
+    });
+    book.addEventListener("pointercancel",()=>{start=null;});
+    showPhoto(0);
+    prev.disabled=next.disabled=photos.length<=1;
+    thumbs.hidden=photos.length<=1;
+    ui.hidden=false;
+    source.hidden=true;
+    album.classList.add("is-ready");
+  });
+})();
+
 })();
