@@ -10,8 +10,8 @@
 <link rel="alternate" hreflang="fr" href="https://artdaci.com/reimagined.html?lang=fr">
 <link rel="alternate" hreflang="ar" href="https://artdaci.com/reimagined.html?lang=ar">
 <link rel="icon" href="assets/app/artdaci-app-icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="styles/reimagined.css?v=10">
-<script src="scripts/reimagined.js?v=7" defer></script>
+<link rel="stylesheet" href="styles/reimagined.css?v=13">
+<script src="scripts/reimagined.js?v=10" defer></script>
 <title>ARTDACI Reimagined — Art Beyond the Frame</title>
 </head>
 <body>
@@ -32,26 +32,15 @@
 </header>
 <main>
 <section class="r-intro" aria-labelledby="r-title">
-  <p class="r-eyebrow" data-l10n="heroKicker"><span aria-hidden="true">✦</span> ART BEYOND THE FRAME</p>
   <h1 id="r-title">ARTDACI <em>REIMAGINED</em></h1>
-
-  <p class="r-intro-copy" data-l10n="heroText">Four masters step beyond their canvases through imagined encounters, still images and film.</p>
-  <div class="r-hero-actions">
-    <a class="r-button r-button-gold" href="#stills"><span data-l10n="exploreGallery">ENTER THE IMAGE GALLERY</span> <span aria-hidden="true">↓</span></a>
-    <a class="r-button" id="r-magic" href="alive.html?lang=en"><span aria-hidden="true">✦</span> <span data-l10n="experience">OPEN THE MAGICAL BOOK</span></a>
-  </div>
-  <ol class="r-master-list" aria-label="Featured artists" data-l10n-aria="featuredArtists">
-    <li><span>01</span> Leonardo da Vinci</li>
-    <li><span>02</span> Johannes Vermeer</li>
-    <li><span>03</span> Vincent van Gogh</li>
-    <li><span>04</span> Claude Monet</li>
-  </ol>
+  <h2 class="r-intro-subtitle" data-l10n="galleryTitle">Quatre maîtres. Des histoires au-delà du cadre.</h2>
+  <p class="r-intro-description" data-l10n="galleryDesc">Ces images contemporaines créent des rencontres poétiques autour des artistes et de leurs œuvres.
+Ce sont des interprétations artistiques, et non des documents historiques.</p>
 </section>
 
 <section class="r-stills" id="stills" aria-labelledby="r-stills-title">
-  <div class="r-section-head">
-    <div><p class="r-eyebrow" data-l10n="galleryKicker">THE IMAGINED ENCOUNTERS</p><h2 id="r-stills-title" data-l10n="galleryTitle">Four masters. Stories beyond the frame.</h2></div>
-    <p data-l10n="galleryDesc">These contemporary images create poetic encounters around the artists and their works. They are artistic interpretations, not historical documents.</p>
+  <div class="r-section-head r-image-section-head">
+    <div class="r-image-ribbon"><span class="r-image-icon" aria-hidden="true">▧</span><h2 id="r-stills-title" data-l10n="imageAlbumLabel">Albums photo 3D · Rencontres réimaginées</h2><span class="r-image-icon" aria-hidden="true">▧</span></div>
   </div>
   <nav class="r-artist-index" aria-label="Artists in the image gallery" data-l10n-aria="galleryArtists">
     <a href="#leonardo-stills"><span>01</span> Leonardo</a>
@@ -61,6 +50,8 @@
     <a href="#group-stills"><span>05</span> <span data-l10n="togetherNav">Together</span></a>
   </nav>
 
+  <p class="r-album-guide" data-album-guide>Turn the 3D albums using the arrows or by swiping. Click a photo to enlarge it.</p>
+
   <article class="r-artist-story" id="leonardo-stills">
     <header class="r-story-copy">
       <span class="r-story-number">01</span>
@@ -69,7 +60,10 @@
       <p data-l10n="leonardoStory">The studio becomes a stage: Mona Lisa steps into the room, while Francis I meets the artist at the end of his journey.</p>
       <a id="r-mona-still" href="print-target.html"><span data-l10n="workLink">Explore the original artwork</span> <span aria-hidden="true">↗</span></a>
     </header>
-    <div class="r-still-grid r-still-grid-three">
+    <div class="r-photo-album" data-album="leonardo" data-album-name="Leonardo da Vinci">
+      <div class="r-album-ui" hidden></div>
+      <div class="r-album-source">
+        <div class="r-still-grid r-still-grid-three">
       <figure class="r-still r-still-feature">
         <button class="r-still-open" type="button" data-caption-key="leonardoCaption1" data-l10n-aria="openLeonardo1">
           <img src="https://media.artdaci.com/shared/images/artists/reimagined/leonardo-painting-mona-lisa.webp" alt="Leonardo painting Mona Lisa in an imagined Renaissance studio" data-l10n-alt="leonardoAlt1" loading="lazy" decoding="async">
@@ -89,6 +83,8 @@
         <figcaption data-l10n="leonardoCaption3">Mona Lisa — beyond the frame</figcaption>
       </figure>
     </div>
+      </div>
+    </div>
   </article>
 
   <article class="r-artist-story" id="vermeer-stills">
@@ -99,7 +95,10 @@
       <p data-l10n="vermeerStory">Delft interiors open around the Girl with a Pearl Earring, Vermeer and the patrons associated with his carefully observed world.</p>
       <a id="r-vermeer-still" href="print-vermeer-girl-with-a-pearl-earring.html"><span data-l10n="workLink">Explore the original artwork</span> <span aria-hidden="true">↗</span></a>
     </header>
-    <div class="r-still-grid r-still-grid-three">
+    <div class="r-photo-album" data-album="vermeer" data-album-name="Johannes Vermeer">
+      <div class="r-album-ui" hidden></div>
+      <div class="r-album-source">
+        <div class="r-still-grid r-still-grid-three">
       <figure class="r-still r-still-feature r-still-tall">
         <button class="r-still-open" type="button" data-caption-key="vermeerCaption1" data-l10n-aria="openVermeer1">
           <img src="https://media.artdaci.com/shared/images/artists/reimagined/vermeer-girl-with-a-pearl-earring-room.webp" alt="Girl with a Pearl Earring standing in an imagined Delft interior" data-l10n-alt="vermeerAlt1" loading="lazy" decoding="async">
@@ -119,6 +118,8 @@
         <figcaption data-l10n="vermeerCaption3">Vermeer and his patrons — imagined presentation</figcaption>
       </figure>
     </div>
+      </div>
+    </div>
   </article>
 
   <article class="r-artist-story" id="vangogh-stills">
@@ -129,7 +130,10 @@
       <p data-l10n="vangoghStory">An imagined studio portrait brings Vincent together with Jo van Gogh-Bonger, whose work later helped introduce his art to the world.</p>
       <a id="r-vangogh-still" href="print-van-gogh.html"><span data-l10n="workLink">Explore the original artwork</span> <span aria-hidden="true">↗</span></a>
     </header>
-    <div class="r-still-grid r-still-grid-two">
+    <div class="r-photo-album" data-album="vangogh" data-album-name="Vincent van Gogh">
+      <div class="r-album-ui" hidden></div>
+      <div class="r-album-source">
+        <div class="r-still-grid r-still-grid-two">
       <figure class="r-still r-still-portrait">
         <button class="r-still-open" type="button" data-caption-key="vangoghCaption1" data-l10n-aria="openVangogh1">
           <img src="https://media.artdaci.com/shared/images/artists/reimagined/van-gogh-and-jo-bonger-standing.webp" alt="Vincent van Gogh and Jo van Gogh-Bonger standing in an imagined studio" data-l10n-alt="vangoghAlt1" loading="lazy" decoding="async">
@@ -143,6 +147,8 @@
         <figcaption data-l10n="vangoghCaption2">The artist and the keeper of his legacy</figcaption>
       </figure>
     </div>
+      </div>
+    </div>
   </article>
 
   <article class="r-artist-story" id="monet-stills">
@@ -153,7 +159,10 @@
       <p data-l10n="monetStory">Monet and the art dealer Paul Durand-Ruel meet within rooms shaped by the paintings their collaboration helped bring to new audiences.</p>
       <a id="r-monet-still" href="print-monet-impression-sunrise.html"><span data-l10n="workLink">Explore the original artwork</span> <span aria-hidden="true">↗</span></a>
     </header>
-    <div class="r-still-grid r-still-grid-two">
+    <div class="r-photo-album" data-album="monet" data-album-name="Claude Monet">
+      <div class="r-album-ui" hidden></div>
+      <div class="r-album-source">
+        <div class="r-still-grid r-still-grid-two">
       <figure class="r-still r-still-feature">
         <button class="r-still-open" type="button" data-caption-key="monetCaption1" data-l10n-aria="openMonet1">
           <img src="https://media.artdaci.com/shared/images/artists/reimagined/monet-and-paul-durand-ruel-gallery.webp" alt="Claude Monet and Paul Durand-Ruel in an imagined gallery of water lilies" data-l10n-alt="monetAlt1" loading="lazy" decoding="async">
@@ -167,6 +176,8 @@
         <figcaption data-l10n="monetCaption2">Monet and Durand-Ruel — imagined portrait</figcaption>
       </figure>
     </div>
+      </div>
+    </div>
   </article>
 
   <article class="r-group-story" id="group-stills">
@@ -175,7 +186,10 @@
       <h3 data-l10n="groupTitle">The four masters, in one imagined world.</h3>
       <p data-l10n="groupStory">These collective portraits bring Leonardo, Monet, Van Gogh and Vermeer together across centuries, places and artistic movements.</p>
     </header>
-    <div class="r-group-grid">
+    <div class="r-photo-album" data-album="together" data-album-name="The Four Masters">
+      <div class="r-album-ui" hidden></div>
+      <div class="r-album-source">
+        <div class="r-group-grid">
       <figure class="r-still r-group-photo r-group-photo-hero">
         <button class="r-still-open" type="button" data-caption-key="groupCaption1" data-l10n-aria="openGroup1">
           <img src="https://media.artdaci.com/shared/images/groups/reimagined/four-masters-and-supporters.png" alt="Leonardo, Monet, Van Gogh and Vermeer gathered with people connected to their stories" data-l10n-alt="groupAlt1" loading="lazy" decoding="async">
@@ -207,15 +221,26 @@
         <figcaption data-l10n="groupCaption5">The four masters — collective study</figcaption>
       </figure>
     </div>
+      </div>
+    </div>
   </article>
 </section>
 
 <section class="r-collection" aria-labelledby="r-collection-title">
-  <div class="r-section-head" id="collection">
-    <div><p class="r-eyebrow" data-l10n="sectionKicker">ARTDACI VR CINEMA · ON SCREEN</p><h2 id="r-collection-title" data-l10n="sectionTitle">The films of ARTDACI Cinema.</h2></div>
-    <p data-l10n="sectionDesc">Watch the 12 films also available in the VR cinema: imagined encounters, Mona Lisa in motion, and artists with their supporters.</p>
+  <div class="r-film-divider" aria-hidden="true">
+    <span>🎬</span><i></i><span>▣</span><i></i><span>🎞</span>
+  </div>
+  <div class="r-section-head r-film-section-head" id="collection">
+    <p class="r-eyebrow r-film-eyebrow" data-l10n="sectionKicker">ARTDACI VR CINEMA · ON SCREEN</p>
+    <h2 id="r-collection-title" data-l10n="sectionTitle">Les films du Cinéma ARTDACI.</h2>
+    <p class="r-film-description" data-l10n="sectionDesc">Retrouvez les 12 films du Cinéma VR et un nouveau film à la une ; visionnez-les ici, même sans casque : rencontres imaginées, Joconde animée et histoires des artistes et de leurs mécènes.</p>
   </div>
   <div class="r-featured-film" aria-labelledby="r-featured-title">
+    <div class="r-featured-intro">
+      <p class="r-featured-intro-kicker" data-l10n="featuredFilmBadge">✦ FILM À LA UNE</p>
+      <h3 id="r-featured-title" data-l10n="featuredFilmTitle">Les quatre maîtres à la recherche du Graal d’ARTDACI</h3>
+      <p class="r-featured-intro-summary" data-l10n="featuredFilmSummary">Léonard de Vinci, Vermeer, Van Gogh et Monet partent à la recherche d’un Graal mystérieux : le livre ARTDACI, que Léonard leur présente comme une nouvelle porte vers l’art.</p>
+    </div>
     <div class="r-featured-frame">
       <video id="r-featured-video" controls playsinline preload="none" poster="https://media.artdaci.com/shared/images/groups/reimagined/four-masters-standing.png" aria-label="ARTDACI Graal — a reimagined encounter of four masters" data-l10n-aria="featuredFilmAria">
         <source src="https://media.artdaci.com/shared/videos/reimagined/dvvm_graal_artdaci.mp4" type="video/mp4">
@@ -225,8 +250,7 @@
       </button>
     </div>
     <div class="r-featured-meta">
-      <span class="r-featured-eyebrow" data-l10n="featuredFilmBadge">✦ FEATURED FILM</span>
-      <strong id="r-featured-title" data-l10n="featuredFilmTitle">ARTDACI Graal — The Four Masters</strong>
+      <span class="r-featured-eyebrow" data-l10n="featuredFilmBadge">✦ FILM À LA UNE</span>
       <span class="r-featured-duration">00:26</span>
     </div>
     <p class="r-featured-error" id="r-featured-error" role="status" data-l10n="featuredFilmError" hidden>This film is temporarily unavailable.</p>
