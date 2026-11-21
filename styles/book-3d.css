@@ -26,7 +26,8 @@ html, body {
 }
 
 body {
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   color: #fff8ec;
   background:
     radial-gradient(circle at 50% 28%, rgba(122, 91, 58, 0.42), transparent 34%),
@@ -78,7 +79,10 @@ button, a { font: inherit; }
   position: relative;
   display: grid;
   place-items: center;
-  height: calc(100vh - 76px);
+  min-height: calc(100svh - 76px);
+  height: auto;
+  padding: clamp(52px, 6vh, 78px) clamp(12px, 2vw, 28px) clamp(88px, 10vh, 128px);
+  overflow: visible;
   perspective: 2600px;
   perspective-origin: 50% 43%;
 }
@@ -96,7 +100,7 @@ button, a { font: inherit; }
   position: relative;
   width: min(88vw, calc((100vh - 132px) * 1.42), 1260px);
   aspect-ratio: 1.42;
-  top: 15px;
+  top: 0;
   transform: rotateX(7deg);
   transform-origin: top center;
   transition: transform .18s ease-out;
@@ -106,7 +110,7 @@ button, a { font: inherit; }
   user-select: none;
 }
 
-.book.zoomed { transform: rotateX(7deg) scale(1.1); }
+.book.zoomed { transform: rotateX(7deg) scale(1.1); margin-block: clamp(22px, 4vh, 52px); }
 
 .book::after {
   content: "";
@@ -253,7 +257,7 @@ button, a { font: inherit; }
 .experience-world small { color: #d8c9b5; }
 
 @media (max-width: 760px) {
-  body { overflow: auto; }
+  body { overflow-x: hidden; overflow-y: auto; }
   .book-toolbar { grid-template-columns: auto 1fr; }
   .book-toolbar-actions { grid-column: 1 / -1; justify-content: center; }
   .book-stage {
@@ -262,8 +266,8 @@ button, a { font: inherit; }
     justify-content: center;
     min-height: calc(100vh - 126px);
     height: auto;
-    padding: 16px 2vw 40px;
-    overflow: auto;
+    padding: 26px 2vw 82px;
+    overflow: visible;
   }
   .book {
     flex: 0 0 auto;
@@ -275,8 +279,8 @@ button, a { font: inherit; }
   }
   .book.zoomed {
     width: 96vw;
-    margin-bottom: 16vh;
-    transform: scale(1.16);
+    margin: 14px 0 clamp(78px, 16vh, 138px);
+    transform: scale(1.08);
   }
   .book-cover-left, .book-spine { display: block; }
   .book-cover-right { left: auto; width: 50%; border-radius: 4px 12px 12px 4px; }
@@ -295,4 +299,16 @@ button, a { font: inherit; }
 
 @media (min-width: 761px) and (max-width: 1180px) {
   .book { width: min(88vw, calc((100vh - 130px) * 1.42), 1180px); }
+}
+
+/* The page may grow beyond the viewport: never trap the book below an invisible fold. */
+html { overflow-y: auto; }
+.book-hint { max-width: min(92%, 900px); text-align: center; line-height: 1.35; }
+@media (min-width: 761px) and (max-width: 1120px) {
+  .book-toolbar { grid-template-columns: auto auto minmax(130px, 1fr); }
+  .book-toolbar-actions { grid-column: 1 / -1; justify-content: center; flex-wrap: wrap; }
+}
+@media (max-width: 760px) {
+  .book-toolbar-actions { flex-wrap: wrap; }
+  .book-stage { min-height: calc(100svh - 126px); }
 }
