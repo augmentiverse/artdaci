@@ -357,9 +357,9 @@
   });
   (function initThreeDimensionalPhotoAlbums() {
   const translations = {
-    en: { guide:"Turn the 3D photo albums with the arrows or a swipe. Click any photo to see it full-size.", tag:"3D PHOTO ALBUM", page:"PHOTO", prev:"Previous photo", next:"Next photo", zoom:"Enlarge photo", choose:"Show photo", together:"The Four Masters" },
-    fr: { guide:"Tournez les albums photo 3D à l’aide des flèches ou d’un glissement. Cliquez sur une image pour l’agrandir.", tag:"ALBUM PHOTO 3D", page:"PHOTO", prev:"Photo précédente", next:"Photo suivante", zoom:"Agrandir la photo", choose:"Afficher la photo", together:"Les quatre maîtres" },
-    ar: { guide:"قلّب صفحات ألبومات الصور ثلاثية الأبعاد باستخدام الأسهم أو السحب. انقر على الصورة لتكبيرها.", tag:"ألبوم صور ثلاثي الأبعاد", page:"الصورة", prev:"الصورة السابقة", next:"الصورة التالية", zoom:"تكبير الصورة", choose:"عرض الصورة", together:"الأساتذة الأربعة" }
+    en: { guide:"Turn the 3D photo albums with the arrows or a swipe. Click any photo to see it full-size.", tag:"3D PHOTO ALBUM", page:"PHOTO", prev:"Previous photo", next:"Next photo", zoom:"Enlarge photo", choose:"Enlarge thumbnail", together:"The Four Masters" },
+    fr: { guide:"Tournez les albums photo 3D à l’aide des flèches ou d’un glissement. Cliquez sur une image pour l’agrandir.", tag:"ALBUM PHOTO 3D", page:"PHOTO", prev:"Photo précédente", next:"Photo suivante", zoom:"Agrandir la photo", choose:"Agrandir la miniature", together:"Les quatre maîtres" },
+    ar: { guide:"قلّب صفحات ألبومات الصور ثلاثية الأبعاد باستخدام الأسهم أو السحب. انقر على الصورة لتكبيرها.", tag:"ألبوم صور ثلاثي الأبعاد", page:"الصورة", prev:"الصورة السابقة", next:"الصورة التالية", zoom:"تكبير الصورة", choose:"تكبير الصورة المصغّرة", together:"الأساتذة الأربعة" }
   };
   const words = translations[lang];
   const guide = document.querySelector("[data-album-guide]");
@@ -443,7 +443,15 @@
       image.decoding="async";
       button.append(image);
       thumbs.append(button);
-      button.addEventListener("click",()=>turnTo(i));
+      button.addEventListener("click",()=>{
+        if(busy)return;
+        index=i;
+        showPhoto(index);
+        lightboxImage.src=photo.src;
+        lightboxImage.alt=photo.alt;
+        lightboxCaption.textContent=photo.caption;
+        lightbox.showModal();
+      });
       return button;
     });
     function showPhoto(i) {
