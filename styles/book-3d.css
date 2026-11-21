@@ -106,7 +106,7 @@ button, a { font: inherit; }
   transition: transform .18s ease-out;
   transform-style: preserve-3d;
   filter: drop-shadow(0 34px 34px rgba(0,0,0,.55));
-  touch-action: none;
+  touch-action: pan-y;
   user-select: none;
 }
 
