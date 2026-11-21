@@ -656,7 +656,7 @@ html[dir=rtl] .r-album-enlarge{right:auto;left:20px}
   line-height:1.7;text-wrap:pretty
 }
 .r-collection>.r-featured-film{
-  width:min(100%,795px);max-width:795px;
+  width:min(100%,676px);max-width:676px;
   margin:0 auto clamp(32px,4vw,52px);
   border:1px solid rgba(241,208,148,.85)
 }
@@ -716,3 +716,7 @@ html[dir=rtl] .r-album-enlarge{right:auto;left:20px}
 @media(prefers-reduced-motion:reduce){
   .r-photo-album .r-album-book,.r-photo-album .r-album-flip-sheet{animation:none;transition:none}
 }
+
+/* Gallery intro: one intentional line break, no extra paragraph spacing. */
+.r-intro-description{white-space:pre-line;line-height:1.4}
+@media(max-width:700px){.r-intro-description{line-height:1.42}}
