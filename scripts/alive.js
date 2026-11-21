@@ -4,8 +4,8 @@
     en: {
       title:"ARTDACI — Art Comes Alive · The Gallery Reimagined",skip:"Skip to experience",home:"Back to ARTDACI",
       kicker:"AN ARTDACI IMMERSIVE ENCOUNTER",headline:"ART COMES ALIVE",subheadline:"THE GALLERY REIMAGINED",
-      intro:"Open the book. Watch a masterpiece move beyond the printed page.",stageReady:"A masterpiece awaits inside.",
-      open:"OPEN THE BOOK",skipAnimation:"Skip animation",replay:"Watch again",
+      intro:"Open the book. Watch a masterpiece move beyond the printed page.",stageReady:"Click the book to reveal Mona Lisa.",
+      open:"OPEN THE BOOK",clickBook:"Click the book to begin",skipAnimation:"Skip animation",replay:"Watch again",
       reveal:"Some masterpieces deserve to step beyond their frames.",
       revealDescription:"The encounter is an artistic interpretation. The painting, its history and its digital models are yours to explore.",
       meet:"MEET THE MONA LISA",place:"PLACE HER IN MY SPACE",
@@ -30,8 +30,8 @@
     fr: {
       title:"ARTDACI — L’art prend vie · La galerie réinventée",skip:"Aller à l’expérience",home:"Retour à ARTDACI",
       kicker:"UNE RENCONTRE IMMERSIVE ARTDACI",headline:"L’ART PREND VIE",subheadline:"LA GALERIE RÉINVENTÉE",
-      intro:"Ouvrez le livre. Regardez un chef-d’œuvre franchir les limites de la page imprimée.",stageReady:"Un chef-d’œuvre attend entre les pages.",
-      open:"OUVRIR LE LIVRE",skipAnimation:"Passer l’animation",replay:"Revoir l’animation",
+      intro:"Ouvrez le livre. Regardez un chef-d’œuvre franchir les limites de la page imprimée.",stageReady:"Cliquez sur le livre pour faire apparaître La Joconde.",
+      open:"OUVRIR LE LIVRE",clickBook:"Cliquez sur le livre pour lancer la magie",skipAnimation:"Passer l’animation",replay:"Revoir l’animation",
       reveal:"Certains chefs-d’œuvre méritent de sortir de leur cadre.",
       revealDescription:"Cette rencontre est une interprétation artistique. Découvrez l’œuvre, son histoire et ses modèles numériques.",
       meet:"RENCONTRER LA JOCONDE",place:"LA PLACER DANS MON ESPACE",
@@ -55,8 +55,8 @@
     ar: {
       title:"ARTDACI — الفن ينبض بالحياة · معرض برؤية جديدة",skip:"تجاوز إلى التجربة",home:"العودة إلى ARTDACI",
       kicker:"تجربة فنية غامرة من ARTDACI",headline:"الفن ينبض بالحياة",subheadline:"المعرض برؤية جديدة",
-      intro:"افتح الكتاب وشاهد لوحة فنية تتجاوز حدود الصفحة المطبوعة.",stageReady:"تحفة فنية تنتظر بين الصفحات.",
-      open:"افتح الكتاب",skipAnimation:"تجاوز الحركة",replay:"شاهد مرة أخرى",
+      intro:"افتح الكتاب وشاهد لوحة فنية تتجاوز حدود الصفحة المطبوعة.",stageReady:"انقر على الكتاب لتظهر الموناليزا.",
+      open:"افتح الكتاب",clickBook:"انقر على الكتاب لبدء التجربة",skipAnimation:"تجاوز الحركة",replay:"شاهد مرة أخرى",
       reveal:"بعض الروائع تستحق أن تتجاوز إطاراتها.",
       revealDescription:"هذه تجربة تخيّلية فنية. اكتشف اللوحة وتاريخها ونماذجها الرقمية.",
       meet:"تعرّف إلى الموناليزا",place:"ضعها في مساحتي",
@@ -108,6 +108,9 @@
   const video=document.getElementById("mona-video");
   const still=document.getElementById("alive-still");
   const openBtn=document.getElementById("open-book");
+  const coverTrigger=document.getElementById("book-cover-trigger");
+  coverTrigger.setAttribute("aria-label", copy.clickBook);
+  coverTrigger.title=copy.clickBook;
   const skipBtn=document.getElementById("skip-animation");
   const replayBtn=document.getElementById("replay-animation");
   const reveal=document.getElementById("alive-reveal");
@@ -164,6 +167,7 @@
     complete(true,copy.transitionBook,350);
   }
   openBtn.addEventListener("click",playSequence);
+  coverTrigger.addEventListener("click",playSequence);
   skipBtn.addEventListener("click",skipSequence);
   replayBtn.addEventListener("click",playSequence);
   video.addEventListener("ended",()=>complete(false));
