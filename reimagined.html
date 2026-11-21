@@ -10,8 +10,8 @@
 <link rel="alternate" hreflang="fr" href="https://artdaci.com/reimagined.html?lang=fr">
 <link rel="alternate" hreflang="ar" href="https://artdaci.com/reimagined.html?lang=ar">
 <link rel="icon" href="assets/app/artdaci-app-icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="styles/reimagined.css?v=2">
-<script src="scripts/reimagined.js?v=2" defer></script>
+<link rel="stylesheet" href="styles/reimagined.css?v=10">
+<script src="scripts/reimagined.js?v=7" defer></script>
 <title>ARTDACI Reimagined — Art Beyond the Frame</title>
 </head>
 <body>
@@ -34,11 +34,8 @@
 <section class="r-intro" aria-labelledby="r-title">
   <p class="r-eyebrow" data-l10n="heroKicker"><span aria-hidden="true">✦</span> ART BEYOND THE FRAME</p>
   <h1 id="r-title">ARTDACI <em>REIMAGINED</em></h1>
+
   <p class="r-intro-copy" data-l10n="heroText">Four masters step beyond their canvases through imagined encounters, still images and film.</p>
-  <div class="r-hero-visual">
-    <img src="https://media.artdaci.com/shared/images/artists/reimagined/leonardo-painting-mona-lisa.webp" alt="Leonardo painting Mona Lisa in an imagined Renaissance studio" data-l10n-alt="heroImageAlt" decoding="async" fetchpriority="high">
-    <span data-l10n="heroImageCaption">Leonardo’s studio — imagined beyond the canvas</span>
-  </div>
   <div class="r-hero-actions">
     <a class="r-button r-button-gold" href="#stills"><span data-l10n="exploreGallery">ENTER THE IMAGE GALLERY</span> <span aria-hidden="true">↓</span></a>
     <a class="r-button" id="r-magic" href="alive.html?lang=en"><span aria-hidden="true">✦</span> <span data-l10n="experience">OPEN THE MAGICAL BOOK</span></a>
@@ -213,28 +210,55 @@
   </article>
 </section>
 
-<section class="r-collection" id="collection" aria-labelledby="r-collection-title">
-  <div class="r-section-head">
-    <div><p class="r-eyebrow" data-l10n="sectionKicker">FROM STILL IMAGE TO MOTION</p><h2 id="r-collection-title" data-l10n="sectionTitle">Four masters. New ways of seeing.</h2></div>
-    <p data-l10n="sectionDesc">These moving artworks are contemporary interpretations, not historical recordings. Each entry links back to the painting and its documented story.</p>
+<section class="r-collection" aria-labelledby="r-collection-title">
+  <div class="r-section-head" id="collection">
+    <div><p class="r-eyebrow" data-l10n="sectionKicker">ARTDACI VR CINEMA · ON SCREEN</p><h2 id="r-collection-title" data-l10n="sectionTitle">The films of ARTDACI Cinema.</h2></div>
+    <p data-l10n="sectionDesc">Watch the 12 films also available in the VR cinema: imagined encounters, Mona Lisa in motion, and artists with their supporters.</p>
   </div>
-  <div class="r-grid">
-    <article class="r-art" data-artist="leonardo">
-      <div class="r-video"><video controls playsinline preload="none" poster="assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp" aria-label="An artistic animation of Leonardo painting the Mona Lisa" data-l10n-aria="monaVideoLabel"><source src="assets/animations/artdaci-Mona_Lisa_animation.mp4" type="video/mp4"></video></div>
-      <div class="r-art-copy"><span class="r-counter">01 · LEONARDO DA VINCI</span><h3 data-l10n="monaTitle">Mona Lisa</h3><p data-l10n="monaText">An artistic reimagining of Leonardo at work.</p><a id="r-mona" href="print-target.html"><span data-l10n="workLink">Explore the original artwork</span> <span aria-hidden="true">↗</span></a></div>
-    </article>
-    <article class="r-art" data-artist="vermeer">
-      <div class="r-video"><video controls playsinline preload="none" poster="assets/artists/johannes-vermeer/collection/girl-with-a-pearl-earring-vermeer.webp" aria-label="An artistic animation of Girl with a Pearl Earring" data-l10n-aria="vermeerVideoLabel"><source src="assets/animations/artdaci-girl-pearl-earring_animation.mp4" type="video/mp4"></video></div>
-      <div class="r-art-copy"><span class="r-counter">02 · JOHANNES VERMEER</span><h3 data-l10n="vermeerTitle">Girl with a Pearl Earring</h3><p data-l10n="vermeerText">A moving interpretation of an enigmatic portrait.</p><a id="r-vermeer" href="print-vermeer-girl-with-a-pearl-earring.html"><span data-l10n="workLink">Explore the original artwork</span> <span aria-hidden="true">↗</span></a></div>
-    </article>
-    <article class="r-art" data-artist="vangogh">
-      <div class="r-video"><video controls playsinline preload="none" poster="assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp" aria-label="An artistic animation of Van Gogh" data-l10n-aria="vangoghVideoLabel"><source src="assets/animations/artdaci-Van_Gogh_animation.mp4" type="video/mp4"></video></div>
-      <div class="r-art-copy"><span class="r-counter">03 · VINCENT VAN GOGH</span><h3 data-l10n="vangoghTitle">Van Gogh</h3><p data-l10n="vangoghText">A contemporary moving tribute to the painter.</p><a id="r-vangogh" href="print-van-gogh.html"><span data-l10n="workLink">Explore the original artwork</span> <span aria-hidden="true">↗</span></a></div>
-    </article>
-    <article class="r-art" data-artist="monet">
-      <div class="r-video"><video controls playsinline preload="none" poster="assets/artists/claude-monet/collection/impression-sunrise-monet.webp" aria-label="An artistic animation of Impression, Sunrise" data-l10n-aria="monetVideoLabel"><source src="assets/animations/artdaci-Impression_Sunrise_animation.mp4" type="video/mp4"></video></div>
-      <div class="r-art-copy"><span class="r-counter">04 · CLAUDE MONET</span><h3 data-l10n="monetTitle">Impression, Sunrise</h3><p data-l10n="monetText">Light and atmosphere interpreted through motion.</p><a id="r-monet" href="print-monet-impression-sunrise.html"><span data-l10n="workLink">Explore the original artwork</span> <span aria-hidden="true">↗</span></a></div>
-    </article>
+  <div class="r-featured-film" aria-labelledby="r-featured-title">
+    <div class="r-featured-frame">
+      <video id="r-featured-video" controls playsinline preload="none" poster="https://media.artdaci.com/shared/images/groups/reimagined/four-masters-standing.png" aria-label="ARTDACI Graal — a reimagined encounter of four masters" data-l10n-aria="featuredFilmAria">
+        <source src="https://media.artdaci.com/shared/videos/reimagined/dvvm_graal_artdaci.mp4" type="video/mp4">
+      </video>
+      <button type="button" class="r-featured-play" id="r-featured-play" aria-label="Play the featured film" data-l10n-aria="featuredFilmPlay" title="Play">
+        <span aria-hidden="true">▶</span>
+      </button>
+    </div>
+    <div class="r-featured-meta">
+      <span class="r-featured-eyebrow" data-l10n="featuredFilmBadge">✦ FEATURED FILM</span>
+      <strong id="r-featured-title" data-l10n="featuredFilmTitle">ARTDACI Graal — The Four Masters</strong>
+      <span class="r-featured-duration">00:26</span>
+    </div>
+    <p class="r-featured-error" id="r-featured-error" role="status" data-l10n="featuredFilmError" hidden>This film is temporarily unavailable.</p>
+  </div>
+  <div class="r-cinema">
+    <div class="r-cinema-feature">
+      <div class="r-cinema-screen">
+        <video id="r-cinema-player" controls playsinline preload="none" poster="https://media.artdaci.com/shared/images/groups/reimagined/four-masters-portrait.png" aria-label="ARTDACI cinema film"></video>
+      </div>
+      <div class="r-cinema-now">
+        <div>
+          <p id="r-cinema-category" class="r-counter">FOUR ARTISTS</p>
+          <h3 id="r-cinema-film-title">Four Painters — Intro</h3>
+          <p class="r-cinema-note" data-l10n="cinemaNote">Artistic interpretations, not historical footage.</p>
+        </div>
+        <a class="r-button r-button-gold r-cinema-vr-link" id="r-cinema-link" href="cinema-vr.html?lang=en" data-l10n="cinemaVisit">Enter the VR cinema ↗</a>
+      </div>
+      <p class="r-cinema-error" id="r-cinema-feedback" role="status" hidden></p>
+    </div>
+    <div class="r-cinema-catalog">
+      <div class="r-cinema-catalog-head">
+        <h3 data-l10n="cinemaPlaylist">Explore the films</h3>
+        <span id="r-cinema-count" aria-live="polite">12 films</span>
+      </div>
+      <div class="r-cinema-filters" role="group" aria-label="Film categories" data-l10n-aria="cinemaFilterLabel">
+        <button type="button" class="r-cinema-filter is-active" data-cinema-filter="all" aria-pressed="true" data-l10n="cinemaAll">All</button>
+        <button type="button" class="r-cinema-filter" data-cinema-filter="together" aria-pressed="false" data-l10n="cinemaTogether">Four artists</button>
+        <button type="button" class="r-cinema-filter" data-cinema-filter="leonardo" aria-pressed="false" data-l10n="cinemaLeonardo">Leonardo & Mona Lisa</button>
+        <button type="button" class="r-cinema-filter" data-cinema-filter="encounters" aria-pressed="false" data-l10n="cinemaEncounters">Encounters</button>
+      </div>
+      <div class="r-cinema-list" id="r-cinema-list" aria-label="Cinema film playlist" data-l10n-aria="cinemaPlaylistLabel"></div>
+    </div>
   </div>
 </section>
 <section class="r-outro" aria-labelledby="r-outro-title">
