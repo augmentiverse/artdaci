@@ -3,16 +3,16 @@
 
   const texts = {
     en: {
-      skip: "Skip to the exhibition", navGallery: "The gallery", navCollection: "The films", navBook: "The Magical Book", navHome: "ARTDACI home", heroKicker: "✦ ART BEYOND THE FRAME", heroText: "Four masters step beyond their canvases through imagined encounters, still images and film.", heroImageAlt: "Leonardo painting Mona Lisa in an imagined Renaissance studio", heroImageCaption: "Leonardo’s studio — imagined beyond the canvas", exploreGallery: "ENTER THE IMAGE GALLERY", experience: "OPEN THE MAGICAL BOOK", featuredFilmBadge: "✦ FEATURED FILM", featuredFilmTitle: "ARTDACI Graal — The Four Masters", featuredFilmAria: "ARTDACI Graal — a reimagined encounter of the four masters", featuredFilmPlay: "Play the featured film", featuredFilmError: "The featured film is temporarily unavailable.", featuredArtists: "Featured artists", galleryKicker: "THE IMAGINED ENCOUNTERS", galleryTitle: "Four masters. Stories beyond the frame.", galleryDesc: "These contemporary images create poetic encounters around the artists and their works. They are artistic interpretations, not historical documents.", galleryArtists: "Artists in the image gallery",
+      skip: "Skip to the exhibition", navGallery: "The gallery", navCollection: "The films", navBook: "The Magical Book", navHome: "ARTDACI home", heroKicker: "✦ ART BEYOND THE FRAME", heroText: "Four masters step beyond their canvases through imagined encounters, still images and film.", heroImageAlt: "Leonardo painting Mona Lisa in an imagined Renaissance studio", heroImageCaption: "Leonardo’s studio — imagined beyond the canvas", exploreGallery: "ENTER THE IMAGE GALLERY", experience: "OPEN THE MAGICAL BOOK", featuredFilmBadge: "✦ FEATURED FILM", featuredFilmSummary: "Leonardo da Vinci, Vermeer, Van Gogh and Monet search for a mysterious Grail: the ARTDACI book, which Leonardo presents as a new gateway to art.", featuredFilmTitle: "The Four Masters in Search of the ARTDACI Grail", featuredFilmAria: "The Four Masters searching for the ARTDACI Grail — an imagined film", featuredFilmPlay: "Play the featured film", featuredFilmError: "The featured film is temporarily unavailable.", featuredArtists: "Featured artists", imageAlbumLabel: "3D Photo Albums · Reimagined Encounters", galleryKicker: "THE IMAGINED ENCOUNTERS", galleryTitle: "Four masters. Stories beyond the frame", galleryDesc: "These contemporary images create poetic encounters around the artists and their works.\nThey are artistic interpretations, not historical documents.", galleryArtists: "Artists in the image gallery",
       leonardoEra: "THE RENAISSANCE · REIMAGINED", leonardoStory: "The studio becomes a stage: Mona Lisa steps into the room, while Francis I meets the artist at the end of his journey.", leonardoCaption1: "Leonardo at work — an imagined studio", leonardoCaption2: "Leonardo and Francis I — imagined encounter", leonardoCaption3: "Mona Lisa — beyond the frame", leonardoAlt1: "Leonardo painting Mona Lisa in an imagined Renaissance studio", leonardoAlt2: "Leonardo da Vinci speaking with Francis I in an imagined royal room", leonardoAlt3: "Mona Lisa stepping out of her frame", openLeonardo1: "Enlarge Leonardo at work", openLeonardo2: "Enlarge Leonardo and Francis I", openLeonardo3: "Enlarge Mona Lisa beyond the frame",
       vermeerEra: "DELFT LIGHT · REIMAGINED", vermeerStory: "Delft interiors open around the Girl with a Pearl Earring, Vermeer and the patrons associated with his carefully observed world.", vermeerCaption1: "The girl enters Vermeer’s room", vermeerCaption2: "Girl with a Pearl Earring — seated", vermeerCaption3: "Vermeer and his patrons — imagined presentation", vermeerAlt1: "Girl with a Pearl Earring standing in an imagined Delft interior", vermeerAlt2: "Girl with a Pearl Earring seated beside a table", vermeerAlt3: "Vermeer presenting a painting to Pieter van Ruijven and Maria de Knuijt", openVermeer1: "Enlarge the girl in Vermeer’s room", openVermeer2: "Enlarge the seated girl", openVermeer3: "Enlarge Vermeer and his patrons",
       vangoghEra: "A LEGACY IN COLOUR · REIMAGINED", vangoghStory: "An imagined studio portrait brings Vincent together with Jo van Gogh-Bonger, whose work later helped introduce his art to the world.", vangoghCaption1: "Vincent and Jo — imagined studio portrait", vangoghCaption2: "The artist and the keeper of his legacy", vangoghAlt1: "Vincent van Gogh and Jo van Gogh-Bonger standing in an imagined studio", vangoghAlt2: "Close imagined portrait of Vincent van Gogh and Jo van Gogh-Bonger", openVangogh1: "Enlarge Vincent and Jo in the studio", openVangogh2: "Enlarge the portrait of Vincent and Jo",
       monetEra: "IMPRESSIONISM · REIMAGINED", monetStory: "Monet and the art dealer Paul Durand-Ruel meet within rooms shaped by the paintings their collaboration helped bring to new audiences.", monetCaption1: "Monet and Durand-Ruel — the gallery", monetCaption2: "Monet and Durand-Ruel — imagined portrait", monetAlt1: "Claude Monet and Paul Durand-Ruel in an imagined gallery of water lilies", monetAlt2: "Claude Monet and Paul Durand-Ruel in an imagined office portrait", openMonet1: "Enlarge Monet and Durand-Ruel in the gallery", openMonet2: "Enlarge the portrait of Monet and Durand-Ruel",
       togetherNav: "Together", groupKicker: "BEYOND TIME · TOGETHER", groupTitle: "The four masters, in one imagined world.", groupStory: "These collective portraits bring Leonardo, Monet, Van Gogh and Vermeer together across centuries, places and artistic movements.", groupCaption1: "Four masters and the people who carried their stories", groupCaption2: "Four painters — one imagined studio", groupCaption3: "A portrait beyond chronology", groupCaption4: "A journey through the places of their stories", groupCaption5: "The four masters — collective study", groupAlt1: "Leonardo, Monet, Van Gogh and Vermeer gathered with people connected to their stories", groupAlt2: "Leonardo, Monet, Van Gogh and Vermeer standing in an imagined shared studio", groupAlt3: "Close collective portrait of Leonardo, Monet, Van Gogh and Vermeer", groupAlt4: "The four painters placed before landmarks connected to their artistic stories", groupAlt5: "Cutout portrait of Leonardo, Monet, Van Gogh and Vermeer", openGroup1: "Enlarge the four masters with their circle", openGroup2: "Enlarge the four painters standing", openGroup3: "Enlarge the collective portrait", openGroup4: "Enlarge the journey through their places", openGroup5: "Enlarge the four-master study",
-      sectionKicker: "VR CINEMA · ON SCREEN", sectionTitle: "The films of ARTDACI Cinema.", sectionDesc: "Discover the 12 films from our VR cinema and a new featured film, playable here without a headset: imagined encounters, Mona Lisa in motion and the artists’ supporters.", cinemaNote: "Artistic interpretations, not historical footage.", cinemaVisit: "Enter the VR cinema ↗", cinemaPlaylist: "Explore the films", cinemaPlaylistLabel: "Cinema film playlist", cinemaFilterLabel: "Film categories", cinemaAll: "All films", cinemaTogether: "Four artists", cinemaLeonardo: "Leonardo & Mona Lisa", cinemaEncounters: "Encounters", cinemaCount: "films", cinemaError: "This film is temporarily unavailable on this device. You can also try the VR cinema.", cinemaPlay: "Play", outroKicker: "FROM IMAGINATION TO EXPLORATION", outroTitle: "Beyond the frame, into the world of art.", outroBook: "The Magical Book ↗", outro3d: "Explore in 3D ↗", outroMuseum: "Explore the museums ↗", disclaimer: "ARTDACI Reimagined is an artistic and educational reinterpretation. It is not an official museum reproduction or a historical reconstruction.", closeImage: "Close image"
+      sectionKicker: "VR CINEMA · ON SCREEN", sectionTitle: "The films of ARTDACI Cinema.", sectionDesc: "Discover the 12 films from VR Cinema and a new featured film. Watch them here without a headset: imagined encounters, Mona Lisa in motion, and stories of artists and their patrons.", cinemaNote: "Artistic interpretations, not historical footage.", cinemaVisit: "Enter the VR cinema ↗", cinemaPlaylist: "Explore the films", cinemaPlaylistLabel: "Cinema film playlist", cinemaFilterLabel: "Film categories", cinemaAll: "All films", cinemaTogether: "Four artists", cinemaLeonardo: "Leonardo & Mona Lisa", cinemaEncounters: "Encounters", cinemaCount: "films", cinemaError: "This film is temporarily unavailable on this device. You can also try the VR cinema.", cinemaPlay: "Play", outroKicker: "FROM IMAGINATION TO EXPLORATION", outroTitle: "Beyond the frame, into the world of art.", outroBook: "The Magical Book ↗", outro3d: "Explore in 3D ↗", outroMuseum: "Explore the museums ↗", disclaimer: "ARTDACI Reimagined is an artistic and educational reinterpretation. It is not an official museum reproduction or a historical reconstruction.", closeImage: "Close image"
     },
     fr: {
-      skip: "Aller à l’exposition", navGallery: "La galerie", navCollection: "Les films", navBook: "Le livre magique", navHome: "Accueil ARTDACI", heroKicker: "✦ L’ART AU-DELÀ DU CADRE", heroText: "Quatre maîtres sortent de leurs tableaux à travers des rencontres imaginées, des images et des films.", heroImageAlt: "Léonard peignant la Joconde dans un atelier Renaissance imaginé", heroImageCaption: "L’atelier de Léonard — imaginé au-delà de la toile", exploreGallery: "ENTRER DANS LA GALERIE D’IMAGES", experience: "OUVRIR LE LIVRE MAGIQUE", featuredFilmBadge: "✦ FILM À LA UNE", featuredFilmTitle: "Le Graal ARTDACI — les quatre maîtres", featuredFilmAria: "Le Graal ARTDACI — une rencontre réinventée des quatre maîtres", featuredFilmPlay: "Lire le film à la une", featuredFilmError: "Le film à la une est temporairement indisponible.", featuredArtists: "Artistes présentés", galleryKicker: "LES RENCONTRES IMAGINÉES", galleryTitle: "Quatre maîtres. Des histoires au-delà du cadre.", galleryDesc: "Ces images contemporaines créent des rencontres poétiques autour des artistes et de leurs œuvres. Ce sont des interprétations artistiques, et non des documents historiques.", galleryArtists: "Artistes de la galerie d’images",
+      skip: "Aller à l’exposition", navGallery: "La galerie", navCollection: "Les films", navBook: "Le livre magique", navHome: "Accueil ARTDACI", heroKicker: "✦ L’ART AU-DELÀ DU CADRE", heroText: "Quatre maîtres sortent de leurs tableaux à travers des rencontres imaginées, des images et des films.", heroImageAlt: "Léonard peignant la Joconde dans un atelier Renaissance imaginé", heroImageCaption: "L’atelier de Léonard — imaginé au-delà de la toile", exploreGallery: "ENTRER DANS LA GALERIE D’IMAGES", experience: "OUVRIR LE LIVRE MAGIQUE", featuredFilmBadge: "✦ FILM À LA UNE", featuredFilmSummary: "Léonard de Vinci, Vermeer, Van Gogh et Monet partent à la recherche d’un Graal mystérieux : le livre ARTDACI, que Léonard leur présente comme une nouvelle porte vers l’art.", featuredFilmTitle: "Les quatre maîtres à la recherche du Graal d’ARTDACI", featuredFilmAria: "Les quatre maîtres à la recherche du Graal d’ARTDACI — film réimaginé", featuredFilmPlay: "Lire le film à la une", featuredFilmError: "Le film à la une est temporairement indisponible.", featuredArtists: "Artistes présentés", imageAlbumLabel: "Albums photo 3D · Rencontres réimaginées", galleryKicker: "LES RENCONTRES IMAGINÉES", galleryTitle: "Quatre maîtres. Des histoires au-delà du cadre.", galleryDesc: "Ces images contemporaines créent des rencontres poétiques autour des artistes et de leurs œuvres.\nCe sont des interprétations artistiques, et non des documents historiques.", galleryArtists: "Artistes de la galerie d’images",
       leonardoEra: "LA RENAISSANCE · RÉIMAGINÉE", leonardoStory: "L’atelier devient une scène : la Joconde entre dans la pièce, tandis que François Ier rencontre l’artiste à la fin de son voyage.", leonardoCaption1: "Léonard au travail — un atelier imaginé", leonardoCaption2: "Léonard et François Ier — rencontre imaginée", leonardoCaption3: "La Joconde — au-delà du cadre", leonardoAlt1: "Léonard peignant la Joconde dans un atelier Renaissance imaginé", leonardoAlt2: "Léonard de Vinci parlant avec François Ier dans une salle royale imaginée", leonardoAlt3: "La Joconde sortant de son cadre", openLeonardo1: "Agrandir Léonard au travail", openLeonardo2: "Agrandir Léonard et François Ier", openLeonardo3: "Agrandir la Joconde au-delà du cadre",
       vermeerEra: "LA LUMIÈRE DE DELFT · RÉIMAGINÉE", vermeerStory: "Les intérieurs de Delft s’ouvrent autour de la Jeune Fille à la perle, de Vermeer et des mécènes associés à son univers d’observation.", vermeerCaption1: "La jeune fille entre dans la chambre de Vermeer", vermeerCaption2: "La Jeune Fille à la perle — assise", vermeerCaption3: "Vermeer et ses mécènes — présentation imaginée", vermeerAlt1: "La Jeune Fille à la perle debout dans un intérieur de Delft imaginé", vermeerAlt2: "La Jeune Fille à la perle assise près d’une table", vermeerAlt3: "Vermeer présentant un tableau à Pieter van Ruijven et Maria de Knuijt", openVermeer1: "Agrandir la jeune fille dans la chambre de Vermeer", openVermeer2: "Agrandir la jeune fille assise", openVermeer3: "Agrandir Vermeer et ses mécènes",
       vangoghEra: "UN HÉRITAGE EN COULEUR · RÉIMAGINÉ", vangoghStory: "Un portrait d’atelier imaginé réunit Vincent et Jo van Gogh-Bonger, dont le travail contribua plus tard à faire connaître son art dans le monde.", vangoghCaption1: "Vincent et Jo — portrait d’atelier imaginé", vangoghCaption2: "L’artiste et la gardienne de son héritage", vangoghAlt1: "Vincent van Gogh et Jo van Gogh-Bonger debout dans un atelier imaginé", vangoghAlt2: "Portrait rapproché imaginé de Vincent van Gogh et Jo van Gogh-Bonger", openVangogh1: "Agrandir Vincent et Jo dans l’atelier", openVangogh2: "Agrandir le portrait de Vincent et Jo",
@@ -21,13 +21,13 @@
       sectionKicker: "CINÉMA VR · EN ACCÈS DIRECT", sectionTitle: "Les films du Cinéma ARTDACI.", sectionDesc: "Retrouvez les 12 films du Cinéma VR et un nouveau film à la une ; visionnez-les ici, même sans casque : rencontres imaginées, Joconde animée et histoires des artistes et de leurs mécènes.", cinemaNote: "Des interprétations artistiques, pas des archives historiques.", cinemaVisit: "Entrer dans le Cinéma VR ↗", cinemaPlaylist: "Choisir un film", cinemaPlaylistLabel: "Liste des films du cinéma", cinemaFilterLabel: "Catégories de films", cinemaAll: "Tous les films", cinemaTogether: "Quatre artistes", cinemaLeonardo: "Léonard & la Joconde", cinemaEncounters: "Rencontres", cinemaCount: "films", cinemaError: "Cette vidéo n’est pas disponible sur cet appareil. Vous pouvez aussi essayer le Cinéma VR.", cinemaPlay: "Lire", outroKicker: "DE L’IMAGINAIRE À L’EXPLORATION", outroTitle: "Au-delà du cadre, explorer le monde de l’art.", outroBook: "Le livre magique ↗", outro3d: "Explorer en 3D ↗", outroMuseum: "Explorer les musées ↗", disclaimer: "ARTDACI Reimagined est une réinterprétation artistique et pédagogique. Il ne s’agit ni d’une reproduction officielle d’un musée ni d’une reconstitution historique.", closeImage: "Fermer l’image"
     },
     ar: {
-      skip: "الانتقال إلى المعرض", navGallery: "معرض الصور", navCollection: "الأفلام", navBook: "الكتاب السحري", navHome: "الصفحة الرئيسية", heroKicker: "✦ الفن أبعد من الإطار", heroText: "أربعة من كبار الفنانين يتجاوزون لوحاتهم عبر لقاءات متخيلة وصور وأفلام.", heroImageAlt: "ليوناردو يرسم الموناليزا في مرسم متخيل من عصر النهضة", heroImageCaption: "مرسم ليوناردو — خيال يتجاوز اللوحة", exploreGallery: "ادخل معرض الصور", experience: "افتح الكتاب السحري", featuredFilmBadge: "✦ فيلم مميز", featuredFilmTitle: "كأس ARTDACI — الفنانون الأربعة", featuredFilmAria: "كأس ARTDACI — لقاء متخيل بين الفنانين الأربعة", featuredFilmPlay: "تشغيل الفيلم المميز", featuredFilmError: "الفيلم المميز غير متاح مؤقتاً.", featuredArtists: "الفنانون المشاركون", galleryKicker: "لقاءات متخيلة", galleryTitle: "أربعة أساتذة. حكايات تتجاوز الإطار.", galleryDesc: "تبتكر هذه الصور المعاصرة لقاءات شعرية حول الفنانين وأعمالهم. إنها تفسيرات فنية وليست وثائق تاريخية.", galleryArtists: "فنانو معرض الصور",
+      skip: "الانتقال إلى المعرض", navGallery: "معرض الصور", navCollection: "الأفلام", navBook: "الكتاب السحري", navHome: "الصفحة الرئيسية", heroKicker: "✦ الفن أبعد من الإطار", heroText: "أربعة من كبار الفنانين يتجاوزون لوحاتهم عبر لقاءات متخيلة وصور وأفلام.", heroImageAlt: "ليوناردو يرسم الموناليزا في مرسم متخيل من عصر النهضة", heroImageCaption: "مرسم ليوناردو — خيال يتجاوز اللوحة", exploreGallery: "ادخل معرض الصور", experience: "افتح الكتاب السحري", featuredFilmBadge: "✦ فيلم مميز", featuredFilmSummary: "ينطلق ليوناردو دافنشي وفيرمير وفان غوخ ومونيه بحثًا عن كنز غامض يتبيّن أنه كتاب ARTDACI، الذي يقدّمه ليوناردو بوصفه بوابة جديدة إلى الفن.", featuredFilmTitle: "الأساتذة الأربعة يبحثون عن كأس ARTDACI المقدسة", featuredFilmAria: "فيلم متخيّل عن بحث الأساتذة الأربعة عن كتاب ARTDACI", featuredFilmPlay: "تشغيل الفيلم المميز", featuredFilmError: "الفيلم المميز غير متاح مؤقتاً.", featuredArtists: "الفنانون المشاركون", imageAlbumLabel: "ألبومات صور ثلاثية الأبعاد · لقاءات متخيّلة", galleryKicker: "لقاءات متخيلة", galleryTitle: "أربعة أساتذة. حكايات تتجاوز إطار اللوحة", galleryDesc: "تُجسّد هذه الصور المعاصرة لقاءات شاعرية حول الفنانين وأعمالهم،\nوهي تأويلات فنية وليست وثائق تاريخية.", galleryArtists: "فنانو معرض الصور",
       leonardoEra: "عصر النهضة · برؤية جديدة", leonardoStory: "يتحول المرسم إلى مسرح: تدخل الموناليزا الغرفة، ويلتقي فرانسوا الأول بالفنان في أواخر رحلته.", leonardoCaption1: "ليوناردو يعمل — مرسم متخيل", leonardoCaption2: "ليوناردو وفرنسوا الأول — لقاء متخيل", leonardoCaption3: "الموناليزا — خارج الإطار", leonardoAlt1: "ليوناردو يرسم الموناليزا في مرسم متخيل من عصر النهضة", leonardoAlt2: "ليوناردو دافنشي يتحدث مع فرانسوا الأول في قاعة ملكية متخيلة", leonardoAlt3: "الموناليزا تخرج من إطارها", openLeonardo1: "تكبير صورة ليوناردو أثناء العمل", openLeonardo2: "تكبير صورة ليوناردو وفرنسوا الأول", openLeonardo3: "تكبير صورة الموناليزا خارج الإطار",
       vermeerEra: "ضوء دلفت · برؤية جديدة", vermeerStory: "تنفتح بيوت دلفت حول الفتاة ذات القرط اللؤلؤي وفيرمير والرعاة المرتبطين بعالمه الدقيق الملاحظة.", vermeerCaption1: "الفتاة تدخل غرفة فيرمير", vermeerCaption2: "الفتاة ذات القرط اللؤلؤي — جالسة", vermeerCaption3: "فيرمير ورعاته — عرض متخيل", vermeerAlt1: "الفتاة ذات القرط اللؤلؤي واقفة في بيت متخيل في دلفت", vermeerAlt2: "الفتاة ذات القرط اللؤلؤي جالسة قرب طاولة", vermeerAlt3: "فيرمير يعرض لوحة على بيتر فان راوفن وماريا دي كنايت", openVermeer1: "تكبير صورة الفتاة في غرفة فيرمير", openVermeer2: "تكبير صورة الفتاة الجالسة", openVermeer3: "تكبير صورة فيرمير ورعاته",
       vangoghEra: "إرث من الألوان · برؤية جديدة", vangoghStory: "تجمع صورة متخيلة في المرسم بين فنسنت وجو فان غوخ-بونغر التي ساعد عملها لاحقاً في تعريف العالم بفنه.", vangoghCaption1: "فنسنت وجو — صورة متخيلة في المرسم", vangoghCaption2: "الفنان وحافظة إرثه", vangoghAlt1: "فنسنت فان غوخ وجو فان غوخ-بونغر واقفان في مرسم متخيل", vangoghAlt2: "صورة متخيلة مقربة لفنسنت فان غوخ وجو فان غوخ-بونغر", openVangogh1: "تكبير صورة فنسنت وجو في المرسم", openVangogh2: "تكبير صورة فنسنت وجو",
       monetEra: "الانطباعية · برؤية جديدة", monetStory: "يلتقي مونيه وتاجر الفن بول دوران-رويل في فضاءات صنعتها اللوحات التي ساهم تعاونهما في تقديمها إلى جمهور جديد.", monetCaption1: "مونيه ودوران-رويل — المعرض", monetCaption2: "مونيه ودوران-رويل — صورة متخيلة", monetAlt1: "كلود مونيه وبول دوران-رويل في معرض متخيل لزنابق الماء", monetAlt2: "كلود مونيه وبول دوران-رويل في صورة مكتبية متخيلة", openMonet1: "تكبير صورة مونيه ودوران-رويل في المعرض", openMonet2: "تكبير صورة مونيه ودوران-رويل",
       togetherNav: "معاً", groupKicker: "ما وراء الزمن · معاً", groupTitle: "الأساتذة الأربعة في عالم متخيل واحد.", groupStory: "تجمع هذه الصور الجماعية ليوناردو ومونيه وفان غوخ وفيرمير عبر القرون والأماكن والحركات الفنية.", groupCaption1: "أربعة أساتذة ومن حملوا حكاياتهم", groupCaption2: "أربعة رسامين — مرسم واحد متخيل", groupCaption3: "صورة تتجاوز التسلسل الزمني", groupCaption4: "رحلة عبر أماكن حكاياتهم", groupCaption5: "الأساتذة الأربعة — دراسة جماعية", groupAlt1: "ليوناردو ومونيه وفان غوخ وفيرمير مع أشخاص مرتبطين بحكاياتهم", groupAlt2: "ليوناردو ومونيه وفان غوخ وفيرمير واقفون في مرسم مشترك متخيل", groupAlt3: "صورة جماعية مقربة لليوناردو ومونيه وفان غوخ وفيرمير", groupAlt4: "الرسامون الأربعة أمام معالم مرتبطة بحكاياتهم الفنية", groupAlt5: "صورة مفرغة لليوناردو ومونيه وفان غوخ وفيرمير", openGroup1: "تكبير صورة الأساتذة الأربعة ومن حولهم", openGroup2: "تكبير صورة الرسامين الأربعة واقفين", openGroup3: "تكبير الصورة الجماعية", openGroup4: "تكبير رحلة أماكنهم", openGroup5: "تكبير دراسة الأساتذة الأربعة",
-      sectionKicker: "سينما الواقع الافتراضي · مشاهدة مباشرة", sectionTitle: "أفلام سينما ARTDACI.", sectionDesc: "شاهد هنا الأفلام الاثني عشر المتاحة في سينما الواقع الافتراضي، إضافة إلى الفيلم المميز الجديد، حتى من دون خوذة: لقاءات متخيلة والموناليزا المتحركة وقصص الفنانين وداعميهم.", cinemaNote: "أعمال فنية متخيلة وليست لقطات تاريخية.", cinemaVisit: "الدخول إلى سينما الواقع الافتراضي ↗", cinemaPlaylist: "اختر فيلماً", cinemaPlaylistLabel: "قائمة أفلام السينما", cinemaFilterLabel: "فئات الأفلام", cinemaAll: "جميع الأفلام", cinemaTogether: "أربعة فنانين", cinemaLeonardo: "ليوناردو والموناليزا", cinemaEncounters: "لقاءات", cinemaCount: "فيلماً", cinemaError: "هذا الفيديو غير متاح على هذا الجهاز حالياً. يمكنك تجربته أيضاً في سينما الواقع الافتراضي.", cinemaPlay: "تشغيل", outroKicker: "من الخيال إلى الاستكشاف", outroTitle: "ما وراء الإطار، اكتشف عالم الفن.", outroBook: "الكتاب السحري ↗", outro3d: "استكشف الأبعاد الثلاثية ↗", outroMuseum: "استكشف المتاحف ↗", disclaimer: "ARTDACI Reimagined تجربة فنية وتعليمية وليست نسخة رسمية من متحف أو إعادة بناء تاريخية.", closeImage: "إغلاق الصورة"
+      sectionKicker: "سينما الواقع الافتراضي · مشاهدة مباشرة", sectionTitle: "أفلام سينما ARTDACI.", sectionDesc: "شاهد الأفلام الاثني عشر من سينما الواقع الافتراضي وفيلمًا جديدًا مميزًا، حتى من دون نظارة: لقاءات متخيّلة، والموناليزا المتحركة، وحكايات الفنانين وداعميهم.", cinemaNote: "أعمال فنية متخيلة وليست لقطات تاريخية.", cinemaVisit: "الدخول إلى سينما الواقع الافتراضي ↗", cinemaPlaylist: "اختر فيلماً", cinemaPlaylistLabel: "قائمة أفلام السينما", cinemaFilterLabel: "فئات الأفلام", cinemaAll: "جميع الأفلام", cinemaTogether: "أربعة فنانين", cinemaLeonardo: "ليوناردو والموناليزا", cinemaEncounters: "لقاءات", cinemaCount: "فيلماً", cinemaError: "هذا الفيديو غير متاح على هذا الجهاز حالياً. يمكنك تجربته أيضاً في سينما الواقع الافتراضي.", cinemaPlay: "تشغيل", outroKicker: "من الخيال إلى الاستكشاف", outroTitle: "ما وراء الإطار، اكتشف عالم الفن.", outroBook: "الكتاب السحري ↗", outro3d: "استكشف الأبعاد الثلاثية ↗", outroMuseum: "استكشف المتاحف ↗", disclaimer: "ARTDACI Reimagined تجربة فنية وتعليمية وليست نسخة رسمية من متحف أو إعادة بناء تاريخية.", closeImage: "إغلاق الصورة"
     }
   };
 
@@ -355,4 +355,187 @@
     lightboxImage.removeAttribute("src");
     lightboxImage.alt = "";
   });
+  (function initThreeDimensionalPhotoAlbums() {
+  const translations = {
+    en: { guide:"Turn the 3D photo albums with the arrows or a swipe. Click any photo to see it full-size.", tag:"3D PHOTO ALBUM", page:"PHOTO", prev:"Previous photo", next:"Next photo", zoom:"Enlarge photo", choose:"Enlarge thumbnail", together:"The Four Masters" },
+    fr: { guide:"Tournez les albums photo 3D à l’aide des flèches ou d’un glissement. Cliquez sur une image pour l’agrandir.", tag:"ALBUM PHOTO 3D", page:"PHOTO", prev:"Photo précédente", next:"Photo suivante", zoom:"Agrandir la photo", choose:"Agrandir la miniature", together:"Les quatre maîtres" },
+    ar: { guide:"قلّب صفحات ألبومات الصور ثلاثية الأبعاد باستخدام الأسهم أو السحب. انقر على الصورة لتكبيرها.", tag:"ألبوم صور ثلاثي الأبعاد", page:"الصورة", prev:"الصورة السابقة", next:"الصورة التالية", zoom:"تكبير الصورة", choose:"تكبير الصورة المصغّرة", together:"الأساتذة الأربعة" }
+  };
+  const words = translations[lang];
+  const guide = document.querySelector("[data-album-guide]");
+  if (guide) guide.textContent=words.guide;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const albums = Array.from(document.querySelectorAll(".r-photo-album"));
+  albums.forEach((album) => {
+    const source = album.querySelector(".r-album-source");
+    const ui = album.querySelector(".r-album-ui");
+    if (!source || !ui) return;
+    const photos = Array.from(source.querySelectorAll(".r-still")).map((figure) => {
+      const button = figure.querySelector(".r-still-open");
+      const image = button?.querySelector("img");
+      if (!image || !button) return null;
+      const caption = copy[button.dataset.captionKey] || figure.querySelector("figcaption")?.textContent?.trim() || "";
+      const alt = copy[image.dataset.l10nAlt] || image.alt || caption;
+      return { src:image.getAttribute("src"), alt, caption };
+    }).filter((photo) => photo?.src);
+    if (!photos.length) return;
+
+    const albumName = album.dataset.album === "together" ? words.together : (album.dataset.albumName || "ARTDACI");
+    const ordinal = album.closest("article")?.querySelector(".r-story-number")?.textContent?.trim() || "05";
+    ui.innerHTML = `
+      <div class="r-album-topline"><span class="r-album-top-label"></span><span class="r-album-counter" role="status" aria-live="polite"></span></div>
+      <div class="r-album-viewport">
+        <div class="r-album-book" tabindex="0">
+          <div class="r-album-left">
+            <div class="r-album-cover-ornament">✦</div>
+            <div class="r-album-cover-label">ARTDACI <span>REIMAGINED</span></div>
+            <div class="r-album-cover-number"></div>
+            <strong class="r-album-cover-title"></strong>
+            <span class="r-album-cover-foil"></span>
+          </div>
+          <div class="r-album-right">
+            <button class="r-album-photo" type="button"><img alt="" loading="lazy" decoding="async"><span class="r-album-photo-caption"></span><span class="r-album-enlarge" aria-hidden="true">⤢</span></button>
+          </div>
+          <div class="r-album-spine" aria-hidden="true"></div>
+          <div class="r-album-flip-sheet" aria-hidden="true" hidden>
+            <div class="r-album-flip-front"><img alt=""><span></span></div>
+            <div class="r-album-flip-back"><span>ARTDACI</span><small>REIMAGINED</small></div>
+          </div>
+        </div>
+      </div>
+      <div class="r-album-bottom">
+        <div class="r-album-controls">
+          <button class="r-album-prev" type="button"><span aria-hidden="true">←</span><span class="r-album-prev-text"></span></button>
+          <button class="r-album-next" type="button"><span class="r-album-next-text"></span><span aria-hidden="true">→</span></button>
+        </div>
+        <div class="r-album-thumbs" role="group"></div>
+      </div>`;
+    ui.querySelector(".r-album-top-label").textContent=words.tag;
+    ui.querySelector(".r-album-cover-title").textContent=albumName;
+    ui.querySelector(".r-album-cover-number").textContent=ordinal;
+    // Reuse the actual localized text, title and original-artwork link within the left page.
+    // If scripts do not run, the source header stays outside the book as a readable fallback.
+    const originalHeader = album.closest("article")?.querySelector(".r-story-copy, .r-group-copy");
+    if (originalHeader) {
+      const leftPage = ui.querySelector(".r-album-left");
+      leftPage.querySelector(".r-album-cover-title")?.remove();
+      leftPage.querySelector(".r-album-cover-number")?.remove();
+      leftPage.querySelector(".r-album-cover-ornament")?.remove();
+      leftPage.querySelector(".r-album-cover-foil")?.remove();
+      leftPage.append(originalHeader);
+    }
+    const book=ui.querySelector(".r-album-book");
+    const photoButton=ui.querySelector(".r-album-photo");
+    const photoImage=photoButton.querySelector("img");
+    const photoCaption=ui.querySelector(".r-album-photo-caption");
+    const counter=ui.querySelector(".r-album-counter");
+    const turnPage=ui.querySelector(".r-album-flip-sheet");
+    const flipImage=turnPage.querySelector(".r-album-flip-front img");
+    const flipCaption=turnPage.querySelector(".r-album-flip-front span");
+    const thumbs=ui.querySelector(".r-album-thumbs");
+    const prev=ui.querySelector(".r-album-prev");
+    const next=ui.querySelector(".r-album-next");
+    prev.querySelector(".r-album-prev-text").textContent=words.prev;
+    next.querySelector(".r-album-next-text").textContent=words.next;
+    prev.setAttribute("aria-label",words.prev);
+    next.setAttribute("aria-label",words.next);
+    book.setAttribute("aria-label",`${words.tag} · ${albumName}`);
+    let index=0, busy=false, swipeClickGuard=0, start=null;
+    const thumbButtons=photos.map((photo,i)=>{
+      const button=document.createElement("button");
+      button.type="button";
+      button.className="r-album-thumb";
+      button.setAttribute("aria-label",`${words.choose} ${i+1}/${photos.length} : ${photo.caption}`);
+      button.setAttribute("aria-pressed","false");
+      const image=document.createElement("img");
+      image.src=photo.src;
+      image.alt="";
+      image.loading="lazy";
+      image.decoding="async";
+      button.append(image);
+      thumbs.append(button);
+      button.addEventListener("click",()=>{
+        if(busy)return;
+        index=i;
+        showPhoto(index);
+        lightboxImage.src=photo.src;
+        lightboxImage.alt=photo.alt;
+        lightboxCaption.textContent=photo.caption;
+        lightbox.showModal();
+      });
+      return button;
+    });
+    function showPhoto(i) {
+      const photo=photos[i];
+      photoImage.src=photo.src;
+      photoImage.alt=photo.alt;
+      photoCaption.textContent=photo.caption;
+      counter.textContent=`${words.page} ${i+1} / ${photos.length}`;
+      photoButton.setAttribute("aria-label",`${words.zoom} : ${photo.caption}`);
+      thumbButtons.forEach((button,n)=>{
+        button.classList.toggle("is-current",n===i);
+        button.setAttribute("aria-pressed",String(n===i));
+      });
+    }
+    function turnTo(target) {
+      if (busy || target===index) return;
+      const newIndex=(target+photos.length)%photos.length;
+      const forward = (newIndex===0 && index===photos.length-1) || (newIndex>index && !(newIndex===photos.length-1&&index===0));
+      if(reducedMotion){index=newIndex;showPhoto(index);return;}
+      busy=true;
+      flipImage.src=(forward?photos[index]:photos[newIndex]).src;
+      flipCaption.textContent=(forward?photos[index]:photos[newIndex]).caption;
+      if(forward){index=newIndex;showPhoto(index);}
+      turnPage.hidden=false;
+      book.classList.remove("is-turning-next","is-turning-prev");
+      void turnPage.offsetWidth;
+      book.classList.add(forward?"is-turning-next":"is-turning-prev");
+      window.setTimeout(()=>{
+        if(!forward){index=newIndex;showPhoto(index);}
+        book.classList.remove("is-turning-next","is-turning-prev");
+        turnPage.hidden=true;
+        busy=false;
+      },640);
+    }
+    prev.addEventListener("click",()=>turnTo((index-1+photos.length)%photos.length));
+    next.addEventListener("click",()=>turnTo((index+1)%photos.length));
+    photoButton.addEventListener("click",()=>{
+      if(Date.now()<swipeClickGuard || busy)return;
+      const photo=photos[index];
+      lightboxImage.src=photo.src;
+      lightboxImage.alt=photo.alt;
+      lightboxCaption.textContent=photo.caption;
+      lightbox.showModal();
+    });
+    book.addEventListener("keydown",(event)=>{
+      if(["ArrowRight","ArrowLeft","Home","End"].includes(event.key)){
+        event.preventDefault();
+        if(event.key==="Home") turnTo(0);
+        else if(event.key==="End") turnTo(photos.length-1);
+        else turnTo((index+(event.key==="ArrowRight"?1:-1)+photos.length)%photos.length);
+      }
+    });
+    book.addEventListener("pointerdown",(event)=>{
+      if(event.button!==0) return;
+      start={x:event.clientX,y:event.clientY};
+    });
+    book.addEventListener("pointerup",(event)=>{
+      if(!start)return;
+      const dx=event.clientX-start.x,dy=event.clientY-start.y;
+      start=null;
+      if(Math.abs(dx)>44 && Math.abs(dx)>Math.abs(dy)*1.25) {
+        swipeClickGuard=Date.now()+450;
+        turnTo((index+(dx<0?1:-1)+photos.length)%photos.length);
+      }
+    });
+    book.addEventListener("pointercancel",()=>{start=null;});
+    showPhoto(0);
+    prev.disabled=next.disabled=photos.length<=1;
+    thumbs.hidden=photos.length<=1;
+    ui.hidden=false;
+    source.hidden=true;
+    album.classList.add("is-ready");
+  });
+})();
+
 })();
