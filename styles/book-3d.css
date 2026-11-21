@@ -278,7 +278,7 @@ button, a { font: inherit; }
     transform-origin: top center;
   }
   .book.zoomed {
-    width: 96vw;
+    width: 90vw;
     margin: 14px 0 clamp(78px, 16vh, 138px);
     transform: scale(1.08);
   }
