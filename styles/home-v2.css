@@ -1128,3 +1128,17 @@
 .hv2-footer .artdaci-editorial-title{font-family:Georgia,'Times New Roman',serif;font-size:.95rem;font-weight:600;color:#F0D7A6;letter-spacing:.01em}
 .hv2-footer .artdaci-editorial-signature{display:inline-block;border-inline-start:1px solid #D8C497;padding-inline-start:14px;font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:700;font-size:1.062rem;color:#C4CFD8;letter-spacing:.035em}
 @media(max-width:750px){.hv2-footer .artdaci-editorial-credit{margin-inline-start:0;justify-content:flex-start}.hv2-footer .artdaci-editorial-title{font-size:.83rem}.hv2-footer .artdaci-editorial-signature{font-size:1rem;padding-inline-start:10px}}
+
+/* Contraste en thème clair / sombre ; signature à graisse normale. */
+body.home-v2 .hv2-footer .artdaci-editorial-title{color:#67471F;font-weight:400}
+body.home-v2 .hv2-footer .artdaci-editorial-signature{color:#31485F;font-weight:400;border-inline-start-color:#94764D}
+@media(prefers-color-scheme:dark){
+  body.home-v2 .hv2-footer .artdaci-editorial-title{color:#F0D7A6}
+  body.home-v2 .hv2-footer .artdaci-editorial-signature{color:#CEDBE5;border-inline-start-color:#D8C497}
+}
+html.dark body.home-v2 .hv2-footer .artdaci-editorial-title,
+html[data-theme="dark"] body.home-v2 .hv2-footer .artdaci-editorial-title{color:#F0D7A6}
+html.dark body.home-v2 .hv2-footer .artdaci-editorial-signature,
+html[data-theme="dark"] body.home-v2 .hv2-footer .artdaci-editorial-signature{color:#CEDBE5;border-inline-start-color:#D8C497}
+html[data-theme="light"] body.home-v2 .hv2-footer .artdaci-editorial-title{color:#67471F}
+html[data-theme="light"] body.home-v2 .hv2-footer .artdaci-editorial-signature{color:#31485F;border-inline-start-color:#94764D}
