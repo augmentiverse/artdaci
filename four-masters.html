@@ -1,0 +1,2875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARTDACI — Four Masters & Twenty-Four Masterpieces</title>
+<meta name="description" content="Explore 24 works through visual analysis, comparison, chronology and quiz."><link rel="icon" href="assets/app/artdaci-app-icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f6f2ea;
+      --bg-elevated: #fffdf8;
+      --bg-muted: #ebe4d6;
+      --surface-glass: rgba(246, 242, 234, 0.88);
+      --text: #191815;
+      --text-muted: #5c564b;
+      --border: #ddd4c3;
+      --accent: #a67c37;
+      --accent-strong: #87601f;
+      --accent-soft: rgba(166, 124, 55, 0.14);
+      --vinci: #7a4b2a;
+      --vermeer: #224c78;
+      --vangogh: #b57b14;
+      --monet: #2d6a62;
+      --shadow-sm: 0 4px 16px rgba(25, 24, 21, 0.06);
+      --shadow-md: 0 12px 34px rgba(25, 24, 21, 0.10);
+      --shadow-lg: 0 24px 64px rgba(15, 14, 12, 0.24);
+      --radius: 14px;
+      --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body.dark {
+      --bg: #12110f;
+      --bg-elevated: #1b1916;
+      --bg-muted: #26231e;
+      --surface-glass: rgba(18, 17, 15, 0.90);
+      --text: #f3eee3;
+      --text-muted: #ada493;
+      --border: #322d26;
+      --accent: #cfa152;
+      --accent-strong: #e3b86b;
+      --accent-soft: rgba(207, 161, 82, 0.15);
+      --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.28);
+      --shadow-md: 0 12px 34px rgba(0, 0, 0, 0.42);
+      --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.65);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.55;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    h1, h2, h3, h4, .serif {
+      font-family: var(--font-serif);
+      letter-spacing: -0.01em;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      color: inherit;
+    }
+
+    a { color: var(--accent-strong); }
+
+    /* Top Header */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: var(--surface-glass);
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar-inner {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), #593e14);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-family: var(--font-serif);
+      font-weight: 700;
+      font-size: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+    .brand-title {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: 0.06em;
+    }
+    .brand-sub {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .nav-tab {
+      border: 1px solid transparent;
+      background: transparent;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+    }
+    .nav-tab:hover {
+      color: var(--text);
+      background: var(--bg-muted);
+    }
+    .nav-tab.active {
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .icon-btn {
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      border-radius: 999px;
+      padding: 7px 13px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .icon-btn:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .badge-count {
+      background: var(--accent);
+      color: #fff;
+      border-radius: 999px;
+      padding: 1px 7px;
+      font-size: 11px;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 28px 24px 64px;
+    }
+
+    /* Hero Banner */
+    .hero {
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      background: linear-gradient(125deg, #1b1915 0%, #2a241b 55%, #1d2a2d 100%);
+      color: #f6f1e6;
+      padding: 40px 36px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow-md);
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 28px;
+      align-items: center;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(207, 161, 82, 0.22), transparent 55%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #dfb468;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: clamp(32px, 4.2vw, 52px);
+      line-height: 1.05;
+      font-weight: 600;
+    }
+    .hero p {
+      margin: 0 0 22px;
+      color: #d6cebe;
+      font-size: 15px;
+      max-width: 62ch;
+    }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-stat-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .hero-stat-card:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: #dfb468;
+      transform: translateY(-2px);
+    }
+    .hero-stat-card .era {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #dfb468;
+    }
+    .hero-stat-card .name {
+      font-family: var(--font-serif);
+      font-size: 21px;
+      font-weight: 600;
+      margin: 2px 0;
+    }
+    .hero-stat-card .meta {
+      font-size: 12px;
+      color: #c8bfae;
+    }
+    .hero-cta-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+    .btn-gold {
+      background: #cfa152;
+      color: #161410;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .btn-gold:hover { background: #e1b567; transform: translateY(-1px); }
+    .btn-outline-light {
+      background: transparent;
+      color: #f6f1e6;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-outline-light:hover { background: rgba(255, 255, 255, 0.1); }
+
+    /* Filter Bar */
+    .controls-bar {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .controls-top {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .search-wrap {
+      flex: 1 1 260px;
+      position: relative;
+    }
+    .search-wrap input {
+      width: 100%;
+      padding: 10px 14px 10px 38px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      font-size: 14px;
+      outline: none;
+    }
+    .search-wrap input:focus { border-color: var(--accent); }
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.55;
+      pointer-events: none;
+    }
+    .select-control {
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .pill-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .filter-pill {
+      padding: 6px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .filter-pill:hover { border-color: var(--accent); }
+    .filter-pill.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* Results Info */
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .results-header h2 {
+      margin: 0;
+      font-size: 28px;
+    }
+    .results-meta {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Gallery Grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 22px;
+    }
+    .art-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .art-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent);
+    }
+    .art-thumb-wrap {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      background: var(--bg-muted);
+      overflow: hidden;
+    }
+    .art-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.45s ease;
+    }
+    .art-card:hover .art-thumb { transform: scale(1.04); }
+    .art-num-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(18, 17, 15, 0.78);
+      color: #f6f1e6;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 9px;
+      border-radius: 999px;
+      backdrop-filter: blur(4px);
+      letter-spacing: 0.05em;
+    }
+    .art-hub-badge {
+      position: absolute;
+      top: 10px;
+      right: 46px;
+      background: rgba(207, 161, 82, 0.92);
+      color: #161410;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 999px;
+      letter-spacing: 0.06em;
+    }
+    .fav-btn {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(18, 17, 15, 0.72);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      font-size: 14px;
+      transition: transform 0.15s ease, background 0.15s ease;
+      z-index: 2;
+    }
+    .fav-btn:hover { transform: scale(1.1); }
+    .fav-btn.saved { background: #c93b3b; color: #fff; }
+
+    .art-body {
+      padding: 16px 18px 18px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .art-master-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      margin-bottom: 4px;
+    }
+    .art-title {
+      margin: 0 0 6px;
+      font-size: 22px;
+      line-height: 1.15;
+      font-weight: 600;
+    }
+    .art-museum {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .art-excerpt {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin: 0 0 14px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex: 1;
+    }
+    .tag-list {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .tag-chip {
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+      font-weight: 600;
+    }
+
+    /* Masters View */
+    .masters-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 22px;
+    }
+    .master-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+    .master-banner {
+      padding: 24px;
+      color: #fff;
+      position: relative;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .master-portrait {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(255,255,255,0.65);
+      background: rgba(0,0,0,0.25);
+      flex-shrink: 0;
+    }
+    .master-banner h3 {
+      margin: 0;
+      font-size: 27px;
+      line-height: 1.1;
+    }
+    .master-banner .dates {
+      font-size: 12px;
+      opacity: 0.9;
+      margin-top: 3px;
+    }
+    .master-content {
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex: 1;
+    }
+    .master-quote {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 18px;
+      padding-left: 12px;
+      border-left: 3px solid var(--accent);
+      margin: 0;
+    }
+    .swatch-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .swatch {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid var(--bg-elevated);
+      box-shadow: 0 0 0 1px var(--border);
+      position: relative;
+    }
+    .master-works-mini {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .mini-work {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--bg);
+      transition: border-color 0.2s ease;
+    }
+    .mini-work:hover { border-color: var(--accent); }
+    .mini-work img {
+      width: 100%;
+      height: 58px;
+      object-fit: cover;
+      display: block;
+    }
+    .mini-work span {
+      display: block;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 4px 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Semantic Graph View */
+    .semantic-layout {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    .graph-stage {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .graph-svg {
+      width: 100%;
+      height: 540px;
+      display: block;
+      background: radial-gradient(circle at center, var(--accent-soft), transparent 70%);
+      border-radius: 12px;
+    }
+    .node-group { cursor: pointer; transition: opacity 0.2s ease; }
+    .node-group:hover circle { stroke-width: 3.5; }
+    .graph-sidebar {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Timeline & Atlas */
+    .timeline-track {
+      position: relative;
+      padding-left: 28px;
+      border-left: 2px solid var(--accent);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .timeline-item {
+      position: relative;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 18px;
+      display: grid;
+      grid-template-columns: 92px 1fr auto;
+      gap: 16px;
+      align-items: center;
+      cursor: pointer;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .timeline-item:hover { border-color: var(--accent); transform: translateX(3px); }
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -35px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg);
+    }
+    .timeline-thumb {
+      width: 92px;
+      height: 68px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .museum-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 18px;
+    }
+    .museum-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Compare & Quiz */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .compare-panel {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+    }
+    .compare-img {
+      width: 100%;
+      height: 300px;
+      object-fit: contain;
+      background: var(--bg-muted);
+      border-radius: 10px;
+      margin: 12px 0;
+    }
+    .quiz-card {
+      max-width: 760px;
+      margin: 0 auto;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 26px;
+      box-shadow: var(--shadow-md);
+    }
+    .quiz-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .quiz-opt {
+      text-align: left;
+      padding: 13px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.15s ease;
+    }
+    .quiz-opt:hover:not(:disabled) { border-color: var(--accent); }
+    .quiz-opt.correct { background: #1e6b43; border-color: #1e6b43; color: #fff; }
+    .quiz-opt.wrong { background: #9e2f2f; border-color: #9e2f2f; color: #fff; }
+
+    /* Modal Artwork Inspector */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(12, 11, 9, 0.80);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-shell {
+      width: min(1220px, 100%);
+      max-height: 92vh;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+    }
+    .modal-visual {
+      background: #141310;
+      color: #f4efe4;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      min-height: 460px;
+    }
+    .canvas-stage {
+      position: relative;
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: grab;
+      user-select: none;
+    }
+    .canvas-stage:active { cursor: grabbing; }
+    .zoom-layer {
+      position: relative;
+      transition: transform 0.15s ease-out;
+      transform-origin: center center;
+      max-width: 92%;
+      max-height: 72vh;
+    }
+    .zoom-layer img {
+      display: block;
+      max-width: 100%;
+      max-height: 70vh;
+      border-radius: 4px;
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.65);
+    }
+    .hotspot-pin {
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      margin: -13px 0 0 -13px;
+      border-radius: 50%;
+      background: rgba(207, 161, 82, 0.95);
+      color: #161410;
+      border: 2px solid #fff;
+      font-size: 12px;
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.45);
+      transition: transform 0.2s ease;
+    }
+    .hotspot-pin:hover, .hotspot-pin.active {
+      transform: scale(1.2);
+      background: #fff;
+    }
+    .hotspot-callout {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 58px;
+      background: rgba(18, 17, 15, 0.92);
+      border: 1px solid rgba(207, 161, 82, 0.5);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.45;
+      backdrop-filter: blur(8px);
+    }
+    .visual-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      background: rgba(0,0,0,0.45);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .vt-btn {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: #f6f1e6;
+      border-radius: 999px;
+      padding: 5px 11px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .vt-btn:hover, .vt-btn.active { background: #cfa152; color: #161410; border-color: #cfa152; }
+
+    .modal-info {
+      padding: 24px 26px;
+      overflow-y: auto;
+      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .modal-close {
+      border: 1px solid var(--border);
+      background: var(--bg);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+    .spec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 12px;
+    }
+    .spec-label {
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+    .subtabs {
+      display: flex;
+      gap: 6px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    .subtab {
+      border: none;
+      background: transparent;
+      padding: 6px 11px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .subtab.active { background: var(--accent-soft); color: var(--accent-strong); }
+
+    .note-box {
+      width: 100%;
+      min-height: 68px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      padding: 10px;
+      font-size: 13px;
+      resize: vertical;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 26px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 960px) {
+      .hero { grid-template-columns: 1fr; padding: 28px 22px; }
+      .semantic-layout { grid-template-columns: 1fr; }
+      .modal-shell { grid-template-columns: 1fr; max-height: 94vh; overflow-y: auto; }
+      .modal-visual { min-height: 340px; }
+      .modal-info { max-height: none; }
+      .compare-grid, .quiz-options { grid-template-columns: 1fr; }
+      .timeline-item { grid-template-columns: 74px 1fr; }
+    }
+    /* ARTDACI integration: compact ocean-blue / gold header; neutral gallery surface for looking at paintings. */
+    :root{--accent:#a57c33;--accent-strong:#77531d;}
+    body{background:linear-gradient(160deg,#e4eef4,#f6f2ea 55%);}
+    body.dark{background:linear-gradient(160deg,#234b66,#1d344a);--bg:#20384d;--bg-elevated:#29465e;--bg-muted:#1a3043;--surface-glass:#24445c;--border:#57738a;--text:#f7f4eb;--text-muted:#d5e3ed;}
+    .topbar{background:linear-gradient(100deg,#285575,#3d7091,#285575);color:#fff4dc;border-bottom:3px solid #dfbd7d;backdrop-filter:none;}
+    .topbar-inner{padding:5px 20px;gap:10px;}
+    .brand{color:#fff4dc;text-decoration:none;gap:8px;}
+    .explorer-logo{width:110px;height:48px;object-fit:contain;}
+    .brand-sub{color:#f4dec0;letter-spacing:.06em;}
+    .nav-tab{color:#f0f5fa;padding:7px 11px;}
+    .nav-tab:hover,.nav-tab.active{background:#f1d9a7;color:#18364d;}
+    .top-actions .icon-btn{background:#244962;border-color:#98afba;color:#fff4dc;}
+    .container{padding-top:16px;}
+    .explorer-context{display:flex;flex-wrap:wrap;gap:8px 22px;margin-bottom:14px;font-size:13px;}
+    .explorer-context a{font-weight:700;}
+    .edition-note{font-size:12px;color:var(--text-muted);margin:0 0 12px;}
+    .hero{background:linear-gradient(135deg,#23465e,#386b8b);padding:26px 30px;gap:18px;}
+    .hero h1{font-size:clamp(30px,3.7vw,47px);}
+    .hero p{color:#e1edf5;}
+    .art-thumb,.mini-work img,.timeline-thumb{object-fit:contain;}
+    .art-thumb-wrap{background:var(--bg-muted);}
+    /* Display the reproduction itself, never add a decorative picture frame. */
+    .art-thumb,.mini-work img,.timeline-thumb,.compare-img,#modalImg{border:0!important;outline:0!important;box-shadow:none!important;border-radius:0!important;object-fit:contain!important;}
+    .art-card:hover .art-thumb{transform:none;}
+    .art-master-line{filter:none;}
+    body.dark .art-master-line{color:#e5c88b!important;}
+    .art-card:focus-within,.mini-work:focus-within{outline:2px solid var(--accent);}
+    @media(max-width:700px){.topbar{position:relative}.topbar-inner{padding:6px 12px}.brand-sub{font-size:10px}.nav-tabs{order:3}.nav-tab{font-size:12px;padding:6px 9px}.container{padding:15px 12px 36px}.hero{padding:19px 17px}.gallery-grid{grid-template-columns:minmax(0,1fr)}.modal-info{padding:18px}.graph-svg{height:auto;min-height:240px}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;}}
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" id="homeLink" href="index.html#masters" aria-label="ARTDACI home"><img class="explorer-logo" src="assets/varia/artdaci-logo.png" alt="ARTDACI" width="164" height="65">
+        <div>
+          <div class="brand-sub">4 Masters · 24 Masterpieces</div></div></a>
+
+      <nav class="nav-tabs" aria-label="Primary Views">
+        <button class="nav-tab active" data-view="gallery">Gallery (24)</button>
+        <button class="nav-tab" data-view="masters">The 4 Masters</button>
+        <button class="nav-tab" data-view="semantic">Semantic Graph</button>
+        <button class="nav-tab" data-view="timeline">Timeline &amp; Atlas</button>
+        <button class="nav-tab" data-view="compare">Compare</button>
+        <button class="nav-tab" data-view="quiz">Quiz</button>
+      </nav>
+
+      <div class="top-actions">
+        <button class="icon-btn" id="favFilterBtn" onclick="toggleSavedFilter()" title="View your bookmarked paintings">
+          ♥ Saved <span class="badge-count" id="savedCount">0</span>
+        </button>
+        <button class="icon-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Switch Gallery Lighting">
+          ☾ Evening Salon
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container"><nav class="explorer-context" aria-label="ARTDACI resources"><a id="returnHome" href="index.html#masters">← ARTDACI home</a><a id="returnHub" href="geo/masters-hub.html?lang=en">Masters Hub · VR ↗</a><a id="returnSemantic" href="semantic/?lang=en">ARTDACI Semantic ↗</a></nav><p class="edition-note" id="editionNote" hidden></p><div id="appRoot"></div><noscript>This interactive explorer requires JavaScript.</noscript></main>
+
+  <footer class="footer">
+    ARTDACI Interactive Explorer — Curating the 24 works of <strong>Leonardo da Vinci</strong>, <strong>Johannes Vermeer</strong>, <strong>Vincent van Gogh</strong>, and <strong>Claude Monet</strong> featured across <em>artdaci.com</em> (Masterpieces Alive, Masters Hub &amp; ARTDACI Semantic).
+  </footer>
+
+  <!-- Artwork Detail Inspector Modal -->
+  <div class="modal-backdrop" id="artworkModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-shell">
+      <div class="modal-visual">
+        <div class="canvas-stage" id="canvasStage">
+          <div class="zoom-layer" id="zoomLayer">
+            <img id="modalImg" src="" alt="" />
+            <div id="hotspotLayer"></div>
+          </div>
+          <div class="hotspot-callout" id="hotspotCallout" style="display:none;"></div>
+        </div>
+        <div class="visual-toolbar">
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <button class="vt-btn" onclick="adjustZoom(0.35)">+ Zoom</button>
+            <button class="vt-btn" onclick="adjustZoom(-0.35)">− Zoom</button>
+            <button class="vt-btn" onclick="resetZoom()">Reset</button>
+            <button class="vt-btn active" id="togglePinsBtn" onclick="toggleHotspots()">● Hotspots</button>
+          </div>
+          <div style="display:flex; gap:6px; align-items:center;">
+            <button class="vt-btn" id="audioBtn" onclick="toggleAudioGuide()">🔊 Audio Overview</button>
+            <button class="vt-btn" onclick="stepModalArtwork(-1)">← Prev</button>
+            <button class="vt-btn" onclick="stepModalArtwork(1)">Next →</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-info">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
+          <div>
+            <div id="modalEyebrow" style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--accent-strong);"></div>
+            <h2 id="modalTitle" style="margin:4px 0 2px; font-size:32px; line-height:1.1;"></h2>
+            <div id="modalSubtitle" style="font-size:14px; color:var(--text-muted);"></div>
+          </div>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <button class="icon-btn" id="modalFavBtn" onclick="toggleCurrentFav()">♡ Save</button>
+            <button class="modal-close" onclick="closeModal()" aria-label="Close modal">×</button>
+          </div>
+        </div>
+
+        <div class="spec-grid" id="modalSpecs"></div><a id="artworkSiteLink" class="filter-pill" style="text-decoration:none;text-align:center" href="print-artwork.html">Explore this work in ARTDACI ↗</a><a id="reproductionSourceLink" class="filter-pill" style="text-decoration:none;text-align:center" target="_blank" rel="noopener noreferrer" href="https://commons.wikimedia.org/">Image source · Wikimedia Commons ↗</a>
+
+        <div class="subtabs" id="modalSubtabs">
+          <button class="subtab active" data-tab="context">Historical Context</button>
+          <button class="subtab" data-tab="look">Look Closely</button>
+          <button class="subtab" data-tab="technique">Technique &amp; Palette</button>
+          <button class="subtab" data-tab="legacy">Meaning &amp; Legacy</button>
+        </div>
+
+        <div id="modalTabBody" style="font-size:14px; line-height:1.65;"></div>
+
+        <div>
+          <div class="spec-label" style="margin-bottom:6px;">ARTDACI Semantic Concepts</div>
+          <div class="tag-list" id="modalConcepts"></div>
+        </div>
+
+        <div>
+          <div class="spec-label" style="margin-bottom:6px;">Your Curatorial Notes (Saved Locally)</div>
+          <textarea class="note-box" id="modalNotes" placeholder="Write observations about light, brushwork, or composition..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+// ============================================================================
+// ARTDACI DATASET: 4 MASTERS & 24 PAINTINGS
+// ============================================================================
+const MASTERS = [
+  {
+    id: 'davinci',
+    name: 'Leonardo da Vinci',
+    years: '1452 – 1519',
+    origin: 'Anchiano, Republic of Florence → Amboise, France',
+    movement: 'High Renaissance',
+    color: '#7a4b2a',
+    portraitFile: 'Leonardo_da_Vinci_-_presumed_self-portrait_-_WGA12798.jpg',
+    wiki: 'Leonardo_da_Vinci',
+    tagline: 'Optics, anatomy, sfumato, and psychological immediacy.',
+    quote: '“What else can we discover?” — ARTDACI Tribute to Leonardo',
+    bio: 'Painter, anatomist, engineer, and natural philosopher, Leonardo da Vinci treated painting as a science of light, shadow, movement, and the human soul. ARTDACI honors him as the spirit of interdisciplinary curiosity bridging Renaissance art, optics, and spatial perception.',
+    techniques: ['Sfumato (smoky imperceptible tonal transitions)', 'Atmospheric / Aerial Perspective', 'Pyramidal & Spiral Composition', 'Transparent Oil Glazes over Tempera'],
+    palette: [
+      { hex: '#c8a97e', name: 'Warm Flesh Ochre' },
+      { hex: '#3d4c41', name: 'Juniper & Cypress Umber' },
+      { hex: '#6c8594', name: 'Atmospheric Distant Blue' },
+      { hex: '#231c16', name: 'Shadowed Walnut Umber' },
+      { hex: '#9e472a', name: 'Venetian Earth Red' }
+    ],
+    didYouKnow: 'Like Claude Monet centuries later, Leonardo began observing crowds on the street to sketch vivid, exaggerated caricatures—though Leonardo focused on animated expression and anatomy.'
+  },
+  {
+    id: 'vermeer',
+    name: 'Johannes Vermeer',
+    years: '1632 – 1675',
+    origin: 'Delft, Dutch Republic',
+    movement: 'Dutch Golden Age',
+    color: '#224c78',
+    portraitFile: 'Cropped_version_of_Jan_Vermeer_van_Delft_002.jpg',
+    wiki: 'Johannes_Vermeer',
+    tagline: 'Silent domestic light, optical clarity, and suspended time.',
+    quote: '“Light enters from the side and turns stillness into visible thought.”',
+    bio: 'Working quietly in seventeenth-century Delft, Johannes Vermeer produced only around three dozen surviving paintings. Yet his mastery of natural daylight, precious ultramarine pigment, and optical softness transformed everyday rooms and portraits into meditations on perception and stillness.',
+    techniques: ['Pointillé (tiny specular pearl highlights)', 'Natural Lapis Lazuli Ultramarine', 'Soft-focus Optical Contours', 'Architectural Geometry & Side-Window Lighting'],
+    palette: [
+      { hex: '#1d4b8c', name: 'Natural Ultramarine' },
+      { hex: '#e0be4c', name: 'Lead-Tin Yellow' },
+      { hex: '#d8d2c5', name: 'Delft Limewash Plaster' },
+      { hex: '#7c5333', name: 'Warm Oak & Bread Ochre' },
+      { hex: '#1a2029', name: 'Deep Interior Shadow' }
+    ],
+    didYouKnow: 'Vermeer used costly ground lapis lazuli (natural ultramarine) not only for rich blue draperies, but mixed subtly into shadows and white walls to lend an extraordinary cool luminosity.'
+  },
+  {
+    id: 'vangogh',
+    name: 'Vincent van Gogh',
+    years: '1853 – 1890',
+    origin: 'Zundert, Netherlands → Arles & Auvers, France',
+    movement: 'Post-Impressionism',
+    color: '#b57b14',
+    portraitFile: 'Self-Portrait_(Van_Gogh_September_1889).jpg',
+    wiki: 'Vincent_van_Gogh',
+    tagline: 'Expressive brushwork, complementary intensity, and inner vision.',
+    quote: '“Colour has to do the job here… looking at the painting should rest the mind.”',
+    bio: 'In just a single decade of painting—reaching incandescent heights in Arles and Saint-Rémy—Vincent van Gogh forged a visual language where rhythmic impasto brushstrokes and bold complementary contrasts (blue vs. orange, red vs. green) express emotion as directly as music.',
+    techniques: ['Directional Impasto Brushwork', 'Simultaneous Complementary Color Contrast', 'Expressive / Forced Perspective', 'Thick Pure-Tube Pigment Application'],
+    palette: [
+      { hex: '#1a3f7a', name: 'Cobalt & Prussian Night Blue' },
+      { hex: '#f2c12e', name: 'Chrome Yellow' },
+      { hex: '#5da69c', name: 'Turquoise / Pale Viridian' },
+      { hex: '#c85328', name: 'Vermilion & Copper Beard' },
+      { hex: '#88342a', name: 'Deep Crimson / Carmine' }
+    ],
+    didYouKnow: 'After Vincent and his brother Theo died, Theo’s widow Jo van Gogh-Bonger preserved hundreds of canvases, mounted a landmark 472-work exhibition in 1905, and published Vincent’s letters in 1914—establishing his global legacy.'
+  },
+  {
+    id: 'monet',
+    name: 'Claude Monet',
+    years: '1840 – 1926',
+    origin: 'Paris & Le Havre → Argenteuil & Giverny, France',
+    movement: 'Impressionism',
+    color: '#2d6a62',
+    portraitFile: 'Claude_Monet_1899_Nadar_crop.jpg',
+    wiki: 'Claude_Monet',
+    tagline: 'En plein air light, fleeting atmosphere, and optical color.',
+    quote: '“A fleeting dawn over Le Havre became a manifesto for modern vision.”',
+    bio: 'Co-founder and lifelong pillar of Impressionism, Claude Monet painted outdoors directly before nature—from the misty harbor of Le Havre (which gave the movement its name) and breezy Argenteuil meadows to the immersive water-lily pond he built at Giverny.',
+    techniques: ['En Plein Air Direct Observation', 'Broken Optical Brushstrokes', 'Serial Painting (Light Across Time)', 'Pure Unblended Color Juxtaposition'],
+    palette: [
+      { hex: '#ef6a32', name: 'Sunrise Vermilion Orange' },
+      { hex: '#63859c', name: 'Harbor Mist Blue-Grey' },
+      { hex: '#437c59', name: 'Giverny Willow Green' },
+      { hex: '#d8413a', name: 'Poppy Scarlet' },
+      { hex: '#b6a8cf', name: 'Water Reflection Lilac' }
+    ],
+    didYouKnow: 'At age fifteen in Le Havre, Monet first earned money and local fame by drawing bold charcoal caricatures of townsfolk before Eugène Boudin introduced him to outdoor oil painting.'
+  }
+];
+
+const ARTWORKS = [
+  // ================= LEONARDO DA VINCI (001 - 006) =================
+  {
+    num: '001',
+    hubCode: 'LD01',
+    masterId: 'davinci',
+    title: 'Mona Lisa',
+    originalTitle: 'La Gioconda / La Joconde',
+    year: 1503,
+    dateDisplay: 'c. 1503–1519',
+    medium: 'Oil on poplar wood panel',
+    dimensions: '77 × 53 cm',
+    museum: 'Musée du Louvre',
+    city: 'Paris, France',
+    movement: 'High Renaissance',
+    file: "Mona_Lisa,_by_Leonardo_da_Vinci,_from_C2RMF_retouched.jpg",
+    wiki: 'Mona_Lisa',
+    concepts: ['Sfumato', 'Atmospheric Perspective', 'Portrait', 'Optical Perception', 'Psychological Presence'],
+    palette: ['#c8a675', '#5b4d34', '#6d8485', '#2a2219', '#947c54'],
+    excerpt: 'Modest in scale yet immense in ambition, its power comes from the convergence of technical innovation, psychological depth, and scientific observation.',
+    context: 'Begun in Florence around 1503—likely portraying Lisa Gherardini, wife of merchant Francesco del Giocondo—and revised over years until Leonardo carried the panel to France under King Francis I.',
+    lookClosely: 'Leonardo replaces the rigid profile portrait with a natural three-quarter pose. The folded hands form a calm triangular base while an asymmetrical horizon gives the landscape subtle movement.',
+    technique: 'Built from microscopically thin transparent glazes (sfumato) that eliminate harsh outlines around the eyes and mouth. Distant mountains dissolve into cool blue haze via aerial perspective.',
+    legacy: 'With almost no jewelry or social display, attention focuses entirely on the sitter’s inner life—redefining Western portraiture for five centuries.',
+    hotspots: [
+      { x: 50, y: 26, title: 'The Sfumato Gaze & Smile', text: 'Soft, shadow-veiled corners of the eyes and lips respond differently to central vs. peripheral vision, creating the illusion of a shifting expression.' },
+      { x: 47, y: 74, title: 'Folded Hands Pyramid', text: 'Her softly modeled hands anchor the lower pyramid of the composition, projecting calm poise and natural anatomical weight.' },
+      { x: 24, y: 44, title: 'Asymmetrical Landscape', text: 'A winding path and cool blue atmospheric distance stand lower on the left than the right, introducing quiet visual motion.' }
+    ]
+  },
+  {
+    num: '002',
+    hubCode: null,
+    masterId: 'davinci',
+    title: 'The Last Supper',
+    originalTitle: "L'Ultima Cena / Il Cenacolo",
+    year: 1495,
+    dateDisplay: 'c. 1495–1498',
+    medium: 'Tempera and oil on gesso, pitch, and mastic',
+    dimensions: '460 × 880 cm',
+    museum: 'Santa Maria delle Grazie',
+    city: 'Milan, Italy',
+    movement: 'High Renaissance',
+    file: "The-Last-Supper-Restored-Da-Vinci_32x16.jpg",
+    wiki: 'The_Last_Supper_(Leonardo)',
+    concepts: ['Linear Perspective', 'Psychological Drama', 'Sacred Narrative', 'Compositional Rhythm'],
+    palette: ['#8b6948', '#486a84', '#9e4738', '#d4c3a3', '#302b24'],
+    excerpt: 'Christ’s announcement of betrayal sends a wave of distinct emotional reactions through the apostles, while his still figure anchors the composition.',
+    context: 'Painted directly on the refectory wall of the Dominican convent of Santa Maria delle Grazie in Milan for Duke Ludovico Sforza, seamlessly extending the dining hall’s architecture into sacred space.',
+    lookClosely: 'Twelve apostles cluster in four groups of three, each reacting with individualized gestures of shock, denial, and questioning—yet every perspective line converges behind Christ’s tranquil head.',
+    technique: 'To paint slowly and achieve oil-like luminous modeling rather than rushed buon fresco, Leonardo experimented with oil-tempera on a dry plaster ground—an innovation that made the mural famously fragile.',
+    legacy: 'Became the supreme Renaissance masterclass in narrative choreography—demonstrating how geometry and human psychology can unify a monumental scene.',
+    hotspots: [
+      { x: 50, y: 45, title: 'Central Vanishing Point', text: 'All architectural ceiling beams and tapestries converge directly on Christ, framing him against the bright window.' },
+      { x: 37, y: 50, title: 'Judas in Shadow', text: 'Recoiling slightly while clutching the money bag, Judas breaks the symmetry of his trio in dramatic psychological isolation.' },
+      { x: 64, y: 48, title: 'Rhythmic Apostle Trios', text: 'Gestures ripple outward from the center like waves, uniting anatomy, rhetoric, and emotion.' }
+    ]
+  },
+  {
+    num: '003',
+    hubCode: 'LD06',
+    masterId: 'davinci',
+    title: 'La Belle Ferronnière',
+    originalTitle: 'Portrait of an Unknown Woman',
+    year: 1493,
+    dateDisplay: 'c. 1490–1497',
+    medium: 'Oil on walnut wood panel',
+    dimensions: '62 × 44 cm',
+    museum: 'Musée du Louvre',
+    city: 'Paris, France',
+    movement: 'High Renaissance',
+    file: "La_Belle_Ferronière_-_Google_Arts.jpg",
+    wiki: 'La_Belle_Ferronnière',
+    concepts: ['Portrait', 'Chiaroscuro', 'Parapet Framing', 'Psychological Presence'],
+    palette: ['#a63a31', '#211c19', '#d7b28a', '#63482d', '#493c34'],
+    excerpt: 'The sitter’s sideways glance, firm contour, and subtle parapet create a charged encounter between composure and alertness.',
+    context: 'Painted during Leonardo’s Milanese court years, likely depicting a noblewoman of Ludovico Sforza’s circle (historically linked to Lucrezia Crivelli or Beatrice d’Este).',
+    lookClosely: 'Though her torso faces left behind a stone parapet, her head turns toward the viewer while her eyes dart sideways—splitting direction of body, face, and gaze.',
+    technique: 'Luminous reflected crimson light warms the underside of her cheek from her velvet sleeve—an optical phenomenon Leonardo explicitly noted in his notebooks.',
+    legacy: 'Bridges the crisp sculptural modeling of Leonardo’s early Milan years and the softer atmospheric mastery of the later Mona Lisa.',
+    hotspots: [
+      { x: 52, y: 24, title: 'The Ferronnière Jewel', text: 'The slender dark ribbon and forehead jewel gave the portrait its traditional name and frame her intense brow.' },
+      { x: 58, y: 36, title: 'Reflected Light on Cheek', text: 'Notice the warm red glow bounced from her dress onto her jawline—evidence of Leonardo’s optical experiments.' },
+      { x: 50, y: 88, title: 'Illusionistic Parapet', text: 'A quiet stone ledge separates the viewer’s world from the sitter’s poised presence.' }
+    ]
+  },
+  {
+    num: '004',
+    hubCode: 'LD02',
+    masterId: 'davinci',
+    title: 'The Lady with an Ermine',
+    originalTitle: 'Dama con l’ermellino',
+    year: 1490,
+    dateDisplay: 'c. 1489–1491',
+    medium: 'Oil on walnut panel',
+    dimensions: '54.8 × 40.3 cm',
+    museum: 'Princes Czartoryski Museum',
+    city: 'Kraków, Poland',
+    movement: 'High Renaissance',
+    file: "Lady_with_an_Ermine_-_Leonardo_da_Vinci_(adjusted_levels).jpg",
+    wiki: 'Lady_with_an_Ermine',
+    concepts: ['Spiral Pose', 'Motion in Portraiture', 'Symbolism', 'Anatomy'],
+    palette: ['#d8be98', '#983d2e', '#325163', '#161515', '#dcd6cc'],
+    excerpt: 'Cecilia turns as if someone has just entered the room. The ermine twists with her, making the portrait feel like a captured instant rather than a fixed pose.',
+    context: 'Depicts Cecilia Gallerani, the brilliant young poet and musician at the Milanese court of Ludovico Sforza ("Il Moro"), whose Greek surname resonates with "galê" (ermine).',
+    lookClosely: 'Her long, expressive right hand cradles the alert animal whose muscular body mirrors the sitter’s torsion—a dynamic contrapposto spiral.',
+    technique: 'Scientific imaging revealed the dark background was overpainted centuries later over an original modulated bluish-grey tone, while Leonardo altered the ermine’s form twice during execution.',
+    legacy: 'Revolutionized European court portraiture by replacing stiff ceremonial stasis with the sensation of a living moment interrupted.',
+    hotspots: [
+      { x: 52, y: 28, title: 'Interrupted Instant', text: 'Cecilia’s head turns sharply right while her shoulders angle left, suggesting someone just stepped into the room.' },
+      { x: 50, y: 66, title: 'Anatomical Hand Study', text: 'Elongated fingers gently press the ermine’s fur, displaying Leonardo’s deep study of tendons and bone.' },
+      { x: 54, y: 74, title: 'The Alert Ermine', text: 'Symbol of purity and Sforza’s Order of the Ermine, its twisted spine echoes Cecilia’s own pose.' }
+    ]
+  },
+  {
+    num: '005',
+    hubCode: null,
+    masterId: 'davinci',
+    title: "Ginevra de' Benci",
+    originalTitle: "Ritratto di Ginevra de' Benci",
+    year: 1476,
+    dateDisplay: 'c. 1474–1478',
+    medium: 'Oil and tempera on poplar panel',
+    dimensions: '38.1 × 37 cm',
+    museum: 'National Gallery of Art',
+    city: 'Washington, D.C., USA',
+    movement: 'Early / High Renaissance',
+    file: "Leonardo_da_Vinci_-_Ginevra_de'_Benci_-_Google_Art_Project.jpg",
+    wiki: "Ginevra_de'_Benci",
+    concepts: ['Portrait', 'Atmospheric Perspective', 'Botanical Symbolism', 'Sfumato'],
+    palette: ['#d8c5a8', '#334232', '#6e8c92', '#8f6948', '#22211d'],
+    excerpt: 'Leonardo portrayed the young Florentine Ginevra de’ Benci against a dense juniper bush, replacing profile portraiture with psychological immediacy.',
+    context: 'Created in Florence while Leonardo was still in his twenties—likely to commemorate the betrothal of the celebrated young poet Ginevra de’ Benci. It is the only Leonardo painting on public view in the Americas.',
+    lookClosely: 'The spiky evergreen juniper (ginepro in Italian) forms a dark botanical halo behind her curls, acting as both a pun on her name and a traditional emblem of virtue.',
+    technique: 'Soft porcelain flesh modeling meets early experiments with oil glazes and misty blue aerial perspective over a tranquil river distance. The bottom third (likely showing her hands) was trimmed centuries ago.',
+    legacy: 'Pioneered the outdoor psychological portrait—linking human temperament directly to natural atmosphere.',
+    hotspots: [
+      { x: 48, y: 38, title: 'Reserved Immediacy', text: 'Unlike traditional Florentine profile portraits, Ginevra’s three-quarter turn lets us meet her candid, contemplative gaze.' },
+      { x: 30, y: 35, title: 'Juniper (Ginepro) Halo', text: 'Botanically precise needles frame her face, echoing both her name and Renaissance emblems of constancy.' },
+      { x: 82, y: 55, title: 'Misty River Horizon', text: 'Cool distant waters preview the atmospheric landscapes Leonardo would perfect decades later.' }
+    ]
+  },
+  {
+    num: '006',
+    hubCode: null,
+    masterId: 'davinci',
+    title: 'The Annunciation',
+    originalTitle: 'Annunciazione',
+    year: 1474,
+    dateDisplay: 'c. 1472–1476',
+    medium: 'Oil and tempera on poplar panel',
+    dimensions: '98 × 217 cm',
+    museum: 'Uffizi Galleries',
+    city: 'Florence, Italy',
+    movement: 'Early Renaissance',
+    file: "Leonardo_Da_Vinci_-_Annunciazione.jpeg",
+    wiki: 'Annunciation_(Leonardo)',
+    concepts: ['Botanical Observation', 'Linear Perspective', 'Sacred Narrative', 'Atmospheric Perspective'],
+    palette: ['#2e4b3c', '#8e2b2e', '#325178', '#c8a96e', '#92aab4'],
+    excerpt: 'Precise plants, delicate bird-like wings, and a distant atmospheric harbor unite close empirical observation with sacred narrative.',
+    context: 'Leonardo’s earliest surviving major work, painted in Florence while emerging from Andrea del Verrocchio’s workshop, probably for the monastery of Monte Oliveto.',
+    lookClosely: 'A flowering meadow carpeted in identifiable Tuscan wildflowers separates Archangel Gabriel from the Virgin Mary, whose sculpted marble lectern anchors the right.',
+    technique: 'Already shows Leonardo’s scientific eye: Gabriel’s wings resemble real avian anatomy rather than stylized fantasy, while distant cypresses and harbor mountains fade into pale blue haze.',
+    legacy: 'Demonstrates how Leonardo fused workshop craftsmanship with direct natural observation from the very beginning of his career.',
+    hotspots: [
+      { x: 25, y: 45, title: 'Naturalistic Bird Wings', text: 'Leonardo studied real bird plumage to give Gabriel’s wings believable weight and aerodynamic structure.' },
+      { x: 52, y: 78, title: 'Botanical Carpet', text: 'Dozens of species of wildflowers are rendered with scientific accuracy across the garden floor.' },
+      { x: 56, y: 34, title: 'Aerial Harbor Vista', text: 'A misty port city and jagged peaks recede through progressively paler blue tones.' }
+    ]
+  },
+
+  // ================= JOHANNES VERMEER (007 - 012) =================
+  {
+    num: '007',
+    hubCode: 'VE05',
+    masterId: 'vermeer',
+    title: 'The Astronomer',
+    originalTitle: 'De astronoom',
+    year: 1668,
+    dateDisplay: '1668',
+    medium: 'Oil on canvas',
+    dimensions: '51 × 45 cm',
+    museum: 'Musée du Louvre',
+    city: 'Paris, France',
+    movement: 'Dutch Golden Age',
+    file: "Johannes_Vermeer_-_The_Astronomer_-_WGA24685.jpg",
+    wiki: 'The_Astronomer_(Vermeer)',
+    concepts: ['Scientific Inquiry', 'Side-Window Light', 'Interior', 'Quiet Gesture'],
+    palette: ['#31585c', '#c89b55', '#8d5b3e', '#d6cdb8', '#1b1d1c'],
+    excerpt: 'The scholar reaches toward a celestial globe as window light turns silent intellectual thought into visible action.',
+    context: 'Painted in Delft in 1668 (paired with The Geographer in Frankfurt). Scholars have long linked the model to Delft scientist Antonie van Leeuwenhoek, pioneer of microscopy.',
+    lookClosely: 'In a silk Japanese-style scholar’s robe (japonse rok), the astronomer leans gently forward to rotate a celestial globe by Jodocus Hondius while open astronomy texts lie nearby.',
+    technique: 'Cool north daylight pours through the stained-glass casement on the left, grazing the globe’s constellations, his poised fingers, and the embroidered tablecloth folds.',
+    legacy: 'Elevates empirical Dutch science and quiet contemplation to the dignity once reserved for history painting.',
+    hotspots: [
+      { x: 64, y: 44, title: 'Celestial Globe', text: 'Carefully rendered constellations (Ursa Major, Draco, Hercules) identify an actual 1600 globe by Jodocus Hondius.' },
+      { x: 47, y: 50, title: 'Thought Made Visible', text: 'His outstretched fingertips hover softly against the sphere, pausing time at the instant of calculation.' },
+      { x: 80, y: 20, title: 'Finding of Moses Painting', text: 'The background painting subtly connects celestial exploration with divine guidance and knowledge.' }
+    ]
+  },
+  {
+    num: '008',
+    hubCode: null,
+    masterId: 'vermeer',
+    title: 'The Art of Painting',
+    originalTitle: 'De Schilderkunst / Allegory of Painting',
+    year: 1667,
+    dateDisplay: 'c. 1666–1668',
+    medium: 'Oil on canvas',
+    dimensions: '120 × 100 cm',
+    museum: 'Kunsthistorisches Museum',
+    city: 'Vienna, Austria',
+    movement: 'Dutch Golden Age',
+    file: "Jan_Vermeer_-_The_Art_of_Painting_-_Google_Art_Project.jpg",
+    wiki: 'The_Art_of_Painting',
+    concepts: ['Allegory', 'Studio Interior', 'Optical Illusion', 'Drapery Curtain'],
+    palette: ['#3d5c84', '#d8b464', '#9e5334', '#dcd8ce', '#211c19'],
+    excerpt: 'A heavy tapestry curtain draws us into a staged encounter between the painter at his easel and a model embodying History.',
+    context: 'Vermeer’s largest and most ambitious interior—kept in his own household until his death, likely serving as a showcase manifesto for visiting patrons.',
+    lookClosely: 'Seen from behind in theatrical Renaissance attire, the painter begins sketching the laurel wreath of Clio, Muse of History, who holds a trumpet and volume of Thucydides.',
+    technique: 'Virtuoso illusionism: foreshortened marble floor tiles, a gleaming brass chandelier, and a richly detailed wall map of the Seventeen Provinces crinkled with age.',
+    legacy: 'Celebrated as a profound self-reflection on the craft, prestige, and historical mission of Dutch painting.',
+    hotspots: [
+      { x: 18, y: 45, title: 'The Drawn Curtain', text: 'A foreground tapestry acts like a stage threshold, inviting the viewer to peek discreetly into the studio.' },
+      { x: 38, y: 42, title: 'Clio, Muse of History', text: 'Wearing a laurel crown, yellow-blue silk, and carrying a trumpet, the model embodies Fame and History.' },
+      { x: 66, y: 30, title: 'Map of the Netherlands', text: 'Crisp cartographic detail proclaims Dutch civic pride and Vermeer’s command of surface texture.' }
+    ]
+  },
+  {
+    num: '009',
+    hubCode: 'VE01',
+    masterId: 'vermeer',
+    title: 'Girl with a Pearl Earring',
+    originalTitle: 'Meisje met de parel',
+    year: 1665,
+    dateDisplay: 'c. 1665',
+    medium: 'Oil on canvas',
+    dimensions: '44.5 × 39 cm',
+    museum: 'Mauritshuis',
+    city: 'The Hague, Netherlands',
+    movement: 'Dutch Golden Age',
+    file: "Meisje_met_de_parel.jpg",
+    wiki: 'Girl_with_a_Pearl_Earring',
+    concepts: ['Tronie', 'Ultramarine', 'Glaze', 'Psychological Presence', 'Optical Softness'],
+    palette: ['#215395', '#e4c254', '#d9b597', '#0e0e0e', '#e7e2d8'],
+    excerpt: 'The girl turns over her shoulder at the instant of encounter. Her parted lips and direct gaze make the image feel immediate, while softened contours keep her identity elusive.',
+    context: 'Not a commissioned portrait of a specific citizen, but a Dutch "tronie"—a study of an exoticized head and expressive mood dressed in an imaginative turban.',
+    lookClosely: 'Vermeer leaves forms subtly incomplete: look at the earring itself—it has no visible hook or outline, constructed entirely from two luminous strokes of white lead against shadow.',
+    technique: 'Pure lapis lazuli ultramarine blue wraps her headscarf against an abyssal dark background glazed over green-black, intensifying the luminous glow of her skin.',
+    legacy: 'Often called the "Mona Lisa of the North," it exemplifies how minimal means and optical light conjure unforgettable human intimacy.',
+    hotspots: [
+      { x: 46, y: 46, title: 'Parted Lips & Direct Gaze', text: 'A tiny moist highlight on the lip and bright catchlights in her eyes create the sensation she is about to speak.' },
+      { x: 45, y: 65, title: 'The Illusion of the Pearl', text: 'No outline exists—just two fluid white highlights reflecting her collar and the unseen window.' },
+      { x: 56, y: 24, title: 'Ultramarine & Ochre Turban', text: 'Precious ground lapis lazuli creates the intense blue foil for the trailing golden-ochre sash.' }
+    ]
+  },
+  {
+    num: '010',
+    hubCode: null,
+    masterId: 'vermeer',
+    title: 'Woman Holding a Balance',
+    originalTitle: 'Vrouw met weegschaal',
+    year: 1664,
+    dateDisplay: 'c. 1662–1665',
+    medium: 'Oil on canvas',
+    dimensions: '42.5 × 38 cm',
+    museum: 'National Gallery of Art',
+    city: 'Washington, D.C., USA',
+    movement: 'Dutch Golden Age',
+    file: "Johannes_Vermeer_-_Woman_Holding_a_Balance_-_Google_Art_Project.jpg",
+    wiki: 'Woman_Holding_a_Balance',
+    concepts: ['Moral Allegory', 'Equilibrium', 'Side-Window Light', 'Interior'],
+    palette: ['#2b4162', '#c8a363', '#8c7d6b', '#d9d3c4', '#1a1917'],
+    excerpt: 'The empty balance, poised hand, and calm face turn material weighing into a quiet meditation on spiritual judgment.',
+    context: 'Executed in Delft at the height of Vermeer’s maturity. Once called "Woman Weighing Gold," close inspection reveals the delicate brass pans are completely empty.',
+    lookClosely: 'Behind the woman hangs a painting of the Last Judgment—Christ’s outstretched arms align directly above her head as she awaits equilibrium on the scales.',
+    technique: 'Diffused golden daylight filters through an orange curtain, catching the fur trim of her jacket, spilled pearls on the blue cloth, and the tiny glint of the balance.',
+    legacy: 'Transforms an everyday genre scene into a timeless meditation on temperance, inner balance, and moral awareness.',
+    hotspots: [
+      { x: 52, y: 55, title: 'Empty Brass Scales', text: 'Not weighing coins or pearls—the poised, empty pans symbolize inner judgment and spiritual equilibrium.' },
+      { x: 64, y: 30, title: 'The Last Judgment Frame', text: 'The painting-within-a-painting echoes the weighing of souls directly behind the woman’s serene brow.' },
+      { x: 22, y: 72, title: 'Pearls & Blue Cloth', text: 'Earthly treasures sit quietly on the table, softly diffused through Vermeer’s optical highlights.' }
+    ]
+  },
+  {
+    num: '011',
+    hubCode: 'VE02',
+    masterId: 'vermeer',
+    title: 'View of Delft',
+    originalTitle: 'Gezicht op Delft',
+    year: 1661,
+    dateDisplay: 'c. 1660–1661',
+    medium: 'Oil on canvas',
+    dimensions: '96.5 × 115.7 cm',
+    museum: 'Mauritshuis',
+    city: 'The Hague, Netherlands',
+    movement: 'Dutch Golden Age',
+    file: "Vermeer-view-of-delft.jpg",
+    wiki: 'View_of_Delft',
+    concepts: ['Cityscape', 'Pointillé', 'Atmospheric Light', 'Cloud Shadow'],
+    palette: ['#728ba3', '#d4b47e', '#9c4e36', '#333b42', '#e4ddc8'],
+    excerpt: 'A broad sky occupies most of the canvas. Clouds alternately shadow and illuminate the waterfront, while the bright tower of the Nieuwe Kerk becomes the visual focus.',
+    context: 'Painted looking north across the Schie harbor toward Vermeer’s hometown around 1660–1661—elevating a familiar municipal prospect into serene poetry.',
+    lookClosely: 'A band of passing cloud darkens the foreground boats and red brick gables, throwing sudden sunlight onto the distant limestone spire of the Nieuwe Kerk.',
+    technique: 'Vermeer blends cool blues and greys with warm sunlit ochres, applying microscopic bright dots (pointillé) along barges and masonry to evoke shimmering damp air.',
+    legacy: 'Admired by Marcel Proust as "the most beautiful painting in the world," it anticipated photographic stillness centuries before the camera.',
+    hotspots: [
+      { x: 63, y: 50, title: 'Sunlit Nieuwe Kerk Spire', text: 'A break in the clouds spotlights the pale church tower, anchoring the entire skyline in quiet radiance.' },
+      { x: 50, y: 22, title: 'Monumental Dutch Sky', text: 'Billowing clouds occupy over half the canvas, dictating where light and shadow fall across the town.' },
+      { x: 28, y: 76, title: 'Pointillé Water Reflections', text: 'Tiny beads of paint along hulls and harbor ripples capture humid morning atmosphere.' }
+    ]
+  },
+  {
+    num: '012',
+    hubCode: null,
+    masterId: 'vermeer',
+    title: 'The Milkmaid',
+    originalTitle: 'De melkmeid / Het melkmeisje',
+    year: 1659,
+    dateDisplay: 'c. 1658–1660',
+    medium: 'Oil on canvas',
+    dimensions: '45.5 × 41 cm',
+    museum: 'Rijksmuseum',
+    city: 'Amsterdam, Netherlands',
+    movement: 'Dutch Golden Age',
+    file: "Johannes_Vermeer_-_Het_melkmeisje_-_Google_Art_Project.jpg",
+    wiki: 'The_Milkmaid_(Vermeer)',
+    concepts: ['Pointillé', 'Everyday Dignity', 'Lead-Tin Yellow', 'Side-Window Light'],
+    palette: ['#e0b83d', '#244b85', '#c8c4b8', '#8d5634', '#2e251c'],
+    excerpt: 'The steady stream of milk and the woman’s absorbed posture make time seem suspended inside a sunlit kitchen.',
+    context: 'An early masterwork from Vermeer’s late 1650s turning point, transforming a humble kitchen servant into a monumental, almost sculptural figure.',
+    lookClosely: 'Notice the broken window pane at top left, the nail holes in the bare plaster wall, and the tiny Delftware tiles along the baseboard—ordinary textures bathed in grace.',
+    technique: 'Thick specular dots of lead-tin yellow and white dot the crusty bread loaves and stoneware pitcher, contrasting with deep ultramarine apron folds.',
+    legacy: 'Redefined domestic labor as an emblem of quiet concentration, endurance, and luminous beauty.',
+    hotspots: [
+      { x: 47, y: 63, title: 'Suspended Milk Stream', text: 'Every gaze in the composition converges on the thin, steady arc of milk pouring into the earthenware pot.' },
+      { x: 26, y: 70, title: 'Pointillé Bread Crusts', text: 'Beaded highlights of lead-tin yellow and white give the bread tactile, glittering freshness.' },
+      { x: 24, y: 40, title: 'Daylight on Whitewash', text: 'Warm plaster walls show subtle cracks and nail shadows, proving Vermeer’s reverence for unpolished reality.' }
+    ]
+  },
+
+  // ================= VINCENT VAN GOGH (013 - 018) =================
+  {
+    num: '013',
+    hubCode: 'VG01',
+    masterId: 'vangogh',
+    title: 'Self-Portrait',
+    originalTitle: 'Autoportrait (Saint-Rémy, September 1889)',
+    year: 1889,
+    dateDisplay: 'September 1889',
+    medium: 'Oil on canvas',
+    dimensions: '65 × 54.2 cm',
+    museum: "Musée d'Orsay",
+    city: 'Paris, France',
+    movement: 'Post-Impressionism',
+    file: "Self-Portrait_(Van_Gogh_September_1889).jpg",
+    wiki: 'Van_Gogh_self-portrait_(1889)',
+    concepts: ['Self-Portrait', 'Complementary Colors', 'Broken Brushwork', 'Psychological Presence'],
+    palette: ['#679b9b', '#b85e2a', '#4d6f89', '#d6b479', '#25394c'],
+    excerpt: 'Van Gogh places his head and upper body against a field of pale turquoise and green. The orange beard and hair act as complementary counterpoints.',
+    context: 'Painted in September 1889 at the Saint-Paul-de-Mausole asylum in Saint-Rémy-de-Provence as he recovered from a severe crisis—calling it an effort to regain composure and clarity.',
+    lookClosely: 'While the background swirls in hypnotic arabesques of turquoise-blue, his sculpted brow and piercing green-rimmed eyes remain remarkably steady and centered.',
+    technique: 'Rhythmic directional strokes ripple across coat and background alike, using fiery copper-orange hair against cool blue-green tones for maximum chromatic tension.',
+    legacy: 'Preserved at Musée d’Orsay (formerly belonging to Dr. Paul Gachet) and championed in ARTDACI alongside Jo van Gogh-Bonger’s vital curation of Vincent’s legacy.',
+    hotspots: [
+      { x: 48, y: 36, title: 'Steady Piercing Gaze', text: 'Against the swirling backdrop, his eyes and furrowed brow hold quiet, intense self-possession.' },
+      { x: 24, y: 48, title: 'Turquoise Arabesques', text: 'Undulating strokes of pale blue-green create an energized halo echoing his inner state.' },
+      { x: 48, y: 50, title: 'Orange-Blue Counterpoint', text: 'His fiery beard and hair vibrate optically against the cool turquoise coat and wall.' }
+    ]
+  },
+  {
+    num: '014',
+    hubCode: 'VG03',
+    masterId: 'vangogh',
+    title: 'The Starry Night',
+    originalTitle: 'De sterrennacht',
+    year: 1889,
+    dateDisplay: 'June 1889',
+    medium: 'Oil on canvas',
+    dimensions: '73.7 × 92.1 cm',
+    museum: 'Museum of Modern Art (MoMA)',
+    city: 'New York, USA',
+    movement: 'Post-Impressionism',
+    file: "Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg",
+    wiki: 'The_Starry_Night',
+    concepts: ['Nocturne', 'Impasto', 'Inner Vision', 'Cosmic Rhythm'],
+    palette: ['#1e3b7a', '#f2cd48', '#22332a', '#7098c9', '#d48d28'],
+    excerpt: 'Whirling stars and a rolling sky transform an observed Provençal landscape into a powerful inner vision of cosmic energy.',
+    context: 'Painted from memory and imagination inside his barred east-facing studio room at Saint-Rémy-de-Provence—combining the pre-dawn morning star (Venus), rolling Alpilles hills, and an idealized Dutch church spire.',
+    lookClosely: 'A towering flame-like cypress tree surges upward in the left foreground, bridging earth and heaven while anchoring the sweeping double-spiral nebula across the center.',
+    technique: 'Dense, sculptural impasto ribbons of cobalt, ultramarine, and chrome yellow sweep across the sky in continuous kinetic currents.',
+    legacy: 'One of modern art’s defining icons—proving that landscape painting could visualize invisible forces of memory, cosmos, and emotion.',
+    hotspots: [
+      { x: 22, y: 52, title: 'Flame-Like Cypress', text: 'Traditionally linked to eternity and mourning, the dark cypress links the sleeping village to the swirling heavens.' },
+      { x: 52, y: 34, title: 'Turbulent Cosmic Spiral', text: 'Interlocking waves of Prussian and cobalt blue drive the eye across eleven glowing stars.' },
+      { x: 87, y: 20, title: 'Crescent Moon & Morning Star', text: 'Radiating halos of lemon and chrome yellow pulse like rhythmic light waves in the pre-dawn sky.' }
+    ]
+  },
+  {
+    num: '015',
+    hubCode: 'VG02',
+    masterId: 'vangogh',
+    title: 'The Bedroom',
+    originalTitle: 'La Chambre à Arles / De slaapkamer',
+    year: 1888,
+    dateDisplay: 'October 1888',
+    medium: 'Oil on canvas',
+    dimensions: '72 × 90 cm',
+    museum: 'Van Gogh Museum',
+    city: 'Amsterdam, Netherlands',
+    movement: 'Post-Impressionism',
+    file: "Vincent_van_Gogh_-_De_slaapkamer_-_Google_Art_Project.jpg",
+    wiki: 'Bedroom_in_Arles',
+    concepts: ['Interior', 'Expressive Perspective', 'Complementary Colors', 'Color Symbolism'],
+    palette: ['#5f83ba', '#d8a63c', '#9e4434', '#7ca16f', '#c9bc9a'],
+    excerpt: 'Immediately striking for its distorted perspective and forced recession lines, transforming a trapezoidal room into a sanctuary of pure color.',
+    context: 'Painted in October 1888 in the Yellow House at 2 Place Lamartine, Arles, while awaiting Paul Gauguin’s arrival. Van Gogh intended its simplified flat color planes to inspire "rest or sleep in general."',
+    lookClosely: 'The real room was trapezoidal rather than rectangular, and Van Gogh amplified the tilted floorboards and skewed furniture lines—creating a simultaneously cozy and charged space.',
+    technique: 'Flat, Japanese-print-inspired color blocks paired with vibrant complementary pairings: violet walls (originally stronger before pigment fading) vs. golden bedframe, red blanket vs. green window.',
+    legacy: 'Later replicated twice by Van Gogh himself and reconstructed in 3D/VR spaces (including ARTDACI’s immersive room) as a landmark of psychological interiority.',
+    hotspots: [
+      { x: 64, y: 66, title: 'Golden Bed & Scarlet Cover', text: 'Strong complementary contrast of red and green/yellow anchors the room with warmth and solidity.' },
+      { x: 35, y: 78, title: 'Tilted Recession Lines', text: 'Forced perspective pulls the floor forward, capturing the eccentric geometry of the Yellow House.' },
+      { x: 75, y: 34, title: 'Portraits on the Wall', text: 'Tiny versions of Van Gogh’s own portraits hang above the bed—identifying this first Amsterdam version.' }
+    ]
+  },
+  {
+    num: '016',
+    hubCode: null,
+    masterId: 'vangogh',
+    title: 'Café Terrace at Night',
+    originalTitle: 'Terrasse du café le soir',
+    year: 1888,
+    dateDisplay: 'September 1888',
+    medium: 'Oil on canvas',
+    dimensions: '80.7 × 65.3 cm',
+    museum: 'Kröller-Müller Museum',
+    city: 'Otterlo, Netherlands',
+    movement: 'Post-Impressionism',
+    file: "Vincent_Willem_van_Gogh_-_Cafe_Terrace_at_Night_(Yorck).jpg",
+    wiki: 'Café_Terrace_at_Night',
+    concepts: ['Nocturne', 'Complementary Colors', 'En Plein Air', 'Night Light'],
+    palette: ['#f0c140', '#1c3b72', '#4c7399', '#8a522a', '#d7e3ee'],
+    excerpt: 'The glowing yellow terrace advances against the deep blue street and starry sky, making color itself—without black paint—the subject.',
+    context: 'Painted on the spot at night in mid-September 1888 at Place du Forum in Arles. Van Gogh proudly wrote to his sister Wil that he painted a night scene "without any black" in it.',
+    lookClosely: 'Gaslight floods the cobblestone café terrace in warm sulfur yellow and orange, while darkened silhouettes stroll up a quiet cobalt-blue lane beneath twinkling constellations.',
+    technique: 'Built entirely on the warm-cool optical opposition of luminous yellow-orange against deep violet-blue and turquoise.',
+    legacy: 'The first of Van Gogh’s three iconic starry-sky paintings from Arles and Saint-Rémy, redefining nocturnal painting.',
+    hotspots: [
+      { x: 38, y: 58, title: 'Gaslit Yellow Canopy', text: 'Warm yellows and oranges advance visually toward the viewer like a glowing theatrical stage.' },
+      { x: 46, y: 16, title: 'Nocturne Without Black', text: 'Instead of black pigment, Van Gogh layers blues, greens, and violets to build a living starry sky.' },
+      { x: 64, y: 65, title: 'Receding Cobblestones', text: 'Cool blue reflections across the dark street guide the eye into the quiet Provençal night.' }
+    ]
+  },
+  {
+    num: '017',
+    hubCode: null,
+    masterId: 'vangogh',
+    title: 'The Night Café',
+    originalTitle: 'Le Café de nuit',
+    year: 1888,
+    dateDisplay: 'September 1888',
+    medium: 'Oil on canvas',
+    dimensions: '72.4 × 92.1 cm',
+    museum: 'Yale University Art Gallery',
+    city: 'New Haven, USA',
+    movement: 'Post-Impressionism',
+    file: "Van_Gogh_The_Night_Cafe.jpg",
+    wiki: 'The_Night_Café',
+    concepts: ['Psychological Color', 'Expressive Perspective', 'Complementary Clash', 'Interior'],
+    palette: ['#b52f28', '#528c4b', '#f2cf46', '#4a3628', '#8a9276'],
+    excerpt: 'Harsh color, an empty steep floor, and isolated figures turn an all-night room into an image of fatigue and emotional unease.',
+    context: 'Painted across three consecutive nights in Arles inside the Café de la Gare—where Van Gogh stayed before moving into the Yellow House. He described wanting to express "the terrible passions of humanity by means of red and green."',
+    lookClosely: 'A central billiard table juts out over steeply tilted yellow floorboards, surrounded by slumped figures along the blood-red walls while a lonely waiter stands in pale white.',
+    technique: 'Deliberately dissonant clashes of blood red, acid green ceiling, and glowing sulfurous lamp halos create visual vertigo.',
+    legacy: 'A milestone of Expressionist color theory—showing that disharmony can be just as eloquent as harmony.',
+    hotspots: [
+      { x: 50, y: 62, title: 'Tilted Floor & Billiard Table', text: 'Aggressive downward floor lines make the viewer feel as though sliding into the cavernous room.' },
+      { x: 50, y: 24, title: 'Sulfurous Lamp Halos', text: 'Concentric brushstrokes radiate eerie yellow-green light beneath the heavy green ceiling.' },
+      { x: 20, y: 45, title: 'Clash of Red and Green', text: 'Van Gogh pitted blood-red walls against malachite green to evoke restlessness and solitude.' }
+    ]
+  },
+  {
+    num: '018',
+    hubCode: null,
+    masterId: 'vangogh',
+    title: 'Sunflowers',
+    originalTitle: 'Tournesols (Fourth Version, London)',
+    year: 1888,
+    dateDisplay: 'August 1888',
+    medium: 'Oil on canvas',
+    dimensions: '92.1 × 73 cm',
+    museum: 'National Gallery',
+    city: 'London, United Kingdom',
+    movement: 'Post-Impressionism',
+    file: "Vincent_van_Gogh_-_Sunflowers_(1888,_National_Gallery_London).jpg",
+    wiki: 'Sunflowers_(Van_Gogh_series)',
+    concepts: ['Still Life', 'Monochrome Harmony', 'Impasto', 'Vitality & Time'],
+    palette: ['#f2c22e', '#d69222', '#e8d78e', '#758246', '#9e5d24'],
+    excerpt: 'Flowers at different stages of bloom and decay turn a simple earthenware vase into a study of vitality, light, and passing time.',
+    context: 'Created in August 1888 in Arles specifically to decorate Gauguin’s guest bedroom in the Yellow House—celebrating Southern sunlight and artistic friendship.',
+    lookClosely: 'Fifteen sunflowers burst in every phase of life: tight golden buds, blazing open disks, and heavy drooping seed heads losing petals.',
+    technique: 'A tour de force of "yellow-on-yellow" tonal mastery—using newly developed chrome yellow pigments alongside sculptural thick impasto centers.',
+    legacy: 'Became Van Gogh’s signature emblem of joy, gratitude, and raw life force.',
+    hotspots: [
+      { x: 52, y: 34, title: 'Symphony in Yellow', text: 'Warm ochre, pale lemon, and fiery chrome yellow create brilliance without relying on high dark contrast.' },
+      { x: 35, y: 45, title: 'Stages of Bloom & Decay', text: 'Fully open faces sit beside seeding, wilting heads—evoking the full arc of natural life.' },
+      { x: 50, y: 76, title: 'Signed Earthenware Vase', text: 'A crisp blue horizon line divides the golden wall and table while "Vincent" marks the simple pot.' }
+    ]
+  },
+
+  // ================= CLAUDE MONET (019 - 024) =================
+  {
+    num: '019',
+    hubCode: 'MO03',
+    masterId: 'monet',
+    title: 'Water Lilies',
+    originalTitle: 'Nymphéas (Tokyo, c. 1916)',
+    year: 1916,
+    dateDisplay: 'c. 1916',
+    medium: 'Oil on canvas',
+    dimensions: '200.5 × 201 cm',
+    museum: 'National Museum of Western Art',
+    city: 'Tokyo, Japan',
+    movement: 'Impressionism',
+    file: "Monet_Water_Lilies_1916.jpg",
+    wiki: 'Water_Lilies_(Monet_series)',
+    concepts: ['Reflection', 'Horizonless Space', 'Serial Painting', 'Broken Brushwork'],
+    palette: ['#4b6a7a', '#63835a', '#b69cc2', '#df9ba4', '#263835'],
+    excerpt: 'Sky, trees, flowers, and water merge on a grand square canvas so that reflection becomes as substantial as landscape.',
+    context: 'Painted in his large Giverny studio during World War I as part of his late monumental Water Lilies campaign—eliminating all shore and horizon to immerse the viewer directly in the pond.',
+    lookClosely: 'There is no sky above and no solid ground below: weeping willow branches and inverted clouds drift across the liquid surface among floating lily pads.',
+    technique: 'Broad, layered, expressive strokes applied wet-over-dry create shimmering depth between surface blooms and submerged light.',
+    legacy: 'Foreshadowed twentieth-century Abstract Expressionism and panoramic immersive environments.',
+    hotspots: [
+      { x: 50, y: 24, title: 'No Horizon Line', text: 'By cropping out the pond bank, Monet turns water reflection into an infinite enveloping field.' },
+      { x: 35, y: 65, title: 'Floating Lily Clusters', text: 'Horizontal dabs of rose, cream, and violet anchor spatial depth on the shimmering plane.' },
+      { x: 74, y: 48, title: 'Inverted Willow Reflections', text: 'Vertical green and purple sweeps mirror unseen trees overhead.' }
+    ]
+  },
+  {
+    num: '020',
+    hubCode: null,
+    masterId: 'monet',
+    title: 'The Water-Lily Pond, Green Harmony',
+    originalTitle: "Le Bassin aux nymphéas, harmonie verte",
+    year: 1899,
+    dateDisplay: '1899',
+    medium: 'Oil on canvas',
+    dimensions: '89 × 93.5 cm',
+    museum: "Musée d'Orsay",
+    city: 'Paris, France',
+    movement: 'Impressionism',
+    file: "2007_Musee_Orsay_Work_Kraft_067.jpg",
+    wiki: 'Water_Lilies_(Monet_series)',
+    concepts: ['Giverny Garden', 'Japanese Bridge', 'Reflection', 'Color Harmony'],
+    palette: ['#457b54', '#7ea372', '#a8b79f', '#df9b97', '#264438'],
+    excerpt: 'The curved Japanese footbridge provides a calm architectural arch amid dense weeping foliage, reflections, and floating lilies.',
+    context: 'In 1899, Monet began his celebrated series depicting the wooden Japanese-inspired bridge over the water garden he personally engineered at Giverny, Normandy.',
+    lookClosely: 'A rhythmic curtain of weeping willow leaves hangs from top left to right, echoing the gentle arc of the green bridge while dappled water glows beneath.',
+    technique: 'Tightly woven short vertical and horizontal strokes fuse emerald, olive, chartreuse, and soft rose into an unbroken tapestry of green harmony.',
+    legacy: 'Demonstrates Monet acting as both gardener and painter—sculpting nature itself before translating it into color.',
+    hotspots: [
+      { x: 50, y: 38, title: 'The Japanese Footbridge', text: 'Inspired by Hokusai and Hiroshige prints, the pale green arch anchors the lush organic profusion.' },
+      { x: 50, y: 78, title: 'Luminous Lily Pond', text: 'Cool blue-green water opens beneath the bridge, dotted with sunlit pink and white water lilies.' },
+      { x: 18, y: 30, title: 'Willows & Iris Foliage', text: 'Thick vertical cascades of green brushstrokes dissolve solid leaves into vibrating light.' }
+    ]
+  },
+  {
+    num: '021',
+    hubCode: 'MO06',
+    masterId: 'monet',
+    title: 'Woman with a Parasol',
+    originalTitle: 'La Promenade / Madame Monet and Her Son',
+    year: 1875,
+    dateDisplay: '1875',
+    medium: 'Oil on canvas',
+    dimensions: '100 × 81 cm',
+    museum: 'National Gallery of Art',
+    city: 'Washington, D.C., USA',
+    movement: 'Impressionism',
+    file: "Claude_Monet_-_Woman_with_a_Parasol_-_Madame_Monet_and_Her_Son_-_Google_Art_Project.jpg",
+    wiki: 'Woman_with_a_Parasol_–_Madame_Monet_and_Her_Son',
+    concepts: ['En Plein Air', 'Movement & Wind', 'Low Viewpoint', 'Broken Brushwork'],
+    palette: ['#72a0cc', '#f0eee8', '#688c52', '#c8be96', '#334d3a'],
+    excerpt: 'The low viewpoint, moving veil, and tilted parasol make this sunlit family encounter feel immediate and windblown.',
+    context: 'Painted outdoors in a single summer session in 1875 near Argenteuil, portraying Monet’s first wife Camille and their young son Jean on a breezy hilltop meadow.',
+    lookClosely: 'Monet paints from below looking up against billowing clouds, giving Camille monumental grace while green meadow light reflects onto the underside of her white dress and parasol.',
+    technique: 'Rapid, spontaneous dabs of pure color—violet-blue shadows in crisp white linen, swirling sky strokes, and animated grass flickering in the wind.',
+    legacy: 'Captures the fleeting essence of Impressionism: not a posed studio portrait, but a living gust of wind and afternoon light.',
+    hotspots: [
+      { x: 48, y: 24, title: 'Green-Lit Parasol Canopy', text: 'Meadow reflections dye the shaded inner parasol luminous emerald and lime green.' },
+      { x: 46, y: 36, title: 'Windblown Veil', text: 'Transparent grey-violet strokes sweep across Camille’s face, making summer wind visible.' },
+      { x: 24, y: 68, title: 'Jean on the Rise', text: 'Visible only from the waist up behind the slope, the boy adds spontaneous depth and scale.' }
+    ]
+  },
+  {
+    num: '022',
+    hubCode: null,
+    masterId: 'monet',
+    title: 'The Bridge at Argenteuil',
+    originalTitle: "Le Pont d'Argenteuil",
+    year: 1874,
+    dateDisplay: '1874',
+    medium: 'Oil on canvas',
+    dimensions: '60.5 × 80 cm',
+    museum: "Musée d'Orsay",
+    city: 'Paris, France',
+    movement: 'Impressionism',
+    file: "Claude_Monet_-_The_Argenteuil_Bridge_-_Google_Art_Project.jpg",
+    wiki: 'Argenteuil_(Monet)',
+    concepts: ['Modernity & Leisure', 'Water Reflections', 'En Plein Air', 'Geometric Contrast'],
+    palette: ['#4e78a6', '#d6c89e', '#587846', '#e6e4de', '#8e6248'],
+    excerpt: 'The toll bridge crosses the Seine with firm modern geometry while white sails, ripples, and reflections keep the river in constant motion.',
+    context: 'Painted in 1874 during Monet’s productive Argenteuil years—a suburban boating hub just outside Paris where city dwellers came to sail and stroll.',
+    lookClosely: 'A newly rebuilt stone-and-iron bridge cuts diagonally across the right while pleasure yachts moor near a riverside promenade.',
+    technique: 'Horizontal, brick-like strokes of blue, ochre, white, and green shimmer across the Seine, showing how structured architecture and flickering water harmonize.',
+    legacy: 'Exemplifies how Impressionism embraced modern engineering and weekend leisure side by side.',
+    hotspots: [
+      { x: 64, y: 48, title: 'Modern Bridge Arches', text: 'Clean structural pillars anchor the right half of the canvas and cast crisp reflections below.' },
+      { x: 26, y: 46, title: 'White Sailboats on the Seine', text: 'Tall masts counterbalance the horizontal bridge span and suggest weekend leisure.' },
+      { x: 45, y: 78, title: 'Optical Water Ripples', text: 'Broad horizontal bars of turquoise, cream, and brown recreate shifting afternoon currents.' }
+    ]
+  },
+  {
+    num: '023',
+    hubCode: null,
+    masterId: 'monet',
+    title: 'Poppies',
+    originalTitle: 'Les Coquelicots (La Promenade)',
+    year: 1873,
+    dateDisplay: '1873',
+    medium: 'Oil on canvas',
+    dimensions: '50 × 65 cm',
+    museum: "Musée d'Orsay",
+    city: 'Paris, France',
+    movement: 'Impressionism',
+    file: "Claude_Monet_-_Poppy_Field_-_Google_Art_Project.jpg",
+    wiki: 'The_Poppy_Field_near_Argenteuil',
+    concepts: ['Complementary Colors', 'En Plein Air', 'Atmospheric Light', 'Diagonal Rhythm'],
+    palette: ['#d83c35', '#5b7c4f', '#89a8c6', '#e2d7c5', '#34472c'],
+    excerpt: 'Scattered red poppies animate a breezy Argenteuil hillside where strolling figures seem absorbed by summer weather and light.',
+    context: 'Completed in 1873 and exhibited the next year at the historic First Impressionist Exhibition of 1874. Depicts Camille and young Jean descending a flower-filled slope.',
+    lookClosely: 'Two mother-and-child pairs—one near the bottom right, another higher along the slope—echo each other to mark time and movement down the hillside.',
+    technique: 'Vibrant scarlet flecks of red poppy petals punctuate the cool green meadow, creating natural complementary sparkle without outlining a single flower.',
+    legacy: 'One of the most beloved celebrations of outdoor summer light and effortless Impressionist rhythm.',
+    hotspots: [
+      { x: 26, y: 68, title: 'Scarlet Poppy Field', text: 'Loose dots of pure red vibrate intensely against the surrounding green grass.' },
+      { x: 68, y: 70, title: 'Camille & Jean Strolling', text: 'Sketched with rapid strokes, the figures belong organically to the sunlit meadow.' },
+      { x: 42, y: 36, title: 'Echoed Pair on the Ridge', text: 'A second mother-and-child figure repeats the foreground motif to suggest motion down the hill.' }
+    ]
+  },
+  {
+    num: '024',
+    hubCode: 'MO01',
+    masterId: 'monet',
+    title: 'Impression, Sunrise',
+    originalTitle: 'Impression, soleil levant',
+    year: 1872,
+    dateDisplay: '1872',
+    medium: 'Oil on canvas',
+    dimensions: '48 × 63 cm',
+    museum: 'Musée Marmottan Monet',
+    city: 'Paris, France',
+    movement: 'Impressionism',
+    file: "Monet_-_Impression,_Sunrise.jpg",
+    wiki: 'Impression,_Sunrise',
+    concepts: ['Impressionism Origin', 'Atmosphere', 'Complementary Colors', 'En Plein Air'],
+    palette: ['#ed6b32', '#647f94', '#8e9ba6', '#28343e', '#d68f5e'],
+    excerpt: 'Dark boats guide the eye toward cranes, masts, and chimneys dissolving into blue-grey mist beneath a radiant orange sun.',
+    context: 'Painted around November 1872 from a hotel window overlooking the outer harbor of Le Havre. Exhibited in April 1874, its title prompted critic Louis Leroy’s satirical review—coining the name "Impressionists."',
+    lookClosely: 'At modest scale (48 × 63 cm), a single glowing orange sun and its broken vertical reflection anchor the misty horizontal sweeps of harbor smoke and dawn sea.',
+    technique: 'Remarkable economy of means: the orange sun shares almost the exact same luminance as the grey sky—causing it to shimmer optically rather than merely look bright.',
+    legacy: 'The painting that named a movement and inaugurated modern painting’s shift toward immediate optical perception.',
+    hotspots: [
+      { x: 52, y: 39, title: 'Equiluminant Orange Sun', text: 'Because the orange disc has nearly the same brightness as the surrounding grey mist, it appears to pulse softly.' },
+      { x: 52, y: 62, title: 'Vertical Broken Reflection', text: 'Bold horizontal slashes of orange paint stack vertically across the rippling harbor surface.' },
+      { x: 26, y: 42, title: 'Misty Cranes & Masts', text: 'Industrial Le Havre silhouettes dissolve into morning haze rather than polished academic outlines.' }
+    ]
+  }
+];
+
+// ============================================================================
+// STATE & PERSISTENCE
+// ============================================================================
+const SITE_ARTWORKS = {"001":{"image":"assets/artists/leonardo-da-vinci/collection/mana-lisa-davinci.webp","slug":"mona-lisa"},"004":{"image":"assets/home-gallery/leonardo-lady-with-ermine-frameless.webp","slug":"lady-with-an-ermine"},"009":{"image":"assets/artists/johannes-vermeer/collection/girl-with-a-pearl-earring-vermeer.webp","slug":"vermeer-girl-with-a-pearl-earring"},"011":{"image":"assets/artists/johannes-vermeer/artworks/view_of_delft/images/ve02-view-of-delft-web.webp","slug":"view-of-delft"},"013":{"image":"assets/artists/vincent-van-gogh/artworks/self-portrait/images/self-portrait-orsay-1889-v1.webp","slug":"van-gogh"},"015":{"image":"assets/artists/vincent-van-gogh/artworks/the-bedroom/images/bed-van-gogh.jpeg","slug":"van-gogh-bedroom"},"024":{"image":"assets/artists/claude-monet/collection/impression-sunrise-monet.webp","slug":"monet-impression-sunrise"},"022":{"image":"assets/home-gallery/monet-bridge-at-argenteuil-frameless.webp","slug":"pont-d-argenteuil"},"002":{"image":"assets/artists/leonardo-da-vinci/collection/the-last-supper-davinci.webp","slug":"last-supper"},"006":{"image":"assets/artists/leonardo-da-vinci/collection/the-annunciation-davinci.webp","slug":"annunciation"},"005":{"image":"assets/artists/leonardo-da-vinci/collection/ginevra-de-benci.webp","slug":"ginevra-de-benci"},"003":{"image":"assets/home-gallery/leonardo-belle-ferronniere-frameless.webp","slug":"belle-ferronniere"},"012":{"image":"assets/artists/johannes-vermeer/collection/the-milkmaid-vermeer.webp","slug":"vermeer-milkmaid"},"008":{"image":"assets/artists/johannes-vermeer/collection/the-art-of-painting-vermeer.webp","slug":"art-of-painting"},"007":{"image":"assets/artists/johannes-vermeer/collection/the-astronomer-vermeer.webp","slug":"vermeer-astronomer"},"010":{"image":"assets/artists/johannes-vermeer/collection/woman-holding-a-balance-vermeer.webp","slug":"woman-holding-balance"},"014":{"image":"assets/artists/vincent-van-gogh/collection/the-starry-night-vangogh.webp","slug":"starry-night"},"018":{"image":"assets/artists/vincent-van-gogh/collection/tournesols-vangogh.webp","slug":"sunflowers"},"016":{"image":"assets/artists/vincent-van-gogh/collection/café-terrasse-at-night-vangogh.webp","slug":"cafe-terrace"},"017":{"image":"assets/artists/vincent-van-gogh/collection/the-night-café-vangogh.webp","slug":"night-cafe"},"019":{"image":"assets/artists/claude-monet/collection/water-lilies-monet.webp","slug":"water-lilies"},"020":{"image":"assets/artists/claude-monet/collection/the-japanese-bridge-monet.webp","slug":"japanese-bridge"},"023":{"image":"assets/artists/claude-monet/collection/poppies-monet.webp","slug":"poppies"},"021":{"image":"assets/artists/claude-monet/artworks/the-woman-with-a-parasol/images/woman-with-a-parasol.webp","slug":"woman-with-parasol"}};
+const SITE_PORTRAITS = {"davinci":"assets/artists/leonardo-da-vinci/profile/home-portrait.webp","vermeer":"assets/artists/johannes-vermeer/profile/home-portrait.webp","vangogh":"assets/artists/vincent-van-gogh/profile/home-portrait.webp","monet":"assets/artists/claude-monet/profile/home-portrait.webp"};
+const returnLang = ['fr','ar','en'].includes(new URLSearchParams(location.search).get('lang')) ? new URLSearchParams(location.search).get('lang') : 'en';
+const returnHomeUrl = (returnLang==='fr'?'index-fr.html':returnLang==='ar'?'index-ar.html':'index.html')+'#masters';
+const STORAGE_KEY_FAVS = 'artdaci_favs_v1';
+const STORAGE_KEY_NOTES = 'artdaci_notes_v1';
+
+function readPreference(key,fallback){try{return JSON.parse(localStorage.getItem(key))||fallback;}catch{return fallback;}}
+let state = {
+  view: 'gallery',
+  search: '',
+  masterFilter: 'all',
+  collectionFilter: 'all', // 'all' | 'hub12'
+  conceptFilter: 'all',
+  sortBy: 'num',
+  onlySaved: false,
+  darkMode: false,
+  favs: readPreference(STORAGE_KEY_FAVS, []),
+  notes: readPreference(STORAGE_KEY_NOTES, {}),
+  modalNum: null,
+  modalTab: 'context',
+  zoom: 1,
+  panX: 0,
+  panY: 0,
+  showHotspots: true,
+  activeHotspotIdx: 0,
+  semanticCenterId: 'm:davinci',
+  compareLeft: '001',
+  compareRight: '009',
+  quiz: { index: 0, score: 0, answered: false, selected: null, questions: [] }
+};
+
+const resolvedImageCache = {};
+
+function savePrefs() {
+  try { localStorage.setItem(STORAGE_KEY_FAVS, JSON.stringify(state.favs)); localStorage.setItem(STORAGE_KEY_NOTES, JSON.stringify(state.notes)); } catch {}
+  document.getElementById('savedCount').textContent = state.favs.length;
+}
+
+// ============================================================================
+// IMAGE RESOLUTION WITH WIKIPEDIA API & SVG FALLBACK
+// ============================================================================
+function getCommonsUrl(file, width = 900) {
+  return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(file)}?width=${width}`;
+}
+
+function makeFallbackSvg(title, masterName, palette) {
+  const c1 = palette?.[0] || '#4a4337';
+  const c2 = palette?.[1] || '#8f7245';
+  const c3 = palette?.[2] || '#2d3b42';
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="${c1}" />
+          <stop offset="55%" stop-color="${c2}" />
+          <stop offset="100%" stop-color="${c3}" />
+        </linearGradient>
+      </defs>
+      <rect width="800" height="600" fill="url(#g)" />
+      <circle cx="580" cy="180" r="140" fill="rgba(255,255,255,0.12)" />
+      <rect x="44" y="44" width="712" height="512" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="2" />
+      <text x="400" y="290" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif" font-size="36" font-weight="bold">${escapeXml(title)}</text>
+      <text x="400" y="335" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="sans-serif" font-size="20">${escapeXml(masterName)}</text>
+    </svg>`;
+  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+}
+
+function escapeXml(str) {
+  return String(str).replace(/[<>&'"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;',"'":'&apos;','"':'&quot;'}[c]));
+}
+
+function handleImgError(imgEl, wikiSlug, title, masterName, paletteJson) {
+  if (imgEl.dataset.fallbackStage === 'done') return;
+  if (!imgEl.dataset.fallbackStage) {
+    imgEl.dataset.fallbackStage = 'wiki';
+    if (resolvedImageCache[wikiSlug]) {
+      imgEl.src = resolvedImageCache[wikiSlug];
+      return;
+    }
+    fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(wikiSlug)}`)
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(data => {
+        const src = data?.thumbnail?.source || data?.originalimage?.source;
+        if (src) {
+          resolvedImageCache[wikiSlug] = src;
+          imgEl.src = src;
+        } else {
+          throw new Error('No image');
+        }
+      })
+      .catch(() => {
+        imgEl.dataset.fallbackStage = 'done';
+        imgEl.src = makeFallbackSvg(title, masterName, JSON.parse(decodeURIComponent(paletteJson)));
+      });
+  } else {
+    imgEl.dataset.fallbackStage = 'done';
+    imgEl.src = makeFallbackSvg(title, masterName, JSON.parse(decodeURIComponent(paletteJson)));
+  }
+}
+
+// Exact documentary reproductions, using the supplied Commons filenames
+// and corrected identifiers where the catalogue refers to a specific version.
+// Never fall back to the framed decorative collection files.
+const COMMONS_HASHES = ["ec","22","4d","bf","39","d9","0e","5e","d7","68","a2","20","ee","ea","76","21","7c","fe","5d","fb","1b","c9","89","59"];
+const DOCUMENTARY_LOCAL = {
+  '009':'assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg',
+  '011':SITE_ARTWORKS['011'].image, '013':SITE_ARTWORKS['013'].image,
+  '015':SITE_ARTWORKS['015'].image, '021':SITE_ARTWORKS['021'].image
+};
+function documentaryUrl(art, width=960) {
+  const hash=COMMONS_HASHES[Number(art.num)-1];
+  const file=encodeURIComponent(art.file.replace(/ /g,'_'));
+  const base='https://upload.wikimedia.org/wikipedia/commons/';
+  const path=hash[0]+'/'+hash+'/'+file;
+  // Small source files: avoid requesting a thumbnail larger than the original.
+  if(['007','019'].includes(art.num))return base+path;
+  const size=width<=330?330:960;
+  return base+'thumb/'+path+'/'+size+'px-'+file;
+}
+function documentarySource(art){return 'https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(art.file);}
+function showMissingImage(img, num) {
+  const art=getArtwork(num);
+  if(!art || (img.id==='modalImg' && state.modalNum!==num))return;
+  const stage=Number(img.dataset.imageFallback||0);
+  img.dataset.imageFallback=String(stage+1);
+  if(stage===0){img.src=getCommonsUrl(art.file,960);return;}
+  if(stage===1 && DOCUMENTARY_LOCAL[num]){img.src=DOCUMENTARY_LOCAL[num];return;}
+  img.onerror=null;
+  img.src=makeFallbackSvg(art.title,'Reproduction temporarily unavailable',art.palette);
+  if(img.id==='modalImg'){document.getElementById('hotspotLayer').replaceChildren();document.getElementById('hotspotCallout').style.display='none';}
+}
+function imgAttrs(art,width=800){
+  return `src="${documentaryUrl(art,width)}" alt="${escapeXml(art.title)} by ${escapeXml(getMaster(art.masterId).name)}" loading="lazy" decoding="async" onerror="showMissingImage(this,'${art.num}')"`;
+}
+
+// ============================================================================
+// HELPERS
+// ============================================================================
+function getMaster(id) { return MASTERS.find(m => m.id === id); }
+function getArtwork(num) { return ARTWORKS.find(a => a.num === num); }
+
+function getAllConcepts() {
+  const set = new Set();
+  ARTWORKS.forEach(a => a.concepts.forEach(c => set.add(c)));
+  return Array.from(set).sort();
+}
+
+function getFilteredArtworks() {
+  let list = ARTWORKS.slice();
+  if (state.masterFilter !== 'all') list = list.filter(a => a.masterId === state.masterFilter);
+  if (state.collectionFilter === 'hub12') list = list.filter(a => a.hubCode !== null);
+  if (state.conceptFilter !== 'all') list = list.filter(a => a.concepts.includes(state.conceptFilter));
+  if (state.onlySaved) list = list.filter(a => state.favs.includes(a.num));
+  if (state.search.trim()) {
+    const q = state.search.toLowerCase();
+    list = list.filter(a => {
+      const m = getMaster(a.masterId);
+      return [a.title, a.originalTitle, a.museum, a.city, a.dateDisplay, a.excerpt, m.name, ...a.concepts]
+        .join(' ').toLowerCase().includes(q);
+    });
+  }
+  if (state.sortBy === 'year') list.sort((a, b) => a.year - b.year);
+  else if (state.sortBy === 'title') list.sort((a, b) => a.title.localeCompare(b.title));
+  else if (state.sortBy === 'museum') list.sort((a, b) => a.museum.localeCompare(b.museum));
+  else list.sort((a, b) => Number(a.num) - Number(b.num));
+  return list;
+}
+
+// ============================================================================
+// NAVIGATION & THEME
+// ============================================================================
+function switchView(view) {
+  state.view = view;
+  document.querySelectorAll('.nav-tab').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.view === view);
+  });
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.querySelectorAll('.nav-tab').forEach(btn => {
+  btn.addEventListener('click', () => switchView(btn.dataset.view));
+});
+
+function toggleTheme() {
+  state.darkMode = !state.darkMode;
+  document.body.classList.toggle('dark', state.darkMode);
+  document.getElementById('themeToggleBtn').innerHTML = state.darkMode ? '☀ Daylight Gallery' : '☾ Evening Salon';
+}
+
+function toggleSavedFilter() {
+  state.onlySaved = !state.onlySaved;
+  if (state.view !== 'gallery') switchView('gallery');
+  else render();
+  document.getElementById('favFilterBtn').style.borderColor = state.onlySaved ? 'var(--accent)' : '';
+  document.getElementById('favFilterBtn').style.background = state.onlySaved ? 'var(--accent-soft)' : '';
+}
+
+function toggleFav(num, ev) {
+  if (ev) ev.stopPropagation();
+  const idx = state.favs.indexOf(num);
+  if (idx >= 0) state.favs.splice(idx, 1);
+  else state.favs.push(num);
+  savePrefs();
+  render();
+  if (state.modalNum === num) updateModalFavBtn();
+}
+
+// ============================================================================
+// RENDER VIEWS
+// ============================================================================
+function render() {
+  const root = document.getElementById('appRoot');
+  if (state.view === 'gallery') root.innerHTML = renderGalleryView();
+  else if (state.view === 'masters') root.innerHTML = renderMastersView();
+  else if (state.view === 'semantic') root.innerHTML = renderSemanticView();
+  else if (state.view === 'timeline') root.innerHTML = renderTimelineAtlasView();
+  else if (state.view === 'compare') root.innerHTML = renderCompareView();
+  else if (state.view === 'quiz') root.innerHTML = renderQuizView();
+}
+
+function renderGalleryView() {
+  const list = getFilteredArtworks();
+  const concepts = getAllConcepts();
+
+  return `
+    <section class="hero">
+      <div>
+        <div class="hero-eyebrow">ARTDACI Collection · Interactive Explorer</div>
+        <h1>Four Masters.<br/>Twenty-Four Paintings.</h1>
+        <p>
+          Explore the complete ARTDACI curatorial collection uniting <strong>Leonardo da Vinci</strong>,
+          <strong>Johannes Vermeer</strong>, <strong>Vincent van Gogh</strong>, and <strong>Claude Monet</strong>—from
+          Renaissance <em>sfumato</em> and Dutch interior light to Post-Impressionist emotion and Impressionist atmosphere.
+        </p>
+        <div class="hero-cta-row">
+          <button class="btn-gold" onclick="openModal('001')">Inspect Mona Lisa (001)</button>
+          <button class="btn-outline-light" onclick="switchView('semantic')">Open Semantic Graph ↗</button>
+          <button class="btn-outline-light" onclick="switchView('masters')">Meet the 4 Masters</button>
+        </div>
+      </div>
+      <div class="hero-stats">
+        ${MASTERS.map(m => `
+          <div class="hero-stat-card" onclick="state.masterFilter='${m.id}'; render();">
+            <div class="era">${m.movement}</div>
+            <div class="name">${m.name}</div>
+            <div class="meta">${m.years} · 6 Paintings</div>
+          </div>
+        `).join('')}
+      </div>
+    </section>
+
+    <section class="controls-bar">
+      <div class="controls-top">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" placeholder="Search title, museum, city, technique, or year..."
+                 value="${escapeXml(state.search)}"
+                 oninput="state.search=this.value; renderSearch(this);" id="gallerySearch" aria-label="Search artworks" />
+        </div>
+        <select class="select-control" onchange="state.collectionFilter=this.value; render();">
+          <option value="all" ${state.collectionFilter==='all'?'selected':''}>All 24 ARTDACI Artworks</option>
+          <option value="hub12" ${state.collectionFilter==='hub12'?'selected':''}>12 Masters Hub Spotlight (VR)</option>
+        </select>
+        <select class="select-control" onchange="state.conceptFilter=this.value; render();">
+          <option value="all">All Concepts &amp; Techniques</option>
+          ${concepts.map(c => `<option value="${escapeXml(c)}" ${state.conceptFilter===c?'selected':''}>${escapeXml(c)}</option>`).join('')}
+        </select>
+        <select class="select-control" onchange="state.sortBy=this.value; render();">
+          <option value="num" ${state.sortBy==='num'?'selected':''}>Sort: ARTDACI Order (001–024)</option>
+          <option value="year" ${state.sortBy==='year'?'selected':''}>Sort: Chronological (1472–1916)</option>
+          <option value="title" ${state.sortBy==='title'?'selected':''}>Sort: Title (A–Z)</option>
+          <option value="museum" ${state.sortBy==='museum'?'selected':''}>Sort: Museum</option>
+        </select>
+      </div>
+      <div class="pill-row">
+        <span style="font-size:12px; font-weight:700; color:var(--text-muted); margin-right:4px;">Master:</span>
+        <button class="filter-pill ${state.masterFilter==='all'?'active':''}" onclick="state.masterFilter='all'; render();">All 4 Masters (24)</button>
+        ${MASTERS.map(m => `
+          <button class="filter-pill ${state.masterFilter===m.id?'active':''}" onclick="state.masterFilter='${m.id}'; render();">
+            ${m.name} (6)
+          </button>
+        `).join('')}
+        ${(state.search || state.masterFilter!=='all' || state.collectionFilter!=='all' || state.conceptFilter!=='all' || state.onlySaved) ?
+          `<button class="filter-pill" style="margin-left:auto;" onclick="resetFilters()">✕ Reset Filters</button>` : ''}
+      </div>
+    </section>
+
+    <div class="results-header">
+      <h2>Exhibition Catalogue</h2>
+      <div class="results-meta">Showing <strong>${list.length}</strong> of 24 paintings</div>
+    </div>
+
+    ${list.length === 0 ? `
+      <div style="text-align:center; padding:60px 20px; background:var(--bg-elevated); border:1px solid var(--border); border-radius:16px;">
+        <h3 style="margin-top:0;">No paintings match your current filters</h3>
+        <p style="color:var(--text-muted);">Try clearing your search query or switching off the Saved filter.</p>
+        <button class="btn-gold" onclick="resetFilters()">Show All 24 Paintings</button>
+      </div>
+    ` : `
+      <section class="gallery-grid">
+        ${list.map(art => {
+          const m = getMaster(art.masterId);
+          const isSaved = state.favs.includes(art.num);
+          return `
+            <article class="art-card" onclick="openModal('${art.num}')">
+              <div class="art-thumb-wrap">
+                <img class="art-thumb" ${imgAttrs(art, 720)} />
+                <span class="art-num-badge">Artwork ${art.num}</span>
+                ${art.hubCode ? `<span class="art-hub-badge">${art.hubCode}</span>` : ''}
+                <button class="fav-btn ${isSaved?'saved':''}" onclick="toggleFav('${art.num}', event)" aria-label="Bookmark ${escapeXml(art.title)}">
+                  ${isSaved ? '♥' : '♡'}
+                </button>
+              </div>
+              <div class="art-body">
+                <div class="art-master-line" style="color:${m.color};">
+                  <span>${m.name}</span>
+                  <span>${art.dateDisplay}</span>
+                </div>
+                <h3 class="art-title">${art.title}</h3>
+                <div class="art-museum">${art.museum} · ${art.city}</div>
+                <p class="art-excerpt">${art.excerpt}</p>
+                <div class="tag-list">
+                  ${art.concepts.slice(0, 3).map(c => `<span class="tag-chip">${c}</span>`).join('')}
+                </div>
+              </div>
+            </article>
+          `;
+        }).join('')}
+      </section>
+    `}
+  `;
+}
+
+function renderSearch(input) {const pos=input.selectionStart;render();const next=document.getElementById("gallerySearch");if(next){next.focus({preventScroll:true});next.setSelectionRange(pos,pos);}}
+function resetFilters() {
+  state.search = '';
+  state.masterFilter = 'all';
+  state.collectionFilter = 'all';
+  state.conceptFilter = 'all';
+  state.onlySaved = false;
+  document.getElementById('favFilterBtn').style.borderColor = '';
+  document.getElementById('favFilterBtn').style.background = '';
+  render();
+}
+
+function renderMastersView() {
+  return `
+    <div class="results-header">
+      <div>
+        <h2>The Four Masters of ARTDACI</h2>
+        <div class="results-meta">Four centuries of vision—from Renaissance Florence to Impressionist Giverny</div>
+      </div>
+    </div>
+    <section class="masters-grid">
+      ${MASTERS.map(m => {
+        const works = ARTWORKS.filter(a => a.masterId === m.id);
+        return `
+          <article class="master-card">
+            <div class="master-banner" style="background:linear-gradient(135deg, ${m.color}, #1b1815);">
+              <img class="master-portrait"
+                   src="${SITE_PORTRAITS[m.id]}"
+                   alt="${m.name}"
+                   onerror="this.onerror=null;this.style.visibility='hidden'" />
+              <div>
+                <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.14em; opacity:0.85;">${m.movement}</div>
+                <h3>${m.name}</h3>
+                <div class="dates">${m.years} · ${m.origin}</div>
+              </div>
+            </div>
+            <div class="master-content">
+              <p class="master-quote"><span class="spec-label" style="font-style:normal;display:block;margin-bottom:4px;">Curatorial perspective</span>${m.quote}</p>
+              <p style="margin:0; font-size:14px;">${m.bio}</p>
+
+              <div>
+                <div class="spec-label" style="margin-bottom:6px;">Signature Techniques</div>
+                <ul style="margin:0; padding-left:18px; font-size:13px; color:var(--text-muted);">
+                  ${m.techniques.map(t => `<li>${t}</li>`).join('')}
+                </ul>
+              </div>
+
+              <div>
+                <div class="spec-label" style="margin-bottom:6px;">Characteristic Palette</div>
+                <div class="swatch-row">
+                  ${m.palette.map(p => `
+                    <div style="display:flex; align-items:center; gap:6px; font-size:11px; background:var(--bg); border:1px solid var(--border); padding:3px 8px 3px 4px; border-radius:999px;">
+                      <span class="swatch" style="background:${p.hex}; width:16px; height:16px;"></span>
+                      <span>${p.name}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+
+              <div style="background:var(--accent-soft); border-radius:10px; padding:10px 12px; font-size:12.5px;">
+                <strong>Curator’s Note:</strong> ${m.didYouKnow}
+              </div>
+
+              <div>
+                <div class="spec-label" style="margin-bottom:6px;">6 ARTDACI Paintings</div>
+                <div class="master-works-mini">
+                  ${works.map(w => `
+                    <div class="mini-work" onclick="openModal('${w.num}')">
+                      <img ${imgAttrs(w, 260)} />
+                      <span>${w.num} · ${w.title}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+
+              <button class="btn-gold" style="margin-top:auto;" onclick="state.masterFilter='${m.id}'; switchView('gallery');">
+                Explore All 6 Works in Gallery →
+              </button>
+            </div>
+          </article>
+        `;
+      }).join('')}
+    </section>
+  `;
+}
+
+// ============================================================================
+// ARTDACI SEMANTIC GRAPH VIEW
+// ============================================================================
+function buildSemanticGraphData(centerId) {
+  // Node IDs: m:davinci, a:001, c:Sfumato, u:Musée du Louvre
+  let centerNode = { id: centerId, label: '', type: '', sub: '' };
+  let neighbors = [];
+
+  if (centerId.startsWith('m:')) {
+    const m = getMaster(centerId.slice(2));
+    centerNode = { id: centerId, label: m.name, type: 'Master', sub: m.years, color: m.color };
+    const works = ARTWORKS.filter(a => a.masterId === m.id);
+    works.forEach(w => neighbors.push({ id: `a:${w.num}`, label: w.title, type: 'Artwork', sub: w.dateDisplay, color: m.color, artNum: w.num }));
+    const conceptCounts = {};
+    works.forEach(w => w.concepts.forEach(c => conceptCounts[c] = (conceptCounts[c]||0)+1));
+    Object.keys(conceptCounts).slice(0, 6).forEach(c => {
+      neighbors.push({ id: `c:${c}`, label: c, type: 'Concept', sub: 'Technique / Theme', color: '#a67c37' });
+    });
+  } else if (centerId.startsWith('a:')) {
+    const art = getArtwork(centerId.slice(2));
+    const m = getMaster(art.masterId);
+    centerNode = { id: centerId, label: art.title, type: 'Artwork', sub: `${m.name} (${art.dateDisplay})`, color: m.color, artNum: art.num };
+    neighbors.push({ id: `m:${m.id}`, label: m.name, type: 'Master', sub: m.movement, color: m.color });
+    neighbors.push({ id: `u:${art.museum}`, label: art.museum, type: 'Museum', sub: art.city, color: '#5c564b' });
+    art.concepts.forEach(c => neighbors.push({ id: `c:${c}`, label: c, type: 'Concept', sub: 'ARTDACI Link', color: '#a67c37' }));
+  } else if (centerId.startsWith('c:')) {
+    const concept = centerId.slice(2);
+    centerNode = { id: centerId, label: concept, type: 'Concept', sub: 'Cross-Master Concept', color: '#a67c37' };
+    const matching = ARTWORKS.filter(a => a.concepts.includes(concept));
+    matching.forEach(w => {
+      const m = getMaster(w.masterId);
+      neighbors.push({ id: `a:${w.num}`, label: w.title, type: 'Artwork', sub: `${m.name} · ${w.dateDisplay}`, color: m.color, artNum: w.num });
+    });
+  } else if (centerId.startsWith('u:')) {
+    const museum = centerId.slice(2);
+    const matching = ARTWORKS.filter(a => a.museum === museum);
+    centerNode = { id: centerId, label: museum, type: 'Museum', sub: matching[0]?.city || '', color: '#5c564b' };
+    matching.forEach(w => {
+      const m = getMaster(w.masterId);
+      neighbors.push({ id: `a:${w.num}`, label: w.title, type: 'Artwork', sub: `${m.name} · ${w.dateDisplay}`, color: m.color, artNum: w.num });
+    });
+  }
+  return { centerNode, neighbors };
+}
+
+function renderSemanticView() {
+  const { centerNode, neighbors } = buildSemanticGraphData(state.semanticCenterId);
+  const cx = 420, cy = 270, radius = 195;
+
+  const positioned = neighbors.map((n, i) => {
+    const angle = (i / Math.max(neighbors.length, 1)) * Math.PI * 2 - Math.PI / 2;
+    return {
+      ...n,
+      x: cx + Math.cos(angle) * radius,
+      y: cy + Math.sin(angle) * (radius * 0.85)
+    };
+  });
+
+  const quickConcepts = ['Sfumato', 'Complementary Colors', 'En Plein Air', 'Portrait', 'Interior', 'Broken Brushwork', 'Nocturne', 'Atmospheric Perspective'];
+
+  return `
+    <div class="results-header">
+      <div>
+        <h2>ARTDACI Semantic Constellation</h2>
+        <div class="results-meta">Click any node to recenter the web linking masters, paintings, museums, and art concepts</div>
+      </div>
+      <div class="pill-row">
+        ${MASTERS.map(m => `
+          <button class="filter-pill ${state.semanticCenterId==='m:'+m.id?'active':''}" onclick="state.semanticCenterId='m:${m.id}'; render();">${m.name}</button>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="pill-row" style="margin-bottom:16px;">
+      <span style="font-size:12px; font-weight:700; color:var(--text-muted);">Jump to Concept:</span>
+      ${quickConcepts.map(c => `
+        <button class="filter-pill ${state.semanticCenterId==='c:'+c?'active':''}" onclick="state.semanticCenterId='c:${c}'; render();">${c}</button>
+      `).join('')}
+    </div>
+
+    <div class="semantic-layout">
+      <div class="graph-stage">
+        <svg class="graph-svg" viewBox="0 0 840 540" aria-label="Semantic Knowledge Graph">
+          ${positioned.map(n => `
+            <line x1="${cx}" y1="${cy}" x2="${n.x}" y2="${n.y}" stroke="var(--border)" stroke-width="2" stroke-dasharray="${n.type==='Concept'?'5,4':'none'}" />
+          `).join('')}
+
+          ${positioned.map(n => `
+            <g class="node-group" onclick="state.semanticCenterId='${n.id.replace(/'/g, "\\'")}'; render();">
+              <circle cx="${n.x}" cy="${n.y}" r="${n.type==='Master'?28:22}" fill="${n.color}" stroke="var(--bg-elevated)" stroke-width="2.5" />
+              <text x="${n.x}" y="${n.y + 4}" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">
+                ${n.type === 'Artwork' ? n.artNum : n.type.slice(0,3).toUpperCase()}
+              </text>
+              <rect x="${n.x - 68}" y="${n.y + 27}" width="136" height="20" rx="6" fill="var(--bg-elevated)" opacity="0.92" />
+              <text x="${n.x}" y="${n.y + 40}" text-anchor="middle" fill="var(--text)" font-size="11" font-weight="700">
+                ${escapeXml(n.label.length > 22 ? n.label.slice(0,20)+'…' : n.label)}
+              </text>
+            </g>
+          `).join('')}
+
+          <g>
+            <circle cx="${cx}" cy="${cy}" r="48" fill="${centerNode.color || '#a67c37'}" stroke="var(--bg-elevated)" stroke-width="4" />
+            <text x="${cx}" y="${cy - 4}" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">${escapeXml(centerNode.type.toUpperCase())}</text>
+            <text x="${cx}" y="${cy + 13}" text-anchor="middle" fill="#fff" font-size="12.5" font-weight="700">
+              ${escapeXml(centerNode.label.length > 16 ? centerNode.label.slice(0,15)+'…' : centerNode.label)}
+            </text>
+          </g>
+        </svg>
+      </div>
+
+      <aside class="graph-sidebar">
+        <div class="spec-label">${centerNode.type} Focus</div>
+        <h3 style="margin:4px 0 4px; font-size:28px;">${centerNode.label}</h3>
+        <div style="font-size:13px; color:var(--text-muted); margin-bottom:14px;">${centerNode.sub}</div>
+
+        ${centerNode.artNum ? `
+          <button class="btn-gold" style="width:100%; margin-bottom:16px;" onclick="openModal('${centerNode.artNum}')">
+            Open Full Artwork Inspector →
+          </button>
+        ` : ''}
+
+        <div class="spec-label" style="margin-bottom:8px;">Connected Nodes (${neighbors.length})</div>
+        <div style="display:flex; flex-direction:column; gap:8px; max-height:360px; overflow-y:auto;">
+          ${neighbors.map(n => `
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; padding:9px 11px; border:1px solid var(--border); border-radius:10px; background:var(--bg); cursor:pointer;"
+                 onclick="state.semanticCenterId='${n.id.replace(/'/g, "\\'")}'; render();">
+              <div>
+                <div style="font-size:13px; font-weight:700;">${n.label}</div>
+                <div style="font-size:11px; color:var(--text-muted);">${n.type} · ${n.sub}</div>
+              </div>
+              ${n.artNum ? `<button class="filter-pill" onclick="event.stopPropagation(); openModal('${n.artNum}')">Inspect</button>` : '<span style="font-size:12px;">→</span>'}
+            </div>
+          `).join('')}
+        </div>
+      </aside>
+    </div>
+  `;
+}
+
+// ============================================================================
+// TIMELINE & MUSEUM ATLAS VIEW
+// ============================================================================
+function renderTimelineAtlasView() {
+  const chrono = ARTWORKS.slice().sort((a, b) => a.year - b.year);
+  const byMuseum = {};
+  ARTWORKS.forEach(a => {
+    const key = `${a.museum} — ${a.city}`;
+    if (!byMuseum[key]) byMuseum[key] = [];
+    byMuseum[key].push(a);
+  });
+
+  return `
+    <div class="results-header">
+      <div>
+        <h2>Chronological Timeline (1472 – 1916)</h2>
+        <div class="results-meta">444 years of European painting across the 24 ARTDACI masterpieces</div>
+      </div>
+    </div>
+
+    <div class="timeline-track" style="margin-bottom:44px;">
+      ${chrono.map(a => {
+        const m = getMaster(a.masterId);
+        return `
+          <div class="timeline-item" onclick="openModal('${a.num}')">
+            <img class="timeline-thumb" ${imgAttrs(a, 240)} />
+            <div>
+              <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:${m.color};">
+                ${a.dateDisplay} · ${m.name}
+              </div>
+              <h3 style="margin:2px 0; font-size:21px;">${a.title}</h3>
+              <div style="font-size:12.5px; color:var(--text-muted);">${a.museum} (${a.city}) · ${a.medium}</div>
+            </div>
+            <span class="tag-chip">Artwork ${a.num}</span>
+          </div>
+        `;
+      }).join('')}
+    </div>
+
+    <div class="results-header">
+      <div>
+        <h2>Global Museum Atlas</h2>
+        <div class="results-meta">Where the 24 ARTDACI paintings live across ${Object.keys(byMuseum).length} world institutions</div>
+      </div>
+    </div>
+
+    <div class="museum-grid">
+      ${Object.entries(byMuseum).sort((a,b)=>b[1].length-a[1].length).map(([label, items]) => `
+        <div class="museum-card">
+          <div class="spec-label">${items.length} ${items.length===1?'Masterpiece':'Masterpieces'}</div>
+          <h3 style="margin:4px 0 12px; font-size:22px;">${label}</h3>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            ${items.map(w => `
+              <div style="display:flex; align-items:center; gap:10px; padding:6px; border-radius:10px; background:var(--bg); border:1px solid var(--border); cursor:pointer;"
+                   onclick="openModal('${w.num}')">
+                <img style="width:46px; height:46px; border-radius:6px; object-fit:cover;" ${imgAttrs(w, 160)} />
+                <div>
+                  <div style="font-size:13px; font-weight:700;">${w.title}</div>
+                  <div style="font-size:11px; color:var(--text-muted);">${getMaster(w.masterId).name} · ${w.dateDisplay}</div>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+// ============================================================================
+// SIDE-BY-SIDE COMPARE VIEW
+// ============================================================================
+function renderCompareView() {
+  const left = getArtwork(state.compareLeft);
+  const right = getArtwork(state.compareRight);
+  const renderPanel = (art, sideKey) => {
+    const m = getMaster(art.masterId);
+    return `
+      <div class="compare-panel">
+        <select class="select-control" style="width:100%;" onchange="state.${sideKey}=this.value; render();">
+          ${ARTWORKS.map(a => `<option value="${a.num}" ${a.num===art.num?'selected':''}>${a.num} — ${a.title} (${getMaster(a.masterId).name})</option>`).join('')}
+        </select>
+        <img class="compare-img" ${imgAttrs(art, 800)} />
+        <div style="font-size:11px; font-weight:700; text-transform:uppercase; color:${m.color};">${m.name} · ${art.movement}</div>
+        <h3 style="margin:4px 0 8px; font-size:26px;">${art.title}</h3>
+        <div class="spec-grid" style="margin-bottom:12px;">
+          <div><div class="spec-label">Date</div>${art.dateDisplay}</div>
+          <div><div class="spec-label">Dimensions</div>${art.dimensions}</div>
+          <div><div class="spec-label">Medium</div>${art.medium}</div>
+          <div><div class="spec-label">Museum</div>${art.museum}, ${art.city}</div>
+        </div>
+        <p style="font-size:13.5px; margin:0 0 10px;"><strong>Technique:</strong> ${art.technique}</p>
+        <div class="swatch-row" style="margin-bottom:12px;">
+          ${art.palette.map(hex => `<span class="swatch" style="background:${hex};" title="${hex}"></span>`).join('')}
+        </div>
+        <button class="filter-pill" onclick="openModal('${art.num}')">Open Full Inspector →</button>
+      </div>
+    `;
+  };
+
+  return `
+    <div class="results-header">
+      <div>
+        <h2>Side-by-Side Masterpiece Comparator</h2>
+        <div class="results-meta">Compare scale, light, brushwork, and palette across centuries (e.g. Mona Lisa vs. Girl with a Pearl Earring)</div>
+      </div>
+      <div class="pill-row">
+        <button class="filter-pill" onclick="state.compareLeft='001'; state.compareRight='009'; render();">Mona Lisa vs. Pearl Earring</button>
+        <button class="filter-pill" onclick="state.compareLeft='014'; state.compareRight='024'; render();">Starry Night vs. Impression, Sunrise</button>
+        <button class="filter-pill" onclick="state.compareLeft='011'; state.compareRight='022'; render();">View of Delft vs. Argenteuil</button>
+      </div>
+    </div>
+    <div class="compare-grid">
+      ${renderPanel(left, 'compareLeft')}
+      ${renderPanel(right, 'compareRight')}
+    </div>
+  `;
+}
+
+// ============================================================================
+// CONNOISSEUR QUIZ VIEW
+// ============================================================================
+function initQuiz() {
+  const pool = ARTWORKS.slice().sort(() => Math.random() - 0.5).slice(0, 8);
+  const questions = pool.map(target => {
+    const m = getMaster(target.masterId);
+    const distractors = ARTWORKS.filter(a => a.num !== target.num).sort(() => Math.random() - 0.5).slice(0, 3);
+    const options = [target, ...distractors].sort(() => Math.random() - 0.5);
+    return {
+      target,
+      prompt: `Which ARTDACI masterpiece (${target.dateDisplay}, ${target.museum}) matches this curatorial clue?`,
+      clue: target.excerpt,
+      options: options.map(o => ({ num: o.num, label: `${o.title} (${getMaster(o.masterId).name})` })),
+      answerNum: target.num,
+      masterName: m.name
+    };
+  });
+  state.quiz = { index: 0, score: 0, answered: false, selected: null, questions };
+}
+
+function renderQuizView() {
+  if (!state.quiz.questions.length) initQuiz();
+  const qState = state.quiz;
+
+  if (qState.index >= qState.questions.length) {
+    return `
+      <div class="quiz-card" style="text-align:center;">
+        <div class="spec-label">Connoisseur Challenge Complete</div>
+        <h2 style="font-size:38px; margin:8px 0;">Score: ${qState.score} / ${qState.questions.length}</h2>
+        <p style="color:var(--text-muted);">
+          ${qState.score >= 7 ? 'Curatorial Mastery! You know all four masters across every gallery.' :
+            qState.score >= 4 ? 'Strong gallery eye—explore the Semantic Graph to sharpen cross-master links.' :
+            'A wonderful start—inspect a few more paintings and try another round!'}
+        </p>
+        <button class="btn-gold" onclick="initQuiz(); render();">Play Another 8-Question Round</button>
+      </div>
+    `;
+  }
+
+  const q = qState.questions[qState.index];
+  return `
+    <div class="quiz-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <span class="spec-label">Question ${qState.index + 1} of ${qState.questions.length}</span>
+        <span class="tag-chip">Score: ${qState.score}</span>
+      </div>
+      <h2 style="margin:0 0 10px; font-size:28px;">${q.prompt}</h2>
+      <p style="font-family:var(--font-serif); font-size:21px; font-style:italic; background:var(--bg); padding:14px 16px; border-left:3px solid var(--accent); border-radius:8px;">
+        “${q.clue}”
+      </p>
+
+      ${qState.answered ? `
+        <div style="margin:14px 0; display:flex; gap:14px; align-items:center; background:var(--accent-soft); padding:12px; border-radius:12px;">
+          <img style="width:90px; height:68px; object-fit:contain; border-radius:0;" ${imgAttrs(q.target, 300)} />
+          <div style="font-size:13px;">
+            <strong>${q.target.title}</strong> by ${q.masterName} (${q.target.dateDisplay})<br/>
+            <span style="color:var(--text-muted);">${q.target.museum}, ${q.target.city}</span>
+          </div>
+        </div>
+      ` : ''}
+
+      <div class="quiz-options">
+        ${q.options.map(opt => {
+          let cls = 'quiz-opt';
+          if (qState.answered) {
+            if (opt.num === q.answerNum) cls += ' correct';
+            else if (opt.num === qState.selected) cls += ' wrong';
+          }
+          return `<button class="${cls}" ${qState.answered?'disabled':''} onclick="answerQuiz('${opt.num}')">${opt.label}</button>`;
+        }).join('')}
+      </div>
+
+      ${qState.answered ? `
+        <div style="margin-top:18px; display:flex; justify-content:flex-end;">
+          <button class="btn-gold" onclick="state.quiz.index++; state.quiz.answered=false; state.quiz.selected=null; render();">
+            ${qState.index + 1 === qState.questions.length ? 'See Final Score →' : 'Next Question →'}
+          </button>
+        </div>
+      ` : ''}
+    </div>
+  `;
+}
+
+function answerQuiz(chosenNum) {
+  if(state.quiz.answered)return;
+  const q = state.quiz.questions[state.quiz.index];
+  state.quiz.answered = true;
+  state.quiz.selected = chosenNum;
+  if (chosenNum === q.answerNum) state.quiz.score++;
+  render();
+}
+
+// ============================================================================
+// ARTWORK INSPECTOR MODAL (ZOOM, PAN, HOTSPOTS, AUDIO, NOTES)
+// ============================================================================
+function openModal(num) {
+  stopAudio();
+  state.modalNum = num;
+  state.modalTab = 'context';
+  state.zoom = 1;
+  state.panX = 0;
+  state.panY = 0;
+  state.activeHotspotIdx = 0;
+  populateModal();
+  document.getElementById('artworkModal').classList.add('open');
+  document.querySelector('.modal-close')?.focus();
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  stopAudio();
+  document.getElementById('artworkModal').classList.remove('open');
+  document.body.style.overflow = '';
+  state.modalNum = null;
+}
+
+function stepModalArtwork(delta) {
+  const idx = ARTWORKS.findIndex(a => a.num === state.modalNum);
+  const next = ARTWORKS[(idx + delta + ARTWORKS.length) % ARTWORKS.length];
+  openModal(next.num);
+}
+
+function populateModal() {
+  const art = getArtwork(state.modalNum);
+  const m = getMaster(art.masterId);
+
+  const img = document.getElementById('modalImg');
+  delete img.dataset.fallbackStage;
+  const pal = encodeURIComponent(JSON.stringify(art.palette));
+  delete img.dataset.imageFallback;
+  img.onerror = () => showMissingImage(img, art.num);
+  img.src = documentaryUrl(art,960);
+  img.alt = `${art.title} by ${m.name}`;
+
+  document.getElementById('modalEyebrow').textContent = `Artwork ${art.num}${art.hubCode ? ' · ARTDACI Hub ' + art.hubCode : ''} · ${art.movement}`;
+  document.getElementById('modalTitle').textContent = art.title;
+  document.getElementById('reproductionSourceLink').href=documentarySource(art);
+  document.getElementById('artworkSiteLink').href='print-artwork.html?painting='+encodeURIComponent(SITE_ARTWORKS[art.num].slug)+'&lang='+returnLang;
+  document.getElementById('modalSubtitle').textContent = `${art.originalTitle} · ${m.name} (${m.years})`;
+
+  document.getElementById('modalSpecs').innerHTML = `
+    <div><div class="spec-label">Date</div>${art.dateDisplay}</div>
+    <div><div class="spec-label">Dimensions</div>${art.dimensions}</div>
+    <div><div class="spec-label">Medium</div>${art.medium}</div>
+    <div><div class="spec-label">Museum</div>${art.museum}, ${art.city}</div>
+  `;
+
+  document.getElementById('modalConcepts').innerHTML = art.concepts.map(c =>
+    `<span class="tag-chip" style="cursor:pointer;" onclick="closeModal(); state.semanticCenterId='c:${c}'; switchView('semantic');">${c} ↗</span>`
+  ).join('');
+
+  const notesEl = document.getElementById('modalNotes');
+  notesEl.value = state.notes[art.num] || '';
+  notesEl.oninput = (e) => {
+    state.notes[art.num] = e.target.value;
+    savePrefs();
+  };
+
+  updateModalFavBtn();
+  renderModalSubtab();
+  renderHotspots();
+  applyZoomTransform();
+}
+
+function updateModalFavBtn() {
+  const isSaved = state.favs.includes(state.modalNum);
+  const btn = document.getElementById('modalFavBtn');
+  btn.textContent = isSaved ? '♥ Saved' : '♡ Save';
+  btn.style.borderColor = isSaved ? '#c93b3b' : '';
+}
+
+function toggleCurrentFav() {
+  if (state.modalNum) toggleFav(state.modalNum);
+}
+
+document.querySelectorAll('#modalSubtabs .subtab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    state.modalTab = btn.dataset.tab;
+    renderModalSubtab();
+  });
+});
+
+function renderModalSubtab() {
+  const art = getArtwork(state.modalNum);
+  document.querySelectorAll('#modalSubtabs .subtab').forEach(b => b.classList.toggle('active', b.dataset.tab === state.modalTab));
+  const body = document.getElementById('modalTabBody');
+  if (state.modalTab === 'context') {
+    body.innerHTML = `<p style="margin:0;">${art.context}</p>`;
+  } else if (state.modalTab === 'look') {
+    body.innerHTML = `<p style="margin:0 0 10px;">${art.lookClosely}</p><div style="font-size:12px; color:var(--text-muted);">Tip: Click the numbered gold hotspot pins to explore details. The markers are indicative observation aids.</div>`;
+  } else if (state.modalTab === 'technique') {
+    body.innerHTML = `
+      <p style="margin:0 0 12px;">${art.technique}</p>
+      <div class="spec-label" style="margin-bottom:6px;">Key Pigments &amp; Tones</div>
+      <div class="swatch-row">
+        ${art.palette.map(hex => `<span class="swatch" style="background:${hex};" title="${hex}"></span>`).join('')}
+      </div>
+    `;
+  } else {
+    body.innerHTML = `<p style="margin:0;">${art.legacy}</p>`;
+  }
+}
+
+function renderHotspots() {
+  const art = getArtwork(state.modalNum);
+  const layer = document.getElementById('hotspotLayer');
+  const callout = document.getElementById('hotspotCallout');
+  document.getElementById('togglePinsBtn').classList.toggle('active', state.showHotspots);
+
+  if (!state.showHotspots || !art.hotspots?.length) {
+    layer.innerHTML = '';
+    callout.style.display = 'none';
+    return;
+  }
+
+  layer.innerHTML = art.hotspots.map((h, i) => `
+    <button class="hotspot-pin ${i===state.activeHotspotIdx?'active':''}"
+            style="left:${h.x}%; top:${h.y}%;"
+            onclick="event.stopPropagation(); state.activeHotspotIdx=${i}; renderHotspots();"
+            title="${escapeXml(h.title)}">${i+1}</button>
+  `).join('');
+
+  const cur = art.hotspots[state.activeHotspotIdx] || art.hotspots[0];
+  callout.style.display = 'block';
+  callout.innerHTML = `<strong style="color:#dfb468;">Detail ${state.activeHotspotIdx + 1}: ${cur.title}</strong><br/>${cur.text}`;
+}
+
+function toggleHotspots() {
+  state.showHotspots = !state.showHotspots;
+  renderHotspots();
+}
+
+// Zoom & Pan controls
+function adjustZoom(delta) {
+  state.zoom = Math.min(3.2, Math.max(1, +(state.zoom + delta).toFixed(2)));
+  if (state.zoom === 1) { state.panX = 0; state.panY = 0; }
+  applyZoomTransform();
+}
+
+function resetZoom() {
+  state.zoom = 1; state.panX = 0; state.panY = 0;
+  applyZoomTransform();
+}
+
+function applyZoomTransform() {
+  const zl = document.getElementById('zoomLayer');
+  zl.style.transform = `translate(${state.panX}px, ${state.panY}px) scale(${state.zoom})`;
+}
+
+(function initPan() {
+  const stage = document.getElementById('canvasStage');
+  let dragging = false, startX = 0, startY = 0;
+  stage.addEventListener('pointerdown', e => {
+    if (e.target.classList.contains('hotspot-pin')) return;
+    dragging = true; startX = e.clientX - state.panX; startY = e.clientY - state.panY;
+  });
+  window.addEventListener('pointermove', e => {
+    if (!dragging || state.zoom <= 1) return;
+    state.panX = e.clientX - startX;
+    state.panY = e.clientY - startY;
+    applyZoomTransform();
+  });
+  window.addEventListener('pointerup', () => dragging = false);
+  stage.addEventListener('wheel', e => {
+    if (!document.getElementById('artworkModal').classList.contains('open')) return;
+    e.preventDefault();
+    adjustZoom(e.deltaY < 0 ? 0.25 : -0.25);
+  }, { passive: false });
+})();
+
+// Web Speech Audio Guide
+let speaking = false;
+function toggleAudioGuide() {
+  if (!('speechSynthesis' in window)) {
+    alert('Audio narration is not supported in this browser.');
+    return;
+  }
+  if (speaking) {
+    stopAudio();
+    return;
+  }
+  const art = getArtwork(state.modalNum);
+  const m = getMaster(art.masterId);
+  const script = `${art.title}, painted by ${m.name}, ${art.dateDisplay}, preserved at ${art.museum} in ${art.city}. ${art.excerpt} ${art.lookClosely} ${art.technique}`;
+  const utter = new SpeechSynthesisUtterance(script);
+  utter.rate = 0.96;
+  utter.onend = () => { speaking = false; document.getElementById('audioBtn').textContent = '🔊 Audio Overview'; };
+  speaking = true;
+  document.getElementById('audioBtn').textContent = '⏹ Stop Audio';
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utter);
+}
+
+function stopAudio() {
+  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+  speaking = false;
+  const btn = document.getElementById('audioBtn');
+  if (btn) btn.textContent = '🔊 Audio Overview';
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('artworkModal').classList.contains('open')) return;
+  if (e.key === 'Escape') closeModal();
+  if (e.key === 'ArrowRight') stepModalArtwork(1);
+  if (e.key === 'ArrowLeft') stepModalArtwork(-1);
+});
+
+document.getElementById('artworkModal').addEventListener('click', e => {
+  if (e.target.id === 'artworkModal') closeModal();
+});
+
+// Boot
+document.getElementById('homeLink').href=returnHomeUrl;
+document.getElementById('returnHome').href=returnHomeUrl;
+document.getElementById('returnHub').href='geo/masters-hub.html?lang='+returnLang;
+document.getElementById('returnSemantic').href='semantic/?lang='+returnLang;
+if(returnLang!=='en'){
+ const note=document.getElementById('editionNote'); note.hidden=false;
+ note.lang=returnLang;
+ note.textContent=returnLang==='fr'?'Explorateur pédagogique : édition originale en anglais. Les liens vers les ressources ARTDACI conservent votre langue.':'هذه النسخة التعليمية الأصلية باللغة الإنجليزية، وتفتح روابط ARTDACI باللغة التي اخترتها.';
+ document.getElementById('returnHome').textContent=returnLang==='fr'?'← Retour aux quatre maîtres':'العودة إلى الفنانين الأربعة';
+}
+const initialView=new URLSearchParams(location.search).get('view');
+if(['gallery','masters','semantic','timeline','compare','quiz'].includes(initialView))state.view=initialView;
+const initialMaster=new URLSearchParams(location.search).get('master');
+if(MASTERS.some(m=>m.id===initialMaster))state.masterFilter=initialMaster;
+document.querySelectorAll('.nav-tab').forEach(btn=>{btn.classList.toggle('active',btn.dataset.view===state.view);});
+savePrefs();
+render();
+</script>
+</body>
+</html>
