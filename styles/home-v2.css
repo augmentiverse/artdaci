@@ -1132,10 +1132,7 @@
 /* Contraste en thème clair / sombre ; signature à graisse normale. */
 body.home-v2 .hv2-footer .artdaci-editorial-title{color:#67471F;font-weight:400}
 body.home-v2 .hv2-footer .artdaci-editorial-signature{color:#31485F;font-weight:400;border-inline-start-color:#94764D}
-@media(prefers-color-scheme:dark){
-  body.home-v2 .hv2-footer .artdaci-editorial-title{color:#F0D7A6}
-  body.home-v2 .hv2-footer .artdaci-editorial-signature{color:#CEDBE5;border-inline-start-color:#D8C497}
-}
+/* Do not infer the footer background from OS preference: the page can stay light. */
 html.dark body.home-v2 .hv2-footer .artdaci-editorial-title,
 html[data-theme="dark"] body.home-v2 .hv2-footer .artdaci-editorial-title{color:#F0D7A6}
 html.dark body.home-v2 .hv2-footer .artdaci-editorial-signature,
