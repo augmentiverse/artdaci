@@ -1122,3 +1122,9 @@
   object-fit: contain;
   background: rgba(17, 32, 47, .35);
 }
+
+/* Attribution éditoriale unifiée — INDEXIA */
+.hv2-footer .artdaci-editorial-credit{display:inline-flex;align-items:center;gap:13px;justify-content:flex-end;flex-wrap:wrap;margin-inline-start:auto}
+.hv2-footer .artdaci-editorial-title{font-family:Georgia,'Times New Roman',serif;font-size:.95rem;font-weight:600;color:#F0D7A6;letter-spacing:.01em}
+.hv2-footer .artdaci-editorial-signature{display:inline-block;border-inline-start:1px solid #D8C497;padding-inline-start:14px;font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:700;font-size:1.062rem;color:#C4CFD8;letter-spacing:.035em}
+@media(max-width:750px){.hv2-footer .artdaci-editorial-credit{margin-inline-start:0;justify-content:flex-start}.hv2-footer .artdaci-editorial-title{font-size:.83rem}.hv2-footer .artdaci-editorial-signature{font-size:1rem;padding-inline-start:10px}}
