@@ -9,7 +9,10 @@
   "dimensions": { "heightCm": 54.8, "widthCm": 40.3 },
   "currentLocation": { "museum": "Princes Czartoryski Museum", "city": "Kraków", "country": "Poland" },
   "print": { "chapter": "Renaissance", "imageTargetSource": "assets/artists/leonardo-da-vinci/collection/the-lady-with-an-ermine-davinci.webp" },
-  "media": { "image": "assets/artists/leonardo-da-vinci/collection/the-lady-with-an-ermine-davinci.webp" },
+  "media": {
+    "image": "assets/artists/leonardo-da-vinci/collection/the-lady-with-an-ermine-davinci.webp",
+    "model": "https://media.artdaci.com/artworks/ld02/models/lady-with-an-ermine--sha256-366667a0233d.glb"
+  },
   "texts": {
     "historicalContext": "Leonardo painted this portrait at the Milanese court around 1489–1491. The sitter is Cecilia Gallerani, celebrated for her intelligence and poetry and closely connected to Ludovico Sforza.",
     "artistBiography": "Leonardo united painting, anatomy, optics and the study of movement. His Milan years transformed court portraiture into a field of psychological and scientific observation.",

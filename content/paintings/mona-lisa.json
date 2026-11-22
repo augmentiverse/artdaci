@@ -312,6 +312,15 @@
           "fr": "De Vinci et Mona Lisa"
         },
         "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/davinci-monalisa-c.glb"
+      },
+      {
+        "id": "leonardo-painting-mona-lisa",
+        "label": {
+          "en": "Leonardo painting the Mona Lisa",
+          "fr": "Léonard peignant la Joconde",
+          "ar": "ليوناردو يرسم الموناليزا"
+        },
+        "src": "https://media.artdaci.com/artworks/ld01/models/leonardo-painting-mona-lisa--sha256-20ee31394f18.glb"
       }
     ],
     "scaleMeters": {
@@ -416,6 +425,15 @@
           "fr": "De Vinci et Mona Lisa — Variante"
         },
         "src": "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/davinci-monalisa-c.glb"
+      },
+      {
+        "id": "leonardo-painting-mona-lisa",
+        "label": {
+          "en": "Leonardo painting the Mona Lisa",
+          "fr": "Léonard peignant la Joconde",
+          "ar": "ليوناردو يرسم الموناليزا"
+        },
+        "src": "https://media.artdaci.com/artworks/ld01/models/leonardo-painting-mona-lisa--sha256-20ee31394f18.glb"
       }
     ],
     "audioGuides": [

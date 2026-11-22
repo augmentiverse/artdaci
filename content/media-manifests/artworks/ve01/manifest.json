@@ -145,12 +145,12 @@
     "models": {
       "portrait": {
         "scope": "artwork",
-        "path": "models/portrait.glb",
+        "path": "models/standing--sha256-e162489dc277.glb",
         "mimeType": "model/gltf-binary",
         "available": true,
         "migrationStatus": "published",
-        "bytes": 2320252,
-        "sha256": "a8a1553de82644a8a21cfb19a2dd2f9e04f6316d216fdbe6c346c4c3710af878"
+        "bytes": 3032692,
+        "sha256": "e162489dc277808d2de00528bf1b0f9716c3ff65ce4361de4f92d6cafaa2a1a5"
       },
       "sitting": {
         "scope": "artwork",
@@ -174,5 +174,5 @@
       }
     }
   },
-  "updatedAt": "2026-09-08"
+  "updatedAt": "2026-11-22"
 }

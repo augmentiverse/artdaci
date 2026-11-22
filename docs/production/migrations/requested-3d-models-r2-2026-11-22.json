@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1.0",
+  "publishedAt": "2026-11-22",
+  "bucket": "artdaci-media",
+  "publicBaseUrl": "https://media.artdaci.com/",
+  "cacheControl": "public, max-age=31536000, immutable",
+  "resources": [
+    {
+      "source": "assets/environments/gallery/models/museums/Mauritshuis_museum_c3.glb",
+      "key": "shared/museums/mauritshuis/models/main--sha256-5458d044ca86.glb",
+      "mimeType": "model/gltf-binary",
+      "bytes": 8818200,
+      "sha256": "5458d044ca8624fda6879215fe180d3d1d124f90f2df3624c0fc1908c5d931a5"
+    },
+    {
+      "source": "assets/environments/gallery/models/museums/Santa_Maria_delle_Grazie.glb",
+      "key": "shared/museums/santa-maria-delle-grazie/models/main--sha256-41a998492e96.glb",
+      "mimeType": "model/gltf-binary",
+      "bytes": 7575784,
+      "sha256": "41a998492e9655ad062af9bbd311c58e85dda344c0c549022c5027f614a49085"
+    },
+    {
+      "source": "assets/artists/groups/models/DaVici_Monet_vanGogh_Vermeer_standing_gd_c.glb",
+      "key": "shared/groups/four-masters/models/standing--sha256-d2196ae68ecf.glb",
+      "mimeType": "model/gltf-binary",
+      "bytes": 4297620,
+      "sha256": "d2196ae68ecf14b5602db737f9cd29e47e8e0099d9e5cd2aa8629630aa370584"
+    },
+    {
+      "source": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/girl-pearl_standing.glb",
+      "key": "artworks/ve01/models/standing--sha256-e162489dc277.glb",
+      "mimeType": "model/gltf-binary",
+      "bytes": 3032692,
+      "sha256": "e162489dc277808d2de00528bf1b0f9716c3ff65ce4361de4f92d6cafaa2a1a5"
+    },
+    {
+      "source": "assets/artists/leonardo-da-vinci/reimagined/models/the-lady-with-an-ermine.glb",
+      "key": "artworks/ld02/models/lady-with-an-ermine--sha256-366667a0233d.glb",
+      "mimeType": "model/gltf-binary",
+      "bytes": 6934764,
+      "sha256": "366667a0233d6f1f532746506a92557cddb70bd01d8a0e849d700715f3ea6707"
+    },
+    {
+      "source": "assets/artists/leonardo-da-vinci/reimagined/models/leonardo_painting_monalisa.glb",
+      "key": "artworks/ld01/models/leonardo-painting-mona-lisa--sha256-20ee31394f18.glb",
+      "mimeType": "model/gltf-binary",
+      "bytes": 8517028,
+      "sha256": "20ee31394f180b711df6e2e790c7bc954d6b2e6297fd50093b225f39eda3b765"
+    }
+  ]
+}
