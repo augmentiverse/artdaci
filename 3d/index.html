@@ -97,7 +97,7 @@
         <section class="d3-group" aria-labelledby="d3-artworks-title">
           <div class="d3-group-head">
             <h3 id="d3-artworks-title">Artworks & interpretations</h3>
-            <span>4 models</span>
+            <span>6 models</span>
           </div>
           <div class="d3-grid">
             <button
@@ -117,11 +117,35 @@
               type="button"
               aria-current="false"
               data-category="Artwork interpretation"
+              data-title="Mona Lisa — 3D bust"
+              data-src="https://media.artdaci.com/artworks/ld01/models/main-v2.glb">
+              <span>Leonardo da Vinci</span>
+              <strong>Mona Lisa — bust</strong>
+              <small>The original compact Mona Lisa model restored to the collection.</small>
+            </button>
+
+            <button
+              class="d3-model-choice"
+              type="button"
+              aria-current="false"
+              data-category="Artwork interpretation"
               data-title="Girl with a Pearl Earring — 3D interpretation"
               data-src="https://media.artdaci.com/artworks/ve01/models/standing--sha256-e162489dc277.glb">
               <span>Johannes Vermeer</span>
               <strong>Girl with a Pearl Earring</strong>
               <small>Three-dimensional interpretation of Vermeer's iconic figure.</small>
+            </button>
+
+            <button
+              class="d3-model-choice"
+              type="button"
+              aria-current="false"
+              data-category="Artwork interpretation"
+              data-title="Girl with a Pearl Earring — classic 3D interpretation"
+              data-src="../assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring.glb">
+              <span>Johannes Vermeer</span>
+              <strong>Girl with a Pearl Earring — classic</strong>
+              <small>The original ARTDACI interpretation, preserved alongside the standing model.</small>
             </button>
 
             <button
@@ -153,7 +177,7 @@
         <section class="d3-group" aria-labelledby="d3-masters-title">
           <div class="d3-group-head">
             <h3 id="d3-masters-title">The Masters</h3>
-            <span>1 model</span>
+            <span>5 models</span>
           </div>
           <div class="d3-grid">
             <button
@@ -166,6 +190,54 @@
               <span>Leonardo · Monet · Van Gogh · Vermeer</span>
               <strong>The Four Masters</strong>
               <small>The four ARTDACI masters brought together in one standing group.</small>
+            </button>
+
+            <button
+              class="d3-model-choice"
+              type="button"
+              aria-current="false"
+              data-category="Master figure"
+              data-title="Leonardo da Vinci — standing figure"
+              data-src="../assets/artists/leonardo-da-vinci/reimagined/models/davinci-standing-c.glb">
+              <span>Master figure</span>
+              <strong>Leonardo da Vinci</strong>
+              <small>Standing 3D character used in ARTDACI narrative experiences.</small>
+            </button>
+
+            <button
+              class="d3-model-choice"
+              type="button"
+              aria-current="false"
+              data-category="Master figure"
+              data-title="Johannes Vermeer — standing figure"
+              data-src="../assets/artists/johannes-vermeer/reimagined/models/vermeer_standing.glb">
+              <span>Master figure</span>
+              <strong>Johannes Vermeer</strong>
+              <small>Standing 3D character for guided and immersive experiences.</small>
+            </button>
+
+            <button
+              class="d3-model-choice"
+              type="button"
+              aria-current="false"
+              data-category="Master figure"
+              data-title="Vincent van Gogh — standing figure"
+              data-src="../assets/artists/vincent-van-gogh/profile/models/standing.glb">
+              <span>Master figure</span>
+              <strong>Vincent van Gogh</strong>
+              <small>Lightweight standing model for spatial experiences.</small>
+            </button>
+
+            <button
+              class="d3-model-choice"
+              type="button"
+              aria-current="false"
+              data-category="Master figure"
+              data-title="Claude Monet — standing figure"
+              data-src="../assets/artists/claude-monet/reimagined/models/claude-monet-standing-c.glb">
+              <span>Master figure</span>
+              <strong>Claude Monet</strong>
+              <small>Standing 3D character used across ARTDACI environments.</small>
             </button>
           </div>
         </section>
@@ -272,6 +344,6 @@
       </footer>
     </main>
 
-    <script type="module" src="../scripts/3d-collection.js?v=2"></script>
+    <script type="module" src="../scripts/3d-collection.js?v=3"></script>
   </body>
 </html>

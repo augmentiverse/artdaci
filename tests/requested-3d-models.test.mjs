@@ -23,17 +23,38 @@ test("the six requested GLB files are valid containers with the recorded hashes"
   }
 });
 
-test("the 3D collection exposes every requested Cloudflare model in all language modes", async () => {
+test("the 3D collection preserves the previous catalogue and exposes every requested Cloudflare model", async () => {
   const [html, script] = await Promise.all([
     readFile("3d/index.html", "utf8"),
     readFile("scripts/3d-collection.js", "utf8")
   ]);
 
   for (const [, , , url] of resources) assert.match(html, new RegExp(url.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
-  assert.equal((html.match(/class="d3-model-choice"/g) || []).length, 11);
-  assert.match(script, /counts: \["4 models", "1 model", "5 models", "1 model"\]/);
-  assert.match(script, /counts: \["4 modèles", "1 modèle", "5 modèles", "1 modèle"\]/);
-  assert.match(script, /counts: \["4 نماذج", "نموذج واحد", "5 نماذج", "نموذج واحد"\]/);
+  const restoredModels = [
+    "https://media.artdaci.com/artworks/ld01/models/main-v2.glb",
+    "../assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring.glb",
+    "../assets/artists/leonardo-da-vinci/reimagined/models/davinci-standing-c.glb",
+    "../assets/artists/johannes-vermeer/reimagined/models/vermeer_standing.glb",
+    "../assets/artists/vincent-van-gogh/profile/models/standing.glb",
+    "../assets/artists/claude-monet/reimagined/models/claude-monet-standing-c.glb"
+  ];
+  for (const src of restoredModels) assert.ok(html.includes(src), src);
+  assert.equal((html.match(/class="d3-model-choice"/g) || []).length, 17);
+  assert.match(script, /counts: \["6 models", "5 models", "5 models", "1 model"\]/);
+  assert.match(script, /counts: \["6 modèles", "5 modèles", "5 modèles", "1 modèle"\]/);
+  assert.match(script, /counts: \["6 نماذج", "5 نماذج", "5 نماذج", "نموذج واحد"\]/);
+});
+
+test("the VR model rooms use the new Leonardo, Vermeer, and Four Masters models", async () => {
+  const gallery = await readFile("scripts/gallery-vr.js", "utf8");
+  assert.ok(gallery.includes("https://media.artdaci.com/artworks/ld01/models/leonardo-painting-mona-lisa--sha256-20ee31394f18.glb"));
+  assert.ok(gallery.includes("https://media.artdaci.com/artworks/ld01/models/main-v2.glb"));
+  assert.ok(gallery.includes("https://media.artdaci.com/artworks/ld02/models/lady-with-an-ermine--sha256-366667a0233d.glb"));
+  assert.ok(gallery.includes("https://media.artdaci.com/artworks/ve01/models/standing--sha256-e162489dc277.glb"));
+  assert.ok(gallery.includes("https://media.artdaci.com/shared/groups/four-masters/models/standing--sha256-d2196ae68ecf.glb"));
+  assert.doesNotMatch(gallery, /assets\/shared\/groups\/dvvm_selfy\.glb/);
+  assert.doesNotMatch(gallery, /assets\/artists\/leonardo-da-vinci\/artworks\/mona-lisa\/models\/davinci-painting-mona\.glb/);
+  assert.match(gallery, /const multiRow = count > 4/);
 });
 
 test("artwork and museum manifests point at the published versioned models", async () => {
