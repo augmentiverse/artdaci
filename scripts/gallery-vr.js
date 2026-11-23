@@ -100,13 +100,15 @@ const LIVING_BOOK_MODEL = "assets/environments/gallery/models/book-artdaci_en.gl
 const LIVING_BOOK_MODEL_LOW_POWER = "assets/environments/gallery/models/book-artdaci_en.glb";
 const LOUVRE_ARTDACI_BOOK_MODEL = "assets/environments/gallery/models/artdaci_book3d_v2.glb";
 const GROUP_EXHIBIT = {
-  model: "assets/shared/groups/dvvm_selfy.glb",
+  model: "https://media.artdaci.com/shared/groups/four-masters/models/standing--sha256-d2196ae68ecf.glb",
   image: "assets/shared/groups/DVVM_Louvre.png"
 };
 const MODEL_ARTIST_EXHIBITS = {
   "da-vinci": [
     { title: { en: "Leonardo and Mona Lisa", fr: "Léonard et La Joconde" }, src: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/davinci-monalisa-c.glb", rotationY: Math.PI },
-    { title: { en: "Leonardo Painting Mona Lisa", fr: "Léonard peignant La Joconde" }, src: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/davinci-painting-mona.glb", rotationY: Math.PI },
+    { title: { en: "Leonardo Painting the Mona Lisa", fr: "Léonard peignant La Joconde", ar: "ليوناردو يرسم الموناليزا" }, src: "https://media.artdaci.com/artworks/ld01/models/leonardo-painting-mona-lisa--sha256-20ee31394f18.glb", rotationY: Math.PI },
+    { title: { en: "Mona Lisa — Bust", fr: "La Joconde — buste", ar: "الموناليزا — تمثال نصفي" }, src: "https://media.artdaci.com/artworks/ld01/models/main-v2.glb", rotationY: Math.PI },
+    { title: { en: "The Lady with an Ermine", fr: "La Dame à l’hermine", ar: "السيدة ذات القاقم" }, src: "https://media.artdaci.com/artworks/ld02/models/lady-with-an-ermine--sha256-366667a0233d.glb", rotationY: Math.PI },
     { title: { en: "Leonardo da Vinci", fr: "Léonard de Vinci", ar: "ليوناردو دافنشي" }, src: "assets/artists/leonardo-da-vinci/reimagined/models/davinci-standing-c.glb", rotationY: Math.PI },
     { title: { en: "Leonardo and Francis I", fr: "Léonard et François Ier", ar: "ليوناردو وفرنسوا الأول" }, src: "assets/artists/leonardo-da-vinci/reimagined/models/davinci-françois1er.glb", rotationY: Math.PI }
   ],
@@ -115,6 +117,7 @@ const MODEL_ARTIST_EXHIBITS = {
     { title: { en: "Jo van Gogh-Bonger", fr: "Jo van Gogh-Bonger", ar: "جو فان غوخ-بونغر" }, src: "assets/artists/vincent-van-gogh/supporters/models/van-gogh-jo-c.glb", rotationY: Math.PI }
   ],
   vermeer: [
+    { title: { en: "Girl with a Pearl Earring — Standing", fr: "La Jeune Fille à la perle — debout", ar: "الفتاة ذات القرط اللؤلؤي — واقفة" }, src: "https://media.artdaci.com/artworks/ve01/models/standing--sha256-e162489dc277.glb", rotationY: Math.PI },
     { title: { en: "Girl with a Pearl Earring", fr: "La Jeune Fille à la perle" }, src: "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring-sitting-c.glb", rotationY: Math.PI },
     { title: { en: "The Milkmaid", fr: "La Laitière" }, src: "assets/artists/johannes-vermeer/profile/models/milkmaid-vermeer-c100.glb", rotationY: Math.PI },
     { title: { en: "The Astronomer", fr: "L’Astronome" }, src: "assets/artists/johannes-vermeer/profile/models/the-astronomer-vermeer-c2.glb", rotationY: Math.PI },
@@ -4206,8 +4209,13 @@ async function addDedicatedArtistModel(item, centerZ, index, count) {
   if (!allowExhibit3DModels) return;
   const gltf = await modelLoader.loadAsync(item.src);
   const display = new THREE.Group();
-  const x = count === 1 ? 0 : (index - (count - 1) / 2) * 2.55;
-  display.position.set(x, 0, centerZ);
+  const multiRow = count > 4;
+  const columns = multiRow ? 3 : count;
+  const column = multiRow ? index % columns : index;
+  const row = multiRow ? Math.floor(index / columns) : 0;
+  const x = count === 1 ? 0 : (column - (Math.min(columns, count) - 1) / 2) * (multiRow ? 3.7 : 2.55);
+  const z = multiRow ? centerZ + (row === 0 ? -1.8 : 2.15) : centerZ;
+  display.position.set(x, 0, z);
   const pedestal = new THREE.Mesh(
     new THREE.CylinderGeometry(1.25, 1.4, 0.26, 32),
     new THREE.MeshStandardMaterial({ color: 0xc7b898, roughness: 0.72 })
