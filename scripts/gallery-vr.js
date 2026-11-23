@@ -106,8 +106,8 @@ const GROUP_EXHIBIT = {
 const MODEL_ARTIST_EXHIBITS = {
   "da-vinci": [
     { title: { en: "Leonardo and Mona Lisa", fr: "Léonard et La Joconde" }, src: "assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/davinci-monalisa-c.glb", rotationY: Math.PI },
-    { title: { en: "Leonardo Painting the Mona Lisa", fr: "Léonard peignant La Joconde", ar: "ليوناردو يرسم الموناليزا" }, src: "https://media.artdaci.com/artworks/ld01/models/leonardo-painting-mona-lisa--sha256-20ee31394f18.glb", rotationY: Math.PI },
-    { title: { en: "Mona Lisa — Bust", fr: "La Joconde — buste", ar: "الموناليزا — تمثال نصفي" }, src: "https://media.artdaci.com/artworks/ld01/models/main-v2.glb", rotationY: Math.PI },
+    { title: { en: "Leonardo Painting the Mona Lisa", fr: "Léonard peignant La Joconde", ar: "ليوناردو يرسم الموناليزا" }, src: "https://media.artdaci.com/artworks/ld01/models/leonardo-painting-mona-lisa--sha256-20ee31394f18.glb", rotationY: Math.PI, displayScale: 1.18 },
+    { title: { en: "Mona Lisa — Bust", fr: "La Joconde — buste", ar: "الموناليزا — تمثال نصفي" }, src: "https://media.artdaci.com/artworks/ld01/models/main-v2.glb", rotationY: Math.PI, displayScale: 0.82 },
     { title: { en: "The Lady with an Ermine", fr: "La Dame à l’hermine", ar: "السيدة ذات القاقم" }, src: "https://media.artdaci.com/artworks/ld02/models/lady-with-an-ermine--sha256-366667a0233d.glb", rotationY: Math.PI },
     { title: { en: "Leonardo da Vinci", fr: "Léonard de Vinci", ar: "ليوناردو دافنشي" }, src: "assets/artists/leonardo-da-vinci/reimagined/models/davinci-standing-c.glb", rotationY: Math.PI },
     { title: { en: "Leonardo and Francis I", fr: "Léonard et François Ier", ar: "ليوناردو وفرنسوا الأول" }, src: "assets/artists/leonardo-da-vinci/reimagined/models/davinci-françois1er.glb", rotationY: Math.PI }
@@ -4111,6 +4111,116 @@ function finishScreenPaint(event) {
   return true;
 }
 
+let museumPedestalMaterials = null;
+
+function createPedestalTexture(kind) {
+  const canvas = document.createElement("canvas");
+  canvas.width = 256;
+  canvas.height = 256;
+  const context = canvas.getContext("2d");
+  const gradient = context.createLinearGradient(0, 0, 256, 256);
+
+  if (kind === "marble") {
+    gradient.addColorStop(0, "#f5f0e7");
+    gradient.addColorStop(0.46, "#d9d0c2");
+    gradient.addColorStop(1, "#eee7dc");
+    context.fillStyle = gradient;
+    context.fillRect(0, 0, 256, 256);
+    for (let index = 0; index < 18; index += 1) {
+      context.beginPath();
+      for (let x = -24; x <= 280; x += 8) {
+        const y = index * 16 + Math.sin(x * 0.055 + index * 1.8) * 8 + Math.sin(x * 0.018 + index) * 13;
+        if (x === -24) context.moveTo(x, y);
+        else context.lineTo(x, y);
+      }
+      context.strokeStyle = index % 4 === 0 ? "rgba(99, 105, 111, 0.42)" : "rgba(134, 123, 119, 0.22)";
+      context.lineWidth = index % 4 === 0 ? 1.7 : 0.8;
+      context.stroke();
+    }
+  } else {
+    gradient.addColorStop(0, "#3b1e10");
+    gradient.addColorStop(0.48, "#8a4d28");
+    gradient.addColorStop(1, "#4a2514");
+    context.fillStyle = gradient;
+    context.fillRect(0, 0, 256, 256);
+    for (let y = 4; y < 256; y += 7) {
+      context.beginPath();
+      for (let x = 0; x <= 256; x += 8) {
+        const grain = y + Math.sin(x * 0.07 + y * 0.09) * 2.8 + Math.sin(x * 0.018) * 4.5;
+        if (x === 0) context.moveTo(x, grain);
+        else context.lineTo(x, grain);
+      }
+      context.strokeStyle = y % 21 === 4 ? "rgba(34, 15, 7, 0.52)" : "rgba(235, 172, 104, 0.18)";
+      context.lineWidth = y % 21 === 4 ? 1.4 : 0.7;
+      context.stroke();
+    }
+  }
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.RepeatWrapping;
+  texture.repeat.set(kind === "marble" ? 1.8 : 2.4, kind === "marble" ? 1.8 : 2.4);
+  texture.encoding = THREE.sRGBEncoding;
+  texture.anisotropy = 4;
+  texture.needsUpdate = true;
+  return texture;
+}
+
+function getMuseumPedestalMaterials() {
+  if (museumPedestalMaterials) return museumPedestalMaterials;
+  museumPedestalMaterials = {
+    marble: new THREE.MeshStandardMaterial({
+      color: 0xf4ecdf,
+      map: createPedestalTexture("marble"),
+      roughness: 0.34,
+      metalness: 0.04
+    }),
+    wood: new THREE.MeshStandardMaterial({
+      color: 0x8a4b28,
+      map: createPedestalTexture("wood"),
+      roughness: 0.56,
+      metalness: 0.02
+    }),
+    brass: new THREE.MeshStandardMaterial({ color: 0xc5a45c, roughness: 0.25, metalness: 0.72 })
+  };
+  return museumPedestalMaterials;
+}
+
+function createMuseumPedestal({ width = 2.55, depth = width, marbleHeight = 0.25, woodHeight = 0.14, shape = "round" } = {}) {
+  const materials = getMuseumPedestalMaterials();
+  const pedestal = new THREE.Group();
+  const woodGeometry = shape === "round"
+    ? new THREE.CylinderGeometry(width * 0.55, width * 0.58, woodHeight, 48)
+    : new THREE.BoxGeometry(width + 0.18, woodHeight, depth + 0.18);
+  const marbleGeometry = shape === "round"
+    ? new THREE.CylinderGeometry(width * 0.5, width * 0.54, marbleHeight, 48)
+    : new THREE.BoxGeometry(width, marbleHeight, depth);
+  const wood = new THREE.Mesh(woodGeometry, materials.wood);
+  wood.position.y = woodHeight / 2;
+  const marble = new THREE.Mesh(marbleGeometry, materials.marble);
+  marble.position.y = woodHeight + marbleHeight / 2;
+  pedestal.add(wood, marble);
+
+  if (shape === "round") {
+    const trim = new THREE.Mesh(new THREE.TorusGeometry(width * 0.515, 0.018, 8, 48), materials.brass);
+    trim.rotation.x = Math.PI / 2;
+    trim.position.y = woodHeight + 0.012;
+    pedestal.add(trim);
+  } else {
+    const trim = new THREE.Mesh(new THREE.BoxGeometry(width + 0.06, 0.035, depth + 0.06), materials.brass);
+    trim.position.y = woodHeight + 0.018;
+    pedestal.add(trim);
+  }
+
+  pedestal.traverse((node) => {
+    if (!node.isMesh) return;
+    node.castShadow = !isQuestBrowser;
+    node.receiveShadow = true;
+  });
+  pedestal.userData.surfaceY = woodHeight + marbleHeight;
+  return pedestal;
+}
+
 async function buildGroupExhibit() {
   const texture = await textureLoader.loadAsync(GROUP_EXHIBIT.image);
   texture.encoding = THREE.sRGBEncoding;
@@ -4127,6 +4237,9 @@ async function buildGroupExhibit() {
   if (!allowExhibit3DModels) return;
 
   const gltf = await modelLoader.loadAsync(GROUP_EXHIBIT.model);
+  const pedestal = createMuseumPedestal({ width: 5.15, depth: 2.8, marbleHeight: 0.27, woodHeight: 0.15, shape: "rect" });
+  pedestal.position.z = -1.1;
+  scene.add(pedestal);
   const model = gltf.scene;
   model.rotation.y = 0;
   model.updateMatrixWorld(true);
@@ -4136,7 +4249,7 @@ async function buildGroupExhibit() {
   model.updateMatrixWorld(true);
   modelBox = new THREE.Box3().setFromObject(model);
   const modelCenter = modelBox.getCenter(new THREE.Vector3());
-  model.position.set(-modelCenter.x, -modelBox.min.y, -1.1 - modelCenter.z);
+  model.position.set(-modelCenter.x, pedestal.userData.surfaceY - modelBox.min.y, -1.1 - modelCenter.z);
   model.traverse((node) => {
     if (!node.isMesh) return;
     node.castShadow = !isQuestBrowser;
@@ -4216,16 +4329,18 @@ async function addDedicatedArtistModel(item, centerZ, index, count) {
   const x = count === 1 ? 0 : (column - (Math.min(columns, count) - 1) / 2) * (multiRow ? 3.7 : 2.55);
   const z = multiRow ? centerZ + (row === 0 ? -1.8 : 2.15) : centerZ;
   display.position.set(x, 0, z);
-  const pedestal = new THREE.Mesh(
-    new THREE.CylinderGeometry(1.25, 1.4, 0.26, 32),
-    new THREE.MeshStandardMaterial({ color: 0xc7b898, roughness: 0.72 })
-  );
-  pedestal.position.y = 0.13;
+  const pedestal = createMuseumPedestal();
   display.add(pedestal);
   const model = gltf.scene;
   normalizeGalleryModel(model);
+  if (item.displayScale && item.displayScale !== 1) {
+    model.scale.multiplyScalar(item.displayScale);
+    model.updateMatrixWorld(true);
+    const scaledBox = new THREE.Box3().setFromObject(model);
+    model.position.y -= scaledBox.min.y;
+  }
   model.rotation.y = item.rotationY || 0;
-  model.position.y += 0.27;
+  model.position.y += pedestal.userData.surfaceY;
   model.traverse((node) => {
     if (!node.isMesh) return;
     node.castShadow = false;
@@ -4234,7 +4349,7 @@ async function addDedicatedArtistModel(item, centerZ, index, count) {
   display.add(model);
   const titleText = item.title[lang] || item.title.en;
   const label = makeLabel(titleText);
-  label.position.set(0, 0.48, -1.03);
+  label.position.set(0, pedestal.userData.surfaceY + 0.18, -1.03);
   label.rotation.x = -Math.PI / 2;
   label.rotation.y = Math.PI;
   label.scale.set(1.85, 0.56, 1);
@@ -4242,7 +4357,7 @@ async function addDedicatedArtistModel(item, centerZ, index, count) {
   scene.add(display);
   registerCollisionObject(display, 0.18, `artist-model-${item.src}`);
   const light = new THREE.SpotLight(0xffe6bd, 0.9, 7, Math.PI / 4.5, 0.5);
-  light.position.set(x, 3.8, centerZ - 1.2);
+  light.position.set(x, 3.8, z - 1.2);
   light.target = display;
   scene.add(light);
   const pseudoExhibit = { painting: { slug: item.src, title: titleText }, modelDisplay: display };
@@ -6822,17 +6937,12 @@ async function addGalleryModel(exhibit, modelSrc) {
   display.position.set(x, 0, z);
   display.userData.painting = exhibit.painting.slug;
 
-  const pedestal = new THREE.Mesh(
-    new THREE.BoxGeometry(1.48, 0.24, 1.48),
-    new THREE.MeshStandardMaterial({ color: 0xc9bca8, roughness: 0.78 })
-  );
-  pedestal.position.y = 0.12;
-  pedestal.receiveShadow = true;
+  const pedestal = createMuseumPedestal({ width: 1.58, depth: 1.58, marbleHeight: 0.22, woodHeight: 0.12 });
   display.add(pedestal);
 
   const model = gltf.scene;
   normalizeGalleryModel(model);
-  model.position.y += 0.25;
+  model.position.y += pedestal.userData.surfaceY;
   model.traverse((node) => {
     if (!node.isMesh) return;
     node.castShadow = false;
@@ -6842,7 +6952,7 @@ async function addGalleryModel(exhibit, modelSrc) {
 
   const title = localizedTitle(exhibit.painting);
   const label = makeLabel(`${lang === "ar" ? "عمل ثلاثي الأبعاد" : lang === "fr" ? "Œuvre 3D" : "3D exhibit"}\n${title}`);
-  label.position.set(0, 0.43, -0.76);
+  label.position.set(0, pedestal.userData.surfaceY + 0.17, -0.76);
   label.rotation.y = Math.PI;
   label.rotation.x = -Math.PI / 2;
   label.scale.set(1.55, 0.72, 1);

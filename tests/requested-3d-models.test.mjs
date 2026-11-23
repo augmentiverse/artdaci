@@ -57,6 +57,19 @@ test("the VR model rooms use the new Leonardo, Vermeer, and Four Masters models"
   assert.match(gallery, /const multiRow = count > 4/);
 });
 
+test("the VR model rooms emphasize Leonardo and use textured museum pedestals", async () => {
+  const gallery = await readFile("scripts/gallery-vr.js", "utf8");
+  assert.match(gallery, /leonardo-painting-mona-lisa[^\n]+displayScale: 1\.18/);
+  assert.match(gallery, /models\/main-v2\.glb[^\n]+displayScale: 0\.82/);
+  assert.match(gallery, /function createPedestalTexture\(kind\)/);
+  assert.match(gallery, /new THREE\.CanvasTexture\(canvas\)/);
+  assert.match(gallery, /marble: new THREE\.MeshStandardMaterial/);
+  assert.match(gallery, /wood: new THREE\.MeshStandardMaterial/);
+  assert.match(gallery, /brass: new THREE\.MeshStandardMaterial/);
+  assert.ok((gallery.match(/createMuseumPedestal\(/g) || []).length >= 4);
+  assert.match(gallery, /model\.position\.y \+= pedestal\.userData\.surfaceY/);
+});
+
 test("artwork and museum manifests point at the published versioned models", async () => {
   const paths = [
     "content/paintings/mona-lisa.json",
