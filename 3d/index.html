@@ -3,18 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#100d0b" />
+    <meta name="theme-color" content="#193B55" />
     <meta
       name="description"
       content="Explore ARTDACI artworks, artists, objects and museum architecture as interactive 3D models."
     />
     <title>ARTDACI — 3D Models</title>
     <link rel="icon" href="../assets/app/artdaci-app-icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="../styles/3d-collection.css?v=1" />
+    <link rel="stylesheet" href="../styles/3d-collection.css?v=2" />
     <link rel="stylesheet" href="../styles/artdaci-identity.css?v=2" />
     <script type="module" src="../vendor/model-viewer.min.js?v=3.5.0"></script>
   
 <link rel="stylesheet" href="../styles/artdaci-brand-system.css?v=1">
+<link rel="stylesheet" href="../styles/3d-studio.css?v=1">
 </head>
   <body>
     <header class="d3-header">
@@ -47,41 +48,14 @@
           </p>
         </div>
 
-        <div class="d3-stage-wrap">
-          <div class="d3-stage">
-            <span id="d3-loading" class="d3-loading">Loading 3D model</span>
-            <model-viewer
-              id="d3-model"
-              src="https://media.artdaci.com/artworks/ld01/models/leonardo-painting-mona-lisa--sha256-20ee31394f18.glb"
-              alt="Leonardo painting the Mona Lisa — interactive 3D model"
-              camera-controls
-              touch-action="pan-y"
-              auto-rotate
-              ar
-              ar-modes="webxr scene-viewer quick-look"
-              ar-placement="floor"
-              shadow-intensity="0.75"
-              exposure="1"
-              interaction-prompt="auto"
-              loading="eager"
-              reveal="auto">
-              <button class="d3-ar-button" slot="ar-button" type="button">View in AR</button>
-            </model-viewer>
-
-            <div class="d3-stage-meta">
-              <div>
-                <span id="d3-category">Artwork interpretation</span>
-                <strong id="d3-title">Leonardo painting the Mona Lisa</strong>
-              </div>
-              <div class="d3-controls" aria-label="3D viewer controls">
-                <button id="d3-rotate" type="button" aria-pressed="true">Stop rotation</button>
-                <button id="d3-reset" type="button">Reset view</button>
-              </div>
-            </div>
-          </div>
+        <div class="d3-hero-side" aria-hidden="true">
+          <span class="d3-hero-rule"></span>
+          <span id="d3-hero-stats">17 models · 4 collections</span>
+          <span class="d3-hero-glyph">✧</span>
         </div>
       </section>
-
+      <section class="d3-workbench" aria-label="Interactive 3D studio">
+        <aside class="d3-browser" id="d3-browser" aria-label="3D model catalogue">
       <section class="d3-section" aria-labelledby="d3-library-title">
         <div class="d3-section-head">
           <div>
@@ -92,6 +66,21 @@
             This first 3D portal brings together several types of assets already used across ARTDACI.
             The collection can expand progressively without changing the interaction model.
           </p>
+        </div>
+        <div class="d3-discovery" aria-label="Model catalogue controls">
+          <label class="d3-search-wrap" for="d3-search">
+            <span class="d3-search-icon" aria-hidden="true">⌕</span>
+            <input type="search" id="d3-search" autocomplete="off" placeholder="Search a model or artist…" aria-label="Search 3D models" />
+          </label>
+          <div class="d3-tabs" id="d3-tabs" role="group" aria-label="Filter the collection">
+            <button class="d3-tab" type="button" data-filter="all" aria-pressed="true">All <span>17</span></button>
+            <button class="d3-tab" type="button" data-filter="0" aria-pressed="false">Artworks</button>
+            <button class="d3-tab" type="button" data-filter="1" aria-pressed="false">Masters</button>
+            <button class="d3-tab" type="button" data-filter="2" aria-pressed="false">Museums</button>
+            <button class="d3-tab" type="button" data-filter="3" aria-pressed="false">Objects</button>
+          </div>
+          <div class="d3-search-meta" role="status" aria-live="polite"><span id="d3-results">17 models</span><span id="d3-active-label">Select to explore ↗</span></div>
+          <p class="d3-empty" id="d3-empty" hidden>No model matches your search.</p>
         </div>
 
         <section class="d3-group" aria-labelledby="d3-artworks-title">
@@ -330,6 +319,61 @@
           </div>
         </section>
       </section>
+        </aside>
+        <div class="d3-stage-wrap">
+          <div class="d3-stage" id="d3-stage">
+            <div class="d3-stage-aura" aria-hidden="true">
+              <span class="d3-aura-halo"></span>
+              <span class="d3-aura-ring d3-aura-ring--outer"></span>
+              <span class="d3-aura-ring d3-aura-ring--inner"></span>
+              <span class="d3-aura-floor"></span>
+              <span class="d3-aura-spark d3-aura-spark--one"></span>
+              <span class="d3-aura-spark d3-aura-spark--two"></span>
+            </div>
+            <div class="d3-stage-top">
+              <div class="d3-scene-id"><span class="d3-scene-dot" aria-hidden="true"></span><span id="d3-scene-label">ARTDACI · 3D STUDIO</span></div>
+              <div class="d3-toolbox">
+                <button type="button" id="d3-light" aria-pressed="false" title="Change lighting">☼ <span>Lighting</span></button>
+                <button type="button" id="d3-fullscreen" title="Full screen" aria-label="Full screen">⛶</button>
+              </div>
+            </div>
+            <span id="d3-loading" class="d3-loading">Loading 3D model</span>
+            <model-viewer
+              id="d3-model"
+              src="https://media.artdaci.com/artworks/ld01/models/leonardo-painting-mona-lisa--sha256-20ee31394f18.glb"
+              alt="Leonardo painting the Mona Lisa — interactive 3D model"
+              camera-controls
+              touch-action="pan-y"
+              auto-rotate
+              ar
+              ar-modes="webxr scene-viewer quick-look"
+              ar-placement="floor"
+              shadow-intensity="0.75"
+              exposure="1"
+              interaction-prompt="auto"
+              loading="eager"
+              reveal="auto">
+              <button class="d3-ar-button" slot="ar-button" type="button">View in AR</button>
+            </model-viewer>
+
+            <div class="d3-zoomtools" role="group" aria-label="Zoom">
+              <button id="d3-zoom-in" type="button" title="Zoom in" aria-label="Zoom in">+</button>
+              <button id="d3-zoom-out" type="button" title="Zoom out" aria-label="Zoom out">−</button>
+            </div>
+            <p class="d3-gesture-hint" id="d3-gesture-hint">↻ Drag to rotate · Scroll to zoom</p>
+            <div class="d3-stage-meta">
+              <div>
+                <span id="d3-category">Artwork interpretation</span>
+                <strong id="d3-title">Leonardo painting the Mona Lisa</strong>
+              </div>
+              <div class="d3-controls" aria-label="3D viewer controls">
+                <button id="d3-rotate" type="button" aria-pressed="true">Stop rotation</button>
+                <button id="d3-reset" type="button">Reset view</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <footer class="d3-footer">
         <span>ARTDACI · Interactive 3D Collection</span>
@@ -344,6 +388,6 @@
       </footer>
     </main>
 
-    <script type="module" src="../scripts/3d-collection.js?v=3"></script>
+    <script type="module" src="../scripts/3d-collection.js?v=4"></script>
   </body>
 </html>
