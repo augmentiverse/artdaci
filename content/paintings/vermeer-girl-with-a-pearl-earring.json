@@ -76,9 +76,9 @@
     "startMode": "painting-emergence",
     "imageTarget": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg",
     "compiledTarget": "assets/targets/vermeer_Girl-with-a-Pearl-Earring.mind",
-    "primaryModel": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring.glb",
+    "primaryModel": "https://media.artdaci.com/artworks/ve01/models/standing--sha256-e162489dc277.glb",
     "modelVariants": [
-      { "id": "portrait", "label": { "en": "Portrait", "fr": "Portrait" }, "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring.glb" },
+      { "id": "portrait", "label": { "en": "Standing figure", "fr": "Figure debout" }, "src": "https://media.artdaci.com/artworks/ve01/models/standing--sha256-e162489dc277.glb" },
       { "id": "sitting", "label": { "en": "Sitting figure", "fr": "Figure assise" }, "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring-sitting-c.glb" }
     ],
     "viewer": { "initialScale": 0.34, "initialRise": 0.14, "modelRotation": { "x": 0, "y": 0, "z": 0 } },
@@ -86,9 +86,9 @@
   },
   "media": {
     "image": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/images/vermeer-girl-with-a-pearl-earring.jpg",
-    "model": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring.glb",
+    "model": "https://media.artdaci.com/artworks/ve01/models/standing--sha256-e162489dc277.glb",
     "modelVariants": [
-      { "id": "portrait", "label": { "en": "Portrait", "fr": "Portrait" }, "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring.glb" },
+      { "id": "portrait", "label": { "en": "Standing figure", "fr": "Figure debout" }, "src": "https://media.artdaci.com/artworks/ve01/models/standing--sha256-e162489dc277.glb" },
       { "id": "sitting", "label": { "en": "Sitting figure", "fr": "Figure assise" }, "src": "assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/vermeer-girl-with-a-pearl-earring-sitting-c.glb" }
     ],
     "audioGuides": [

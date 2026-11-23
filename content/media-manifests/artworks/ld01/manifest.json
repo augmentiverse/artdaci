@@ -131,6 +131,15 @@
         "migrationStatus": "published",
         "bytes": 2637936,
         "sha256": "138e618385c471fe51bc71f1d4e2faed32ea1bad8a0db18245bddd27ca253733"
+      },
+      "leonardo-painting-mona-lisa": {
+        "scope": "artwork",
+        "path": "models/leonardo-painting-mona-lisa--sha256-20ee31394f18.glb",
+        "mimeType": "model/gltf-binary",
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 8517028,
+        "sha256": "20ee31394f180b711df6e2e790c7bc954d6b2e6297fd50093b225f39eda3b765"
       }
     },
     "ar": {
@@ -152,5 +161,5 @@
       }
     }
   },
-  "updatedAt": "2026-09-10"
+  "updatedAt": "2026-11-22"
 }

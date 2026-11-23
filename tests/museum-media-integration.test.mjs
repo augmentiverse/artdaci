@@ -51,7 +51,7 @@ test("the Five Museums Wing loads each architectural model as essential room con
   const source = await text("scripts/gallery-vr.js");
   const models = [
     "Louvre-full-joint_c.glb",
-    "Mauritshuis_museum_c3.glb",
+    "https://media.artdaci.com/shared/museums/mauritshuis/models/main--sha256-5458d044ca86.glb",
     "MNK-Czartoryski_museum_c3.glb",
     "Orsay_museum_c3.glb",
     "Vangogh_museum_c3.glb"
@@ -93,8 +93,8 @@ test("museum configuration and viewer cache-busters activate the new media", asy
   assert.match(arSource, /CONFIG\.resourceType === "museum" && manifest\.print\?\.imageTargetSource/);
   assert.match(arSource, /document\.getElementById\("target-image-link"\)\.href = manifest\.print\.imageTargetSource/);
   assert.match(spaceHtml, /space-viewer\.js\?v=36/);
-  assert.match(galleryHtml, /gallery-vr\.js\?v=177/);
-  assert.match(cinemaHtml, /gallery-vr\.js\?v=148/);
+  assert.match(galleryHtml, /gallery-vr\.js\?v=181/);
+  assert.match(cinemaHtml, /gallery-vr\.js\?v=151/);
   assert.match(cinemaHtml, /<body class="screen-ui-collapsed" data-experience="cinema">/);
   assert.match(cinemaHtml, /id="gallery-ui-toggle"[\s\S]*?aria-expanded="false"[\s\S]*?>Menu<\/button>/);
   assert.match(cinemaHtml, /id="gallery-toolbar"/);

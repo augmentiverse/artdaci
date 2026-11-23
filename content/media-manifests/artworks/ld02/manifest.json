@@ -28,8 +28,18 @@
       }
     },
     "videos": {},
-    "models": {},
+    "models": {
+      "main": {
+        "scope": "artwork",
+        "path": "models/lady-with-an-ermine--sha256-366667a0233d.glb",
+        "mimeType": "model/gltf-binary",
+        "available": true,
+        "migrationStatus": "published",
+        "bytes": 6934764,
+        "sha256": "366667a0233d6f1f532746506a92557cddb70bd01d8a0e849d700715f3ea6707"
+      }
+    },
     "ar": {}
   },
-  "updatedAt": "2026-09-08"
+  "updatedAt": "2026-11-22"
 }

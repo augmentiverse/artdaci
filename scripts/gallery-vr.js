@@ -9,15 +9,15 @@ import { resolveManifestMedia } from "./artwork-media-manifest-core.mjs";
 import { detectRuntimeProfile } from "./runtime-profile.js?v=1";
 
 const MANIFESTS = [
-  "content/paintings/mona-lisa.json?v=4",
+  "content/paintings/mona-lisa.json?v=5",
   "content/paintings/van-gogh.json?v=4",
-  "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=3",
+  "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=4",
   "content/paintings/van-gogh-bedroom.json?v=2"
 ];
 const PRINTED_MANIFESTS = [
-  "content/paintings/mona-lisa.json?v=4",
-  "content/paintings/lady-with-an-ermine.json?v=1",
-  "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=3",
+  "content/paintings/mona-lisa.json?v=5",
+  "content/paintings/lady-with-an-ermine.json?v=2",
+  "content/paintings/vermeer-girl-with-a-pearl-earring.json?v=4",
   "content/paintings/additional-16.json?v=1",
   "content/paintings/van-gogh.json?v=4",
   "content/paintings/van-gogh-bedroom.json?v=2",
@@ -216,7 +216,7 @@ const MUSEUM_ROOMS = [
     name: { en: "Mauritshuis", fr: "Mauritshuis", ar: "متحف موريتشهاوس" },
     plan: "assets/environments/gallery/images/Mauritshuis/Mauritshuis_building_plan/Mauritshuis_building_plan_{lang}.png",
     timeline: "assets/environments/gallery/images/Mauritshuis/Mauritshuis_timeline/Mauritshuis_timeline_{lang}.png",
-    facade: "assets/environments/gallery/images/Mauritshuis/Mauritshuis_building_plan/Mauritshuis_façade.png", model: "assets/environments/gallery/models/museums/Mauritshuis_museum_c3.glb", displaySize: 5.8,
+    facade: "assets/environments/gallery/images/Mauritshuis/Mauritshuis_building_plan/Mauritshuis_façade.png", model: "https://media.artdaci.com/shared/museums/mauritshuis/models/main--sha256-5458d044ca86.glb", displaySize: 5.8,
     colors: [0x3d352b, 0xd3b471]
   },
   {
