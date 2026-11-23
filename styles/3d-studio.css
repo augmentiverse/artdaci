@@ -309,3 +309,55 @@ html[dir="rtl"] .d3-model-choice[aria-current="true"] {box-shadow:0 0 0 1px rgba
 @media(min-width:761px){.d3-workbench{grid-template-columns:minmax(250px,29%) minmax(0,1fr);align-items:stretch;height:max(340px,calc(100dvh - 156px))}.d3-browser,.d3-stage-wrap{height:100%;max-height:100%;order:initial}.d3-grid{grid-template-columns:1fr}.d3-stage-wrap{position:sticky}.d3-stage{min-height:220px}.d3-understage{flex:none}}
 @media(max-width:760px){.d3-header{grid-template-columns:1fr auto;min-height:54px}.d3-header .d3-back{display:none}.d3-lang{grid-column:2}.d3-brand span{display:inline;font-size:9px}.d3-shell{padding-top:10px}.d3-hero-side{display:none}.d3-copy h1{font-size:29px}.d3-workbench{display:flex;flex-direction:column;gap:10px}.d3-stage-wrap{order:-1;position:sticky;top:55px;z-index:10;background:#234f6a;padding-bottom:5px}.d3-stage{flex:none;height:clamp(190px,43dvh,420px);min-height:0}.d3-browser{max-height:46dvh;min-height:190px}.d3-understage{padding:5px 8px}.d3-understage .d3-stage-meta strong{font-size:15px}.d3-understage .d3-stage-meta{flex-wrap:wrap}.d3-controls{width:auto;flex:none}.d3-controls button{min-height:28px}.d3-scene-id{display:none}.d3-stage-top{justify-content:flex-end}.d3-zoomtools{top:60px}.d3-section-head h2{font-size:19px}}
 @media(max-height:550px) and (max-width:760px){.d3-stage-wrap{position:relative;top:auto}.d3-browser{max-height:55dvh}}
+
+/* V3 — generous square canvas and editorial catalogue without decorative icons. */
+.d3-workbench{--catalog-width:clamp(310px,34%,490px);gap:18px}
+.d3-browser{padding:18px 16px}
+.d3-browser .d3-section-head{margin:0 0 12px}
+.d3-browser .d3-section-head h2{font-size:clamp(23px,2vw,29px);line-height:1.2}
+.d3-model-list{flex:1 1 auto;padding:2px 7px 10px 0;scrollbar-gutter:stable}
+.d3-model-list .d3-group{margin-top:18px}
+.d3-grid{gap:9px}
+.d3-model-choice,.d3-model-choice[aria-current="true"],html[dir="rtl"] .d3-model-choice{
+  display:flex;flex-direction:column;align-items:stretch;justify-content:center;
+  gap:5px;padding:13px 25px 13px 15px;min-height:0;text-align:start;
+  overflow-wrap:anywhere;white-space:normal;
+}
+.d3-model-choice[hidden]{display:none!important}
+.d3-model-choice::before{content:none!important;display:none!important}
+.d3-model-choice::after{top:15px;right:10px;font-size:13px}
+html[dir="rtl"] .d3-model-choice{padding:13px 15px 13px 25px}
+html[dir="rtl"] .d3-model-choice::after{right:auto;left:10px}
+.d3-model-choice span{font-size:11.5px;line-height:1.4;letter-spacing:0;color:#b8dbea}
+.d3-model-choice strong{font-family:inherit;font-size:15.5px;line-height:1.35;font-weight:650}
+.d3-model-choice small{font-size:12px;line-height:1.5;color:#d2e1e9}
+.d3-tab{font-size:12px;padding:7px 10px}
+.d3-search-meta{font-size:11px}
+.d3-group-head h3{font-size:21px}
+@media(min-width:761px){
+ .d3-workbench{grid-template-columns:minmax(0,var(--catalog-width)) minmax(0,1fr);height:auto;align-items:stretch;container-type:inline-size}
+ .d3-stage-wrap{height:auto;max-height:none;min-height:0;position:relative;top:auto;align-self:start}
+ .d3-stage{flex:none;width:100%;height:auto;min-height:0;aspect-ratio:1 / 1}
+ .d3-browser{height:100%;max-height:none;min-height:0;position:relative;contain:size;align-self:stretch}
+ .d3-browser .d3-section{position:absolute;inset:18px 16px;height:auto}
+ .d3-model-list{min-height:0}
+ .d3-stage-wrap:has(.d3-stage:fullscreen){position:static}
+ .d3-stage:fullscreen{aspect-ratio:auto;height:100%;width:100%}
+}
+@media(min-width:761px) and (max-width:1000px){
+ .d3-workbench{--catalog-width:clamp(280px,39%,360px);gap:12px}
+ .d3-browser .d3-section{inset:12px}
+ .d3-model-choice{padding-block:10px}
+ .d3-model-choice strong{font-size:14.5px}
+ .d3-model-choice small{font-size:11.5px}
+}
+@media(max-width:760px){
+ .d3-stage-wrap{position:relative;top:auto}
+ .d3-stage{width:100%;height:auto;aspect-ratio:1 / 1;min-height:0}
+ .d3-browser{max-height:none;min-height:0;padding:15px 12px}
+ .d3-browser .d3-section{height:auto}
+ .d3-model-list{max-height:clamp(360px,65dvh,680px);flex:auto}
+ .d3-model-choice strong{font-size:16px}
+ .d3-model-choice small{font-size:12px}
+ .d3-stage:fullscreen{aspect-ratio:auto;height:100%;width:100%}
+}
