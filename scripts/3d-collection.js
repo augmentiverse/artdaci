@@ -428,8 +428,10 @@ function changeZoom(multiplier) {
 }
 const zoomInButton=document.getElementById("d3-zoom-in");
 const zoomOutButton=document.getElementById("d3-zoom-out");
-zoomInButton.title=zoomInButton.getAttribute("aria-label")=studio.zoomIn;
-zoomOutButton.title=zoomOutButton.getAttribute("aria-label")=studio.zoomOut;
+zoomInButton.title=studio.zoomIn;
+zoomInButton.setAttribute("aria-label",studio.zoomIn);
+zoomOutButton.title=studio.zoomOut;
+zoomOutButton.setAttribute("aria-label",studio.zoomOut);
 zoomInButton.addEventListener("click",()=>changeZoom(.8));
 zoomOutButton.addEventListener("click",()=>changeZoom(1.25));
 
