@@ -68,6 +68,10 @@ test("the VR model rooms emphasize Leonardo and use textured museum pedestals", 
   assert.match(gallery, /brass: new THREE\.MeshStandardMaterial/);
   assert.ok((gallery.match(/createMuseumPedestal\(/g) || []).length >= 4);
   assert.match(gallery, /model\.position\.y \+= pedestal\.userData\.surfaceY/);
+  assert.match(gallery, /width = 1\.85, depth = width, marbleHeight = 0\.2, woodHeight = 0\.1/);
+  assert.match(gallery, /width: 1\.35, depth: 1\.35, marbleHeight: 0\.18, woodHeight: 0\.09/);
+  assert.match(gallery, /color: 0xd2c4b4/);
+  assert.match(gallery, /color: 0x69381f/);
 });
 
 test("artwork and museum manifests point at the published versioned models", async () => {

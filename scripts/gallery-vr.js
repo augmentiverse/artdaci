@@ -4121,9 +4121,9 @@ function createPedestalTexture(kind) {
   const gradient = context.createLinearGradient(0, 0, 256, 256);
 
   if (kind === "marble") {
-    gradient.addColorStop(0, "#f5f0e7");
-    gradient.addColorStop(0.46, "#d9d0c2");
-    gradient.addColorStop(1, "#eee7dc");
+    gradient.addColorStop(0, "#d8cdbf");
+    gradient.addColorStop(0.46, "#b7a99a");
+    gradient.addColorStop(1, "#cbbdad");
     context.fillStyle = gradient;
     context.fillRect(0, 0, 256, 256);
     for (let index = 0; index < 18; index += 1) {
@@ -4133,14 +4133,14 @@ function createPedestalTexture(kind) {
         if (x === -24) context.moveTo(x, y);
         else context.lineTo(x, y);
       }
-      context.strokeStyle = index % 4 === 0 ? "rgba(99, 105, 111, 0.42)" : "rgba(134, 123, 119, 0.22)";
+      context.strokeStyle = index % 4 === 0 ? "rgba(72, 77, 82, 0.46)" : "rgba(105, 92, 86, 0.28)";
       context.lineWidth = index % 4 === 0 ? 1.7 : 0.8;
       context.stroke();
     }
   } else {
     gradient.addColorStop(0, "#3b1e10");
-    gradient.addColorStop(0.48, "#8a4d28");
-    gradient.addColorStop(1, "#4a2514");
+    gradient.addColorStop(0.48, "#72401f");
+    gradient.addColorStop(1, "#3d1d10");
     context.fillStyle = gradient;
     context.fillRect(0, 0, 256, 256);
     for (let y = 4; y < 256; y += 7) {
@@ -4170,23 +4170,23 @@ function getMuseumPedestalMaterials() {
   if (museumPedestalMaterials) return museumPedestalMaterials;
   museumPedestalMaterials = {
     marble: new THREE.MeshStandardMaterial({
-      color: 0xf4ecdf,
+      color: 0xd2c4b4,
       map: createPedestalTexture("marble"),
       roughness: 0.34,
       metalness: 0.04
     }),
     wood: new THREE.MeshStandardMaterial({
-      color: 0x8a4b28,
+      color: 0x69381f,
       map: createPedestalTexture("wood"),
       roughness: 0.56,
       metalness: 0.02
     }),
-    brass: new THREE.MeshStandardMaterial({ color: 0xc5a45c, roughness: 0.25, metalness: 0.72 })
+    brass: new THREE.MeshStandardMaterial({ color: 0xa88749, roughness: 0.28, metalness: 0.68 })
   };
   return museumPedestalMaterials;
 }
 
-function createMuseumPedestal({ width = 2.55, depth = width, marbleHeight = 0.25, woodHeight = 0.14, shape = "round" } = {}) {
+function createMuseumPedestal({ width = 1.85, depth = width, marbleHeight = 0.2, woodHeight = 0.1, shape = "round" } = {}) {
   const materials = getMuseumPedestalMaterials();
   const pedestal = new THREE.Group();
   const woodGeometry = shape === "round"
@@ -4237,7 +4237,7 @@ async function buildGroupExhibit() {
   if (!allowExhibit3DModels) return;
 
   const gltf = await modelLoader.loadAsync(GROUP_EXHIBIT.model);
-  const pedestal = createMuseumPedestal({ width: 5.15, depth: 2.8, marbleHeight: 0.27, woodHeight: 0.15, shape: "rect" });
+  const pedestal = createMuseumPedestal({ width: 4.4, depth: 2.3, marbleHeight: 0.21, woodHeight: 0.11, shape: "rect" });
   pedestal.position.z = -1.1;
   scene.add(pedestal);
   const model = gltf.scene;
@@ -6937,7 +6937,7 @@ async function addGalleryModel(exhibit, modelSrc) {
   display.position.set(x, 0, z);
   display.userData.painting = exhibit.painting.slug;
 
-  const pedestal = createMuseumPedestal({ width: 1.58, depth: 1.58, marbleHeight: 0.22, woodHeight: 0.12 });
+  const pedestal = createMuseumPedestal({ width: 1.35, depth: 1.35, marbleHeight: 0.18, woodHeight: 0.09 });
   display.add(pedestal);
 
   const model = gltf.scene;
