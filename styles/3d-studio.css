@@ -361,3 +361,9 @@ html[dir="rtl"] .d3-model-choice::after{right:auto;left:10px}
  .d3-model-choice small{font-size:12px}
  .d3-stage:fullscreen{aspect-ratio:auto;height:100%;width:100%}
 }
+
+/* V4 — manipulation instructions beside the studio heading. */
+.d3-hero-side{white-space:normal;text-transform:none;letter-spacing:0;max-width:46%;color:#e0edf4;text-align:end;gap:8px;font-size:13px;line-height:1.5}
+.d3-hero-side #d3-hero-stats,.d3-hero-side .d3-hero-glyph,.d3-hero-side .d3-hero-rule{display:none!important}
+.d3-hero-side #d3-gesture-hint{font-weight:550}
+@media(max-width:760px){.d3-hero{flex-wrap:wrap;gap:6px}.d3-hero-side{display:flex;max-width:100%;text-align:start;font-size:11px}}
