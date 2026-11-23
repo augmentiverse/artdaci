@@ -225,6 +225,7 @@ function selectModel(button) {
   title.textContent = nextTitle;
   loading.textContent = copy.loading;
   loading.hidden = false;
+  if (viewer.getAttribute("src") === src && viewer.loaded) { loading.hidden = true; fitStudioModel(); return; }
   viewer.setAttribute("src", src);
   viewer.setAttribute("alt", nextTitle);
 }
@@ -232,13 +233,13 @@ function selectModel(button) {
 choices.forEach((button) => {
   button.addEventListener("click", () => {
     selectModel(button);
-    if (window.matchMedia("(max-width: 1100px)").matches) {
+    if (window.matchMedia("(max-width: 760px)").matches) {
       document.querySelector(".d3-stage-wrap")?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
     }
   });
 });
 
-viewer?.addEventListener("load", () => { loading.hidden = true; });
+viewer?.addEventListener("load", () => { loading.hidden = true; fitStudioModel(); });
 viewer?.addEventListener("error", () => {
   loading.textContent = copy.unavailable;
   loading.hidden = false;
@@ -260,9 +261,9 @@ rotateButton?.addEventListener("click", () => {
 
 resetButton?.addEventListener("click", () => {
   if (typeof viewer.resetTurntableRotation === "function") viewer.resetTurntableRotation();
-  viewer.cameraOrbit = "0deg 75deg auto";
+  viewer.cameraOrbit = "0deg 75deg 130%";
   viewer.cameraTarget = "auto auto auto";
-  viewer.fieldOfView = "auto";
+  viewer.fieldOfView = "35deg";
 });
 
 const first = choices.find((choice) => choice.getAttribute("aria-current") === "true") || choices[0];
@@ -423,7 +424,7 @@ function changeZoom(multiplier) {
   if(typeof viewer.getCameraOrbit!=="function")return;
   const orbit=viewer.getCameraOrbit();
   if(!orbit||!Number.isFinite(orbit.radius))return;
-  const newRadius=Math.max(.06,Math.min(10000,orbit.radius*multiplier));
+  const newRadius=Math.max(.0001,orbit.radius*multiplier);
   viewer.cameraOrbit=orbit.theta+"rad "+orbit.phi+"rad "+newRadius+"m";
 }
 const zoomInButton=document.getElementById("d3-zoom-in");
@@ -440,3 +441,34 @@ if(window.matchMedia("(prefers-reduced-motion: reduce)").matches&&rotating) {
   viewer.removeAttribute("auto-rotate");
   refreshRotateLabel();
 }
+
+/* Anchor the decorative floor to the projected lower centre of the model.
+   The camera's actual target and orbit are used; no fixed-size GLB assumptions. */
+function fitStudioModel(){
+  viewer.cameraTarget="auto auto auto";
+  viewer.cameraOrbit="0deg 75deg 130%";
+  viewer.fieldOfView="35deg";
+  viewer.jumpCameraToGoal?.();
+  requestAnimationFrame(updateStudioFloor);
+}
+function updateStudioFloor(){
+  if(!viewer.loaded || !viewer.getBoundingBoxCenter || !viewer.getDimensions || !viewer.getCameraTarget || !viewer.getCameraOrbit)return;
+  const c=viewer.getBoundingBoxCenter(), d=viewer.getDimensions(), t=viewer.getCameraTarget(), o=viewer.getCameraOrbit();
+  const w=viewer.clientWidth,h=viewer.clientHeight;
+  if(!w||!h||!o.radius)return;
+  const fov=(viewer.getFieldOfView?.()||35)*Math.PI/180;
+  const f=h/(2*Math.tan(fov/2));
+  const x=c.x-t.x,y=c.y-d.y/2-t.y,z=c.z-t.z;
+  const st=Math.sin(o.theta),ct=Math.cos(o.theta),sp=Math.sin(o.phi),cp=Math.cos(o.phi);
+  const depth=o.radius-(x*sp*st+y*cp+z*sp*ct);
+  if(depth<=0)return;
+  const px=w/2+f*(x*ct-z*st)/depth;
+  const py=h/2-f*(-x*cp*st+y*sp-z*cp*ct)/depth;
+  const ring=Math.max(30,Math.min(w*.75,f*Math.max(d.x,d.z,d.y*.28)*1.45/depth));
+  scene.style.setProperty("--floor-x",px+"px");
+  scene.style.setProperty("--floor-y",py+"px");
+  scene.style.setProperty("--ring-width",ring+"px");
+}
+viewer.addEventListener("camera-change",updateStudioFloor);
+if(typeof ResizeObserver!=="undefined")new ResizeObserver(updateStudioFloor).observe(viewer);
+customElements.whenDefined("model-viewer").then(()=>{if(viewer.loaded)fitStudioModel();});
