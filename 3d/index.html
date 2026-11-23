@@ -15,7 +15,7 @@
     <script type="module" src="../vendor/model-viewer.min.js?v=3.5.0"></script>
   
 <link rel="stylesheet" href="../styles/artdaci-brand-system.css?v=1">
-<link rel="stylesheet" href="../styles/3d-studio.css?v=3">
+<link rel="stylesheet" href="../styles/3d-studio.css?v=4">
 </head>
   <body>
     <header class="d3-header">
@@ -41,9 +41,9 @@
 
         </div>
 
-        <div class="d3-hero-side" aria-hidden="true">
+        <div class="d3-hero-side">
           <span class="d3-hero-rule"></span>
-          <span id="d3-hero-stats">17 models · 4 collections</span>
+          <span id="d3-hero-stats" hidden></span><span id="d3-gesture-hint">↻ Drag to rotate · Scroll or pinch to zoom</span>
           <span class="d3-hero-glyph">✧</span>
         </div>
       </section>
@@ -89,7 +89,7 @@
               aria-current="true"
               data-category="Artwork interpretation"
               data-title="Leonardo painting the Mona Lisa"
-              data-src="../assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/davinci-painting-mona.glb">
+              data-src="../assets/artists/leonardo-da-vinci/reimagined/models/leonardo_painting_monalisa.glb">
               <span>Leonardo da Vinci</span>
               <strong>Leonardo painting the Mona Lisa</strong>
               <small>A reimagined three-dimensional scene of Leonardo at work.</small>
@@ -113,7 +113,7 @@
               aria-current="false"
               data-category="Artwork interpretation"
               data-title="Girl with a Pearl Earring — 3D interpretation"
-              data-src="https://media.artdaci.com/artworks/ve01/models/standing--sha256-e162489dc277.glb">
+              data-src="../assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/girl-pearl_standing.glb">
               <span>Johannes Vermeer</span>
               <strong>Girl with a Pearl Earring</strong>
               <small>Three-dimensional interpretation of Vermeer's iconic figure.</small>
@@ -137,7 +137,7 @@
               aria-current="false"
               data-category="Artwork interpretation"
               data-title="The Lady with an Ermine — 3D interpretation"
-              data-src="https://media.artdaci.com/artworks/ld02/models/lady-with-an-ermine--sha256-366667a0233d.glb">
+              data-src="../assets/artists/leonardo-da-vinci/reimagined/models/the-lady-with-an-ermine.glb">
               <span>Leonardo da Vinci</span>
               <strong>The Lady with an Ermine</strong>
               <small>Three-dimensional interpretation of Cecilia Gallerani and the ermine.</small>
@@ -169,7 +169,7 @@
               aria-current="false"
               data-category="Master figure"
               data-title="The Four Masters — standing group"
-              data-src="https://media.artdaci.com/shared/groups/four-masters/models/standing--sha256-d2196ae68ecf.glb">
+              data-src="../assets/artists/groups/models/DaVici_Monet_vanGogh_Vermeer_standing_gd_c.glb">
               <span>Leonardo · Monet · Van Gogh · Vermeer</span>
               <strong>The Four Masters</strong>
               <small>The four ARTDACI masters brought together in one standing group.</small>
@@ -249,7 +249,7 @@
               aria-current="false"
               data-category="Museum architecture"
               data-title="Mauritshuis — architectural model"
-              data-src="https://media.artdaci.com/shared/museums/mauritshuis/models/main--sha256-5458d044ca86.glb">
+              data-src="../assets/environments/gallery/models/museums/Mauritshuis_museum_c3.glb">
               <span>The Hague · Netherlands</span>
               <strong>Mauritshuis</strong>
               <small>3D museum model connected to the Vermeer collection.</small>
@@ -261,7 +261,7 @@
               aria-current="false"
               data-category="Museum architecture"
               data-title="Santa Maria delle Grazie — architectural model"
-              data-src="https://media.artdaci.com/shared/museums/santa-maria-delle-grazie/models/main--sha256-41a998492e96.glb">
+              data-src="../assets/environments/gallery/models/museums/Santa_Maria_delle_Grazie.glb">
               <span>Milan · Italy</span>
               <strong>Santa Maria delle Grazie</strong>
               <small>Architectural setting connected to Leonardo's Last Supper.</small>
@@ -273,7 +273,7 @@
               aria-current="false"
               data-category="Museum architecture"
               data-title="National Gallery of Art — architectural model"
-              data-src="https://media.artdaci.com/shared/museums/national-gallery-of-art-washington/models/main--sha256-b1e51bdc7563.glb">
+              data-src="../assets/environments/gallery/models/museums/National_Gallery_of_Art_Washington.glb">
               <span>Washington · USA</span>
               <strong>National Gallery of Art</strong>
               <small>Architectural model for ARTDACI's Washington museum layer.</small>
@@ -335,7 +335,7 @@
             <span id="d3-loading" class="d3-loading">Loading 3D model</span>
             <model-viewer
               id="d3-model"
-              src="../assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/davinci-painting-mona.glb"
+              src="../assets/artists/leonardo-da-vinci/reimagined/models/leonardo_painting_monalisa.glb"
               alt="Leonardo painting the Mona Lisa — interactive 3D model"
               camera-controls
               camera-orbit="0deg 75deg 130%"
@@ -362,7 +362,7 @@
             </div>
           </div>
           <div class="d3-understage">
-            <p class="d3-gesture-hint" id="d3-gesture-hint">↻ Drag to rotate · Scroll to zoom</p>
+            
             <div class="d3-stage-meta">
               <div>
                 <span id="d3-category">Artwork interpretation</span>
@@ -398,6 +398,6 @@
       </footer>
     </main>
 
-    <script type="module" src="../scripts/3d-collection.js?v=5"></script>
+    <script type="module" src="../scripts/3d-collection.js?v=6"></script>
   </body>
 </html>
