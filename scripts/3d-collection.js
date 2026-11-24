@@ -225,6 +225,7 @@ function selectModel(button) {
   title.textContent = nextTitle;
   loading.textContent = copy.loading;
   loading.hidden = false;
+  if (viewer.getAttribute("src") === src && viewer.loaded) { loading.hidden = true; fitStudioModel(); return; }
   viewer.setAttribute("src", src);
   viewer.setAttribute("alt", nextTitle);
 }
@@ -232,11 +233,13 @@ function selectModel(button) {
 choices.forEach((button) => {
   button.addEventListener("click", () => {
     selectModel(button);
-    document.querySelector(".d3-stage-wrap")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    if (window.matchMedia("(max-width: 760px)").matches) {
+      document.querySelector(".d3-stage-wrap")?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+    }
   });
 });
 
-viewer?.addEventListener("load", () => { loading.hidden = true; });
+viewer?.addEventListener("load", () => { loading.hidden = true; fitStudioModel(); });
 viewer?.addEventListener("error", () => {
   loading.textContent = copy.unavailable;
   loading.hidden = false;
@@ -258,13 +261,214 @@ rotateButton?.addEventListener("click", () => {
 
 resetButton?.addEventListener("click", () => {
   if (typeof viewer.resetTurntableRotation === "function") viewer.resetTurntableRotation();
-  viewer.cameraOrbit = "0deg 75deg auto";
+  viewer.cameraOrbit = "0deg 75deg 130%";
   viewer.cameraTarget = "auto auto auto";
-  viewer.fieldOfView = "auto";
+  viewer.fieldOfView = "35deg";
 });
 
 const first = choices.find((choice) => choice.getAttribute("aria-current") === "true") || choices[0];
 if (first) {
   category.textContent = first.dataset.category;
   title.textContent = first.dataset.title;
+  viewer.setAttribute("alt", first.dataset.title);
 }
+
+
+/* Gallery-blue studio enhancements: filter already-present choices; never preload
+   the other GLBs. The model-viewer above remains the sole model instance. */
+const STUDIO_COPY = {
+  en: {
+    tabs:["All","Artworks","Masters","Museums","Objects"],
+    search:"Find a model, an artist or a museum…",
+    results:(count)=>count+" "+(count===1?"model":"models"),
+    empty:"No model matches your search. Try another term.",
+    select:"Choose a model ↗", selected:"Model selected ✓",
+    studio:"ARTDACI · 3D STUDIO", hero:"17 models · 4 collections",
+    gesture:"↻ Drag to rotate · Scroll or pinch to zoom",
+    light:"Lighting", lightActive:"Soft light",
+    fullscreen:"Full screen", exitFullscreen:"Exit full screen",
+    zoomIn:"Zoom in", zoomOut:"Zoom out", searchLabel:"Search 3D models"
+  },
+  fr: {
+    tabs:["Tous","Œuvres","Maîtres","Musées","Objets"],
+    search:"Rechercher une œuvre, un artiste, un musée…",
+    results:(count)=>count+" "+(count===1?"modèle":"modèles"),
+    empty:"Aucun modèle trouvé. Essayez une autre recherche.",
+    select:"Choisissez un modèle ↗", selected:"Modèle sélectionné ✓",
+    studio:"ARTDACI · STUDIO 3D", hero:"17 modèles · 4 collections",
+    gesture:"↻ Glisser pour tourner · Molette ou pincement pour zoomer",
+    light:"Éclairage", lightActive:"Lumière douce",
+    fullscreen:"Plein écran", exitFullscreen:"Quitter le plein écran",
+    zoomIn:"Zoom avant", zoomOut:"Zoom arrière", searchLabel:"Rechercher un modèle 3D"
+  },
+  ar: {
+    tabs:["الكل","الأعمال","الفنانون","المتاحف","المقتنيات"],
+    search:"ابحث عن عمل أو فنان أو متحف…",
+    results:(count)=>count+" نموذج",
+    empty:"لا توجد نماذج مطابقة. جرّب عبارة أخرى.",
+    select:"اختر نموذجًا ↗", selected:"تم اختيار النموذج ✓",
+    studio:"ARTDACI · استوديو ثلاثي الأبعاد", hero:"١٧ نموذجًا · ٤ مجموعات",
+    gesture:"↻ اسحب للتدوير · استخدم التمرير أو القرص للتقريب",
+    light:"الإضاءة", lightActive:"ضوء ناعم",
+    fullscreen:"ملء الشاشة", exitFullscreen:"الخروج من ملء الشاشة",
+    zoomIn:"تكبير", zoomOut:"تصغير", searchLabel:"البحث عن نماذج ثلاثية الأبعاد"
+  }
+};
+const studio = STUDIO_COPY[lang];
+const browser = document.getElementById("d3-browser");
+const searchInput = document.getElementById("d3-search");
+const tabs = [...document.querySelectorAll(".d3-tab")];
+const groups = [...document.querySelectorAll(".d3-group")];
+const resultsLabel = document.getElementById("d3-results");
+const activeLabel = document.getElementById("d3-active-label");
+const emptyLabel = document.getElementById("d3-empty");
+const scene = document.getElementById("d3-stage");
+let currentFilter = "all";
+
+document.getElementById("d3-hero-stats").textContent = studio.hero;
+document.getElementById("d3-scene-label").textContent = studio.studio;
+document.getElementById("d3-gesture-hint").textContent = studio.gesture;
+searchInput.placeholder = studio.search;
+searchInput.setAttribute("aria-label",studio.searchLabel);
+emptyLabel.textContent = studio.empty;
+activeLabel.textContent = studio.select;
+document.getElementById("d3-tabs").setAttribute("aria-label",copy.libraryKicker);
+
+tabs.forEach((tab,index)=>{
+  const label = studio.tabs[index];
+  tab.firstChild.textContent = label+" ";
+});
+groups.forEach((group,index)=>{
+  group.querySelectorAll(".d3-model-choice").forEach((button)=>{
+    button.dataset.group = String(index);
+    button.setAttribute("aria-controls","d3-model");
+  });
+});
+
+function normalized(value) {
+  return String(value||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLocaleLowerCase(lang).trim();
+}
+function applyStudioFilters() {
+  const query = normalized(searchInput.value);
+  let total = 0;
+  groups.forEach((group,index)=>{
+    let visible = 0;
+    group.querySelectorAll(".d3-model-choice").forEach((button)=>{
+      const searchable = normalized([button.dataset.title,button.dataset.category,button.textContent].join(" "));
+      const isVisible = (currentFilter==="all" || currentFilter===String(index)) && (!query || searchable.includes(query));
+      button.hidden = !isVisible;
+      button.style.display = isVisible ? "" : "none";
+      if(isVisible) visible++;
+    });
+    group.hidden = visible===0;
+    group.querySelector(".d3-group-head span").textContent = studio.results(visible);
+    total += visible;
+  });
+  resultsLabel.textContent = studio.results(total);
+  emptyLabel.hidden = total>0;
+}
+
+tabs.forEach((tab)=>{
+  tab.addEventListener("click",()=>{
+    currentFilter=tab.dataset.filter;
+    tabs.forEach((item)=>item.setAttribute("aria-pressed",String(item===tab)));
+    applyStudioFilters();
+  });
+});
+searchInput.addEventListener("input",applyStudioFilters);
+searchInput.addEventListener("keydown",(event)=>{
+  if(event.key==="Escape"&&searchInput.value) {
+    searchInput.value="";
+    applyStudioFilters();
+    event.stopPropagation();
+  }
+});
+document.addEventListener("keydown",(event)=>{
+  if(event.key==="/"&&!event.ctrlKey&&!event.metaKey&&!event.altKey&&
+     !["INPUT","TEXTAREA"].includes(document.activeElement?.tagName)) {
+    event.preventDefault();searchInput.focus();
+  }
+});
+choices.forEach((button)=>button.addEventListener("click",()=>{
+  activeLabel.textContent=studio.selected;
+}));
+applyStudioFilters();
+
+const lightButton=document.getElementById("d3-light");
+const lightText=lightButton.querySelector("span");
+lightText.textContent=studio.light;
+lightButton.title=studio.light;
+lightButton.setAttribute("aria-label",studio.light);
+lightButton.addEventListener("click",()=>{
+  const daylight=scene.classList.toggle("d3-stage--daylight");
+  lightButton.setAttribute("aria-pressed",String(daylight));
+  lightText.textContent=daylight?studio.lightActive:studio.light;
+  viewer.setAttribute("exposure",daylight?"1.15":"1");
+});
+const fullscreenButton=document.getElementById("d3-fullscreen");
+function updateFullscreenLabel() {
+  const label=document.fullscreenElement===scene?studio.exitFullscreen:studio.fullscreen;
+  fullscreenButton.title=label;
+  fullscreenButton.setAttribute("aria-label",label);
+}
+updateFullscreenLabel();
+if(!scene.requestFullscreen) fullscreenButton.hidden=true;
+fullscreenButton.addEventListener("click",async()=>{
+  try {
+    if(document.fullscreenElement===scene) await document.exitFullscreen();
+    else await scene.requestFullscreen();
+  } catch(error) { console.warn("Fullscreen unavailable",error); }
+});
+document.addEventListener("fullscreenchange",updateFullscreenLabel);
+function changeZoom(multiplier) {
+  if(typeof viewer.getCameraOrbit!=="function")return;
+  const orbit=viewer.getCameraOrbit();
+  if(!orbit||!Number.isFinite(orbit.radius))return;
+  const newRadius=Math.max(.0001,orbit.radius*multiplier);
+  viewer.cameraOrbit=orbit.theta+"rad "+orbit.phi+"rad "+newRadius+"m";
+}
+const zoomInButton=document.getElementById("d3-zoom-in");
+const zoomOutButton=document.getElementById("d3-zoom-out");
+zoomInButton.title=studio.zoomIn;
+zoomInButton.setAttribute("aria-label",studio.zoomIn);
+zoomOutButton.title=studio.zoomOut;
+zoomOutButton.setAttribute("aria-label",studio.zoomOut);
+zoomInButton.addEventListener("click",()=>changeZoom(.8));
+zoomOutButton.addEventListener("click",()=>changeZoom(1.25));
+
+if(window.matchMedia("(prefers-reduced-motion: reduce)").matches&&rotating) {
+  rotating=false;
+  viewer.removeAttribute("auto-rotate");
+  refreshRotateLabel();
+}
+
+/* Anchor the decorative floor to the projected lower centre of the model.
+   The camera's actual target and orbit are used; no fixed-size GLB assumptions. */
+function fitStudioModel(){
+  viewer.cameraTarget="auto auto auto";
+  viewer.cameraOrbit="0deg 75deg 130%";
+  viewer.fieldOfView="35deg";
+  viewer.jumpCameraToGoal?.();
+  requestAnimationFrame(updateStudioFloor);
+}
+function updateStudioFloor(){
+  if(!viewer.loaded || !viewer.getBoundingBoxCenter || !viewer.getDimensions || !viewer.getCameraTarget || !viewer.getCameraOrbit)return;
+  const c=viewer.getBoundingBoxCenter(), d=viewer.getDimensions(), t=viewer.getCameraTarget(), o=viewer.getCameraOrbit();
+  const w=viewer.clientWidth,h=viewer.clientHeight;
+  if(!w||!h||!o.radius)return;
+  const fov=(viewer.getFieldOfView?.()||35)*Math.PI/180;
+  const f=h/(2*Math.tan(fov/2));
+  const x=c.x-t.x,y=c.y-d.y/2-t.y,z=c.z-t.z;
+  const st=Math.sin(o.theta),ct=Math.cos(o.theta),sp=Math.sin(o.phi),cp=Math.cos(o.phi);
+  const depth=o.radius-(x*sp*st+y*cp+z*sp*ct);
+  if(depth<=0)return;
+  const px=w/2+f*(x*ct-z*st)/depth;
+  const py=h/2-f*(-x*cp*st+y*sp-z*cp*ct)/depth;
+  const ring=Math.max(30,Math.min(w*.75,f*Math.max(d.x,d.z,d.y*.28)*1.45/depth));
+  scene.style.setProperty("--floor-x",px+"px");
+  scene.style.setProperty("--floor-y",py+"px");
+  scene.style.setProperty("--ring-width",ring+"px");
+}
+viewer.addEventListener("camera-change",updateStudioFloor);
+if(typeof ResizeObserver!=="undefined")new ResizeObserver(updateStudioFloor).observe(viewer);
+customElements.whenDefined("model-viewer").then(()=>{if(viewer.loaded)fitStudioModel();});

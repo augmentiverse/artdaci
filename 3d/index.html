@@ -3,18 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#100d0b" />
+    <meta name="theme-color" content="#193B55" />
     <meta
       name="description"
       content="Explore ARTDACI artworks, artists, objects and museum architecture as interactive 3D models."
     />
     <title>ARTDACI — 3D Models</title>
     <link rel="icon" href="../assets/app/artdaci-app-icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="../styles/3d-collection.css?v=1" />
+    <link rel="stylesheet" href="../styles/3d-collection.css?v=2" />
     <link rel="stylesheet" href="../styles/artdaci-identity.css?v=2" />
     <script type="module" src="../vendor/model-viewer.min.js?v=3.5.0"></script>
   
 <link rel="stylesheet" href="../styles/artdaci-brand-system.css?v=1">
+<link rel="stylesheet" href="../styles/3d-studio.css?v=4">
 </head>
   <body>
     <header class="d3-header">
@@ -37,51 +38,17 @@
         <div class="d3-copy">
           <p class="d3-kicker">ARTDACI · Interactive 3D</p>
           <h1 id="d3-page-title">Explore the collection <span>in 3D.</span></h1>
-          <p class="d3-lead">
-            Rotate, inspect and explore selected ARTDACI models—from artwork interpretations and
-            artist figures to the living book and museum architecture.
-          </p>
-          <p class="d3-note">
-            Only one model is loaded at a time. Select any item below to replace the model in the
-            viewer. AR is offered when supported by the device and browser.
-          </p>
+
         </div>
 
-        <div class="d3-stage-wrap">
-          <div class="d3-stage">
-            <span id="d3-loading" class="d3-loading">Loading 3D model</span>
-            <model-viewer
-              id="d3-model"
-              src="https://media.artdaci.com/artworks/ld01/models/leonardo-painting-mona-lisa--sha256-20ee31394f18.glb"
-              alt="Leonardo painting the Mona Lisa — interactive 3D model"
-              camera-controls
-              touch-action="pan-y"
-              auto-rotate
-              ar
-              ar-modes="webxr scene-viewer quick-look"
-              ar-placement="floor"
-              shadow-intensity="0.75"
-              exposure="1"
-              interaction-prompt="auto"
-              loading="eager"
-              reveal="auto">
-              <button class="d3-ar-button" slot="ar-button" type="button">View in AR</button>
-            </model-viewer>
-
-            <div class="d3-stage-meta">
-              <div>
-                <span id="d3-category">Artwork interpretation</span>
-                <strong id="d3-title">Leonardo painting the Mona Lisa</strong>
-              </div>
-              <div class="d3-controls" aria-label="3D viewer controls">
-                <button id="d3-rotate" type="button" aria-pressed="true">Stop rotation</button>
-                <button id="d3-reset" type="button">Reset view</button>
-              </div>
-            </div>
-          </div>
+        <div class="d3-hero-side">
+          <span class="d3-hero-rule"></span>
+          <span id="d3-hero-stats" hidden></span><span id="d3-gesture-hint">↻ Drag to rotate · Scroll or pinch to zoom</span>
+          <span class="d3-hero-glyph">✧</span>
         </div>
       </section>
-
+      <section class="d3-workbench" aria-label="Interactive 3D studio">
+        <aside class="d3-browser" id="d3-browser" aria-label="3D model catalogue">
       <section class="d3-section" aria-labelledby="d3-library-title">
         <div class="d3-section-head">
           <div>
@@ -93,7 +60,23 @@
             The collection can expand progressively without changing the interaction model.
           </p>
         </div>
+        <div class="d3-discovery" aria-label="Model catalogue controls">
+          <label class="d3-search-wrap" for="d3-search">
+            <span class="d3-search-icon" aria-hidden="true">⌕</span>
+            <input type="search" id="d3-search" autocomplete="off" placeholder="Search a model or artist…" aria-label="Search 3D models" />
+          </label>
+          <div class="d3-tabs" id="d3-tabs" role="group" aria-label="Filter the collection">
+            <button class="d3-tab" type="button" data-filter="all" aria-pressed="true">All <span>17</span></button>
+            <button class="d3-tab" type="button" data-filter="0" aria-pressed="false">Artworks</button>
+            <button class="d3-tab" type="button" data-filter="1" aria-pressed="false">Masters</button>
+            <button class="d3-tab" type="button" data-filter="2" aria-pressed="false">Museums</button>
+            <button class="d3-tab" type="button" data-filter="3" aria-pressed="false">Objects</button>
+          </div>
+          <div class="d3-search-meta" role="status" aria-live="polite"><span id="d3-results">17 models</span><span id="d3-active-label">Select to explore ↗</span></div>
+          <p class="d3-empty" id="d3-empty" hidden>No model matches your search.</p>
+        </div>
 
+        <div class="d3-model-list">
         <section class="d3-group" aria-labelledby="d3-artworks-title">
           <div class="d3-group-head">
             <h3 id="d3-artworks-title">Artworks & interpretations</h3>
@@ -106,7 +89,7 @@
               aria-current="true"
               data-category="Artwork interpretation"
               data-title="Leonardo painting the Mona Lisa"
-              data-src="https://media.artdaci.com/artworks/ld01/models/leonardo-painting-mona-lisa--sha256-20ee31394f18.glb">
+              data-src="../assets/artists/leonardo-da-vinci/reimagined/models/leonardo_painting_monalisa.glb" data-media-src="https://media.artdaci.com/artworks/ld01/models/leonardo-painting-mona-lisa--sha256-20ee31394f18.glb">
               <span>Leonardo da Vinci</span>
               <strong>Leonardo painting the Mona Lisa</strong>
               <small>A reimagined three-dimensional scene of Leonardo at work.</small>
@@ -118,7 +101,7 @@
               aria-current="false"
               data-category="Artwork interpretation"
               data-title="Mona Lisa — 3D bust"
-              data-src="https://media.artdaci.com/artworks/ld01/models/main-v2.glb">
+              data-src="../assets/artists/leonardo-da-vinci/artworks/mona-lisa/models/mona-lisa-main-v2.glb" data-media-src="https://media.artdaci.com/artworks/ld01/models/main-v2.glb">
               <span>Leonardo da Vinci</span>
               <strong>Mona Lisa — bust</strong>
               <small>The original compact Mona Lisa model restored to the collection.</small>
@@ -130,7 +113,7 @@
               aria-current="false"
               data-category="Artwork interpretation"
               data-title="Girl with a Pearl Earring — 3D interpretation"
-              data-src="https://media.artdaci.com/artworks/ve01/models/standing--sha256-e162489dc277.glb">
+              data-src="../assets/artists/johannes-vermeer/artworks/girl-with-a-pearl-earring/models/girl-pearl_standing.glb" data-media-src="https://media.artdaci.com/artworks/ve01/models/standing--sha256-e162489dc277.glb">
               <span>Johannes Vermeer</span>
               <strong>Girl with a Pearl Earring</strong>
               <small>Three-dimensional interpretation of Vermeer's iconic figure.</small>
@@ -154,7 +137,7 @@
               aria-current="false"
               data-category="Artwork interpretation"
               data-title="The Lady with an Ermine — 3D interpretation"
-              data-src="https://media.artdaci.com/artworks/ld02/models/lady-with-an-ermine--sha256-366667a0233d.glb">
+              data-src="../assets/artists/leonardo-da-vinci/reimagined/models/the-lady-with-an-ermine.glb" data-media-src="https://media.artdaci.com/artworks/ld02/models/lady-with-an-ermine--sha256-366667a0233d.glb">
               <span>Leonardo da Vinci</span>
               <strong>The Lady with an Ermine</strong>
               <small>Three-dimensional interpretation of Cecilia Gallerani and the ermine.</small>
@@ -186,7 +169,7 @@
               aria-current="false"
               data-category="Master figure"
               data-title="The Four Masters — standing group"
-              data-src="https://media.artdaci.com/shared/groups/four-masters/models/standing--sha256-d2196ae68ecf.glb">
+              data-src="../assets/artists/groups/models/DaVici_Monet_vanGogh_Vermeer_standing_gd_c.glb" data-media-src="https://media.artdaci.com/shared/groups/four-masters/models/standing--sha256-d2196ae68ecf.glb">
               <span>Leonardo · Monet · Van Gogh · Vermeer</span>
               <strong>The Four Masters</strong>
               <small>The four ARTDACI masters brought together in one standing group.</small>
@@ -266,7 +249,7 @@
               aria-current="false"
               data-category="Museum architecture"
               data-title="Mauritshuis — architectural model"
-              data-src="https://media.artdaci.com/shared/museums/mauritshuis/models/main--sha256-5458d044ca86.glb">
+              data-src="../assets/environments/gallery/models/museums/Mauritshuis_museum_c3.glb" data-media-src="https://media.artdaci.com/shared/museums/mauritshuis/models/main--sha256-5458d044ca86.glb">
               <span>The Hague · Netherlands</span>
               <strong>Mauritshuis</strong>
               <small>3D museum model connected to the Vermeer collection.</small>
@@ -278,7 +261,7 @@
               aria-current="false"
               data-category="Museum architecture"
               data-title="Santa Maria delle Grazie — architectural model"
-              data-src="https://media.artdaci.com/shared/museums/santa-maria-delle-grazie/models/main--sha256-41a998492e96.glb">
+              data-src="../assets/environments/gallery/models/museums/Santa_Maria_delle_Grazie.glb" data-media-src="https://media.artdaci.com/shared/museums/santa-maria-delle-grazie/models/main--sha256-41a998492e96.glb">
               <span>Milan · Italy</span>
               <strong>Santa Maria delle Grazie</strong>
               <small>Architectural setting connected to Leonardo's Last Supper.</small>
@@ -290,7 +273,7 @@
               aria-current="false"
               data-category="Museum architecture"
               data-title="National Gallery of Art — architectural model"
-              data-src="https://media.artdaci.com/shared/museums/national-gallery-of-art-washington/models/main--sha256-b1e51bdc7563.glb">
+              data-src="../assets/environments/gallery/models/museums/National_Gallery_of_Art_Washington.glb" data-media-src="https://media.artdaci.com/shared/museums/national-gallery-of-art-washington/models/main--sha256-b1e51bdc7563.glb">
               <span>Washington · USA</span>
               <strong>National Gallery of Art</strong>
               <small>Architectural model for ARTDACI's Washington museum layer.</small>
@@ -329,8 +312,79 @@
             </button>
           </div>
         </section>
+        </div>
+      </section>
+        </aside>
+        <div class="d3-stage-wrap">
+          <div class="d3-stage" id="d3-stage">
+            <div class="d3-stage-aura" aria-hidden="true">
+              <span class="d3-aura-halo"></span>
+              <span class="d3-aura-ring d3-aura-ring--outer"></span>
+              <span class="d3-aura-ring d3-aura-ring--inner"></span>
+              <span class="d3-aura-floor"></span>
+              <span class="d3-aura-spark d3-aura-spark--one"></span>
+              <span class="d3-aura-spark d3-aura-spark--two"></span>
+            </div>
+            <div class="d3-stage-top">
+              <div class="d3-scene-id"><span class="d3-scene-dot" aria-hidden="true"></span><span id="d3-scene-label">ARTDACI · 3D STUDIO</span></div>
+              <div class="d3-toolbox">
+                <button type="button" id="d3-light" aria-pressed="false" title="Change lighting">☼ <span>Lighting</span></button>
+                <button type="button" id="d3-fullscreen" title="Full screen" aria-label="Full screen">⛶</button>
+              </div>
+            </div>
+            <span id="d3-loading" class="d3-loading">Loading 3D model</span>
+            <model-viewer
+              id="d3-model"
+              src="../assets/artists/leonardo-da-vinci/reimagined/models/leonardo_painting_monalisa.glb"
+              alt="Leonardo painting the Mona Lisa — interactive 3D model"
+              camera-controls
+              camera-orbit="0deg 75deg 130%"
+              max-camera-orbit="auto 180deg 1200%"
+              min-camera-orbit="auto 0deg 10%"
+              field-of-view="35deg"
+              max-field-of-view="70deg"
+              touch-action="pan-y"
+              auto-rotate
+              ar
+              ar-modes="webxr scene-viewer quick-look"
+              ar-placement="floor"
+              shadow-intensity="0.75"
+              exposure="1"
+              interaction-prompt="auto"
+              loading="eager"
+              reveal="auto">
+              <button class="d3-ar-button" slot="ar-button" type="button">View in AR</button>
+            </model-viewer>
+
+            <div class="d3-zoomtools" role="group" aria-label="Zoom">
+              <button id="d3-zoom-in" type="button" title="Zoom in" aria-label="Zoom in">+</button>
+              <button id="d3-zoom-out" type="button" title="Zoom out" aria-label="Zoom out">−</button>
+            </div>
+          </div>
+          <div class="d3-understage">
+            
+            <div class="d3-stage-meta">
+              <div>
+                <span id="d3-category">Artwork interpretation</span>
+                <strong id="d3-title">Leonardo painting the Mona Lisa</strong>
+              </div>
+              <div class="d3-controls" aria-label="3D viewer controls">
+                <button id="d3-rotate" type="button" aria-pressed="true">Stop rotation</button>
+                <button id="d3-reset" type="button">Reset view</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
+      <section class="d3-description">          <p class="d3-lead">
+            Rotate, inspect and explore selected ARTDACI models—from artwork interpretations and
+            artist figures to the living book and museum architecture.
+          </p>
+          <p class="d3-note">
+            Only one model is loaded at a time. Select any item below to replace the model in the
+            viewer. AR is offered when supported by the device and browser.
+          </p></section>
       <footer class="d3-footer">
         <span>ARTDACI · Interactive 3D Collection</span>
         <div>
@@ -344,6 +398,6 @@
       </footer>
     </main>
 
-    <script type="module" src="../scripts/3d-collection.js?v=3"></script>
+    <script type="module" src="../scripts/3d-collection.js?v=6"></script>
   </body>
 </html>
